@@ -1,0 +1,12 @@
+0.6
+2017.4
+Dec 15 2017
+21:07:18
+H:/363/Computer Eng Lab 1/Lab4/Controller.v,1571934822,verilog,,H:/363/Computer Eng Lab 1/Lab4/processor.v,,Controller,,,,,,,,
+H:/363/Computer Eng Lab 1/Lab4/Datapath.v,1571936513,verilog,,H:/363/Computer Eng Lab 1/Lab4/Controller.v,,Datapath,,,,,,,,
+H:/363/Computer Eng Lab 1/Lab4/alu.v,1571934819,verilog,,H:/363/Computer Eng Lab 1/Lab4/test.v,,alu,,,,,,,,
+H:/363/Computer Eng Lab 1/Lab4/processor.v,1571934829,verilog,,H:/363/project_simpleProcessor/project_simpleProcessor.srcs/sources_1/new/alu2.v,,processor,,,,,,,,
+H:/363/Computer Eng Lab 1/Lab4/test.v,1571936502,verilog,,H:/363/Computer Eng Lab 1/Lab4/testprocessor.v,,test,,,,,,,,
+H:/363/Computer Eng Lab 1/Lab4/testprocessor.v,1571934834,verilog,,,,testprocessor,,,,,,,,
+H:/363/project_simpleProcessor/project_simpleProcessor.sim/sim_1/behav/xsim/glbl.v,1513215259,verilog,,,,glbl,,,,,,,,
+H:/363/project_simpleProcessor/project_simpleProcessor.srcs/sources_1/new/alu2.v,1571936485,verilog,,H:/363/Computer Eng Lab 1/Lab4/alu.v,,alu2,,,,,,,,

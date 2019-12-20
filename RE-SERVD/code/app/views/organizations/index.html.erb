@@ -1,0 +1,46 @@
+<div class="organizations">
+  <h1>Organizations</h1>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Issue Area</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @organizations.each do |organization| %>
+      <% if organization.approved? || organization.user == current_user %>
+        <tr>
+          <td><%= organization.name %></td>
+          <td><%= organization.city %></td>
+          <td><%= organization.state %></td>
+          <td><%= organization.issue_area %></td>
+          <td><%= link_to 'View', organization %></td>
+
+          <% if session[:user_type] == 0 || (session[:user_type] == 1 && session[:user_email] == organization.email) %>
+            <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+          <% else %>
+            <td></td>
+          <% end %>
+
+
+          <% if session[:user_type] == 0 %>
+            <td><%= link_to 'Delete', organization, method: :delete, data: {confirm: 'Are you sure? This action will terminate this organizations account. '} %></td>
+
+          <% else %>
+            <td></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+</div>

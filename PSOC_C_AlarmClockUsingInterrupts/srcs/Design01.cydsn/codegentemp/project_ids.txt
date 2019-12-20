@@ -1,0 +1,6 @@
+C:\Users\tmj32\Desktop\343Final\PSOC_C_AlarmClockUsingInterrupts\Design01.cydsn\Design01.cyprj|f2aeada5-d44b-4132-98c4-79fb5f33af4d
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|8819d3c1-e054-4ce0-abb5-77699c38b418
+C:\Users\tmj32\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|fcde9d7f-bedd-4b33-aae5-40107f555281
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|9550d55a-be48-40a1-b932-2e211fb26c19
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|6cea9e6d-63fc-42a8-b54e-8e9c2d1ba744
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|a8ffe7f4-f8fa-471f-a672-a1333ce8ce94

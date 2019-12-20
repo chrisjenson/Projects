@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Servd</title>
+  <%= csrf_meta_tags %>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body>
+<ul class="nav">
+
+  <li id="homeContainer" class="nav-hover">
+    <%= link_to root_path do %>
+
+      <%= image_tag "servd-logo.gif", :class => "homebutton" %>
+
+    <% end %>
+  </li>
+  <li class="nav-hover"> <%= link_to "Events", opportunities_path %></li>
+  <li class="nav-hover"> <%= link_to "Organizations", organizations_path %></li>
+
+  <% if user_signed_in? %>
+    <li class="nav-hover"> <%= link_to "Dashboard", dashboard_path_url %></li>
+    <% if current_user.admin %>
+      <li class="nav-hover"><%= link_to "Manage Interests", "/add_tags"  %></li>
+    <% end %>
+    <div class="farRight nav-hover">
+      <%= link_to opportunities_path %>
+      <li class="logout nav-hover"><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+    </div>
+  <% end %>
+</ul>
+
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
+
+<%= yield %>
+
+<!-- <div id="foots"></div> -->
+</body>
+</html>

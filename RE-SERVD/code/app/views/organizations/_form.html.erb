@@ -1,0 +1,109 @@
+<%= form_for(organization) do |f| %>
+  <% if organization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
+
+      <ul>
+        <% organization.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if organization.email %>
+    <%= f.hidden_field :email, :value => organization.email %>
+  <% else %>
+    <%= f.hidden_field :email, :value => session[:user_email] %>
+  <% end %>
+
+  <div class="form">
+    <div class="field">
+      <%= f.label :name, 'Organization Name', :class => "required" %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :phone_no, 'Phone Number (XXX-XXX-XXXX)', :class => "required" %>
+      <%= f.text_field :phone_no, maxlength: 12 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :address %>
+      <%= f.text_field :address %>
+    </div>
+
+    <div class="field">
+      <%= f.label :city %>
+      <%= f.text_field :city %>
+    </div>
+
+    <div class="field">
+      <%= f.label :state, 'State (XX)' %>
+      <%= f.text_field :state, maxlength: 2 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :zip_code, 'Zip Code (XXXXX)' %>
+      <%= f.text_field :zip_code, maxlength: 5 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description, "Organization Description (Ex: Mission Statement, Links to website/forms, etc.)" %>
+      <%= f.text_area :description, :cols => "73", :rows => "10" %>
+    </div>
+
+    <% if session[:user_type] == 0 %>
+      <div class="field">
+        <%= f.label :approved %>
+        <%= f.check_box :approved %>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :issue_area %>
+      <%= f.select :issue_area, ["Adult Education",
+                                 "Advocacy and Human Rights",
+                                 "Arts and Culture",
+                                 "College Preparation",
+                                 "Community Development",
+                                 "Computers and Technology",
+                                 "Counseling",
+                                 "Crisis Support",
+                                 "Disaster Relief",
+                                 "Domestic Violence",
+                                 "Education and Literacy",
+                                 "Employment Preparation",
+                                 "English as a Second Language",
+                                 "Environment",
+                                 "Faith-Based",
+                                 "Health",
+                                 "Homelessness Prevention",
+                                 "Housing",
+                                 "Hunger",
+                                 "Immigration",
+                                 "Individuals with Developmental Disabilities",
+                                 "International",
+                                 "LGBTQ+",
+                                 "Mentoring",
+                                 "Politics",
+                                 "Seniors",
+                                 "Sports and Recreation",
+                                 "Veterans",
+                                 "Women's Empowerment",
+                                 "Youth and Teens",
+                                 "Other"], :prompt => "Select One" %>
+    </div>
+
+    <div>
+      Note: Fields marked with <span style="color: red;">*</span> are required.
+    </div>
+
+    <br>
+    <div>
+      <%= f.submit %>
+    </div>
+    <br>
+
+<% end %>
+</div>

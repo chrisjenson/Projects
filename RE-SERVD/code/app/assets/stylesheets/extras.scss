@@ -1,0 +1,59 @@
+:root {
+    --hover-color: rgb(1, 194, 153);
+    --dark1: rgb(5, 102, 141);
+    --dark2: rgb(2, 128, 144);
+    --middle: rgb(0, 168, 150);
+    --light1: rgb(2, 195, 154);
+    --light2: rgb(240, 243, 189);
+    --h1: rgb(0, 167, 149);
+    --button1: rgb(72, 211, 181);
+    --button2: rgb(71, 192, 179);
+    --button3: rgb(72, 163, 174);
+}
+
+
+.container {
+    //padding: 5% 0.5%;
+    margin: auto;
+
+    font-size: 18px;
+    text-align: center;
+    //display: inline-block;
+    //width: 50%;
+   // display:flex;
+    align-items: center;
+}
+
+.login-buttons a:link{
+  text-decoration: none;
+}
+.login-buttons {
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    margin: auto;
+    padding: 10px;
+    height: 50px;
+    width: 300px;
+    font-size: 25px;
+    display: block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    border: 0px solid;
+    border-radius: 10px;
+    opacity: 0.9;
+    line-height: 1;
+}
+
+.button1 {
+    background-color: var(--button1);
+}
+
+.button2 {
+    background-color: var(--button2);
+}
+
+.button3 {
+    background-color: var(--button3);
+}
+
+

@@ -1,0 +1,24 @@
+<% if session[:user_type].to_i == 1 || session[:user_type].to_i == 0 %>
+  <h1>New Organization</h1>
+
+  <div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <%= render 'form', organization: @organization %>
+    </div>
+  </div>
+<% else %>
+  <br><br><br>
+
+  <h1>You must be lost.</h1>
+  <h1> You don't have access to this page.</h1>
+
+  <br>
+  <div style="text-align: center;">
+    <div class="styledButton">
+      <h3><%= link_to 'Back to Events', opportunities_path %></h3>
+    </div>
+
+<% end %>
+
+
+

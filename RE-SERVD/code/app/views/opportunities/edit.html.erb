@@ -1,0 +1,18 @@
+<h1>Editing Opportunity</h1>
+<div style="text-align: center;">
+  <div style="display: inline-block; text-align: left;">
+    <% if session[:user_type].to_i == 0 || (session[:user_type].to_i == 1 && session[:user_email] == @opportunity.email) %>
+      <%= render 'form', opportunity: @opportunity %>
+      <div>
+        <div class="styledButton">
+          <%= link_to 'Back', :back %>
+        </div>
+      </div>
+      <!-- <div class= "container-butt">
+		    <a class= "new-butt" <%= link_to 'New Event', new_opportunity_path, :class => "" %></a>
+		  </div> -->
+    <% else %>
+      <h1>You must be lost. You don't have access to this page.</h1>
+    <% end %>
+  </div>
+</div>

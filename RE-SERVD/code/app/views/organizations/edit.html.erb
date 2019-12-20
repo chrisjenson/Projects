@@ -1,0 +1,17 @@
+<h1>Editing Organization</h1>
+<div style="text-align: center;">
+  <div style="display: inline-block; text-align: left;">
+    <% if session[:user_email] == @organization.email || session[:user_type] == 0 %>
+      <%= render 'form', organization: @organization %>
+    <% else %>
+      <h1>You seem lost. You don't have access to this page</h1>
+    <% end %>
+    <div class="styledButton">
+      <%= link_to 'Show', @organization %>
+    </div>
+    |
+    <div class="styledButton">
+      <%= link_to 'Back', :back %>
+    </div>
+  </div>
+</div>

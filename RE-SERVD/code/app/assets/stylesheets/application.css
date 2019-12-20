@@ -1,0 +1,182 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+:root {
+    --hover-color: rgb(1, 194, 153);
+    --dark1: rgb(5, 102, 141);
+    --dark2: rgb(2, 128, 144);
+    --middle: rgb(0, 168, 150);
+    --light1: rgb(2, 195, 154);
+    --light2: rgb(240, 243, 189);
+}
+
+body {
+    margin: auto;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+
+
+.nav{
+  height: 75px;
+  width: 100%;
+
+  padding: 0;
+  margin: 0 0 10px 0;
+
+  background-color: rgba(4, 102, 140, 1);
+  text-decoration: none;
+  //position:fixed;
+ // z-index:200;
+}
+
+.nav a:link{
+  text-decoration:none;
+}
+.nav li{
+  float: left;
+  display: inline-block;
+  margin-left: 30px;
+  width: auto;
+  height: 75px;
+  line-height: 70px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-size: 23px;
+}
+
+.nav .farRight{
+ // margin-left: 30px;
+  width: auto;
+  height: 75px;
+  line-height: 70px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  font-size: 23px;
+
+}
+.nav li.nav-hover:hover {
+    width: auto;
+    height: 75px;
+    border-bottom: 8px solid rgb(1, 194, 153);
+    margin-bottom: -8px;
+    transition: color 0.2s ease-in, border 0.2s ease;
+}
+
+.nav li.active{
+  border-bottom: 8px solid rgb(1, 194, 153);
+  margin-bottom: -8px;
+}
+
+
+.nav li.logout{
+   position: absolute;
+   right:-5px;
+   display: none;
+}
+.nav .farRight{
+  position: absolute;
+  right: 0px;
+  padding: 0 30px 0 30px;
+  //z-index: 10;
+}
+
+.homeButton{
+ // border-radius: 50%;
+ // background-color:rgb(240, 243, 189);
+  //background: url(https://drive.google.com/file/d/14NjgbyFJKSTlr8CKFFL7Z_tGG1Fc_yr5/view?usp=sharing);
+  //background: url("servd-logo.gif");
+  width: 35px;
+  height: 35px;
+  z-index: 10;
+//  margin-right: 50%;
+
+
+
+}
+
+img.homebutton{
+  width: 70px;
+  text-align: center;
+  margin-top: 25px;
+
+}
+
+#homeContainer{
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.required::after {
+  color: red;
+  content: " *";
+}
+
+html{
+ position: relative;
+ min-height: 100%;
+}
+
+#foots {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    z-index: -2;
+    opacity: 0.5;
+    /* Height of the footer */
+    background: linear-gradient(to right, var(--dark1) 20%, var(--dark2) 20%, var(--dark2) 40%, var(--middle) 40%, var(--middle) 60%, var(--light1) 60%, var(--light1) 80%, var(--light2) 80%);
+}
+
+
+/*
+h1,
+h2 {
+    margin: 0px;
+    line-height: 2;
+}*/
+
+@media screen and (max-width: 500px) {
+    h1,
+    h2 {
+        margin: 0px 0px 30px 0px;
+        line-height: normal;
+    }
+}
+
+a {
+    color: inherit;
+}
+
+
+.nav li.logout{
+    position: absolute;
+    background-color:rgba(4, 102, 140, 0.95);
+    color:white;
+    min-width:30px;
+    padding: 0 10px 0 10px;
+    z-index: 1;
+    right:0px;
+}
+
+.nav .farRight:hover li.logout{
+   display:block;
+}

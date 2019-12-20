@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>CELR Volunteering</title>
+  <meta name="viewport" content="initial-scale=1">
+
+  <!-- CELR Navbar CSS -->
+  <link href="application.css" media="screen" rel="stylesheet" type="text/css"/>
+
+  <!-- CELR Welcome Page CSS -->
+  <link href="welcome.css" media="screen" rel="stylesheet" type="text/css"/>
+
+  <!-- Google Fonts: OpenSans -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+
+  <!-- Font Awesome Images -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+
+  <!--  Window Scroll for Chevron-->
+  <script type="text/javascript">
+      function scrollToContainer() {
+          document.querySelector(".container2").scrollIntoView({
+              behavior: 'smooth'
+          });
+      }
+
+  </script>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="background"></div>
+
+  <h1 class="giant">SERVD</h1>
+  <h4>Students of Ewing Region Volunteer Database</h4>
+  <ul class="menu">
+
+    <% unless user_signed_in? %>
+      <div class="login-buttons button1">
+        <a class="content"><%= link_to "Login", new_user_session_path %></a>
+      </div>
+      <div class="login-buttons button2">
+        <a class="content"><%= link_to "Create an Account", new_user_registration_path %></a>
+      </div>
+    <% else %>
+      <div class="login-buttons button1">
+        <a class="content"><%= link_to "See Local Events", opportunities_path %></a>
+      </div>
+    <% end %>
+
+    <div style="font-size:8em; color:rgb(4, 102, 140)">
+      <i class="fas fa-chevron-down" style="cursor: pointer" onclick="scrollToContainer();"></i>
+    </div>
+  </ul>
+
+  <div class="container2">
+    <h2>SERVD</h2>
+    <div>
+      <p>
+        SERVD is a web application that helps TCNJ students interact with their surrounding community. SERVD provides a
+        list of volunteer events approved by the Center for Community Engaged Learning (CELR). Create an account,
+        bookmark the events you are interested in, and get started!
+      </p>
+      <br><br>
+      <h3>Get Started Today!</h3>
+
+      <% unless user_signed_in? %>
+        <div class="login-buttons button1">
+          <a class="content"><%= link_to "Login", new_user_session_path %></a>
+        </div>
+        <div class="login-buttons button2">
+          <a class="content"><%= link_to "Create an Account", new_user_registration_path %></a>
+        </div>
+      <% end %>
+      <div class="login-buttons button1">
+        <a class="content"><%= link_to "See Local Events", opportunities_path %></a>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="foots"></div>
+</div>
+</body>
+
+</html>

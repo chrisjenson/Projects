@@ -1,0 +1,15 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../Computer Eng Lab 1/Lab4/Datapath.v" \
+"../../../../../Computer Eng Lab 1/Lab4/Controller.v" \
+"../../../../../Computer Eng Lab 1/Lab4/processor.v" \
+"../../../../project_simpleProcessor.srcs/sources_1/new/alu2.v" \
+"../../../../../Computer Eng Lab 1/Lab4/alu.v" \
+"../../../../../Computer Eng Lab 1/Lab4/test.v" \
+"../../../../../Computer Eng Lab 1/Lab4/testprocessor.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

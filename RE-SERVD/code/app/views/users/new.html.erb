@@ -1,0 +1,44 @@
+<% provide(:title, 'Volunteer Registartion') %>
+<h1>Sign up</h1>
+
+<div style="text-align: center;">
+  <div style="display: inline-block; text-align: left;">
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div style="text-align: center;">
+  <div style="display: inline-block; text-align: left;">
+
+    <%= form_for(@user) do |f| %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <%= f.password_field :password_confirmation %>
+
+
+
+      <%= f.hidden_field :user_type, :value => 2 %>
+      <br>
+      <br>
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
+

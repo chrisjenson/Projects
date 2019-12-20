@@ -1,0 +1,173 @@
+<% if current_user.org? %>
+  <div class="opportunities">
+    <h1>Your Organization status</h1>
+    <div class="container">
+      <% if current_user.unapproved_org? %>
+        <p>
+          You are <b>not</b> an approved organization.
+          <br>
+          Please contact CELR to have your organization certified and
+          events be made visible to the public.
+
+          If you did not mean to request for organization status, contact
+          CELR and ask to decline it.
+        </p>
+      <% else %>
+        <p>
+          You are an approved organization. Your organization and events are visible to the public.
+        </p>
+      <% end %>
+    </div>
+<% end %>
+
+<table>
+  <thead>
+  <tr>
+    <th style="white-space: nowrap;">Name</th>
+    <th>Email</th>
+    <th>City</th>
+    <th>State</th>
+    <th style="white-space: nowrap;">Zip Code</th>
+    <th style="white-space: nowrap;">Issue Area</th>
+    <th>Approved?</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @organizations.each do |organization| %>
+    <% if current_user.approved_org? %>
+      <tr class="approved">
+    <% else %>
+      <tr class="unapproved">
+    <% end %>
+
+    <td><%= organization.name %></td>
+    <td><%= organization.email %></td>
+    <td><%= organization.city %></td>
+    <td><%= organization.state %></td>
+    <td><%= organization.zip_code %></td>
+    <td><%= organization.issue_area %></td>
+    <% if current_user.approved_org? %>
+      <td>Yes</td>
+    <% else %>
+      <td>No</td>
+    <% end %>
+
+    <td><%= link_to 'View', organization %></td>
+    <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+    <td><%= link_to 'Delete', organization, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+</div>
+<div class="opportunities">
+  <% if current_user.org? %>
+    <h1>Your Events</h1>
+
+    <table>
+      <thead>
+      <tr>
+        <th style="white-space: nowrap;">Event Name</th>
+        <th>Organization</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Date</th>
+        <th style="white-space: nowrap;">Issue Area</th>
+        <th>Visible?</th>
+        <th colspan="2"></th>
+        <th style="white-space: nowrap;">
+          <div class="styledButton">
+            <%= link_to 'New', new_opportunity_path %>
+          </div>
+        </th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @opportunities.each do |opportunity| %>
+        <% if opportunity.approved? %>
+          <tr class="approved">
+        <% else %>
+          <tr class="unapproved">
+        <% end %>
+
+        <td><%= opportunity.name %></td>
+        <td><%= opportunity.organization.name %></td>
+        <td><%= opportunity.city %></td>
+        <td><%= opportunity.state %></td>
+        <% if opportunity.on_date >= Date.current %>
+          <td style="white-space: nowrap;"><%= opportunity.on_date.strftime('%B %-d, %Y') %></td>
+        <% else %>
+          <td style="white-space: nowrap; color: red;"><%= opportunity.on_date.strftime('%B %-d, %Y') %></td>
+        <% end %>
+        <td><%= opportunity.issue_area %></td>
+        <% if opportunity.approved? && opportunity.on_date >= Date.current %>
+          <td>Yes</td>
+        <% else %>
+          <td>No</td>
+        <% end %>
+
+        <td><%= link_to 'View', opportunity %></td>
+        <td><%= link_to 'Edit', edit_opportunity_path(opportunity) %></td>
+        <td><%= link_to 'Delete', opportunity, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+
+        </tr>
+
+
+      <% end %>
+      </tbody>
+
+    </table>
+
+    </div>
+    <br>
+    <p class="container">Note: All expired events (with dates shown in <span style="color: red;">red</span>)
+      will not be visible to the public, even if approved.</p>
+  <% else %>
+    <div class="opportunities">
+      <h1>Your Favorites</h1>
+
+      <table>
+        <thead>
+        <tr>
+          <th style="white-space: nowrap;">Event Name</th>
+          <th>Organization</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Date</th>
+          <th style="white-space: nowrap;">Issue Area</th>
+          <th colspan="3"></th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @favorites.each do |favorite| %>
+
+          <tr>
+            <% opportunity = favorite %>
+
+            <td><%= opportunity.name %></td>
+            <td><%= opportunity.organization.name %></td>
+            <td><%= opportunity.city %></td>
+            <td><%= opportunity.state %></td>
+            <td style="white-space: nowrap;"><%= opportunity.on_date.strftime('%B %-d, %Y') %></td>
+            <td><%= opportunity.issue_area %></td>
+
+            <td><%= link_to 'View', opportunity %></td>
+<!--            FIXME: correct link-->
+            <td>Unfavorite (in repair)<%#= link_to 'Unfavorite', favorite_opportunity_path(@opportunity, :id => opportunity.id, type: "unfavorite"), method: :put %></td>
+
+          </tr>
+
+
+        <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  <% end %>

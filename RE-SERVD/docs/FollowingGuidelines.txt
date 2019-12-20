@@ -1,0 +1,7 @@
+-In general, bugs/issues are raised as issues in Github. SERVD does not have any documentation anywhere listing bugs/issues. Furthermore, there are no closed issues in GitHub either, indicating that they may have been removed. While there are none open right now, this is where they should be stored, and it is where I will store them. They can be distinguished by a ‘bug’ label on the issue. Ideas discussed for the project are also stored as issues. They are denoted with the ‘enhancements’ tag. In the contribution guide for SERVD, there is only a guide on getting you started with running the program, along with general background information regarding the application. While no guidelines were defined, I did the following when developing code for my branch, so that they may potentially become guidelines:
+-Write clean/reusable code
+-Write well documented/commented code that is easy to understand
+-Follow existing naming conventions
+-Follow existing structural patterns
+-Create the necessary diagrams/documents that describe my modifications
+-Document locations of changes within files

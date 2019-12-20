@@ -1,0 +1,133 @@
+<%= form_for(opportunity) do |f| %>
+  <% if opportunity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(opportunity.errors.count, "error") %> prohibited this opportunity from being saved:</h2>
+
+      <ul>
+        <% opportunity.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form">
+    <div class="field">
+
+      <%= f.label :name, :class => "required" %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :on_date %>
+      <%= f.date_select :on_date %>
+    </div>
+
+    <div class="field">
+      <%= f.label :start_time %>
+      <%= f.time_select :start_time, {ampm: true} %>
+    </div>
+
+    <div class="field">
+      <%= f.label :end_time %>
+      <%= f.time_select :end_time, {ampm: true} %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :frequency %>
+      <%= f.text_field :frequency %>
+    </div>
+
+    <div class="field">
+
+      <%= f.label :address, :class => "required" %>
+      <%= f.text_field :address %>
+    </div>
+
+    <div class="field">
+      <%= f.label :city, :class => "required" %>
+      <%= f.text_field :city %>
+    </div>
+
+    <div class="field">
+      <%= f.label :state, 'State (XX)', :class => "required" %>
+      <%= f.text_field :state, maxlength: 2 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :zip_code, 'Zip Code (XXXXX)', :class => "required" %>
+      <%= f.text_field :zip_code, maxlength: 5 %>
+    </div>
+
+    <div class="field">
+      <%= f.label :transportation, 'Transportation from TCNJ provided (Check if available)' %>
+      <%= f.check_box :transportation %>
+    </div>
+
+    <div class="field">
+      <%= f.label :description, 'Description (Ex: Transportation details, recommended attire, contact information, etc. )', :class => "required" %>
+      <%= f.text_area :description, :cols => "73", :rows => "10" %>
+    </div>
+
+
+    <div class="field">
+      <%= f.label :issue_area %>
+      <%= f.select :issue_area, ["Adult Education",
+                                 "Advocacy and Human Rights",
+                                 "Arts and Culture",
+                                 "College Preparation",
+                                 "Community Development",
+                                 "Computers and Technology",
+                                 "Counseling",
+                                 "Crisis Support",
+                                 "Disaster Relief",
+                                 "Domestic Violence",
+                                 "Education and Literacy",
+                                 "Employment Preparation",
+                                 "English as a Second Language",
+                                 "Environment",
+                                 "Faith-Based",
+                                 "Health",
+                                 "Homelessness Prevention",
+                                 "Housing",
+                                 "Hunger",
+                                 "Immigration",
+                                 "Individuals with Developmental Disabilities",
+                                 "International",
+                                 "LGBTQ+",
+                                 "Mentoring",
+                                 "Politics",
+                                 "Seniors",
+                                 "Sports and Recreation",
+                                 "Veterans",
+                                 "Women's Empowerment",
+                                 "Youth and Teens",
+                                 "Other"], :prompt => "Select One" %>
+    </div>
+
+    <%# this div block added by kirk %>
+    <div class="field">
+      <%= f.label :tag  %>
+      <%= f.select :tag, ['tag1',
+                          'tag2',
+                          'tag3',
+                          'tag4',
+                          'tag5',
+                          'tag6',
+                          'tag7',
+                          'tag8',
+                          'tag9'] %>
+    </div>
+    <div>
+      Note: Fields marked with <span style="color: red;">*</span> are required.
+    </div>
+
+    <br>
+    <div>
+      <%= f.submit %>
+    </div>
+    <br>
+
+<% end %>
+</div>

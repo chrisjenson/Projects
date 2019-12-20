@@ -1,0 +1,16 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/Datapath.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Datapath
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/Controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/processor.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module processor
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/project_simpleProcessor/project_simpleProcessor.srcs/sources_1/new/alu2.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu2
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/alu.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module alu
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module test
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/Computer Eng Lab 1/Lab4/testprocessor.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module testprocessor
+INFO: [VRFC 10-2263] Analyzing Verilog file "H:/363/project_simpleProcessor/project_simpleProcessor.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
