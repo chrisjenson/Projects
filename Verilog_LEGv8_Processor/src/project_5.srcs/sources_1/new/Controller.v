@@ -1,21 +1,14 @@
 `timescale 1ns / 1ps
 
-//DEBUG chekc if passing in is correct
 module Controller(
-    input clk,
-    input [10:0]opcode,
-    output reg Reg2Loc, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp1, ALUOp0,UncondBranch,
-    output reg[3:0] ALUc,
-    input rstn
-    );
-    
-   // reg Reg2Loc, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp1, ALUOp0;
-    
-    //wire [11:0] opcode;
-    //assign opcode = op;
 
+    input clk, rstn
+    input [10:0]opcode,
     
-    
+    output reg Reg2Loc, ALUSrc, MemtoReg, RegWrite, MemRead, MemWrite, Branch, ALUOp1, ALUOp0,UncondBranch,
+    output reg[3:0] ALUc
+    );
+
     always @(*) begin //As soon as it gets input, runs operation
     
         if (rstn == 0) begin
@@ -44,11 +37,10 @@ module Controller(
                 ALUOp0 = 1; 
                 ALUc = 4'b0111;
                 //MemtoReg = don't care                   
-                
-                //          COND_BR_Address = operation[23:5];
-                //          Rd = operation[4:0];
             end
         endcase
+
+        //case for branch
 //        case(opcode[11:6])    //dont need to have branch
 //              //B
 //              6'b000101: begin
@@ -64,6 +56,7 @@ module Controller(
 //                UncondBranch = 1;
 //              end
 //          endcase
+
         case (opcode)
             //LDUR
             11'b11111000010: begin       
@@ -76,13 +69,7 @@ module Controller(
                 ALUOp1 = 0;
                 ALUOp0 = 0; 
                 ALUc = 4'b0010;
-
                 //Reg2Loc = don't care
-                
-                //          DT_Address = operation[20:12];
-                //          op = operation[11:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
             
             //STUR
@@ -98,11 +85,6 @@ module Controller(
                 ALUc = 4'b0010;
 
                 //MemtoReg = don't care
-                  
-                //          DT_Address = operation[20:12];
-                //          op = operation[11:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
             
             //ADD
@@ -117,11 +99,6 @@ module Controller(
                 ALUOp1 = 1;
                 ALUOp0 = 0; 
                 ALUc = 4'b0010;
-                              
-                //          Rm = operation[20:16];
-                //          Shamt = operation[15:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
             
             //AND
@@ -136,11 +113,6 @@ module Controller(
                 ALUOp1 = 1;
                 ALUOp0 = 0;
                 ALUc = 4'b0000;
-
-                //          Rm = operation[20:16];
-                //          Shamt = operation[15:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
             
             //SUB
@@ -155,11 +127,6 @@ module Controller(
                 ALUOp1 = 1;
                 ALUOp0 = 0; 
                 ALUc = 4'b0110;
-                
-                //          Rm = operation[20:16];
-                //          Shamt = operation[15:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
             
             //ORR
@@ -173,18 +140,7 @@ module Controller(
                 Branch = 0;
                 ALUOp1 = 1;
                 ALUOp0 = 0;
-                ALUc = 4'b0001;
-                
-                //          Rm = operation[20:16];
-                //          Shamt = operation[15:10];
-                //          Rn = operation[9:5];
-                //          Rd = operation[4:0];
             end
         endcase
     end
-
-    
-    
-    
-    
 endmodule
