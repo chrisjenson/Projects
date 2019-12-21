@@ -2,6 +2,6 @@
 
 This is a collection of various noteworthy projects done throughout school.
 
-For more detail about a specific project, look in the docs folder of each project folder
+For more detail about a specific project, look in the docs folder of each project folder or that project wiki page
 
-wiki support and more documentation to come
+Each Project now has their own wiki page.
