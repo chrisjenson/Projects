@@ -1,0 +1,2 @@
+This is an early C++ project of mine that is suppose to act like a phonebook. If I am to believe the comments I wrote years ago,
+then it seems like you can load in contacts from a text file, add and delete, contacts, and save the new list.
