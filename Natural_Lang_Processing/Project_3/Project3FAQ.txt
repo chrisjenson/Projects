@@ -1,0 +1,17 @@
+Some Project 3 FAQ
+
+QUESTION 1
+
+Is it necessary to output the alignment of the edit distance as defined in T2 when working through T3-T5 as it is not specified?
+
+ANSWER 1
+
+Yes, please output an alignment for the top ten candidates returned when using your modified EDScore as your retrieval metric. If you've implemented your code in a wise and prudent way, this should be not be difficult or time-consuming to do. If any of you are struggling with it, please let me know and I can take a few minutes during class this week to give you some tips/hints to make sure you're all on the right track for this.
+
+QUESTION 2
+
+In T3, you specify that the costs for all operations should be 1. In the case of substitution should this also be 1 even if the words are the same?
+
+ANSWER 2
+
+No. Substitutions should have a cost of 0 if the words are the same and a cost of 1 if they are real non-equal substitutions, meaning a word gets replaced with a different word. Often people don't consider a word being "substituted" for itself to be a subsitution, so that's why I worded it that way. But I see that earlier when dealing with character-level edit distance, I see I had made the distinction of equal substitutions versus non-equal substitutions so I'm glad you asked for this clarification. For T3 and T5, please use a cost of 1 for non-equal substitutions and a cost of 0 for equal "substitutions".

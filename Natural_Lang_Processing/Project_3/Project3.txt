@@ -1,0 +1,48 @@
+CSC470-01 NLP
+Project 3
+Due: April 26, 2020 by 11:59PM
+
+Title: Edit Distance and Translation Memory Retrieval Systems 
+
+Description: In this project you will gain hands-on experience working in a team to implement a dynamic programming algorithm, Edit Distance, from scratch. You will also build on your implementation to implement a basic Translation Memory Retrieval System. You will also gain experience in production of professional well documented software deliverables and reports. 
+
+Teams: Team Assignments will be emailed to students on April 18, 2020. 
+
+Tasks:
+
+T1: Implement edit distance algorithm using the dynamic programming algorithm we went over in class. Use costs of 1 for insertion and deletion and 2 for non-equal substitutions and 0 for equal subsitutions. Specification Requirement: When your program is invoked from the command-line prompt, it must be able to take two command-line arguments, one for each of the words between which the user wants the edit distance to be computed. 
+Example: $ yourProgramName apple able 
+The above call to your program should compute the edit distance between apple and able and output that distance. Note: The $ is just a symbol I use to represent a linux-style command-line prompt. The user wouldn't actually type the $ sign. 
+
+Tip: Test your program thoroughly with various input word pairs. 
+
+T2: Augment your edit distance program algorithm to output an alignment corresponding to the minimum edit distance. If there are multiple alignments such as in the example we worked in class, your program is only required to print one such and I don't care how you choose it as long as it is a minimum edit distance alignment. Alignment output format: use parentheses and ASCII arrows. For example, the output for the alignment we worked out in class for the apple to able example could be represented as: (a->a 0, p->* 1, p->b 2, l->l 0, e->e 0) where the numbers are the costs for those operations. Use the same costs as in T1. 
+
+T3: Modify your program so that you can implement a basic translation memory retrieval system based on edit distance between sentences. There are a number of changes you will need to make. You have to change your edit distance software so that the units of granularity for your edit operations are words instead of characters. Also, treat insertions, deletions, and subsitutions as all having cost 1 now. Also, translation memory retrieval metrics are framed as similarity scores rather than distances so we're going to have to change our edit distance into a score. At the same time, we're going to want to normalize for the length of the workload sentence to be translated. The final version you will use is that defined in Equation 3 of the "Translation Memory Retrieval Systems" paper published in the Proceedings of the European Association for Computational Linguistics 2014 ( https://arxiv.org/pdf/1505.05841.pdf ). The formula is EDScore = max(1 - edit-dist(M,C)/|M_{unigrams}|,0) as explained in the paper.
+
+T4: Implement the very first basic Translation Memory Retrieval metric Percent Match that we learned in class. Recall that PM(M,C) = |M_{unigrams} intersection with C_{unigrams}| / |M_{unigrams}|. It's also defined in Equation 1 of the Translation Memory Retrieval Systems paper mentioned in Task T3. 
+
+T5: Use the English-French EMEA parallel corpus, which are medical documents from the European Medicines Agency. The data is available from the OPUS collection, easily found via search. A link is: http://opus.nlpl.eu/EMEA.php
+Pretend you have to translate from English into French. Randomly choose 10,000 translations from the dataset to serve as your TMB. Randomly choose a separate five translations that we will pretend are your MTBT. You'll have the French translations already for this simulation, but in a real setting it would be your job to translate each of the English sentences in your MTBT into French. 
+
+For each of your five English sentences, return the top ten candidates from the TMB using PM as your retrieval metric and then using your modified EDScore as your retrieval metric.  
+
+T6: Write up your analysis of the results of the TM Retrieval experiments from T5. 
+
+Deliverables:
+
+D1: All source code neatly documented with ReadMe.txt file saying what is what and where everything is and giving clear usage instructions. Your source code can be written in the computer programming language of choice, as long as it can run with the standard STEM 112 Mac lab configuration from terminal command-line prompt (same as for Projects 1 and 2). Your code must not be wastefully inefficient and slow to run.  
+
+D2: Your random sets from T5 and the top ten candidates for each of your five MTBT sentences using PM and using EDScore.
+
+D3. Writeup of analysis and results from T6. 
+
+D4. Responses to the following questions:
+What was easy about this assignment?
+What was challenging about this assignment?
+What did you like about this assignment?
+What did you dislike about this assignment?
+What did you learn from this assignment? 
+
+Please submit your package as a .tar.gz file.
+

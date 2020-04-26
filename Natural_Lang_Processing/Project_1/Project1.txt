@@ -1,0 +1,35 @@
+CSC470-02
+Project 1
+Due: March 14, 2020
+
+Title: FSA Recognizer
+
+Teams: Team assignments will be given out in class on Tuesday, March 3, 2020. 
+
+Task: Implement a recognizer for deterministic finite state automata in the  programming language(s) of your choice, as long as all software needed is currently installed on the TCNJ CS systems in the STEM 112 Mac Computers. Provide documentation and in particular, a ReadMe file explaining how to run the software from the Mac Terminal command line prompt. 
+
+If you want to use a different environment such as the CS HPC system, that might be possible but you would need to seek and obtain Instructor permission for that in advance. 
+
+Elaboration:
+
+Your software will take as input a finite state machine and a string. It will output “accept” if the string is accepted by the machine and reject otherwise. 
+
+The format for the machine will consist of a directory containing five text files with the following formats:
+states.txt - each line containing a string identifying a state in the machine
+alphabet.txt - each line containing a character in the alphabet
+startState.txt - a one-line file containing the start-state
+finalStates.txt - each line containing the name of a state that is a final (accepting) state
+transitionTable.txt - each line containing “stateID1”,”symbol”,”stateID2” with meaning that when in state stateID1 and reading symbol from the input string, the machine transitions to stateID2. If there is no transition, then the string “NULL” is used to indicate that. 
+
+Tip: you can double-check your transitionTable.txt should always have (numberOfStates * numberOfAlphabetSymbols) lines in it. 
+
+Deliverables:
+
+D1. Source code implementing basic D-Recognize algorithm as I sketched in class. 
+D2. Source code implementing D-Recognize, but this time being able to detect matches in a string where the match is not necessarily right at the beginning of the string. 
+D3. Source code building on deliverable D2, but this time being able to detect matches even if there are more characters in the string after the match is accepted. 
+D4. At least one test machine different than the sheep language machine. 
+D5. A main README file in plain text format documenting your entire package, explaining what’s what and where it’s located. Also, the README file must document for your new test machine what the language is that it accepts in the RegEx syntax that we covered in the course. The README must also document all build instructions and command-line execution instructions for your software. 
+
+Please submit as a .tar.gz file.
+
