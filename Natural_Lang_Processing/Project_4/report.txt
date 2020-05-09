@@ -1,0 +1,21 @@
+D4. Responses to the following questions:
+
+What was easy about this assignment?
+	
+	The assignment itself was pretty easy and intuitive. The math portion of the assignment was easy due to the class reviewing log functions and how to utilize them within our code. Python makes it very easy to do these functions and allows our Big O space and time complexity much smaller and quicker to run. 
+
+What was challenging about this assignment?
+
+	As a group we believe the hardest part of the assignment was understanding the assignment in itself. Once we figured out what exactly was needed and what the flow of our code needed to be, the rest came pretty easily. The inherent nature of NLP tasks has a lot of complex vocabulary that we needed to break down and understand.
+	
+What did you like about this assignment?
+	
+	As a group, we enjoyed the subject matter. We all enjoyed the discussion about unigrams and how they can be used in our code. Along with that, we enjoyed working together and separating the work very evenly. The code itself came naturally since we have used unigram models in previous assignments. 
+
+What did you dislike about this assignment?
+
+	Only a few minor things made this assignment more difficult. Mainly was the timeframe given, however we completed it ahead of time. It required some time management since it was due the very last week of class. Other than the timeframe the assignment was enjoyable on multiple fronts.  
+	
+What did you learn from this assignment? 
+
+	One thing the whole group learned was how to manipulate a directory of data files. We had never dealt with problems that required scanning many different text files at different times in different locations. Some other things we learned were better time management skills and how to feel more comfortable with using mathematical equations in our code. 

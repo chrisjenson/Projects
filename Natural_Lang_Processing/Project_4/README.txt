@@ -1,0 +1,347 @@
+CSC470 Natural Language Processing - Project 4 Report
+Authorship Attribution
+Alex Benasutti, Samuel Bishop, and Chris Jenson
+
+Task: In this project you will gain hands-on experience working in a team to implement  authorship  attribution  systems  from  scratch.   You  will  also  gain additional hands-on practice applying and continuing to increase your foun-dational corpus processing and language modeling skills.  You will also gain experience  in  production  of  professional  well  documented  software  deliver-ables and reports.
+
+README File
+
+From a Mac in STEM112:
+
+
+Creating the training and test datasets (T1-T2):
+1. Open the terminal
+2. Navigate to the location where the “Project4.tar.gz” file was downloaded
+3. Ex. if downloaded to Downloads, enter “cd Downloads”
+4. To extract the “Project4.tar.gz” file, type "tar -zxvf Project4.tar.gz"
+5. Type “Project4” to enter the extracted folder named Project4 containing the Python code
+6. Type “python3 t2.py path1 path2 path3”, and hit enter. Path1 is the path to the 7. imdb62.txt file, path2 is the path to where the train directory will be created, and path3 is the path to where the test directory will be created
+   6.1. The paths should not already contain directories named “train” or “test”
+7. The program will then output to those directories
+
+Example: $ t2.py /path/to/imdb62.txt /path/to/train /path/to/test 
+
+NOTE: The $ sign is just a symbol to represent a linux-style command-line prompt.  The user wouldn’t actually type the $ sign.
+
+NOTE: If the specified directories already exist, the program will say that the creation of them failed.
+
+
+Running the authorship attribution systems (T3-T5):
+1. Inside the project directory, and having created both training and test sets, type the following command in the terminal:
+   1.1. python3 t4.py path1 path2 path3
+   path1: Training data directory (ex. ./train/) 
+   path2: Test data directory (ex. ./test/)
+   path3: Author data text file (ex. ./authors.txt)
+2. The authorship attribution systems for AllTokens and Singletons will be run using the training and test data on the authors supplied in path3.
+3. A ranked list for each system will be displayed to the terminal, and outputted to a text file. Each element of the ranked list is labeled as such: (AuthorID, systemScore)
+
+
+Individual File Description:
+
+README.txt -> This README file.
+
+authors.txt -> List of authors to be input into the author attribution system.
+
+/train/ -> Randomly sampled idmb62 training directory (from t2.py).
+
+/test/ -> Randomly sampled imdb62 test directory (from t2.py).
+
+t2.py -> Python source file containing code for T2.
+
+t3.py -> Python source file containing code for T3.
+
+t4.py -> Python source file containing code for T4 and T5 that uses the base established in t3.py and runs the experiments in T5.
+
+D3.txt -> Analysis as described in T5.
+
+report.txt -> Responses to the questions as described in D4.
+
+D3: Write up your results and analysis of the results from T5.
+	
+AllTokens System: AuthorID = 33913
+
+The ranked list produced by the AllTokens system shows surprising but also expected results. Sitting at the top of the list shows an overwhelming probability estimate for the most suspected author being that of Author 33913. The geometric means of each of the unigram probabilities proves to be a good metric for determining movie review authorship. The effectiveness of determining the author here is surprising, especially in comparison to the results of utilizing AllTokens to find Author 70535.
+
+('33913', 2.0272370856134862e-05)
+('2483625', 1.7325049433147382e-05)
+('342623', 1.72334350291146e-05)
+('3223254', 1.7215634161112685e-05)
+('3280905', 1.7071803414818234e-05)
+('15896852', 1.6492626345076886e-05)
+('819382', 1.643481773053896e-05)
+('9938570', 1.64182096144754e-05)
+('7743887', 1.6287687234763842e-05)
+('449021', 1.620727884173736e-05)
+('1048771', 1.6200209466134695e-05)
+('1406078', 1.6055087060835725e-05)
+('2542703', 1.5996544949474554e-05)
+('4532636', 1.5991302650818052e-05)
+('317399', 1.5956775575243467e-05)
+('4248714', 1.5920169483007737e-05)
+('2707735', 1.586136681760813e-05)
+('1391795', 1.5792542509967004e-05)
+('1173088', 1.573139394163098e-05)
+('11228318', 1.5515218895689328e-05)
+('989035', 1.5465574838241662e-05)
+('2721657', 1.546122280539578e-05)
+('1609079', 1.540336171682905e-05)
+('1355507', 1.5402998000683694e-05)
+('2020269', 1.53744555541109e-05)
+('3717154', 1.5143266065363091e-05)
+('2567136', 1.5134452252317038e-05)
+('1532177', 1.512604206430737e-05)
+('1399158', 1.5057471121012084e-05)
+('391152', 1.5014628860212772e-05)
+('562732', 1.4839090253136856e-05)
+('2171244', 1.4779813460358654e-05)
+('8239592', 1.4620178560299033e-05)
+('102816', 1.4517490101715432e-05)
+('1219578', 1.4237294089796055e-05)
+('3109237', 1.4156830821008919e-05)
+('453068', 1.4128821145004126e-05)
+('4888011', 1.4111332500568673e-05)
+('2488512', 1.4088693635238012e-05)
+('463200', 1.4062980594010522e-05)
+('4445210', 1.3993509710351278e-05)
+('663392', 1.3958707513344284e-05)
+('1162550', 1.385247370934703e-05)
+('2467618', 1.3480291674945545e-05)
+('2626332', 1.3291329189687191e-05)
+('1293485', 1.3159773719262652e-05)
+('1617546', 1.30810051457667e-05)
+('2911571', 1.2992929436247919e-05)
+('3079504', 1.290697430474859e-05)
+('2248099', 1.26963529733402e-05)
+('306861', 1.258788747444819e-05)
+('865972', 1.2455860613329426e-05)
+('783721', 1.2284600179223257e-05)
+('70535', 1.222555098508408e-05)
+('11423174', 1.1978965193397703e-05)
+('386241', 1.1950251372425878e-05)
+('583640', 1.151833166743319e-05)
+('453228', 1.1488407454552737e-05)
+('1416505', 1.1481088110741311e-05)
+('1111192', 1.1359954127283494e-05)
+('2093818', 1.0802854902537126e-05)
+('1132073', 9.941721275081455e-06)
+
+AllTokens System: AuthorID = 70535
+
+As stated above, this ranked list for the AllTokens system proves this system to be not 100% reliable when trying to determine a most-suspected author. While Author 70535 is near the top, Author 819382’s writing and unigram probabilities calculate a geometric mean that proves to be significantly higher than that of the original author. This perhaps allows us to infer that utilizing every single token to calculate geometric mean is not a good way of establishing a most-suspected author metric.
+
+('819382', 2.3081931600071545e-05)
+('9938570', 2.2305646966079448e-05)
+('2707735', 2.2266512445598105e-05)
+('70535', 2.1833672713069185e-05)
+('317399', 2.14002627369462e-05)
+('1173088', 2.1306748910404166e-05)
+('562732', 2.1114282563887176e-05)
+('2020269', 2.096300040808252e-05)
+('1048771', 2.0919151996978444e-05)
+('1355507', 2.0914778164001386e-05)
+('3717154', 2.0840812430334247e-05)
+('8239592', 2.065412921286708e-05)
+('102816', 2.053966294634544e-05)
+('2483625', 2.0433054767957367e-05)
+('1391795', 2.0404149219354022e-05)
+('1532177', 2.038667362490377e-05)
+('4532636', 2.0219505792571472e-05)
+('453068', 2.006426260811029e-05)
+('1399158', 1.999509327058827e-05)
+('3109237', 1.996922528991751e-05)
+('3280905', 1.9901027559951606e-05)
+('1609079', 1.983595003149321e-05)
+('7743887', 1.9656327022857896e-05)
+('449021', 1.9614690550281463e-05)
+('2721657', 1.9592914455308336e-05)
+('989035', 1.95093146738957e-05)
+('391152', 1.9467191799677037e-05)
+('4445210', 1.9253846702307605e-05)
+('342623', 1.9215000204572987e-05)
+('2467618', 1.8790458451073695e-05)
+('15896852', 1.8777151671622825e-05)
+('2567136', 1.87168924502249e-05)
+('3223254', 1.8708255948940452e-05)
+('3079504', 1.8653003589102074e-05)
+('2911571', 1.8578651754145886e-05)
+('11228318', 1.8362735513673053e-05)
+('2171244', 1.8296318657694296e-05)
+('2542703', 1.8094226724932357e-05)
+('1162550', 1.8040334036017054e-05)
+('2248099', 1.7974181540837577e-05)
+('463200', 1.7736228494872038e-05)
+('1219578', 1.762576157745244e-05)
+('2626332', 1.7479067239356376e-05)
+('1406078', 1.7230669567719238e-05)
+('33913', 1.722150454578574e-05)
+('4888011', 1.7208764489297715e-05)
+('1293485', 1.7190513757555717e-05)
+('1617546', 1.6990744218965207e-05)
+('4248714', 1.676961302492328e-05)
+('783721', 1.6588300159616117e-05)
+('1111192', 1.6562839910540594e-05)
+('11423174', 1.6401689573669583e-05)
+('865972', 1.6290380866404924e-05)
+('386241', 1.6223168610532363e-05)
+('663392', 1.6178617537619273e-05)
+('2093818', 1.6162968180968962e-05)
+('306861', 1.5692111613158015e-05)
+('453228', 1.5366559597144385e-05)
+('2488512', 1.534104421453959e-05)
+('583640', 1.521848938853963e-05)
+('1416505', 1.45923727793989e-05)
+('1132073', 1.1601923767404843e-05)
+
+Singletons System: AuthorID = 33913
+
+The ranked lists for the Singletons system prove to be more reliable than that of the AllTokens system. The ranked list for Author 33913 shows a much higher system score for that of the correct author than any other. I found this to be surprising due to the fact that this system only uses tokens that are 1-time occurrences within the test file. Perhaps these 1-time occurrences are more unique to the original author than any other?
+
+('33913', 9.338140170111154e-06)
+('449021', 9.010328810842532e-06)
+('3223254', 8.715134174029934e-06)
+('15896852', 8.60814363379961e-06)
+('9938570', 8.250008051796684e-06)
+('2483625', 8.223245463998842e-06)
+('989035', 8.196797055291874e-06)
+('2542703', 8.183185905584739e-06)
+('1048771', 8.164569785365518e-06)
+('7743887', 8.105648821457875e-06)
+('342623', 8.080471901718554e-06)
+('8239592', 8.01480301125737e-06)
+('4248714', 7.985702781729652e-06)
+('11228318', 7.871518987326738e-06)
+('1391795', 7.861839661150722e-06)
+('4532636', 7.846265233390016e-06)
+('3280905', 7.824463333013375e-06)
+('1406078', 7.824256869844724e-06)
+('819382', 7.807482602296608e-06)
+('2707735', 7.762161865546211e-06)
+('1399158', 7.730240026002108e-06)
+('2567136', 7.713822546957572e-06)
+('2488512', 7.671925586952885e-06)
+('317399', 7.656238103140781e-06)
+('2171244', 7.620214162212045e-06)
+('2020269', 7.548604975861971e-06)
+('3717154', 7.528915800377932e-06)
+('1162550', 7.435438966862e-06)
+('1532177', 7.4134463759403466e-06)
+('663392', 7.389375436715389e-06)
+('1609079', 7.384724302232967e-06)
+('2721657', 7.355900790973924e-06)
+('1173088', 7.33776014456249e-06)
+('102816', 7.267091471370519e-06)
+('391152', 7.212060955959328e-06)
+('4888011', 7.1951501570411265e-06)
+('1355507', 7.1050451680983084e-06)
+('1617546', 7.074106449032571e-06)
+('783721', 7.070817331341918e-06)
+('1219578', 7.037176296582717e-06)
+('70535', 6.990431431368768e-06)
+('865972', 6.94777082545838e-06)
+('463200', 6.928645420770708e-06)
+('4445210', 6.882097721826831e-06)
+('3109237', 6.7980792701867426e-06)
+('386241', 6.762770098496365e-06)
+('2467618', 6.638908334255158e-06)
+('306861', 6.632896530719932e-06)
+('562732', 6.612866563994875e-06)
+('2626332', 6.609983002932677e-06)
+('453068', 6.586340520773152e-06)
+('2911571', 6.51792311895031e-06)
+('3079504', 6.414306615939011e-06)
+('583640', 6.308377673606914e-06)
+('453228', 6.248569664008301e-06)
+('11423174', 6.158923357668586e-06)
+('1293485', 6.103388813969945e-06)
+('2248099', 6.007337458322575e-06)
+('1111192', 5.758268113860322e-06)
+('1132073', 5.410270617885565e-06)
+('1416505', 5.347728320567925e-06)
+('2093818', 5.186697220868094e-06)
+
+Singletons System: AuthorID = 70535
+
+Once again, the Singletons system proves correct when calculating the score for the most suspected author. However, the score difference between Author 70535 and 8239592 is much smaller than the score differences for Author 33913 above. This perhaps shows the inevitable potential for possible faults within the Singletons system.
+
+('70535', 1.1295423003755546e-05)
+('8239592', 1.1261808977414499e-05)
+('9938570', 1.0893177122866323e-05)
+('819382', 1.0673580285508646e-05)
+('449021', 1.060314249480737e-05)
+('2707735', 1.0489657066326779e-05)
+('1048771', 1.026315452552364e-05)
+('989035', 1.0131921794380528e-05)
+('1399158', 9.970698977854102e-06)
+('3717154', 9.904952312129244e-06)
+('317399', 9.830657191368917e-06)
+('2020269', 9.770232546356067e-06)
+('7743887', 9.769462075239278e-06)
+('1532177', 9.702430635123316e-06)
+('1391795', 9.69826956958978e-06)
+('15896852', 9.69516518567647e-06)
+('102816', 9.669151625299605e-06)
+('2483625', 9.664055282703451e-06)
+('1173088', 9.640611542351548e-06)
+('4532636', 9.55932441440153e-06)
+('3280905', 9.328212785941663e-06)
+('3223254', 9.315304350226741e-06)
+('1609079', 9.276438087881586e-06)
+('562732', 9.248481833496821e-06)
+('11228318', 9.155236458157389e-06)
+('2567136', 9.128584344755815e-06)
+('2721657', 9.099744228591975e-06)
+('3109237', 9.095515299262546e-06)
+('2542703', 9.040788985365625e-06)
+('1355507', 9.036808099196337e-06)
+('783721', 9.01875833516539e-06)
+('4445210', 9.014857130494153e-06)
+('1162550', 8.988788542184529e-06)
+('2171244', 8.971560061960646e-06)
+('453068', 8.913738952914688e-06)
+('391152', 8.901688447671516e-06)
+('342623', 8.852340998401908e-06)
+('3079504', 8.84301396511423e-06)
+('2467618', 8.83421978471108e-06)
+('2911571', 8.686207140685512e-06)
+('4888011', 8.670962121994557e-06)
+('1617546', 8.648310308973217e-06)
+('865972', 8.553055350170118e-06)
+('386241', 8.478647631709497e-06)
+('33913', 8.475346230703815e-06)
+('2626332', 8.423453653580076e-06)
+('1219578', 8.421435876424578e-06)
+('4248714', 8.339037489135007e-06)
+('463200', 8.266028382481353e-06)
+('663392', 8.217262057179277e-06)
+('306861', 8.184465190741605e-06)
+('1406078', 8.16763568731254e-06)
+('2488512', 8.069435905202549e-06)
+('453228', 8.043870045726414e-06)
+('11423174', 8.025201826944143e-06)
+('583640', 8.009922332750552e-06)
+('2248099', 7.974213460793592e-06)
+('1293485', 7.849442709978152e-06)
+('1111192', 7.755453681292628e-06)
+('2093818', 7.2152277299286455e-06)
+('1416505', 6.383236102386399e-06)
+('1132073', 6.150356645321807e-06)
+D4. Responses to the following questions:
+What was easy about this assignment?
+	
+	The assignment itself was pretty easy and intuitive. The math portion of the assignment was easy due to the class reviewing log functions and how to utilize them within our code. Python makes it very easy to do these functions and allows our Big O space and time complexity much smaller and quicker to run. 
+
+What was challenging about this assignment?
+
+	As a group we believe the hardest part of the assignment was understanding the assignment in itself. Once we figured out what exactly was needed and what the flow of our code needed to be, the rest came pretty easily. The inherent nature of NLP tasks has a lot of complex vocabulary that we needed to break down and understand.
+	
+What did you like about this assignment?
+	
+	As a group, we enjoyed the subject matter. We all enjoyed the discussion about unigrams and how they can be used in our code. Along with that, we enjoyed working together and separating the work very evenly. The code itself came naturally since we have used unigram models in previous assignments. 
+
+What did you dislike about this assignment?
+
+	Only a few minor things made this assignment more difficult. Mainly was the timeframe given, however we completed it ahead of time. It required some time management since it was due the very last week of class. Other than the timeframe the assignment was enjoyable on multiple fronts.  
+	
+What did you learn from this assignment? 
+
+	One thing the whole group learned was how to manipulate a directory of data files. We had never dealt with problems that required scanning many different text files at different times in different locations. Some other things we learned were better time management skills and how to feel more comfortable with using mathematical equations in our code. 
