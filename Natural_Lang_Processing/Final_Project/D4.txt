@@ -1,0 +1,44 @@
+What was easy about this assignment?
+
+Nothing about the assignment was generally easy per se, all tasks had their challenges.
+Relatively, implementing the naive Bayes classifier was the easiest because it was simply
+implementing the given formula. Once the architecture of the program was designed and the
+proper variables defined, using them with the classification algorithm was simple.
+
+~~~~~~~~~~
+
+
+What was challenging about this assignment?
+
+Designing the programs (at least for task 3's) architecture was the most challenging. The architecture is
+the program's design and how it handles data and such. Instead of simply loading all the variables into
+a dictionary or some list and processing the data there, a variety of data structures were used to
+represent different things. So, an article that needed to be classified was called an article and 
+contained its types/counts along with a classification field that gets set after running it through
+the naive Bayes classifier object. A training model was is own object that contained the bag of words
+representation for a directory of training documents. There were two of these for the assignment.
+The classifier was designed to be as modular as possible such that it can work on text classification
+tasks outside of the scope of the project. So, there can be any number of training models and the program
+will consider all of them when classifying a document.
+
+~~~~~~~~~~~~
+
+What did you like about this assignment?
+
+Seeing what was taught in class in practice was enjoyable. It was neat to see the program actually give
+the information desired after working on designing and programming it.
+
+~~~~~~~~~~~~~
+
+What did you dislike about this assignment?
+
+The data set seemed kind of difficult and confusing to work with. It appeared that sentences were stored
+in JSON format but as objects that contain the sentence word along with the citations. This made it
+more complex to deserialize into something useful.
+
+~~~~~~~~~~~~~
+
+What did you learn from this assignment?
+
+I learned more about proper software design and working more in a team where each person has their own tasks
+to do. As such, it was good practice for strengthening by coding style, documentation, algorithmic skills and so on.

@@ -1,0 +1,93 @@
+Analysis for T3: Naive Bayes Classification Results.
+
+The NBayes classifier was run against the first training data generation and the results are as followed.
+The direct program output is:
+
+~~~~~~~~~~~~~~~~~~~~~~~~classifying documents in testAfter~~~~~~~~~~~~~~~~~~~~
+[('trainAfter', 119), ('trainBefore', 15)]
+
+~~~~~~~~~~~~~~~~classifying documents in testBefore~~~~~~~~~~~~~~~~
+[('trainAfter', 70), ('trainBefore', 64)]
+
+trainBefore/After and testBefore/After are the respective training and testing data-sets for both before
+the median date and after it. So, trainAfter/Before is what an article in testAfter/Before is classified as.
+The classifier just uses the directory names to stay modular for other training tasks.
+
+It is shown that when classifying all the data in the testAfter (documents published after the median date)
+the results are nearly 100% correct with only a few being incorrectly identified as being published before
+the median date.
+
+For the test documents in testBefore, the results are mostly wrong, with them being near 50/50 for each.
+It may not be from the algorithm itself but rather the kind of information that both training sets had.
+For example, each document across the entire data-set could have had common information between them. As
+the document was published further after the median date, there may have been supplementary information
+known that proves that the article was published after this date. Because both training sets share a
+lot of information, it is hard to classify test articles in testBefore correctly and it is easy to classify
+articles in testAfter because they have additional unique information.
+
+
+The test was run two more times using different initializations of the training and testing sets:
+
+TEST 2:
+testAfter documents:
+    "After" ---- 109 classified
+    "Before" --- 25 classified
+
+testBefore documents:
+    "After" ---- 81 classified
+    "Before" --- 53 classified
+
+TEST 3:
+testAfter documents:
+    "After" ---- 116 classified
+    "Before" --- 18 classified
+
+testBefore documents:
+    "After" ---- 82 classified
+    "Before" --- 52 classified
+
+
+Here, the classifier has a harder time classifying documents in testBefore than the first time. 
+The Naive Bayes Classifier would be very useful in classification tasks where each class is 
+very distinct from each other.
+In this task, one training set is very similar to the other causing one classification task to 
+give the wrong results most of the time. To improve it, we could hand pick certain features for
+each classification to improve the results as opposed to using every single token over the
+training set as features. Of course, we have no knowledge of which features make each classification 
+better, so this idea is invalid.
+
+=====================================================================================================
+
+Analysis for T4: Cross entropy experiments
+
+The cross-entropies for each combination of training set against test set were computed.
+So, the entropies of trainBefore_testBefore, trainBefore_testAfter, trainAfter_testBefore,
+and trainAfter_testAfter were computed. The equation used was: H(W)=-1/N * SUM(log2(p_train(w_i)), N, i = 1)
+where N is the number of types in the test set, w_i is a type in the test set and p_train(w_i) is
+the probability that w_i from the test set occurs in the training set. Each directory was loaded as
+a separate training model and the vocab of types for each model tracked as well. The probabilities
+for the trainBefore/After sets were smoothed with this vocab and the cross entropies calculated.
+The results are as followed:
+
+Entropy of trainAfter-testBefore: 12.996521872170403
+Entropy of trainBefore-testBefore: 12.933533058491404
+Entropy of trainBefore-testAfter: 12.86197095931956
+Entropy of trainAfter-testAfter: 12.7419918035677
+
+The cross-entropy compares how well a candidate set of types compares to a learned model. The lower 
+the entropy, the better the candidate represents the model. This is because
+as x -> 1 for log(x) the value gets closer to 0. So, the sum of logs of high probabilities is
+closer to zero than low probabilities. For a training model with types consistent with a candidate test
+document and smoothed with that document, those type's probabilities will be relatively higher leading
+to an overall lower entropy.
+    The results show that trainAfter-testAfter had the lowest entropy and it makes sense because
+the trainAfter model was accurately able to classify most documents in the testAfter set from T3.
+    Interestingly, trainAfter-testBefore has the overall largest entropy despite classification for 
+testBefore was skewed towards trainAfter. This could suggest that there is a bug in the classification code. 
+    trainBefore-testBefore had a large entropy and this makes sense because the classifier had a hard time 
+classifying documents in testBefore correctly but this contradicts the fact that they should be very similar
+to each other. 
+    trainBefore-testAfter had a large entropy, and this is consistent with trainBefore being rarely selected as
+a classification for documents in testAfter.
+    In short, there appears to be some factor that is causing the classifier to fail on the testBefore set.
+
