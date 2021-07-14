@@ -1,4 +1,4 @@
-Dependencies
+Dependencies:
 The Python script requires the cx_Oracle, csv, and sys modules
 The connection requires oci.dll, oraociei12.dll, and oraons.dll  
 
