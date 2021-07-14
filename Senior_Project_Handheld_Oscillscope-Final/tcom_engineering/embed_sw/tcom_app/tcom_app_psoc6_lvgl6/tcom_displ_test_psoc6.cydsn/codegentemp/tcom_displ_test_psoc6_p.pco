@@ -1,0 +1,49 @@
+dont_use_location SMIF -1 -1 0
+dont_use_location p4usbcell -1 -1 0
+dont_use_location USB -1 -1 0
+dont_use_location usbcell -1 -1 0
+set_location "\LCD_INTERFACE:full\" macrocell 0 1 0 2
+set_location "\LCD_INTERFACE:status_1\" macrocell 1 1 0 2
+set_location "\LCD_INTERFACE:state_3\" macrocell 1 1 0 1
+set_location "Net_127" macrocell 1 1 0 3
+set_location "\LCD_INTERFACE:state_0\" macrocell 0 1 1 0
+set_location "\LCD_INTERFACE:state_1\" macrocell 1 1 0 0
+set_location "\LCD_INTERFACE:GraphLcd8:Lsb\" datapathcell 0 1 2 
+set_location "\LCD_INTERFACE:state_2\" macrocell 0 1 0 0
+set_location "Net_131" macrocell 0 1 1 3
+set_location "Net_129" macrocell 0 1 1 1
+set_location "Net_132" macrocell 0 1 0 1
+set_location "Net_130" macrocell 0 1 1 2
+set_io "nwr(0)" iocell 9 6
+set_io "nrd(0)" iocell 9 2
+set_io "d(5)" iocell 10 5
+set_io "SPI_MISO(0)" iocell 5 1
+set_location "\I2C_MASTER:SCB_IRQ\" interrupt -1 -1 43
+set_location "DISP_TICK_ISR" interrupt -1 -1 90
+set_io "SPI_Sel(0)" iocell 5 3
+set_io "d(6)" iocell 10 6
+set_location "ClockGenBlock" CLK_GEN -1 -1 0
+set_io "d(3)" iocell 10 3
+set_io "SPI_MOSI(0)" iocell 5 0
+set_io "ncs(0)" iocell 6 4
+set_location "\I2C_MASTER:SCB\" SCB -1 -1 2
+set_io "d(0)" iocell 10 0
+set_location "\SPIM:SCB\" SCB -1 -1 5
+set_location "PASS_BLOCK" PASSBLOCK -1 -1 0
+set_location "\DISP_TICK_TIMER:TCPWM\" TCPWM -1 -1 0
+set_io "d_c(0)" iocell 9 3
+set_io "CY_CPUSS_SWJ_SWCLK_TCLK(0)" iocell 6 7
+set_io "PORT9_PIN1(0)" iocell 9 1
+set_io "d(1)" iocell 10 1
+set_io "d(4)" iocell 10 4
+set_location "\LCD_INTERFACE:StsReg\" statuscell 1 1 3 
+set_location "\LCD_INTERFACE:LsbReg\" statuscell 0 1 3 
+set_io "SPI_CLK(0)" iocell 5 2
+set_io "d(2)" iocell 10 2
+set_io "d(7)" iocell 5 6
+set_io "CY_CPUSS_SWJ_SWDIO_TMS(0)" iocell 6 6
+set_location "ClockBlock" Clock -1 -1 0
+set_io "PORT6_PIN2(0)" iocell 6 2
+set_io "SEL_PIN(0)" iocell 5 5
+set_io "PORT9_PIN0(0)" iocell 9 0
+set_location "CPUSS" CPUSS -1 -1 0

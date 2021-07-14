@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2019-07-17T15:36:51Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.4.2"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "audioProto_v1"
+        },
+        "Owner": "Jordan Sinoway <sinowaj1@tcnj.edu>",
+        "Size": {
+            "X": 70.592,
+            "Y": 88.316
+        }
+    }
+}

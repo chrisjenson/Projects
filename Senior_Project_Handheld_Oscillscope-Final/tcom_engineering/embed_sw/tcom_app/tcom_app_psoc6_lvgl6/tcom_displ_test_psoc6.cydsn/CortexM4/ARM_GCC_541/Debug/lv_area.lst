@@ -1,0 +1,2477 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_area.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_area_get_width,"ax",%progbits
+  21              		.align	2
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	lv_area_get_width, %function
+  25              	lv_area_get_width:
+  26              	.LFB1:
+  27              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.h"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @file lv_area.h
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifndef LV_AREA_H
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_AREA_H
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifdef __cplusplus
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** extern "C" {
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #endif
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      INCLUDES
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <string.h>
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <stdbool.h>
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <stdint.h>
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include "lv_conf.h"
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #else
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include "../../../lv_conf.h"
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #endif
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      DEFINES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*To avoid overflow don't let the max ranges (reduce with 1000) */
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_COORD_MAX ((lv_coord_t)((uint32_t)((uint32_t)1 << (8 * sizeof(lv_coord_t) - 1)) - 1000))
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_COORD_MIN (-LV_COORD_MAX)
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 2
+
+
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** LV_EXPORT_CONST_INT(LV_COORD_MAX);
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** LV_EXPORT_CONST_INT(LV_COORD_MIN);
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**********************
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      TYPEDEFS
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  **********************/
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Represents a point on the screen.
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** typedef struct
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x;
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y;
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** } lv_point_t;
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /** Represents an area of the screen. */
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** typedef struct
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x1;
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y1;
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x2;
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y2;
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** } lv_area_t;
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**********************
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * GLOBAL PROTOTYPES
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  **********************/
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Initialize an area
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param x1 left coordinate of the area
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param y1 top coordinate of the area
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param x2 right coordinate of the area
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param y2 bottom coordinate of the area
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** void lv_area_set(lv_area_t * area_p, lv_coord_t x1, lv_coord_t y1, lv_coord_t x2, lv_coord_t y2);
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Copy an area
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param dest pointer to the destination area
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param src pointer to the source area
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** inline static void lv_area_copy(lv_area_t * dest, const lv_area_t * src)
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     memcpy(dest, src, sizeof(lv_area_t));
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Get the width of an area
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @return the width of the area (if x1 == x2 -> width = 1)
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** static inline lv_coord_t lv_area_get_width(const lv_area_t * area_p)
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 3
+
+
+  28              		.loc 1 87 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 7, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+  40 0006 7860     		str	r0, [r7, #4]
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     return (lv_coord_t)(area_p->x2 - area_p->x1 + 1);
+  41              		.loc 1 88 0
+  42 0008 7B68     		ldr	r3, [r7, #4]
+  43 000a B3F90430 		ldrsh	r3, [r3, #4]
+  44 000e 9AB2     		uxth	r2, r3
+  45 0010 7B68     		ldr	r3, [r7, #4]
+  46 0012 B3F90030 		ldrsh	r3, [r3]
+  47 0016 9BB2     		uxth	r3, r3
+  48 0018 D31A     		subs	r3, r2, r3
+  49 001a 9BB2     		uxth	r3, r3
+  50 001c 0133     		adds	r3, r3, #1
+  51 001e 9BB2     		uxth	r3, r3
+  52 0020 1BB2     		sxth	r3, r3
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+  53              		.loc 1 89 0
+  54 0022 1846     		mov	r0, r3
+  55 0024 0C37     		adds	r7, r7, #12
+  56              		.cfi_def_cfa_offset 4
+  57 0026 BD46     		mov	sp, r7
+  58              		.cfi_def_cfa_register 13
+  59              		@ sp needed
+  60 0028 5DF8047B 		ldr	r7, [sp], #4
+  61              		.cfi_restore 7
+  62              		.cfi_def_cfa_offset 0
+  63 002c 7047     		bx	lr
+  64              		.cfi_endproc
+  65              	.LFE1:
+  66              		.size	lv_area_get_width, .-lv_area_get_width
+  67 002e 00BF     		.section	.text.lv_area_get_height,"ax",%progbits
+  68              		.align	2
+  69              		.thumb
+  70              		.thumb_func
+  71              		.type	lv_area_get_height, %function
+  72              	lv_area_get_height:
+  73              	.LFB2:
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Get the height of an area
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @return the height of the area (if y1 == y2 -> height = 1)
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** static inline lv_coord_t lv_area_get_height(const lv_area_t * area_p)
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  74              		.loc 1 97 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 4
+
+
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 8
+  77              		@ frame_needed = 1, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+  79 0000 80B4     		push	{r7}
+  80              		.cfi_def_cfa_offset 4
+  81              		.cfi_offset 7, -4
+  82 0002 83B0     		sub	sp, sp, #12
+  83              		.cfi_def_cfa_offset 16
+  84 0004 00AF     		add	r7, sp, #0
+  85              		.cfi_def_cfa_register 7
+  86 0006 7860     		str	r0, [r7, #4]
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     return (lv_coord_t)(area_p->y2 - area_p->y1 + 1);
+  87              		.loc 1 98 0
+  88 0008 7B68     		ldr	r3, [r7, #4]
+  89 000a B3F90630 		ldrsh	r3, [r3, #6]
+  90 000e 9AB2     		uxth	r2, r3
+  91 0010 7B68     		ldr	r3, [r7, #4]
+  92 0012 B3F90230 		ldrsh	r3, [r3, #2]
+  93 0016 9BB2     		uxth	r3, r3
+  94 0018 D31A     		subs	r3, r2, r3
+  95 001a 9BB2     		uxth	r3, r3
+  96 001c 0133     		adds	r3, r3, #1
+  97 001e 9BB2     		uxth	r3, r3
+  98 0020 1BB2     		sxth	r3, r3
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+  99              		.loc 1 99 0
+ 100 0022 1846     		mov	r0, r3
+ 101 0024 0C37     		adds	r7, r7, #12
+ 102              		.cfi_def_cfa_offset 4
+ 103 0026 BD46     		mov	sp, r7
+ 104              		.cfi_def_cfa_register 13
+ 105              		@ sp needed
+ 106 0028 5DF8047B 		ldr	r7, [sp], #4
+ 107              		.cfi_restore 7
+ 108              		.cfi_def_cfa_offset 0
+ 109 002c 7047     		bx	lr
+ 110              		.cfi_endproc
+ 111              	.LFE2:
+ 112              		.size	lv_area_get_height, .-lv_area_get_height
+ 113 002e 00BF     		.section	.text.lv_area_set,"ax",%progbits
+ 114              		.align	2
+ 115              		.global	lv_area_set
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.type	lv_area_set, %function
+ 119              	lv_area_set:
+ 120              	.LFB3:
+ 121              		.file 2 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @file lv_area.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *********************/
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 5
+
+
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_conf.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #else
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "../../../lv_conf.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #endif
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_area.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_math.h"
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /*********************
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      DEFINES
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *********************/
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      TYPEDEFS
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *  STATIC PROTOTYPES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *  STATIC VARIABLES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      MACROS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *   GLOBAL FUNCTIONS
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Initialize an area
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x1 left coordinate of the area
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y1 top coordinate of the area
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x2 right coordinate of the area
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y2 bottom coordinate of the area
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set(lv_area_t * area_p, lv_coord_t x1, lv_coord_t y1, lv_coord_t x2, lv_coord_t y2)
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 122              		.loc 2 51 0
+ 123              		.cfi_startproc
+ 124              		@ args = 4, pretend = 0, frame = 16
+ 125              		@ frame_needed = 1, uses_anonymous_args = 0
+ 126              		@ link register save eliminated.
+ 127 0000 80B4     		push	{r7}
+ 128              		.cfi_def_cfa_offset 4
+ 129              		.cfi_offset 7, -4
+ 130 0002 85B0     		sub	sp, sp, #20
+ 131              		.cfi_def_cfa_offset 24
+ 132 0004 00AF     		add	r7, sp, #0
+ 133              		.cfi_def_cfa_register 7
+ 134 0006 F860     		str	r0, [r7, #12]
+ 135 0008 0846     		mov	r0, r1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 6
+
+
+ 136 000a 1146     		mov	r1, r2
+ 137 000c 1A46     		mov	r2, r3
+ 138 000e 0346     		mov	r3, r0	@ movhi
+ 139 0010 7B81     		strh	r3, [r7, #10]	@ movhi
+ 140 0012 0B46     		mov	r3, r1	@ movhi
+ 141 0014 3B81     		strh	r3, [r7, #8]	@ movhi
+ 142 0016 1346     		mov	r3, r2	@ movhi
+ 143 0018 FB80     		strh	r3, [r7, #6]	@ movhi
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x1 = x1;
+ 144              		.loc 2 52 0
+ 145 001a FB68     		ldr	r3, [r7, #12]
+ 146 001c 7A89     		ldrh	r2, [r7, #10]	@ movhi
+ 147 001e 1A80     		strh	r2, [r3]	@ movhi
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y1 = y1;
+ 148              		.loc 2 53 0
+ 149 0020 FB68     		ldr	r3, [r7, #12]
+ 150 0022 3A89     		ldrh	r2, [r7, #8]	@ movhi
+ 151 0024 5A80     		strh	r2, [r3, #2]	@ movhi
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x2 = x2;
+ 152              		.loc 2 54 0
+ 153 0026 FB68     		ldr	r3, [r7, #12]
+ 154 0028 FA88     		ldrh	r2, [r7, #6]	@ movhi
+ 155 002a 9A80     		strh	r2, [r3, #4]	@ movhi
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y2 = y2;
+ 156              		.loc 2 55 0
+ 157 002c FB68     		ldr	r3, [r7, #12]
+ 158 002e 3A8B     		ldrh	r2, [r7, #24]	@ movhi
+ 159 0030 DA80     		strh	r2, [r3, #6]	@ movhi
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 160              		.loc 2 56 0
+ 161 0032 00BF     		nop
+ 162 0034 1437     		adds	r7, r7, #20
+ 163              		.cfi_def_cfa_offset 4
+ 164 0036 BD46     		mov	sp, r7
+ 165              		.cfi_def_cfa_register 13
+ 166              		@ sp needed
+ 167 0038 5DF8047B 		ldr	r7, [sp], #4
+ 168              		.cfi_restore 7
+ 169              		.cfi_def_cfa_offset 0
+ 170 003c 7047     		bx	lr
+ 171              		.cfi_endproc
+ 172              	.LFE3:
+ 173              		.size	lv_area_set, .-lv_area_set
+ 174 003e 00BF     		.section	.text.lv_area_set_width,"ax",%progbits
+ 175              		.align	2
+ 176              		.global	lv_area_set_width
+ 177              		.thumb
+ 178              		.thumb_func
+ 179              		.type	lv_area_set_width, %function
+ 180              	lv_area_set_width:
+ 181              	.LFB4:
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the width of an area
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param w the new width of the area (w == 1 makes x1 == x2)
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 7
+
+
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_width(lv_area_t * area_p, lv_coord_t w)
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 182              		.loc 2 64 0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 8
+ 185              		@ frame_needed = 1, uses_anonymous_args = 0
+ 186              		@ link register save eliminated.
+ 187 0000 80B4     		push	{r7}
+ 188              		.cfi_def_cfa_offset 4
+ 189              		.cfi_offset 7, -4
+ 190 0002 83B0     		sub	sp, sp, #12
+ 191              		.cfi_def_cfa_offset 16
+ 192 0004 00AF     		add	r7, sp, #0
+ 193              		.cfi_def_cfa_register 7
+ 194 0006 7860     		str	r0, [r7, #4]
+ 195 0008 0B46     		mov	r3, r1
+ 196 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x2 = area_p->x1 + w - 1;
+ 197              		.loc 2 65 0
+ 198 000c 7B68     		ldr	r3, [r7, #4]
+ 199 000e B3F90030 		ldrsh	r3, [r3]
+ 200 0012 9AB2     		uxth	r2, r3
+ 201 0014 7B88     		ldrh	r3, [r7, #2]
+ 202 0016 1344     		add	r3, r3, r2
+ 203 0018 9BB2     		uxth	r3, r3
+ 204 001a 013B     		subs	r3, r3, #1
+ 205 001c 9BB2     		uxth	r3, r3
+ 206 001e 1AB2     		sxth	r2, r3
+ 207 0020 7B68     		ldr	r3, [r7, #4]
+ 208 0022 9A80     		strh	r2, [r3, #4]	@ movhi
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 209              		.loc 2 66 0
+ 210 0024 00BF     		nop
+ 211 0026 0C37     		adds	r7, r7, #12
+ 212              		.cfi_def_cfa_offset 4
+ 213 0028 BD46     		mov	sp, r7
+ 214              		.cfi_def_cfa_register 13
+ 215              		@ sp needed
+ 216 002a 5DF8047B 		ldr	r7, [sp], #4
+ 217              		.cfi_restore 7
+ 218              		.cfi_def_cfa_offset 0
+ 219 002e 7047     		bx	lr
+ 220              		.cfi_endproc
+ 221              	.LFE4:
+ 222              		.size	lv_area_set_width, .-lv_area_set_width
+ 223              		.section	.text.lv_area_set_height,"ax",%progbits
+ 224              		.align	2
+ 225              		.global	lv_area_set_height
+ 226              		.thumb
+ 227              		.thumb_func
+ 228              		.type	lv_area_set_height, %function
+ 229              	lv_area_set_height:
+ 230              	.LFB5:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the height of an area
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 8
+
+
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param h the new height of the area (h == 1 makes y1 == y2)
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_height(lv_area_t * area_p, lv_coord_t h)
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 231              		.loc 2 74 0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 8
+ 234              		@ frame_needed = 1, uses_anonymous_args = 0
+ 235              		@ link register save eliminated.
+ 236 0000 80B4     		push	{r7}
+ 237              		.cfi_def_cfa_offset 4
+ 238              		.cfi_offset 7, -4
+ 239 0002 83B0     		sub	sp, sp, #12
+ 240              		.cfi_def_cfa_offset 16
+ 241 0004 00AF     		add	r7, sp, #0
+ 242              		.cfi_def_cfa_register 7
+ 243 0006 7860     		str	r0, [r7, #4]
+ 244 0008 0B46     		mov	r3, r1
+ 245 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y2 = area_p->y1 + h - 1;
+ 246              		.loc 2 75 0
+ 247 000c 7B68     		ldr	r3, [r7, #4]
+ 248 000e B3F90230 		ldrsh	r3, [r3, #2]
+ 249 0012 9AB2     		uxth	r2, r3
+ 250 0014 7B88     		ldrh	r3, [r7, #2]
+ 251 0016 1344     		add	r3, r3, r2
+ 252 0018 9BB2     		uxth	r3, r3
+ 253 001a 013B     		subs	r3, r3, #1
+ 254 001c 9BB2     		uxth	r3, r3
+ 255 001e 1AB2     		sxth	r2, r3
+ 256 0020 7B68     		ldr	r3, [r7, #4]
+ 257 0022 DA80     		strh	r2, [r3, #6]	@ movhi
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 258              		.loc 2 76 0
+ 259 0024 00BF     		nop
+ 260 0026 0C37     		adds	r7, r7, #12
+ 261              		.cfi_def_cfa_offset 4
+ 262 0028 BD46     		mov	sp, r7
+ 263              		.cfi_def_cfa_register 13
+ 264              		@ sp needed
+ 265 002a 5DF8047B 		ldr	r7, [sp], #4
+ 266              		.cfi_restore 7
+ 267              		.cfi_def_cfa_offset 0
+ 268 002e 7047     		bx	lr
+ 269              		.cfi_endproc
+ 270              	.LFE5:
+ 271              		.size	lv_area_set_height, .-lv_area_set_height
+ 272              		.section	.text.lv_area_set_pos,"ax",%progbits
+ 273              		.align	2
+ 274              		.global	lv_area_set_pos
+ 275              		.thumb
+ 276              		.thumb_func
+ 277              		.type	lv_area_set_pos, %function
+ 278              	lv_area_set_pos:
+ 279              	.LFB6:
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 9
+
+
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the position of an area (width and height will be kept)
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x the new x coordinate of the area
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y the new y coordinate of the area
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_pos(lv_area_t * area_p, lv_coord_t x, lv_coord_t y)
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 280              		.loc 2 85 0
+ 281              		.cfi_startproc
+ 282              		@ args = 0, pretend = 0, frame = 16
+ 283              		@ frame_needed = 1, uses_anonymous_args = 0
+ 284 0000 80B5     		push	{r7, lr}
+ 285              		.cfi_def_cfa_offset 8
+ 286              		.cfi_offset 7, -8
+ 287              		.cfi_offset 14, -4
+ 288 0002 84B0     		sub	sp, sp, #16
+ 289              		.cfi_def_cfa_offset 24
+ 290 0004 00AF     		add	r7, sp, #0
+ 291              		.cfi_def_cfa_register 7
+ 292 0006 7860     		str	r0, [r7, #4]
+ 293 0008 0B46     		mov	r3, r1
+ 294 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 295 000c 1346     		mov	r3, r2	@ movhi
+ 296 000e 3B80     		strh	r3, [r7]	@ movhi
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_coord_t w = lv_area_get_width(area_p);
+ 297              		.loc 2 86 0
+ 298 0010 7868     		ldr	r0, [r7, #4]
+ 299 0012 FFF7FEFF 		bl	lv_area_get_width
+ 300 0016 0346     		mov	r3, r0
+ 301 0018 FB81     		strh	r3, [r7, #14]	@ movhi
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_coord_t h = lv_area_get_height(area_p);
+ 302              		.loc 2 87 0
+ 303 001a 7868     		ldr	r0, [r7, #4]
+ 304 001c FFF7FEFF 		bl	lv_area_get_height
+ 305 0020 0346     		mov	r3, r0
+ 306 0022 BB81     		strh	r3, [r7, #12]	@ movhi
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x1   = x;
+ 307              		.loc 2 88 0
+ 308 0024 7B68     		ldr	r3, [r7, #4]
+ 309 0026 7A88     		ldrh	r2, [r7, #2]	@ movhi
+ 310 0028 1A80     		strh	r2, [r3]	@ movhi
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y1   = y;
+ 311              		.loc 2 89 0
+ 312 002a 7B68     		ldr	r3, [r7, #4]
+ 313 002c 3A88     		ldrh	r2, [r7]	@ movhi
+ 314 002e 5A80     		strh	r2, [r3, #2]	@ movhi
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_area_set_width(area_p, w);
+ 315              		.loc 2 90 0
+ 316 0030 B7F90E30 		ldrsh	r3, [r7, #14]
+ 317 0034 1946     		mov	r1, r3
+ 318 0036 7868     		ldr	r0, [r7, #4]
+ 319 0038 FFF7FEFF 		bl	lv_area_set_width
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_area_set_height(area_p, h);
+ 320              		.loc 2 91 0
+ 321 003c B7F90C30 		ldrsh	r3, [r7, #12]
+ 322 0040 1946     		mov	r1, r3
+ 323 0042 7868     		ldr	r0, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 10
+
+
+ 324 0044 FFF7FEFF 		bl	lv_area_set_height
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 325              		.loc 2 92 0
+ 326 0048 00BF     		nop
+ 327 004a 1037     		adds	r7, r7, #16
+ 328              		.cfi_def_cfa_offset 8
+ 329 004c BD46     		mov	sp, r7
+ 330              		.cfi_def_cfa_register 13
+ 331              		@ sp needed
+ 332 004e 80BD     		pop	{r7, pc}
+ 333              		.cfi_endproc
+ 334              	.LFE6:
+ 335              		.size	lv_area_set_pos, .-lv_area_set_pos
+ 336              		.section	.text.lv_area_get_size,"ax",%progbits
+ 337              		.align	2
+ 338              		.global	lv_area_get_size
+ 339              		.thumb
+ 340              		.thumb_func
+ 341              		.type	lv_area_get_size, %function
+ 342              	lv_area_get_size:
+ 343              	.LFB7:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Return with area of an area (x * y)
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return size of area
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** uint32_t lv_area_get_size(const lv_area_t * area_p)
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 344              		.loc 2 100 0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 16
+ 347              		@ frame_needed = 1, uses_anonymous_args = 0
+ 348              		@ link register save eliminated.
+ 349 0000 80B4     		push	{r7}
+ 350              		.cfi_def_cfa_offset 4
+ 351              		.cfi_offset 7, -4
+ 352 0002 85B0     		sub	sp, sp, #20
+ 353              		.cfi_def_cfa_offset 24
+ 354 0004 00AF     		add	r7, sp, #0
+ 355              		.cfi_def_cfa_register 7
+ 356 0006 7860     		str	r0, [r7, #4]
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     uint32_t size;
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     size = (uint32_t)(area_p->x2 - area_p->x1 + 1) * (area_p->y2 - area_p->y1 + 1);
+ 357              		.loc 2 103 0
+ 358 0008 7B68     		ldr	r3, [r7, #4]
+ 359 000a B3F90430 		ldrsh	r3, [r3, #4]
+ 360 000e 1A46     		mov	r2, r3
+ 361 0010 7B68     		ldr	r3, [r7, #4]
+ 362 0012 B3F90030 		ldrsh	r3, [r3]
+ 363 0016 D31A     		subs	r3, r2, r3
+ 364 0018 0133     		adds	r3, r3, #1
+ 365 001a 1A46     		mov	r2, r3
+ 366 001c 7B68     		ldr	r3, [r7, #4]
+ 367 001e B3F90630 		ldrsh	r3, [r3, #6]
+ 368 0022 1946     		mov	r1, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 11
+
+
+ 369 0024 7B68     		ldr	r3, [r7, #4]
+ 370 0026 B3F90230 		ldrsh	r3, [r3, #2]
+ 371 002a CB1A     		subs	r3, r1, r3
+ 372 002c 0133     		adds	r3, r3, #1
+ 373 002e 03FB02F3 		mul	r3, r3, r2
+ 374 0032 FB60     		str	r3, [r7, #12]
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return size;
+ 375              		.loc 2 105 0
+ 376 0034 FB68     		ldr	r3, [r7, #12]
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 377              		.loc 2 106 0
+ 378 0036 1846     		mov	r0, r3
+ 379 0038 1437     		adds	r7, r7, #20
+ 380              		.cfi_def_cfa_offset 4
+ 381 003a BD46     		mov	sp, r7
+ 382              		.cfi_def_cfa_register 13
+ 383              		@ sp needed
+ 384 003c 5DF8047B 		ldr	r7, [sp], #4
+ 385              		.cfi_restore 7
+ 386              		.cfi_def_cfa_offset 0
+ 387 0040 7047     		bx	lr
+ 388              		.cfi_endproc
+ 389              	.LFE7:
+ 390              		.size	lv_area_get_size, .-lv_area_get_size
+ 391 0042 00BF     		.section	.text.lv_area_intersect,"ax",%progbits
+ 392              		.align	2
+ 393              		.global	lv_area_intersect
+ 394              		.thumb
+ 395              		.thumb_func
+ 396              		.type	lv_area_intersect, %function
+ 397              	lv_area_intersect:
+ 398              	.LFB8:
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Get the common parts of two areas
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param res_p pointer to an area, the result will be stored here
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to the first area
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to the second area
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false: the two area has NO common parts, res_p is invalid
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_intersect(lv_area_t * res_p, const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 399              		.loc 2 116 0
+ 400              		.cfi_startproc
+ 401              		@ args = 0, pretend = 0, frame = 24
+ 402              		@ frame_needed = 1, uses_anonymous_args = 0
+ 403              		@ link register save eliminated.
+ 404 0000 80B4     		push	{r7}
+ 405              		.cfi_def_cfa_offset 4
+ 406              		.cfi_offset 7, -4
+ 407 0002 87B0     		sub	sp, sp, #28
+ 408              		.cfi_def_cfa_offset 32
+ 409 0004 00AF     		add	r7, sp, #0
+ 410              		.cfi_def_cfa_register 7
+ 411 0006 F860     		str	r0, [r7, #12]
+ 412 0008 B960     		str	r1, [r7, #8]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 12
+
+
+ 413 000a 7A60     		str	r2, [r7, #4]
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     /* Get the smaller area from 'a1_p' and 'a2_p' */
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x1 = LV_MATH_MAX(a1_p->x1, a2_p->x1);
+ 414              		.loc 2 118 0
+ 415 000c 7B68     		ldr	r3, [r7, #4]
+ 416 000e B3F90020 		ldrsh	r2, [r3]
+ 417 0012 BB68     		ldr	r3, [r7, #8]
+ 418 0014 B3F90030 		ldrsh	r3, [r3]
+ 419 0018 9342     		cmp	r3, r2
+ 420 001a B8BF     		it	lt
+ 421 001c 1346     		movlt	r3, r2
+ 422 001e 1AB2     		sxth	r2, r3
+ 423 0020 FB68     		ldr	r3, [r7, #12]
+ 424 0022 1A80     		strh	r2, [r3]	@ movhi
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y1 = LV_MATH_MAX(a1_p->y1, a2_p->y1);
+ 425              		.loc 2 119 0
+ 426 0024 7B68     		ldr	r3, [r7, #4]
+ 427 0026 B3F90220 		ldrsh	r2, [r3, #2]
+ 428 002a BB68     		ldr	r3, [r7, #8]
+ 429 002c B3F90230 		ldrsh	r3, [r3, #2]
+ 430 0030 9342     		cmp	r3, r2
+ 431 0032 B8BF     		it	lt
+ 432 0034 1346     		movlt	r3, r2
+ 433 0036 1AB2     		sxth	r2, r3
+ 434 0038 FB68     		ldr	r3, [r7, #12]
+ 435 003a 5A80     		strh	r2, [r3, #2]	@ movhi
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x2 = LV_MATH_MIN(a1_p->x2, a2_p->x2);
+ 436              		.loc 2 120 0
+ 437 003c 7B68     		ldr	r3, [r7, #4]
+ 438 003e B3F90420 		ldrsh	r2, [r3, #4]
+ 439 0042 BB68     		ldr	r3, [r7, #8]
+ 440 0044 B3F90430 		ldrsh	r3, [r3, #4]
+ 441 0048 9342     		cmp	r3, r2
+ 442 004a A8BF     		it	ge
+ 443 004c 1346     		movge	r3, r2
+ 444 004e 1AB2     		sxth	r2, r3
+ 445 0050 FB68     		ldr	r3, [r7, #12]
+ 446 0052 9A80     		strh	r2, [r3, #4]	@ movhi
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y2 = LV_MATH_MIN(a1_p->y2, a2_p->y2);
+ 447              		.loc 2 121 0
+ 448 0054 7B68     		ldr	r3, [r7, #4]
+ 449 0056 B3F90620 		ldrsh	r2, [r3, #6]
+ 450 005a BB68     		ldr	r3, [r7, #8]
+ 451 005c B3F90630 		ldrsh	r3, [r3, #6]
+ 452 0060 9342     		cmp	r3, r2
+ 453 0062 A8BF     		it	ge
+ 454 0064 1346     		movge	r3, r2
+ 455 0066 1AB2     		sxth	r2, r3
+ 456 0068 FB68     		ldr	r3, [r7, #12]
+ 457 006a DA80     		strh	r2, [r3, #6]	@ movhi
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     /*If x1 or y1 greater then x2 or y2 then the areas union is empty*/
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool union_ok = true;
+ 458              		.loc 2 124 0
+ 459 006c 0123     		movs	r3, #1
+ 460 006e FB75     		strb	r3, [r7, #23]
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((res_p->x1 > res_p->x2) || (res_p->y1 > res_p->y2)) {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 13
+
+
+ 461              		.loc 2 125 0
+ 462 0070 FB68     		ldr	r3, [r7, #12]
+ 463 0072 B3F90020 		ldrsh	r2, [r3]
+ 464 0076 FB68     		ldr	r3, [r7, #12]
+ 465 0078 B3F90430 		ldrsh	r3, [r3, #4]
+ 466 007c 9A42     		cmp	r2, r3
+ 467 007e 07DC     		bgt	.L12
+ 468              		.loc 2 125 0 is_stmt 0 discriminator 1
+ 469 0080 FB68     		ldr	r3, [r7, #12]
+ 470 0082 B3F90220 		ldrsh	r2, [r3, #2]
+ 471 0086 FB68     		ldr	r3, [r7, #12]
+ 472 0088 B3F90630 		ldrsh	r3, [r3, #6]
+ 473 008c 9A42     		cmp	r2, r3
+ 474 008e 01DD     		ble	.L13
+ 475              	.L12:
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         union_ok = false;
+ 476              		.loc 2 126 0 is_stmt 1
+ 477 0090 0023     		movs	r3, #0
+ 478 0092 FB75     		strb	r3, [r7, #23]
+ 479              	.L13:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return union_ok;
+ 480              		.loc 2 129 0
+ 481 0094 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 482              		.loc 2 130 0
+ 483 0096 1846     		mov	r0, r3
+ 484 0098 1C37     		adds	r7, r7, #28
+ 485              		.cfi_def_cfa_offset 4
+ 486 009a BD46     		mov	sp, r7
+ 487              		.cfi_def_cfa_register 13
+ 488              		@ sp needed
+ 489 009c 5DF8047B 		ldr	r7, [sp], #4
+ 490              		.cfi_restore 7
+ 491              		.cfi_def_cfa_offset 0
+ 492 00a0 7047     		bx	lr
+ 493              		.cfi_endproc
+ 494              	.LFE8:
+ 495              		.size	lv_area_intersect, .-lv_area_intersect
+ 496 00a2 00BF     		.section	.text.lv_area_join,"ax",%progbits
+ 497              		.align	2
+ 498              		.global	lv_area_join
+ 499              		.thumb
+ 500              		.thumb_func
+ 501              		.type	lv_area_join, %function
+ 502              	lv_area_join:
+ 503              	.LFB9:
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Join two areas into a third which involves the other two
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param res_p pointer to an area, the result will be stored here
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to the first area
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to the second area
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_join(lv_area_t * a_res_p, const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 504              		.loc 2 138 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 14
+
+
+ 505              		.cfi_startproc
+ 506              		@ args = 0, pretend = 0, frame = 16
+ 507              		@ frame_needed = 1, uses_anonymous_args = 0
+ 508              		@ link register save eliminated.
+ 509 0000 80B4     		push	{r7}
+ 510              		.cfi_def_cfa_offset 4
+ 511              		.cfi_offset 7, -4
+ 512 0002 85B0     		sub	sp, sp, #20
+ 513              		.cfi_def_cfa_offset 24
+ 514 0004 00AF     		add	r7, sp, #0
+ 515              		.cfi_def_cfa_register 7
+ 516 0006 F860     		str	r0, [r7, #12]
+ 517 0008 B960     		str	r1, [r7, #8]
+ 518 000a 7A60     		str	r2, [r7, #4]
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x1 = LV_MATH_MIN(a1_p->x1, a2_p->x1);
+ 519              		.loc 2 139 0
+ 520 000c 7B68     		ldr	r3, [r7, #4]
+ 521 000e B3F90020 		ldrsh	r2, [r3]
+ 522 0012 BB68     		ldr	r3, [r7, #8]
+ 523 0014 B3F90030 		ldrsh	r3, [r3]
+ 524 0018 9342     		cmp	r3, r2
+ 525 001a A8BF     		it	ge
+ 526 001c 1346     		movge	r3, r2
+ 527 001e 1AB2     		sxth	r2, r3
+ 528 0020 FB68     		ldr	r3, [r7, #12]
+ 529 0022 1A80     		strh	r2, [r3]	@ movhi
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y1 = LV_MATH_MIN(a1_p->y1, a2_p->y1);
+ 530              		.loc 2 140 0
+ 531 0024 7B68     		ldr	r3, [r7, #4]
+ 532 0026 B3F90220 		ldrsh	r2, [r3, #2]
+ 533 002a BB68     		ldr	r3, [r7, #8]
+ 534 002c B3F90230 		ldrsh	r3, [r3, #2]
+ 535 0030 9342     		cmp	r3, r2
+ 536 0032 A8BF     		it	ge
+ 537 0034 1346     		movge	r3, r2
+ 538 0036 1AB2     		sxth	r2, r3
+ 539 0038 FB68     		ldr	r3, [r7, #12]
+ 540 003a 5A80     		strh	r2, [r3, #2]	@ movhi
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x2 = LV_MATH_MAX(a1_p->x2, a2_p->x2);
+ 541              		.loc 2 141 0
+ 542 003c 7B68     		ldr	r3, [r7, #4]
+ 543 003e B3F90420 		ldrsh	r2, [r3, #4]
+ 544 0042 BB68     		ldr	r3, [r7, #8]
+ 545 0044 B3F90430 		ldrsh	r3, [r3, #4]
+ 546 0048 9342     		cmp	r3, r2
+ 547 004a B8BF     		it	lt
+ 548 004c 1346     		movlt	r3, r2
+ 549 004e 1AB2     		sxth	r2, r3
+ 550 0050 FB68     		ldr	r3, [r7, #12]
+ 551 0052 9A80     		strh	r2, [r3, #4]	@ movhi
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 552              		.loc 2 142 0
+ 553 0054 7B68     		ldr	r3, [r7, #4]
+ 554 0056 B3F90620 		ldrsh	r2, [r3, #6]
+ 555 005a BB68     		ldr	r3, [r7, #8]
+ 556 005c B3F90630 		ldrsh	r3, [r3, #6]
+ 557 0060 9342     		cmp	r3, r2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 15
+
+
+ 558 0062 B8BF     		it	lt
+ 559 0064 1346     		movlt	r3, r2
+ 560 0066 1AB2     		sxth	r2, r3
+ 561 0068 FB68     		ldr	r3, [r7, #12]
+ 562 006a DA80     		strh	r2, [r3, #6]	@ movhi
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 563              		.loc 2 143 0
+ 564 006c 00BF     		nop
+ 565 006e 1437     		adds	r7, r7, #20
+ 566              		.cfi_def_cfa_offset 4
+ 567 0070 BD46     		mov	sp, r7
+ 568              		.cfi_def_cfa_register 13
+ 569              		@ sp needed
+ 570 0072 5DF8047B 		ldr	r7, [sp], #4
+ 571              		.cfi_restore 7
+ 572              		.cfi_def_cfa_offset 0
+ 573 0076 7047     		bx	lr
+ 574              		.cfi_endproc
+ 575              	.LFE9:
+ 576              		.size	lv_area_join, .-lv_area_join
+ 577              		.section	.text.lv_area_is_point_on,"ax",%progbits
+ 578              		.align	2
+ 579              		.global	lv_area_is_point_on
+ 580              		.thumb
+ 581              		.thumb_func
+ 582              		.type	lv_area_is_point_on, %function
+ 583              	lv_area_is_point_on:
+ 584              	.LFB10:
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if a point is on an area
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a_p pointer to an area
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param p_p pointer to a point
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false:the point is out of the area
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_point_on(const lv_area_t * a_p, const lv_point_t * p_p)
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 585              		.loc 2 152 0
+ 586              		.cfi_startproc
+ 587              		@ args = 0, pretend = 0, frame = 16
+ 588              		@ frame_needed = 1, uses_anonymous_args = 0
+ 589              		@ link register save eliminated.
+ 590 0000 80B4     		push	{r7}
+ 591              		.cfi_def_cfa_offset 4
+ 592              		.cfi_offset 7, -4
+ 593 0002 85B0     		sub	sp, sp, #20
+ 594              		.cfi_def_cfa_offset 24
+ 595 0004 00AF     		add	r7, sp, #0
+ 596              		.cfi_def_cfa_register 7
+ 597 0006 7860     		str	r0, [r7, #4]
+ 598 0008 3960     		str	r1, [r7]
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_on = false;
+ 599              		.loc 2 153 0
+ 600 000a 0023     		movs	r3, #0
+ 601 000c FB73     		strb	r3, [r7, #15]
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((p_p->x >= a_p->x1 && p_p->x <= a_p->x2) && ((p_p->y >= a_p->y1 && p_p->y <= a_p->y2))) {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 16
+
+
+ 602              		.loc 2 155 0
+ 603 000e 3B68     		ldr	r3, [r7]
+ 604 0010 B3F90020 		ldrsh	r2, [r3]
+ 605 0014 7B68     		ldr	r3, [r7, #4]
+ 606 0016 B3F90030 		ldrsh	r3, [r3]
+ 607 001a 9A42     		cmp	r2, r3
+ 608 001c 19DB     		blt	.L17
+ 609              		.loc 2 155 0 is_stmt 0 discriminator 1
+ 610 001e 3B68     		ldr	r3, [r7]
+ 611 0020 B3F90020 		ldrsh	r2, [r3]
+ 612 0024 7B68     		ldr	r3, [r7, #4]
+ 613 0026 B3F90430 		ldrsh	r3, [r3, #4]
+ 614 002a 9A42     		cmp	r2, r3
+ 615 002c 11DC     		bgt	.L17
+ 616              		.loc 2 155 0 discriminator 2
+ 617 002e 3B68     		ldr	r3, [r7]
+ 618 0030 B3F90220 		ldrsh	r2, [r3, #2]
+ 619 0034 7B68     		ldr	r3, [r7, #4]
+ 620 0036 B3F90230 		ldrsh	r3, [r3, #2]
+ 621 003a 9A42     		cmp	r2, r3
+ 622 003c 09DB     		blt	.L17
+ 623              		.loc 2 155 0 discriminator 3
+ 624 003e 3B68     		ldr	r3, [r7]
+ 625 0040 B3F90220 		ldrsh	r2, [r3, #2]
+ 626 0044 7B68     		ldr	r3, [r7, #4]
+ 627 0046 B3F90630 		ldrsh	r3, [r3, #6]
+ 628 004a 9A42     		cmp	r2, r3
+ 629 004c 01DC     		bgt	.L17
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         is_on = true;
+ 630              		.loc 2 156 0 is_stmt 1
+ 631 004e 0123     		movs	r3, #1
+ 632 0050 FB73     		strb	r3, [r7, #15]
+ 633              	.L17:
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return is_on;
+ 634              		.loc 2 159 0
+ 635 0052 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 636              		.loc 2 160 0
+ 637 0054 1846     		mov	r0, r3
+ 638 0056 1437     		adds	r7, r7, #20
+ 639              		.cfi_def_cfa_offset 4
+ 640 0058 BD46     		mov	sp, r7
+ 641              		.cfi_def_cfa_register 13
+ 642              		@ sp needed
+ 643 005a 5DF8047B 		ldr	r7, [sp], #4
+ 644              		.cfi_restore 7
+ 645              		.cfi_def_cfa_offset 0
+ 646 005e 7047     		bx	lr
+ 647              		.cfi_endproc
+ 648              	.LFE10:
+ 649              		.size	lv_area_is_point_on, .-lv_area_is_point_on
+ 650              		.section	.text.lv_area_is_on,"ax",%progbits
+ 651              		.align	2
+ 652              		.global	lv_area_is_on
+ 653              		.thumb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 17
+
+
+ 654              		.thumb_func
+ 655              		.type	lv_area_is_on, %function
+ 656              	lv_area_is_on:
+ 657              	.LFB11:
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if two area has common parts
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to an area.
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to an other area
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false: a1_p and a2_p has no common parts
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_on(const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 658              		.loc 2 169 0
+ 659              		.cfi_startproc
+ 660              		@ args = 0, pretend = 0, frame = 8
+ 661              		@ frame_needed = 1, uses_anonymous_args = 0
+ 662              		@ link register save eliminated.
+ 663 0000 80B4     		push	{r7}
+ 664              		.cfi_def_cfa_offset 4
+ 665              		.cfi_offset 7, -4
+ 666 0002 83B0     		sub	sp, sp, #12
+ 667              		.cfi_def_cfa_offset 16
+ 668 0004 00AF     		add	r7, sp, #0
+ 669              		.cfi_def_cfa_register 7
+ 670 0006 7860     		str	r0, [r7, #4]
+ 671 0008 3960     		str	r1, [r7]
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((a1_p->x1 <= a2_p->x2) && (a1_p->x2 >= a2_p->x1) && (a1_p->y1 <= a2_p->y2) && (a1_p->y2 >= a
+ 672              		.loc 2 170 0
+ 673 000a 7B68     		ldr	r3, [r7, #4]
+ 674 000c B3F90020 		ldrsh	r2, [r3]
+ 675 0010 3B68     		ldr	r3, [r7]
+ 676 0012 B3F90430 		ldrsh	r3, [r3, #4]
+ 677 0016 9A42     		cmp	r2, r3
+ 678 0018 19DC     		bgt	.L20
+ 679              		.loc 2 170 0 is_stmt 0 discriminator 1
+ 680 001a 7B68     		ldr	r3, [r7, #4]
+ 681 001c B3F90420 		ldrsh	r2, [r3, #4]
+ 682 0020 3B68     		ldr	r3, [r7]
+ 683 0022 B3F90030 		ldrsh	r3, [r3]
+ 684 0026 9A42     		cmp	r2, r3
+ 685 0028 11DB     		blt	.L20
+ 686              		.loc 2 170 0 discriminator 2
+ 687 002a 7B68     		ldr	r3, [r7, #4]
+ 688 002c B3F90220 		ldrsh	r2, [r3, #2]
+ 689 0030 3B68     		ldr	r3, [r7]
+ 690 0032 B3F90630 		ldrsh	r3, [r3, #6]
+ 691 0036 9A42     		cmp	r2, r3
+ 692 0038 09DC     		bgt	.L20
+ 693              		.loc 2 170 0 discriminator 3
+ 694 003a 7B68     		ldr	r3, [r7, #4]
+ 695 003c B3F90620 		ldrsh	r2, [r3, #6]
+ 696 0040 3B68     		ldr	r3, [r7]
+ 697 0042 B3F90230 		ldrsh	r3, [r3, #2]
+ 698 0046 9A42     		cmp	r2, r3
+ 699 0048 01DB     		blt	.L20
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         return true;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 18
+
+
+ 700              		.loc 2 171 0 is_stmt 1
+ 701 004a 0123     		movs	r3, #1
+ 702 004c 00E0     		b	.L21
+ 703              	.L20:
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     } else {
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         return false;
+ 704              		.loc 2 173 0
+ 705 004e 0023     		movs	r3, #0
+ 706              	.L21:
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 707              		.loc 2 175 0
+ 708 0050 1846     		mov	r0, r3
+ 709 0052 0C37     		adds	r7, r7, #12
+ 710              		.cfi_def_cfa_offset 4
+ 711 0054 BD46     		mov	sp, r7
+ 712              		.cfi_def_cfa_register 13
+ 713              		@ sp needed
+ 714 0056 5DF8047B 		ldr	r7, [sp], #4
+ 715              		.cfi_restore 7
+ 716              		.cfi_def_cfa_offset 0
+ 717 005a 7047     		bx	lr
+ 718              		.cfi_endproc
+ 719              	.LFE11:
+ 720              		.size	lv_area_is_on, .-lv_area_is_on
+ 721              		.section	.text.lv_area_is_in,"ax",%progbits
+ 722              		.align	2
+ 723              		.global	lv_area_is_in
+ 724              		.thumb
+ 725              		.thumb_func
+ 726              		.type	lv_area_is_in, %function
+ 727              	lv_area_is_in:
+ 728              	.LFB12:
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if an area is fully on an other
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param ain_p pointer to an area which could be in 'aholder_p'
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param aholder pointer to an area which could involve 'ain_p'
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_in(const lv_area_t * ain_p, const lv_area_t * aholder_p)
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 729              		.loc 2 184 0
+ 730              		.cfi_startproc
+ 731              		@ args = 0, pretend = 0, frame = 16
+ 732              		@ frame_needed = 1, uses_anonymous_args = 0
+ 733              		@ link register save eliminated.
+ 734 0000 80B4     		push	{r7}
+ 735              		.cfi_def_cfa_offset 4
+ 736              		.cfi_offset 7, -4
+ 737 0002 85B0     		sub	sp, sp, #20
+ 738              		.cfi_def_cfa_offset 24
+ 739 0004 00AF     		add	r7, sp, #0
+ 740              		.cfi_def_cfa_register 7
+ 741 0006 7860     		str	r0, [r7, #4]
+ 742 0008 3960     		str	r1, [r7]
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_in = false;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 19
+
+
+ 743              		.loc 2 185 0
+ 744 000a 0023     		movs	r3, #0
+ 745 000c FB73     		strb	r3, [r7, #15]
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if(ain_p->x1 >= aholder_p->x1 && ain_p->y1 >= aholder_p->y1 && ain_p->x2 <= aholder_p->x2 &&
+ 746              		.loc 2 187 0
+ 747 000e 7B68     		ldr	r3, [r7, #4]
+ 748 0010 B3F90020 		ldrsh	r2, [r3]
+ 749 0014 3B68     		ldr	r3, [r7]
+ 750 0016 B3F90030 		ldrsh	r3, [r3]
+ 751 001a 9A42     		cmp	r2, r3
+ 752 001c 19DB     		blt	.L23
+ 753              		.loc 2 187 0 is_stmt 0 discriminator 1
+ 754 001e 7B68     		ldr	r3, [r7, #4]
+ 755 0020 B3F90220 		ldrsh	r2, [r3, #2]
+ 756 0024 3B68     		ldr	r3, [r7]
+ 757 0026 B3F90230 		ldrsh	r3, [r3, #2]
+ 758 002a 9A42     		cmp	r2, r3
+ 759 002c 11DB     		blt	.L23
+ 760              		.loc 2 187 0 discriminator 2
+ 761 002e 7B68     		ldr	r3, [r7, #4]
+ 762 0030 B3F90420 		ldrsh	r2, [r3, #4]
+ 763 0034 3B68     		ldr	r3, [r7]
+ 764 0036 B3F90430 		ldrsh	r3, [r3, #4]
+ 765 003a 9A42     		cmp	r2, r3
+ 766 003c 09DC     		bgt	.L23
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****        ain_p->y2 <= aholder_p->y2) {
+ 767              		.loc 2 188 0 is_stmt 1 discriminator 3
+ 768 003e 7B68     		ldr	r3, [r7, #4]
+ 769 0040 B3F90620 		ldrsh	r2, [r3, #6]
+ 770 0044 3B68     		ldr	r3, [r7]
+ 771 0046 B3F90630 		ldrsh	r3, [r3, #6]
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****        ain_p->y2 <= aholder_p->y2) {
+ 772              		.loc 2 187 0 discriminator 3
+ 773 004a 9A42     		cmp	r2, r3
+ 774 004c 01DC     		bgt	.L23
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         is_in = true;
+ 775              		.loc 2 189 0
+ 776 004e 0123     		movs	r3, #1
+ 777 0050 FB73     		strb	r3, [r7, #15]
+ 778              	.L23:
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return is_in;
+ 779              		.loc 2 192 0
+ 780 0052 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 781              		.loc 2 193 0
+ 782 0054 1846     		mov	r0, r3
+ 783 0056 1437     		adds	r7, r7, #20
+ 784              		.cfi_def_cfa_offset 4
+ 785 0058 BD46     		mov	sp, r7
+ 786              		.cfi_def_cfa_register 13
+ 787              		@ sp needed
+ 788 005a 5DF8047B 		ldr	r7, [sp], #4
+ 789              		.cfi_restore 7
+ 790              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 20
+
+
+ 791 005e 7047     		bx	lr
+ 792              		.cfi_endproc
+ 793              	.LFE12:
+ 794              		.size	lv_area_is_in, .-lv_area_is_in
+ 795              		.section	.text.lv_area_increment,"ax",%progbits
+ 796              		.align	2
+ 797              		.global	lv_area_increment
+ 798              		.thumb
+ 799              		.thumb_func
+ 800              		.type	lv_area_increment, %function
+ 801              	lv_area_increment:
+ 802              	.LFB13:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Increment or decrement an area's size by a single amount
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a_p pointer to an area to grow
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param amount amount to increment the area, or negative to decrement
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_increment(lv_area_t * a_p, const lv_coord_t amount)
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 803              		.loc 2 201 0
+ 804              		.cfi_startproc
+ 805              		@ args = 0, pretend = 0, frame = 8
+ 806              		@ frame_needed = 1, uses_anonymous_args = 0
+ 807              		@ link register save eliminated.
+ 808 0000 80B4     		push	{r7}
+ 809              		.cfi_def_cfa_offset 4
+ 810              		.cfi_offset 7, -4
+ 811 0002 83B0     		sub	sp, sp, #12
+ 812              		.cfi_def_cfa_offset 16
+ 813 0004 00AF     		add	r7, sp, #0
+ 814              		.cfi_def_cfa_register 7
+ 815 0006 7860     		str	r0, [r7, #4]
+ 816 0008 0B46     		mov	r3, r1
+ 817 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x1 -= amount;
+ 818              		.loc 2 202 0
+ 819 000c 7B68     		ldr	r3, [r7, #4]
+ 820 000e B3F90030 		ldrsh	r3, [r3]
+ 821 0012 9AB2     		uxth	r2, r3
+ 822 0014 7B88     		ldrh	r3, [r7, #2]
+ 823 0016 D31A     		subs	r3, r2, r3
+ 824 0018 9BB2     		uxth	r3, r3
+ 825 001a 1AB2     		sxth	r2, r3
+ 826 001c 7B68     		ldr	r3, [r7, #4]
+ 827 001e 1A80     		strh	r2, [r3]	@ movhi
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y1 -= amount;
+ 828              		.loc 2 203 0
+ 829 0020 7B68     		ldr	r3, [r7, #4]
+ 830 0022 B3F90230 		ldrsh	r3, [r3, #2]
+ 831 0026 9AB2     		uxth	r2, r3
+ 832 0028 7B88     		ldrh	r3, [r7, #2]
+ 833 002a D31A     		subs	r3, r2, r3
+ 834 002c 9BB2     		uxth	r3, r3
+ 835 002e 1AB2     		sxth	r2, r3
+ 836 0030 7B68     		ldr	r3, [r7, #4]
+ 837 0032 5A80     		strh	r2, [r3, #2]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 21
+
+
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x2 += amount;
+ 838              		.loc 2 204 0
+ 839 0034 7B68     		ldr	r3, [r7, #4]
+ 840 0036 B3F90430 		ldrsh	r3, [r3, #4]
+ 841 003a 9AB2     		uxth	r2, r3
+ 842 003c 7B88     		ldrh	r3, [r7, #2]
+ 843 003e 1344     		add	r3, r3, r2
+ 844 0040 9BB2     		uxth	r3, r3
+ 845 0042 1AB2     		sxth	r2, r3
+ 846 0044 7B68     		ldr	r3, [r7, #4]
+ 847 0046 9A80     		strh	r2, [r3, #4]	@ movhi
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y2 += amount;
+ 848              		.loc 2 205 0
+ 849 0048 7B68     		ldr	r3, [r7, #4]
+ 850 004a B3F90630 		ldrsh	r3, [r3, #6]
+ 851 004e 9AB2     		uxth	r2, r3
+ 852 0050 7B88     		ldrh	r3, [r7, #2]
+ 853 0052 1344     		add	r3, r3, r2
+ 854 0054 9BB2     		uxth	r3, r3
+ 855 0056 1AB2     		sxth	r2, r3
+ 856 0058 7B68     		ldr	r3, [r7, #4]
+ 857 005a DA80     		strh	r2, [r3, #6]	@ movhi
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 858              		.loc 2 206 0
+ 859 005c 00BF     		nop
+ 860 005e 0C37     		adds	r7, r7, #12
+ 861              		.cfi_def_cfa_offset 4
+ 862 0060 BD46     		mov	sp, r7
+ 863              		.cfi_def_cfa_register 13
+ 864              		@ sp needed
+ 865 0062 5DF8047B 		ldr	r7, [sp], #4
+ 866              		.cfi_restore 7
+ 867              		.cfi_def_cfa_offset 0
+ 868 0066 7047     		bx	lr
+ 869              		.cfi_endproc
+ 870              	.LFE13:
+ 871              		.size	lv_area_increment, .-lv_area_increment
+ 872              		.text
+ 873              	.Letext0:
+ 874              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 875              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 876              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 877              		.section	.debug_info,"",%progbits
+ 878              	.Ldebug_info0:
+ 879 0000 58040000 		.4byte	0x458
+ 880 0004 0400     		.2byte	0x4
+ 881 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 882 000a 04       		.byte	0x4
+ 883 000b 01       		.uleb128 0x1
+ 884 000c 86000000 		.4byte	.LASF45
+ 885 0010 0C       		.byte	0xc
+ 886 0011 CE020000 		.4byte	.LASF46
+ 887 0015 31020000 		.4byte	.LASF47
+ 888 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 889 001d 00000000 		.4byte	0
+ 890 0021 00000000 		.4byte	.Ldebug_line0
+ 891 0025 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 22
+
+
+ 892 0026 01       		.byte	0x1
+ 893 0027 06       		.byte	0x6
+ 894 0028 77030000 		.4byte	.LASF0
+ 895 002c 02       		.uleb128 0x2
+ 896 002d 01       		.byte	0x1
+ 897 002e 08       		.byte	0x8
+ 898 002f D8010000 		.4byte	.LASF1
+ 899 0033 03       		.uleb128 0x3
+ 900 0034 23000000 		.4byte	.LASF5
+ 901 0038 03       		.byte	0x3
+ 902 0039 29       		.byte	0x29
+ 903 003a 3E000000 		.4byte	0x3e
+ 904 003e 02       		.uleb128 0x2
+ 905 003f 02       		.byte	0x2
+ 906 0040 05       		.byte	0x5
+ 907 0041 39010000 		.4byte	.LASF2
+ 908 0045 02       		.uleb128 0x2
+ 909 0046 02       		.byte	0x2
+ 910 0047 07       		.byte	0x7
+ 911 0048 9C010000 		.4byte	.LASF3
+ 912 004c 02       		.uleb128 0x2
+ 913 004d 04       		.byte	0x4
+ 914 004e 05       		.byte	0x5
+ 915 004f 5C030000 		.4byte	.LASF4
+ 916 0053 03       		.uleb128 0x3
+ 917 0054 E6010000 		.4byte	.LASF6
+ 918 0058 03       		.byte	0x3
+ 919 0059 41       		.byte	0x41
+ 920 005a 5E000000 		.4byte	0x5e
+ 921 005e 02       		.uleb128 0x2
+ 922 005f 04       		.byte	0x4
+ 923 0060 07       		.byte	0x7
+ 924 0061 8A010000 		.4byte	.LASF7
+ 925 0065 02       		.uleb128 0x2
+ 926 0066 08       		.byte	0x8
+ 927 0067 05       		.byte	0x5
+ 928 0068 0E030000 		.4byte	.LASF8
+ 929 006c 02       		.uleb128 0x2
+ 930 006d 08       		.byte	0x8
+ 931 006e 07       		.byte	0x7
+ 932 006f 12020000 		.4byte	.LASF9
+ 933 0073 04       		.uleb128 0x4
+ 934 0074 04       		.byte	0x4
+ 935 0075 05       		.byte	0x5
+ 936 0076 696E7400 		.ascii	"int\000"
+ 937 007a 02       		.uleb128 0x2
+ 938 007b 04       		.byte	0x4
+ 939 007c 07       		.byte	0x7
+ 940 007d 05020000 		.4byte	.LASF10
+ 941 0081 03       		.uleb128 0x3
+ 942 0082 29020000 		.4byte	.LASF11
+ 943 0086 04       		.byte	0x4
+ 944 0087 20       		.byte	0x20
+ 945 0088 33000000 		.4byte	0x33
+ 946 008c 03       		.uleb128 0x3
+ 947 008d 53030000 		.4byte	.LASF12
+ 948 0091 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 23
+
+
+ 949 0092 30       		.byte	0x30
+ 950 0093 53000000 		.4byte	0x53
+ 951 0097 03       		.uleb128 0x3
+ 952 0098 10000000 		.4byte	.LASF13
+ 953 009c 05       		.byte	0x5
+ 954 009d 3C       		.byte	0x3c
+ 955 009e 81000000 		.4byte	0x81
+ 956 00a2 02       		.uleb128 0x2
+ 957 00a3 08       		.byte	0x8
+ 958 00a4 04       		.byte	0x4
+ 959 00a5 6B030000 		.4byte	.LASF14
+ 960 00a9 02       		.uleb128 0x2
+ 961 00aa 04       		.byte	0x4
+ 962 00ab 07       		.byte	0x7
+ 963 00ac 05030000 		.4byte	.LASF15
+ 964 00b0 02       		.uleb128 0x2
+ 965 00b1 01       		.byte	0x1
+ 966 00b2 08       		.byte	0x8
+ 967 00b3 28030000 		.4byte	.LASF16
+ 968 00b7 05       		.uleb128 0x5
+ 969 00b8 04       		.byte	0x4
+ 970 00b9 01       		.byte	0x1
+ 971 00ba 2A       		.byte	0x2a
+ 972 00bb D4000000 		.4byte	0xd4
+ 973 00bf 06       		.uleb128 0x6
+ 974 00c0 7800     		.ascii	"x\000"
+ 975 00c2 01       		.byte	0x1
+ 976 00c3 2C       		.byte	0x2c
+ 977 00c4 97000000 		.4byte	0x97
+ 978 00c8 00       		.byte	0
+ 979 00c9 06       		.uleb128 0x6
+ 980 00ca 7900     		.ascii	"y\000"
+ 981 00cc 01       		.byte	0x1
+ 982 00cd 2D       		.byte	0x2d
+ 983 00ce 97000000 		.4byte	0x97
+ 984 00d2 02       		.byte	0x2
+ 985 00d3 00       		.byte	0
+ 986 00d4 03       		.uleb128 0x3
+ 987 00d5 7F010000 		.4byte	.LASF17
+ 988 00d9 01       		.byte	0x1
+ 989 00da 2E       		.byte	0x2e
+ 990 00db B7000000 		.4byte	0xb7
+ 991 00df 05       		.uleb128 0x5
+ 992 00e0 08       		.byte	0x8
+ 993 00e1 01       		.byte	0x1
+ 994 00e2 31       		.byte	0x31
+ 995 00e3 14010000 		.4byte	0x114
+ 996 00e7 06       		.uleb128 0x6
+ 997 00e8 783100   		.ascii	"x1\000"
+ 998 00eb 01       		.byte	0x1
+ 999 00ec 33       		.byte	0x33
+ 1000 00ed 97000000 		.4byte	0x97
+ 1001 00f1 00       		.byte	0
+ 1002 00f2 06       		.uleb128 0x6
+ 1003 00f3 793100   		.ascii	"y1\000"
+ 1004 00f6 01       		.byte	0x1
+ 1005 00f7 34       		.byte	0x34
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 24
+
+
+ 1006 00f8 97000000 		.4byte	0x97
+ 1007 00fc 02       		.byte	0x2
+ 1008 00fd 06       		.uleb128 0x6
+ 1009 00fe 783200   		.ascii	"x2\000"
+ 1010 0101 01       		.byte	0x1
+ 1011 0102 35       		.byte	0x35
+ 1012 0103 97000000 		.4byte	0x97
+ 1013 0107 04       		.byte	0x4
+ 1014 0108 06       		.uleb128 0x6
+ 1015 0109 793200   		.ascii	"y2\000"
+ 1016 010c 01       		.byte	0x1
+ 1017 010d 36       		.byte	0x36
+ 1018 010e 97000000 		.4byte	0x97
+ 1019 0112 06       		.byte	0x6
+ 1020 0113 00       		.byte	0
+ 1021 0114 03       		.uleb128 0x3
+ 1022 0115 6A010000 		.4byte	.LASF18
+ 1023 0119 01       		.byte	0x1
+ 1024 011a 37       		.byte	0x37
+ 1025 011b DF000000 		.4byte	0xdf
+ 1026 011f 07       		.uleb128 0x7
+ 1027 0120 2D030000 		.4byte	.LASF19
+ 1028 0124 01       		.byte	0x1
+ 1029 0125 56       		.byte	0x56
+ 1030 0126 97000000 		.4byte	0x97
+ 1031 012a 00000000 		.4byte	.LFB1
+ 1032 012e 2E000000 		.4byte	.LFE1-.LFB1
+ 1033 0132 01       		.uleb128 0x1
+ 1034 0133 9C       		.byte	0x9c
+ 1035 0134 47010000 		.4byte	0x147
+ 1036 0138 08       		.uleb128 0x8
+ 1037 0139 21030000 		.4byte	.LASF21
+ 1038 013d 01       		.byte	0x1
+ 1039 013e 56       		.byte	0x56
+ 1040 013f 47010000 		.4byte	0x147
+ 1041 0143 02       		.uleb128 0x2
+ 1042 0144 91       		.byte	0x91
+ 1043 0145 74       		.sleb128 -12
+ 1044 0146 00       		.byte	0
+ 1045 0147 09       		.uleb128 0x9
+ 1046 0148 04       		.byte	0x4
+ 1047 0149 4D010000 		.4byte	0x14d
+ 1048 014d 0A       		.uleb128 0xa
+ 1049 014e 14010000 		.4byte	0x114
+ 1050 0152 07       		.uleb128 0x7
+ 1051 0153 49010000 		.4byte	.LASF20
+ 1052 0157 01       		.byte	0x1
+ 1053 0158 60       		.byte	0x60
+ 1054 0159 97000000 		.4byte	0x97
+ 1055 015d 00000000 		.4byte	.LFB2
+ 1056 0161 2E000000 		.4byte	.LFE2-.LFB2
+ 1057 0165 01       		.uleb128 0x1
+ 1058 0166 9C       		.byte	0x9c
+ 1059 0167 7A010000 		.4byte	0x17a
+ 1060 016b 08       		.uleb128 0x8
+ 1061 016c 21030000 		.4byte	.LASF21
+ 1062 0170 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 25
+
+
+ 1063 0171 60       		.byte	0x60
+ 1064 0172 47010000 		.4byte	0x147
+ 1065 0176 02       		.uleb128 0x2
+ 1066 0177 91       		.byte	0x91
+ 1067 0178 74       		.sleb128 -12
+ 1068 0179 00       		.byte	0
+ 1069 017a 0B       		.uleb128 0xb
+ 1070 017b 7A000000 		.4byte	.LASF22
+ 1071 017f 02       		.byte	0x2
+ 1072 0180 32       		.byte	0x32
+ 1073 0181 00000000 		.4byte	.LFB3
+ 1074 0185 3E000000 		.4byte	.LFE3-.LFB3
+ 1075 0189 01       		.uleb128 0x1
+ 1076 018a 9C       		.byte	0x9c
+ 1077 018b D2010000 		.4byte	0x1d2
+ 1078 018f 08       		.uleb128 0x8
+ 1079 0190 21030000 		.4byte	.LASF21
+ 1080 0194 02       		.byte	0x2
+ 1081 0195 32       		.byte	0x32
+ 1082 0196 D2010000 		.4byte	0x1d2
+ 1083 019a 02       		.uleb128 0x2
+ 1084 019b 91       		.byte	0x91
+ 1085 019c 74       		.sleb128 -12
+ 1086 019d 0C       		.uleb128 0xc
+ 1087 019e 783100   		.ascii	"x1\000"
+ 1088 01a1 02       		.byte	0x2
+ 1089 01a2 32       		.byte	0x32
+ 1090 01a3 97000000 		.4byte	0x97
+ 1091 01a7 02       		.uleb128 0x2
+ 1092 01a8 91       		.byte	0x91
+ 1093 01a9 72       		.sleb128 -14
+ 1094 01aa 0C       		.uleb128 0xc
+ 1095 01ab 793100   		.ascii	"y1\000"
+ 1096 01ae 02       		.byte	0x2
+ 1097 01af 32       		.byte	0x32
+ 1098 01b0 97000000 		.4byte	0x97
+ 1099 01b4 02       		.uleb128 0x2
+ 1100 01b5 91       		.byte	0x91
+ 1101 01b6 70       		.sleb128 -16
+ 1102 01b7 0C       		.uleb128 0xc
+ 1103 01b8 783200   		.ascii	"x2\000"
+ 1104 01bb 02       		.byte	0x2
+ 1105 01bc 32       		.byte	0x32
+ 1106 01bd 97000000 		.4byte	0x97
+ 1107 01c1 02       		.uleb128 0x2
+ 1108 01c2 91       		.byte	0x91
+ 1109 01c3 6E       		.sleb128 -18
+ 1110 01c4 0C       		.uleb128 0xc
+ 1111 01c5 793200   		.ascii	"y2\000"
+ 1112 01c8 02       		.byte	0x2
+ 1113 01c9 32       		.byte	0x32
+ 1114 01ca 97000000 		.4byte	0x97
+ 1115 01ce 02       		.uleb128 0x2
+ 1116 01cf 91       		.byte	0x91
+ 1117 01d0 00       		.sleb128 0
+ 1118 01d1 00       		.byte	0
+ 1119 01d2 09       		.uleb128 0x9
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 26
+
+
+ 1120 01d3 04       		.byte	0x4
+ 1121 01d4 14010000 		.4byte	0x114
+ 1122 01d8 0B       		.uleb128 0xb
+ 1123 01d9 56000000 		.4byte	.LASF23
+ 1124 01dd 02       		.byte	0x2
+ 1125 01de 3F       		.byte	0x3f
+ 1126 01df 00000000 		.4byte	.LFB4
+ 1127 01e3 30000000 		.4byte	.LFE4-.LFB4
+ 1128 01e7 01       		.uleb128 0x1
+ 1129 01e8 9C       		.byte	0x9c
+ 1130 01e9 08020000 		.4byte	0x208
+ 1131 01ed 08       		.uleb128 0x8
+ 1132 01ee 21030000 		.4byte	.LASF21
+ 1133 01f2 02       		.byte	0x2
+ 1134 01f3 3F       		.byte	0x3f
+ 1135 01f4 D2010000 		.4byte	0x1d2
+ 1136 01f8 02       		.uleb128 0x2
+ 1137 01f9 91       		.byte	0x91
+ 1138 01fa 74       		.sleb128 -12
+ 1139 01fb 0C       		.uleb128 0xc
+ 1140 01fc 7700     		.ascii	"w\000"
+ 1141 01fe 02       		.byte	0x2
+ 1142 01ff 3F       		.byte	0x3f
+ 1143 0200 97000000 		.4byte	0x97
+ 1144 0204 02       		.uleb128 0x2
+ 1145 0205 91       		.byte	0x91
+ 1146 0206 72       		.sleb128 -14
+ 1147 0207 00       		.byte	0
+ 1148 0208 0B       		.uleb128 0xb
+ 1149 0209 B4010000 		.4byte	.LASF24
+ 1150 020d 02       		.byte	0x2
+ 1151 020e 49       		.byte	0x49
+ 1152 020f 00000000 		.4byte	.LFB5
+ 1153 0213 30000000 		.4byte	.LFE5-.LFB5
+ 1154 0217 01       		.uleb128 0x1
+ 1155 0218 9C       		.byte	0x9c
+ 1156 0219 38020000 		.4byte	0x238
+ 1157 021d 08       		.uleb128 0x8
+ 1158 021e 21030000 		.4byte	.LASF21
+ 1159 0222 02       		.byte	0x2
+ 1160 0223 49       		.byte	0x49
+ 1161 0224 D2010000 		.4byte	0x1d2
+ 1162 0228 02       		.uleb128 0x2
+ 1163 0229 91       		.byte	0x91
+ 1164 022a 74       		.sleb128 -12
+ 1165 022b 0C       		.uleb128 0xc
+ 1166 022c 6800     		.ascii	"h\000"
+ 1167 022e 02       		.byte	0x2
+ 1168 022f 49       		.byte	0x49
+ 1169 0230 97000000 		.4byte	0x97
+ 1170 0234 02       		.uleb128 0x2
+ 1171 0235 91       		.byte	0x91
+ 1172 0236 72       		.sleb128 -14
+ 1173 0237 00       		.byte	0
+ 1174 0238 0D       		.uleb128 0xd
+ 1175 0239 00000000 		.4byte	.LASF25
+ 1176 023d 02       		.byte	0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 27
+
+
+ 1177 023e 54       		.byte	0x54
+ 1178 023f 00000000 		.4byte	.LFB6
+ 1179 0243 50000000 		.4byte	.LFE6-.LFB6
+ 1180 0247 01       		.uleb128 0x1
+ 1181 0248 9C       		.byte	0x9c
+ 1182 0249 8C020000 		.4byte	0x28c
+ 1183 024d 08       		.uleb128 0x8
+ 1184 024e 21030000 		.4byte	.LASF21
+ 1185 0252 02       		.byte	0x2
+ 1186 0253 54       		.byte	0x54
+ 1187 0254 D2010000 		.4byte	0x1d2
+ 1188 0258 02       		.uleb128 0x2
+ 1189 0259 91       		.byte	0x91
+ 1190 025a 6C       		.sleb128 -20
+ 1191 025b 0C       		.uleb128 0xc
+ 1192 025c 7800     		.ascii	"x\000"
+ 1193 025e 02       		.byte	0x2
+ 1194 025f 54       		.byte	0x54
+ 1195 0260 97000000 		.4byte	0x97
+ 1196 0264 02       		.uleb128 0x2
+ 1197 0265 91       		.byte	0x91
+ 1198 0266 6A       		.sleb128 -22
+ 1199 0267 0C       		.uleb128 0xc
+ 1200 0268 7900     		.ascii	"y\000"
+ 1201 026a 02       		.byte	0x2
+ 1202 026b 54       		.byte	0x54
+ 1203 026c 97000000 		.4byte	0x97
+ 1204 0270 02       		.uleb128 0x2
+ 1205 0271 91       		.byte	0x91
+ 1206 0272 68       		.sleb128 -24
+ 1207 0273 0E       		.uleb128 0xe
+ 1208 0274 7700     		.ascii	"w\000"
+ 1209 0276 02       		.byte	0x2
+ 1210 0277 56       		.byte	0x56
+ 1211 0278 97000000 		.4byte	0x97
+ 1212 027c 02       		.uleb128 0x2
+ 1213 027d 91       		.byte	0x91
+ 1214 027e 76       		.sleb128 -10
+ 1215 027f 0E       		.uleb128 0xe
+ 1216 0280 6800     		.ascii	"h\000"
+ 1217 0282 02       		.byte	0x2
+ 1218 0283 57       		.byte	0x57
+ 1219 0284 97000000 		.4byte	0x97
+ 1220 0288 02       		.uleb128 0x2
+ 1221 0289 91       		.byte	0x91
+ 1222 028a 74       		.sleb128 -12
+ 1223 028b 00       		.byte	0
+ 1224 028c 0F       		.uleb128 0xf
+ 1225 028d C7010000 		.4byte	.LASF27
+ 1226 0291 02       		.byte	0x2
+ 1227 0292 63       		.byte	0x63
+ 1228 0293 8C000000 		.4byte	0x8c
+ 1229 0297 00000000 		.4byte	.LFB7
+ 1230 029b 42000000 		.4byte	.LFE7-.LFB7
+ 1231 029f 01       		.uleb128 0x1
+ 1232 02a0 9C       		.byte	0x9c
+ 1233 02a1 C2020000 		.4byte	0x2c2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 28
+
+
+ 1234 02a5 08       		.uleb128 0x8
+ 1235 02a6 21030000 		.4byte	.LASF21
+ 1236 02aa 02       		.byte	0x2
+ 1237 02ab 63       		.byte	0x63
+ 1238 02ac 47010000 		.4byte	0x147
+ 1239 02b0 02       		.uleb128 0x2
+ 1240 02b1 91       		.byte	0x91
+ 1241 02b2 6C       		.sleb128 -20
+ 1242 02b3 10       		.uleb128 0x10
+ 1243 02b4 7A010000 		.4byte	.LASF26
+ 1244 02b8 02       		.byte	0x2
+ 1245 02b9 65       		.byte	0x65
+ 1246 02ba 8C000000 		.4byte	0x8c
+ 1247 02be 02       		.uleb128 0x2
+ 1248 02bf 91       		.byte	0x91
+ 1249 02c0 74       		.sleb128 -12
+ 1250 02c1 00       		.byte	0
+ 1251 02c2 0F       		.uleb128 0xf
+ 1252 02c3 68000000 		.4byte	.LASF28
+ 1253 02c7 02       		.byte	0x2
+ 1254 02c8 73       		.byte	0x73
+ 1255 02c9 14030000 		.4byte	0x314
+ 1256 02cd 00000000 		.4byte	.LFB8
+ 1257 02d1 A2000000 		.4byte	.LFE8-.LFB8
+ 1258 02d5 01       		.uleb128 0x1
+ 1259 02d6 9C       		.byte	0x9c
+ 1260 02d7 14030000 		.4byte	0x314
+ 1261 02db 08       		.uleb128 0x8
+ 1262 02dc 65030000 		.4byte	.LASF29
+ 1263 02e0 02       		.byte	0x2
+ 1264 02e1 73       		.byte	0x73
+ 1265 02e2 D2010000 		.4byte	0x1d2
+ 1266 02e6 02       		.uleb128 0x2
+ 1267 02e7 91       		.byte	0x91
+ 1268 02e8 6C       		.sleb128 -20
+ 1269 02e9 08       		.uleb128 0x8
+ 1270 02ea 1C030000 		.4byte	.LASF30
+ 1271 02ee 02       		.byte	0x2
+ 1272 02ef 73       		.byte	0x73
+ 1273 02f0 47010000 		.4byte	0x147
+ 1274 02f4 02       		.uleb128 0x2
+ 1275 02f5 91       		.byte	0x91
+ 1276 02f6 68       		.sleb128 -24
+ 1277 02f7 08       		.uleb128 0x8
+ 1278 02f8 AF010000 		.4byte	.LASF31
+ 1279 02fc 02       		.byte	0x2
+ 1280 02fd 73       		.byte	0x73
+ 1281 02fe 47010000 		.4byte	0x147
+ 1282 0302 02       		.uleb128 0x2
+ 1283 0303 91       		.byte	0x91
+ 1284 0304 64       		.sleb128 -28
+ 1285 0305 10       		.uleb128 0x10
+ 1286 0306 2D000000 		.4byte	.LASF32
+ 1287 030a 02       		.byte	0x2
+ 1288 030b 7C       		.byte	0x7c
+ 1289 030c 14030000 		.4byte	0x314
+ 1290 0310 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 29
+
+
+ 1291 0311 91       		.byte	0x91
+ 1292 0312 77       		.sleb128 -9
+ 1293 0313 00       		.byte	0
+ 1294 0314 02       		.uleb128 0x2
+ 1295 0315 01       		.byte	0x1
+ 1296 0316 02       		.byte	0x2
+ 1297 0317 8D030000 		.4byte	.LASF33
+ 1298 031b 0B       		.uleb128 0xb
+ 1299 031c F8010000 		.4byte	.LASF34
+ 1300 0320 02       		.byte	0x2
+ 1301 0321 89       		.byte	0x89
+ 1302 0322 00000000 		.4byte	.LFB9
+ 1303 0326 78000000 		.4byte	.LFE9-.LFB9
+ 1304 032a 01       		.uleb128 0x1
+ 1305 032b 9C       		.byte	0x9c
+ 1306 032c 5B030000 		.4byte	0x35b
+ 1307 0330 08       		.uleb128 0x8
+ 1308 0331 1B000000 		.4byte	.LASF35
+ 1309 0335 02       		.byte	0x2
+ 1310 0336 89       		.byte	0x89
+ 1311 0337 D2010000 		.4byte	0x1d2
+ 1312 033b 02       		.uleb128 0x2
+ 1313 033c 91       		.byte	0x91
+ 1314 033d 74       		.sleb128 -12
+ 1315 033e 08       		.uleb128 0x8
+ 1316 033f 1C030000 		.4byte	.LASF30
+ 1317 0343 02       		.byte	0x2
+ 1318 0344 89       		.byte	0x89
+ 1319 0345 47010000 		.4byte	0x147
+ 1320 0349 02       		.uleb128 0x2
+ 1321 034a 91       		.byte	0x91
+ 1322 034b 70       		.sleb128 -16
+ 1323 034c 08       		.uleb128 0x8
+ 1324 034d AF010000 		.4byte	.LASF31
+ 1325 0351 02       		.byte	0x2
+ 1326 0352 89       		.byte	0x89
+ 1327 0353 47010000 		.4byte	0x147
+ 1328 0357 02       		.uleb128 0x2
+ 1329 0358 91       		.byte	0x91
+ 1330 0359 6C       		.sleb128 -20
+ 1331 035a 00       		.byte	0
+ 1332 035b 0F       		.uleb128 0xf
+ 1333 035c 3F030000 		.4byte	.LASF36
+ 1334 0360 02       		.byte	0x2
+ 1335 0361 97       		.byte	0x97
+ 1336 0362 14030000 		.4byte	0x314
+ 1337 0366 00000000 		.4byte	.LFB10
+ 1338 036a 60000000 		.4byte	.LFE10-.LFB10
+ 1339 036e 01       		.uleb128 0x1
+ 1340 036f 9C       		.byte	0x9c
+ 1341 0370 9F030000 		.4byte	0x39f
+ 1342 0374 0C       		.uleb128 0xc
+ 1343 0375 615F7000 		.ascii	"a_p\000"
+ 1344 0379 02       		.byte	0x2
+ 1345 037a 97       		.byte	0x97
+ 1346 037b 47010000 		.4byte	0x147
+ 1347 037f 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 30
+
+
+ 1348 0380 91       		.byte	0x91
+ 1349 0381 6C       		.sleb128 -20
+ 1350 0382 0C       		.uleb128 0xc
+ 1351 0383 705F7000 		.ascii	"p_p\000"
+ 1352 0387 02       		.byte	0x2
+ 1353 0388 97       		.byte	0x97
+ 1354 0389 9F030000 		.4byte	0x39f
+ 1355 038d 02       		.uleb128 0x2
+ 1356 038e 91       		.byte	0x91
+ 1357 038f 68       		.sleb128 -24
+ 1358 0390 10       		.uleb128 0x10
+ 1359 0391 74010000 		.4byte	.LASF37
+ 1360 0395 02       		.byte	0x2
+ 1361 0396 99       		.byte	0x99
+ 1362 0397 14030000 		.4byte	0x314
+ 1363 039b 02       		.uleb128 0x2
+ 1364 039c 91       		.byte	0x91
+ 1365 039d 77       		.sleb128 -9
+ 1366 039e 00       		.byte	0
+ 1367 039f 09       		.uleb128 0x9
+ 1368 03a0 04       		.byte	0x4
+ 1369 03a1 A5030000 		.4byte	0x3a5
+ 1370 03a5 0A       		.uleb128 0xa
+ 1371 03a6 D4000000 		.4byte	0xd4
+ 1372 03aa 0F       		.uleb128 0xf
+ 1373 03ab 36000000 		.4byte	.LASF38
+ 1374 03af 02       		.byte	0x2
+ 1375 03b0 A8       		.byte	0xa8
+ 1376 03b1 14030000 		.4byte	0x314
+ 1377 03b5 00000000 		.4byte	.LFB11
+ 1378 03b9 5C000000 		.4byte	.LFE11-.LFB11
+ 1379 03bd 01       		.uleb128 0x1
+ 1380 03be 9C       		.byte	0x9c
+ 1381 03bf E0030000 		.4byte	0x3e0
+ 1382 03c3 08       		.uleb128 0x8
+ 1383 03c4 1C030000 		.4byte	.LASF30
+ 1384 03c8 02       		.byte	0x2
+ 1385 03c9 A8       		.byte	0xa8
+ 1386 03ca 47010000 		.4byte	0x147
+ 1387 03ce 02       		.uleb128 0x2
+ 1388 03cf 91       		.byte	0x91
+ 1389 03d0 74       		.sleb128 -12
+ 1390 03d1 08       		.uleb128 0x8
+ 1391 03d2 AF010000 		.4byte	.LASF31
+ 1392 03d6 02       		.byte	0x2
+ 1393 03d7 A8       		.byte	0xa8
+ 1394 03d8 47010000 		.4byte	0x147
+ 1395 03dc 02       		.uleb128 0x2
+ 1396 03dd 91       		.byte	0x91
+ 1397 03de 70       		.sleb128 -16
+ 1398 03df 00       		.byte	0
+ 1399 03e0 0F       		.uleb128 0xf
+ 1400 03e1 5C010000 		.4byte	.LASF39
+ 1401 03e5 02       		.byte	0x2
+ 1402 03e6 B7       		.byte	0xb7
+ 1403 03e7 14030000 		.4byte	0x314
+ 1404 03eb 00000000 		.4byte	.LFB12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 31
+
+
+ 1405 03ef 60000000 		.4byte	.LFE12-.LFB12
+ 1406 03f3 01       		.uleb128 0x1
+ 1407 03f4 9C       		.byte	0x9c
+ 1408 03f5 24040000 		.4byte	0x424
+ 1409 03f9 08       		.uleb128 0x8
+ 1410 03fa 93030000 		.4byte	.LASF40
+ 1411 03fe 02       		.byte	0x2
+ 1412 03ff B7       		.byte	0xb7
+ 1413 0400 47010000 		.4byte	0x147
+ 1414 0404 02       		.uleb128 0x2
+ 1415 0405 91       		.byte	0x91
+ 1416 0406 6C       		.sleb128 -20
+ 1417 0407 08       		.uleb128 0x8
+ 1418 0408 83030000 		.4byte	.LASF41
+ 1419 040c 02       		.byte	0x2
+ 1420 040d B7       		.byte	0xb7
+ 1421 040e 47010000 		.4byte	0x147
+ 1422 0412 02       		.uleb128 0x2
+ 1423 0413 91       		.byte	0x91
+ 1424 0414 68       		.sleb128 -24
+ 1425 0415 10       		.uleb128 0x10
+ 1426 0416 43010000 		.4byte	.LASF42
+ 1427 041a 02       		.byte	0x2
+ 1428 041b B9       		.byte	0xb9
+ 1429 041c 14030000 		.4byte	0x314
+ 1430 0420 02       		.uleb128 0x2
+ 1431 0421 91       		.byte	0x91
+ 1432 0422 77       		.sleb128 -9
+ 1433 0423 00       		.byte	0
+ 1434 0424 0B       		.uleb128 0xb
+ 1435 0425 44000000 		.4byte	.LASF43
+ 1436 0429 02       		.byte	0x2
+ 1437 042a C8       		.byte	0xc8
+ 1438 042b 00000000 		.4byte	.LFB13
+ 1439 042f 68000000 		.4byte	.LFE13-.LFB13
+ 1440 0433 01       		.uleb128 0x1
+ 1441 0434 9C       		.byte	0x9c
+ 1442 0435 56040000 		.4byte	0x456
+ 1443 0439 0C       		.uleb128 0xc
+ 1444 043a 615F7000 		.ascii	"a_p\000"
+ 1445 043e 02       		.byte	0x2
+ 1446 043f C8       		.byte	0xc8
+ 1447 0440 D2010000 		.4byte	0x1d2
+ 1448 0444 02       		.uleb128 0x2
+ 1449 0445 91       		.byte	0x91
+ 1450 0446 74       		.sleb128 -12
+ 1451 0447 08       		.uleb128 0x8
+ 1452 0448 F1010000 		.4byte	.LASF44
+ 1453 044c 02       		.byte	0x2
+ 1454 044d C8       		.byte	0xc8
+ 1455 044e 56040000 		.4byte	0x456
+ 1456 0452 02       		.uleb128 0x2
+ 1457 0453 91       		.byte	0x91
+ 1458 0454 72       		.sleb128 -14
+ 1459 0455 00       		.byte	0
+ 1460 0456 0A       		.uleb128 0xa
+ 1461 0457 97000000 		.4byte	0x97
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 32
+
+
+ 1462 045b 00       		.byte	0
+ 1463              		.section	.debug_abbrev,"",%progbits
+ 1464              	.Ldebug_abbrev0:
+ 1465 0000 01       		.uleb128 0x1
+ 1466 0001 11       		.uleb128 0x11
+ 1467 0002 01       		.byte	0x1
+ 1468 0003 25       		.uleb128 0x25
+ 1469 0004 0E       		.uleb128 0xe
+ 1470 0005 13       		.uleb128 0x13
+ 1471 0006 0B       		.uleb128 0xb
+ 1472 0007 03       		.uleb128 0x3
+ 1473 0008 0E       		.uleb128 0xe
+ 1474 0009 1B       		.uleb128 0x1b
+ 1475 000a 0E       		.uleb128 0xe
+ 1476 000b 55       		.uleb128 0x55
+ 1477 000c 17       		.uleb128 0x17
+ 1478 000d 11       		.uleb128 0x11
+ 1479 000e 01       		.uleb128 0x1
+ 1480 000f 10       		.uleb128 0x10
+ 1481 0010 17       		.uleb128 0x17
+ 1482 0011 00       		.byte	0
+ 1483 0012 00       		.byte	0
+ 1484 0013 02       		.uleb128 0x2
+ 1485 0014 24       		.uleb128 0x24
+ 1486 0015 00       		.byte	0
+ 1487 0016 0B       		.uleb128 0xb
+ 1488 0017 0B       		.uleb128 0xb
+ 1489 0018 3E       		.uleb128 0x3e
+ 1490 0019 0B       		.uleb128 0xb
+ 1491 001a 03       		.uleb128 0x3
+ 1492 001b 0E       		.uleb128 0xe
+ 1493 001c 00       		.byte	0
+ 1494 001d 00       		.byte	0
+ 1495 001e 03       		.uleb128 0x3
+ 1496 001f 16       		.uleb128 0x16
+ 1497 0020 00       		.byte	0
+ 1498 0021 03       		.uleb128 0x3
+ 1499 0022 0E       		.uleb128 0xe
+ 1500 0023 3A       		.uleb128 0x3a
+ 1501 0024 0B       		.uleb128 0xb
+ 1502 0025 3B       		.uleb128 0x3b
+ 1503 0026 0B       		.uleb128 0xb
+ 1504 0027 49       		.uleb128 0x49
+ 1505 0028 13       		.uleb128 0x13
+ 1506 0029 00       		.byte	0
+ 1507 002a 00       		.byte	0
+ 1508 002b 04       		.uleb128 0x4
+ 1509 002c 24       		.uleb128 0x24
+ 1510 002d 00       		.byte	0
+ 1511 002e 0B       		.uleb128 0xb
+ 1512 002f 0B       		.uleb128 0xb
+ 1513 0030 3E       		.uleb128 0x3e
+ 1514 0031 0B       		.uleb128 0xb
+ 1515 0032 03       		.uleb128 0x3
+ 1516 0033 08       		.uleb128 0x8
+ 1517 0034 00       		.byte	0
+ 1518 0035 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 33
+
+
+ 1519 0036 05       		.uleb128 0x5
+ 1520 0037 13       		.uleb128 0x13
+ 1521 0038 01       		.byte	0x1
+ 1522 0039 0B       		.uleb128 0xb
+ 1523 003a 0B       		.uleb128 0xb
+ 1524 003b 3A       		.uleb128 0x3a
+ 1525 003c 0B       		.uleb128 0xb
+ 1526 003d 3B       		.uleb128 0x3b
+ 1527 003e 0B       		.uleb128 0xb
+ 1528 003f 01       		.uleb128 0x1
+ 1529 0040 13       		.uleb128 0x13
+ 1530 0041 00       		.byte	0
+ 1531 0042 00       		.byte	0
+ 1532 0043 06       		.uleb128 0x6
+ 1533 0044 0D       		.uleb128 0xd
+ 1534 0045 00       		.byte	0
+ 1535 0046 03       		.uleb128 0x3
+ 1536 0047 08       		.uleb128 0x8
+ 1537 0048 3A       		.uleb128 0x3a
+ 1538 0049 0B       		.uleb128 0xb
+ 1539 004a 3B       		.uleb128 0x3b
+ 1540 004b 0B       		.uleb128 0xb
+ 1541 004c 49       		.uleb128 0x49
+ 1542 004d 13       		.uleb128 0x13
+ 1543 004e 38       		.uleb128 0x38
+ 1544 004f 0B       		.uleb128 0xb
+ 1545 0050 00       		.byte	0
+ 1546 0051 00       		.byte	0
+ 1547 0052 07       		.uleb128 0x7
+ 1548 0053 2E       		.uleb128 0x2e
+ 1549 0054 01       		.byte	0x1
+ 1550 0055 03       		.uleb128 0x3
+ 1551 0056 0E       		.uleb128 0xe
+ 1552 0057 3A       		.uleb128 0x3a
+ 1553 0058 0B       		.uleb128 0xb
+ 1554 0059 3B       		.uleb128 0x3b
+ 1555 005a 0B       		.uleb128 0xb
+ 1556 005b 27       		.uleb128 0x27
+ 1557 005c 19       		.uleb128 0x19
+ 1558 005d 49       		.uleb128 0x49
+ 1559 005e 13       		.uleb128 0x13
+ 1560 005f 11       		.uleb128 0x11
+ 1561 0060 01       		.uleb128 0x1
+ 1562 0061 12       		.uleb128 0x12
+ 1563 0062 06       		.uleb128 0x6
+ 1564 0063 40       		.uleb128 0x40
+ 1565 0064 18       		.uleb128 0x18
+ 1566 0065 9742     		.uleb128 0x2117
+ 1567 0067 19       		.uleb128 0x19
+ 1568 0068 01       		.uleb128 0x1
+ 1569 0069 13       		.uleb128 0x13
+ 1570 006a 00       		.byte	0
+ 1571 006b 00       		.byte	0
+ 1572 006c 08       		.uleb128 0x8
+ 1573 006d 05       		.uleb128 0x5
+ 1574 006e 00       		.byte	0
+ 1575 006f 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 34
+
+
+ 1576 0070 0E       		.uleb128 0xe
+ 1577 0071 3A       		.uleb128 0x3a
+ 1578 0072 0B       		.uleb128 0xb
+ 1579 0073 3B       		.uleb128 0x3b
+ 1580 0074 0B       		.uleb128 0xb
+ 1581 0075 49       		.uleb128 0x49
+ 1582 0076 13       		.uleb128 0x13
+ 1583 0077 02       		.uleb128 0x2
+ 1584 0078 18       		.uleb128 0x18
+ 1585 0079 00       		.byte	0
+ 1586 007a 00       		.byte	0
+ 1587 007b 09       		.uleb128 0x9
+ 1588 007c 0F       		.uleb128 0xf
+ 1589 007d 00       		.byte	0
+ 1590 007e 0B       		.uleb128 0xb
+ 1591 007f 0B       		.uleb128 0xb
+ 1592 0080 49       		.uleb128 0x49
+ 1593 0081 13       		.uleb128 0x13
+ 1594 0082 00       		.byte	0
+ 1595 0083 00       		.byte	0
+ 1596 0084 0A       		.uleb128 0xa
+ 1597 0085 26       		.uleb128 0x26
+ 1598 0086 00       		.byte	0
+ 1599 0087 49       		.uleb128 0x49
+ 1600 0088 13       		.uleb128 0x13
+ 1601 0089 00       		.byte	0
+ 1602 008a 00       		.byte	0
+ 1603 008b 0B       		.uleb128 0xb
+ 1604 008c 2E       		.uleb128 0x2e
+ 1605 008d 01       		.byte	0x1
+ 1606 008e 3F       		.uleb128 0x3f
+ 1607 008f 19       		.uleb128 0x19
+ 1608 0090 03       		.uleb128 0x3
+ 1609 0091 0E       		.uleb128 0xe
+ 1610 0092 3A       		.uleb128 0x3a
+ 1611 0093 0B       		.uleb128 0xb
+ 1612 0094 3B       		.uleb128 0x3b
+ 1613 0095 0B       		.uleb128 0xb
+ 1614 0096 27       		.uleb128 0x27
+ 1615 0097 19       		.uleb128 0x19
+ 1616 0098 11       		.uleb128 0x11
+ 1617 0099 01       		.uleb128 0x1
+ 1618 009a 12       		.uleb128 0x12
+ 1619 009b 06       		.uleb128 0x6
+ 1620 009c 40       		.uleb128 0x40
+ 1621 009d 18       		.uleb128 0x18
+ 1622 009e 9742     		.uleb128 0x2117
+ 1623 00a0 19       		.uleb128 0x19
+ 1624 00a1 01       		.uleb128 0x1
+ 1625 00a2 13       		.uleb128 0x13
+ 1626 00a3 00       		.byte	0
+ 1627 00a4 00       		.byte	0
+ 1628 00a5 0C       		.uleb128 0xc
+ 1629 00a6 05       		.uleb128 0x5
+ 1630 00a7 00       		.byte	0
+ 1631 00a8 03       		.uleb128 0x3
+ 1632 00a9 08       		.uleb128 0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 35
+
+
+ 1633 00aa 3A       		.uleb128 0x3a
+ 1634 00ab 0B       		.uleb128 0xb
+ 1635 00ac 3B       		.uleb128 0x3b
+ 1636 00ad 0B       		.uleb128 0xb
+ 1637 00ae 49       		.uleb128 0x49
+ 1638 00af 13       		.uleb128 0x13
+ 1639 00b0 02       		.uleb128 0x2
+ 1640 00b1 18       		.uleb128 0x18
+ 1641 00b2 00       		.byte	0
+ 1642 00b3 00       		.byte	0
+ 1643 00b4 0D       		.uleb128 0xd
+ 1644 00b5 2E       		.uleb128 0x2e
+ 1645 00b6 01       		.byte	0x1
+ 1646 00b7 3F       		.uleb128 0x3f
+ 1647 00b8 19       		.uleb128 0x19
+ 1648 00b9 03       		.uleb128 0x3
+ 1649 00ba 0E       		.uleb128 0xe
+ 1650 00bb 3A       		.uleb128 0x3a
+ 1651 00bc 0B       		.uleb128 0xb
+ 1652 00bd 3B       		.uleb128 0x3b
+ 1653 00be 0B       		.uleb128 0xb
+ 1654 00bf 27       		.uleb128 0x27
+ 1655 00c0 19       		.uleb128 0x19
+ 1656 00c1 11       		.uleb128 0x11
+ 1657 00c2 01       		.uleb128 0x1
+ 1658 00c3 12       		.uleb128 0x12
+ 1659 00c4 06       		.uleb128 0x6
+ 1660 00c5 40       		.uleb128 0x40
+ 1661 00c6 18       		.uleb128 0x18
+ 1662 00c7 9642     		.uleb128 0x2116
+ 1663 00c9 19       		.uleb128 0x19
+ 1664 00ca 01       		.uleb128 0x1
+ 1665 00cb 13       		.uleb128 0x13
+ 1666 00cc 00       		.byte	0
+ 1667 00cd 00       		.byte	0
+ 1668 00ce 0E       		.uleb128 0xe
+ 1669 00cf 34       		.uleb128 0x34
+ 1670 00d0 00       		.byte	0
+ 1671 00d1 03       		.uleb128 0x3
+ 1672 00d2 08       		.uleb128 0x8
+ 1673 00d3 3A       		.uleb128 0x3a
+ 1674 00d4 0B       		.uleb128 0xb
+ 1675 00d5 3B       		.uleb128 0x3b
+ 1676 00d6 0B       		.uleb128 0xb
+ 1677 00d7 49       		.uleb128 0x49
+ 1678 00d8 13       		.uleb128 0x13
+ 1679 00d9 02       		.uleb128 0x2
+ 1680 00da 18       		.uleb128 0x18
+ 1681 00db 00       		.byte	0
+ 1682 00dc 00       		.byte	0
+ 1683 00dd 0F       		.uleb128 0xf
+ 1684 00de 2E       		.uleb128 0x2e
+ 1685 00df 01       		.byte	0x1
+ 1686 00e0 3F       		.uleb128 0x3f
+ 1687 00e1 19       		.uleb128 0x19
+ 1688 00e2 03       		.uleb128 0x3
+ 1689 00e3 0E       		.uleb128 0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 36
+
+
+ 1690 00e4 3A       		.uleb128 0x3a
+ 1691 00e5 0B       		.uleb128 0xb
+ 1692 00e6 3B       		.uleb128 0x3b
+ 1693 00e7 0B       		.uleb128 0xb
+ 1694 00e8 27       		.uleb128 0x27
+ 1695 00e9 19       		.uleb128 0x19
+ 1696 00ea 49       		.uleb128 0x49
+ 1697 00eb 13       		.uleb128 0x13
+ 1698 00ec 11       		.uleb128 0x11
+ 1699 00ed 01       		.uleb128 0x1
+ 1700 00ee 12       		.uleb128 0x12
+ 1701 00ef 06       		.uleb128 0x6
+ 1702 00f0 40       		.uleb128 0x40
+ 1703 00f1 18       		.uleb128 0x18
+ 1704 00f2 9742     		.uleb128 0x2117
+ 1705 00f4 19       		.uleb128 0x19
+ 1706 00f5 01       		.uleb128 0x1
+ 1707 00f6 13       		.uleb128 0x13
+ 1708 00f7 00       		.byte	0
+ 1709 00f8 00       		.byte	0
+ 1710 00f9 10       		.uleb128 0x10
+ 1711 00fa 34       		.uleb128 0x34
+ 1712 00fb 00       		.byte	0
+ 1713 00fc 03       		.uleb128 0x3
+ 1714 00fd 0E       		.uleb128 0xe
+ 1715 00fe 3A       		.uleb128 0x3a
+ 1716 00ff 0B       		.uleb128 0xb
+ 1717 0100 3B       		.uleb128 0x3b
+ 1718 0101 0B       		.uleb128 0xb
+ 1719 0102 49       		.uleb128 0x49
+ 1720 0103 13       		.uleb128 0x13
+ 1721 0104 02       		.uleb128 0x2
+ 1722 0105 18       		.uleb128 0x18
+ 1723 0106 00       		.byte	0
+ 1724 0107 00       		.byte	0
+ 1725 0108 00       		.byte	0
+ 1726              		.section	.debug_aranges,"",%progbits
+ 1727 0000 7C000000 		.4byte	0x7c
+ 1728 0004 0200     		.2byte	0x2
+ 1729 0006 00000000 		.4byte	.Ldebug_info0
+ 1730 000a 04       		.byte	0x4
+ 1731 000b 00       		.byte	0
+ 1732 000c 0000     		.2byte	0
+ 1733 000e 0000     		.2byte	0
+ 1734 0010 00000000 		.4byte	.LFB1
+ 1735 0014 2E000000 		.4byte	.LFE1-.LFB1
+ 1736 0018 00000000 		.4byte	.LFB2
+ 1737 001c 2E000000 		.4byte	.LFE2-.LFB2
+ 1738 0020 00000000 		.4byte	.LFB3
+ 1739 0024 3E000000 		.4byte	.LFE3-.LFB3
+ 1740 0028 00000000 		.4byte	.LFB4
+ 1741 002c 30000000 		.4byte	.LFE4-.LFB4
+ 1742 0030 00000000 		.4byte	.LFB5
+ 1743 0034 30000000 		.4byte	.LFE5-.LFB5
+ 1744 0038 00000000 		.4byte	.LFB6
+ 1745 003c 50000000 		.4byte	.LFE6-.LFB6
+ 1746 0040 00000000 		.4byte	.LFB7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 37
+
+
+ 1747 0044 42000000 		.4byte	.LFE7-.LFB7
+ 1748 0048 00000000 		.4byte	.LFB8
+ 1749 004c A2000000 		.4byte	.LFE8-.LFB8
+ 1750 0050 00000000 		.4byte	.LFB9
+ 1751 0054 78000000 		.4byte	.LFE9-.LFB9
+ 1752 0058 00000000 		.4byte	.LFB10
+ 1753 005c 60000000 		.4byte	.LFE10-.LFB10
+ 1754 0060 00000000 		.4byte	.LFB11
+ 1755 0064 5C000000 		.4byte	.LFE11-.LFB11
+ 1756 0068 00000000 		.4byte	.LFB12
+ 1757 006c 60000000 		.4byte	.LFE12-.LFB12
+ 1758 0070 00000000 		.4byte	.LFB13
+ 1759 0074 68000000 		.4byte	.LFE13-.LFB13
+ 1760 0078 00000000 		.4byte	0
+ 1761 007c 00000000 		.4byte	0
+ 1762              		.section	.debug_ranges,"",%progbits
+ 1763              	.Ldebug_ranges0:
+ 1764 0000 00000000 		.4byte	.LFB1
+ 1765 0004 2E000000 		.4byte	.LFE1
+ 1766 0008 00000000 		.4byte	.LFB2
+ 1767 000c 2E000000 		.4byte	.LFE2
+ 1768 0010 00000000 		.4byte	.LFB3
+ 1769 0014 3E000000 		.4byte	.LFE3
+ 1770 0018 00000000 		.4byte	.LFB4
+ 1771 001c 30000000 		.4byte	.LFE4
+ 1772 0020 00000000 		.4byte	.LFB5
+ 1773 0024 30000000 		.4byte	.LFE5
+ 1774 0028 00000000 		.4byte	.LFB6
+ 1775 002c 50000000 		.4byte	.LFE6
+ 1776 0030 00000000 		.4byte	.LFB7
+ 1777 0034 42000000 		.4byte	.LFE7
+ 1778 0038 00000000 		.4byte	.LFB8
+ 1779 003c A2000000 		.4byte	.LFE8
+ 1780 0040 00000000 		.4byte	.LFB9
+ 1781 0044 78000000 		.4byte	.LFE9
+ 1782 0048 00000000 		.4byte	.LFB10
+ 1783 004c 60000000 		.4byte	.LFE10
+ 1784 0050 00000000 		.4byte	.LFB11
+ 1785 0054 5C000000 		.4byte	.LFE11
+ 1786 0058 00000000 		.4byte	.LFB12
+ 1787 005c 60000000 		.4byte	.LFE12
+ 1788 0060 00000000 		.4byte	.LFB13
+ 1789 0064 68000000 		.4byte	.LFE13
+ 1790 0068 00000000 		.4byte	0
+ 1791 006c 00000000 		.4byte	0
+ 1792              		.section	.debug_line,"",%progbits
+ 1793              	.Ldebug_line0:
+ 1794 0000 FC020000 		.section	.debug_str,"MS",%progbits,1
+ 1794      02009A01 
+ 1794      00000201 
+ 1794      FB0E0D00 
+ 1794      01010101 
+ 1795              	.LASF25:
+ 1796 0000 6C765F61 		.ascii	"lv_area_set_pos\000"
+ 1796      7265615F 
+ 1796      7365745F 
+ 1796      706F7300 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 38
+
+
+ 1797              	.LASF13:
+ 1798 0010 6C765F63 		.ascii	"lv_coord_t\000"
+ 1798      6F6F7264 
+ 1798      5F7400
+ 1799              	.LASF35:
+ 1800 001b 615F7265 		.ascii	"a_res_p\000"
+ 1800      735F7000 
+ 1801              	.LASF5:
+ 1802 0023 5F5F696E 		.ascii	"__int16_t\000"
+ 1802      7431365F 
+ 1802      7400
+ 1803              	.LASF32:
+ 1804 002d 756E696F 		.ascii	"union_ok\000"
+ 1804      6E5F6F6B 
+ 1804      00
+ 1805              	.LASF38:
+ 1806 0036 6C765F61 		.ascii	"lv_area_is_on\000"
+ 1806      7265615F 
+ 1806      69735F6F 
+ 1806      6E00
+ 1807              	.LASF43:
+ 1808 0044 6C765F61 		.ascii	"lv_area_increment\000"
+ 1808      7265615F 
+ 1808      696E6372 
+ 1808      656D656E 
+ 1808      7400
+ 1809              	.LASF23:
+ 1810 0056 6C765F61 		.ascii	"lv_area_set_width\000"
+ 1810      7265615F 
+ 1810      7365745F 
+ 1810      77696474 
+ 1810      6800
+ 1811              	.LASF28:
+ 1812 0068 6C765F61 		.ascii	"lv_area_intersect\000"
+ 1812      7265615F 
+ 1812      696E7465 
+ 1812      72736563 
+ 1812      7400
+ 1813              	.LASF22:
+ 1814 007a 6C765F61 		.ascii	"lv_area_set\000"
+ 1814      7265615F 
+ 1814      73657400 
+ 1815              	.LASF45:
+ 1816 0086 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1816      43313120 
+ 1816      352E342E 
+ 1816      31203230 
+ 1816      31363036 
+ 1817 00b9 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1817      20726576 
+ 1817      6973696F 
+ 1817      6E203233 
+ 1817      37373135 
+ 1818 00ec 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 1818      70202D6D 
+ 1818      6670753D 
+ 1818      66707634 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 39
+
+
+ 1818      2D73702D 
+ 1819 011f 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1819      6F6E7320 
+ 1819      2D666661 
+ 1819      742D6C74 
+ 1819      6F2D6F62 
+ 1820              	.LASF2:
+ 1821 0139 73686F72 		.ascii	"short int\000"
+ 1821      7420696E 
+ 1821      7400
+ 1822              	.LASF42:
+ 1823 0143 69735F69 		.ascii	"is_in\000"
+ 1823      6E00
+ 1824              	.LASF20:
+ 1825 0149 6C765F61 		.ascii	"lv_area_get_height\000"
+ 1825      7265615F 
+ 1825      6765745F 
+ 1825      68656967 
+ 1825      687400
+ 1826              	.LASF39:
+ 1827 015c 6C765F61 		.ascii	"lv_area_is_in\000"
+ 1827      7265615F 
+ 1827      69735F69 
+ 1827      6E00
+ 1828              	.LASF18:
+ 1829 016a 6C765F61 		.ascii	"lv_area_t\000"
+ 1829      7265615F 
+ 1829      7400
+ 1830              	.LASF37:
+ 1831 0174 69735F6F 		.ascii	"is_on\000"
+ 1831      6E00
+ 1832              	.LASF26:
+ 1833 017a 73697A65 		.ascii	"size\000"
+ 1833      00
+ 1834              	.LASF17:
+ 1835 017f 6C765F70 		.ascii	"lv_point_t\000"
+ 1835      6F696E74 
+ 1835      5F7400
+ 1836              	.LASF7:
+ 1837 018a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1837      20756E73 
+ 1837      69676E65 
+ 1837      6420696E 
+ 1837      7400
+ 1838              	.LASF3:
+ 1839 019c 73686F72 		.ascii	"short unsigned int\000"
+ 1839      7420756E 
+ 1839      7369676E 
+ 1839      65642069 
+ 1839      6E7400
+ 1840              	.LASF31:
+ 1841 01af 61325F70 		.ascii	"a2_p\000"
+ 1841      00
+ 1842              	.LASF24:
+ 1843 01b4 6C765F61 		.ascii	"lv_area_set_height\000"
+ 1843      7265615F 
+ 1843      7365745F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 40
+
+
+ 1843      68656967 
+ 1843      687400
+ 1844              	.LASF27:
+ 1845 01c7 6C765F61 		.ascii	"lv_area_get_size\000"
+ 1845      7265615F 
+ 1845      6765745F 
+ 1845      73697A65 
+ 1845      00
+ 1846              	.LASF1:
+ 1847 01d8 756E7369 		.ascii	"unsigned char\000"
+ 1847      676E6564 
+ 1847      20636861 
+ 1847      7200
+ 1848              	.LASF6:
+ 1849 01e6 5F5F7569 		.ascii	"__uint32_t\000"
+ 1849      6E743332 
+ 1849      5F7400
+ 1850              	.LASF44:
+ 1851 01f1 616D6F75 		.ascii	"amount\000"
+ 1851      6E7400
+ 1852              	.LASF34:
+ 1853 01f8 6C765F61 		.ascii	"lv_area_join\000"
+ 1853      7265615F 
+ 1853      6A6F696E 
+ 1853      00
+ 1854              	.LASF10:
+ 1855 0205 756E7369 		.ascii	"unsigned int\000"
+ 1855      676E6564 
+ 1855      20696E74 
+ 1855      00
+ 1856              	.LASF9:
+ 1857 0212 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1857      206C6F6E 
+ 1857      6720756E 
+ 1857      7369676E 
+ 1857      65642069 
+ 1858              	.LASF11:
+ 1859 0229 696E7431 		.ascii	"int16_t\000"
+ 1859      365F7400 
+ 1860              	.LASF47:
+ 1861 0231 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 1861      73657273 
+ 1861      5C746D6A 
+ 1861      33325C44 
+ 1861      6F63756D 
+ 1862 025e 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 1862      6C6C6F73 
+ 1862      636F7065 
+ 1862      5F53656E 
+ 1862      696F725F 
+ 1863 028f 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 1863      5C74636F 
+ 1863      6D5F6170 
+ 1863      705C7463 
+ 1863      6F6D5F61 
+ 1864 02bf 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 1864      736F6336 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 41
+
+
+ 1864      2E637964 
+ 1864      736E00
+ 1865              	.LASF46:
+ 1866 02ce 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 1866      2E5C2E2E 
+ 1866      5C6C7667 
+ 1866      6C5C7665 
+ 1866      7273696F 
+ 1867 02fa 5C6C765F 		.ascii	"\\lv_area.c\000"
+ 1867      61726561 
+ 1867      2E6300
+ 1868              	.LASF15:
+ 1869 0305 73697A65 		.ascii	"sizetype\000"
+ 1869      74797065 
+ 1869      00
+ 1870              	.LASF8:
+ 1871 030e 6C6F6E67 		.ascii	"long long int\000"
+ 1871      206C6F6E 
+ 1871      6720696E 
+ 1871      7400
+ 1872              	.LASF30:
+ 1873 031c 61315F70 		.ascii	"a1_p\000"
+ 1873      00
+ 1874              	.LASF21:
+ 1875 0321 61726561 		.ascii	"area_p\000"
+ 1875      5F7000
+ 1876              	.LASF16:
+ 1877 0328 63686172 		.ascii	"char\000"
+ 1877      00
+ 1878              	.LASF19:
+ 1879 032d 6C765F61 		.ascii	"lv_area_get_width\000"
+ 1879      7265615F 
+ 1879      6765745F 
+ 1879      77696474 
+ 1879      6800
+ 1880              	.LASF36:
+ 1881 033f 6C765F61 		.ascii	"lv_area_is_point_on\000"
+ 1881      7265615F 
+ 1881      69735F70 
+ 1881      6F696E74 
+ 1881      5F6F6E00 
+ 1882              	.LASF12:
+ 1883 0353 75696E74 		.ascii	"uint32_t\000"
+ 1883      33325F74 
+ 1883      00
+ 1884              	.LASF4:
+ 1885 035c 6C6F6E67 		.ascii	"long int\000"
+ 1885      20696E74 
+ 1885      00
+ 1886              	.LASF29:
+ 1887 0365 7265735F 		.ascii	"res_p\000"
+ 1887      7000
+ 1888              	.LASF14:
+ 1889 036b 6C6F6E67 		.ascii	"long double\000"
+ 1889      20646F75 
+ 1889      626C6500 
+ 1890              	.LASF0:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccS9z4Wj.s 			page 42
+
+
+ 1891 0377 7369676E 		.ascii	"signed char\000"
+ 1891      65642063 
+ 1891      68617200 
+ 1892              	.LASF41:
+ 1893 0383 61686F6C 		.ascii	"aholder_p\000"
+ 1893      6465725F 
+ 1893      7000
+ 1894              	.LASF33:
+ 1895 038d 5F426F6F 		.ascii	"_Bool\000"
+ 1895      6C00
+ 1896              	.LASF40:
+ 1897 0393 61696E5F 		.ascii	"ain_p\000"
+ 1897      7000
+ 1898              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

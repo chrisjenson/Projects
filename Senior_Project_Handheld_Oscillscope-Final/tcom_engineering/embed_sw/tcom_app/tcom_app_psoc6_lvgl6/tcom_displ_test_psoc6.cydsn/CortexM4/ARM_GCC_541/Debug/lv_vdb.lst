@@ -1,0 +1,424 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_vdb.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_flush_ready,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_flush_ready
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_flush_ready, %function
+  26              	lv_flush_ready:
+  27              	.LFB0:
+  28              		.file 1 "..\\..\\..\\display\\lvgl\\lv_core\\lv_vdb.c"
+   1:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+   2:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @file lv_vdb.c
+   3:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *
+   4:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+   5:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+   6:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*********************
+   7:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *      INCLUDES
+   8:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *********************/
+   9:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #include "lv_vdb.h"
+  10:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_SIZE != 0
+  11:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  12:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #include "../lv_hal/lv_hal_disp.h"
+  13:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #include "../lv_misc/lv_log.h"
+  14:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #include <stddef.h>
+  15:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  16:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*********************
+  17:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *      DEFINES
+  18:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *********************/
+  19:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #ifndef LV_ATTRIBUTE_FLUSH_READY
+  20:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #define LV_ATTRIBUTE_FLUSH_READY
+  21:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+  22:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  23:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #ifndef LV_ATTRIBUTE_MEM_ALIGN
+  24:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #define LV_ATTRIBUTE_MEM_ALIGN
+  25:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+  26:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  27:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+  28:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *      TYPEDEFS
+  29:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 2
+
+
+  30:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  31:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+  32:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *  STATIC PROTOTYPES
+  33:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+  34:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  35:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+  36:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *  STATIC VARIABLES
+  37:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+  38:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  39:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*Simple VDB*/
+  40:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0
+  41:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  if LV_VDB_ADR == 0
+  42:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*If the buffer address is not specified  simply allocate it*/
+  43:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static LV_ATTRIBUTE_MEM_ALIGN uint8_t vdb_buf[LV_VDB_SIZE_IN_BYTES];
+  44:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static lv_vdb_t vdb = {.buf = (lv_color_t *)vdb_buf};
+  45:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  else     /*LV_VDB_ADR != 0*/
+  46:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*If the buffer address is specified use that address*/
+  47:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static lv_vdb_t vdb = {.buf = (lv_color_t *)LV_VDB_ADR};
+  48:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  endif
+  49:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  50:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*LV_VDB_DOUBLE != 0*/
+  51:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+  52:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*Double VDB*/
+  53:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static uint8_t vdb_active = 0;
+  54:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  if LV_VDB_ADR == 0
+  55:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*If the buffer address is not specified  simply allocate it*/
+  56:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static LV_ATTRIBUTE_MEM_ALIGN uint8_t vdb_buf1[LV_VDB_SIZE_IN_BYTES];
+  57:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static LV_ATTRIBUTE_MEM_ALIGN uint8_t vdb_buf2[LV_VDB_SIZE_IN_BYTES];
+  58:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static lv_vdb_t vdb[2] = {{.buf = (lv_color_t *) vdb_buf1}, {.buf = (lv_color_t *) vdb_buf2}};
+  59:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  else /*LV_VDB_ADR != 0*/
+  60:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /*If the buffer address is specified use that address*/
+  61:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static lv_vdb_t vdb[2] = {{.buf = (lv_color_t *)LV_VDB_ADR}, {.buf = (lv_color_t *)LV_VDB2_ADR}};
+  62:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  endif
+  63:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+  64:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  65:..\..\..\display\lvgl\lv_core/lv_vdb.c **** static volatile bool vdb_flushing = false;
+  66:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  67:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+  68:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *      MACROS
+  69:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+  70:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  71:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+  72:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *   GLOBAL FUNCTIONS
+  73:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+  74:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  75:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+  76:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Get the 'vdb' variable or allocate one in LV_VDB_DOUBLE mode
+  77:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @return pointer to a 'vdb' variable
+  78:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+  79:..\..\..\display\lvgl\lv_core/lv_vdb.c **** lv_vdb_t * lv_vdb_get(void)
+  80:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+  81:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0
+  82:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /* Wait until VDB is flushing.
+  83:..\..\..\display\lvgl\lv_core/lv_vdb.c ****      * (Until this user calls of 'lv_flush_ready()' in the display drivers's flush function*/
+  84:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     while(vdb_flushing);
+  85:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  86:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 3
+
+
+  87:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+  88:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*If already there is an active do nothing*/
+  89:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb[vdb_active];
+  90:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+  91:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+  92:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+  93:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+  94:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Flush the content of the VDB
+  95:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+  96:..\..\..\display\lvgl\lv_core/lv_vdb.c **** void lv_vdb_flush(void)
+  97:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+  98:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     lv_vdb_t * vdb_act = lv_vdb_get();
+  99:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     if(!vdb_act) {
+ 100:..\..\..\display\lvgl\lv_core/lv_vdb.c ****         LV_LOG_WARN("Invalid VDB pointer");
+ 101:..\..\..\display\lvgl\lv_core/lv_vdb.c ****         return;
+ 102:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     }
+ 103:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 104:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*Don't start a new flush while the previous is not finished*/
+ 105:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE
+ 106:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     while(vdb_flushing);
+ 107:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif  /*LV_VDB_DOUBLE*/
+ 108:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 109:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb_flushing = true;
+ 110:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 111:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*Flush the rendered content to the display*/
+ 112:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     lv_disp_flush(vdb_act->area.x1, vdb_act->area.y1, vdb_act->area.x2, vdb_act->area.y2, vdb_act->
+ 113:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 114:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 115:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE
+ 116:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*Make the other VDB active. The content of the current will be kept until the next flush*/
+ 117:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb_active++;
+ 118:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb_active &= 0x1;
+ 119:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 120:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*If the screen is transparent initialize it when the new VDB is selected*/
+ 121:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  if LV_COLOR_SCREEN_TRANSP
+ 122:..\..\..\display\lvgl\lv_core/lv_vdb.c ****         memset(vdb[vdb_active].buf, 0x00, LV_VDB_SIZE_IN_BYTES);
+ 123:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #  endif  /*LV_COLOR_SCREEN_TRANSP*/
+ 124:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 125:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif  /*#if LV_VDB_DOUBLE*/
+ 126:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 127:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 128:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 129:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ 130:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Set the address of VDB buffer(s) manually. To use this set `LV_VDB_ADR` (and `LV_VDB2_ADR`) to `
+ 131:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * It should be called before `lv_init()`. The size of the buffer should be: `LV_VDB_SIZE_IN_BYTES`
+ 132:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @param buf1 address of the VDB.
+ 133:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @param buf2 address of the second buffer. `NULL` if `LV_VDB_DOUBLE  0`
+ 134:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 135:..\..\..\display\lvgl\lv_core/lv_vdb.c **** void lv_vdb_set_adr(void * buf1, void * buf2)
+ 136:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+ 137:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0
+ 138:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     (void) buf2;   /*unused*/
+ 139:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb.buf = buf1;
+ 140:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+ 141:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb[0].buf = buf1;
+ 142:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb[1].buf = buf2;
+ 143:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 4
+
+
+ 144:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 145:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 146:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ 147:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Call in the display driver's  'disp_flush' function when the flushing is finished
+ 148:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 149:..\..\..\display\lvgl\lv_core/lv_vdb.c **** LV_ATTRIBUTE_FLUSH_READY void lv_flush_ready(void)
+ 150:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+ 151:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     vdb_flushing = false;
+ 152:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 153:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*If the screen is transparent initialize it when the flushing is ready*/
+ 154:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0 && LV_COLOR_SCREEN_TRANSP
+ 155:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     memset(vdb_buf, 0x00, LV_VDB_SIZE_IN_BYTES);
+ 156:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+ 157:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 158:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 159:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ 160:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Get currently active VDB, where the drawing happens. Used with `LV_VDB_DOUBLE  1`
+ 161:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @return pointer to the active VDB. If `LV_VDB_DOUBLE  0` give the single VDB
+ 162:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 163:..\..\..\display\lvgl\lv_core/lv_vdb.c **** lv_vdb_t * lv_vdb_get_active(void)
+ 164:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+ 165:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0
+ 166:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb;
+ 167:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+ 168:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb[vdb_active];
+ 169:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+ 170:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 171:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 172:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ 173:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Get currently inactive VDB, which is being displayed or being flushed. Used with `LV_VDB_DOUBLE 
+ 174:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @return pointer to the inactive VDB. If `LV_VDB_DOUBLE  0` give the single VDB
+ 175:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 176:..\..\..\display\lvgl\lv_core/lv_vdb.c **** lv_vdb_t * lv_vdb_get_inactive(void)
+ 177:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+ 178:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #if LV_VDB_DOUBLE == 0
+ 179:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb;
+ 180:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+ 181:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return &vdb[(vdb_active + 1) & 0x1];
+ 182:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #endif
+ 183:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 184:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 185:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ 186:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Whether the flushing is in progress or not
+ 187:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * @return true: flushing is in progress; false: flushing ready
+ 188:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 189:..\..\..\display\lvgl\lv_core/lv_vdb.c **** bool lv_vdb_is_flushing(void)
+ 190:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+ 191:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     return vdb_flushing;
+ 192:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+ 193:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 194:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**********************
+ 195:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  *   STATIC FUNCTIONS
+ 196:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  **********************/
+ 197:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 198:..\..\..\display\lvgl\lv_core/lv_vdb.c **** #else
+ 199:..\..\..\display\lvgl\lv_core/lv_vdb.c **** 
+ 200:..\..\..\display\lvgl\lv_core/lv_vdb.c **** /**
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 5
+
+
+ 201:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  * Just for compatibility
+ 202:..\..\..\display\lvgl\lv_core/lv_vdb.c ****  */
+ 203:..\..\..\display\lvgl\lv_core/lv_vdb.c **** void lv_flush_ready(void)
+ 204:..\..\..\display\lvgl\lv_core/lv_vdb.c **** {
+  29              		.loc 1 204 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+ 205:..\..\..\display\lvgl\lv_core/lv_vdb.c ****     /*Do nothing. It is used only for VDB*/
+ 206:..\..\..\display\lvgl\lv_core/lv_vdb.c **** }
+  39              		.loc 1 206 0
+  40 0004 00BF     		nop
+  41 0006 BD46     		mov	sp, r7
+  42              		.cfi_def_cfa_register 13
+  43              		@ sp needed
+  44 0008 5DF8047B 		ldr	r7, [sp], #4
+  45              		.cfi_restore 7
+  46              		.cfi_def_cfa_offset 0
+  47 000c 7047     		bx	lr
+  48              		.cfi_endproc
+  49              	.LFE0:
+  50              		.size	lv_flush_ready, .-lv_flush_ready
+  51 000e 00BF     		.text
+  52              	.Letext0:
+  53              		.section	.debug_info,"",%progbits
+  54              	.Ldebug_info0:
+  55 0000 33000000 		.4byte	0x33
+  56 0004 0400     		.2byte	0x4
+  57 0006 00000000 		.4byte	.Ldebug_abbrev0
+  58 000a 04       		.byte	0x4
+  59 000b 01       		.uleb128 0x1
+  60 000c 00000000 		.4byte	.LASF0
+  61 0010 0C       		.byte	0xc
+  62 0011 B3000000 		.4byte	.LASF1
+  63 0015 DA000000 		.4byte	.LASF2
+  64 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  65 001d 00000000 		.4byte	0
+  66 0021 00000000 		.4byte	.Ldebug_line0
+  67 0025 02       		.uleb128 0x2
+  68 0026 60010000 		.4byte	.LASF3
+  69 002a 01       		.byte	0x1
+  70 002b CB       		.byte	0xcb
+  71 002c 00000000 		.4byte	.LFB0
+  72 0030 0E000000 		.4byte	.LFE0-.LFB0
+  73 0034 01       		.uleb128 0x1
+  74 0035 9C       		.byte	0x9c
+  75 0036 00       		.byte	0
+  76              		.section	.debug_abbrev,"",%progbits
+  77              	.Ldebug_abbrev0:
+  78 0000 01       		.uleb128 0x1
+  79 0001 11       		.uleb128 0x11
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 6
+
+
+  80 0002 01       		.byte	0x1
+  81 0003 25       		.uleb128 0x25
+  82 0004 0E       		.uleb128 0xe
+  83 0005 13       		.uleb128 0x13
+  84 0006 0B       		.uleb128 0xb
+  85 0007 03       		.uleb128 0x3
+  86 0008 0E       		.uleb128 0xe
+  87 0009 1B       		.uleb128 0x1b
+  88 000a 0E       		.uleb128 0xe
+  89 000b 55       		.uleb128 0x55
+  90 000c 17       		.uleb128 0x17
+  91 000d 11       		.uleb128 0x11
+  92 000e 01       		.uleb128 0x1
+  93 000f 10       		.uleb128 0x10
+  94 0010 17       		.uleb128 0x17
+  95 0011 00       		.byte	0
+  96 0012 00       		.byte	0
+  97 0013 02       		.uleb128 0x2
+  98 0014 2E       		.uleb128 0x2e
+  99 0015 00       		.byte	0
+ 100 0016 3F       		.uleb128 0x3f
+ 101 0017 19       		.uleb128 0x19
+ 102 0018 03       		.uleb128 0x3
+ 103 0019 0E       		.uleb128 0xe
+ 104 001a 3A       		.uleb128 0x3a
+ 105 001b 0B       		.uleb128 0xb
+ 106 001c 3B       		.uleb128 0x3b
+ 107 001d 0B       		.uleb128 0xb
+ 108 001e 27       		.uleb128 0x27
+ 109 001f 19       		.uleb128 0x19
+ 110 0020 11       		.uleb128 0x11
+ 111 0021 01       		.uleb128 0x1
+ 112 0022 12       		.uleb128 0x12
+ 113 0023 06       		.uleb128 0x6
+ 114 0024 40       		.uleb128 0x40
+ 115 0025 18       		.uleb128 0x18
+ 116 0026 9742     		.uleb128 0x2117
+ 117 0028 19       		.uleb128 0x19
+ 118 0029 00       		.byte	0
+ 119 002a 00       		.byte	0
+ 120 002b 00       		.byte	0
+ 121              		.section	.debug_aranges,"",%progbits
+ 122 0000 1C000000 		.4byte	0x1c
+ 123 0004 0200     		.2byte	0x2
+ 124 0006 00000000 		.4byte	.Ldebug_info0
+ 125 000a 04       		.byte	0x4
+ 126 000b 00       		.byte	0
+ 127 000c 0000     		.2byte	0
+ 128 000e 0000     		.2byte	0
+ 129 0010 00000000 		.4byte	.LFB0
+ 130 0014 0E000000 		.4byte	.LFE0-.LFB0
+ 131 0018 00000000 		.4byte	0
+ 132 001c 00000000 		.4byte	0
+ 133              		.section	.debug_ranges,"",%progbits
+ 134              	.Ldebug_ranges0:
+ 135 0000 00000000 		.4byte	.LFB0
+ 136 0004 0E000000 		.4byte	.LFE0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 7
+
+
+ 137 0008 00000000 		.4byte	0
+ 138 000c 00000000 		.4byte	0
+ 139              		.section	.debug_line,"",%progbits
+ 140              	.Ldebug_line0:
+ 141 0000 54000000 		.section	.debug_str,"MS",%progbits,1
+ 141      02003D00 
+ 141      00000201 
+ 141      FB0E0D00 
+ 141      01010101 
+ 142              	.LASF0:
+ 143 0000 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 143      43313120 
+ 143      352E342E 
+ 143      31203230 
+ 143      31363036 
+ 144 0033 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 144      20726576 
+ 144      6973696F 
+ 144      6E203233 
+ 144      37373135 
+ 145 0066 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 145      70202D6D 
+ 145      6670753D 
+ 145      66707634 
+ 145      2D73702D 
+ 146 0099 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 146      6F6E7320 
+ 146      2D666661 
+ 146      742D6C74 
+ 146      6F2D6F62 
+ 147              	.LASF1:
+ 148 00b3 2E2E5C2E 		.ascii	"..\\..\\..\\display\\lvgl\\lv_core\\lv_vdb.c\000"
+ 148      2E5C2E2E 
+ 148      5C646973 
+ 148      706C6179 
+ 148      5C6C7667 
+ 149              	.LASF2:
+ 150 00da 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 150      73657273 
+ 150      5C706561 
+ 150      726C7374 
+ 150      6C5C446F 
+ 151 0108 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 151      6D5F656E 
+ 151      67696E65 
+ 151      6572696E 
+ 151      675C656D 
+ 152 0137 6F63365F 		.ascii	"oc6_fixed_io\\tcom_displ_test_psoc6.cydsn\000"
+ 152      66697865 
+ 152      645F696F 
+ 152      5C74636F 
+ 152      6D5F6469 
+ 153              	.LASF3:
+ 154 0160 6C765F66 		.ascii	"lv_flush_ready\000"
+ 154      6C757368 
+ 154      5F726561 
+ 154      647900
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccBRH3K4.s 			page 8
+
+
+ 155              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

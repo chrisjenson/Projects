@@ -1,0 +1,940 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_hal_tick.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_tick_inc,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_tick_inc
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_tick_inc, %function
+  26              	lv_tick_inc:
+  27              	.LFB0:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\lv_hal_tick.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @file systick.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Provide access to the system tick with 1 millisecond resolution
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "lv_conf.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #else
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "../../../lv_conf.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "lv_hal_tick.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include <stddef.h>
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #if LV_TICK_CUSTOM == 1
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include LV_TICK_CUSTOM_INCLUDE
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /*********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      DEFINES
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      TYPEDEFS
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *  STATIC PROTOTYPES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *  STATIC VARIABLES
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** static uint32_t sys_time = 0;
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** static volatile uint8_t tick_irq_flag;
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      MACROS
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *   GLOBAL FUNCTIONS
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * You have to call this function periodically
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @param tick_period the call period of this function in milliseconds
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** LV_ATTRIBUTE_TICK_INC void lv_tick_inc(uint32_t tick_period)
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+  29              		.loc 1 53 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     tick_irq_flag = 0;
+  35              		.loc 1 54 0
+  36 0000 034B     		ldr	r3, .L2
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     sys_time += tick_period;
+  37              		.loc 1 55 0
+  38 0002 5A68     		ldr	r2, [r3, #4]
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     tick_irq_flag = 0;
+  39              		.loc 1 54 0
+  40 0004 0021     		movs	r1, #0
+  41              		.loc 1 55 0
+  42 0006 1044     		add	r0, r0, r2
+  43              	.LVL1:
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     tick_irq_flag = 0;
+  44              		.loc 1 54 0
+  45 0008 1970     		strb	r1, [r3]
+  46              		.loc 1 55 0
+  47 000a 5860     		str	r0, [r3, #4]
+  48 000c 7047     		bx	lr
+  49              	.L3:
+  50 000e 00BF     		.align	2
+  51              	.L2:
+  52 0010 00000000 		.word	.LANCHOR0
+  53              		.cfi_endproc
+  54              	.LFE0:
+  55              		.size	lv_tick_inc, .-lv_tick_inc
+  56              		.section	.text.lv_tick_get,"ax",%progbits
+  57              		.align	2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 3
+
+
+  58              		.global	lv_tick_get
+  59              		.thumb
+  60              		.thumb_func
+  61              		.type	lv_tick_get, %function
+  62              	lv_tick_get:
+  63              	.LFB1:
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Get the elapsed milliseconds since start up
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @return the elapsed milliseconds
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** uint32_t lv_tick_get(void)
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+  64              		.loc 1 63 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  69 0000 034B     		ldr	r3, .L9
+  70 0002 5868     		ldr	r0, [r3, #4]
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #if LV_TICK_CUSTOM == 0
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     uint32_t result;
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     do {
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         tick_irq_flag = 1;
+  71              		.loc 1 67 0
+  72 0004 0121     		movs	r1, #1
+  73              	.L5:
+  74              		.loc 1 67 0 is_stmt 0 discriminator 1
+  75 0006 1970     		strb	r1, [r3]
+  76              	.LVL2:
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         result        = sys_time;
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     } while(!tick_irq_flag); /*'lv_tick_inc()' clears this flag which can be in an interrupt.
+  77              		.loc 1 69 0 is_stmt 1 discriminator 1
+  78 0008 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  79 000a 002A     		cmp	r2, #0
+  80 000c FBD0     		beq	.L5
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****                                 Continue until make a non interrupted cycle */
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return result;
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #else
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return LV_TICK_CUSTOM_SYS_TIME_EXPR;
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+  81              		.loc 1 76 0
+  82 000e 7047     		bx	lr
+  83              	.L10:
+  84              		.align	2
+  85              	.L9:
+  86 0010 00000000 		.word	.LANCHOR0
+  87              		.cfi_endproc
+  88              	.LFE1:
+  89              		.size	lv_tick_get, .-lv_tick_get
+  90              		.section	.text.lv_tick_elaps,"ax",%progbits
+  91              		.align	2
+  92              		.global	lv_tick_elaps
+  93              		.thumb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 4
+
+
+  94              		.thumb_func
+  95              		.type	lv_tick_elaps, %function
+  96              	lv_tick_elaps:
+  97              	.LFB2:
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Get the elapsed milliseconds since a previous time stamp
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @param prev_tick a previous time stamp (return value of systick_get() )
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @return the elapsed milliseconds since 'prev_tick'
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** uint32_t lv_tick_elaps(uint32_t prev_tick)
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+  98              		.loc 1 84 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 103              	.LVL3:
+ 104 0000 054B     		ldr	r3, .L18
+ 105 0002 10B4     		push	{r4}
+ 106              		.cfi_def_cfa_offset 4
+ 107              		.cfi_offset 4, -4
+ 108 0004 5C68     		ldr	r4, [r3, #4]
+ 109              	.LBB4:
+ 110              	.LBB5:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         result        = sys_time;
+ 111              		.loc 1 67 0
+ 112 0006 0121     		movs	r1, #1
+ 113              	.L12:
+ 114 0008 1970     		strb	r1, [r3]
+ 115              	.LVL4:
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****                                 Continue until make a non interrupted cycle */
+ 116              		.loc 1 69 0
+ 117 000a 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 118 000c 002A     		cmp	r2, #0
+ 119 000e FBD0     		beq	.L12
+ 120              	.LVL5:
+ 121              	.LBE5:
+ 122              	.LBE4:
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     uint32_t act_time = lv_tick_get();
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     /*If there is no overflow in sys_time simple subtract*/
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     if(act_time >= prev_tick) {
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick = act_time - prev_tick;
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     } else {
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick = UINT32_MAX - prev_tick + 1;
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick += act_time;
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     }
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return prev_tick;
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+ 123              		.loc 1 96 0
+ 124 0010 201A     		subs	r0, r4, r0
+ 125              	.LVL6:
+ 126 0012 5DF8044B 		ldr	r4, [sp], #4
+ 127              		.cfi_restore 4
+ 128              		.cfi_def_cfa_offset 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 5
+
+
+ 129 0016 7047     		bx	lr
+ 130              	.L19:
+ 131              		.align	2
+ 132              	.L18:
+ 133 0018 00000000 		.word	.LANCHOR0
+ 134              		.cfi_endproc
+ 135              	.LFE2:
+ 136              		.size	lv_tick_elaps, .-lv_tick_elaps
+ 137              		.bss
+ 138              		.align	2
+ 139              		.set	.LANCHOR0,. + 0
+ 140              		.type	tick_irq_flag, %object
+ 141              		.size	tick_irq_flag, 1
+ 142              	tick_irq_flag:
+ 143 0000 00       		.space	1
+ 144 0001 000000   		.space	3
+ 145              		.type	sys_time, %object
+ 146              		.size	sys_time, 4
+ 147              	sys_time:
+ 148 0004 00000000 		.space	4
+ 149              		.text
+ 150              	.Letext0:
+ 151              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 152              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 153              		.section	.debug_info,"",%progbits
+ 154              	.Ldebug_info0:
+ 155 0000 79010000 		.4byte	0x179
+ 156 0004 0400     		.2byte	0x4
+ 157 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 158 000a 04       		.byte	0x4
+ 159 000b 01       		.uleb128 0x1
+ 160 000c 78000000 		.4byte	.LASF20
+ 161 0010 0C       		.byte	0xc
+ 162 0011 4F020000 		.4byte	.LASF21
+ 163 0015 98010000 		.4byte	.LASF22
+ 164 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 165 001d 00000000 		.4byte	0
+ 166 0021 00000000 		.4byte	.Ldebug_line0
+ 167 0025 02       		.uleb128 0x2
+ 168 0026 01       		.byte	0x1
+ 169 0027 06       		.byte	0x6
+ 170 0028 43020000 		.4byte	.LASF0
+ 171 002c 03       		.uleb128 0x3
+ 172 002d 00000000 		.4byte	.LASF5
+ 173 0031 02       		.byte	0x2
+ 174 0032 1D       		.byte	0x1d
+ 175 0033 37000000 		.4byte	0x37
+ 176 0037 02       		.uleb128 0x2
+ 177 0038 01       		.byte	0x1
+ 178 0039 08       		.byte	0x8
+ 179 003a 29000000 		.4byte	.LASF1
+ 180 003e 02       		.uleb128 0x2
+ 181 003f 02       		.byte	0x2
+ 182 0040 05       		.byte	0x5
+ 183 0041 1B020000 		.4byte	.LASF2
+ 184 0045 02       		.uleb128 0x2
+ 185 0046 02       		.byte	0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 6
+
+
+ 186 0047 07       		.byte	0x7
+ 187 0048 57000000 		.4byte	.LASF3
+ 188 004c 02       		.uleb128 0x2
+ 189 004d 04       		.byte	0x4
+ 190 004e 05       		.byte	0x5
+ 191 004f 2E020000 		.4byte	.LASF4
+ 192 0053 03       		.uleb128 0x3
+ 193 0054 37010000 		.4byte	.LASF6
+ 194 0058 02       		.byte	0x2
+ 195 0059 41       		.byte	0x41
+ 196 005a 5E000000 		.4byte	0x5e
+ 197 005e 02       		.uleb128 0x2
+ 198 005f 04       		.byte	0x4
+ 199 0060 07       		.byte	0x7
+ 200 0061 45000000 		.4byte	.LASF7
+ 201 0065 02       		.uleb128 0x2
+ 202 0066 08       		.byte	0x8
+ 203 0067 05       		.byte	0x5
+ 204 0068 8A010000 		.4byte	.LASF8
+ 205 006c 02       		.uleb128 0x2
+ 206 006d 08       		.byte	0x8
+ 207 006e 07       		.byte	0x7
+ 208 006f 64010000 		.4byte	.LASF9
+ 209 0073 04       		.uleb128 0x4
+ 210 0074 04       		.byte	0x4
+ 211 0075 05       		.byte	0x5
+ 212 0076 696E7400 		.ascii	"int\000"
+ 213 007a 02       		.uleb128 0x2
+ 214 007b 04       		.byte	0x4
+ 215 007c 07       		.byte	0x7
+ 216 007d 4E010000 		.4byte	.LASF10
+ 217 0081 03       		.uleb128 0x3
+ 218 0082 7B010000 		.4byte	.LASF11
+ 219 0086 03       		.byte	0x3
+ 220 0087 18       		.byte	0x18
+ 221 0088 2C000000 		.4byte	0x2c
+ 222 008c 03       		.uleb128 0x3
+ 223 008d 25020000 		.4byte	.LASF12
+ 224 0091 03       		.byte	0x3
+ 225 0092 30       		.byte	0x30
+ 226 0093 53000000 		.4byte	0x53
+ 227 0097 02       		.uleb128 0x2
+ 228 0098 08       		.byte	0x8
+ 229 0099 04       		.byte	0x4
+ 230 009a 37020000 		.4byte	.LASF13
+ 231 009e 05       		.uleb128 0x5
+ 232 009f 14000000 		.4byte	.LASF23
+ 233 00a3 01       		.byte	0x1
+ 234 00a4 3E       		.byte	0x3e
+ 235 00a5 8C000000 		.4byte	0x8c
+ 236 00a9 01       		.byte	0x1
+ 237 00aa BA000000 		.4byte	0xba
+ 238 00ae 06       		.uleb128 0x6
+ 239 00af 83010000 		.4byte	.LASF16
+ 240 00b3 01       		.byte	0x1
+ 241 00b4 41       		.byte	0x41
+ 242 00b5 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 7
+
+
+ 243 00b9 00       		.byte	0
+ 244 00ba 07       		.uleb128 0x7
+ 245 00bb 42010000 		.4byte	.LASF24
+ 246 00bf 01       		.byte	0x1
+ 247 00c0 34       		.byte	0x34
+ 248 00c1 00000000 		.4byte	.LFB0
+ 249 00c5 14000000 		.4byte	.LFE0-.LFB0
+ 250 00c9 01       		.uleb128 0x1
+ 251 00ca 9C       		.byte	0x9c
+ 252 00cb DF000000 		.4byte	0xdf
+ 253 00cf 08       		.uleb128 0x8
+ 254 00d0 2B010000 		.4byte	.LASF14
+ 255 00d4 01       		.byte	0x1
+ 256 00d5 34       		.byte	0x34
+ 257 00d6 8C000000 		.4byte	0x8c
+ 258 00da 00000000 		.4byte	.LLST0
+ 259 00de 00       		.byte	0
+ 260 00df 09       		.uleb128 0x9
+ 261 00e0 9E000000 		.4byte	0x9e
+ 262 00e4 00000000 		.4byte	.LFB1
+ 263 00e8 14000000 		.4byte	.LFE1-.LFB1
+ 264 00ec 01       		.uleb128 0x1
+ 265 00ed 9C       		.byte	0x9c
+ 266 00ee FE000000 		.4byte	0xfe
+ 267 00f2 0A       		.uleb128 0xa
+ 268 00f3 AE000000 		.4byte	0xae
+ 269 00f7 05       		.uleb128 0x5
+ 270 00f8 03       		.byte	0x3
+ 271 00f9 04000000 		.4byte	sys_time
+ 272 00fd 00       		.byte	0
+ 273 00fe 0B       		.uleb128 0xb
+ 274 00ff 37000000 		.4byte	.LASF25
+ 275 0103 01       		.byte	0x1
+ 276 0104 53       		.byte	0x53
+ 277 0105 8C000000 		.4byte	0x8c
+ 278 0109 00000000 		.4byte	.LFB2
+ 279 010d 1C000000 		.4byte	.LFE2-.LFB2
+ 280 0111 01       		.uleb128 0x1
+ 281 0112 9C       		.byte	0x9c
+ 282 0113 55010000 		.4byte	0x155
+ 283 0117 08       		.uleb128 0x8
+ 284 0118 0A000000 		.4byte	.LASF15
+ 285 011c 01       		.byte	0x1
+ 286 011d 53       		.byte	0x53
+ 287 011e 8C000000 		.4byte	0x8c
+ 288 0122 21000000 		.4byte	.LLST1
+ 289 0126 06       		.uleb128 0x6
+ 290 0127 5B010000 		.4byte	.LASF17
+ 291 012b 01       		.byte	0x1
+ 292 012c 55       		.byte	0x55
+ 293 012d 8C000000 		.4byte	0x8c
+ 294 0131 0C       		.uleb128 0xc
+ 295 0132 9E000000 		.4byte	0x9e
+ 296 0136 06000000 		.4byte	.LBB4
+ 297 013a 0A000000 		.4byte	.LBE4-.LBB4
+ 298 013e 01       		.byte	0x1
+ 299 013f 55       		.byte	0x55
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 8
+
+
+ 300 0140 0D       		.uleb128 0xd
+ 301 0141 06000000 		.4byte	.LBB5
+ 302 0145 0A000000 		.4byte	.LBE5-.LBB5
+ 303 0149 0E       		.uleb128 0xe
+ 304 014a AE000000 		.4byte	0xae
+ 305 014e 4F000000 		.4byte	.LLST2
+ 306 0152 00       		.byte	0
+ 307 0153 00       		.byte	0
+ 308 0154 00       		.byte	0
+ 309 0155 0F       		.uleb128 0xf
+ 310 0156 20000000 		.4byte	.LASF18
+ 311 015a 01       		.byte	0x1
+ 312 015b 25       		.byte	0x25
+ 313 015c 8C000000 		.4byte	0x8c
+ 314 0160 05       		.uleb128 0x5
+ 315 0161 03       		.byte	0x3
+ 316 0162 04000000 		.4byte	sys_time
+ 317 0166 0F       		.uleb128 0xf
+ 318 0167 6A000000 		.4byte	.LASF19
+ 319 016b 01       		.byte	0x1
+ 320 016c 26       		.byte	0x26
+ 321 016d 77010000 		.4byte	0x177
+ 322 0171 05       		.uleb128 0x5
+ 323 0172 03       		.byte	0x3
+ 324 0173 00000000 		.4byte	tick_irq_flag
+ 325 0177 10       		.uleb128 0x10
+ 326 0178 81000000 		.4byte	0x81
+ 327 017c 00       		.byte	0
+ 328              		.section	.debug_abbrev,"",%progbits
+ 329              	.Ldebug_abbrev0:
+ 330 0000 01       		.uleb128 0x1
+ 331 0001 11       		.uleb128 0x11
+ 332 0002 01       		.byte	0x1
+ 333 0003 25       		.uleb128 0x25
+ 334 0004 0E       		.uleb128 0xe
+ 335 0005 13       		.uleb128 0x13
+ 336 0006 0B       		.uleb128 0xb
+ 337 0007 03       		.uleb128 0x3
+ 338 0008 0E       		.uleb128 0xe
+ 339 0009 1B       		.uleb128 0x1b
+ 340 000a 0E       		.uleb128 0xe
+ 341 000b 55       		.uleb128 0x55
+ 342 000c 17       		.uleb128 0x17
+ 343 000d 11       		.uleb128 0x11
+ 344 000e 01       		.uleb128 0x1
+ 345 000f 10       		.uleb128 0x10
+ 346 0010 17       		.uleb128 0x17
+ 347 0011 00       		.byte	0
+ 348 0012 00       		.byte	0
+ 349 0013 02       		.uleb128 0x2
+ 350 0014 24       		.uleb128 0x24
+ 351 0015 00       		.byte	0
+ 352 0016 0B       		.uleb128 0xb
+ 353 0017 0B       		.uleb128 0xb
+ 354 0018 3E       		.uleb128 0x3e
+ 355 0019 0B       		.uleb128 0xb
+ 356 001a 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 9
+
+
+ 357 001b 0E       		.uleb128 0xe
+ 358 001c 00       		.byte	0
+ 359 001d 00       		.byte	0
+ 360 001e 03       		.uleb128 0x3
+ 361 001f 16       		.uleb128 0x16
+ 362 0020 00       		.byte	0
+ 363 0021 03       		.uleb128 0x3
+ 364 0022 0E       		.uleb128 0xe
+ 365 0023 3A       		.uleb128 0x3a
+ 366 0024 0B       		.uleb128 0xb
+ 367 0025 3B       		.uleb128 0x3b
+ 368 0026 0B       		.uleb128 0xb
+ 369 0027 49       		.uleb128 0x49
+ 370 0028 13       		.uleb128 0x13
+ 371 0029 00       		.byte	0
+ 372 002a 00       		.byte	0
+ 373 002b 04       		.uleb128 0x4
+ 374 002c 24       		.uleb128 0x24
+ 375 002d 00       		.byte	0
+ 376 002e 0B       		.uleb128 0xb
+ 377 002f 0B       		.uleb128 0xb
+ 378 0030 3E       		.uleb128 0x3e
+ 379 0031 0B       		.uleb128 0xb
+ 380 0032 03       		.uleb128 0x3
+ 381 0033 08       		.uleb128 0x8
+ 382 0034 00       		.byte	0
+ 383 0035 00       		.byte	0
+ 384 0036 05       		.uleb128 0x5
+ 385 0037 2E       		.uleb128 0x2e
+ 386 0038 01       		.byte	0x1
+ 387 0039 3F       		.uleb128 0x3f
+ 388 003a 19       		.uleb128 0x19
+ 389 003b 03       		.uleb128 0x3
+ 390 003c 0E       		.uleb128 0xe
+ 391 003d 3A       		.uleb128 0x3a
+ 392 003e 0B       		.uleb128 0xb
+ 393 003f 3B       		.uleb128 0x3b
+ 394 0040 0B       		.uleb128 0xb
+ 395 0041 27       		.uleb128 0x27
+ 396 0042 19       		.uleb128 0x19
+ 397 0043 49       		.uleb128 0x49
+ 398 0044 13       		.uleb128 0x13
+ 399 0045 20       		.uleb128 0x20
+ 400 0046 0B       		.uleb128 0xb
+ 401 0047 01       		.uleb128 0x1
+ 402 0048 13       		.uleb128 0x13
+ 403 0049 00       		.byte	0
+ 404 004a 00       		.byte	0
+ 405 004b 06       		.uleb128 0x6
+ 406 004c 34       		.uleb128 0x34
+ 407 004d 00       		.byte	0
+ 408 004e 03       		.uleb128 0x3
+ 409 004f 0E       		.uleb128 0xe
+ 410 0050 3A       		.uleb128 0x3a
+ 411 0051 0B       		.uleb128 0xb
+ 412 0052 3B       		.uleb128 0x3b
+ 413 0053 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 10
+
+
+ 414 0054 49       		.uleb128 0x49
+ 415 0055 13       		.uleb128 0x13
+ 416 0056 00       		.byte	0
+ 417 0057 00       		.byte	0
+ 418 0058 07       		.uleb128 0x7
+ 419 0059 2E       		.uleb128 0x2e
+ 420 005a 01       		.byte	0x1
+ 421 005b 3F       		.uleb128 0x3f
+ 422 005c 19       		.uleb128 0x19
+ 423 005d 03       		.uleb128 0x3
+ 424 005e 0E       		.uleb128 0xe
+ 425 005f 3A       		.uleb128 0x3a
+ 426 0060 0B       		.uleb128 0xb
+ 427 0061 3B       		.uleb128 0x3b
+ 428 0062 0B       		.uleb128 0xb
+ 429 0063 27       		.uleb128 0x27
+ 430 0064 19       		.uleb128 0x19
+ 431 0065 11       		.uleb128 0x11
+ 432 0066 01       		.uleb128 0x1
+ 433 0067 12       		.uleb128 0x12
+ 434 0068 06       		.uleb128 0x6
+ 435 0069 40       		.uleb128 0x40
+ 436 006a 18       		.uleb128 0x18
+ 437 006b 9742     		.uleb128 0x2117
+ 438 006d 19       		.uleb128 0x19
+ 439 006e 01       		.uleb128 0x1
+ 440 006f 13       		.uleb128 0x13
+ 441 0070 00       		.byte	0
+ 442 0071 00       		.byte	0
+ 443 0072 08       		.uleb128 0x8
+ 444 0073 05       		.uleb128 0x5
+ 445 0074 00       		.byte	0
+ 446 0075 03       		.uleb128 0x3
+ 447 0076 0E       		.uleb128 0xe
+ 448 0077 3A       		.uleb128 0x3a
+ 449 0078 0B       		.uleb128 0xb
+ 450 0079 3B       		.uleb128 0x3b
+ 451 007a 0B       		.uleb128 0xb
+ 452 007b 49       		.uleb128 0x49
+ 453 007c 13       		.uleb128 0x13
+ 454 007d 02       		.uleb128 0x2
+ 455 007e 17       		.uleb128 0x17
+ 456 007f 00       		.byte	0
+ 457 0080 00       		.byte	0
+ 458 0081 09       		.uleb128 0x9
+ 459 0082 2E       		.uleb128 0x2e
+ 460 0083 01       		.byte	0x1
+ 461 0084 31       		.uleb128 0x31
+ 462 0085 13       		.uleb128 0x13
+ 463 0086 11       		.uleb128 0x11
+ 464 0087 01       		.uleb128 0x1
+ 465 0088 12       		.uleb128 0x12
+ 466 0089 06       		.uleb128 0x6
+ 467 008a 40       		.uleb128 0x40
+ 468 008b 18       		.uleb128 0x18
+ 469 008c 9742     		.uleb128 0x2117
+ 470 008e 19       		.uleb128 0x19
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 11
+
+
+ 471 008f 01       		.uleb128 0x1
+ 472 0090 13       		.uleb128 0x13
+ 473 0091 00       		.byte	0
+ 474 0092 00       		.byte	0
+ 475 0093 0A       		.uleb128 0xa
+ 476 0094 34       		.uleb128 0x34
+ 477 0095 00       		.byte	0
+ 478 0096 31       		.uleb128 0x31
+ 479 0097 13       		.uleb128 0x13
+ 480 0098 02       		.uleb128 0x2
+ 481 0099 18       		.uleb128 0x18
+ 482 009a 00       		.byte	0
+ 483 009b 00       		.byte	0
+ 484 009c 0B       		.uleb128 0xb
+ 485 009d 2E       		.uleb128 0x2e
+ 486 009e 01       		.byte	0x1
+ 487 009f 3F       		.uleb128 0x3f
+ 488 00a0 19       		.uleb128 0x19
+ 489 00a1 03       		.uleb128 0x3
+ 490 00a2 0E       		.uleb128 0xe
+ 491 00a3 3A       		.uleb128 0x3a
+ 492 00a4 0B       		.uleb128 0xb
+ 493 00a5 3B       		.uleb128 0x3b
+ 494 00a6 0B       		.uleb128 0xb
+ 495 00a7 27       		.uleb128 0x27
+ 496 00a8 19       		.uleb128 0x19
+ 497 00a9 49       		.uleb128 0x49
+ 498 00aa 13       		.uleb128 0x13
+ 499 00ab 11       		.uleb128 0x11
+ 500 00ac 01       		.uleb128 0x1
+ 501 00ad 12       		.uleb128 0x12
+ 502 00ae 06       		.uleb128 0x6
+ 503 00af 40       		.uleb128 0x40
+ 504 00b0 18       		.uleb128 0x18
+ 505 00b1 9742     		.uleb128 0x2117
+ 506 00b3 19       		.uleb128 0x19
+ 507 00b4 01       		.uleb128 0x1
+ 508 00b5 13       		.uleb128 0x13
+ 509 00b6 00       		.byte	0
+ 510 00b7 00       		.byte	0
+ 511 00b8 0C       		.uleb128 0xc
+ 512 00b9 1D       		.uleb128 0x1d
+ 513 00ba 01       		.byte	0x1
+ 514 00bb 31       		.uleb128 0x31
+ 515 00bc 13       		.uleb128 0x13
+ 516 00bd 11       		.uleb128 0x11
+ 517 00be 01       		.uleb128 0x1
+ 518 00bf 12       		.uleb128 0x12
+ 519 00c0 06       		.uleb128 0x6
+ 520 00c1 58       		.uleb128 0x58
+ 521 00c2 0B       		.uleb128 0xb
+ 522 00c3 59       		.uleb128 0x59
+ 523 00c4 0B       		.uleb128 0xb
+ 524 00c5 00       		.byte	0
+ 525 00c6 00       		.byte	0
+ 526 00c7 0D       		.uleb128 0xd
+ 527 00c8 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 12
+
+
+ 528 00c9 01       		.byte	0x1
+ 529 00ca 11       		.uleb128 0x11
+ 530 00cb 01       		.uleb128 0x1
+ 531 00cc 12       		.uleb128 0x12
+ 532 00cd 06       		.uleb128 0x6
+ 533 00ce 00       		.byte	0
+ 534 00cf 00       		.byte	0
+ 535 00d0 0E       		.uleb128 0xe
+ 536 00d1 34       		.uleb128 0x34
+ 537 00d2 00       		.byte	0
+ 538 00d3 31       		.uleb128 0x31
+ 539 00d4 13       		.uleb128 0x13
+ 540 00d5 02       		.uleb128 0x2
+ 541 00d6 17       		.uleb128 0x17
+ 542 00d7 00       		.byte	0
+ 543 00d8 00       		.byte	0
+ 544 00d9 0F       		.uleb128 0xf
+ 545 00da 34       		.uleb128 0x34
+ 546 00db 00       		.byte	0
+ 547 00dc 03       		.uleb128 0x3
+ 548 00dd 0E       		.uleb128 0xe
+ 549 00de 3A       		.uleb128 0x3a
+ 550 00df 0B       		.uleb128 0xb
+ 551 00e0 3B       		.uleb128 0x3b
+ 552 00e1 0B       		.uleb128 0xb
+ 553 00e2 49       		.uleb128 0x49
+ 554 00e3 13       		.uleb128 0x13
+ 555 00e4 02       		.uleb128 0x2
+ 556 00e5 18       		.uleb128 0x18
+ 557 00e6 00       		.byte	0
+ 558 00e7 00       		.byte	0
+ 559 00e8 10       		.uleb128 0x10
+ 560 00e9 35       		.uleb128 0x35
+ 561 00ea 00       		.byte	0
+ 562 00eb 49       		.uleb128 0x49
+ 563 00ec 13       		.uleb128 0x13
+ 564 00ed 00       		.byte	0
+ 565 00ee 00       		.byte	0
+ 566 00ef 00       		.byte	0
+ 567              		.section	.debug_loc,"",%progbits
+ 568              	.Ldebug_loc0:
+ 569              	.LLST0:
+ 570 0000 00000000 		.4byte	.LVL0
+ 571 0004 08000000 		.4byte	.LVL1
+ 572 0008 0100     		.2byte	0x1
+ 573 000a 50       		.byte	0x50
+ 574 000b 08000000 		.4byte	.LVL1
+ 575 000f 14000000 		.4byte	.LFE0
+ 576 0013 0400     		.2byte	0x4
+ 577 0015 F3       		.byte	0xf3
+ 578 0016 01       		.uleb128 0x1
+ 579 0017 50       		.byte	0x50
+ 580 0018 9F       		.byte	0x9f
+ 581 0019 00000000 		.4byte	0
+ 582 001d 00000000 		.4byte	0
+ 583              	.LLST1:
+ 584 0021 00000000 		.4byte	.LVL3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 13
+
+
+ 585 0025 10000000 		.4byte	.LVL5
+ 586 0029 0100     		.2byte	0x1
+ 587 002b 50       		.byte	0x50
+ 588 002c 10000000 		.4byte	.LVL5
+ 589 0030 12000000 		.4byte	.LVL6
+ 590 0034 0600     		.2byte	0x6
+ 591 0036 74       		.byte	0x74
+ 592 0037 00       		.sleb128 0
+ 593 0038 70       		.byte	0x70
+ 594 0039 00       		.sleb128 0
+ 595 003a 1C       		.byte	0x1c
+ 596 003b 9F       		.byte	0x9f
+ 597 003c 12000000 		.4byte	.LVL6
+ 598 0040 1C000000 		.4byte	.LFE2
+ 599 0044 0100     		.2byte	0x1
+ 600 0046 50       		.byte	0x50
+ 601 0047 00000000 		.4byte	0
+ 602 004b 00000000 		.4byte	0
+ 603              	.LLST2:
+ 604 004f 0A000000 		.4byte	.LVL4
+ 605 0053 10000000 		.4byte	.LVL5
+ 606 0057 0500     		.2byte	0x5
+ 607 0059 03       		.byte	0x3
+ 608 005a 04000000 		.4byte	sys_time
+ 609 005e 00000000 		.4byte	0
+ 610 0062 00000000 		.4byte	0
+ 611              		.section	.debug_aranges,"",%progbits
+ 612 0000 2C000000 		.4byte	0x2c
+ 613 0004 0200     		.2byte	0x2
+ 614 0006 00000000 		.4byte	.Ldebug_info0
+ 615 000a 04       		.byte	0x4
+ 616 000b 00       		.byte	0
+ 617 000c 0000     		.2byte	0
+ 618 000e 0000     		.2byte	0
+ 619 0010 00000000 		.4byte	.LFB0
+ 620 0014 14000000 		.4byte	.LFE0-.LFB0
+ 621 0018 00000000 		.4byte	.LFB1
+ 622 001c 14000000 		.4byte	.LFE1-.LFB1
+ 623 0020 00000000 		.4byte	.LFB2
+ 624 0024 1C000000 		.4byte	.LFE2-.LFB2
+ 625 0028 00000000 		.4byte	0
+ 626 002c 00000000 		.4byte	0
+ 627              		.section	.debug_ranges,"",%progbits
+ 628              	.Ldebug_ranges0:
+ 629 0000 00000000 		.4byte	.LFB0
+ 630 0004 14000000 		.4byte	.LFE0
+ 631 0008 00000000 		.4byte	.LFB1
+ 632 000c 14000000 		.4byte	.LFE1
+ 633 0010 00000000 		.4byte	.LFB2
+ 634 0014 1C000000 		.4byte	.LFE2
+ 635 0018 00000000 		.4byte	0
+ 636 001c 00000000 		.4byte	0
+ 637              		.section	.debug_line,"",%progbits
+ 638              	.Ldebug_line0:
+ 639 0000 9C010000 		.section	.debug_str,"MS",%progbits,1
+ 639      02004D01 
+ 639      00000201 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 14
+
+
+ 639      FB0E0D00 
+ 639      01010101 
+ 640              	.LASF5:
+ 641 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 641      6E74385F 
+ 641      7400
+ 642              	.LASF15:
+ 643 000a 70726576 		.ascii	"prev_tick\000"
+ 643      5F746963 
+ 643      6B00
+ 644              	.LASF23:
+ 645 0014 6C765F74 		.ascii	"lv_tick_get\000"
+ 645      69636B5F 
+ 645      67657400 
+ 646              	.LASF18:
+ 647 0020 7379735F 		.ascii	"sys_time\000"
+ 647      74696D65 
+ 647      00
+ 648              	.LASF1:
+ 649 0029 756E7369 		.ascii	"unsigned char\000"
+ 649      676E6564 
+ 649      20636861 
+ 649      7200
+ 650              	.LASF25:
+ 651 0037 6C765F74 		.ascii	"lv_tick_elaps\000"
+ 651      69636B5F 
+ 651      656C6170 
+ 651      7300
+ 652              	.LASF7:
+ 653 0045 6C6F6E67 		.ascii	"long unsigned int\000"
+ 653      20756E73 
+ 653      69676E65 
+ 653      6420696E 
+ 653      7400
+ 654              	.LASF3:
+ 655 0057 73686F72 		.ascii	"short unsigned int\000"
+ 655      7420756E 
+ 655      7369676E 
+ 655      65642069 
+ 655      6E7400
+ 656              	.LASF19:
+ 657 006a 7469636B 		.ascii	"tick_irq_flag\000"
+ 657      5F697271 
+ 657      5F666C61 
+ 657      6700
+ 658              	.LASF20:
+ 659 0078 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 659      43313120 
+ 659      352E342E 
+ 659      31203230 
+ 659      31363036 
+ 660 00ab 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 660      20726576 
+ 660      6973696F 
+ 660      6E203233 
+ 660      37373135 
+ 661 00de 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 15
+
+
+ 661      70202D6D 
+ 661      6670753D 
+ 661      66707634 
+ 661      2D73702D 
+ 662 0111 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 662      6F6E7320 
+ 662      2D666661 
+ 662      742D6C74 
+ 662      6F2D6F62 
+ 663              	.LASF14:
+ 664 012b 7469636B 		.ascii	"tick_period\000"
+ 664      5F706572 
+ 664      696F6400 
+ 665              	.LASF6:
+ 666 0137 5F5F7569 		.ascii	"__uint32_t\000"
+ 666      6E743332 
+ 666      5F7400
+ 667              	.LASF24:
+ 668 0142 6C765F74 		.ascii	"lv_tick_inc\000"
+ 668      69636B5F 
+ 668      696E6300 
+ 669              	.LASF10:
+ 670 014e 756E7369 		.ascii	"unsigned int\000"
+ 670      676E6564 
+ 670      20696E74 
+ 670      00
+ 671              	.LASF17:
+ 672 015b 6163745F 		.ascii	"act_time\000"
+ 672      74696D65 
+ 672      00
+ 673              	.LASF9:
+ 674 0164 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 674      206C6F6E 
+ 674      6720756E 
+ 674      7369676E 
+ 674      65642069 
+ 675              	.LASF11:
+ 676 017b 75696E74 		.ascii	"uint8_t\000"
+ 676      385F7400 
+ 677              	.LASF16:
+ 678 0183 72657375 		.ascii	"result\000"
+ 678      6C7400
+ 679              	.LASF8:
+ 680 018a 6C6F6E67 		.ascii	"long long int\000"
+ 680      206C6F6E 
+ 680      6720696E 
+ 680      7400
+ 681              	.LASF22:
+ 682 0198 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 682      73657273 
+ 682      5C706561 
+ 682      726C7374 
+ 682      6C5C446F 
+ 683 01c6 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 683      6D5F656E 
+ 683      67696E65 
+ 683      6572696E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccigVjWt.s 			page 16
+
+
+ 683      675C656D 
+ 684 01f5 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 684      6C76676C 
+ 684      365C7463 
+ 684      6F6D5F64 
+ 684      6973706C 
+ 685              	.LASF2:
+ 686 021b 73686F72 		.ascii	"short int\000"
+ 686      7420696E 
+ 686      7400
+ 687              	.LASF12:
+ 688 0225 75696E74 		.ascii	"uint32_t\000"
+ 688      33325F74 
+ 688      00
+ 689              	.LASF4:
+ 690 022e 6C6F6E67 		.ascii	"long int\000"
+ 690      20696E74 
+ 690      00
+ 691              	.LASF13:
+ 692 0237 6C6F6E67 		.ascii	"long double\000"
+ 692      20646F75 
+ 692      626C6500 
+ 693              	.LASF0:
+ 694 0243 7369676E 		.ascii	"signed char\000"
+ 694      65642063 
+ 694      68617200 
+ 695              	.LASF21:
+ 696 024f 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\"
+ 696      2E5C2E2E 
+ 696      5C6C7667 
+ 696      6C5C7665 
+ 696      7273696F 
+ 697 027b 6C765F68 		.ascii	"lv_hal_tick.c\000"
+ 697      616C5F74 
+ 697      69636B2E 
+ 697      6300
+ 698              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

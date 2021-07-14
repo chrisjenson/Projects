@@ -1,0 +1,2413 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"GraphicLCDIntf_1.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.GraphicLCDIntf_1_Enable,"ax",%progbits
+  20              		.align	2
+  21              		.global	GraphicLCDIntf_1_Enable
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	GraphicLCDIntf_1_Enable, %function
+  25              	GraphicLCDIntf_1_Enable:
+  26              	.LFB45:
+  27              		.file 1 "Generated_Source\\PSoC6\\GraphicLCDIntf_1.c"
+   1:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * File Name: GraphicLCDIntf_1.c  
+   3:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Version 1.80
+   4:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+   5:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Description:
+   6:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  This file contains the setup, control and status commands for the 
+   7:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  GraphicLCDIntf component.   
+   8:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+   9:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************
+  10:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Copyright 2008-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  11:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  12:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  13:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * the software package with which this file was provided.
+  14:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************/
+  15:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  16:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** #include "GraphicLCDIntf_1.h"  
+  17:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  18:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** uint8 GraphicLCDIntf_1_initVar = 0u;
+  19:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  20:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  21:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+  22:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Enable
+  23:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+  24:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  25:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+  26:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  There is no need to reset or enable this component.  This component is 
+  27:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  naturally a slave that waits for the API calls to perform any 
+  28:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  function and after a request is made that request will always complete in 
+  29:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  finite time as long as a clock is provided. The only thing provided
+  30:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  by this API is setting the Command FIFO to drive at least the half-empty status
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 2
+
+
+  31:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  from the FIFO.
+  32:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  33:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+  34:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Enable(void) 
+  35:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {   
+  28              		.loc 1 35 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  36:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     /* Nothing to enable */
+  37:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+  33              		.loc 1 37 0
+  34              		@ sp needed
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE45:
+  38              		.size	GraphicLCDIntf_1_Enable, .-GraphicLCDIntf_1_Enable
+  39 0002 C046     		.section	.text.GraphicLCDIntf_1_Init,"ax",%progbits
+  40              		.align	2
+  41              		.global	GraphicLCDIntf_1_Init
+  42              		.code	16
+  43              		.thumb_func
+  44              		.type	GraphicLCDIntf_1_Init, %function
+  45              	GraphicLCDIntf_1_Init:
+  46              	.LFB46:
+  38:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  39:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  40:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+  41:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Init
+  42:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+  43:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  44:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+  45:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Inits/Restores default GraphicLCDIntf configuration provided with the customizer.
+  46:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * 
+  47:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+  48:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Init(void) 
+  49:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+  47              		.loc 1 49 0
+  48              		.cfi_startproc
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51              		@ link register save eliminated.
+  50:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     /* Set low and high pulse widths for a read transaction */
+  51:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_READ_LO_PULSE_REG = GraphicLCDIntf_1_READ_LOW_PULSE;
+  52              		.loc 1 51 0
+  53 0000 0722     		movs	r2, #7
+  54 0002 034B     		ldr	r3, .L3
+  55 0004 1A70     		strb	r2, [r3]
+  52:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_READ_HI_PULSE_REG = GraphicLCDIntf_1_READ_HIGH_PULSE;
+  56              		.loc 1 52 0
+  57 0006 053A     		subs	r2, r2, #5
+  58 0008 024B     		ldr	r3, .L3+4
+  59 000a 1A70     		strb	r2, [r3]
+  53:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+  60              		.loc 1 53 0
+  61              		@ sp needed
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 3
+
+
+  62 000c 7047     		bx	lr
+  63              	.L4:
+  64 000e C046     		.align	2
+  65              	.L3:
+  66 0010 20123440 		.word	1077154336
+  67 0014 20133440 		.word	1077154592
+  68              		.cfi_endproc
+  69              	.LFE46:
+  70              		.size	GraphicLCDIntf_1_Init, .-GraphicLCDIntf_1_Init
+  71              		.section	.text.GraphicLCDIntf_1_Start,"ax",%progbits
+  72              		.align	2
+  73              		.global	GraphicLCDIntf_1_Start
+  74              		.code	16
+  75              		.thumb_func
+  76              		.type	GraphicLCDIntf_1_Start, %function
+  77              	GraphicLCDIntf_1_Start:
+  78              	.LFB47:
+  54:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  55:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  56:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+  57:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Start
+  58:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+  59:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  60:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+  61:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Starts the GraphicLCDIntf interface.
+  62:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  63:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Global Variables:
+  64:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  GraphicLCDIntf_1_initVar - Used to check the initial configuration, modified on 
+  65:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  the first function call.
+  66:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  67:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+  68:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Start(void) 
+  69:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+  79              		.loc 1 69 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83 0000 10B5     		push	{r4, lr}
+  84              		.cfi_def_cfa_offset 8
+  85              		.cfi_offset 4, -8
+  86              		.cfi_offset 14, -4
+  70:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     if (GraphicLCDIntf_1_initVar == 0u)
+  87              		.loc 1 70 0
+  88 0002 054B     		ldr	r3, .L7
+  89 0004 1B78     		ldrb	r3, [r3]
+  90 0006 002B     		cmp	r3, #0
+  91 0008 04D1     		bne	.L5
+  71:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+  72:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_Init();
+  92              		.loc 1 72 0
+  93 000a FFF7FEFF 		bl	GraphicLCDIntf_1_Init
+  94              	.LVL0:
+  73:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_initVar = 1u;
+  95              		.loc 1 73 0
+  96 000e 0122     		movs	r2, #1
+  97 0010 014B     		ldr	r3, .L7
+  98 0012 1A70     		strb	r2, [r3]
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 4
+
+
+  99              	.L5:
+  74:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }
+  75:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****       
+  76:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_Enable();
+  77:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 100              		.loc 1 77 0
+ 101              		@ sp needed
+ 102 0014 10BD     		pop	{r4, pc}
+ 103              	.L8:
+ 104 0016 C046     		.align	2
+ 105              	.L7:
+ 106 0018 00000000 		.word	.LANCHOR0
+ 107              		.cfi_endproc
+ 108              	.LFE47:
+ 109              		.size	GraphicLCDIntf_1_Start, .-GraphicLCDIntf_1_Start
+ 110              		.section	.text.GraphicLCDIntf_1_Stop,"ax",%progbits
+ 111              		.align	2
+ 112              		.global	GraphicLCDIntf_1_Stop
+ 113              		.code	16
+ 114              		.thumb_func
+ 115              		.type	GraphicLCDIntf_1_Stop, %function
+ 116              	GraphicLCDIntf_1_Stop:
+ 117              	.LFB48:
+  78:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  79:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  80:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+  81:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Stop
+  82:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+  83:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  84:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+  85:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Disables the GraphicLCDIntf interface.
+  86:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  87:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+  88:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Stop(void) 
+  89:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 118              		.loc 1 89 0
+ 119              		.cfi_startproc
+ 120              		@ args = 0, pretend = 0, frame = 0
+ 121              		@ frame_needed = 0, uses_anonymous_args = 0
+ 122              		@ link register save eliminated.
+  90:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     /* Nothing to stop */
+  91:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 123              		.loc 1 91 0
+ 124              		@ sp needed
+ 125 0000 7047     		bx	lr
+ 126              		.cfi_endproc
+ 127              	.LFE48:
+ 128              		.size	GraphicLCDIntf_1_Stop, .-GraphicLCDIntf_1_Stop
+ 129 0002 C046     		.section	.text.GraphicLCDIntf_1_Write8,"ax",%progbits
+ 130              		.align	2
+ 131              		.global	GraphicLCDIntf_1_Write8
+ 132              		.code	16
+ 133              		.thumb_func
+ 134              		.type	GraphicLCDIntf_1_Write8, %function
+ 135              	GraphicLCDIntf_1_Write8:
+ 136              	.LFB49:
+  92:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 5
+
+
+  93:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+  94:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+  95:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Write8
+  96:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+  97:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+  98:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+  99:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates a write transaction on the 8-bit parallel
+ 100:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  interface.
+ 101:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  The write is a posted write, so this function will return before the write 
+ 102:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  has actually completed on the interface. If the command queue is full, this 
+ 103:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  function will not return until space is available to queue this write request.
+ 104:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 105:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 106:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  d_c:  Data(1) or Command(0) indication. Passed to the d_c pin.
+ 107:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 108:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: Data sent to the do_msb[7:0] (most significant byte) 
+ 109:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 110:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          presents only for the 16-bit interface.
+ 111:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 112:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 113:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Write8(uint8 d_c, uint8 wrData) 
+ 114:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 137              		.loc 1 114 0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		@ link register save eliminated.
+ 142              	.LVL1:
+ 143              	.L11:
+ 115:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_CMD_QUEUE_FULL) != 0u)
+ 144              		.loc 1 115 0 discriminator 1
+ 145 0000 044B     		ldr	r3, .L12
+ 146 0002 1B78     		ldrb	r3, [r3]
+ 147 0004 DB07     		lsls	r3, r3, #31
+ 148 0006 FBD4     		bmi	.L11
+ 116:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 117:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         /* The command queue is full */
+ 118:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }   
+ 119:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_CMD_FIFO_REG = d_c;
+ 149              		.loc 1 119 0
+ 150 0008 034B     		ldr	r3, .L12+4
+ 151 000a 1870     		strb	r0, [r3]
+ 120:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #if (GraphicLCDIntf_1_BUS_WIDTH == 16u)
+ 121:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         CY_SET_REG16(GraphicLCDIntf_1_DATA_FIFO_PTR, wrData);
+ 122:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #else /* 8-bit interface */
+ 123:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_DATA_FIFO_REG = wrData;
+ 152              		.loc 1 123 0
+ 153 000c 034B     		ldr	r3, .L12+8
+ 154 000e 1970     		strb	r1, [r3]
+ 124:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #endif /* GraphicLCDIntf_1_BUS_WIDTH == 16u */
+ 125:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 155              		.loc 1 125 0
+ 156              		@ sp needed
+ 157 0010 7047     		bx	lr
+ 158              	.L13:
+ 159 0012 C046     		.align	2
+ 160              	.L12:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 6
+
+
+ 161 0014 24163440 		.word	1077155364
+ 162 0018 20143440 		.word	1077154848
+ 163 001c 20153440 		.word	1077155104
+ 164              		.cfi_endproc
+ 165              	.LFE49:
+ 166              		.size	GraphicLCDIntf_1_Write8, .-GraphicLCDIntf_1_Write8
+ 167              		.section	.text.GraphicLCDIntf_1_WriteM8,"ax",%progbits
+ 168              		.align	2
+ 169              		.global	GraphicLCDIntf_1_WriteM8
+ 170              		.code	16
+ 171              		.thumb_func
+ 172              		.type	GraphicLCDIntf_1_WriteM8, %function
+ 173              	GraphicLCDIntf_1_WriteM8:
+ 174              	.LFB50:
+ 126:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 	
+ 127:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 128:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 129:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_WriteM8
+ 130:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 131:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 132:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 133:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates multiple write transactions on the 8-bit 
+ 134:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface. The write is a posted write, so this function will return
+ 135:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  before the write has actually completed on the interface. If the command 
+ 136:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  queue is full, this function will not return until space is available to queue
+ 137:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  this write request.
+ 138:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 139:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 140:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  d_c:    The Data(1) or Command(0) indication. Passed to the d_c pin.
+ 141:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 142:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: The pointer to the the first element of a data buffer sent to the do_msb[7:0]
+ 143:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 144:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          do_msb[7:0] presents only for the 16-bit interface.
+ 145:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 146:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  num:    The number of words/bytes to write.
+ 147:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 148:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 149:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_WriteM8(uint8 d_c, uint8 wrData[], uint16 num) 
+ 150:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 175              		.loc 1 150 0
+ 176              		.cfi_startproc
+ 177              		@ args = 0, pretend = 0, frame = 0
+ 178              		@ frame_needed = 0, uses_anonymous_args = 0
+ 179              	.LVL2:
+ 180 0000 30B5     		push	{r4, r5, lr}
+ 181              		.cfi_def_cfa_offset 12
+ 182              		.cfi_offset 4, -12
+ 183              		.cfi_offset 5, -8
+ 184              		.cfi_offset 14, -4
+ 185              	.LVL3:
+ 151:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     uint32 i;
+ 152:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     
+ 153:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     for(i = 0u; i < num; i++)
+ 186              		.loc 1 153 0
+ 187 0002 0024     		movs	r4, #0
+ 188 0004 09E0     		b	.L15
+ 189              	.LVL4:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 7
+
+
+ 190              	.L16:
+ 154:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 155:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_CMD_QUEUE_FULL) != 0u)
+ 191              		.loc 1 155 0 discriminator 1
+ 192 0006 064B     		ldr	r3, .L17
+ 193 0008 1B78     		ldrb	r3, [r3]
+ 194 000a DB07     		lsls	r3, r3, #31
+ 195 000c FBD4     		bmi	.L16
+ 156:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         {
+ 157:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****             /* The command queue is full */
+ 158:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         }   
+ 159:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_CMD_FIFO_REG = d_c;  
+ 196              		.loc 1 159 0 discriminator 2
+ 197 000e 054B     		ldr	r3, .L17+4
+ 198 0010 1870     		strb	r0, [r3]
+ 160:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****  
+ 161:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         #if (GraphicLCDIntf_1_BUS_WIDTH == 16u)
+ 162:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****             CY_SET_REG16(GraphicLCDIntf_1_DATA_FIFO_PTR, wrData[i]);
+ 163:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         #else /* 8-bit interface */
+ 164:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****             GraphicLCDIntf_1_DATA_FIFO_REG = wrData[i];
+ 199              		.loc 1 164 0 discriminator 2
+ 200 0012 0D5D     		ldrb	r5, [r1, r4]
+ 201 0014 044B     		ldr	r3, .L17+8
+ 202 0016 1D70     		strb	r5, [r3]
+ 153:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 203              		.loc 1 153 0 discriminator 2
+ 204 0018 0134     		adds	r4, r4, #1
+ 205              	.LVL5:
+ 206              	.L15:
+ 153:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 207              		.loc 1 153 0 is_stmt 0 discriminator 1
+ 208 001a 9442     		cmp	r4, r2
+ 209 001c F3D3     		bcc	.L16
+ 165:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         #endif /* GraphicLCDIntf_1_BUS_WIDTH == 16u */
+ 166:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }
+ 167:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 210              		.loc 1 167 0 is_stmt 1
+ 211              		@ sp needed
+ 212              	.LVL6:
+ 213 001e 30BD     		pop	{r4, r5, pc}
+ 214              	.L18:
+ 215              		.align	2
+ 216              	.L17:
+ 217 0020 24163440 		.word	1077155364
+ 218 0024 20143440 		.word	1077154848
+ 219 0028 20153440 		.word	1077155104
+ 220              		.cfi_endproc
+ 221              	.LFE50:
+ 222              		.size	GraphicLCDIntf_1_WriteM8, .-GraphicLCDIntf_1_WriteM8
+ 223              		.section	.text.GraphicLCDIntf_1_Read8,"ax",%progbits
+ 224              		.align	2
+ 225              		.global	GraphicLCDIntf_1_Read8
+ 226              		.code	16
+ 227              		.thumb_func
+ 228              		.type	GraphicLCDIntf_1_Read8, %function
+ 229              	GraphicLCDIntf_1_Read8:
+ 230              	.LFB51:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 8
+
+
+ 168:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 169:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 170:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 171:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Read8
+ 172:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 173:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 174:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 175:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates a read transaction on the 8-bit parallel interface.
+ 176:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  The read will execute after all currently posted writes have completed. This 
+ 177:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  function will wait until the read completes and then returns the read value.
+ 178:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 179:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 180:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  d_c: Data(1) or Command(0) indication. Passed to the d_c pin.
+ 181:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 182:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Return:
+ 183:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  The 16-bit read value from the di_msb[7:0] (most significant byte) and 
+ 184:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  di_lsb[7:0] (least significant byte) pins for the 16-bit interface or the 
+ 185:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  8-bit read value from the di_lsb[7:0] for 8-bit interface.
+ 186:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 187:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 188:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** uint8 GraphicLCDIntf_1_Read8(uint8 d_c) 
+ 189:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 231              		.loc 1 189 0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 0
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235              		@ link register save eliminated.
+ 236              	.LVL7:
+ 237              	.L20:
+ 190:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_CMD_QUEUE_FULL) != 0u)
+ 238              		.loc 1 190 0 discriminator 1
+ 239 0000 084B     		ldr	r3, .L22
+ 240 0002 1B78     		ldrb	r3, [r3]
+ 241 0004 DB07     		lsls	r3, r3, #31
+ 242 0006 FBD4     		bmi	.L20
+ 191:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 192:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         /* The command queue is full */
+ 193:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }   
+ 194:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_CMD_FIFO_REG = d_c | GraphicLCDIntf_1_READ_COMMAND;
+ 243              		.loc 1 194 0
+ 244 0008 0223     		movs	r3, #2
+ 245 000a 1843     		orrs	r0, r3
+ 246              	.LVL8:
+ 247 000c C0B2     		uxtb	r0, r0
+ 248 000e 064B     		ldr	r3, .L22+4
+ 249 0010 1870     		strb	r0, [r3]
+ 250              	.L21:
+ 195:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     
+ 196:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_DATA_VALID) != GraphicLCDIntf_1_DATA_VALI
+ 251              		.loc 1 196 0 discriminator 1
+ 252 0012 044B     		ldr	r3, .L22
+ 253 0014 1B78     		ldrb	r3, [r3]
+ 254 0016 9B07     		lsls	r3, r3, #30
+ 255 0018 FBD5     		bpl	.L21
+ 197:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 198:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         /* Wait until input data is valid */
+ 199:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 9
+
+
+ 200:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     
+ 201:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #if (GraphicLCDIntf_1_BUS_WIDTH == 8u)  /* 8-bit interface */
+ 202:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         return (GraphicLCDIntf_1_DIN_LSB_DATA_REG);
+ 256              		.loc 1 202 0
+ 257 001a 044B     		ldr	r3, .L22+8
+ 258 001c 1878     		ldrb	r0, [r3]
+ 259 001e C0B2     		uxtb	r0, r0
+ 203:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #else   /* 16-bit interface */
+ 204:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         return (uint16)((uint16)GraphicLCDIntf_1_DIN_MSB_DATA_REG << 8u) | GraphicLCDIntf_1_DIN_LSB
+ 205:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #endif /* GraphicLCDIntf_1_BUS_WIDTH == 8u */
+ 206:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 260              		.loc 1 206 0
+ 261              		@ sp needed
+ 262 0020 7047     		bx	lr
+ 263              	.L23:
+ 264 0022 C046     		.align	2
+ 265              	.L22:
+ 266 0024 24163440 		.word	1077155364
+ 267 0028 20143440 		.word	1077154848
+ 268 002c 20163440 		.word	1077155360
+ 269              		.cfi_endproc
+ 270              	.LFE51:
+ 271              		.size	GraphicLCDIntf_1_Read8, .-GraphicLCDIntf_1_Read8
+ 272              		.section	.text.GraphicLCDIntf_1_ReadM8,"ax",%progbits
+ 273              		.align	2
+ 274              		.global	GraphicLCDIntf_1_ReadM8
+ 275              		.code	16
+ 276              		.thumb_func
+ 277              		.type	GraphicLCDIntf_1_ReadM8, %function
+ 278              	GraphicLCDIntf_1_ReadM8:
+ 279              	.LFB52:
+ 207:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 208:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 209:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 210:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_ReadM8
+ 211:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 212:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 213:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 214:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates multiple read transactions on the 8-bit 
+ 215:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface. The read will execute after all currently posted writes 
+ 216:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  have completed. This function will wait until the read completes and then 
+ 217:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  returns the read value.
+ 218:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 219:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 220:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  d_c:    The Data(1) or Command(0) indication. Passed to the d_c pin.
+ 221:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 222:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  rdData: The pointer to the the first element of a data buffer read from the do_msb[7:0]
+ 223:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 224:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          do_msb[7:0] presents only for the 16-bit interface.
+ 225:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 226:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  num:    The number of words/bytes to read.
+ 227:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 228:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 229:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_ReadM8(uint8 d_c, uint8 rdData[], uint16 num) 
+ 230:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 280              		.loc 1 230 0
+ 281              		.cfi_startproc
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 10
+
+
+ 282              		@ args = 0, pretend = 0, frame = 8
+ 283              		@ frame_needed = 0, uses_anonymous_args = 0
+ 284              	.LVL9:
+ 285 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 286              		.cfi_def_cfa_offset 20
+ 287              		.cfi_offset 4, -20
+ 288              		.cfi_offset 5, -16
+ 289              		.cfi_offset 6, -12
+ 290              		.cfi_offset 7, -8
+ 291              		.cfi_offset 14, -4
+ 292 0002 83B0     		sub	sp, sp, #12
+ 293              		.cfi_def_cfa_offset 32
+ 294 0004 0190     		str	r0, [sp, #4]
+ 295 0006 0E00     		movs	r6, r1
+ 296 0008 1700     		movs	r7, r2
+ 297              	.LVL10:
+ 231:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     uint32 i;
+ 232:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     
+ 233:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     for(i = 0u; i < num; i++)
+ 298              		.loc 1 233 0
+ 299 000a 0024     		movs	r4, #0
+ 300 000c 05E0     		b	.L25
+ 301              	.LVL11:
+ 302              	.L26:
+ 234:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 235:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         rdData[i] = GraphicLCDIntf_1_Read8(d_c);
+ 303              		.loc 1 235 0 discriminator 3
+ 304 000e 3519     		adds	r5, r6, r4
+ 305 0010 0198     		ldr	r0, [sp, #4]
+ 306 0012 FFF7FEFF 		bl	GraphicLCDIntf_1_Read8
+ 307              	.LVL12:
+ 308 0016 2870     		strb	r0, [r5]
+ 233:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 309              		.loc 1 233 0 discriminator 3
+ 310 0018 0134     		adds	r4, r4, #1
+ 311              	.LVL13:
+ 312              	.L25:
+ 233:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 313              		.loc 1 233 0 is_stmt 0 discriminator 1
+ 314 001a BC42     		cmp	r4, r7
+ 315 001c F7D3     		bcc	.L26
+ 236:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }
+ 237:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 316              		.loc 1 237 0 is_stmt 1
+ 317 001e 03B0     		add	sp, sp, #12
+ 318              		@ sp needed
+ 319              	.LVL14:
+ 320              	.LVL15:
+ 321 0020 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 322              		.cfi_endproc
+ 323              	.LFE52:
+ 324              		.size	GraphicLCDIntf_1_ReadM8, .-GraphicLCDIntf_1_ReadM8
+ 325 0022 C046     		.section	.text.GraphicLCDIntf_1_Write8_A0,"ax",%progbits
+ 326              		.align	2
+ 327              		.global	GraphicLCDIntf_1_Write8_A0
+ 328              		.code	16
+ 329              		.thumb_func
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 11
+
+
+ 330              		.type	GraphicLCDIntf_1_Write8_A0, %function
+ 331              	GraphicLCDIntf_1_Write8_A0:
+ 332              	.LFB53:
+ 238:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 239:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 240:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 241:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Write8_A0
+ 242:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 243:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 244:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 245:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates a write transaction on the 8-bit parallel
+ 246:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  interface with the d_c pin set to 0.
+ 247:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  The write is a posted write, so this function will return before the write 
+ 248:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  has actually completed on the interface. If the command queue is full, this 
+ 249:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  function will not return until space is availale to queue this write request.
+ 250:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 251:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 252:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: Data sent on the do_msb[7:0] (most significant byte) 
+ 253:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *         and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 254:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *         presents only for 16-bit interface.
+ 255:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 256:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 257:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Write8_A0(uint8 wrData) 
+ 258:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 333              		.loc 1 258 0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337              		@ link register save eliminated.
+ 338              	.LVL16:
+ 339              	.L28:
+ 259:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_CMD_QUEUE_FULL) != 0u)
+ 340              		.loc 1 259 0 discriminator 1
+ 341 0000 044B     		ldr	r3, .L29
+ 342 0002 1B78     		ldrb	r3, [r3]
+ 343 0004 DB07     		lsls	r3, r3, #31
+ 344 0006 FBD4     		bmi	.L28
+ 260:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 261:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         /* Command queue is full */
+ 262:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }   
+ 263:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_CMD_FIFO_REG = 0u;
+ 345              		.loc 1 263 0
+ 346 0008 0022     		movs	r2, #0
+ 347 000a 034B     		ldr	r3, .L29+4
+ 348 000c 1A70     		strb	r2, [r3]
+ 264:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #if (GraphicLCDIntf_1_BUS_WIDTH == 16u)
+ 265:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         CY_SET_REG16(GraphicLCDIntf_1_DATA_FIFO_PTR, wrData);
+ 266:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #else /* 8-bit interface */
+ 267:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_DATA_FIFO_REG = wrData;
+ 349              		.loc 1 267 0
+ 350 000e 034B     		ldr	r3, .L29+8
+ 351 0010 1870     		strb	r0, [r3]
+ 268:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #endif /* GraphicLCDIntf_1_BUS_WIDTH == 16u */
+ 269:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 352              		.loc 1 269 0
+ 353              		@ sp needed
+ 354 0012 7047     		bx	lr
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 12
+
+
+ 355              	.L30:
+ 356              		.align	2
+ 357              	.L29:
+ 358 0014 24163440 		.word	1077155364
+ 359 0018 20143440 		.word	1077154848
+ 360 001c 20153440 		.word	1077155104
+ 361              		.cfi_endproc
+ 362              	.LFE53:
+ 363              		.size	GraphicLCDIntf_1_Write8_A0, .-GraphicLCDIntf_1_Write8_A0
+ 364              		.section	.text.GraphicLCDIntf_1_Write8_A1,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	GraphicLCDIntf_1_Write8_A1
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.type	GraphicLCDIntf_1_Write8_A1, %function
+ 370              	GraphicLCDIntf_1_Write8_A1:
+ 371              	.LFB54:
+ 270:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 271:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 272:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 273:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Write8_A1
+ 274:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 275:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 276:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 277:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates a write transaction on the 8-bit 
+ 278:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface with the d_c pin set to 1. The write is a posted write, 
+ 279:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  so this function will return before the write has actually completed on the 
+ 280:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  interface. If the command queue is full, this function will not return until
+ 281:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  space is availale to queue this write request.
+ 282:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 283:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 284:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: Data sent on the do_msb[7:0] (most significant byte) 
+ 285:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 286:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          presents only for 16-bit interface.
+ 287:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 288:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 289:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_Write8_A1(uint8 wrData) 
+ 290:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 372              		.loc 1 290 0
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376              		@ link register save eliminated.
+ 377              	.LVL17:
+ 378              	.L32:
+ 291:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     while((GraphicLCDIntf_1_STATUS_REG & GraphicLCDIntf_1_CMD_QUEUE_FULL) != 0u)
+ 379              		.loc 1 291 0 discriminator 1
+ 380 0000 044B     		ldr	r3, .L33
+ 381 0002 1B78     		ldrb	r3, [r3]
+ 382 0004 DB07     		lsls	r3, r3, #31
+ 383 0006 FBD4     		bmi	.L32
+ 292:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     {
+ 293:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         /* Command queue is full */
+ 294:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     }   
+ 295:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_CMD_FIFO_REG = 1u;
+ 384              		.loc 1 295 0
+ 385 0008 0122     		movs	r2, #1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 13
+
+
+ 386 000a 034B     		ldr	r3, .L33+4
+ 387 000c 1A70     		strb	r2, [r3]
+ 296:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #if (GraphicLCDIntf_1_BUS_WIDTH == 16u)
+ 297:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         CY_SET_REG16(GraphicLCDIntf_1_DATA_FIFO_PTR, wrData);
+ 298:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #else /* 8-bit interface */
+ 299:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****         GraphicLCDIntf_1_DATA_FIFO_REG = wrData;
+ 388              		.loc 1 299 0
+ 389 000e 034B     		ldr	r3, .L33+8
+ 390 0010 1870     		strb	r0, [r3]
+ 300:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     #endif /* GraphicLCDIntf_1_BUS_WIDTH == 16u */
+ 301:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 391              		.loc 1 301 0
+ 392              		@ sp needed
+ 393 0012 7047     		bx	lr
+ 394              	.L34:
+ 395              		.align	2
+ 396              	.L33:
+ 397 0014 24163440 		.word	1077155364
+ 398 0018 20143440 		.word	1077154848
+ 399 001c 20153440 		.word	1077155104
+ 400              		.cfi_endproc
+ 401              	.LFE54:
+ 402              		.size	GraphicLCDIntf_1_Write8_A1, .-GraphicLCDIntf_1_Write8_A1
+ 403              		.section	.text.GraphicLCDIntf_1_WriteM8_A0,"ax",%progbits
+ 404              		.align	2
+ 405              		.global	GraphicLCDIntf_1_WriteM8_A0
+ 406              		.code	16
+ 407              		.thumb_func
+ 408              		.type	GraphicLCDIntf_1_WriteM8_A0, %function
+ 409              	GraphicLCDIntf_1_WriteM8_A0:
+ 410              	.LFB55:
+ 302:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 303:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 304:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 305:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_WriteM8_A0
+ 306:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 307:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 308:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 309:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates multiple write transactions on the 8-bit 
+ 310:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface with the d_c pin set to 0. The write is a posted write, 
+ 311:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  so this function will return before the write has actually completed on the 
+ 312:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  interface. If the command queue is full, this function will not return until
+ 313:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  space is availale to queue this write request.
+ 314:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 315:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 316:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: Pointer to the the first element of a data buffer sent on the 
+ 317:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          do_msb[7:0] (most significant byte) and do_lsb[7:0] (least significant
+ 318:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          byte) pins. do_msb[7:0] presents only for 16-bit interface.
+ 319:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 320:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  num:  Number of words/bytes to write.
+ 321:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 322:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 323:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_WriteM8_A0(uint8 wrData[], int num) 
+ 324:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 411              		.loc 1 324 0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 14
+
+
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              	.LVL18:
+ 416 0000 10B5     		push	{r4, lr}
+ 417              		.cfi_def_cfa_offset 8
+ 418              		.cfi_offset 4, -8
+ 419              		.cfi_offset 14, -4
+ 325:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_WriteM8(0u, wrData, (uint16)num);
+ 420              		.loc 1 325 0
+ 421 0002 8AB2     		uxth	r2, r1
+ 422 0004 0100     		movs	r1, r0
+ 423              	.LVL19:
+ 424 0006 0020     		movs	r0, #0
+ 425              	.LVL20:
+ 426 0008 FFF7FEFF 		bl	GraphicLCDIntf_1_WriteM8
+ 427              	.LVL21:
+ 326:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 428              		.loc 1 326 0
+ 429              		@ sp needed
+ 430 000c 10BD     		pop	{r4, pc}
+ 431              		.cfi_endproc
+ 432              	.LFE55:
+ 433              		.size	GraphicLCDIntf_1_WriteM8_A0, .-GraphicLCDIntf_1_WriteM8_A0
+ 434 000e C046     		.section	.text.GraphicLCDIntf_1_WriteM8_A1,"ax",%progbits
+ 435              		.align	2
+ 436              		.global	GraphicLCDIntf_1_WriteM8_A1
+ 437              		.code	16
+ 438              		.thumb_func
+ 439              		.type	GraphicLCDIntf_1_WriteM8_A1, %function
+ 440              	GraphicLCDIntf_1_WriteM8_A1:
+ 441              	.LFB56:
+ 327:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 328:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 329:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 330:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_WriteM8_A1
+ 331:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 332:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 333:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 334:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates multiple data write transactions on the 8-bit 
+ 335:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface with the d_c pin set to 1. The write is a posted write, 
+ 336:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  so this function will return before the write has actually completed on the 
+ 337:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  interface. If the command queue is full, this function will not return until
+ 338:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  space is availale to queue this write request.
+ 339:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 340:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 341:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  wrData: Pointer to the the first element of a data buffer sent on the 
+ 342:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          do_msb[7:0] (most significant byte) and do_lsb[7:0] (least significant
+ 343:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *          byte) pins. do_msb[7:0] presents only for 16-bit interface.
+ 344:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 345:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  num:  Number of words/bytes to write.
+ 346:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 347:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 348:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_WriteM8_A1(uint8 wrData[], int num) 
+ 349:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 442              		.loc 1 349 0
+ 443              		.cfi_startproc
+ 444              		@ args = 0, pretend = 0, frame = 0
+ 445              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 15
+
+
+ 446              	.LVL22:
+ 447 0000 10B5     		push	{r4, lr}
+ 448              		.cfi_def_cfa_offset 8
+ 449              		.cfi_offset 4, -8
+ 450              		.cfi_offset 14, -4
+ 350:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_WriteM8(1u, wrData, (uint16)num);
+ 451              		.loc 1 350 0
+ 452 0002 8AB2     		uxth	r2, r1
+ 453 0004 0100     		movs	r1, r0
+ 454              	.LVL23:
+ 455 0006 0120     		movs	r0, #1
+ 456              	.LVL24:
+ 457 0008 FFF7FEFF 		bl	GraphicLCDIntf_1_WriteM8
+ 458              	.LVL25:
+ 351:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 459              		.loc 1 351 0
+ 460              		@ sp needed
+ 461 000c 10BD     		pop	{r4, pc}
+ 462              		.cfi_endproc
+ 463              	.LFE56:
+ 464              		.size	GraphicLCDIntf_1_WriteM8_A1, .-GraphicLCDIntf_1_WriteM8_A1
+ 465 000e C046     		.section	.text.GraphicLCDIntf_1_Read8_A1,"ax",%progbits
+ 466              		.align	2
+ 467              		.global	GraphicLCDIntf_1_Read8_A1
+ 468              		.code	16
+ 469              		.thumb_func
+ 470              		.type	GraphicLCDIntf_1_Read8_A1, %function
+ 471              	GraphicLCDIntf_1_Read8_A1:
+ 472              	.LFB57:
+ 352:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 353:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 354:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 355:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_Read8_A1
+ 356:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 357:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 358:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 359:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates data read transaction on the 8-bit 
+ 360:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface with the d_c pin set to 1. The read will execute after 
+ 361:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  all currently posted writes have completed. This function will wait until 
+ 362:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  the read completes and then returns the read value.
+ 363:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 364:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Return:
+ 365:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  The 16-bit read value from the di_msb[7:0] (most significant byte) and 
+ 366:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  di_lsb[7:0] (least significant byte) pins for the 16-bit interface or the 
+ 367:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  8-bit read value from the di_lsb[7:0] for 8-bit interface.
+ 368:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 369:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 370:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** uint8 GraphicLCDIntf_1_Read8_A1(void) 
+ 371:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 473              		.loc 1 371 0
+ 474              		.cfi_startproc
+ 475              		@ args = 0, pretend = 0, frame = 0
+ 476              		@ frame_needed = 0, uses_anonymous_args = 0
+ 477 0000 10B5     		push	{r4, lr}
+ 478              		.cfi_def_cfa_offset 8
+ 479              		.cfi_offset 4, -8
+ 480              		.cfi_offset 14, -4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 16
+
+
+ 372:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     return GraphicLCDIntf_1_Read8(1u);
+ 481              		.loc 1 372 0
+ 482 0002 0120     		movs	r0, #1
+ 483 0004 FFF7FEFF 		bl	GraphicLCDIntf_1_Read8
+ 484              	.LVL26:
+ 373:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 485              		.loc 1 373 0
+ 486              		@ sp needed
+ 487 0008 10BD     		pop	{r4, pc}
+ 488              		.cfi_endproc
+ 489              	.LFE57:
+ 490              		.size	GraphicLCDIntf_1_Read8_A1, .-GraphicLCDIntf_1_Read8_A1
+ 491 000a C046     		.section	.text.GraphicLCDIntf_1_ReadM8_A1,"ax",%progbits
+ 492              		.align	2
+ 493              		.global	GraphicLCDIntf_1_ReadM8_A1
+ 494              		.code	16
+ 495              		.thumb_func
+ 496              		.type	GraphicLCDIntf_1_ReadM8_A1, %function
+ 497              	GraphicLCDIntf_1_ReadM8_A1:
+ 498              	.LFB58:
+ 374:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 375:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** 
+ 376:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** /*******************************************************************************
+ 377:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Function Name: GraphicLCDIntf_1_ReadM8_A1
+ 378:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** ********************************************************************************
+ 379:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 380:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Summary:
+ 381:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  Initiates multiple data read transactions on the 8-bit 
+ 382:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  parallel interface with the d_c pin set to 1. The read will execute after all 
+ 383:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  currently posted writes have completed. This function will wait until the 
+ 384:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  read completes and then returns the read value.
+ 385:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 386:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** * Parameters:
+ 387:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  rdData: Pointer to the the first element of a data buffer read from the do_msb[7:0]
+ 388:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *        (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 389:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *        do_msb[7:0] presents only for 16-bit interface.
+ 390:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 391:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *  num:  Number of words/bytes to read.
+ 392:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *
+ 393:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** *******************************************************************************/
+ 394:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** void GraphicLCDIntf_1_ReadM8_A1(uint8 rdData[], int num) 
+ 395:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** {
+ 499              		.loc 1 395 0
+ 500              		.cfi_startproc
+ 501              		@ args = 0, pretend = 0, frame = 0
+ 502              		@ frame_needed = 0, uses_anonymous_args = 0
+ 503              	.LVL27:
+ 504 0000 10B5     		push	{r4, lr}
+ 505              		.cfi_def_cfa_offset 8
+ 506              		.cfi_offset 4, -8
+ 507              		.cfi_offset 14, -4
+ 396:Generated_Source\PSoC6/GraphicLCDIntf_1.c ****     GraphicLCDIntf_1_ReadM8(1u, rdData, (uint16)num);
+ 508              		.loc 1 396 0
+ 509 0002 8AB2     		uxth	r2, r1
+ 510 0004 0100     		movs	r1, r0
+ 511              	.LVL28:
+ 512 0006 0120     		movs	r0, #1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 17
+
+
+ 513              	.LVL29:
+ 514 0008 FFF7FEFF 		bl	GraphicLCDIntf_1_ReadM8
+ 515              	.LVL30:
+ 397:Generated_Source\PSoC6/GraphicLCDIntf_1.c **** }
+ 516              		.loc 1 397 0
+ 517              		@ sp needed
+ 518 000c 10BD     		pop	{r4, pc}
+ 519              		.cfi_endproc
+ 520              	.LFE58:
+ 521              		.size	GraphicLCDIntf_1_ReadM8_A1, .-GraphicLCDIntf_1_ReadM8_A1
+ 522              		.global	GraphicLCDIntf_1_initVar
+ 523 000e C046     		.bss
+ 524              		.set	.LANCHOR0,. + 0
+ 525              		.type	GraphicLCDIntf_1_initVar, %object
+ 526              		.size	GraphicLCDIntf_1_initVar, 1
+ 527              	GraphicLCDIntf_1_initVar:
+ 528 0000 00       		.space	1
+ 529              		.text
+ 530              	.Letext0:
+ 531              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 532              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 533              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+ 534              		.section	.debug_info,"",%progbits
+ 535              	.Ldebug_info0:
+ 536 0000 E0030000 		.4byte	0x3e0
+ 537 0004 0400     		.2byte	0x4
+ 538 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 539 000a 04       		.byte	0x4
+ 540 000b 01       		.uleb128 0x1
+ 541 000c 23030000 		.4byte	.LASF40
+ 542 0010 0C       		.byte	0xc
+ 543 0011 84000000 		.4byte	.LASF41
+ 544 0015 B4000000 		.4byte	.LASF42
+ 545 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 546 001d 00000000 		.4byte	0
+ 547 0021 00000000 		.4byte	.Ldebug_line0
+ 548 0025 02       		.uleb128 0x2
+ 549 0026 02       		.byte	0x2
+ 550 0027 05       		.byte	0x5
+ 551 0028 D9020000 		.4byte	.LASF0
+ 552 002c 02       		.uleb128 0x2
+ 553 002d 01       		.byte	0x1
+ 554 002e 08       		.byte	0x8
+ 555 002f 36010000 		.4byte	.LASF1
+ 556 0033 02       		.uleb128 0x2
+ 557 0034 01       		.byte	0x1
+ 558 0035 06       		.byte	0x6
+ 559 0036 B5030000 		.4byte	.LASF2
+ 560 003a 03       		.uleb128 0x3
+ 561 003b 00000000 		.4byte	.LASF3
+ 562 003f 02       		.byte	0x2
+ 563 0040 1D       		.byte	0x1d
+ 564 0041 2C000000 		.4byte	0x2c
+ 565 0045 03       		.uleb128 0x3
+ 566 0046 9A010000 		.4byte	.LASF4
+ 567 004a 02       		.byte	0x2
+ 568 004b 2B       		.byte	0x2b
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 18
+
+
+ 569 004c 50000000 		.4byte	0x50
+ 570 0050 02       		.uleb128 0x2
+ 571 0051 02       		.byte	0x2
+ 572 0052 07       		.byte	0x7
+ 573 0053 5A000000 		.4byte	.LASF5
+ 574 0057 02       		.uleb128 0x2
+ 575 0058 04       		.byte	0x4
+ 576 0059 05       		.byte	0x5
+ 577 005a 0E030000 		.4byte	.LASF6
+ 578 005e 03       		.uleb128 0x3
+ 579 005f 79010000 		.4byte	.LASF7
+ 580 0063 02       		.byte	0x2
+ 581 0064 41       		.byte	0x41
+ 582 0065 69000000 		.4byte	0x69
+ 583 0069 02       		.uleb128 0x2
+ 584 006a 04       		.byte	0x4
+ 585 006b 07       		.byte	0x7
+ 586 006c 49010000 		.4byte	.LASF8
+ 587 0070 02       		.uleb128 0x2
+ 588 0071 08       		.byte	0x8
+ 589 0072 05       		.byte	0x5
+ 590 0073 AC020000 		.4byte	.LASF9
+ 591 0077 02       		.uleb128 0x2
+ 592 0078 08       		.byte	0x8
+ 593 0079 07       		.byte	0x7
+ 594 007a 53020000 		.4byte	.LASF10
+ 595 007e 04       		.uleb128 0x4
+ 596 007f 04       		.byte	0x4
+ 597 0080 05       		.byte	0x5
+ 598 0081 696E7400 		.ascii	"int\000"
+ 599 0085 02       		.uleb128 0x2
+ 600 0086 04       		.byte	0x4
+ 601 0087 07       		.byte	0x7
+ 602 0088 10020000 		.4byte	.LASF11
+ 603 008c 03       		.uleb128 0x3
+ 604 008d 6A020000 		.4byte	.LASF12
+ 605 0091 03       		.byte	0x3
+ 606 0092 18       		.byte	0x18
+ 607 0093 3A000000 		.4byte	0x3a
+ 608 0097 03       		.uleb128 0x3
+ 609 0098 E3020000 		.4byte	.LASF13
+ 610 009c 03       		.byte	0x3
+ 611 009d 24       		.byte	0x24
+ 612 009e 45000000 		.4byte	0x45
+ 613 00a2 03       		.uleb128 0x3
+ 614 00a3 05030000 		.4byte	.LASF14
+ 615 00a7 03       		.byte	0x3
+ 616 00a8 30       		.byte	0x30
+ 617 00a9 5E000000 		.4byte	0x5e
+ 618 00ad 02       		.uleb128 0x2
+ 619 00ae 04       		.byte	0x4
+ 620 00af 07       		.byte	0x7
+ 621 00b0 A3020000 		.4byte	.LASF15
+ 622 00b4 05       		.uleb128 0x5
+ 623 00b5 8C000000 		.4byte	0x8c
+ 624 00b9 02       		.uleb128 0x2
+ 625 00ba 08       		.byte	0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 19
+
+
+ 626 00bb 04       		.byte	0x4
+ 627 00bc 17030000 		.4byte	.LASF16
+ 628 00c0 02       		.uleb128 0x2
+ 629 00c1 01       		.byte	0x1
+ 630 00c2 08       		.byte	0x8
+ 631 00c3 BA020000 		.4byte	.LASF17
+ 632 00c7 02       		.uleb128 0x2
+ 633 00c8 04       		.byte	0x4
+ 634 00c9 04       		.byte	0x4
+ 635 00ca AE000000 		.4byte	.LASF18
+ 636 00ce 02       		.uleb128 0x2
+ 637 00cf 08       		.byte	0x8
+ 638 00d0 04       		.byte	0x4
+ 639 00d1 A5010000 		.4byte	.LASF19
+ 640 00d5 06       		.uleb128 0x6
+ 641 00d6 5B010000 		.4byte	.LASF20
+ 642 00da 04       		.byte	0x4
+ 643 00db EA03     		.2byte	0x3ea
+ 644 00dd 8C000000 		.4byte	0x8c
+ 645 00e1 06       		.uleb128 0x6
+ 646 00e2 FB010000 		.4byte	.LASF21
+ 647 00e6 04       		.byte	0x4
+ 648 00e7 EB03     		.2byte	0x3eb
+ 649 00e9 97000000 		.4byte	0x97
+ 650 00ed 06       		.uleb128 0x6
+ 651 00ee 09020000 		.4byte	.LASF22
+ 652 00f2 04       		.byte	0x4
+ 653 00f3 EC03     		.2byte	0x3ec
+ 654 00f5 A2000000 		.4byte	0xa2
+ 655 00f9 06       		.uleb128 0x6
+ 656 00fa 44010000 		.4byte	.LASF23
+ 657 00fe 04       		.byte	0x4
+ 658 00ff F603     		.2byte	0x3f6
+ 659 0101 B4000000 		.4byte	0xb4
+ 660 0105 07       		.uleb128 0x7
+ 661 0106 E3010000 		.4byte	.LASF24
+ 662 010a 01       		.byte	0x1
+ 663 010b 22       		.byte	0x22
+ 664 010c 00000000 		.4byte	.LFB45
+ 665 0110 02000000 		.4byte	.LFE45-.LFB45
+ 666 0114 01       		.uleb128 0x1
+ 667 0115 9C       		.byte	0x9c
+ 668 0116 07       		.uleb128 0x7
+ 669 0117 84010000 		.4byte	.LASF25
+ 670 011b 01       		.byte	0x1
+ 671 011c 30       		.byte	0x30
+ 672 011d 00000000 		.4byte	.LFB46
+ 673 0121 18000000 		.4byte	.LFE46-.LFB46
+ 674 0125 01       		.uleb128 0x1
+ 675 0126 9C       		.byte	0x9c
+ 676 0127 08       		.uleb128 0x8
+ 677 0128 B3010000 		.4byte	.LASF27
+ 678 012c 01       		.byte	0x1
+ 679 012d 44       		.byte	0x44
+ 680 012e 00000000 		.4byte	.LFB47
+ 681 0132 1C000000 		.4byte	.LFE47-.LFB47
+ 682 0136 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 20
+
+
+ 683 0137 9C       		.byte	0x9c
+ 684 0138 46010000 		.4byte	0x146
+ 685 013c 09       		.uleb128 0x9
+ 686 013d 0E000000 		.4byte	.LVL0
+ 687 0141 16010000 		.4byte	0x116
+ 688 0145 00       		.byte	0
+ 689 0146 07       		.uleb128 0x7
+ 690 0147 8D020000 		.4byte	.LASF26
+ 691 014b 01       		.byte	0x1
+ 692 014c 58       		.byte	0x58
+ 693 014d 00000000 		.4byte	.LFB48
+ 694 0151 02000000 		.4byte	.LFE48-.LFB48
+ 695 0155 01       		.uleb128 0x1
+ 696 0156 9C       		.byte	0x9c
+ 697 0157 08       		.uleb128 0x8
+ 698 0158 42000000 		.4byte	.LASF28
+ 699 015c 01       		.byte	0x1
+ 700 015d 71       		.byte	0x71
+ 701 015e 00000000 		.4byte	.LFB49
+ 702 0162 20000000 		.4byte	.LFE49-.LFB49
+ 703 0166 01       		.uleb128 0x1
+ 704 0167 9C       		.byte	0x9c
+ 705 0168 87010000 		.4byte	0x187
+ 706 016c 0A       		.uleb128 0xa
+ 707 016d 645F6300 		.ascii	"d_c\000"
+ 708 0171 01       		.byte	0x1
+ 709 0172 71       		.byte	0x71
+ 710 0173 D5000000 		.4byte	0xd5
+ 711 0177 01       		.uleb128 0x1
+ 712 0178 50       		.byte	0x50
+ 713 0179 0B       		.uleb128 0xb
+ 714 017a AC010000 		.4byte	.LASF29
+ 715 017e 01       		.byte	0x1
+ 716 017f 71       		.byte	0x71
+ 717 0180 D5000000 		.4byte	0xd5
+ 718 0184 01       		.uleb128 0x1
+ 719 0185 51       		.byte	0x51
+ 720 0186 00       		.byte	0
+ 721 0187 08       		.uleb128 0x8
+ 722 0188 CA010000 		.4byte	.LASF30
+ 723 018c 01       		.byte	0x1
+ 724 018d 95       		.byte	0x95
+ 725 018e 00000000 		.4byte	.LFB50
+ 726 0192 2C000000 		.4byte	.LFE50-.LFB50
+ 727 0196 01       		.uleb128 0x1
+ 728 0197 9C       		.byte	0x9c
+ 729 0198 D1010000 		.4byte	0x1d1
+ 730 019c 0A       		.uleb128 0xa
+ 731 019d 645F6300 		.ascii	"d_c\000"
+ 732 01a1 01       		.byte	0x1
+ 733 01a2 95       		.byte	0x95
+ 734 01a3 D5000000 		.4byte	0xd5
+ 735 01a7 01       		.uleb128 0x1
+ 736 01a8 50       		.byte	0x50
+ 737 01a9 0B       		.uleb128 0xb
+ 738 01aa AC010000 		.4byte	.LASF29
+ 739 01ae 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 21
+
+
+ 740 01af 95       		.byte	0x95
+ 741 01b0 D1010000 		.4byte	0x1d1
+ 742 01b4 01       		.uleb128 0x1
+ 743 01b5 51       		.byte	0x51
+ 744 01b6 0A       		.uleb128 0xa
+ 745 01b7 6E756D00 		.ascii	"num\000"
+ 746 01bb 01       		.byte	0x1
+ 747 01bc 95       		.byte	0x95
+ 748 01bd E1000000 		.4byte	0xe1
+ 749 01c1 01       		.uleb128 0x1
+ 750 01c2 52       		.byte	0x52
+ 751 01c3 0C       		.uleb128 0xc
+ 752 01c4 6900     		.ascii	"i\000"
+ 753 01c6 01       		.byte	0x1
+ 754 01c7 97       		.byte	0x97
+ 755 01c8 ED000000 		.4byte	0xed
+ 756 01cc 00000000 		.4byte	.LLST0
+ 757 01d0 00       		.byte	0
+ 758 01d1 0D       		.uleb128 0xd
+ 759 01d2 04       		.byte	0x4
+ 760 01d3 D5000000 		.4byte	0xd5
+ 761 01d7 0E       		.uleb128 0xe
+ 762 01d8 6D000000 		.4byte	.LASF37
+ 763 01dc 01       		.byte	0x1
+ 764 01dd BC       		.byte	0xbc
+ 765 01de D5000000 		.4byte	0xd5
+ 766 01e2 00000000 		.4byte	.LFB51
+ 767 01e6 30000000 		.4byte	.LFE51-.LFB51
+ 768 01ea 01       		.uleb128 0x1
+ 769 01eb 9C       		.byte	0x9c
+ 770 01ec 00020000 		.4byte	0x200
+ 771 01f0 0F       		.uleb128 0xf
+ 772 01f1 645F6300 		.ascii	"d_c\000"
+ 773 01f5 01       		.byte	0x1
+ 774 01f6 BC       		.byte	0xbc
+ 775 01f7 D5000000 		.4byte	0xd5
+ 776 01fb 1F000000 		.4byte	.LLST1
+ 777 01ff 00       		.byte	0
+ 778 0200 08       		.uleb128 0x8
+ 779 0201 61010000 		.4byte	.LASF31
+ 780 0205 01       		.byte	0x1
+ 781 0206 E5       		.byte	0xe5
+ 782 0207 00000000 		.4byte	.LFB52
+ 783 020b 22000000 		.4byte	.LFE52-.LFB52
+ 784 020f 01       		.uleb128 0x1
+ 785 0210 9C       		.byte	0x9c
+ 786 0211 62020000 		.4byte	0x262
+ 787 0215 0F       		.uleb128 0xf
+ 788 0216 645F6300 		.ascii	"d_c\000"
+ 789 021a 01       		.byte	0x1
+ 790 021b E5       		.byte	0xe5
+ 791 021c D5000000 		.4byte	0xd5
+ 792 0220 40000000 		.4byte	.LLST2
+ 793 0224 10       		.uleb128 0x10
+ 794 0225 02020000 		.4byte	.LASF32
+ 795 0229 01       		.byte	0x1
+ 796 022a E5       		.byte	0xe5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 22
+
+
+ 797 022b D1010000 		.4byte	0x1d1
+ 798 022f 61000000 		.4byte	.LLST3
+ 799 0233 0F       		.uleb128 0xf
+ 800 0234 6E756D00 		.ascii	"num\000"
+ 801 0238 01       		.byte	0x1
+ 802 0239 E5       		.byte	0xe5
+ 803 023a E1000000 		.4byte	0xe1
+ 804 023e 8D000000 		.4byte	.LLST4
+ 805 0242 0C       		.uleb128 0xc
+ 806 0243 6900     		.ascii	"i\000"
+ 807 0245 01       		.byte	0x1
+ 808 0246 E7       		.byte	0xe7
+ 809 0247 ED000000 		.4byte	0xed
+ 810 024b AE000000 		.4byte	.LLST5
+ 811 024f 11       		.uleb128 0x11
+ 812 0250 16000000 		.4byte	.LVL12
+ 813 0254 D7010000 		.4byte	0x1d7
+ 814 0258 12       		.uleb128 0x12
+ 815 0259 01       		.uleb128 0x1
+ 816 025a 50       		.byte	0x50
+ 817 025b 04       		.uleb128 0x4
+ 818 025c 91       		.byte	0x91
+ 819 025d 64       		.sleb128 -28
+ 820 025e 94       		.byte	0x94
+ 821 025f 01       		.byte	0x1
+ 822 0260 00       		.byte	0
+ 823 0261 00       		.byte	0
+ 824 0262 13       		.uleb128 0x13
+ 825 0263 1D020000 		.4byte	.LASF33
+ 826 0267 01       		.byte	0x1
+ 827 0268 0101     		.2byte	0x101
+ 828 026a 00000000 		.4byte	.LFB53
+ 829 026e 20000000 		.4byte	.LFE53-.LFB53
+ 830 0272 01       		.uleb128 0x1
+ 831 0273 9C       		.byte	0x9c
+ 832 0274 87020000 		.4byte	0x287
+ 833 0278 14       		.uleb128 0x14
+ 834 0279 AC010000 		.4byte	.LASF29
+ 835 027d 01       		.byte	0x1
+ 836 027e 0101     		.2byte	0x101
+ 837 0280 D5000000 		.4byte	0xd5
+ 838 0284 01       		.uleb128 0x1
+ 839 0285 50       		.byte	0x50
+ 840 0286 00       		.byte	0
+ 841 0287 13       		.uleb128 0x13
+ 842 0288 38020000 		.4byte	.LASF34
+ 843 028c 01       		.byte	0x1
+ 844 028d 2101     		.2byte	0x121
+ 845 028f 00000000 		.4byte	.LFB54
+ 846 0293 20000000 		.4byte	.LFE54-.LFB54
+ 847 0297 01       		.uleb128 0x1
+ 848 0298 9C       		.byte	0x9c
+ 849 0299 AC020000 		.4byte	0x2ac
+ 850 029d 14       		.uleb128 0x14
+ 851 029e AC010000 		.4byte	.LASF29
+ 852 02a2 01       		.byte	0x1
+ 853 02a3 2101     		.2byte	0x121
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 23
+
+
+ 854 02a5 D5000000 		.4byte	0xd5
+ 855 02a9 01       		.uleb128 0x1
+ 856 02aa 50       		.byte	0x50
+ 857 02ab 00       		.byte	0
+ 858 02ac 13       		.uleb128 0x13
+ 859 02ad 0A000000 		.4byte	.LASF35
+ 860 02b1 01       		.byte	0x1
+ 861 02b2 4301     		.2byte	0x143
+ 862 02b4 00000000 		.4byte	.LFB55
+ 863 02b8 0E000000 		.4byte	.LFE55-.LFB55
+ 864 02bc 01       		.uleb128 0x1
+ 865 02bd 9C       		.byte	0x9c
+ 866 02be 00030000 		.4byte	0x300
+ 867 02c2 15       		.uleb128 0x15
+ 868 02c3 AC010000 		.4byte	.LASF29
+ 869 02c7 01       		.byte	0x1
+ 870 02c8 4301     		.2byte	0x143
+ 871 02ca D1010000 		.4byte	0x1d1
+ 872 02ce CD000000 		.4byte	.LLST6
+ 873 02d2 16       		.uleb128 0x16
+ 874 02d3 6E756D00 		.ascii	"num\000"
+ 875 02d7 01       		.byte	0x1
+ 876 02d8 4301     		.2byte	0x143
+ 877 02da 7E000000 		.4byte	0x7e
+ 878 02de F9000000 		.4byte	.LLST7
+ 879 02e2 11       		.uleb128 0x11
+ 880 02e3 0C000000 		.4byte	.LVL21
+ 881 02e7 87010000 		.4byte	0x187
+ 882 02eb 12       		.uleb128 0x12
+ 883 02ec 01       		.uleb128 0x1
+ 884 02ed 50       		.byte	0x50
+ 885 02ee 01       		.uleb128 0x1
+ 886 02ef 30       		.byte	0x30
+ 887 02f0 12       		.uleb128 0x12
+ 888 02f1 01       		.uleb128 0x1
+ 889 02f2 51       		.byte	0x51
+ 890 02f3 03       		.uleb128 0x3
+ 891 02f4 F3       		.byte	0xf3
+ 892 02f5 01       		.uleb128 0x1
+ 893 02f6 50       		.byte	0x50
+ 894 02f7 12       		.uleb128 0x12
+ 895 02f8 01       		.uleb128 0x1
+ 896 02f9 52       		.byte	0x52
+ 897 02fa 03       		.uleb128 0x3
+ 898 02fb F3       		.byte	0xf3
+ 899 02fc 01       		.uleb128 0x1
+ 900 02fd 51       		.byte	0x51
+ 901 02fe 00       		.byte	0
+ 902 02ff 00       		.byte	0
+ 903 0300 13       		.uleb128 0x13
+ 904 0301 26000000 		.4byte	.LASF36
+ 905 0305 01       		.byte	0x1
+ 906 0306 5C01     		.2byte	0x15c
+ 907 0308 00000000 		.4byte	.LFB56
+ 908 030c 0E000000 		.4byte	.LFE56-.LFB56
+ 909 0310 01       		.uleb128 0x1
+ 910 0311 9C       		.byte	0x9c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 24
+
+
+ 911 0312 54030000 		.4byte	0x354
+ 912 0316 15       		.uleb128 0x15
+ 913 0317 AC010000 		.4byte	.LASF29
+ 914 031b 01       		.byte	0x1
+ 915 031c 5C01     		.2byte	0x15c
+ 916 031e D1010000 		.4byte	0x1d1
+ 917 0322 1A010000 		.4byte	.LLST8
+ 918 0326 16       		.uleb128 0x16
+ 919 0327 6E756D00 		.ascii	"num\000"
+ 920 032b 01       		.byte	0x1
+ 921 032c 5C01     		.2byte	0x15c
+ 922 032e 7E000000 		.4byte	0x7e
+ 923 0332 46010000 		.4byte	.LLST9
+ 924 0336 11       		.uleb128 0x11
+ 925 0337 0C000000 		.4byte	.LVL25
+ 926 033b 87010000 		.4byte	0x187
+ 927 033f 12       		.uleb128 0x12
+ 928 0340 01       		.uleb128 0x1
+ 929 0341 50       		.byte	0x50
+ 930 0342 01       		.uleb128 0x1
+ 931 0343 31       		.byte	0x31
+ 932 0344 12       		.uleb128 0x12
+ 933 0345 01       		.uleb128 0x1
+ 934 0346 51       		.byte	0x51
+ 935 0347 03       		.uleb128 0x3
+ 936 0348 F3       		.byte	0xf3
+ 937 0349 01       		.uleb128 0x1
+ 938 034a 50       		.byte	0x50
+ 939 034b 12       		.uleb128 0x12
+ 940 034c 01       		.uleb128 0x1
+ 941 034d 52       		.byte	0x52
+ 942 034e 03       		.uleb128 0x3
+ 943 034f F3       		.byte	0xf3
+ 944 0350 01       		.uleb128 0x1
+ 945 0351 51       		.byte	0x51
+ 946 0352 00       		.byte	0
+ 947 0353 00       		.byte	0
+ 948 0354 17       		.uleb128 0x17
+ 949 0355 BF020000 		.4byte	.LASF38
+ 950 0359 01       		.byte	0x1
+ 951 035a 7201     		.2byte	0x172
+ 952 035c D5000000 		.4byte	0xd5
+ 953 0360 00000000 		.4byte	.LFB57
+ 954 0364 0A000000 		.4byte	.LFE57-.LFB57
+ 955 0368 01       		.uleb128 0x1
+ 956 0369 9C       		.byte	0x9c
+ 957 036a 7E030000 		.4byte	0x37e
+ 958 036e 11       		.uleb128 0x11
+ 959 036f 08000000 		.4byte	.LVL26
+ 960 0373 D7010000 		.4byte	0x1d7
+ 961 0377 12       		.uleb128 0x12
+ 962 0378 01       		.uleb128 0x1
+ 963 0379 50       		.byte	0x50
+ 964 037a 01       		.uleb128 0x1
+ 965 037b 31       		.byte	0x31
+ 966 037c 00       		.byte	0
+ 967 037d 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 25
+
+
+ 968 037e 13       		.uleb128 0x13
+ 969 037f 72020000 		.4byte	.LASF39
+ 970 0383 01       		.byte	0x1
+ 971 0384 8A01     		.2byte	0x18a
+ 972 0386 00000000 		.4byte	.LFB58
+ 973 038a 0E000000 		.4byte	.LFE58-.LFB58
+ 974 038e 01       		.uleb128 0x1
+ 975 038f 9C       		.byte	0x9c
+ 976 0390 D2030000 		.4byte	0x3d2
+ 977 0394 15       		.uleb128 0x15
+ 978 0395 02020000 		.4byte	.LASF32
+ 979 0399 01       		.byte	0x1
+ 980 039a 8A01     		.2byte	0x18a
+ 981 039c D1010000 		.4byte	0x1d1
+ 982 03a0 67010000 		.4byte	.LLST10
+ 983 03a4 16       		.uleb128 0x16
+ 984 03a5 6E756D00 		.ascii	"num\000"
+ 985 03a9 01       		.byte	0x1
+ 986 03aa 8A01     		.2byte	0x18a
+ 987 03ac 7E000000 		.4byte	0x7e
+ 988 03b0 93010000 		.4byte	.LLST11
+ 989 03b4 11       		.uleb128 0x11
+ 990 03b5 0C000000 		.4byte	.LVL30
+ 991 03b9 00020000 		.4byte	0x200
+ 992 03bd 12       		.uleb128 0x12
+ 993 03be 01       		.uleb128 0x1
+ 994 03bf 50       		.byte	0x50
+ 995 03c0 01       		.uleb128 0x1
+ 996 03c1 31       		.byte	0x31
+ 997 03c2 12       		.uleb128 0x12
+ 998 03c3 01       		.uleb128 0x1
+ 999 03c4 51       		.byte	0x51
+ 1000 03c5 03       		.uleb128 0x3
+ 1001 03c6 F3       		.byte	0xf3
+ 1002 03c7 01       		.uleb128 0x1
+ 1003 03c8 50       		.byte	0x50
+ 1004 03c9 12       		.uleb128 0x12
+ 1005 03ca 01       		.uleb128 0x1
+ 1006 03cb 52       		.byte	0x52
+ 1007 03cc 03       		.uleb128 0x3
+ 1008 03cd F3       		.byte	0xf3
+ 1009 03ce 01       		.uleb128 0x1
+ 1010 03cf 51       		.byte	0x51
+ 1011 03d0 00       		.byte	0
+ 1012 03d1 00       		.byte	0
+ 1013 03d2 18       		.uleb128 0x18
+ 1014 03d3 EC020000 		.4byte	.LASF43
+ 1015 03d7 01       		.byte	0x1
+ 1016 03d8 12       		.byte	0x12
+ 1017 03d9 D5000000 		.4byte	0xd5
+ 1018 03dd 05       		.uleb128 0x5
+ 1019 03de 03       		.byte	0x3
+ 1020 03df 00000000 		.4byte	GraphicLCDIntf_1_initVar
+ 1021 03e3 00       		.byte	0
+ 1022              		.section	.debug_abbrev,"",%progbits
+ 1023              	.Ldebug_abbrev0:
+ 1024 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 26
+
+
+ 1025 0001 11       		.uleb128 0x11
+ 1026 0002 01       		.byte	0x1
+ 1027 0003 25       		.uleb128 0x25
+ 1028 0004 0E       		.uleb128 0xe
+ 1029 0005 13       		.uleb128 0x13
+ 1030 0006 0B       		.uleb128 0xb
+ 1031 0007 03       		.uleb128 0x3
+ 1032 0008 0E       		.uleb128 0xe
+ 1033 0009 1B       		.uleb128 0x1b
+ 1034 000a 0E       		.uleb128 0xe
+ 1035 000b 55       		.uleb128 0x55
+ 1036 000c 17       		.uleb128 0x17
+ 1037 000d 11       		.uleb128 0x11
+ 1038 000e 01       		.uleb128 0x1
+ 1039 000f 10       		.uleb128 0x10
+ 1040 0010 17       		.uleb128 0x17
+ 1041 0011 00       		.byte	0
+ 1042 0012 00       		.byte	0
+ 1043 0013 02       		.uleb128 0x2
+ 1044 0014 24       		.uleb128 0x24
+ 1045 0015 00       		.byte	0
+ 1046 0016 0B       		.uleb128 0xb
+ 1047 0017 0B       		.uleb128 0xb
+ 1048 0018 3E       		.uleb128 0x3e
+ 1049 0019 0B       		.uleb128 0xb
+ 1050 001a 03       		.uleb128 0x3
+ 1051 001b 0E       		.uleb128 0xe
+ 1052 001c 00       		.byte	0
+ 1053 001d 00       		.byte	0
+ 1054 001e 03       		.uleb128 0x3
+ 1055 001f 16       		.uleb128 0x16
+ 1056 0020 00       		.byte	0
+ 1057 0021 03       		.uleb128 0x3
+ 1058 0022 0E       		.uleb128 0xe
+ 1059 0023 3A       		.uleb128 0x3a
+ 1060 0024 0B       		.uleb128 0xb
+ 1061 0025 3B       		.uleb128 0x3b
+ 1062 0026 0B       		.uleb128 0xb
+ 1063 0027 49       		.uleb128 0x49
+ 1064 0028 13       		.uleb128 0x13
+ 1065 0029 00       		.byte	0
+ 1066 002a 00       		.byte	0
+ 1067 002b 04       		.uleb128 0x4
+ 1068 002c 24       		.uleb128 0x24
+ 1069 002d 00       		.byte	0
+ 1070 002e 0B       		.uleb128 0xb
+ 1071 002f 0B       		.uleb128 0xb
+ 1072 0030 3E       		.uleb128 0x3e
+ 1073 0031 0B       		.uleb128 0xb
+ 1074 0032 03       		.uleb128 0x3
+ 1075 0033 08       		.uleb128 0x8
+ 1076 0034 00       		.byte	0
+ 1077 0035 00       		.byte	0
+ 1078 0036 05       		.uleb128 0x5
+ 1079 0037 35       		.uleb128 0x35
+ 1080 0038 00       		.byte	0
+ 1081 0039 49       		.uleb128 0x49
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 27
+
+
+ 1082 003a 13       		.uleb128 0x13
+ 1083 003b 00       		.byte	0
+ 1084 003c 00       		.byte	0
+ 1085 003d 06       		.uleb128 0x6
+ 1086 003e 16       		.uleb128 0x16
+ 1087 003f 00       		.byte	0
+ 1088 0040 03       		.uleb128 0x3
+ 1089 0041 0E       		.uleb128 0xe
+ 1090 0042 3A       		.uleb128 0x3a
+ 1091 0043 0B       		.uleb128 0xb
+ 1092 0044 3B       		.uleb128 0x3b
+ 1093 0045 05       		.uleb128 0x5
+ 1094 0046 49       		.uleb128 0x49
+ 1095 0047 13       		.uleb128 0x13
+ 1096 0048 00       		.byte	0
+ 1097 0049 00       		.byte	0
+ 1098 004a 07       		.uleb128 0x7
+ 1099 004b 2E       		.uleb128 0x2e
+ 1100 004c 00       		.byte	0
+ 1101 004d 3F       		.uleb128 0x3f
+ 1102 004e 19       		.uleb128 0x19
+ 1103 004f 03       		.uleb128 0x3
+ 1104 0050 0E       		.uleb128 0xe
+ 1105 0051 3A       		.uleb128 0x3a
+ 1106 0052 0B       		.uleb128 0xb
+ 1107 0053 3B       		.uleb128 0x3b
+ 1108 0054 0B       		.uleb128 0xb
+ 1109 0055 27       		.uleb128 0x27
+ 1110 0056 19       		.uleb128 0x19
+ 1111 0057 11       		.uleb128 0x11
+ 1112 0058 01       		.uleb128 0x1
+ 1113 0059 12       		.uleb128 0x12
+ 1114 005a 06       		.uleb128 0x6
+ 1115 005b 40       		.uleb128 0x40
+ 1116 005c 18       		.uleb128 0x18
+ 1117 005d 9742     		.uleb128 0x2117
+ 1118 005f 19       		.uleb128 0x19
+ 1119 0060 00       		.byte	0
+ 1120 0061 00       		.byte	0
+ 1121 0062 08       		.uleb128 0x8
+ 1122 0063 2E       		.uleb128 0x2e
+ 1123 0064 01       		.byte	0x1
+ 1124 0065 3F       		.uleb128 0x3f
+ 1125 0066 19       		.uleb128 0x19
+ 1126 0067 03       		.uleb128 0x3
+ 1127 0068 0E       		.uleb128 0xe
+ 1128 0069 3A       		.uleb128 0x3a
+ 1129 006a 0B       		.uleb128 0xb
+ 1130 006b 3B       		.uleb128 0x3b
+ 1131 006c 0B       		.uleb128 0xb
+ 1132 006d 27       		.uleb128 0x27
+ 1133 006e 19       		.uleb128 0x19
+ 1134 006f 11       		.uleb128 0x11
+ 1135 0070 01       		.uleb128 0x1
+ 1136 0071 12       		.uleb128 0x12
+ 1137 0072 06       		.uleb128 0x6
+ 1138 0073 40       		.uleb128 0x40
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 28
+
+
+ 1139 0074 18       		.uleb128 0x18
+ 1140 0075 9742     		.uleb128 0x2117
+ 1141 0077 19       		.uleb128 0x19
+ 1142 0078 01       		.uleb128 0x1
+ 1143 0079 13       		.uleb128 0x13
+ 1144 007a 00       		.byte	0
+ 1145 007b 00       		.byte	0
+ 1146 007c 09       		.uleb128 0x9
+ 1147 007d 898201   		.uleb128 0x4109
+ 1148 0080 00       		.byte	0
+ 1149 0081 11       		.uleb128 0x11
+ 1150 0082 01       		.uleb128 0x1
+ 1151 0083 31       		.uleb128 0x31
+ 1152 0084 13       		.uleb128 0x13
+ 1153 0085 00       		.byte	0
+ 1154 0086 00       		.byte	0
+ 1155 0087 0A       		.uleb128 0xa
+ 1156 0088 05       		.uleb128 0x5
+ 1157 0089 00       		.byte	0
+ 1158 008a 03       		.uleb128 0x3
+ 1159 008b 08       		.uleb128 0x8
+ 1160 008c 3A       		.uleb128 0x3a
+ 1161 008d 0B       		.uleb128 0xb
+ 1162 008e 3B       		.uleb128 0x3b
+ 1163 008f 0B       		.uleb128 0xb
+ 1164 0090 49       		.uleb128 0x49
+ 1165 0091 13       		.uleb128 0x13
+ 1166 0092 02       		.uleb128 0x2
+ 1167 0093 18       		.uleb128 0x18
+ 1168 0094 00       		.byte	0
+ 1169 0095 00       		.byte	0
+ 1170 0096 0B       		.uleb128 0xb
+ 1171 0097 05       		.uleb128 0x5
+ 1172 0098 00       		.byte	0
+ 1173 0099 03       		.uleb128 0x3
+ 1174 009a 0E       		.uleb128 0xe
+ 1175 009b 3A       		.uleb128 0x3a
+ 1176 009c 0B       		.uleb128 0xb
+ 1177 009d 3B       		.uleb128 0x3b
+ 1178 009e 0B       		.uleb128 0xb
+ 1179 009f 49       		.uleb128 0x49
+ 1180 00a0 13       		.uleb128 0x13
+ 1181 00a1 02       		.uleb128 0x2
+ 1182 00a2 18       		.uleb128 0x18
+ 1183 00a3 00       		.byte	0
+ 1184 00a4 00       		.byte	0
+ 1185 00a5 0C       		.uleb128 0xc
+ 1186 00a6 34       		.uleb128 0x34
+ 1187 00a7 00       		.byte	0
+ 1188 00a8 03       		.uleb128 0x3
+ 1189 00a9 08       		.uleb128 0x8
+ 1190 00aa 3A       		.uleb128 0x3a
+ 1191 00ab 0B       		.uleb128 0xb
+ 1192 00ac 3B       		.uleb128 0x3b
+ 1193 00ad 0B       		.uleb128 0xb
+ 1194 00ae 49       		.uleb128 0x49
+ 1195 00af 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 29
+
+
+ 1196 00b0 02       		.uleb128 0x2
+ 1197 00b1 17       		.uleb128 0x17
+ 1198 00b2 00       		.byte	0
+ 1199 00b3 00       		.byte	0
+ 1200 00b4 0D       		.uleb128 0xd
+ 1201 00b5 0F       		.uleb128 0xf
+ 1202 00b6 00       		.byte	0
+ 1203 00b7 0B       		.uleb128 0xb
+ 1204 00b8 0B       		.uleb128 0xb
+ 1205 00b9 49       		.uleb128 0x49
+ 1206 00ba 13       		.uleb128 0x13
+ 1207 00bb 00       		.byte	0
+ 1208 00bc 00       		.byte	0
+ 1209 00bd 0E       		.uleb128 0xe
+ 1210 00be 2E       		.uleb128 0x2e
+ 1211 00bf 01       		.byte	0x1
+ 1212 00c0 3F       		.uleb128 0x3f
+ 1213 00c1 19       		.uleb128 0x19
+ 1214 00c2 03       		.uleb128 0x3
+ 1215 00c3 0E       		.uleb128 0xe
+ 1216 00c4 3A       		.uleb128 0x3a
+ 1217 00c5 0B       		.uleb128 0xb
+ 1218 00c6 3B       		.uleb128 0x3b
+ 1219 00c7 0B       		.uleb128 0xb
+ 1220 00c8 27       		.uleb128 0x27
+ 1221 00c9 19       		.uleb128 0x19
+ 1222 00ca 49       		.uleb128 0x49
+ 1223 00cb 13       		.uleb128 0x13
+ 1224 00cc 11       		.uleb128 0x11
+ 1225 00cd 01       		.uleb128 0x1
+ 1226 00ce 12       		.uleb128 0x12
+ 1227 00cf 06       		.uleb128 0x6
+ 1228 00d0 40       		.uleb128 0x40
+ 1229 00d1 18       		.uleb128 0x18
+ 1230 00d2 9742     		.uleb128 0x2117
+ 1231 00d4 19       		.uleb128 0x19
+ 1232 00d5 01       		.uleb128 0x1
+ 1233 00d6 13       		.uleb128 0x13
+ 1234 00d7 00       		.byte	0
+ 1235 00d8 00       		.byte	0
+ 1236 00d9 0F       		.uleb128 0xf
+ 1237 00da 05       		.uleb128 0x5
+ 1238 00db 00       		.byte	0
+ 1239 00dc 03       		.uleb128 0x3
+ 1240 00dd 08       		.uleb128 0x8
+ 1241 00de 3A       		.uleb128 0x3a
+ 1242 00df 0B       		.uleb128 0xb
+ 1243 00e0 3B       		.uleb128 0x3b
+ 1244 00e1 0B       		.uleb128 0xb
+ 1245 00e2 49       		.uleb128 0x49
+ 1246 00e3 13       		.uleb128 0x13
+ 1247 00e4 02       		.uleb128 0x2
+ 1248 00e5 17       		.uleb128 0x17
+ 1249 00e6 00       		.byte	0
+ 1250 00e7 00       		.byte	0
+ 1251 00e8 10       		.uleb128 0x10
+ 1252 00e9 05       		.uleb128 0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 30
+
+
+ 1253 00ea 00       		.byte	0
+ 1254 00eb 03       		.uleb128 0x3
+ 1255 00ec 0E       		.uleb128 0xe
+ 1256 00ed 3A       		.uleb128 0x3a
+ 1257 00ee 0B       		.uleb128 0xb
+ 1258 00ef 3B       		.uleb128 0x3b
+ 1259 00f0 0B       		.uleb128 0xb
+ 1260 00f1 49       		.uleb128 0x49
+ 1261 00f2 13       		.uleb128 0x13
+ 1262 00f3 02       		.uleb128 0x2
+ 1263 00f4 17       		.uleb128 0x17
+ 1264 00f5 00       		.byte	0
+ 1265 00f6 00       		.byte	0
+ 1266 00f7 11       		.uleb128 0x11
+ 1267 00f8 898201   		.uleb128 0x4109
+ 1268 00fb 01       		.byte	0x1
+ 1269 00fc 11       		.uleb128 0x11
+ 1270 00fd 01       		.uleb128 0x1
+ 1271 00fe 31       		.uleb128 0x31
+ 1272 00ff 13       		.uleb128 0x13
+ 1273 0100 00       		.byte	0
+ 1274 0101 00       		.byte	0
+ 1275 0102 12       		.uleb128 0x12
+ 1276 0103 8A8201   		.uleb128 0x410a
+ 1277 0106 00       		.byte	0
+ 1278 0107 02       		.uleb128 0x2
+ 1279 0108 18       		.uleb128 0x18
+ 1280 0109 9142     		.uleb128 0x2111
+ 1281 010b 18       		.uleb128 0x18
+ 1282 010c 00       		.byte	0
+ 1283 010d 00       		.byte	0
+ 1284 010e 13       		.uleb128 0x13
+ 1285 010f 2E       		.uleb128 0x2e
+ 1286 0110 01       		.byte	0x1
+ 1287 0111 3F       		.uleb128 0x3f
+ 1288 0112 19       		.uleb128 0x19
+ 1289 0113 03       		.uleb128 0x3
+ 1290 0114 0E       		.uleb128 0xe
+ 1291 0115 3A       		.uleb128 0x3a
+ 1292 0116 0B       		.uleb128 0xb
+ 1293 0117 3B       		.uleb128 0x3b
+ 1294 0118 05       		.uleb128 0x5
+ 1295 0119 27       		.uleb128 0x27
+ 1296 011a 19       		.uleb128 0x19
+ 1297 011b 11       		.uleb128 0x11
+ 1298 011c 01       		.uleb128 0x1
+ 1299 011d 12       		.uleb128 0x12
+ 1300 011e 06       		.uleb128 0x6
+ 1301 011f 40       		.uleb128 0x40
+ 1302 0120 18       		.uleb128 0x18
+ 1303 0121 9742     		.uleb128 0x2117
+ 1304 0123 19       		.uleb128 0x19
+ 1305 0124 01       		.uleb128 0x1
+ 1306 0125 13       		.uleb128 0x13
+ 1307 0126 00       		.byte	0
+ 1308 0127 00       		.byte	0
+ 1309 0128 14       		.uleb128 0x14
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 31
+
+
+ 1310 0129 05       		.uleb128 0x5
+ 1311 012a 00       		.byte	0
+ 1312 012b 03       		.uleb128 0x3
+ 1313 012c 0E       		.uleb128 0xe
+ 1314 012d 3A       		.uleb128 0x3a
+ 1315 012e 0B       		.uleb128 0xb
+ 1316 012f 3B       		.uleb128 0x3b
+ 1317 0130 05       		.uleb128 0x5
+ 1318 0131 49       		.uleb128 0x49
+ 1319 0132 13       		.uleb128 0x13
+ 1320 0133 02       		.uleb128 0x2
+ 1321 0134 18       		.uleb128 0x18
+ 1322 0135 00       		.byte	0
+ 1323 0136 00       		.byte	0
+ 1324 0137 15       		.uleb128 0x15
+ 1325 0138 05       		.uleb128 0x5
+ 1326 0139 00       		.byte	0
+ 1327 013a 03       		.uleb128 0x3
+ 1328 013b 0E       		.uleb128 0xe
+ 1329 013c 3A       		.uleb128 0x3a
+ 1330 013d 0B       		.uleb128 0xb
+ 1331 013e 3B       		.uleb128 0x3b
+ 1332 013f 05       		.uleb128 0x5
+ 1333 0140 49       		.uleb128 0x49
+ 1334 0141 13       		.uleb128 0x13
+ 1335 0142 02       		.uleb128 0x2
+ 1336 0143 17       		.uleb128 0x17
+ 1337 0144 00       		.byte	0
+ 1338 0145 00       		.byte	0
+ 1339 0146 16       		.uleb128 0x16
+ 1340 0147 05       		.uleb128 0x5
+ 1341 0148 00       		.byte	0
+ 1342 0149 03       		.uleb128 0x3
+ 1343 014a 08       		.uleb128 0x8
+ 1344 014b 3A       		.uleb128 0x3a
+ 1345 014c 0B       		.uleb128 0xb
+ 1346 014d 3B       		.uleb128 0x3b
+ 1347 014e 05       		.uleb128 0x5
+ 1348 014f 49       		.uleb128 0x49
+ 1349 0150 13       		.uleb128 0x13
+ 1350 0151 02       		.uleb128 0x2
+ 1351 0152 17       		.uleb128 0x17
+ 1352 0153 00       		.byte	0
+ 1353 0154 00       		.byte	0
+ 1354 0155 17       		.uleb128 0x17
+ 1355 0156 2E       		.uleb128 0x2e
+ 1356 0157 01       		.byte	0x1
+ 1357 0158 3F       		.uleb128 0x3f
+ 1358 0159 19       		.uleb128 0x19
+ 1359 015a 03       		.uleb128 0x3
+ 1360 015b 0E       		.uleb128 0xe
+ 1361 015c 3A       		.uleb128 0x3a
+ 1362 015d 0B       		.uleb128 0xb
+ 1363 015e 3B       		.uleb128 0x3b
+ 1364 015f 05       		.uleb128 0x5
+ 1365 0160 27       		.uleb128 0x27
+ 1366 0161 19       		.uleb128 0x19
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 32
+
+
+ 1367 0162 49       		.uleb128 0x49
+ 1368 0163 13       		.uleb128 0x13
+ 1369 0164 11       		.uleb128 0x11
+ 1370 0165 01       		.uleb128 0x1
+ 1371 0166 12       		.uleb128 0x12
+ 1372 0167 06       		.uleb128 0x6
+ 1373 0168 40       		.uleb128 0x40
+ 1374 0169 18       		.uleb128 0x18
+ 1375 016a 9742     		.uleb128 0x2117
+ 1376 016c 19       		.uleb128 0x19
+ 1377 016d 01       		.uleb128 0x1
+ 1378 016e 13       		.uleb128 0x13
+ 1379 016f 00       		.byte	0
+ 1380 0170 00       		.byte	0
+ 1381 0171 18       		.uleb128 0x18
+ 1382 0172 34       		.uleb128 0x34
+ 1383 0173 00       		.byte	0
+ 1384 0174 03       		.uleb128 0x3
+ 1385 0175 0E       		.uleb128 0xe
+ 1386 0176 3A       		.uleb128 0x3a
+ 1387 0177 0B       		.uleb128 0xb
+ 1388 0178 3B       		.uleb128 0x3b
+ 1389 0179 0B       		.uleb128 0xb
+ 1390 017a 49       		.uleb128 0x49
+ 1391 017b 13       		.uleb128 0x13
+ 1392 017c 3F       		.uleb128 0x3f
+ 1393 017d 19       		.uleb128 0x19
+ 1394 017e 02       		.uleb128 0x2
+ 1395 017f 18       		.uleb128 0x18
+ 1396 0180 00       		.byte	0
+ 1397 0181 00       		.byte	0
+ 1398 0182 00       		.byte	0
+ 1399              		.section	.debug_loc,"",%progbits
+ 1400              	.Ldebug_loc0:
+ 1401              	.LLST0:
+ 1402 0000 02000000 		.4byte	.LVL3
+ 1403 0004 06000000 		.4byte	.LVL4
+ 1404 0008 0200     		.2byte	0x2
+ 1405 000a 30       		.byte	0x30
+ 1406 000b 9F       		.byte	0x9f
+ 1407 000c 06000000 		.4byte	.LVL4
+ 1408 0010 1E000000 		.4byte	.LVL6
+ 1409 0014 0100     		.2byte	0x1
+ 1410 0016 54       		.byte	0x54
+ 1411 0017 00000000 		.4byte	0
+ 1412 001b 00000000 		.4byte	0
+ 1413              	.LLST1:
+ 1414 001f 00000000 		.4byte	.LVL7
+ 1415 0023 0C000000 		.4byte	.LVL8
+ 1416 0027 0100     		.2byte	0x1
+ 1417 0029 50       		.byte	0x50
+ 1418 002a 0C000000 		.4byte	.LVL8
+ 1419 002e 30000000 		.4byte	.LFE51
+ 1420 0032 0400     		.2byte	0x4
+ 1421 0034 F3       		.byte	0xf3
+ 1422 0035 01       		.uleb128 0x1
+ 1423 0036 50       		.byte	0x50
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 33
+
+
+ 1424 0037 9F       		.byte	0x9f
+ 1425 0038 00000000 		.4byte	0
+ 1426 003c 00000000 		.4byte	0
+ 1427              	.LLST2:
+ 1428 0040 00000000 		.4byte	.LVL9
+ 1429 0044 0E000000 		.4byte	.LVL11
+ 1430 0048 0100     		.2byte	0x1
+ 1431 004a 50       		.byte	0x50
+ 1432 004b 0E000000 		.4byte	.LVL11
+ 1433 004f 22000000 		.4byte	.LFE52
+ 1434 0053 0400     		.2byte	0x4
+ 1435 0055 F3       		.byte	0xf3
+ 1436 0056 01       		.uleb128 0x1
+ 1437 0057 50       		.byte	0x50
+ 1438 0058 9F       		.byte	0x9f
+ 1439 0059 00000000 		.4byte	0
+ 1440 005d 00000000 		.4byte	0
+ 1441              	.LLST3:
+ 1442 0061 00000000 		.4byte	.LVL9
+ 1443 0065 0E000000 		.4byte	.LVL11
+ 1444 0069 0100     		.2byte	0x1
+ 1445 006b 51       		.byte	0x51
+ 1446 006c 0E000000 		.4byte	.LVL11
+ 1447 0070 20000000 		.4byte	.LVL15
+ 1448 0074 0100     		.2byte	0x1
+ 1449 0076 56       		.byte	0x56
+ 1450 0077 20000000 		.4byte	.LVL15
+ 1451 007b 22000000 		.4byte	.LFE52
+ 1452 007f 0400     		.2byte	0x4
+ 1453 0081 F3       		.byte	0xf3
+ 1454 0082 01       		.uleb128 0x1
+ 1455 0083 51       		.byte	0x51
+ 1456 0084 9F       		.byte	0x9f
+ 1457 0085 00000000 		.4byte	0
+ 1458 0089 00000000 		.4byte	0
+ 1459              	.LLST4:
+ 1460 008d 00000000 		.4byte	.LVL9
+ 1461 0091 0E000000 		.4byte	.LVL11
+ 1462 0095 0100     		.2byte	0x1
+ 1463 0097 52       		.byte	0x52
+ 1464 0098 0E000000 		.4byte	.LVL11
+ 1465 009c 22000000 		.4byte	.LFE52
+ 1466 00a0 0400     		.2byte	0x4
+ 1467 00a2 F3       		.byte	0xf3
+ 1468 00a3 01       		.uleb128 0x1
+ 1469 00a4 52       		.byte	0x52
+ 1470 00a5 9F       		.byte	0x9f
+ 1471 00a6 00000000 		.4byte	0
+ 1472 00aa 00000000 		.4byte	0
+ 1473              	.LLST5:
+ 1474 00ae 0A000000 		.4byte	.LVL10
+ 1475 00b2 0E000000 		.4byte	.LVL11
+ 1476 00b6 0200     		.2byte	0x2
+ 1477 00b8 30       		.byte	0x30
+ 1478 00b9 9F       		.byte	0x9f
+ 1479 00ba 0E000000 		.4byte	.LVL11
+ 1480 00be 20000000 		.4byte	.LVL14
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 34
+
+
+ 1481 00c2 0100     		.2byte	0x1
+ 1482 00c4 54       		.byte	0x54
+ 1483 00c5 00000000 		.4byte	0
+ 1484 00c9 00000000 		.4byte	0
+ 1485              	.LLST6:
+ 1486 00cd 00000000 		.4byte	.LVL18
+ 1487 00d1 08000000 		.4byte	.LVL20
+ 1488 00d5 0100     		.2byte	0x1
+ 1489 00d7 50       		.byte	0x50
+ 1490 00d8 08000000 		.4byte	.LVL20
+ 1491 00dc 0B000000 		.4byte	.LVL21-1
+ 1492 00e0 0100     		.2byte	0x1
+ 1493 00e2 51       		.byte	0x51
+ 1494 00e3 0B000000 		.4byte	.LVL21-1
+ 1495 00e7 0E000000 		.4byte	.LFE55
+ 1496 00eb 0400     		.2byte	0x4
+ 1497 00ed F3       		.byte	0xf3
+ 1498 00ee 01       		.uleb128 0x1
+ 1499 00ef 50       		.byte	0x50
+ 1500 00f0 9F       		.byte	0x9f
+ 1501 00f1 00000000 		.4byte	0
+ 1502 00f5 00000000 		.4byte	0
+ 1503              	.LLST7:
+ 1504 00f9 00000000 		.4byte	.LVL18
+ 1505 00fd 06000000 		.4byte	.LVL19
+ 1506 0101 0100     		.2byte	0x1
+ 1507 0103 51       		.byte	0x51
+ 1508 0104 06000000 		.4byte	.LVL19
+ 1509 0108 0E000000 		.4byte	.LFE55
+ 1510 010c 0400     		.2byte	0x4
+ 1511 010e F3       		.byte	0xf3
+ 1512 010f 01       		.uleb128 0x1
+ 1513 0110 51       		.byte	0x51
+ 1514 0111 9F       		.byte	0x9f
+ 1515 0112 00000000 		.4byte	0
+ 1516 0116 00000000 		.4byte	0
+ 1517              	.LLST8:
+ 1518 011a 00000000 		.4byte	.LVL22
+ 1519 011e 08000000 		.4byte	.LVL24
+ 1520 0122 0100     		.2byte	0x1
+ 1521 0124 50       		.byte	0x50
+ 1522 0125 08000000 		.4byte	.LVL24
+ 1523 0129 0B000000 		.4byte	.LVL25-1
+ 1524 012d 0100     		.2byte	0x1
+ 1525 012f 51       		.byte	0x51
+ 1526 0130 0B000000 		.4byte	.LVL25-1
+ 1527 0134 0E000000 		.4byte	.LFE56
+ 1528 0138 0400     		.2byte	0x4
+ 1529 013a F3       		.byte	0xf3
+ 1530 013b 01       		.uleb128 0x1
+ 1531 013c 50       		.byte	0x50
+ 1532 013d 9F       		.byte	0x9f
+ 1533 013e 00000000 		.4byte	0
+ 1534 0142 00000000 		.4byte	0
+ 1535              	.LLST9:
+ 1536 0146 00000000 		.4byte	.LVL22
+ 1537 014a 06000000 		.4byte	.LVL23
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 35
+
+
+ 1538 014e 0100     		.2byte	0x1
+ 1539 0150 51       		.byte	0x51
+ 1540 0151 06000000 		.4byte	.LVL23
+ 1541 0155 0E000000 		.4byte	.LFE56
+ 1542 0159 0400     		.2byte	0x4
+ 1543 015b F3       		.byte	0xf3
+ 1544 015c 01       		.uleb128 0x1
+ 1545 015d 51       		.byte	0x51
+ 1546 015e 9F       		.byte	0x9f
+ 1547 015f 00000000 		.4byte	0
+ 1548 0163 00000000 		.4byte	0
+ 1549              	.LLST10:
+ 1550 0167 00000000 		.4byte	.LVL27
+ 1551 016b 08000000 		.4byte	.LVL29
+ 1552 016f 0100     		.2byte	0x1
+ 1553 0171 50       		.byte	0x50
+ 1554 0172 08000000 		.4byte	.LVL29
+ 1555 0176 0B000000 		.4byte	.LVL30-1
+ 1556 017a 0100     		.2byte	0x1
+ 1557 017c 51       		.byte	0x51
+ 1558 017d 0B000000 		.4byte	.LVL30-1
+ 1559 0181 0E000000 		.4byte	.LFE58
+ 1560 0185 0400     		.2byte	0x4
+ 1561 0187 F3       		.byte	0xf3
+ 1562 0188 01       		.uleb128 0x1
+ 1563 0189 50       		.byte	0x50
+ 1564 018a 9F       		.byte	0x9f
+ 1565 018b 00000000 		.4byte	0
+ 1566 018f 00000000 		.4byte	0
+ 1567              	.LLST11:
+ 1568 0193 00000000 		.4byte	.LVL27
+ 1569 0197 06000000 		.4byte	.LVL28
+ 1570 019b 0100     		.2byte	0x1
+ 1571 019d 51       		.byte	0x51
+ 1572 019e 06000000 		.4byte	.LVL28
+ 1573 01a2 0E000000 		.4byte	.LFE58
+ 1574 01a6 0400     		.2byte	0x4
+ 1575 01a8 F3       		.byte	0xf3
+ 1576 01a9 01       		.uleb128 0x1
+ 1577 01aa 51       		.byte	0x51
+ 1578 01ab 9F       		.byte	0x9f
+ 1579 01ac 00000000 		.4byte	0
+ 1580 01b0 00000000 		.4byte	0
+ 1581              		.section	.debug_aranges,"",%progbits
+ 1582 0000 84000000 		.4byte	0x84
+ 1583 0004 0200     		.2byte	0x2
+ 1584 0006 00000000 		.4byte	.Ldebug_info0
+ 1585 000a 04       		.byte	0x4
+ 1586 000b 00       		.byte	0
+ 1587 000c 0000     		.2byte	0
+ 1588 000e 0000     		.2byte	0
+ 1589 0010 00000000 		.4byte	.LFB45
+ 1590 0014 02000000 		.4byte	.LFE45-.LFB45
+ 1591 0018 00000000 		.4byte	.LFB46
+ 1592 001c 18000000 		.4byte	.LFE46-.LFB46
+ 1593 0020 00000000 		.4byte	.LFB47
+ 1594 0024 1C000000 		.4byte	.LFE47-.LFB47
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 36
+
+
+ 1595 0028 00000000 		.4byte	.LFB48
+ 1596 002c 02000000 		.4byte	.LFE48-.LFB48
+ 1597 0030 00000000 		.4byte	.LFB49
+ 1598 0034 20000000 		.4byte	.LFE49-.LFB49
+ 1599 0038 00000000 		.4byte	.LFB50
+ 1600 003c 2C000000 		.4byte	.LFE50-.LFB50
+ 1601 0040 00000000 		.4byte	.LFB51
+ 1602 0044 30000000 		.4byte	.LFE51-.LFB51
+ 1603 0048 00000000 		.4byte	.LFB52
+ 1604 004c 22000000 		.4byte	.LFE52-.LFB52
+ 1605 0050 00000000 		.4byte	.LFB53
+ 1606 0054 20000000 		.4byte	.LFE53-.LFB53
+ 1607 0058 00000000 		.4byte	.LFB54
+ 1608 005c 20000000 		.4byte	.LFE54-.LFB54
+ 1609 0060 00000000 		.4byte	.LFB55
+ 1610 0064 0E000000 		.4byte	.LFE55-.LFB55
+ 1611 0068 00000000 		.4byte	.LFB56
+ 1612 006c 0E000000 		.4byte	.LFE56-.LFB56
+ 1613 0070 00000000 		.4byte	.LFB57
+ 1614 0074 0A000000 		.4byte	.LFE57-.LFB57
+ 1615 0078 00000000 		.4byte	.LFB58
+ 1616 007c 0E000000 		.4byte	.LFE58-.LFB58
+ 1617 0080 00000000 		.4byte	0
+ 1618 0084 00000000 		.4byte	0
+ 1619              		.section	.debug_ranges,"",%progbits
+ 1620              	.Ldebug_ranges0:
+ 1621 0000 00000000 		.4byte	.LFB45
+ 1622 0004 02000000 		.4byte	.LFE45
+ 1623 0008 00000000 		.4byte	.LFB46
+ 1624 000c 18000000 		.4byte	.LFE46
+ 1625 0010 00000000 		.4byte	.LFB47
+ 1626 0014 1C000000 		.4byte	.LFE47
+ 1627 0018 00000000 		.4byte	.LFB48
+ 1628 001c 02000000 		.4byte	.LFE48
+ 1629 0020 00000000 		.4byte	.LFB49
+ 1630 0024 20000000 		.4byte	.LFE49
+ 1631 0028 00000000 		.4byte	.LFB50
+ 1632 002c 2C000000 		.4byte	.LFE50
+ 1633 0030 00000000 		.4byte	.LFB51
+ 1634 0034 30000000 		.4byte	.LFE51
+ 1635 0038 00000000 		.4byte	.LFB52
+ 1636 003c 22000000 		.4byte	.LFE52
+ 1637 0040 00000000 		.4byte	.LFB53
+ 1638 0044 20000000 		.4byte	.LFE53
+ 1639 0048 00000000 		.4byte	.LFB54
+ 1640 004c 20000000 		.4byte	.LFE54
+ 1641 0050 00000000 		.4byte	.LFB55
+ 1642 0054 0E000000 		.4byte	.LFE55
+ 1643 0058 00000000 		.4byte	.LFB56
+ 1644 005c 0E000000 		.4byte	.LFE56
+ 1645 0060 00000000 		.4byte	.LFB57
+ 1646 0064 0A000000 		.4byte	.LFE57
+ 1647 0068 00000000 		.4byte	.LFB58
+ 1648 006c 0E000000 		.4byte	.LFE58
+ 1649 0070 00000000 		.4byte	0
+ 1650 0074 00000000 		.4byte	0
+ 1651              		.section	.debug_line,"",%progbits
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 37
+
+
+ 1652              	.Ldebug_line0:
+ 1653 0000 CF020000 		.section	.debug_str,"MS",%progbits,1
+ 1653      02008101 
+ 1653      00000201 
+ 1653      FB0E0D00 
+ 1653      01010101 
+ 1654              	.LASF3:
+ 1655 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1655      6E74385F 
+ 1655      7400
+ 1656              	.LASF35:
+ 1657 000a 47726170 		.ascii	"GraphicLCDIntf_1_WriteM8_A0\000"
+ 1657      6869634C 
+ 1657      4344496E 
+ 1657      74665F31 
+ 1657      5F577269 
+ 1658              	.LASF36:
+ 1659 0026 47726170 		.ascii	"GraphicLCDIntf_1_WriteM8_A1\000"
+ 1659      6869634C 
+ 1659      4344496E 
+ 1659      74665F31 
+ 1659      5F577269 
+ 1660              	.LASF28:
+ 1661 0042 47726170 		.ascii	"GraphicLCDIntf_1_Write8\000"
+ 1661      6869634C 
+ 1661      4344496E 
+ 1661      74665F31 
+ 1661      5F577269 
+ 1662              	.LASF5:
+ 1663 005a 73686F72 		.ascii	"short unsigned int\000"
+ 1663      7420756E 
+ 1663      7369676E 
+ 1663      65642069 
+ 1663      6E7400
+ 1664              	.LASF37:
+ 1665 006d 47726170 		.ascii	"GraphicLCDIntf_1_Read8\000"
+ 1665      6869634C 
+ 1665      4344496E 
+ 1665      74665F31 
+ 1665      5F526561 
+ 1666              	.LASF41:
+ 1667 0084 47656E65 		.ascii	"Generated_Source\\PSoC6\\GraphicLCDIntf_1.c\000"
+ 1667      72617465 
+ 1667      645F536F 
+ 1667      75726365 
+ 1667      5C50536F 
+ 1668              	.LASF18:
+ 1669 00ae 666C6F61 		.ascii	"float\000"
+ 1669      7400
+ 1670              	.LASF42:
+ 1671 00b4 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 1671      73657273 
+ 1671      5C706561 
+ 1671      726C7374 
+ 1671      6C5C446F 
+ 1672 00e2 5C74636F 		.ascii	"\\tcom_engineering\\hw\\display\\diag\\tcom_displ_t"
+ 1672      6D5F656E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 38
+
+
+ 1672      67696E65 
+ 1672      6572696E 
+ 1672      675C6877 
+ 1673 0110 6573745F 		.ascii	"est_psoc6\\tcom_displ_test_psoc6.cydsn\000"
+ 1673      70736F63 
+ 1673      365C7463 
+ 1673      6F6D5F64 
+ 1673      6973706C 
+ 1674              	.LASF1:
+ 1675 0136 756E7369 		.ascii	"unsigned char\000"
+ 1675      676E6564 
+ 1675      20636861 
+ 1675      7200
+ 1676              	.LASF23:
+ 1677 0144 72656738 		.ascii	"reg8\000"
+ 1677      00
+ 1678              	.LASF8:
+ 1679 0149 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1679      20756E73 
+ 1679      69676E65 
+ 1679      6420696E 
+ 1679      7400
+ 1680              	.LASF20:
+ 1681 015b 75696E74 		.ascii	"uint8\000"
+ 1681      3800
+ 1682              	.LASF31:
+ 1683 0161 47726170 		.ascii	"GraphicLCDIntf_1_ReadM8\000"
+ 1683      6869634C 
+ 1683      4344496E 
+ 1683      74665F31 
+ 1683      5F526561 
+ 1684              	.LASF7:
+ 1685 0179 5F5F7569 		.ascii	"__uint32_t\000"
+ 1685      6E743332 
+ 1685      5F7400
+ 1686              	.LASF25:
+ 1687 0184 47726170 		.ascii	"GraphicLCDIntf_1_Init\000"
+ 1687      6869634C 
+ 1687      4344496E 
+ 1687      74665F31 
+ 1687      5F496E69 
+ 1688              	.LASF4:
+ 1689 019a 5F5F7569 		.ascii	"__uint16_t\000"
+ 1689      6E743136 
+ 1689      5F7400
+ 1690              	.LASF19:
+ 1691 01a5 646F7562 		.ascii	"double\000"
+ 1691      6C6500
+ 1692              	.LASF29:
+ 1693 01ac 77724461 		.ascii	"wrData\000"
+ 1693      746100
+ 1694              	.LASF27:
+ 1695 01b3 47726170 		.ascii	"GraphicLCDIntf_1_Start\000"
+ 1695      6869634C 
+ 1695      4344496E 
+ 1695      74665F31 
+ 1695      5F537461 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 39
+
+
+ 1696              	.LASF30:
+ 1697 01ca 47726170 		.ascii	"GraphicLCDIntf_1_WriteM8\000"
+ 1697      6869634C 
+ 1697      4344496E 
+ 1697      74665F31 
+ 1697      5F577269 
+ 1698              	.LASF24:
+ 1699 01e3 47726170 		.ascii	"GraphicLCDIntf_1_Enable\000"
+ 1699      6869634C 
+ 1699      4344496E 
+ 1699      74665F31 
+ 1699      5F456E61 
+ 1700              	.LASF21:
+ 1701 01fb 75696E74 		.ascii	"uint16\000"
+ 1701      313600
+ 1702              	.LASF32:
+ 1703 0202 72644461 		.ascii	"rdData\000"
+ 1703      746100
+ 1704              	.LASF22:
+ 1705 0209 75696E74 		.ascii	"uint32\000"
+ 1705      333200
+ 1706              	.LASF11:
+ 1707 0210 756E7369 		.ascii	"unsigned int\000"
+ 1707      676E6564 
+ 1707      20696E74 
+ 1707      00
+ 1708              	.LASF33:
+ 1709 021d 47726170 		.ascii	"GraphicLCDIntf_1_Write8_A0\000"
+ 1709      6869634C 
+ 1709      4344496E 
+ 1709      74665F31 
+ 1709      5F577269 
+ 1710              	.LASF34:
+ 1711 0238 47726170 		.ascii	"GraphicLCDIntf_1_Write8_A1\000"
+ 1711      6869634C 
+ 1711      4344496E 
+ 1711      74665F31 
+ 1711      5F577269 
+ 1712              	.LASF10:
+ 1713 0253 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1713      206C6F6E 
+ 1713      6720756E 
+ 1713      7369676E 
+ 1713      65642069 
+ 1714              	.LASF12:
+ 1715 026a 75696E74 		.ascii	"uint8_t\000"
+ 1715      385F7400 
+ 1716              	.LASF39:
+ 1717 0272 47726170 		.ascii	"GraphicLCDIntf_1_ReadM8_A1\000"
+ 1717      6869634C 
+ 1717      4344496E 
+ 1717      74665F31 
+ 1717      5F526561 
+ 1718              	.LASF26:
+ 1719 028d 47726170 		.ascii	"GraphicLCDIntf_1_Stop\000"
+ 1719      6869634C 
+ 1719      4344496E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 40
+
+
+ 1719      74665F31 
+ 1719      5F53746F 
+ 1720              	.LASF15:
+ 1721 02a3 73697A65 		.ascii	"sizetype\000"
+ 1721      74797065 
+ 1721      00
+ 1722              	.LASF9:
+ 1723 02ac 6C6F6E67 		.ascii	"long long int\000"
+ 1723      206C6F6E 
+ 1723      6720696E 
+ 1723      7400
+ 1724              	.LASF17:
+ 1725 02ba 63686172 		.ascii	"char\000"
+ 1725      00
+ 1726              	.LASF38:
+ 1727 02bf 47726170 		.ascii	"GraphicLCDIntf_1_Read8_A1\000"
+ 1727      6869634C 
+ 1727      4344496E 
+ 1727      74665F31 
+ 1727      5F526561 
+ 1728              	.LASF0:
+ 1729 02d9 73686F72 		.ascii	"short int\000"
+ 1729      7420696E 
+ 1729      7400
+ 1730              	.LASF13:
+ 1731 02e3 75696E74 		.ascii	"uint16_t\000"
+ 1731      31365F74 
+ 1731      00
+ 1732              	.LASF43:
+ 1733 02ec 47726170 		.ascii	"GraphicLCDIntf_1_initVar\000"
+ 1733      6869634C 
+ 1733      4344496E 
+ 1733      74665F31 
+ 1733      5F696E69 
+ 1734              	.LASF14:
+ 1735 0305 75696E74 		.ascii	"uint32_t\000"
+ 1735      33325F74 
+ 1735      00
+ 1736              	.LASF6:
+ 1737 030e 6C6F6E67 		.ascii	"long int\000"
+ 1737      20696E74 
+ 1737      00
+ 1738              	.LASF16:
+ 1739 0317 6C6F6E67 		.ascii	"long double\000"
+ 1739      20646F75 
+ 1739      626C6500 
+ 1740              	.LASF40:
+ 1741 0323 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1741      43313120 
+ 1741      352E342E 
+ 1741      31203230 
+ 1741      31363036 
+ 1742 0356 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 1742      20726576 
+ 1742      6973696F 
+ 1742      6E203233 
+ 1742      37373135 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cciV0MkZ.s 			page 41
+
+
+ 1743 0389 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 1743      67202D66 
+ 1743      66756E63 
+ 1743      74696F6E 
+ 1743      2D736563 
+ 1744              	.LASF2:
+ 1745 03b5 7369676E 		.ascii	"signed char\000"
+ 1745      65642063 
+ 1745      68617200 
+ 1746              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

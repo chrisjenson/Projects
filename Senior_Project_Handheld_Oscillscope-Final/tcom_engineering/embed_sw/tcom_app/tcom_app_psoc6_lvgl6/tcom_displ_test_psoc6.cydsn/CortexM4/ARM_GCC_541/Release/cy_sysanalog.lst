@@ -1,0 +1,2603 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"cy_sysanalog.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.Cy_SysAnalog_Init,"ax",%progbits
+  21              		.align	2
+  22              		.global	Cy_SysAnalog_Init
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	Cy_SysAnalog_Init, %function
+  26              	Cy_SysAnalog_Init:
+  27              	.LFB175:
+  28              		.file 1 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\sysanalog\\cy_sysanalog.c"
+   1:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \file cy_sysanalog.c
+   3:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \version 1.10
+   4:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+   5:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * Provides the public functions for the API for the SAR driver.
+   6:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+   7:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** ********************************************************************************
+   8:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \copyright
+   9:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * Copyright 2017-2018, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *******************************************************************************/
+  14:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** #include "cy_sysanalog.h"
+  15:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  16:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** #ifdef CY_IP_MXS40PASS
+  17:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  18:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** #if defined(__cplusplus)
+  19:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** extern "C" {
+  20:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** #endif
+  21:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  22:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** /* Configure the AREF to use the local Vref and local IZTAT. Can be used with \ref Cy_SysAnalog_Ini
+  23:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** const cy_stc_sysanalog_config_t Cy_SysAnalog_Fast_Local =
+  24:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** {
+  25:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.startup    */ CY_SYSANALOG_STARTUP_FAST,
+  26:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.iztat      */ CY_SYSANALOG_IZTAT_SOURCE_LOCAL,
+  27:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.vref       */ CY_SYSANALOG_VREF_SOURCE_LOCAL_1_2V,
+  28:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.deepSleep  */ CY_SYSANALOG_DEEPSLEEP_DISABLE,
+  29:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** };
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 2
+
+
+  30:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  31:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** /* Configure the AREF to use the SRSS Vref and SRSS IZTAT. Can be used with \ref Cy_SysAnalog_Init.
+  32:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** const cy_stc_sysanalog_config_t Cy_SysAnalog_Fast_SRSS =
+  33:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** {
+  34:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.startup    */ CY_SYSANALOG_STARTUP_FAST,
+  35:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.iztat      */ CY_SYSANALOG_IZTAT_SOURCE_SRSS,
+  36:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.vref       */ CY_SYSANALOG_VREF_SOURCE_SRSS,
+  37:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.deepSleep  */ CY_SYSANALOG_DEEPSLEEP_DISABLE,
+  38:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** };
+  39:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  40:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** /* Configure the AREF to use the external Vref and local IZTAT. Can be used with \ref Cy_SysAnalog_
+  41:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** const cy_stc_sysanalog_config_t Cy_SysAnalog_Fast_External =
+  42:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** {
+  43:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.startup    */ CY_SYSANALOG_STARTUP_FAST,
+  44:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.iztat      */ CY_SYSANALOG_IZTAT_SOURCE_LOCAL,
+  45:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.vref       */ CY_SYSANALOG_VREF_SOURCE_EXTERNAL,
+  46:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     /*.deepSleep  */ CY_SYSANALOG_DEEPSLEEP_DISABLE,
+  47:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** };
+  48:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  49:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** /*******************************************************************************
+  50:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * Function Name: Cy_SysAnalog_Init
+  51:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** ****************************************************************************//**
+  52:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  53:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * Initialize the AREF block.
+  54:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  55:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \param config
+  56:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * Pointer to structure containing configuration data. See \ref cy_stc_sysanalog_config_t
+  57:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  58:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \return
+  59:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * - \ref CY_SYSANALOG_SUCCESS : initialization complete
+  60:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * - \ref CY_SYSANALOG_BAD_PARAM : input pointers are null, initialization incomplete
+  61:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  62:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \funcusage
+  63:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  64:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** * \snippet sysanalog_sut_01.cydsn/main_cm0p.c SYSANA_SNIPPET_INIT
+  65:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *
+  66:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** *******************************************************************************/
+  67:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** cy_en_sysanalog_status_t Cy_SysAnalog_Init(const cy_stc_sysanalog_config_t *config)
+  68:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** {
+  29              		.loc 1 68 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  69:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     CY_ASSERT_L1(NULL != config);
+  70:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  71:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     cy_en_sysanalog_status_t result;
+  72:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     uint32_t ctrlReg = CY_SYSANALOG_DEINIT;
+  73:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  74:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     if (NULL == config)
+  35              		.loc 1 74 0
+  36 0000 88B1     		cbz	r0, .L3
+  68:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     CY_ASSERT_L1(NULL != config);
+  37              		.loc 1 68 0
+  38 0002 30B4     		push	{r4, r5}
+  39              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 3
+
+
+  40              		.cfi_offset 4, -8
+  41              		.cfi_offset 5, -4
+  75:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     {
+  76:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         result = CY_SYSANALOG_BAD_PARAM;
+  77:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     }
+  78:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     else
+  79:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     {
+  80:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         CY_ASSERT_L3(CY_SYSANALOG_STARTUP(config->startup));
+  81:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         CY_ASSERT_L3(CY_SYSANALOG_DEEPSLEEP(config->deepSleep));
+  82:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         CY_ASSERT_L3(CY_SYSANALOG_VREF(config->vref));
+  83:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         CY_ASSERT_L3(CY_SYSANALOG_IZTAT(config->iztat));
+  84:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  85:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         ctrlReg = (uint32_t) config->startup \
+  86:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | CY_SYSANALOG_DEFAULT_BIAS_SCALE \
+  87:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | (uint32_t) config->iztat \
+  88:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | (uint32_t) config->vref \
+  89:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | (uint32_t) config->deepSleep;
+  90:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  91:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         PASS_AREF_AREF_CTRL = ctrlReg;
+  42              		.loc 1 91 0
+  43 0004 094D     		ldr	r5, .L7
+  85:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | CY_SYSANALOG_DEFAULT_BIAS_SCALE \
+  44              		.loc 1 85 0
+  45 0006 4468     		ldr	r4, [r0, #4]
+  46 0008 8268     		ldr	r2, [r0, #8]
+  47 000a C168     		ldr	r1, [r0, #12]
+  48 000c 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  49              		.loc 1 91 0
+  50 000e 2868     		ldr	r0, [r5]
+  51              	.LVL1:
+  85:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | CY_SYSANALOG_DEFAULT_BIAS_SCALE \
+  52              		.loc 1 85 0
+  53 0010 2243     		orrs	r2, r2, r4
+  54 0012 0A43     		orrs	r2, r2, r1
+  55 0014 43F00403 		orr	r3, r3, #4
+  56              		.loc 1 91 0
+  57 0018 C169     		ldr	r1, [r0, #28]
+  85:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****                   | CY_SYSANALOG_DEFAULT_BIAS_SCALE \
+  58              		.loc 1 85 0
+  59 001a 1343     		orrs	r3, r3, r2
+  60              	.LVL2:
+  92:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  93:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****         result = CY_SYSANALOG_SUCCESS;
+  61              		.loc 1 93 0
+  62 001c 0020     		movs	r0, #0
+  91:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  63              		.loc 1 91 0
+  64 001e C1F8003E 		str	r3, [r1, #3584]
+  65              	.LVL3:
+  94:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     }
+  95:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** 
+  96:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     return result;
+  97:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c **** }
+  66              		.loc 1 97 0
+  67 0022 30BC     		pop	{r4, r5}
+  68              		.cfi_restore 5
+  69              		.cfi_restore 4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 4
+
+
+  70              		.cfi_def_cfa_offset 0
+  71 0024 7047     		bx	lr
+  72              	.LVL4:
+  73              	.L3:
+  76:Generated_Source\PSoC6\pdl\drivers\peripheral\sysanalog/cy_sysanalog.c ****     }
+  74              		.loc 1 76 0
+  75 0026 0248     		ldr	r0, .L7+4
+  76              	.LVL5:
+  77 0028 7047     		bx	lr
+  78              	.L8:
+  79 002a 00BF     		.align	2
+  80              	.L7:
+  81 002c 00000000 		.word	cy_device
+  82 0030 01005E00 		.word	6160385
+  83              		.cfi_endproc
+  84              	.LFE175:
+  85              		.size	Cy_SysAnalog_Init, .-Cy_SysAnalog_Init
+  86              		.global	Cy_SysAnalog_Fast_External
+  87              		.global	Cy_SysAnalog_Fast_SRSS
+  88              		.global	Cy_SysAnalog_Fast_Local
+  89              		.section	.rodata
+  90              		.align	2
+  91              		.type	Cy_SysAnalog_Fast_External, %object
+  92              		.size	Cy_SysAnalog_Fast_External, 16
+  93              	Cy_SysAnalog_Fast_External:
+  94 0000 01       		.byte	1
+  95 0001 000000   		.space	3
+  96 0004 00000100 		.word	65536
+  97 0008 00002000 		.word	2097152
+  98 000c 00000000 		.word	0
+  99              		.type	Cy_SysAnalog_Fast_SRSS, %object
+ 100              		.size	Cy_SysAnalog_Fast_SRSS, 16
+ 101              	Cy_SysAnalog_Fast_SRSS:
+ 102 0010 01       		.byte	1
+ 103 0011 000000   		.space	3
+ 104 0014 00000000 		.word	0
+ 105 0018 00000000 		.word	0
+ 106 001c 00000000 		.word	0
+ 107              		.type	Cy_SysAnalog_Fast_Local, %object
+ 108              		.size	Cy_SysAnalog_Fast_Local, 16
+ 109              	Cy_SysAnalog_Fast_Local:
+ 110 0020 01       		.byte	1
+ 111 0021 000000   		.space	3
+ 112 0024 00000100 		.word	65536
+ 113 0028 00001000 		.word	1048576
+ 114 002c 00000000 		.word	0
+ 115              		.text
+ 116              	.Letext0:
+ 117              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 118              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 119              		.file 4 "Generated_Source\\PSoC6\\pdl\\devices/psoc6/include/ip/cyip_pass.h"
+ 120              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
+ 121              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\sysanalog\\cy_sysanalog.h"
+ 122              		.file 7 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 123              		.section	.debug_info,"",%progbits
+ 124              	.Ldebug_info0:
+ 125 0000 F8070000 		.4byte	0x7f8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 5
+
+
+ 126 0004 0400     		.2byte	0x4
+ 127 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 128 000a 04       		.byte	0x4
+ 129 000b 01       		.uleb128 0x1
+ 130 000c 9B070000 		.4byte	.LASF155
+ 131 0010 0C       		.byte	0xc
+ 132 0011 FE0A0000 		.4byte	.LASF156
+ 133 0015 AA040000 		.4byte	.LASF157
+ 134 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 135 001d 00000000 		.4byte	0
+ 136 0021 00000000 		.4byte	.Ldebug_line0
+ 137 0025 02       		.uleb128 0x2
+ 138 0026 01       		.byte	0x1
+ 139 0027 06       		.byte	0x6
+ 140 0028 05020000 		.4byte	.LASF0
+ 141 002c 03       		.uleb128 0x3
+ 142 002d 8B000000 		.4byte	.LASF2
+ 143 0031 02       		.byte	0x2
+ 144 0032 1D       		.byte	0x1d
+ 145 0033 37000000 		.4byte	0x37
+ 146 0037 02       		.uleb128 0x2
+ 147 0038 01       		.byte	0x1
+ 148 0039 08       		.byte	0x8
+ 149 003a 56080000 		.4byte	.LASF1
+ 150 003e 03       		.uleb128 0x3
+ 151 003f 7D030000 		.4byte	.LASF3
+ 152 0043 02       		.byte	0x2
+ 153 0044 29       		.byte	0x29
+ 154 0045 49000000 		.4byte	0x49
+ 155 0049 02       		.uleb128 0x2
+ 156 004a 02       		.byte	0x2
+ 157 004b 05       		.byte	0x5
+ 158 004c 78080000 		.4byte	.LASF4
+ 159 0050 03       		.uleb128 0x3
+ 160 0051 50090000 		.4byte	.LASF5
+ 161 0055 02       		.byte	0x2
+ 162 0056 2B       		.byte	0x2b
+ 163 0057 5B000000 		.4byte	0x5b
+ 164 005b 02       		.uleb128 0x2
+ 165 005c 02       		.byte	0x2
+ 166 005d 07       		.byte	0x7
+ 167 005e D7090000 		.4byte	.LASF6
+ 168 0062 03       		.uleb128 0x3
+ 169 0063 92090000 		.4byte	.LASF7
+ 170 0067 02       		.byte	0x2
+ 171 0068 3F       		.byte	0x3f
+ 172 0069 6D000000 		.4byte	0x6d
+ 173 006d 02       		.uleb128 0x2
+ 174 006e 04       		.byte	0x4
+ 175 006f 05       		.byte	0x5
+ 176 0070 6F020000 		.4byte	.LASF8
+ 177 0074 03       		.uleb128 0x3
+ 178 0075 62030000 		.4byte	.LASF9
+ 179 0079 02       		.byte	0x2
+ 180 007a 41       		.byte	0x41
+ 181 007b 7F000000 		.4byte	0x7f
+ 182 007f 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 6
+
+
+ 183 0080 04       		.byte	0x4
+ 184 0081 07       		.byte	0x7
+ 185 0082 2C040000 		.4byte	.LASF10
+ 186 0086 02       		.uleb128 0x2
+ 187 0087 08       		.byte	0x8
+ 188 0088 05       		.byte	0x5
+ 189 0089 F7010000 		.4byte	.LASF11
+ 190 008d 02       		.uleb128 0x2
+ 191 008e 08       		.byte	0x8
+ 192 008f 07       		.byte	0x7
+ 193 0090 16010000 		.4byte	.LASF12
+ 194 0094 04       		.uleb128 0x4
+ 195 0095 04       		.byte	0x4
+ 196 0096 05       		.byte	0x5
+ 197 0097 696E7400 		.ascii	"int\000"
+ 198 009b 02       		.uleb128 0x2
+ 199 009c 04       		.byte	0x4
+ 200 009d 07       		.byte	0x7
+ 201 009e BC030000 		.4byte	.LASF13
+ 202 00a2 03       		.uleb128 0x3
+ 203 00a3 560A0000 		.4byte	.LASF14
+ 204 00a7 03       		.byte	0x3
+ 205 00a8 18       		.byte	0x18
+ 206 00a9 2C000000 		.4byte	0x2c
+ 207 00ad 03       		.uleb128 0x3
+ 208 00ae EF010000 		.4byte	.LASF15
+ 209 00b2 03       		.byte	0x3
+ 210 00b3 20       		.byte	0x20
+ 211 00b4 3E000000 		.4byte	0x3e
+ 212 00b8 03       		.uleb128 0x3
+ 213 00b9 C9030000 		.4byte	.LASF16
+ 214 00bd 03       		.byte	0x3
+ 215 00be 24       		.byte	0x24
+ 216 00bf 50000000 		.4byte	0x50
+ 217 00c3 03       		.uleb128 0x3
+ 218 00c4 4E080000 		.4byte	.LASF17
+ 219 00c8 03       		.byte	0x3
+ 220 00c9 2C       		.byte	0x2c
+ 221 00ca 62000000 		.4byte	0x62
+ 222 00ce 03       		.uleb128 0x3
+ 223 00cf 05090000 		.4byte	.LASF18
+ 224 00d3 03       		.byte	0x3
+ 225 00d4 30       		.byte	0x30
+ 226 00d5 74000000 		.4byte	0x74
+ 227 00d9 02       		.uleb128 0x2
+ 228 00da 08       		.byte	0x8
+ 229 00db 04       		.byte	0x4
+ 230 00dc 0E090000 		.4byte	.LASF19
+ 231 00e0 02       		.uleb128 0x2
+ 232 00e1 04       		.byte	0x4
+ 233 00e2 07       		.byte	0x7
+ 234 00e3 E4050000 		.4byte	.LASF20
+ 235 00e7 05       		.uleb128 0x5
+ 236 00e8 CE000000 		.4byte	0xce
+ 237 00ec 06       		.uleb128 0x6
+ 238 00ed E7000000 		.4byte	0xe7
+ 239 00f1 07       		.uleb128 0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 7
+
+
+ 240 00f2 EC000000 		.4byte	0xec
+ 241 00f6 01010000 		.4byte	0x101
+ 242 00fa 08       		.uleb128 0x8
+ 243 00fb E0000000 		.4byte	0xe0
+ 244 00ff 3E       		.byte	0x3e
+ 245 0100 00       		.byte	0
+ 246 0101 09       		.uleb128 0x9
+ 247 0102 0001     		.2byte	0x100
+ 248 0104 04       		.byte	0x4
+ 249 0105 22       		.byte	0x22
+ 250 0106 23010000 		.4byte	0x123
+ 251 010a 0A       		.uleb128 0xa
+ 252 010b 5B010000 		.4byte	.LASF21
+ 253 010f 04       		.byte	0x4
+ 254 0110 23       		.byte	0x23
+ 255 0111 E7000000 		.4byte	0xe7
+ 256 0115 00       		.byte	0
+ 257 0116 0A       		.uleb128 0xa
+ 258 0117 87080000 		.4byte	.LASF22
+ 259 011b 04       		.byte	0x4
+ 260 011c 24       		.byte	0x24
+ 261 011d 28010000 		.4byte	0x128
+ 262 0121 04       		.byte	0x4
+ 263 0122 00       		.byte	0
+ 264 0123 05       		.uleb128 0x5
+ 265 0124 F1000000 		.4byte	0xf1
+ 266 0128 06       		.uleb128 0x6
+ 267 0129 23010000 		.4byte	0x123
+ 268 012d 03       		.uleb128 0x3
+ 269 012e B5060000 		.4byte	.LASF23
+ 270 0132 04       		.byte	0x4
+ 271 0133 25       		.byte	0x25
+ 272 0134 01010000 		.4byte	0x101
+ 273 0138 09       		.uleb128 0x9
+ 274 0139 200F     		.2byte	0xf20
+ 275 013b 04       		.byte	0x4
+ 276 013c 2A       		.byte	0x2a
+ 277 013d CF010000 		.4byte	0x1cf
+ 278 0141 0A       		.uleb128 0xa
+ 279 0142 78020000 		.4byte	.LASF24
+ 280 0146 04       		.byte	0x4
+ 281 0147 2B       		.byte	0x2b
+ 282 0148 EC000000 		.4byte	0xec
+ 283 014c 00       		.byte	0
+ 284 014d 0A       		.uleb128 0xa
+ 285 014e 87080000 		.4byte	.LASF22
+ 286 0152 04       		.byte	0x4
+ 287 0153 2C       		.byte	0x2c
+ 288 0154 E5010000 		.4byte	0x1e5
+ 289 0158 04       		.byte	0x4
+ 290 0159 0B       		.uleb128 0xb
+ 291 015a AC080000 		.4byte	.LASF25
+ 292 015e 04       		.byte	0x4
+ 293 015f 2D       		.byte	0x2d
+ 294 0160 2D010000 		.4byte	0x12d
+ 295 0164 000E     		.2byte	0xe00
+ 296 0166 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 8
+
+
+ 297 0167 B6020000 		.4byte	.LASF26
+ 298 016b 04       		.byte	0x4
+ 299 016c 2E       		.byte	0x2e
+ 300 016d E7000000 		.4byte	0xe7
+ 301 0171 000F     		.2byte	0xf00
+ 302 0173 0B       		.uleb128 0xb
+ 303 0174 3A020000 		.4byte	.LASF27
+ 304 0178 04       		.byte	0x4
+ 305 0179 2F       		.byte	0x2f
+ 306 017a E7000000 		.4byte	0xe7
+ 307 017e 040F     		.2byte	0xf04
+ 308 0180 0B       		.uleb128 0xb
+ 309 0181 E8020000 		.4byte	.LASF28
+ 310 0185 04       		.byte	0x4
+ 311 0186 30       		.byte	0x30
+ 312 0187 E7000000 		.4byte	0xe7
+ 313 018b 080F     		.2byte	0xf08
+ 314 018d 0B       		.uleb128 0xb
+ 315 018e 5A020000 		.4byte	.LASF29
+ 316 0192 04       		.byte	0x4
+ 317 0193 31       		.byte	0x31
+ 318 0194 E7000000 		.4byte	0xe7
+ 319 0198 0C0F     		.2byte	0xf0c
+ 320 019a 0B       		.uleb128 0xb
+ 321 019b 14040000 		.4byte	.LASF30
+ 322 019f 04       		.byte	0x4
+ 323 01a0 32       		.byte	0x32
+ 324 01a1 E7000000 		.4byte	0xe7
+ 325 01a5 100F     		.2byte	0xf10
+ 326 01a7 0B       		.uleb128 0xb
+ 327 01a8 20040000 		.4byte	.LASF31
+ 328 01ac 04       		.byte	0x4
+ 329 01ad 33       		.byte	0x33
+ 330 01ae E7000000 		.4byte	0xe7
+ 331 01b2 140F     		.2byte	0xf14
+ 332 01b4 0B       		.uleb128 0xb
+ 333 01b5 4D070000 		.4byte	.LASF32
+ 334 01b9 04       		.byte	0x4
+ 335 01ba 34       		.byte	0x34
+ 336 01bb E7000000 		.4byte	0xe7
+ 337 01bf 180F     		.2byte	0xf18
+ 338 01c1 0B       		.uleb128 0xb
+ 339 01c2 1F0A0000 		.4byte	.LASF33
+ 340 01c6 04       		.byte	0x4
+ 341 01c7 35       		.byte	0x35
+ 342 01c8 E7000000 		.4byte	0xe7
+ 343 01cc 1C0F     		.2byte	0xf1c
+ 344 01ce 00       		.byte	0
+ 345 01cf 07       		.uleb128 0x7
+ 346 01d0 EC000000 		.4byte	0xec
+ 347 01d4 E0010000 		.4byte	0x1e0
+ 348 01d8 0C       		.uleb128 0xc
+ 349 01d9 E0000000 		.4byte	0xe0
+ 350 01dd 7E03     		.2byte	0x37e
+ 351 01df 00       		.byte	0
+ 352 01e0 05       		.uleb128 0x5
+ 353 01e1 CF010000 		.4byte	0x1cf
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 9
+
+
+ 354 01e5 06       		.uleb128 0x6
+ 355 01e6 E0010000 		.4byte	0x1e0
+ 356 01ea 03       		.uleb128 0x3
+ 357 01eb 6E090000 		.4byte	.LASF34
+ 358 01ef 04       		.byte	0x4
+ 359 01f0 36       		.byte	0x36
+ 360 01f1 38010000 		.4byte	0x138
+ 361 01f5 0D       		.uleb128 0xd
+ 362 01f6 B8       		.byte	0xb8
+ 363 01f7 05       		.byte	0x5
+ 364 01f8 34       		.byte	0x34
+ 365 01f9 06060000 		.4byte	0x606
+ 366 01fd 0A       		.uleb128 0xa
+ 367 01fe C1000000 		.4byte	.LASF35
+ 368 0202 05       		.byte	0x5
+ 369 0203 37       		.byte	0x37
+ 370 0204 CE000000 		.4byte	0xce
+ 371 0208 00       		.byte	0
+ 372 0209 0A       		.uleb128 0xa
+ 373 020a 57030000 		.4byte	.LASF36
+ 374 020e 05       		.byte	0x5
+ 375 020f 38       		.byte	0x38
+ 376 0210 CE000000 		.4byte	0xce
+ 377 0214 04       		.byte	0x4
+ 378 0215 0A       		.uleb128 0xa
+ 379 0216 91020000 		.4byte	.LASF37
+ 380 021a 05       		.byte	0x5
+ 381 021b 39       		.byte	0x39
+ 382 021c CE000000 		.4byte	0xce
+ 383 0220 08       		.byte	0x8
+ 384 0221 0A       		.uleb128 0xa
+ 385 0222 93070000 		.4byte	.LASF38
+ 386 0226 05       		.byte	0x5
+ 387 0227 3A       		.byte	0x3a
+ 388 0228 CE000000 		.4byte	0xce
+ 389 022c 0C       		.byte	0xc
+ 390 022d 0A       		.uleb128 0xa
+ 391 022e 26020000 		.4byte	.LASF39
+ 392 0232 05       		.byte	0x5
+ 393 0233 3B       		.byte	0x3b
+ 394 0234 CE000000 		.4byte	0xce
+ 395 0238 10       		.byte	0x10
+ 396 0239 0A       		.uleb128 0xa
+ 397 023a 65020000 		.4byte	.LASF40
+ 398 023e 05       		.byte	0x5
+ 399 023f 3C       		.byte	0x3c
+ 400 0240 CE000000 		.4byte	0xce
+ 401 0244 14       		.byte	0x14
+ 402 0245 0A       		.uleb128 0xa
+ 403 0246 51040000 		.4byte	.LASF41
+ 404 024a 05       		.byte	0x5
+ 405 024b 3D       		.byte	0x3d
+ 406 024c CE000000 		.4byte	0xce
+ 407 0250 18       		.byte	0x18
+ 408 0251 0A       		.uleb128 0xa
+ 409 0252 67000000 		.4byte	.LASF42
+ 410 0256 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 10
+
+
+ 411 0257 3E       		.byte	0x3e
+ 412 0258 CE000000 		.4byte	0xce
+ 413 025c 1C       		.byte	0x1c
+ 414 025d 0A       		.uleb128 0xa
+ 415 025e 90080000 		.4byte	.LASF43
+ 416 0262 05       		.byte	0x5
+ 417 0263 3F       		.byte	0x3f
+ 418 0264 CE000000 		.4byte	0xce
+ 419 0268 20       		.byte	0x20
+ 420 0269 0A       		.uleb128 0xa
+ 421 026a E0060000 		.4byte	.LASF44
+ 422 026e 05       		.byte	0x5
+ 423 026f 40       		.byte	0x40
+ 424 0270 CE000000 		.4byte	0xce
+ 425 0274 24       		.byte	0x24
+ 426 0275 0A       		.uleb128 0xa
+ 427 0276 B6050000 		.4byte	.LASF45
+ 428 027a 05       		.byte	0x5
+ 429 027b 43       		.byte	0x43
+ 430 027c A2000000 		.4byte	0xa2
+ 431 0280 28       		.byte	0x28
+ 432 0281 0A       		.uleb128 0xa
+ 433 0282 4D000000 		.4byte	.LASF46
+ 434 0286 05       		.byte	0x5
+ 435 0287 44       		.byte	0x44
+ 436 0288 A2000000 		.4byte	0xa2
+ 437 028c 29       		.byte	0x29
+ 438 028d 0A       		.uleb128 0xa
+ 439 028e AD0A0000 		.4byte	.LASF47
+ 440 0292 05       		.byte	0x5
+ 441 0293 45       		.byte	0x45
+ 442 0294 A2000000 		.4byte	0xa2
+ 443 0298 2A       		.byte	0x2a
+ 444 0299 0A       		.uleb128 0xa
+ 445 029a 85070000 		.4byte	.LASF48
+ 446 029e 05       		.byte	0x5
+ 447 029f 46       		.byte	0x46
+ 448 02a0 A2000000 		.4byte	0xa2
+ 449 02a4 2B       		.byte	0x2b
+ 450 02a5 0A       		.uleb128 0xa
+ 451 02a6 4C050000 		.4byte	.LASF49
+ 452 02aa 05       		.byte	0x5
+ 453 02ab 47       		.byte	0x47
+ 454 02ac A2000000 		.4byte	0xa2
+ 455 02b0 2C       		.byte	0x2c
+ 456 02b1 0A       		.uleb128 0xa
+ 457 02b2 9C090000 		.4byte	.LASF50
+ 458 02b6 05       		.byte	0x5
+ 459 02b7 48       		.byte	0x48
+ 460 02b8 A2000000 		.4byte	0xa2
+ 461 02bc 2D       		.byte	0x2d
+ 462 02bd 0A       		.uleb128 0xa
+ 463 02be 2F020000 		.4byte	.LASF51
+ 464 02c2 05       		.byte	0x5
+ 465 02c3 49       		.byte	0x49
+ 466 02c4 A2000000 		.4byte	0xa2
+ 467 02c8 2E       		.byte	0x2e
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 11
+
+
+ 468 02c9 0A       		.uleb128 0xa
+ 469 02ca C3050000 		.4byte	.LASF52
+ 470 02ce 05       		.byte	0x5
+ 471 02cf 4A       		.byte	0x4a
+ 472 02d0 A2000000 		.4byte	0xa2
+ 473 02d4 2F       		.byte	0x2f
+ 474 02d5 0A       		.uleb128 0xa
+ 475 02d6 75060000 		.4byte	.LASF53
+ 476 02da 05       		.byte	0x5
+ 477 02db 4B       		.byte	0x4b
+ 478 02dc A2000000 		.4byte	0xa2
+ 479 02e0 30       		.byte	0x30
+ 480 02e1 0A       		.uleb128 0xa
+ 481 02e2 46040000 		.4byte	.LASF54
+ 482 02e6 05       		.byte	0x5
+ 483 02e7 4E       		.byte	0x4e
+ 484 02e8 A2000000 		.4byte	0xa2
+ 485 02ec 31       		.byte	0x31
+ 486 02ed 0A       		.uleb128 0xa
+ 487 02ee 7D000000 		.4byte	.LASF55
+ 488 02f2 05       		.byte	0x5
+ 489 02f3 4F       		.byte	0x4f
+ 490 02f4 A2000000 		.4byte	0xa2
+ 491 02f8 32       		.byte	0x32
+ 492 02f9 0A       		.uleb128 0xa
+ 493 02fa B0030000 		.4byte	.LASF56
+ 494 02fe 05       		.byte	0x5
+ 495 02ff 50       		.byte	0x50
+ 496 0300 A2000000 		.4byte	0xa2
+ 497 0304 33       		.byte	0x33
+ 498 0305 0A       		.uleb128 0xa
+ 499 0306 3F060000 		.4byte	.LASF57
+ 500 030a 05       		.byte	0x5
+ 501 030b 51       		.byte	0x51
+ 502 030c A2000000 		.4byte	0xa2
+ 503 0310 34       		.byte	0x34
+ 504 0311 0A       		.uleb128 0xa
+ 505 0312 010A0000 		.4byte	.LASF58
+ 506 0316 05       		.byte	0x5
+ 507 0317 52       		.byte	0x52
+ 508 0318 AD000000 		.4byte	0xad
+ 509 031c 36       		.byte	0x36
+ 510 031d 0A       		.uleb128 0xa
+ 511 031e 9A020000 		.4byte	.LASF59
+ 512 0322 05       		.byte	0x5
+ 513 0323 53       		.byte	0x53
+ 514 0324 AD000000 		.4byte	0xad
+ 515 0328 38       		.byte	0x38
+ 516 0329 0A       		.uleb128 0xa
+ 517 032a 2B0A0000 		.4byte	.LASF60
+ 518 032e 05       		.byte	0x5
+ 519 032f 54       		.byte	0x54
+ 520 0330 AD000000 		.4byte	0xad
+ 521 0334 3A       		.byte	0x3a
+ 522 0335 0A       		.uleb128 0xa
+ 523 0336 9E0A0000 		.4byte	.LASF61
+ 524 033a 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 12
+
+
+ 525 033b 55       		.byte	0x55
+ 526 033c A2000000 		.4byte	0xa2
+ 527 0340 3C       		.byte	0x3c
+ 528 0341 0A       		.uleb128 0xa
+ 529 0342 F3020000 		.4byte	.LASF62
+ 530 0346 05       		.byte	0x5
+ 531 0347 56       		.byte	0x56
+ 532 0348 A2000000 		.4byte	0xa2
+ 533 034c 3D       		.byte	0x3d
+ 534 034d 0A       		.uleb128 0xa
+ 535 034e CB080000 		.4byte	.LASF63
+ 536 0352 05       		.byte	0x5
+ 537 0353 57       		.byte	0x57
+ 538 0354 A2000000 		.4byte	0xa2
+ 539 0358 3E       		.byte	0x3e
+ 540 0359 0A       		.uleb128 0xa
+ 541 035a 5B000000 		.4byte	.LASF64
+ 542 035e 05       		.byte	0x5
+ 543 035f 58       		.byte	0x58
+ 544 0360 A2000000 		.4byte	0xa2
+ 545 0364 3F       		.byte	0x3f
+ 546 0365 0A       		.uleb128 0xa
+ 547 0366 EB060000 		.4byte	.LASF65
+ 548 036a 05       		.byte	0x5
+ 549 036b 59       		.byte	0x59
+ 550 036c A2000000 		.4byte	0xa2
+ 551 0370 40       		.byte	0x40
+ 552 0371 0A       		.uleb128 0xa
+ 553 0372 6D030000 		.4byte	.LASF66
+ 554 0376 05       		.byte	0x5
+ 555 0377 5A       		.byte	0x5a
+ 556 0378 A2000000 		.4byte	0xa2
+ 557 037c 41       		.byte	0x41
+ 558 037d 0A       		.uleb128 0xa
+ 559 037e 68050000 		.4byte	.LASF67
+ 560 0382 05       		.byte	0x5
+ 561 0383 5B       		.byte	0x5b
+ 562 0384 A2000000 		.4byte	0xa2
+ 563 0388 42       		.byte	0x42
+ 564 0389 0A       		.uleb128 0xa
+ 565 038a 92060000 		.4byte	.LASF68
+ 566 038e 05       		.byte	0x5
+ 567 038f 5C       		.byte	0x5c
+ 568 0390 A2000000 		.4byte	0xa2
+ 569 0394 43       		.byte	0x43
+ 570 0395 0A       		.uleb128 0xa
+ 571 0396 A5020000 		.4byte	.LASF69
+ 572 039a 05       		.byte	0x5
+ 573 039b 5D       		.byte	0x5d
+ 574 039c A2000000 		.4byte	0xa2
+ 575 03a0 44       		.byte	0x44
+ 576 03a1 0A       		.uleb128 0xa
+ 577 03a2 00000000 		.4byte	.LASF70
+ 578 03a6 05       		.byte	0x5
+ 579 03a7 5E       		.byte	0x5e
+ 580 03a8 CE000000 		.4byte	0xce
+ 581 03ac 48       		.byte	0x48
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 13
+
+
+ 582 03ad 0A       		.uleb128 0xa
+ 583 03ae 83020000 		.4byte	.LASF71
+ 584 03b2 05       		.byte	0x5
+ 585 03b3 5F       		.byte	0x5f
+ 586 03b4 CE000000 		.4byte	0xce
+ 587 03b8 4C       		.byte	0x4c
+ 588 03b9 0A       		.uleb128 0xa
+ 589 03ba 4C0B0000 		.4byte	.LASF72
+ 590 03be 05       		.byte	0x5
+ 591 03bf 60       		.byte	0x60
+ 592 03c0 A2000000 		.4byte	0xa2
+ 593 03c4 50       		.byte	0x50
+ 594 03c5 0A       		.uleb128 0xa
+ 595 03c6 A5010000 		.4byte	.LASF73
+ 596 03ca 05       		.byte	0x5
+ 597 03cb 61       		.byte	0x61
+ 598 03cc A2000000 		.4byte	0xa2
+ 599 03d0 51       		.byte	0x51
+ 600 03d1 0A       		.uleb128 0xa
+ 601 03d2 460A0000 		.4byte	.LASF74
+ 602 03d6 05       		.byte	0x5
+ 603 03d7 62       		.byte	0x62
+ 604 03d8 A2000000 		.4byte	0xa2
+ 605 03dc 52       		.byte	0x52
+ 606 03dd 0A       		.uleb128 0xa
+ 607 03de EC0A0000 		.4byte	.LASF75
+ 608 03e2 05       		.byte	0x5
+ 609 03e3 63       		.byte	0x63
+ 610 03e4 A2000000 		.4byte	0xa2
+ 611 03e8 53       		.byte	0x53
+ 612 03e9 0A       		.uleb128 0xa
+ 613 03ea D9080000 		.4byte	.LASF76
+ 614 03ee 05       		.byte	0x5
+ 615 03ef 64       		.byte	0x64
+ 616 03f0 A2000000 		.4byte	0xa2
+ 617 03f4 54       		.byte	0x54
+ 618 03f5 0A       		.uleb128 0xa
+ 619 03f6 DB010000 		.4byte	.LASF77
+ 620 03fa 05       		.byte	0x5
+ 621 03fb 65       		.byte	0x65
+ 622 03fc A2000000 		.4byte	0xa2
+ 623 0400 55       		.byte	0x55
+ 624 0401 0A       		.uleb128 0xa
+ 625 0402 A9090000 		.4byte	.LASF78
+ 626 0406 05       		.byte	0x5
+ 627 0407 66       		.byte	0x66
+ 628 0408 A2000000 		.4byte	0xa2
+ 629 040c 56       		.byte	0x56
+ 630 040d 0A       		.uleb128 0xa
+ 631 040e 5A040000 		.4byte	.LASF79
+ 632 0412 05       		.byte	0x5
+ 633 0413 67       		.byte	0x67
+ 634 0414 A2000000 		.4byte	0xa2
+ 635 0418 57       		.byte	0x57
+ 636 0419 0A       		.uleb128 0xa
+ 637 041a 12000000 		.4byte	.LASF80
+ 638 041e 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 14
+
+
+ 639 041f 68       		.byte	0x68
+ 640 0420 A2000000 		.4byte	0xa2
+ 641 0424 58       		.byte	0x58
+ 642 0425 0A       		.uleb128 0xa
+ 643 0426 64080000 		.4byte	.LASF81
+ 644 042a 05       		.byte	0x5
+ 645 042b 69       		.byte	0x69
+ 646 042c A2000000 		.4byte	0xa2
+ 647 0430 59       		.byte	0x59
+ 648 0431 0A       		.uleb128 0xa
+ 649 0432 C1020000 		.4byte	.LASF82
+ 650 0436 05       		.byte	0x5
+ 651 0437 6E       		.byte	0x6e
+ 652 0438 B8000000 		.4byte	0xb8
+ 653 043c 5A       		.byte	0x5a
+ 654 043d 0A       		.uleb128 0xa
+ 655 043e EA090000 		.4byte	.LASF83
+ 656 0442 05       		.byte	0x5
+ 657 0443 6F       		.byte	0x6f
+ 658 0444 B8000000 		.4byte	0xb8
+ 659 0448 5C       		.byte	0x5c
+ 660 0449 0A       		.uleb128 0xa
+ 661 044a ED000000 		.4byte	.LASF84
+ 662 044e 05       		.byte	0x5
+ 663 044f 70       		.byte	0x70
+ 664 0450 A2000000 		.4byte	0xa2
+ 665 0454 5E       		.byte	0x5e
+ 666 0455 0A       		.uleb128 0xa
+ 667 0456 6F070000 		.4byte	.LASF85
+ 668 045a 05       		.byte	0x5
+ 669 045b 71       		.byte	0x71
+ 670 045c A2000000 		.4byte	0xa2
+ 671 0460 5F       		.byte	0x5f
+ 672 0461 0A       		.uleb128 0xa
+ 673 0462 81060000 		.4byte	.LASF86
+ 674 0466 05       		.byte	0x5
+ 675 0467 72       		.byte	0x72
+ 676 0468 A2000000 		.4byte	0xa2
+ 677 046c 60       		.byte	0x60
+ 678 046d 0A       		.uleb128 0xa
+ 679 046e 3C070000 		.4byte	.LASF87
+ 680 0472 05       		.byte	0x5
+ 681 0473 73       		.byte	0x73
+ 682 0474 CE000000 		.4byte	0xce
+ 683 0478 64       		.byte	0x64
+ 684 0479 0A       		.uleb128 0xa
+ 685 047a 2D010000 		.4byte	.LASF88
+ 686 047e 05       		.byte	0x5
+ 687 047f 76       		.byte	0x76
+ 688 0480 B8000000 		.4byte	0xb8
+ 689 0484 68       		.byte	0x68
+ 690 0485 0A       		.uleb128 0xa
+ 691 0486 02040000 		.4byte	.LASF89
+ 692 048a 05       		.byte	0x5
+ 693 048b 77       		.byte	0x77
+ 694 048c B8000000 		.4byte	0xb8
+ 695 0490 6A       		.byte	0x6a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 15
+
+
+ 696 0491 0A       		.uleb128 0xa
+ 697 0492 6E040000 		.4byte	.LASF90
+ 698 0496 05       		.byte	0x5
+ 699 0497 78       		.byte	0x78
+ 700 0498 B8000000 		.4byte	0xb8
+ 701 049c 6C       		.byte	0x6c
+ 702 049d 0A       		.uleb128 0xa
+ 703 049e 70000000 		.4byte	.LASF91
+ 704 04a2 05       		.byte	0x5
+ 705 04a3 79       		.byte	0x79
+ 706 04a4 B8000000 		.4byte	0xb8
+ 707 04a8 6E       		.byte	0x6e
+ 708 04a9 0A       		.uleb128 0xa
+ 709 04aa 98080000 		.4byte	.LASF92
+ 710 04ae 05       		.byte	0x5
+ 711 04af 7B       		.byte	0x7b
+ 712 04b0 A2000000 		.4byte	0xa2
+ 713 04b4 70       		.byte	0x70
+ 714 04b5 0A       		.uleb128 0xa
+ 715 04b6 11020000 		.4byte	.LASF93
+ 716 04ba 05       		.byte	0x5
+ 717 04bb 7C       		.byte	0x7c
+ 718 04bc A2000000 		.4byte	0xa2
+ 719 04c0 71       		.byte	0x71
+ 720 04c1 0A       		.uleb128 0xa
+ 721 04c2 D60A0000 		.4byte	.LASF94
+ 722 04c6 05       		.byte	0x5
+ 723 04c7 7D       		.byte	0x7d
+ 724 04c8 A2000000 		.4byte	0xa2
+ 725 04cc 72       		.byte	0x72
+ 726 04cd 0A       		.uleb128 0xa
+ 727 04ce 50060000 		.4byte	.LASF95
+ 728 04d2 05       		.byte	0x5
+ 729 04d3 7E       		.byte	0x7e
+ 730 04d4 A2000000 		.4byte	0xa2
+ 731 04d8 73       		.byte	0x73
+ 732 04d9 0A       		.uleb128 0xa
+ 733 04da FE020000 		.4byte	.LASF96
+ 734 04de 05       		.byte	0x5
+ 735 04df 80       		.byte	0x80
+ 736 04e0 B8000000 		.4byte	0xb8
+ 737 04e4 74       		.byte	0x74
+ 738 04e5 0A       		.uleb128 0xa
+ 739 04e6 5B090000 		.4byte	.LASF97
+ 740 04ea 05       		.byte	0x5
+ 741 04eb 81       		.byte	0x81
+ 742 04ec B8000000 		.4byte	0xb8
+ 743 04f0 76       		.byte	0x76
+ 744 04f1 0A       		.uleb128 0xa
+ 745 04f2 D3020000 		.4byte	.LASF98
+ 746 04f6 05       		.byte	0x5
+ 747 04f7 82       		.byte	0x82
+ 748 04f8 B8000000 		.4byte	0xb8
+ 749 04fc 78       		.byte	0x78
+ 750 04fd 0A       		.uleb128 0xa
+ 751 04fe 95000000 		.4byte	.LASF99
+ 752 0502 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 16
+
+
+ 753 0503 83       		.byte	0x83
+ 754 0504 B8000000 		.4byte	0xb8
+ 755 0508 7A       		.byte	0x7a
+ 756 0509 0A       		.uleb128 0xa
+ 757 050a 730A0000 		.4byte	.LASF100
+ 758 050e 05       		.byte	0x5
+ 759 050f 86       		.byte	0x86
+ 760 0510 A2000000 		.4byte	0xa2
+ 761 0514 7C       		.byte	0x7c
+ 762 0515 0A       		.uleb128 0xa
+ 763 0516 0E0A0000 		.4byte	.LASF101
+ 764 051a 05       		.byte	0x5
+ 765 051b 87       		.byte	0x87
+ 766 051c A2000000 		.4byte	0xa2
+ 767 0520 7D       		.byte	0x7d
+ 768 0521 0A       		.uleb128 0xa
+ 769 0522 26000000 		.4byte	.LASF102
+ 770 0526 05       		.byte	0x5
+ 771 0527 88       		.byte	0x88
+ 772 0528 A2000000 		.4byte	0xa2
+ 773 052c 7E       		.byte	0x7e
+ 774 052d 0A       		.uleb128 0xa
+ 775 052e 25030000 		.4byte	.LASF103
+ 776 0532 05       		.byte	0x5
+ 777 0533 89       		.byte	0x89
+ 778 0534 A2000000 		.4byte	0xa2
+ 779 0538 7F       		.byte	0x7f
+ 780 0539 0A       		.uleb128 0xa
+ 781 053a 9C030000 		.4byte	.LASF104
+ 782 053e 05       		.byte	0x5
+ 783 053f 8A       		.byte	0x8a
+ 784 0540 A2000000 		.4byte	0xa2
+ 785 0544 80       		.byte	0x80
+ 786 0545 0A       		.uleb128 0xa
+ 787 0546 9F050000 		.4byte	.LASF105
+ 788 054a 05       		.byte	0x5
+ 789 054b 8D       		.byte	0x8d
+ 790 054c CE000000 		.4byte	0xce
+ 791 0550 84       		.byte	0x84
+ 792 0551 0A       		.uleb128 0xa
+ 793 0552 AA000000 		.4byte	.LASF106
+ 794 0556 05       		.byte	0x5
+ 795 0557 8E       		.byte	0x8e
+ 796 0558 CE000000 		.4byte	0xce
+ 797 055c 88       		.byte	0x88
+ 798 055d 0A       		.uleb128 0xa
+ 799 055e 5E0A0000 		.4byte	.LASF107
+ 800 0562 05       		.byte	0x5
+ 801 0563 8F       		.byte	0x8f
+ 802 0564 CE000000 		.4byte	0xce
+ 803 0568 8C       		.byte	0x8c
+ 804 0569 0A       		.uleb128 0xa
+ 805 056a CF050000 		.4byte	.LASF108
+ 806 056e 05       		.byte	0x5
+ 807 056f 90       		.byte	0x90
+ 808 0570 CE000000 		.4byte	0xce
+ 809 0574 90       		.byte	0x90
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 17
+
+
+ 810 0575 0A       		.uleb128 0xa
+ 811 0576 87030000 		.4byte	.LASF109
+ 812 057a 05       		.byte	0x5
+ 813 057b 91       		.byte	0x91
+ 814 057c CE000000 		.4byte	0xce
+ 815 0580 94       		.byte	0x94
+ 816 0581 0A       		.uleb128 0xa
+ 817 0582 89050000 		.4byte	.LASF110
+ 818 0586 05       		.byte	0x5
+ 819 0587 92       		.byte	0x92
+ 820 0588 CE000000 		.4byte	0xce
+ 821 058c 98       		.byte	0x98
+ 822 058d 0A       		.uleb128 0xa
+ 823 058e 880A0000 		.4byte	.LASF111
+ 824 0592 05       		.byte	0x5
+ 825 0593 93       		.byte	0x93
+ 826 0594 CE000000 		.4byte	0xce
+ 827 0598 9C       		.byte	0x9c
+ 828 0599 0A       		.uleb128 0xa
+ 829 059a 65010000 		.4byte	.LASF112
+ 830 059e 05       		.byte	0x5
+ 831 059f 94       		.byte	0x94
+ 832 05a0 CE000000 		.4byte	0xce
+ 833 05a4 A0       		.byte	0xa0
+ 834 05a5 0A       		.uleb128 0xa
+ 835 05a6 45020000 		.4byte	.LASF113
+ 836 05aa 05       		.byte	0x5
+ 837 05ab 95       		.byte	0x95
+ 838 05ac B8000000 		.4byte	0xb8
+ 839 05b0 A4       		.byte	0xa4
+ 840 05b1 0A       		.uleb128 0xa
+ 841 05b2 74050000 		.4byte	.LASF114
+ 842 05b6 05       		.byte	0x5
+ 843 05b7 96       		.byte	0x96
+ 844 05b8 B8000000 		.4byte	0xb8
+ 845 05bc A6       		.byte	0xa6
+ 846 05bd 0A       		.uleb128 0xa
+ 847 05be 63070000 		.4byte	.LASF115
+ 848 05c2 05       		.byte	0x5
+ 849 05c3 97       		.byte	0x97
+ 850 05c4 B8000000 		.4byte	0xb8
+ 851 05c8 A8       		.byte	0xa8
+ 852 05c9 0A       		.uleb128 0xa
+ 853 05ca 3B090000 		.4byte	.LASF116
+ 854 05ce 05       		.byte	0x5
+ 855 05cf 98       		.byte	0x98
+ 856 05d0 B8000000 		.4byte	0xb8
+ 857 05d4 AA       		.byte	0xaa
+ 858 05d5 0A       		.uleb128 0xa
+ 859 05d6 7D040000 		.4byte	.LASF117
+ 860 05da 05       		.byte	0x5
+ 861 05db 99       		.byte	0x99
+ 862 05dc B8000000 		.4byte	0xb8
+ 863 05e0 AC       		.byte	0xac
+ 864 05e1 0A       		.uleb128 0xa
+ 865 05e2 67060000 		.4byte	.LASF118
+ 866 05e6 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 18
+
+
+ 867 05e7 9A       		.byte	0x9a
+ 868 05e8 B8000000 		.4byte	0xb8
+ 869 05ec AE       		.byte	0xae
+ 870 05ed 0A       		.uleb128 0xa
+ 871 05ee F3090000 		.4byte	.LASF119
+ 872 05f2 05       		.byte	0x5
+ 873 05f3 9D       		.byte	0x9d
+ 874 05f4 B8000000 		.4byte	0xb8
+ 875 05f8 B0       		.byte	0xb0
+ 876 05f9 0A       		.uleb128 0xa
+ 877 05fa 39000000 		.4byte	.LASF120
+ 878 05fe 05       		.byte	0x5
+ 879 05ff 9E       		.byte	0x9e
+ 880 0600 CE000000 		.4byte	0xce
+ 881 0604 B4       		.byte	0xb4
+ 882 0605 00       		.byte	0
+ 883 0606 03       		.uleb128 0x3
+ 884 0607 58050000 		.4byte	.LASF121
+ 885 060b 05       		.byte	0x5
+ 886 060c 9F       		.byte	0x9f
+ 887 060d F5010000 		.4byte	0x1f5
+ 888 0611 02       		.uleb128 0x2
+ 889 0612 01       		.byte	0x1
+ 890 0613 08       		.byte	0x8
+ 891 0614 1A090000 		.4byte	.LASF122
+ 892 0618 02       		.uleb128 0x2
+ 893 0619 04       		.byte	0x4
+ 894 061a 04       		.byte	0x4
+ 895 061b 36070000 		.4byte	.LASF123
+ 896 061f 02       		.uleb128 0x2
+ 897 0620 08       		.byte	0x8
+ 898 0621 04       		.byte	0x4
+ 899 0622 CC020000 		.4byte	.LASF124
+ 900 0626 0E       		.uleb128 0xe
+ 901 0627 04       		.byte	0x4
+ 902 0628 9B000000 		.4byte	0x9b
+ 903 062c 06       		.byte	0x6
+ 904 062d DB       		.byte	0xdb
+ 905 062e 42060000 		.4byte	0x642
+ 906 0632 0F       		.uleb128 0xf
+ 907 0633 10030000 		.4byte	.LASF125
+ 908 0637 00       		.byte	0
+ 909 0638 10       		.uleb128 0x10
+ 910 0639 7B090000 		.4byte	.LASF126
+ 911 063d 01005E00 		.4byte	0x5e0001
+ 912 0641 00       		.byte	0
+ 913 0642 03       		.uleb128 0x3
+ 914 0643 C7060000 		.4byte	.LASF127
+ 915 0647 06       		.byte	0x6
+ 916 0648 DE       		.byte	0xde
+ 917 0649 26060000 		.4byte	0x626
+ 918 064d 0E       		.uleb128 0xe
+ 919 064e 01       		.byte	0x1
+ 920 064f 37000000 		.4byte	0x37
+ 921 0653 06       		.byte	0x6
+ 922 0654 E8       		.byte	0xe8
+ 923 0655 66060000 		.4byte	0x666
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 19
+
+
+ 924 0659 0F       		.uleb128 0xf
+ 925 065a E9080000 		.4byte	.LASF128
+ 926 065e 00       		.byte	0
+ 927 065f 0F       		.uleb128 0xf
+ 928 0660 FC000000 		.4byte	.LASF129
+ 929 0664 01       		.byte	0x1
+ 930 0665 00       		.byte	0
+ 931 0666 03       		.uleb128 0x3
+ 932 0667 BD090000 		.4byte	.LASF130
+ 933 066b 06       		.byte	0x6
+ 934 066c EB       		.byte	0xeb
+ 935 066d 4D060000 		.4byte	0x64d
+ 936 0671 0E       		.uleb128 0xe
+ 937 0672 04       		.byte	0x4
+ 938 0673 9B000000 		.4byte	0x9b
+ 939 0677 06       		.byte	0x6
+ 940 0678 F5       		.byte	0xf5
+ 941 0679 96060000 		.4byte	0x696
+ 942 067d 0F       		.uleb128 0xf
+ 943 067e 39030000 		.4byte	.LASF131
+ 944 0682 00       		.byte	0
+ 945 0683 10       		.uleb128 0x10
+ 946 0684 B7010000 		.4byte	.LASF132
+ 947 0688 00001000 		.4byte	0x100000
+ 948 068c 10       		.uleb128 0x10
+ 949 068d CB000000 		.4byte	.LASF133
+ 950 0691 00002000 		.4byte	0x200000
+ 951 0695 00       		.byte	0
+ 952 0696 03       		.uleb128 0x3
+ 953 0697 3D010000 		.4byte	.LASF134
+ 954 069b 06       		.byte	0x6
+ 955 069c F9       		.byte	0xf9
+ 956 069d 71060000 		.4byte	0x671
+ 957 06a1 11       		.uleb128 0x11
+ 958 06a2 04       		.byte	0x4
+ 959 06a3 9B000000 		.4byte	0x9b
+ 960 06a7 06       		.byte	0x6
+ 961 06a8 0401     		.2byte	0x104
+ 962 06aa BE060000 		.4byte	0x6be
+ 963 06ae 0F       		.uleb128 0xf
+ 964 06af B70A0000 		.4byte	.LASF135
+ 965 06b3 00       		.byte	0
+ 966 06b4 10       		.uleb128 0x10
+ 967 06b5 ED050000 		.4byte	.LASF136
+ 968 06b9 00000100 		.4byte	0x10000
+ 969 06bd 00       		.byte	0
+ 970 06be 12       		.uleb128 0x12
+ 971 06bf 2D050000 		.4byte	.LASF137
+ 972 06c3 06       		.byte	0x6
+ 973 06c4 0701     		.2byte	0x107
+ 974 06c6 A1060000 		.4byte	0x6a1
+ 975 06ca 11       		.uleb128 0x11
+ 976 06cb 04       		.byte	0x4
+ 977 06cc 9B000000 		.4byte	0x9b
+ 978 06d0 06       		.byte	0x6
+ 979 06d1 1301     		.2byte	0x113
+ 980 06d3 F9060000 		.4byte	0x6f9
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 20
+
+
+ 981 06d7 0F       		.uleb128 0xf
+ 982 06d8 8B040000 		.4byte	.LASF138
+ 983 06dc 00       		.byte	0
+ 984 06dd 10       		.uleb128 0x10
+ 985 06de F8060000 		.4byte	.LASF139
+ 986 06e2 00000050 		.4byte	0x50000000
+ 987 06e6 10       		.uleb128 0x10
+ 988 06e7 17070000 		.4byte	.LASF140
+ 989 06eb 00000060 		.4byte	0x60000000
+ 990 06ef 10       		.uleb128 0x10
+ 991 06f0 D2030000 		.4byte	.LASF141
+ 992 06f4 00000070 		.4byte	0x70000000
+ 993 06f8 00       		.byte	0
+ 994 06f9 12       		.uleb128 0x12
+ 995 06fa 88010000 		.4byte	.LASF142
+ 996 06fe 06       		.byte	0x6
+ 997 06ff 1C01     		.2byte	0x11c
+ 998 0701 CA060000 		.4byte	0x6ca
+ 999 0705 13       		.uleb128 0x13
+ 1000 0706 10       		.byte	0x10
+ 1001 0707 06       		.byte	0x6
+ 1002 0708 4001     		.2byte	0x140
+ 1003 070a 43070000 		.4byte	0x743
+ 1004 070e 14       		.uleb128 0x14
+ 1005 070f 3E040000 		.4byte	.LASF143
+ 1006 0713 06       		.byte	0x6
+ 1007 0714 4201     		.2byte	0x142
+ 1008 0716 66060000 		.4byte	0x666
+ 1009 071a 00       		.byte	0
+ 1010 071b 14       		.uleb128 0x14
+ 1011 071c 400A0000 		.4byte	.LASF144
+ 1012 0720 06       		.byte	0x6
+ 1013 0721 4301     		.2byte	0x143
+ 1014 0723 BE060000 		.4byte	0x6be
+ 1015 0727 04       		.byte	0x4
+ 1016 0728 14       		.uleb128 0x14
+ 1017 0729 82080000 		.4byte	.LASF145
+ 1018 072d 06       		.byte	0x6
+ 1019 072e 4401     		.2byte	0x144
+ 1020 0730 96060000 		.4byte	0x696
+ 1021 0734 08       		.byte	0x8
+ 1022 0735 14       		.uleb128 0x14
+ 1023 0736 1F090000 		.4byte	.LASF146
+ 1024 073a 06       		.byte	0x6
+ 1025 073b 4501     		.2byte	0x145
+ 1026 073d F9060000 		.4byte	0x6f9
+ 1027 0741 0C       		.byte	0xc
+ 1028 0742 00       		.byte	0
+ 1029 0743 12       		.uleb128 0x12
+ 1030 0744 B1080000 		.4byte	.LASF147
+ 1031 0748 06       		.byte	0x6
+ 1032 0749 4601     		.2byte	0x146
+ 1033 074b 05070000 		.4byte	0x705
+ 1034 074f 15       		.uleb128 0x15
+ 1035 0750 29090000 		.4byte	.LASF158
+ 1036 0754 01       		.byte	0x1
+ 1037 0755 43       		.byte	0x43
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 21
+
+
+ 1038 0756 42060000 		.4byte	0x642
+ 1039 075a 00000000 		.4byte	.LFB175
+ 1040 075e 34000000 		.4byte	.LFE175-.LFB175
+ 1041 0762 01       		.uleb128 0x1
+ 1042 0763 9C       		.byte	0x9c
+ 1043 0764 96070000 		.4byte	0x796
+ 1044 0768 16       		.uleb128 0x16
+ 1045 0769 49090000 		.4byte	.LASF159
+ 1046 076d 01       		.byte	0x1
+ 1047 076e 43       		.byte	0x43
+ 1048 076f 96070000 		.4byte	0x796
+ 1049 0773 00000000 		.4byte	.LLST0
+ 1050 0777 17       		.uleb128 0x17
+ 1051 0778 450B0000 		.4byte	.LASF148
+ 1052 077c 01       		.byte	0x1
+ 1053 077d 47       		.byte	0x47
+ 1054 077e 42060000 		.4byte	0x642
+ 1055 0782 3A000000 		.4byte	.LLST1
+ 1056 0786 17       		.uleb128 0x17
+ 1057 0787 FA030000 		.4byte	.LASF149
+ 1058 078b 01       		.byte	0x1
+ 1059 078c 48       		.byte	0x48
+ 1060 078d CE000000 		.4byte	0xce
+ 1061 0791 4D000000 		.4byte	.LLST2
+ 1062 0795 00       		.byte	0
+ 1063 0796 18       		.uleb128 0x18
+ 1064 0797 04       		.byte	0x4
+ 1065 0798 9C070000 		.4byte	0x79c
+ 1066 079c 06       		.uleb128 0x6
+ 1067 079d 43070000 		.4byte	0x743
+ 1068 07a1 19       		.uleb128 0x19
+ 1069 07a2 7B010000 		.4byte	.LASF150
+ 1070 07a6 07       		.byte	0x7
+ 1071 07a7 F907     		.2byte	0x7f9
+ 1072 07a9 AD070000 		.4byte	0x7ad
+ 1073 07ad 05       		.uleb128 0x5
+ 1074 07ae C3000000 		.4byte	0xc3
+ 1075 07b2 1A       		.uleb128 0x1a
+ 1076 07b3 59070000 		.4byte	.LASF151
+ 1077 07b7 05       		.byte	0x5
+ 1078 07b8 A7       		.byte	0xa7
+ 1079 07b9 BD070000 		.4byte	0x7bd
+ 1080 07bd 18       		.uleb128 0x18
+ 1081 07be 04       		.byte	0x4
+ 1082 07bf C3070000 		.4byte	0x7c3
+ 1083 07c3 06       		.uleb128 0x6
+ 1084 07c4 06060000 		.4byte	0x606
+ 1085 07c8 1B       		.uleb128 0x1b
+ 1086 07c9 9D060000 		.4byte	.LASF152
+ 1087 07cd 01       		.byte	0x1
+ 1088 07ce 17       		.byte	0x17
+ 1089 07cf 9C070000 		.4byte	0x79c
+ 1090 07d3 05       		.uleb128 0x5
+ 1091 07d4 03       		.byte	0x3
+ 1092 07d5 00000000 		.4byte	Cy_SysAnalog_Fast_Local
+ 1093 07d9 1B       		.uleb128 0x1b
+ 1094 07da 28060000 		.4byte	.LASF153
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 22
+
+
+ 1095 07de 01       		.byte	0x1
+ 1096 07df 20       		.byte	0x20
+ 1097 07e0 9C070000 		.4byte	0x79c
+ 1098 07e4 05       		.uleb128 0x5
+ 1099 07e5 03       		.byte	0x3
+ 1100 07e6 00000000 		.4byte	Cy_SysAnalog_Fast_SRSS
+ 1101 07ea 1B       		.uleb128 0x1b
+ 1102 07eb 0D060000 		.4byte	.LASF154
+ 1103 07ef 01       		.byte	0x1
+ 1104 07f0 29       		.byte	0x29
+ 1105 07f1 9C070000 		.4byte	0x79c
+ 1106 07f5 05       		.uleb128 0x5
+ 1107 07f6 03       		.byte	0x3
+ 1108 07f7 00000000 		.4byte	Cy_SysAnalog_Fast_External
+ 1109 07fb 00       		.byte	0
+ 1110              		.section	.debug_abbrev,"",%progbits
+ 1111              	.Ldebug_abbrev0:
+ 1112 0000 01       		.uleb128 0x1
+ 1113 0001 11       		.uleb128 0x11
+ 1114 0002 01       		.byte	0x1
+ 1115 0003 25       		.uleb128 0x25
+ 1116 0004 0E       		.uleb128 0xe
+ 1117 0005 13       		.uleb128 0x13
+ 1118 0006 0B       		.uleb128 0xb
+ 1119 0007 03       		.uleb128 0x3
+ 1120 0008 0E       		.uleb128 0xe
+ 1121 0009 1B       		.uleb128 0x1b
+ 1122 000a 0E       		.uleb128 0xe
+ 1123 000b 55       		.uleb128 0x55
+ 1124 000c 17       		.uleb128 0x17
+ 1125 000d 11       		.uleb128 0x11
+ 1126 000e 01       		.uleb128 0x1
+ 1127 000f 10       		.uleb128 0x10
+ 1128 0010 17       		.uleb128 0x17
+ 1129 0011 00       		.byte	0
+ 1130 0012 00       		.byte	0
+ 1131 0013 02       		.uleb128 0x2
+ 1132 0014 24       		.uleb128 0x24
+ 1133 0015 00       		.byte	0
+ 1134 0016 0B       		.uleb128 0xb
+ 1135 0017 0B       		.uleb128 0xb
+ 1136 0018 3E       		.uleb128 0x3e
+ 1137 0019 0B       		.uleb128 0xb
+ 1138 001a 03       		.uleb128 0x3
+ 1139 001b 0E       		.uleb128 0xe
+ 1140 001c 00       		.byte	0
+ 1141 001d 00       		.byte	0
+ 1142 001e 03       		.uleb128 0x3
+ 1143 001f 16       		.uleb128 0x16
+ 1144 0020 00       		.byte	0
+ 1145 0021 03       		.uleb128 0x3
+ 1146 0022 0E       		.uleb128 0xe
+ 1147 0023 3A       		.uleb128 0x3a
+ 1148 0024 0B       		.uleb128 0xb
+ 1149 0025 3B       		.uleb128 0x3b
+ 1150 0026 0B       		.uleb128 0xb
+ 1151 0027 49       		.uleb128 0x49
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 23
+
+
+ 1152 0028 13       		.uleb128 0x13
+ 1153 0029 00       		.byte	0
+ 1154 002a 00       		.byte	0
+ 1155 002b 04       		.uleb128 0x4
+ 1156 002c 24       		.uleb128 0x24
+ 1157 002d 00       		.byte	0
+ 1158 002e 0B       		.uleb128 0xb
+ 1159 002f 0B       		.uleb128 0xb
+ 1160 0030 3E       		.uleb128 0x3e
+ 1161 0031 0B       		.uleb128 0xb
+ 1162 0032 03       		.uleb128 0x3
+ 1163 0033 08       		.uleb128 0x8
+ 1164 0034 00       		.byte	0
+ 1165 0035 00       		.byte	0
+ 1166 0036 05       		.uleb128 0x5
+ 1167 0037 35       		.uleb128 0x35
+ 1168 0038 00       		.byte	0
+ 1169 0039 49       		.uleb128 0x49
+ 1170 003a 13       		.uleb128 0x13
+ 1171 003b 00       		.byte	0
+ 1172 003c 00       		.byte	0
+ 1173 003d 06       		.uleb128 0x6
+ 1174 003e 26       		.uleb128 0x26
+ 1175 003f 00       		.byte	0
+ 1176 0040 49       		.uleb128 0x49
+ 1177 0041 13       		.uleb128 0x13
+ 1178 0042 00       		.byte	0
+ 1179 0043 00       		.byte	0
+ 1180 0044 07       		.uleb128 0x7
+ 1181 0045 01       		.uleb128 0x1
+ 1182 0046 01       		.byte	0x1
+ 1183 0047 49       		.uleb128 0x49
+ 1184 0048 13       		.uleb128 0x13
+ 1185 0049 01       		.uleb128 0x1
+ 1186 004a 13       		.uleb128 0x13
+ 1187 004b 00       		.byte	0
+ 1188 004c 00       		.byte	0
+ 1189 004d 08       		.uleb128 0x8
+ 1190 004e 21       		.uleb128 0x21
+ 1191 004f 00       		.byte	0
+ 1192 0050 49       		.uleb128 0x49
+ 1193 0051 13       		.uleb128 0x13
+ 1194 0052 2F       		.uleb128 0x2f
+ 1195 0053 0B       		.uleb128 0xb
+ 1196 0054 00       		.byte	0
+ 1197 0055 00       		.byte	0
+ 1198 0056 09       		.uleb128 0x9
+ 1199 0057 13       		.uleb128 0x13
+ 1200 0058 01       		.byte	0x1
+ 1201 0059 0B       		.uleb128 0xb
+ 1202 005a 05       		.uleb128 0x5
+ 1203 005b 3A       		.uleb128 0x3a
+ 1204 005c 0B       		.uleb128 0xb
+ 1205 005d 3B       		.uleb128 0x3b
+ 1206 005e 0B       		.uleb128 0xb
+ 1207 005f 01       		.uleb128 0x1
+ 1208 0060 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 24
+
+
+ 1209 0061 00       		.byte	0
+ 1210 0062 00       		.byte	0
+ 1211 0063 0A       		.uleb128 0xa
+ 1212 0064 0D       		.uleb128 0xd
+ 1213 0065 00       		.byte	0
+ 1214 0066 03       		.uleb128 0x3
+ 1215 0067 0E       		.uleb128 0xe
+ 1216 0068 3A       		.uleb128 0x3a
+ 1217 0069 0B       		.uleb128 0xb
+ 1218 006a 3B       		.uleb128 0x3b
+ 1219 006b 0B       		.uleb128 0xb
+ 1220 006c 49       		.uleb128 0x49
+ 1221 006d 13       		.uleb128 0x13
+ 1222 006e 38       		.uleb128 0x38
+ 1223 006f 0B       		.uleb128 0xb
+ 1224 0070 00       		.byte	0
+ 1225 0071 00       		.byte	0
+ 1226 0072 0B       		.uleb128 0xb
+ 1227 0073 0D       		.uleb128 0xd
+ 1228 0074 00       		.byte	0
+ 1229 0075 03       		.uleb128 0x3
+ 1230 0076 0E       		.uleb128 0xe
+ 1231 0077 3A       		.uleb128 0x3a
+ 1232 0078 0B       		.uleb128 0xb
+ 1233 0079 3B       		.uleb128 0x3b
+ 1234 007a 0B       		.uleb128 0xb
+ 1235 007b 49       		.uleb128 0x49
+ 1236 007c 13       		.uleb128 0x13
+ 1237 007d 38       		.uleb128 0x38
+ 1238 007e 05       		.uleb128 0x5
+ 1239 007f 00       		.byte	0
+ 1240 0080 00       		.byte	0
+ 1241 0081 0C       		.uleb128 0xc
+ 1242 0082 21       		.uleb128 0x21
+ 1243 0083 00       		.byte	0
+ 1244 0084 49       		.uleb128 0x49
+ 1245 0085 13       		.uleb128 0x13
+ 1246 0086 2F       		.uleb128 0x2f
+ 1247 0087 05       		.uleb128 0x5
+ 1248 0088 00       		.byte	0
+ 1249 0089 00       		.byte	0
+ 1250 008a 0D       		.uleb128 0xd
+ 1251 008b 13       		.uleb128 0x13
+ 1252 008c 01       		.byte	0x1
+ 1253 008d 0B       		.uleb128 0xb
+ 1254 008e 0B       		.uleb128 0xb
+ 1255 008f 3A       		.uleb128 0x3a
+ 1256 0090 0B       		.uleb128 0xb
+ 1257 0091 3B       		.uleb128 0x3b
+ 1258 0092 0B       		.uleb128 0xb
+ 1259 0093 01       		.uleb128 0x1
+ 1260 0094 13       		.uleb128 0x13
+ 1261 0095 00       		.byte	0
+ 1262 0096 00       		.byte	0
+ 1263 0097 0E       		.uleb128 0xe
+ 1264 0098 04       		.uleb128 0x4
+ 1265 0099 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 25
+
+
+ 1266 009a 0B       		.uleb128 0xb
+ 1267 009b 0B       		.uleb128 0xb
+ 1268 009c 49       		.uleb128 0x49
+ 1269 009d 13       		.uleb128 0x13
+ 1270 009e 3A       		.uleb128 0x3a
+ 1271 009f 0B       		.uleb128 0xb
+ 1272 00a0 3B       		.uleb128 0x3b
+ 1273 00a1 0B       		.uleb128 0xb
+ 1274 00a2 01       		.uleb128 0x1
+ 1275 00a3 13       		.uleb128 0x13
+ 1276 00a4 00       		.byte	0
+ 1277 00a5 00       		.byte	0
+ 1278 00a6 0F       		.uleb128 0xf
+ 1279 00a7 28       		.uleb128 0x28
+ 1280 00a8 00       		.byte	0
+ 1281 00a9 03       		.uleb128 0x3
+ 1282 00aa 0E       		.uleb128 0xe
+ 1283 00ab 1C       		.uleb128 0x1c
+ 1284 00ac 0B       		.uleb128 0xb
+ 1285 00ad 00       		.byte	0
+ 1286 00ae 00       		.byte	0
+ 1287 00af 10       		.uleb128 0x10
+ 1288 00b0 28       		.uleb128 0x28
+ 1289 00b1 00       		.byte	0
+ 1290 00b2 03       		.uleb128 0x3
+ 1291 00b3 0E       		.uleb128 0xe
+ 1292 00b4 1C       		.uleb128 0x1c
+ 1293 00b5 06       		.uleb128 0x6
+ 1294 00b6 00       		.byte	0
+ 1295 00b7 00       		.byte	0
+ 1296 00b8 11       		.uleb128 0x11
+ 1297 00b9 04       		.uleb128 0x4
+ 1298 00ba 01       		.byte	0x1
+ 1299 00bb 0B       		.uleb128 0xb
+ 1300 00bc 0B       		.uleb128 0xb
+ 1301 00bd 49       		.uleb128 0x49
+ 1302 00be 13       		.uleb128 0x13
+ 1303 00bf 3A       		.uleb128 0x3a
+ 1304 00c0 0B       		.uleb128 0xb
+ 1305 00c1 3B       		.uleb128 0x3b
+ 1306 00c2 05       		.uleb128 0x5
+ 1307 00c3 01       		.uleb128 0x1
+ 1308 00c4 13       		.uleb128 0x13
+ 1309 00c5 00       		.byte	0
+ 1310 00c6 00       		.byte	0
+ 1311 00c7 12       		.uleb128 0x12
+ 1312 00c8 16       		.uleb128 0x16
+ 1313 00c9 00       		.byte	0
+ 1314 00ca 03       		.uleb128 0x3
+ 1315 00cb 0E       		.uleb128 0xe
+ 1316 00cc 3A       		.uleb128 0x3a
+ 1317 00cd 0B       		.uleb128 0xb
+ 1318 00ce 3B       		.uleb128 0x3b
+ 1319 00cf 05       		.uleb128 0x5
+ 1320 00d0 49       		.uleb128 0x49
+ 1321 00d1 13       		.uleb128 0x13
+ 1322 00d2 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 26
+
+
+ 1323 00d3 00       		.byte	0
+ 1324 00d4 13       		.uleb128 0x13
+ 1325 00d5 13       		.uleb128 0x13
+ 1326 00d6 01       		.byte	0x1
+ 1327 00d7 0B       		.uleb128 0xb
+ 1328 00d8 0B       		.uleb128 0xb
+ 1329 00d9 3A       		.uleb128 0x3a
+ 1330 00da 0B       		.uleb128 0xb
+ 1331 00db 3B       		.uleb128 0x3b
+ 1332 00dc 05       		.uleb128 0x5
+ 1333 00dd 01       		.uleb128 0x1
+ 1334 00de 13       		.uleb128 0x13
+ 1335 00df 00       		.byte	0
+ 1336 00e0 00       		.byte	0
+ 1337 00e1 14       		.uleb128 0x14
+ 1338 00e2 0D       		.uleb128 0xd
+ 1339 00e3 00       		.byte	0
+ 1340 00e4 03       		.uleb128 0x3
+ 1341 00e5 0E       		.uleb128 0xe
+ 1342 00e6 3A       		.uleb128 0x3a
+ 1343 00e7 0B       		.uleb128 0xb
+ 1344 00e8 3B       		.uleb128 0x3b
+ 1345 00e9 05       		.uleb128 0x5
+ 1346 00ea 49       		.uleb128 0x49
+ 1347 00eb 13       		.uleb128 0x13
+ 1348 00ec 38       		.uleb128 0x38
+ 1349 00ed 0B       		.uleb128 0xb
+ 1350 00ee 00       		.byte	0
+ 1351 00ef 00       		.byte	0
+ 1352 00f0 15       		.uleb128 0x15
+ 1353 00f1 2E       		.uleb128 0x2e
+ 1354 00f2 01       		.byte	0x1
+ 1355 00f3 3F       		.uleb128 0x3f
+ 1356 00f4 19       		.uleb128 0x19
+ 1357 00f5 03       		.uleb128 0x3
+ 1358 00f6 0E       		.uleb128 0xe
+ 1359 00f7 3A       		.uleb128 0x3a
+ 1360 00f8 0B       		.uleb128 0xb
+ 1361 00f9 3B       		.uleb128 0x3b
+ 1362 00fa 0B       		.uleb128 0xb
+ 1363 00fb 27       		.uleb128 0x27
+ 1364 00fc 19       		.uleb128 0x19
+ 1365 00fd 49       		.uleb128 0x49
+ 1366 00fe 13       		.uleb128 0x13
+ 1367 00ff 11       		.uleb128 0x11
+ 1368 0100 01       		.uleb128 0x1
+ 1369 0101 12       		.uleb128 0x12
+ 1370 0102 06       		.uleb128 0x6
+ 1371 0103 40       		.uleb128 0x40
+ 1372 0104 18       		.uleb128 0x18
+ 1373 0105 9742     		.uleb128 0x2117
+ 1374 0107 19       		.uleb128 0x19
+ 1375 0108 01       		.uleb128 0x1
+ 1376 0109 13       		.uleb128 0x13
+ 1377 010a 00       		.byte	0
+ 1378 010b 00       		.byte	0
+ 1379 010c 16       		.uleb128 0x16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 27
+
+
+ 1380 010d 05       		.uleb128 0x5
+ 1381 010e 00       		.byte	0
+ 1382 010f 03       		.uleb128 0x3
+ 1383 0110 0E       		.uleb128 0xe
+ 1384 0111 3A       		.uleb128 0x3a
+ 1385 0112 0B       		.uleb128 0xb
+ 1386 0113 3B       		.uleb128 0x3b
+ 1387 0114 0B       		.uleb128 0xb
+ 1388 0115 49       		.uleb128 0x49
+ 1389 0116 13       		.uleb128 0x13
+ 1390 0117 02       		.uleb128 0x2
+ 1391 0118 17       		.uleb128 0x17
+ 1392 0119 00       		.byte	0
+ 1393 011a 00       		.byte	0
+ 1394 011b 17       		.uleb128 0x17
+ 1395 011c 34       		.uleb128 0x34
+ 1396 011d 00       		.byte	0
+ 1397 011e 03       		.uleb128 0x3
+ 1398 011f 0E       		.uleb128 0xe
+ 1399 0120 3A       		.uleb128 0x3a
+ 1400 0121 0B       		.uleb128 0xb
+ 1401 0122 3B       		.uleb128 0x3b
+ 1402 0123 0B       		.uleb128 0xb
+ 1403 0124 49       		.uleb128 0x49
+ 1404 0125 13       		.uleb128 0x13
+ 1405 0126 02       		.uleb128 0x2
+ 1406 0127 17       		.uleb128 0x17
+ 1407 0128 00       		.byte	0
+ 1408 0129 00       		.byte	0
+ 1409 012a 18       		.uleb128 0x18
+ 1410 012b 0F       		.uleb128 0xf
+ 1411 012c 00       		.byte	0
+ 1412 012d 0B       		.uleb128 0xb
+ 1413 012e 0B       		.uleb128 0xb
+ 1414 012f 49       		.uleb128 0x49
+ 1415 0130 13       		.uleb128 0x13
+ 1416 0131 00       		.byte	0
+ 1417 0132 00       		.byte	0
+ 1418 0133 19       		.uleb128 0x19
+ 1419 0134 34       		.uleb128 0x34
+ 1420 0135 00       		.byte	0
+ 1421 0136 03       		.uleb128 0x3
+ 1422 0137 0E       		.uleb128 0xe
+ 1423 0138 3A       		.uleb128 0x3a
+ 1424 0139 0B       		.uleb128 0xb
+ 1425 013a 3B       		.uleb128 0x3b
+ 1426 013b 05       		.uleb128 0x5
+ 1427 013c 49       		.uleb128 0x49
+ 1428 013d 13       		.uleb128 0x13
+ 1429 013e 3F       		.uleb128 0x3f
+ 1430 013f 19       		.uleb128 0x19
+ 1431 0140 3C       		.uleb128 0x3c
+ 1432 0141 19       		.uleb128 0x19
+ 1433 0142 00       		.byte	0
+ 1434 0143 00       		.byte	0
+ 1435 0144 1A       		.uleb128 0x1a
+ 1436 0145 34       		.uleb128 0x34
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 28
+
+
+ 1437 0146 00       		.byte	0
+ 1438 0147 03       		.uleb128 0x3
+ 1439 0148 0E       		.uleb128 0xe
+ 1440 0149 3A       		.uleb128 0x3a
+ 1441 014a 0B       		.uleb128 0xb
+ 1442 014b 3B       		.uleb128 0x3b
+ 1443 014c 0B       		.uleb128 0xb
+ 1444 014d 49       		.uleb128 0x49
+ 1445 014e 13       		.uleb128 0x13
+ 1446 014f 3F       		.uleb128 0x3f
+ 1447 0150 19       		.uleb128 0x19
+ 1448 0151 3C       		.uleb128 0x3c
+ 1449 0152 19       		.uleb128 0x19
+ 1450 0153 00       		.byte	0
+ 1451 0154 00       		.byte	0
+ 1452 0155 1B       		.uleb128 0x1b
+ 1453 0156 34       		.uleb128 0x34
+ 1454 0157 00       		.byte	0
+ 1455 0158 03       		.uleb128 0x3
+ 1456 0159 0E       		.uleb128 0xe
+ 1457 015a 3A       		.uleb128 0x3a
+ 1458 015b 0B       		.uleb128 0xb
+ 1459 015c 3B       		.uleb128 0x3b
+ 1460 015d 0B       		.uleb128 0xb
+ 1461 015e 49       		.uleb128 0x49
+ 1462 015f 13       		.uleb128 0x13
+ 1463 0160 3F       		.uleb128 0x3f
+ 1464 0161 19       		.uleb128 0x19
+ 1465 0162 02       		.uleb128 0x2
+ 1466 0163 18       		.uleb128 0x18
+ 1467 0164 00       		.byte	0
+ 1468 0165 00       		.byte	0
+ 1469 0166 00       		.byte	0
+ 1470              		.section	.debug_loc,"",%progbits
+ 1471              	.Ldebug_loc0:
+ 1472              	.LLST0:
+ 1473 0000 00000000 		.4byte	.LVL0
+ 1474 0004 10000000 		.4byte	.LVL1
+ 1475 0008 0100     		.2byte	0x1
+ 1476 000a 50       		.byte	0x50
+ 1477 000b 10000000 		.4byte	.LVL1
+ 1478 000f 26000000 		.4byte	.LVL4
+ 1479 0013 0400     		.2byte	0x4
+ 1480 0015 F3       		.byte	0xf3
+ 1481 0016 01       		.uleb128 0x1
+ 1482 0017 50       		.byte	0x50
+ 1483 0018 9F       		.byte	0x9f
+ 1484 0019 26000000 		.4byte	.LVL4
+ 1485 001d 28000000 		.4byte	.LVL5
+ 1486 0021 0100     		.2byte	0x1
+ 1487 0023 50       		.byte	0x50
+ 1488 0024 28000000 		.4byte	.LVL5
+ 1489 0028 34000000 		.4byte	.LFE175
+ 1490 002c 0400     		.2byte	0x4
+ 1491 002e F3       		.byte	0xf3
+ 1492 002f 01       		.uleb128 0x1
+ 1493 0030 50       		.byte	0x50
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 29
+
+
+ 1494 0031 9F       		.byte	0x9f
+ 1495 0032 00000000 		.4byte	0
+ 1496 0036 00000000 		.4byte	0
+ 1497              	.LLST1:
+ 1498 003a 22000000 		.4byte	.LVL3
+ 1499 003e 26000000 		.4byte	.LVL4
+ 1500 0042 0100     		.2byte	0x1
+ 1501 0044 50       		.byte	0x50
+ 1502 0045 00000000 		.4byte	0
+ 1503 0049 00000000 		.4byte	0
+ 1504              	.LLST2:
+ 1505 004d 00000000 		.4byte	.LVL0
+ 1506 0051 1C000000 		.4byte	.LVL2
+ 1507 0055 0200     		.2byte	0x2
+ 1508 0057 30       		.byte	0x30
+ 1509 0058 9F       		.byte	0x9f
+ 1510 0059 1C000000 		.4byte	.LVL2
+ 1511 005d 26000000 		.4byte	.LVL4
+ 1512 0061 0100     		.2byte	0x1
+ 1513 0063 53       		.byte	0x53
+ 1514 0064 26000000 		.4byte	.LVL4
+ 1515 0068 34000000 		.4byte	.LFE175
+ 1516 006c 0200     		.2byte	0x2
+ 1517 006e 30       		.byte	0x30
+ 1518 006f 9F       		.byte	0x9f
+ 1519 0070 00000000 		.4byte	0
+ 1520 0074 00000000 		.4byte	0
+ 1521              		.section	.debug_aranges,"",%progbits
+ 1522 0000 1C000000 		.4byte	0x1c
+ 1523 0004 0200     		.2byte	0x2
+ 1524 0006 00000000 		.4byte	.Ldebug_info0
+ 1525 000a 04       		.byte	0x4
+ 1526 000b 00       		.byte	0
+ 1527 000c 0000     		.2byte	0
+ 1528 000e 0000     		.2byte	0
+ 1529 0010 00000000 		.4byte	.LFB175
+ 1530 0014 34000000 		.4byte	.LFE175-.LFB175
+ 1531 0018 00000000 		.4byte	0
+ 1532 001c 00000000 		.4byte	0
+ 1533              		.section	.debug_ranges,"",%progbits
+ 1534              	.Ldebug_ranges0:
+ 1535 0000 00000000 		.4byte	.LFB175
+ 1536 0004 34000000 		.4byte	.LFE175
+ 1537 0008 00000000 		.4byte	0
+ 1538 000c 00000000 		.4byte	0
+ 1539              		.section	.debug_line,"",%progbits
+ 1540              	.Ldebug_line0:
+ 1541 0000 58020000 		.section	.debug_str,"MS",%progbits,1
+ 1541      02002A02 
+ 1541      00000201 
+ 1541      FB0E0D00 
+ 1541      01010101 
+ 1542              	.LASF70:
+ 1543 0000 70726F74 		.ascii	"protBusMasterMask\000"
+ 1543      4275734D 
+ 1543      61737465 
+ 1543      724D6173 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 30
+
+
+ 1543      6B00
+ 1544              	.LASF80:
+ 1545 0012 666C6173 		.ascii	"flashCtlMainWs3Freq\000"
+ 1545      6843746C 
+ 1545      4D61696E 
+ 1545      57733346 
+ 1545      72657100 
+ 1546              	.LASF102:
+ 1547 0026 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
+ 1547      50727443 
+ 1547      6667496E 
+ 1547      4F666673 
+ 1547      657400
+ 1548              	.LASF120:
+ 1549 0039 6970634C 		.ascii	"ipcLockStatusOffset\000"
+ 1549      6F636B53 
+ 1549      74617475 
+ 1549      734F6666 
+ 1549      73657400 
+ 1550              	.LASF46:
+ 1551 004d 63727970 		.ascii	"cryptoVersion\000"
+ 1551      746F5665 
+ 1551      7273696F 
+ 1551      6E00
+ 1552              	.LASF64:
+ 1553 005b 70657269 		.ascii	"periClockNr\000"
+ 1553      436C6F63 
+ 1553      6B4E7200 
+ 1554              	.LASF42:
+ 1555 0067 70617373 		.ascii	"passBase\000"
+ 1555      42617365 
+ 1555      00
+ 1556              	.LASF91:
+ 1557 0070 70657269 		.ascii	"periTrGrSize\000"
+ 1557      54724772 
+ 1557      53697A65 
+ 1557      00
+ 1558              	.LASF55:
+ 1559 007d 63707573 		.ascii	"cpussIpcIrqNr\000"
+ 1559      73497063 
+ 1559      4972714E 
+ 1559      7200
+ 1560              	.LASF2:
+ 1561 008b 5F5F7569 		.ascii	"__uint8_t\000"
+ 1561      6E74385F 
+ 1561      7400
+ 1562              	.LASF99:
+ 1563 0095 70657269 		.ascii	"periDiv24_5CtlOffset\000"
+ 1563      44697632 
+ 1563      345F3543 
+ 1563      746C4F66 
+ 1563      66736574 
+ 1564              	.LASF106:
+ 1565 00aa 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
+ 1565      73436D34 
+ 1565      436C6F63 
+ 1565      6B43746C 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 31
+
+
+ 1565      4F666673 
+ 1566              	.LASF35:
+ 1567 00c1 63707573 		.ascii	"cpussBase\000"
+ 1567      73426173 
+ 1567      6500
+ 1568              	.LASF133:
+ 1569 00cb 43595F53 		.ascii	"CY_SYSANALOG_VREF_SOURCE_EXTERNAL\000"
+ 1569      5953414E 
+ 1569      414C4F47 
+ 1569      5F565245 
+ 1569      465F534F 
+ 1570              	.LASF84:
+ 1571 00ed 64774368 		.ascii	"dwChCtlPrioPos\000"
+ 1571      43746C50 
+ 1571      72696F50 
+ 1571      6F7300
+ 1572              	.LASF129:
+ 1573 00fc 43595F53 		.ascii	"CY_SYSANALOG_STARTUP_FAST\000"
+ 1573      5953414E 
+ 1573      414C4F47 
+ 1573      5F535441 
+ 1573      52545550 
+ 1574              	.LASF12:
+ 1575 0116 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1575      206C6F6E 
+ 1575      6720756E 
+ 1575      7369676E 
+ 1575      65642069 
+ 1576              	.LASF88:
+ 1577 012d 70657269 		.ascii	"periTrCmdOffset\000"
+ 1577      5472436D 
+ 1577      644F6666 
+ 1577      73657400 
+ 1578              	.LASF134:
+ 1579 013d 63795F65 		.ascii	"cy_en_sysanalog_vref_source_t\000"
+ 1579      6E5F7379 
+ 1579      73616E61 
+ 1579      6C6F675F 
+ 1579      76726566 
+ 1580              	.LASF21:
+ 1581 015b 41524546 		.ascii	"AREF_CTRL\000"
+ 1581      5F435452 
+ 1581      4C00
+ 1582              	.LASF112:
+ 1583 0165 63707573 		.ascii	"cpussSysTickCtlOffset\000"
+ 1583      73537973 
+ 1583      5469636B 
+ 1583      43746C4F 
+ 1583      66667365 
+ 1584              	.LASF150:
+ 1585 017b 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1585      52784275 
+ 1585      66666572 
+ 1585      00
+ 1586              	.LASF142:
+ 1587 0188 63795F65 		.ascii	"cy_en_sysanalog_deep_sleep_t\000"
+ 1587      6E5F7379 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 32
+
+
+ 1587      73616E61 
+ 1587      6C6F675F 
+ 1587      64656570 
+ 1588              	.LASF73:
+ 1589 01a5 666C6173 		.ascii	"flashPipeRequired\000"
+ 1589      68506970 
+ 1589      65526571 
+ 1589      75697265 
+ 1589      6400
+ 1590              	.LASF132:
+ 1591 01b7 43595F53 		.ascii	"CY_SYSANALOG_VREF_SOURCE_LOCAL_1_2V\000"
+ 1591      5953414E 
+ 1591      414C4F47 
+ 1591      5F565245 
+ 1591      465F534F 
+ 1592              	.LASF77:
+ 1593 01db 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
+ 1593      6843746C 
+ 1593      4D61696E 
+ 1593      57733046 
+ 1593      72657100 
+ 1594              	.LASF15:
+ 1595 01ef 696E7431 		.ascii	"int16_t\000"
+ 1595      365F7400 
+ 1596              	.LASF11:
+ 1597 01f7 6C6F6E67 		.ascii	"long long int\000"
+ 1597      206C6F6E 
+ 1597      6720696E 
+ 1597      7400
+ 1598              	.LASF0:
+ 1599 0205 7369676E 		.ascii	"signed char\000"
+ 1599      65642063 
+ 1599      68617200 
+ 1600              	.LASF93:
+ 1601 0211 70657269 		.ascii	"periDivCmdTypeSelPos\000"
+ 1601      44697643 
+ 1601      6D645479 
+ 1601      70655365 
+ 1601      6C506F73 
+ 1602              	.LASF39:
+ 1603 0226 70726F74 		.ascii	"protBase\000"
+ 1603      42617365 
+ 1603      00
+ 1604              	.LASF51:
+ 1605 022f 69706356 		.ascii	"ipcVersion\000"
+ 1605      65727369 
+ 1605      6F6E00
+ 1606              	.LASF27:
+ 1607 023a 56524546 		.ascii	"VREF_TRIM1\000"
+ 1607      5F545249 
+ 1607      4D3100
+ 1608              	.LASF113:
+ 1609 0245 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
+ 1609      73436D30 
+ 1609      4E6D6943 
+ 1609      746C4F66 
+ 1609      66736574 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 33
+
+
+ 1610              	.LASF29:
+ 1611 025a 56524546 		.ascii	"VREF_TRIM3\000"
+ 1611      5F545249 
+ 1611      4D3300
+ 1612              	.LASF40:
+ 1613 0265 6873696F 		.ascii	"hsiomBase\000"
+ 1613      6D426173 
+ 1613      6500
+ 1614              	.LASF8:
+ 1615 026f 6C6F6E67 		.ascii	"long int\000"
+ 1615      20696E74 
+ 1615      00
+ 1616              	.LASF24:
+ 1617 0278 494E5452 		.ascii	"INTR_CAUSE\000"
+ 1617      5F434155 
+ 1617      534500
+ 1618              	.LASF71:
+ 1619 0283 63727970 		.ascii	"cryptoMemSize\000"
+ 1619      746F4D65 
+ 1619      6D53697A 
+ 1619      6500
+ 1620              	.LASF37:
+ 1621 0291 70657269 		.ascii	"periBase\000"
+ 1621      42617365 
+ 1621      00
+ 1622              	.LASF59:
+ 1623 029a 63707573 		.ascii	"cpussFmIrq\000"
+ 1623      73466D49 
+ 1623      727100
+ 1624              	.LASF69:
+ 1625 02a5 73797350 		.ascii	"sysPmSimoPresent\000"
+ 1625      6D53696D 
+ 1625      6F507265 
+ 1625      73656E74 
+ 1625      00
+ 1626              	.LASF26:
+ 1627 02b6 56524546 		.ascii	"VREF_TRIM0\000"
+ 1627      5F545249 
+ 1627      4D3000
+ 1628              	.LASF82:
+ 1629 02c1 64774368 		.ascii	"dwChOffset\000"
+ 1629      4F666673 
+ 1629      657400
+ 1630              	.LASF124:
+ 1631 02cc 646F7562 		.ascii	"double\000"
+ 1631      6C6500
+ 1632              	.LASF98:
+ 1633 02d3 70657269 		.ascii	"periDiv16_5CtlOffset\000"
+ 1633      44697631 
+ 1633      365F3543 
+ 1633      746C4F66 
+ 1633      66736574 
+ 1634              	.LASF28:
+ 1635 02e8 56524546 		.ascii	"VREF_TRIM2\000"
+ 1635      5F545249 
+ 1635      4D3200
+ 1636              	.LASF62:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 34
+
+
+ 1637 02f3 73727373 		.ascii	"srssNumPll\000"
+ 1637      4E756D50 
+ 1637      6C6C00
+ 1638              	.LASF96:
+ 1639 02fe 70657269 		.ascii	"periDiv8CtlOffset\000"
+ 1639      44697638 
+ 1639      43746C4F 
+ 1639      66667365 
+ 1639      7400
+ 1640              	.LASF125:
+ 1641 0310 43595F53 		.ascii	"CY_SYSANALOG_SUCCESS\000"
+ 1641      5953414E 
+ 1641      414C4F47 
+ 1641      5F535543 
+ 1641      43455353 
+ 1642              	.LASF103:
+ 1643 0325 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
+ 1643      50727443 
+ 1643      66674F75 
+ 1643      744F6666 
+ 1643      73657400 
+ 1644              	.LASF131:
+ 1645 0339 43595F53 		.ascii	"CY_SYSANALOG_VREF_SOURCE_SRSS\000"
+ 1645      5953414E 
+ 1645      414C4F47 
+ 1645      5F565245 
+ 1645      465F534F 
+ 1646              	.LASF36:
+ 1647 0357 666C6173 		.ascii	"flashcBase\000"
+ 1647      68634261 
+ 1647      736500
+ 1648              	.LASF9:
+ 1649 0362 5F5F7569 		.ascii	"__uint32_t\000"
+ 1649      6E743332 
+ 1649      5F7400
+ 1650              	.LASF66:
+ 1651 036d 70617373 		.ascii	"passSarChannels\000"
+ 1651      53617243 
+ 1651      68616E6E 
+ 1651      656C7300 
+ 1652              	.LASF3:
+ 1653 037d 5F5F696E 		.ascii	"__int16_t\000"
+ 1653      7431365F 
+ 1653      7400
+ 1654              	.LASF109:
+ 1655 0387 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
+ 1655      73436D34 
+ 1655      50777243 
+ 1655      746C4F66 
+ 1655      66736574 
+ 1656              	.LASF104:
+ 1657 039c 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
+ 1657      50727443 
+ 1657      66675369 
+ 1657      6F4F6666 
+ 1657      73657400 
+ 1658              	.LASF56:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 35
+
+
+ 1659 03b0 63707573 		.ascii	"cpussDwChNr\000"
+ 1659      73447743 
+ 1659      684E7200 
+ 1660              	.LASF13:
+ 1661 03bc 756E7369 		.ascii	"unsigned int\000"
+ 1661      676E6564 
+ 1661      20696E74 
+ 1661      00
+ 1662              	.LASF16:
+ 1663 03c9 75696E74 		.ascii	"uint16_t\000"
+ 1663      31365F74 
+ 1663      00
+ 1664              	.LASF141:
+ 1665 03d2 43595F53 		.ascii	"CY_SYSANALOG_DEEPSLEEP_IPTAT_IZTAT_VREF\000"
+ 1665      5953414E 
+ 1665      414C4F47 
+ 1665      5F444545 
+ 1665      50534C45 
+ 1666              	.LASF149:
+ 1667 03fa 6374726C 		.ascii	"ctrlReg\000"
+ 1667      52656700 
+ 1668              	.LASF89:
+ 1669 0402 70657269 		.ascii	"periTrCmdGrSelMsk\000"
+ 1669      5472436D 
+ 1669      64477253 
+ 1669      656C4D73 
+ 1669      6B00
+ 1670              	.LASF30:
+ 1671 0414 495A5441 		.ascii	"IZTAT_TRIM0\000"
+ 1671      545F5452 
+ 1671      494D3000 
+ 1672              	.LASF31:
+ 1673 0420 495A5441 		.ascii	"IZTAT_TRIM1\000"
+ 1673      545F5452 
+ 1673      494D3100 
+ 1674              	.LASF10:
+ 1675 042c 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1675      20756E73 
+ 1675      69676E65 
+ 1675      6420696E 
+ 1675      7400
+ 1676              	.LASF143:
+ 1677 043e 73746172 		.ascii	"startup\000"
+ 1677      74757000 
+ 1678              	.LASF54:
+ 1679 0446 63707573 		.ascii	"cpussIpcNr\000"
+ 1679      73497063 
+ 1679      4E7200
+ 1680              	.LASF41:
+ 1681 0451 6770696F 		.ascii	"gpioBase\000"
+ 1681      42617365 
+ 1681      00
+ 1682              	.LASF79:
+ 1683 045a 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
+ 1683      6843746C 
+ 1683      4D61696E 
+ 1683      57733246 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 36
+
+
+ 1683      72657100 
+ 1684              	.LASF90:
+ 1685 046e 70657269 		.ascii	"periTrGrOffset\000"
+ 1685      54724772 
+ 1685      4F666673 
+ 1685      657400
+ 1686              	.LASF117:
+ 1687 047d 63707573 		.ascii	"cpussRam1Ctl0\000"
+ 1687      7352616D 
+ 1687      3143746C 
+ 1687      3000
+ 1688              	.LASF138:
+ 1689 048b 43595F53 		.ascii	"CY_SYSANALOG_DEEPSLEEP_DISABLE\000"
+ 1689      5953414E 
+ 1689      414C4F47 
+ 1689      5F444545 
+ 1689      50534C45 
+ 1690              	.LASF157:
+ 1691 04aa 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 1691      73657273 
+ 1691      5C706561 
+ 1691      726C7374 
+ 1691      6C5C446F 
+ 1692 04d8 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 1692      6D5F656E 
+ 1692      67696E65 
+ 1692      6572696E 
+ 1692      675C656D 
+ 1693 0507 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 1693      6C76676C 
+ 1693      365C7463 
+ 1693      6F6D5F64 
+ 1693      6973706C 
+ 1694              	.LASF137:
+ 1695 052d 63795F65 		.ascii	"cy_en_sysanalog_iztat_source_t\000"
+ 1695      6E5F7379 
+ 1695      73616E61 
+ 1695      6C6F675F 
+ 1695      697A7461 
+ 1696              	.LASF49:
+ 1697 054c 6770696F 		.ascii	"gpioVersion\000"
+ 1697      56657273 
+ 1697      696F6E00 
+ 1698              	.LASF121:
+ 1699 0558 63795F73 		.ascii	"cy_stc_device_t\000"
+ 1699      74635F64 
+ 1699      65766963 
+ 1699      655F7400 
+ 1700              	.LASF67:
+ 1701 0568 65704D6F 		.ascii	"epMonitorNr\000"
+ 1701      6E69746F 
+ 1701      724E7200 
+ 1702              	.LASF114:
+ 1703 0574 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
+ 1703      73436D34 
+ 1703      4E6D6943 
+ 1703      746C4F66 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 37
+
+
+ 1703      66736574 
+ 1704              	.LASF110:
+ 1705 0589 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
+ 1705      73547269 
+ 1705      6D52616D 
+ 1705      43746C4F 
+ 1705      66667365 
+ 1706              	.LASF105:
+ 1707 059f 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
+ 1707      73436D30 
+ 1707      436C6F63 
+ 1707      6B43746C 
+ 1707      4F666673 
+ 1708              	.LASF45:
+ 1709 05b6 63707573 		.ascii	"cpussVersion\000"
+ 1709      73566572 
+ 1709      73696F6E 
+ 1709      00
+ 1710              	.LASF52:
+ 1711 05c3 70657269 		.ascii	"periVersion\000"
+ 1711      56657273 
+ 1711      696F6E00 
+ 1712              	.LASF108:
+ 1713 05cf 63707573 		.ascii	"cpussCm0StatusOffset\000"
+ 1713      73436D30 
+ 1713      53746174 
+ 1713      75734F66 
+ 1713      66736574 
+ 1714              	.LASF20:
+ 1715 05e4 73697A65 		.ascii	"sizetype\000"
+ 1715      74797065 
+ 1715      00
+ 1716              	.LASF136:
+ 1717 05ed 43595F53 		.ascii	"CY_SYSANALOG_IZTAT_SOURCE_LOCAL\000"
+ 1717      5953414E 
+ 1717      414C4F47 
+ 1717      5F495A54 
+ 1717      41545F53 
+ 1718              	.LASF154:
+ 1719 060d 43795F53 		.ascii	"Cy_SysAnalog_Fast_External\000"
+ 1719      7973416E 
+ 1719      616C6F67 
+ 1719      5F466173 
+ 1719      745F4578 
+ 1720              	.LASF153:
+ 1721 0628 43795F53 		.ascii	"Cy_SysAnalog_Fast_SRSS\000"
+ 1721      7973416E 
+ 1721      616C6F67 
+ 1721      5F466173 
+ 1721      745F5352 
+ 1722              	.LASF57:
+ 1723 063f 63707573 		.ascii	"cpussFlashPaSize\000"
+ 1723      73466C61 
+ 1723      73685061 
+ 1723      53697A65 
+ 1723      00
+ 1724              	.LASF95:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 38
+
+
+ 1725 0650 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
+ 1725      44697643 
+ 1725      6D645061 
+ 1725      54797065 
+ 1725      53656C50 
+ 1726              	.LASF118:
+ 1727 0667 63707573 		.ascii	"cpussRam2Ctl0\000"
+ 1727      7352616D 
+ 1727      3243746C 
+ 1727      3000
+ 1728              	.LASF53:
+ 1729 0675 70726F74 		.ascii	"protVersion\000"
+ 1729      56657273 
+ 1729      696F6E00 
+ 1730              	.LASF86:
+ 1731 0681 64775374 		.ascii	"dwStatusChIdxPos\000"
+ 1731      61747573 
+ 1731      43684964 
+ 1731      78506F73 
+ 1731      00
+ 1732              	.LASF68:
+ 1733 0692 75646250 		.ascii	"udbPresent\000"
+ 1733      72657365 
+ 1733      6E7400
+ 1734              	.LASF152:
+ 1735 069d 43795F53 		.ascii	"Cy_SysAnalog_Fast_Local\000"
+ 1735      7973416E 
+ 1735      616C6F67 
+ 1735      5F466173 
+ 1735      745F4C6F 
+ 1736              	.LASF23:
+ 1737 06b5 50415353 		.ascii	"PASS_AREF_V1_Type\000"
+ 1737      5F415245 
+ 1737      465F5631 
+ 1737      5F547970 
+ 1737      6500
+ 1738              	.LASF127:
+ 1739 06c7 63795F65 		.ascii	"cy_en_sysanalog_status_t\000"
+ 1739      6E5F7379 
+ 1739      73616E61 
+ 1739      6C6F675F 
+ 1739      73746174 
+ 1740              	.LASF44:
+ 1741 06e0 63727970 		.ascii	"cryptoBase\000"
+ 1741      746F4261 
+ 1741      736500
+ 1742              	.LASF65:
+ 1743 06eb 736D6966 		.ascii	"smifDeviceNr\000"
+ 1743      44657669 
+ 1743      63654E72 
+ 1743      00
+ 1744              	.LASF139:
+ 1745 06f8 43595F53 		.ascii	"CY_SYSANALOG_DEEPSLEEP_IPTAT_1\000"
+ 1745      5953414E 
+ 1745      414C4F47 
+ 1745      5F444545 
+ 1745      50534C45 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 39
+
+
+ 1746              	.LASF140:
+ 1747 0717 43595F53 		.ascii	"CY_SYSANALOG_DEEPSLEEP_IPTAT_2\000"
+ 1747      5953414E 
+ 1747      414C4F47 
+ 1747      5F444545 
+ 1747      50534C45 
+ 1748              	.LASF123:
+ 1749 0736 666C6F61 		.ascii	"float\000"
+ 1749      7400
+ 1750              	.LASF87:
+ 1751 073c 64775374 		.ascii	"dwStatusChIdxMsk\000"
+ 1751      61747573 
+ 1751      43684964 
+ 1751      784D736B 
+ 1751      00
+ 1752              	.LASF32:
+ 1753 074d 49505441 		.ascii	"IPTAT_TRIM0\000"
+ 1753      545F5452 
+ 1753      494D3000 
+ 1754              	.LASF151:
+ 1755 0759 63795F64 		.ascii	"cy_device\000"
+ 1755      65766963 
+ 1755      6500
+ 1756              	.LASF115:
+ 1757 0763 63707573 		.ascii	"cpussRomCtl\000"
+ 1757      73526F6D 
+ 1757      43746C00 
+ 1758              	.LASF85:
+ 1759 076f 64774368 		.ascii	"dwChCtlPreemptablePos\000"
+ 1759      43746C50 
+ 1759      7265656D 
+ 1759      70746162 
+ 1759      6C65506F 
+ 1760              	.LASF48:
+ 1761 0785 666C6173 		.ascii	"flashcVersion\000"
+ 1761      68635665 
+ 1761      7273696F 
+ 1761      6E00
+ 1762              	.LASF38:
+ 1763 0793 75646242 		.ascii	"udbBase\000"
+ 1763      61736500 
+ 1764              	.LASF155:
+ 1765 079b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1765      43313120 
+ 1765      352E342E 
+ 1765      31203230 
+ 1765      31363036 
+ 1766 07ce 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1766      20726576 
+ 1766      6973696F 
+ 1766      6E203233 
+ 1766      37373135 
+ 1767 0801 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 1767      70202D6D 
+ 1767      6670753D 
+ 1767      66707634 
+ 1767      2D73702D 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 40
+
+
+ 1768 0834 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1768      6F6E7320 
+ 1768      2D666661 
+ 1768      742D6C74 
+ 1768      6F2D6F62 
+ 1769              	.LASF17:
+ 1770 084e 696E7433 		.ascii	"int32_t\000"
+ 1770      325F7400 
+ 1771              	.LASF1:
+ 1772 0856 756E7369 		.ascii	"unsigned char\000"
+ 1772      676E6564 
+ 1772      20636861 
+ 1772      7200
+ 1773              	.LASF81:
+ 1774 0864 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
+ 1774      6843746C 
+ 1774      4D61696E 
+ 1774      57733446 
+ 1774      72657100 
+ 1775              	.LASF4:
+ 1776 0878 73686F72 		.ascii	"short int\000"
+ 1776      7420696E 
+ 1776      7400
+ 1777              	.LASF145:
+ 1778 0882 76726566 		.ascii	"vref\000"
+ 1778      00
+ 1779              	.LASF22:
+ 1780 0887 52455345 		.ascii	"RESERVED\000"
+ 1780      52564544 
+ 1780      00
+ 1781              	.LASF43:
+ 1782 0890 69706342 		.ascii	"ipcBase\000"
+ 1782      61736500 
+ 1783              	.LASF92:
+ 1784 0898 70657269 		.ascii	"periDivCmdDivSelMsk\000"
+ 1784      44697643 
+ 1784      6D644469 
+ 1784      7653656C 
+ 1784      4D736B00 
+ 1785              	.LASF25:
+ 1786 08ac 41524546 		.ascii	"AREF\000"
+ 1786      00
+ 1787              	.LASF147:
+ 1788 08b1 63795F73 		.ascii	"cy_stc_sysanalog_config_t\000"
+ 1788      74635F73 
+ 1788      7973616E 
+ 1788      616C6F67 
+ 1788      5F636F6E 
+ 1789              	.LASF63:
+ 1790 08cb 73727373 		.ascii	"srssNumHfroot\000"
+ 1790      4E756D48 
+ 1790      66726F6F 
+ 1790      7400
+ 1791              	.LASF76:
+ 1792 08d9 666C6173 		.ascii	"flashEraseDelay\000"
+ 1792      68457261 
+ 1792      73654465 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 41
+
+
+ 1792      6C617900 
+ 1793              	.LASF128:
+ 1794 08e9 43595F53 		.ascii	"CY_SYSANALOG_STARTUP_NORMAL\000"
+ 1794      5953414E 
+ 1794      414C4F47 
+ 1794      5F535441 
+ 1794      52545550 
+ 1795              	.LASF18:
+ 1796 0905 75696E74 		.ascii	"uint32_t\000"
+ 1796      33325F74 
+ 1796      00
+ 1797              	.LASF19:
+ 1798 090e 6C6F6E67 		.ascii	"long double\000"
+ 1798      20646F75 
+ 1798      626C6500 
+ 1799              	.LASF122:
+ 1800 091a 63686172 		.ascii	"char\000"
+ 1800      00
+ 1801              	.LASF146:
+ 1802 091f 64656570 		.ascii	"deepSleep\000"
+ 1802      536C6565 
+ 1802      7000
+ 1803              	.LASF158:
+ 1804 0929 43795F53 		.ascii	"Cy_SysAnalog_Init\000"
+ 1804      7973416E 
+ 1804      616C6F67 
+ 1804      5F496E69 
+ 1804      7400
+ 1805              	.LASF116:
+ 1806 093b 63707573 		.ascii	"cpussRam0Ctl0\000"
+ 1806      7352616D 
+ 1806      3043746C 
+ 1806      3000
+ 1807              	.LASF159:
+ 1808 0949 636F6E66 		.ascii	"config\000"
+ 1808      696700
+ 1809              	.LASF5:
+ 1810 0950 5F5F7569 		.ascii	"__uint16_t\000"
+ 1810      6E743136 
+ 1810      5F7400
+ 1811              	.LASF97:
+ 1812 095b 70657269 		.ascii	"periDiv16CtlOffset\000"
+ 1812      44697631 
+ 1812      3643746C 
+ 1812      4F666673 
+ 1812      657400
+ 1813              	.LASF34:
+ 1814 096e 50415353 		.ascii	"PASS_V1_Type\000"
+ 1814      5F56315F 
+ 1814      54797065 
+ 1814      00
+ 1815              	.LASF126:
+ 1816 097b 43595F53 		.ascii	"CY_SYSANALOG_BAD_PARAM\000"
+ 1816      5953414E 
+ 1816      414C4F47 
+ 1816      5F424144 
+ 1816      5F504152 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 42
+
+
+ 1817              	.LASF7:
+ 1818 0992 5F5F696E 		.ascii	"__int32_t\000"
+ 1818      7433325F 
+ 1818      7400
+ 1819              	.LASF50:
+ 1820 099c 6873696F 		.ascii	"hsiomVersion\000"
+ 1820      6D566572 
+ 1820      73696F6E 
+ 1820      00
+ 1821              	.LASF78:
+ 1822 09a9 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
+ 1822      6843746C 
+ 1822      4D61696E 
+ 1822      57733146 
+ 1822      72657100 
+ 1823              	.LASF130:
+ 1824 09bd 63795F65 		.ascii	"cy_en_sysanalog_startup_t\000"
+ 1824      6E5F7379 
+ 1824      73616E61 
+ 1824      6C6F675F 
+ 1824      73746172 
+ 1825              	.LASF6:
+ 1826 09d7 73686F72 		.ascii	"short unsigned int\000"
+ 1826      7420756E 
+ 1826      7369676E 
+ 1826      65642069 
+ 1826      6E7400
+ 1827              	.LASF83:
+ 1828 09ea 64774368 		.ascii	"dwChSize\000"
+ 1828      53697A65 
+ 1828      00
+ 1829              	.LASF119:
+ 1830 09f3 69706353 		.ascii	"ipcStructSize\000"
+ 1830      74727563 
+ 1830      7453697A 
+ 1830      6500
+ 1831              	.LASF58:
+ 1832 0a01 63707573 		.ascii	"cpussIpc0Irq\000"
+ 1832      73497063 
+ 1832      30497271 
+ 1832      00
+ 1833              	.LASF101:
+ 1834 0a0e 6770696F 		.ascii	"gpioPrtCfgOffset\000"
+ 1834      50727443 
+ 1834      66674F66 
+ 1834      66736574 
+ 1834      00
+ 1835              	.LASF33:
+ 1836 0a1f 49435441 		.ascii	"ICTAT_TRIM0\000"
+ 1836      545F5452 
+ 1836      494D3000 
+ 1837              	.LASF60:
+ 1838 0a2b 63707573 		.ascii	"cpussNotConnectedIrq\000"
+ 1838      734E6F74 
+ 1838      436F6E6E 
+ 1838      65637465 
+ 1838      64497271 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 43
+
+
+ 1839              	.LASF144:
+ 1840 0a40 697A7461 		.ascii	"iztat\000"
+ 1840      7400
+ 1841              	.LASF74:
+ 1842 0a46 666C6173 		.ascii	"flashWriteDelay\000"
+ 1842      68577269 
+ 1842      74654465 
+ 1842      6C617900 
+ 1843              	.LASF14:
+ 1844 0a56 75696E74 		.ascii	"uint8_t\000"
+ 1844      385F7400 
+ 1845              	.LASF107:
+ 1846 0a5e 63707573 		.ascii	"cpussCm4StatusOffset\000"
+ 1846      73436D34 
+ 1846      53746174 
+ 1846      75734F66 
+ 1846      66736574 
+ 1847              	.LASF100:
+ 1848 0a73 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
+ 1848      50727449 
+ 1848      6E747243 
+ 1848      66674F66 
+ 1848      66736574 
+ 1849              	.LASF111:
+ 1850 0a88 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
+ 1850      73547269 
+ 1850      6D526F6D 
+ 1850      43746C4F 
+ 1850      66667365 
+ 1851              	.LASF61:
+ 1852 0a9e 73727373 		.ascii	"srssNumClkpath\000"
+ 1852      4E756D43 
+ 1852      6C6B7061 
+ 1852      746800
+ 1853              	.LASF47:
+ 1854 0aad 64775665 		.ascii	"dwVersion\000"
+ 1854      7273696F 
+ 1854      6E00
+ 1855              	.LASF135:
+ 1856 0ab7 43595F53 		.ascii	"CY_SYSANALOG_IZTAT_SOURCE_SRSS\000"
+ 1856      5953414E 
+ 1856      414C4F47 
+ 1856      5F495A54 
+ 1856      41545F53 
+ 1857              	.LASF94:
+ 1858 0ad6 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ 1858      44697643 
+ 1858      6D645061 
+ 1858      44697653 
+ 1858      656C506F 
+ 1859              	.LASF75:
+ 1860 0aec 666C6173 		.ascii	"flashProgramDelay\000"
+ 1860      6850726F 
+ 1860      6772616D 
+ 1860      44656C61 
+ 1860      7900
+ 1861              	.LASF156:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccfptac2.s 			page 44
+
+
+ 1862 0afe 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
+ 1862      72617465 
+ 1862      645F536F 
+ 1862      75726365 
+ 1862      5C50536F 
+ 1863 0b2c 73797361 		.ascii	"sysanalog\\cy_sysanalog.c\000"
+ 1863      6E616C6F 
+ 1863      675C6379 
+ 1863      5F737973 
+ 1863      616E616C 
+ 1864              	.LASF148:
+ 1865 0b45 72657375 		.ascii	"result\000"
+ 1865      6C7400
+ 1866              	.LASF72:
+ 1867 0b4c 666C6173 		.ascii	"flashRwwRequired\000"
+ 1867      68527777 
+ 1867      52657175 
+ 1867      69726564 
+ 1867      00
+ 1868              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

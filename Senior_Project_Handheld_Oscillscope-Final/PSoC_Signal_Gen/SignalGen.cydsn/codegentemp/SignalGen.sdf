@@ -1,0 +1,25 @@
+(DELAYFILE
+ (SDFVERSION "IEEE 1497 4.0")
+ (DATE "2021-03-18T15:19:21Z")
+ (DESIGN "SignalGen")
+ (VENDOR "Cypress Semiconductor")
+ (PROGRAM "PSoC Creator")
+ (VERSION " 4.3")
+ (DIVIDER .)
+ (TIMESCALE 1 ns)
+ (CELL
+  (CELLTYPE "SignalGen")
+  (INSTANCE *)
+  (DELAY
+   (ABSOLUTE
+    (INTERCONNECT CY_CPUSS_SWJ_SWCLK_TCLK\(0\).fb CPUSS.swj_swclk_tclk (0.000:0.000:0.000))
+    (INTERCONNECT CY_CPUSS_SWJ_SWDIO_TMS\(0\).fb CPUSS.swj_swdio_tms (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.hfclk_4 Pin_2\(0\).pin_input (43.669:58.309:58.309))
+    (INTERCONNECT ClockBlock.ff_div_47 \\VDAC_1\:CTDAC\\.clock (0.000:0.000:0.000))
+    (INTERCONNECT Pin_2\(0\).pad_out Pin_2\(0\).pad_in (0.000:0.000:0.000))
+    (INTERCONNECT Pin_2\(0\).pad_out Pin_2\(0\)_PAD (0.000:0.000:0.000))
+    (INTERCONNECT Pin_2\(0\)_PAD Pin_2\(0\).pad_in (0.000:0.000:0.000))
+   )
+  )
+ )
+)

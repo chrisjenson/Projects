@@ -1,0 +1,7 @@
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|c5122cd1-4e39-41f8-8acf-e41e93cad329
+C:\Users\tmj32\Documents\PSoC Creator\4.3\Downloads ( 4.3).cylib\Downloads ( 4.3).cyprj|2db777cb-e98e-49c9-8c43-12bf5de7c3bb
+C:\Users\tmj32\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|8fea8a7b-ba44-4e8d-802b-7d49f1ef6ea9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|8bdb791f-f269-4d3a-adc3-07c0fcdf9a3f
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|d4f24a3d-836e-4494-afa8-1dc695ed646e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|4cf3d2e0-9152-4a07-bfbf-1544f8893021
+C:\Users\tmj32\Documents\TCNJ\Senior_Project\Oscilloscope_Senior_Project\Workspace01\SignalGen.cydsn\SignalGen.cyprj|37a43193-ed76-45bc-a39e-831a147b3233

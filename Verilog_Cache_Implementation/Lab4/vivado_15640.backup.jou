@@ -1,0 +1,176 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Wed Apr 28 12:11:37 2021
+# Process ID: 15640
+# Current directory: D:/CELab2/Lab4
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent7252 D:\CELab2\Lab4\lab4.xpr
+# Log file: D:/CELab2/Lab4/vivado.log
+# Journal file: D:/CELab2/Lab4\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/CELab2/Lab4/lab4.xpr
+update_compile_order -fileset sources_1
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+relaunch_sim
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+relaunch_sim
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+save_wave_config {D:/CELab2/Lab4/testbench_behav.wcfg}
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim
+launch_simulation
+open_wave_config D:/CELab2/Lab4/testbench_behav.wcfg
+source testbench.tcl
+close_sim

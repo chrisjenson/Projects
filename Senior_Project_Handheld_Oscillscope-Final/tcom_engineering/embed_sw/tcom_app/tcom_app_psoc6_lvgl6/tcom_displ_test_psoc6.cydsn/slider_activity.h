@@ -1,0 +1,1 @@
+void slider_action(lv_obj_t * slider, lv_event_t event);

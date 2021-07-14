@@ -1,0 +1,3485 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_draw_arc.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_draw_arc,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_draw_arc
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_draw_arc, %function
+  26              	lv_draw_arc:
+  27              	.LFB31:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_draw_arc.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @file lv_draw_arc.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #include "lv_draw_arc.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #include "../lv_misc/lv_math.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /*********************
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *      DEFINES
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *********************/
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *      TYPEDEFS
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *  STATIC PROTOTYPES
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static void ver_line(lv_coord_t x, lv_coord_t y, const lv_area_t * mask, lv_coord_t len, lv_color_t
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                      lv_opa_t opa);
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static void hor_line(lv_coord_t x, lv_coord_t y, const lv_area_t * mask, lv_coord_t len, lv_color_t
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                      lv_opa_t opa);
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static bool deg_test_norm(uint16_t deg, uint16_t start, uint16_t end);
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static bool deg_test_inv(uint16_t deg, uint16_t start, uint16_t end);
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *  STATIC VARIABLES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *      MACROS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *   GLOBAL FUNCTIONS
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * Draw an arc. (Can draw pie too with great thickness.)
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param center_x the x coordinate of the center of the arc
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param center_y the y coordinate of the center of the arc
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param radius the radius of the arc
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param mask the arc will be drawn only in this mask
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param start_angle the start angle of the arc (0 deg on the bottom, 90 deg on the right)
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param end_angle the end angle of the arc
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param style style of the arc (`body.thickness`, `body.main_color`, `body.opa` is used)
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  * @param opa_scale scale down all opacities by the factor
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  */
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** void lv_draw_arc(lv_coord_t center_x, lv_coord_t center_y, uint16_t radius, const lv_area_t * mask,
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                  uint16_t start_angle, uint16_t end_angle, const lv_style_t * style, lv_opa_t opa_s
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** {
+  29              		.loc 1 55 0
+  30              		.cfi_startproc
+  31              		@ args = 16, pretend = 0, frame = 80
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 96B0     		sub	sp, sp, #88
+  38              		.cfi_def_cfa_offset 96
+  39 0004 02AF     		add	r7, sp, #8
+  40              		.cfi_def_cfa 7, 88
+  41 0006 7B60     		str	r3, [r7, #4]
+  42 0008 0346     		mov	r3, r0	@ movhi
+  43 000a FB81     		strh	r3, [r7, #14]	@ movhi
+  44 000c 0B46     		mov	r3, r1	@ movhi
+  45 000e BB81     		strh	r3, [r7, #12]	@ movhi
+  46 0010 1346     		mov	r3, r2	@ movhi
+  47 0012 7B81     		strh	r3, [r7, #10]	@ movhi
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_coord_t thickness = style->line.width;
+  48              		.loc 1 56 0
+  49 0014 3B6E     		ldr	r3, [r7, #96]
+  50 0016 B3F84C30 		ldrh	r3, [r3, #76]	@ movhi
+  51 001a A7F84E30 		strh	r3, [r7, #78]	@ movhi
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(thickness > radius) thickness = radius;
+  52              		.loc 1 57 0
+  53 001e B7F94E20 		ldrsh	r2, [r7, #78]
+  54 0022 7B89     		ldrh	r3, [r7, #10]
+  55 0024 9A42     		cmp	r2, r3
+  56 0026 02DD     		ble	.L2
+  57              		.loc 1 57 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 3
+
+
+  58 0028 7B89     		ldrh	r3, [r7, #10]	@ movhi
+  59 002a A7F84E30 		strh	r3, [r7, #78]	@ movhi
+  60              	.L2:
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #if LV_ANTIALIAS
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     thickness--;
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     radius--;
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_coord_t r_out = radius;
+  61              		.loc 1 64 0 is_stmt 1
+  62 002e 7B89     		ldrh	r3, [r7, #10]	@ movhi
+  63 0030 FB87     		strh	r3, [r7, #62]	@ movhi
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_coord_t r_in  = r_out - thickness;
+  64              		.loc 1 65 0
+  65 0032 FA8F     		ldrh	r2, [r7, #62]
+  66 0034 B7F84E30 		ldrh	r3, [r7, #78]
+  67 0038 D31A     		subs	r3, r2, r3
+  68 003a 9BB2     		uxth	r3, r3
+  69 003c BB87     		strh	r3, [r7, #60]	@ movhi
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     int16_t deg_base;
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     int16_t deg;
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_coord_t x_start[4];
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_coord_t x_end[4];
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_color_t color = style->line.color;
+  70              		.loc 1 71 0
+  71 003e 3B6E     		ldr	r3, [r7, #96]
+  72 0040 9B6C     		ldr	r3, [r3, #72]
+  73 0042 3B61     		str	r3, [r7, #16]
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_opa_t opa = opa_scale == LV_OPA_COVER ? style->body.opa : (uint16_t)((uint16_t)style->body.o
+  74              		.loc 1 72 0
+  75 0044 97F86430 		ldrb	r3, [r7, #100]	@ zero_extendqisi2
+  76 0048 FF2B     		cmp	r3, #255
+  77 004a 02D1     		bne	.L3
+  78              		.loc 1 72 0 is_stmt 0 discriminator 1
+  79 004c 3B6E     		ldr	r3, [r7, #96]
+  80 004e 9B7B     		ldrb	r3, [r3, #14]	@ zero_extendqisi2
+  81 0050 0BE0     		b	.L4
+  82              	.L3:
+  83              		.loc 1 72 0 discriminator 2
+  84 0052 3B6E     		ldr	r3, [r7, #96]
+  85 0054 9B7B     		ldrb	r3, [r3, #14]	@ zero_extendqisi2
+  86 0056 9AB2     		uxth	r2, r3
+  87 0058 97F86430 		ldrb	r3, [r7, #100]	@ zero_extendqisi2
+  88 005c 9BB2     		uxth	r3, r3
+  89 005e 12FB03F3 		smulbb	r3, r2, r3
+  90 0062 9BB2     		uxth	r3, r3
+  91 0064 1B0A     		lsrs	r3, r3, #8
+  92 0066 9BB2     		uxth	r3, r3
+  93 0068 DBB2     		uxtb	r3, r3
+  94              	.L4:
+  95              		.loc 1 72 0 discriminator 4
+  96 006a 87F83B30 		strb	r3, [r7, #59]
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     bool (*deg_test)(uint16_t, uint16_t, uint16_t);
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(start_angle <= end_angle)
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 4
+
+
+  97              		.loc 1 75 0 is_stmt 1 discriminator 4
+  98 006e B7F85820 		ldrh	r2, [r7, #88]
+  99 0072 B7F85C30 		ldrh	r3, [r7, #92]
+ 100 0076 9A42     		cmp	r2, r3
+ 101 0078 02D8     		bhi	.L5
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         deg_test = deg_test_norm;
+ 102              		.loc 1 76 0
+ 103 007a B24B     		ldr	r3, .L39
+ 104 007c BB64     		str	r3, [r7, #72]
+ 105 007e 01E0     		b	.L6
+ 106              	.L5:
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     else
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         deg_test = deg_test_inv;
+ 107              		.loc 1 78 0
+ 108 0080 B14B     		ldr	r3, .L39+4
+ 109 0082 BB64     		str	r3, [r7, #72]
+ 110              	.L6:
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     int middle_r_out = r_out;
+ 111              		.loc 1 80 0
+ 112 0084 B7F93E30 		ldrsh	r3, [r7, #62]
+ 113 0088 7B63     		str	r3, [r7, #52]
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #if !LV_ANTIALIAS
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     thickness--;
+ 114              		.loc 1 82 0
+ 115 008a B7F94E30 		ldrsh	r3, [r7, #78]
+ 116 008e 9BB2     		uxth	r3, r3
+ 117 0090 013B     		subs	r3, r3, #1
+ 118 0092 9BB2     		uxth	r3, r3
+ 119 0094 A7F84E30 		strh	r3, [r7, #78]	@ movhi
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     middle_r_out = r_out - 1;
+ 120              		.loc 1 83 0
+ 121 0098 B7F93E30 		ldrsh	r3, [r7, #62]
+ 122 009c 013B     		subs	r3, r3, #1
+ 123 009e 7B63     		str	r3, [r7, #52]
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg_test(270, start_angle, end_angle))
+ 124              		.loc 1 85 0
+ 125 00a0 B7F85C20 		ldrh	r2, [r7, #92]
+ 126 00a4 B7F85810 		ldrh	r1, [r7, #88]
+ 127 00a8 BB6C     		ldr	r3, [r7, #72]
+ 128 00aa 4FF48770 		mov	r0, #270
+ 129 00ae 9847     		blx	r3
+ 130 00b0 0346     		mov	r3, r0
+ 131 00b2 002B     		cmp	r3, #0
+ 132 00b4 12D0     		beq	.L7
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         hor_line(center_x - middle_r_out, center_y, mask, thickness, color, opa); /*Left Middle*/
+ 133              		.loc 1 86 0
+ 134 00b6 FA89     		ldrh	r2, [r7, #14]
+ 135 00b8 7B6B     		ldr	r3, [r7, #52]
+ 136 00ba 9BB2     		uxth	r3, r3
+ 137 00bc D31A     		subs	r3, r2, r3
+ 138 00be 9BB2     		uxth	r3, r3
+ 139 00c0 18B2     		sxth	r0, r3
+ 140 00c2 B7F94E20 		ldrsh	r2, [r7, #78]
+ 141 00c6 B7F90C10 		ldrsh	r1, [r7, #12]
+ 142 00ca 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 5
+
+
+ 143 00ce 0193     		str	r3, [sp, #4]
+ 144 00d0 3B69     		ldr	r3, [r7, #16]
+ 145 00d2 0093     		str	r3, [sp]
+ 146 00d4 1346     		mov	r3, r2
+ 147 00d6 7A68     		ldr	r2, [r7, #4]
+ 148 00d8 FFF7FEFF 		bl	hor_line
+ 149              	.L7:
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg_test(90, start_angle, end_angle))
+ 150              		.loc 1 87 0
+ 151 00dc B7F85C20 		ldrh	r2, [r7, #92]
+ 152 00e0 B7F85810 		ldrh	r1, [r7, #88]
+ 153 00e4 BB6C     		ldr	r3, [r7, #72]
+ 154 00e6 5A20     		movs	r0, #90
+ 155 00e8 9847     		blx	r3
+ 156 00ea 0346     		mov	r3, r0
+ 157 00ec 002B     		cmp	r3, #0
+ 158 00ee 11D0     		beq	.L8
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         hor_line(center_x + r_in, center_y, mask, thickness, color, opa); /*Right Middle*/
+ 159              		.loc 1 88 0
+ 160 00f0 FA89     		ldrh	r2, [r7, #14]
+ 161 00f2 BB8F     		ldrh	r3, [r7, #60]
+ 162 00f4 1344     		add	r3, r3, r2
+ 163 00f6 9BB2     		uxth	r3, r3
+ 164 00f8 18B2     		sxth	r0, r3
+ 165 00fa B7F94E20 		ldrsh	r2, [r7, #78]
+ 166 00fe B7F90C10 		ldrsh	r1, [r7, #12]
+ 167 0102 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 168 0106 0193     		str	r3, [sp, #4]
+ 169 0108 3B69     		ldr	r3, [r7, #16]
+ 170 010a 0093     		str	r3, [sp]
+ 171 010c 1346     		mov	r3, r2
+ 172 010e 7A68     		ldr	r2, [r7, #4]
+ 173 0110 FFF7FEFF 		bl	hor_line
+ 174              	.L8:
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg_test(180, start_angle, end_angle))
+ 175              		.loc 1 89 0
+ 176 0114 B7F85C20 		ldrh	r2, [r7, #92]
+ 177 0118 B7F85810 		ldrh	r1, [r7, #88]
+ 178 011c BB6C     		ldr	r3, [r7, #72]
+ 179 011e B420     		movs	r0, #180
+ 180 0120 9847     		blx	r3
+ 181 0122 0346     		mov	r3, r0
+ 182 0124 002B     		cmp	r3, #0
+ 183 0126 12D0     		beq	.L9
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         ver_line(center_x, center_y - middle_r_out, mask, thickness, color, opa); /*Top Middle*/
+ 184              		.loc 1 90 0
+ 185 0128 BA89     		ldrh	r2, [r7, #12]
+ 186 012a 7B6B     		ldr	r3, [r7, #52]
+ 187 012c 9BB2     		uxth	r3, r3
+ 188 012e D31A     		subs	r3, r2, r3
+ 189 0130 9BB2     		uxth	r3, r3
+ 190 0132 19B2     		sxth	r1, r3
+ 191 0134 B7F94E20 		ldrsh	r2, [r7, #78]
+ 192 0138 B7F90E00 		ldrsh	r0, [r7, #14]
+ 193 013c 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 194 0140 0193     		str	r3, [sp, #4]
+ 195 0142 3B69     		ldr	r3, [r7, #16]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 6
+
+
+ 196 0144 0093     		str	r3, [sp]
+ 197 0146 1346     		mov	r3, r2
+ 198 0148 7A68     		ldr	r2, [r7, #4]
+ 199 014a FFF7FEFF 		bl	ver_line
+ 200              	.L9:
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg_test(0, start_angle, end_angle))
+ 201              		.loc 1 91 0
+ 202 014e B7F85C20 		ldrh	r2, [r7, #92]
+ 203 0152 B7F85810 		ldrh	r1, [r7, #88]
+ 204 0156 BB6C     		ldr	r3, [r7, #72]
+ 205 0158 0020     		movs	r0, #0
+ 206 015a 9847     		blx	r3
+ 207 015c 0346     		mov	r3, r0
+ 208 015e 002B     		cmp	r3, #0
+ 209 0160 11D0     		beq	.L10
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         ver_line(center_x, center_y + r_in, mask, thickness, color, opa); /*Bottom middle*/
+ 210              		.loc 1 92 0
+ 211 0162 BA89     		ldrh	r2, [r7, #12]
+ 212 0164 BB8F     		ldrh	r3, [r7, #60]
+ 213 0166 1344     		add	r3, r3, r2
+ 214 0168 9BB2     		uxth	r3, r3
+ 215 016a 19B2     		sxth	r1, r3
+ 216 016c B7F94E20 		ldrsh	r2, [r7, #78]
+ 217 0170 B7F90E00 		ldrsh	r0, [r7, #14]
+ 218 0174 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 219 0178 0193     		str	r3, [sp, #4]
+ 220 017a 3B69     		ldr	r3, [r7, #16]
+ 221 017c 0093     		str	r3, [sp]
+ 222 017e 1346     		mov	r3, r2
+ 223 0180 7A68     		ldr	r2, [r7, #4]
+ 224 0182 FFF7FEFF 		bl	ver_line
+ 225              	.L10:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     uint32_t r_out_sqr = r_out * r_out;
+ 226              		.loc 1 94 0
+ 227 0186 B7F93E30 		ldrsh	r3, [r7, #62]
+ 228 018a B7F93E20 		ldrsh	r2, [r7, #62]
+ 229 018e 02FB03F3 		mul	r3, r2, r3
+ 230 0192 3B63     		str	r3, [r7, #48]
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     uint32_t r_in_sqr  = r_in * r_in;
+ 231              		.loc 1 95 0
+ 232 0194 B7F93C30 		ldrsh	r3, [r7, #60]
+ 233 0198 B7F93C20 		ldrsh	r2, [r7, #60]
+ 234 019c 02FB03F3 		mul	r3, r2, r3
+ 235 01a0 FB62     		str	r3, [r7, #44]
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #if LV_ANTIALIAS
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     uint32_t r_out_aa_sqr = (r_out + 1) * (r_out + 1);
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     uint32_t r_in_aa_sqr  = (r_in - 1) * (r_in - 1);
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     int16_t xi;
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     int16_t yi;
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     for(yi = -r_out; yi < 0; yi++) {
+ 236              		.loc 1 102 0
+ 237 01a2 FB8F     		ldrh	r3, [r7, #62]
+ 238 01a4 5B42     		negs	r3, r3
+ 239 01a6 9BB2     		uxth	r3, r3
+ 240 01a8 A7F84430 		strh	r3, [r7, #68]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 7
+
+
+ 241 01ac BAE1     		b	.L11
+ 242              	.L37:
+ 243              	.LBB2:
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[0] = LV_COORD_MIN;
+ 244              		.loc 1 103 0
+ 245 01ae 48F2E833 		movw	r3, #33768
+ 246 01b2 BB83     		strh	r3, [r7, #28]	@ movhi
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[1] = LV_COORD_MIN;
+ 247              		.loc 1 104 0
+ 248 01b4 48F2E833 		movw	r3, #33768
+ 249 01b8 FB83     		strh	r3, [r7, #30]	@ movhi
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[2] = LV_COORD_MIN;
+ 250              		.loc 1 105 0
+ 251 01ba 48F2E833 		movw	r3, #33768
+ 252 01be 3B84     		strh	r3, [r7, #32]	@ movhi
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[3] = LV_COORD_MIN;
+ 253              		.loc 1 106 0
+ 254 01c0 48F2E833 		movw	r3, #33768
+ 255 01c4 7B84     		strh	r3, [r7, #34]	@ movhi
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_end[0]   = LV_COORD_MIN;
+ 256              		.loc 1 107 0
+ 257 01c6 48F2E833 		movw	r3, #33768
+ 258 01ca BB82     		strh	r3, [r7, #20]	@ movhi
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_end[1]   = LV_COORD_MIN;
+ 259              		.loc 1 108 0
+ 260 01cc 48F2E833 		movw	r3, #33768
+ 261 01d0 FB82     		strh	r3, [r7, #22]	@ movhi
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_end[2]   = LV_COORD_MIN;
+ 262              		.loc 1 109 0
+ 263 01d2 48F2E833 		movw	r3, #33768
+ 264 01d6 3B83     		strh	r3, [r7, #24]	@ movhi
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_end[3]   = LV_COORD_MIN;
+ 265              		.loc 1 110 0
+ 266 01d8 48F2E833 		movw	r3, #33768
+ 267 01dc 7B83     		strh	r3, [r7, #26]	@ movhi
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         int xe     = 0;
+ 268              		.loc 1 111 0
+ 269 01de 0023     		movs	r3, #0
+ 270 01e0 3B64     		str	r3, [r7, #64]
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         for(xi = -r_out; xi < 0; xi++) {
+ 271              		.loc 1 112 0
+ 272 01e2 FB8F     		ldrh	r3, [r7, #62]
+ 273 01e4 5B42     		negs	r3, r3
+ 274 01e6 9BB2     		uxth	r3, r3
+ 275 01e8 A7F84630 		strh	r3, [r7, #70]	@ movhi
+ 276 01ec D0E0     		b	.L12
+ 277              	.L28:
+ 278              	.LBB3:
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             uint32_t r_act_sqr = xi * xi + yi * yi;
+ 279              		.loc 1 114 0
+ 280 01ee B7F94630 		ldrsh	r3, [r7, #70]
+ 281 01f2 B7F94620 		ldrsh	r2, [r7, #70]
+ 282 01f6 02FB03F2 		mul	r2, r2, r3
+ 283 01fa B7F94430 		ldrsh	r3, [r7, #68]
+ 284 01fe B7F94410 		ldrsh	r1, [r7, #68]
+ 285 0202 01FB03F3 		mul	r3, r1, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 8
+
+
+ 286 0206 1344     		add	r3, r3, r2
+ 287 0208 BB62     		str	r3, [r7, #40]
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #if LV_ANTIALIAS
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(r_act_sqr > r_out_aa_sqr) {
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 continue;
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #else
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(r_act_sqr > r_out_sqr) continue;
+ 288              		.loc 1 120 0
+ 289 020a BA6A     		ldr	r2, [r7, #40]
+ 290 020c 3B6B     		ldr	r3, [r7, #48]
+ 291 020e 9A42     		cmp	r2, r3
+ 292 0210 00F2B680 		bhi	.L38
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             deg_base = lv_atan2(xi, yi) - 180;
+ 293              		.loc 1 123 0
+ 294 0214 B7F94630 		ldrsh	r3, [r7, #70]
+ 295 0218 B7F94420 		ldrsh	r2, [r7, #68]
+ 296 021c 1146     		mov	r1, r2
+ 297 021e 1846     		mov	r0, r3
+ 298 0220 FFF7FEFF 		bl	lv_atan2
+ 299 0224 0346     		mov	r3, r0
+ 300 0226 B43B     		subs	r3, r3, #180
+ 301 0228 9BB2     		uxth	r3, r3
+ 302 022a FB84     		strh	r3, [r7, #38]	@ movhi
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #if LV_ANTIALIAS
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             int opa2 = -1;
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(r_act_sqr > r_out_sqr) {
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 opa2 = LV_OPA_100 * (r_out + 1) - lv_sqrt(LV_OPA_100 * LV_OPA_100 * r_act_sqr);
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(opa2 < LV_OPA_0)
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     opa2 = LV_OPA_0;
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 else if(opa2 > LV_OPA_100)
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     opa2 = LV_OPA_100;
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             } else if(r_act_sqr < r_in_sqr) {
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(xe == 0) xe = xi;
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 opa2 = lv_sqrt(LV_OPA_100 * LV_OPA_100 * r_act_sqr) - LV_OPA_100 * (r_in - 1);
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(opa2 < LV_OPA_0)
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     opa2 = LV_OPA_0;
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 else if(opa2 > LV_OPA_100)
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     opa2 = LV_OPA_100;
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(r_act_sqr < r_in_aa_sqr)
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     break; /*No need to continue the iteration in x once we found the inner edge of
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                               arc*/
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(opa2 != -1) {
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(deg_test(180 + deg_base, start_angle, end_angle)) {
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     lv_draw_px(center_x + xi, center_y + yi, mask, color, opa2);
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 }
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(deg_test(360 - deg_base, start_angle, end_angle)) {
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     lv_draw_px(center_x + xi, center_y - yi, mask, color, opa2);
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 }
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(deg_test(180 - deg_base, start_angle, end_angle)) {
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     lv_draw_px(center_x - xi, center_y + yi, mask, color, opa2);
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 }
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(deg_test(deg_base, start_angle, end_angle)) {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 9
+
+
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                     lv_draw_px(center_x - xi, center_y - yi, mask, color, opa2);
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 }
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 continue;
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             deg = 180 + deg_base;
+ 303              		.loc 1 161 0
+ 304 022c FB8C     		ldrh	r3, [r7, #38]
+ 305 022e B433     		adds	r3, r3, #180
+ 306 0230 9BB2     		uxth	r3, r3
+ 307 0232 BB84     		strh	r3, [r7, #36]	@ movhi
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(deg_test(deg, start_angle, end_angle)) {
+ 308              		.loc 1 162 0
+ 309 0234 B88C     		ldrh	r0, [r7, #36]
+ 310 0236 B7F85C20 		ldrh	r2, [r7, #92]
+ 311 023a B7F85810 		ldrh	r1, [r7, #88]
+ 312 023e BB6C     		ldr	r3, [r7, #72]
+ 313 0240 9847     		blx	r3
+ 314 0242 0346     		mov	r3, r0
+ 315 0244 002B     		cmp	r3, #0
+ 316 0246 08D0     		beq	.L15
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(x_start[0] == LV_COORD_MIN) x_start[0] = xi;
+ 317              		.loc 1 163 0
+ 318 0248 B7F91C30 		ldrsh	r3, [r7, #28]
+ 319 024c 3F4A     		ldr	r2, .L39+8
+ 320 024e 9342     		cmp	r3, r2
+ 321 0250 13D1     		bne	.L17
+ 322              		.loc 1 163 0 is_stmt 0 discriminator 1
+ 323 0252 B7F84630 		ldrh	r3, [r7, #70]	@ movhi
+ 324 0256 BB83     		strh	r3, [r7, #28]	@ movhi
+ 325 0258 0FE0     		b	.L17
+ 326              	.L15:
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             } else if(x_start[0] != LV_COORD_MIN && x_end[0] == LV_COORD_MIN) {
+ 327              		.loc 1 164 0 is_stmt 1
+ 328 025a B7F91C30 		ldrsh	r3, [r7, #28]
+ 329 025e 3B4A     		ldr	r2, .L39+8
+ 330 0260 9342     		cmp	r3, r2
+ 331 0262 0AD0     		beq	.L17
+ 332              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 333 0264 B7F91430 		ldrsh	r3, [r7, #20]
+ 334 0268 384A     		ldr	r2, .L39+8
+ 335 026a 9342     		cmp	r3, r2
+ 336 026c 05D1     		bne	.L17
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 x_end[0] = xi - 1;
+ 337              		.loc 1 165 0 is_stmt 1
+ 338 026e B7F84630 		ldrh	r3, [r7, #70]
+ 339 0272 013B     		subs	r3, r3, #1
+ 340 0274 9BB2     		uxth	r3, r3
+ 341 0276 1BB2     		sxth	r3, r3
+ 342 0278 BB82     		strh	r3, [r7, #20]	@ movhi
+ 343              	.L17:
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             deg = 360 - deg_base;
+ 344              		.loc 1 168 0
+ 345 027a FB8C     		ldrh	r3, [r7, #38]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 10
+
+
+ 346 027c C3F5B473 		rsb	r3, r3, #360
+ 347 0280 9BB2     		uxth	r3, r3
+ 348 0282 BB84     		strh	r3, [r7, #36]	@ movhi
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(deg_test(deg, start_angle, end_angle)) {
+ 349              		.loc 1 169 0
+ 350 0284 B88C     		ldrh	r0, [r7, #36]
+ 351 0286 B7F85C20 		ldrh	r2, [r7, #92]
+ 352 028a B7F85810 		ldrh	r1, [r7, #88]
+ 353 028e BB6C     		ldr	r3, [r7, #72]
+ 354 0290 9847     		blx	r3
+ 355 0292 0346     		mov	r3, r0
+ 356 0294 002B     		cmp	r3, #0
+ 357 0296 08D0     		beq	.L18
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(x_start[1] == LV_COORD_MIN) x_start[1] = xi;
+ 358              		.loc 1 170 0
+ 359 0298 B7F91E30 		ldrsh	r3, [r7, #30]
+ 360 029c 2B4A     		ldr	r2, .L39+8
+ 361 029e 9342     		cmp	r3, r2
+ 362 02a0 13D1     		bne	.L20
+ 363              		.loc 1 170 0 is_stmt 0 discriminator 1
+ 364 02a2 B7F84630 		ldrh	r3, [r7, #70]	@ movhi
+ 365 02a6 FB83     		strh	r3, [r7, #30]	@ movhi
+ 366 02a8 0FE0     		b	.L20
+ 367              	.L18:
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             } else if(x_start[1] != LV_COORD_MIN && x_end[1] == LV_COORD_MIN) {
+ 368              		.loc 1 171 0 is_stmt 1
+ 369 02aa B7F91E30 		ldrsh	r3, [r7, #30]
+ 370 02ae 274A     		ldr	r2, .L39+8
+ 371 02b0 9342     		cmp	r3, r2
+ 372 02b2 0AD0     		beq	.L20
+ 373              		.loc 1 171 0 is_stmt 0 discriminator 1
+ 374 02b4 B7F91630 		ldrsh	r3, [r7, #22]
+ 375 02b8 244A     		ldr	r2, .L39+8
+ 376 02ba 9342     		cmp	r3, r2
+ 377 02bc 05D1     		bne	.L20
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 x_end[1] = xi - 1;
+ 378              		.loc 1 172 0 is_stmt 1
+ 379 02be B7F84630 		ldrh	r3, [r7, #70]
+ 380 02c2 013B     		subs	r3, r3, #1
+ 381 02c4 9BB2     		uxth	r3, r3
+ 382 02c6 1BB2     		sxth	r3, r3
+ 383 02c8 FB82     		strh	r3, [r7, #22]	@ movhi
+ 384              	.L20:
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             deg = 180 - deg_base;
+ 385              		.loc 1 175 0
+ 386 02ca FB8C     		ldrh	r3, [r7, #38]
+ 387 02cc C3F1B403 		rsb	r3, r3, #180
+ 388 02d0 9BB2     		uxth	r3, r3
+ 389 02d2 BB84     		strh	r3, [r7, #36]	@ movhi
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(deg_test(deg, start_angle, end_angle)) {
+ 390              		.loc 1 176 0
+ 391 02d4 B88C     		ldrh	r0, [r7, #36]
+ 392 02d6 B7F85C20 		ldrh	r2, [r7, #92]
+ 393 02da B7F85810 		ldrh	r1, [r7, #88]
+ 394 02de BB6C     		ldr	r3, [r7, #72]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 11
+
+
+ 395 02e0 9847     		blx	r3
+ 396 02e2 0346     		mov	r3, r0
+ 397 02e4 002B     		cmp	r3, #0
+ 398 02e6 08D0     		beq	.L21
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(x_start[2] == LV_COORD_MIN) x_start[2] = xi;
+ 399              		.loc 1 177 0
+ 400 02e8 B7F92030 		ldrsh	r3, [r7, #32]
+ 401 02ec 174A     		ldr	r2, .L39+8
+ 402 02ee 9342     		cmp	r3, r2
+ 403 02f0 13D1     		bne	.L23
+ 404              		.loc 1 177 0 is_stmt 0 discriminator 1
+ 405 02f2 B7F84630 		ldrh	r3, [r7, #70]	@ movhi
+ 406 02f6 3B84     		strh	r3, [r7, #32]	@ movhi
+ 407 02f8 0FE0     		b	.L23
+ 408              	.L21:
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             } else if(x_start[2] != LV_COORD_MIN && x_end[2] == LV_COORD_MIN) {
+ 409              		.loc 1 178 0 is_stmt 1
+ 410 02fa B7F92030 		ldrsh	r3, [r7, #32]
+ 411 02fe 134A     		ldr	r2, .L39+8
+ 412 0300 9342     		cmp	r3, r2
+ 413 0302 0AD0     		beq	.L23
+ 414              		.loc 1 178 0 is_stmt 0 discriminator 1
+ 415 0304 B7F91830 		ldrsh	r3, [r7, #24]
+ 416 0308 104A     		ldr	r2, .L39+8
+ 417 030a 9342     		cmp	r3, r2
+ 418 030c 05D1     		bne	.L23
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 x_end[2] = xi - 1;
+ 419              		.loc 1 179 0 is_stmt 1
+ 420 030e B7F84630 		ldrh	r3, [r7, #70]
+ 421 0312 013B     		subs	r3, r3, #1
+ 422 0314 9BB2     		uxth	r3, r3
+ 423 0316 1BB2     		sxth	r3, r3
+ 424 0318 3B83     		strh	r3, [r7, #24]	@ movhi
+ 425              	.L23:
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             deg = deg_base;
+ 426              		.loc 1 182 0
+ 427 031a FB8C     		ldrh	r3, [r7, #38]	@ movhi
+ 428 031c BB84     		strh	r3, [r7, #36]	@ movhi
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(deg_test(deg, start_angle, end_angle)) {
+ 429              		.loc 1 183 0
+ 430 031e B88C     		ldrh	r0, [r7, #36]
+ 431 0320 B7F85C20 		ldrh	r2, [r7, #92]
+ 432 0324 B7F85810 		ldrh	r1, [r7, #88]
+ 433 0328 BB6C     		ldr	r3, [r7, #72]
+ 434 032a 9847     		blx	r3
+ 435 032c 0346     		mov	r3, r0
+ 436 032e 002B     		cmp	r3, #0
+ 437 0330 0ED0     		beq	.L24
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 if(x_start[3] == LV_COORD_MIN) x_start[3] = xi;
+ 438              		.loc 1 184 0
+ 439 0332 B7F92230 		ldrsh	r3, [r7, #34]
+ 440 0336 054A     		ldr	r2, .L39+8
+ 441 0338 9342     		cmp	r3, r2
+ 442 033a 19D1     		bne	.L26
+ 443              		.loc 1 184 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 12
+
+
+ 444 033c B7F84630 		ldrh	r3, [r7, #70]	@ movhi
+ 445 0340 7B84     		strh	r3, [r7, #34]	@ movhi
+ 446 0342 15E0     		b	.L26
+ 447              	.L40:
+ 448              		.align	2
+ 449              	.L39:
+ 450 0344 00000000 		.word	deg_test_norm
+ 451 0348 00000000 		.word	deg_test_inv
+ 452 034c E883FFFF 		.word	-31768
+ 453              	.L24:
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             } else if(x_start[3] != LV_COORD_MIN && x_end[3] == LV_COORD_MIN) {
+ 454              		.loc 1 185 0 is_stmt 1
+ 455 0350 B7F92230 		ldrsh	r3, [r7, #34]
+ 456 0354 784A     		ldr	r2, .L41
+ 457 0356 9342     		cmp	r3, r2
+ 458 0358 0AD0     		beq	.L26
+ 459              		.loc 1 185 0 is_stmt 0 discriminator 1
+ 460 035a B7F91A30 		ldrsh	r3, [r7, #26]
+ 461 035e 764A     		ldr	r2, .L41
+ 462 0360 9342     		cmp	r3, r2
+ 463 0362 05D1     		bne	.L26
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 x_end[3] = xi - 1;
+ 464              		.loc 1 186 0 is_stmt 1
+ 465 0364 B7F84630 		ldrh	r3, [r7, #70]
+ 466 0368 013B     		subs	r3, r3, #1
+ 467 036a 9BB2     		uxth	r3, r3
+ 468 036c 1BB2     		sxth	r3, r3
+ 469 036e 7B83     		strh	r3, [r7, #26]	@ movhi
+ 470              	.L26:
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(r_act_sqr < r_in_sqr) {
+ 471              		.loc 1 189 0
+ 472 0370 BA6A     		ldr	r2, [r7, #40]
+ 473 0372 FB6A     		ldr	r3, [r7, #44]
+ 474 0374 9A42     		cmp	r2, r3
+ 475 0376 04D2     		bcs	.L14
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 xe = xi;
+ 476              		.loc 1 190 0
+ 477 0378 B7F94630 		ldrsh	r3, [r7, #70]
+ 478 037c 3B64     		str	r3, [r7, #64]
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                 break; /*No need to continue the iteration in x once we found the inner edge of the
+ 479              		.loc 1 191 0
+ 480 037e 0CE0     		b	.L27
+ 481              	.L38:
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** #endif
+ 482              		.loc 1 120 0
+ 483 0380 00BF     		nop
+ 484              	.L14:
+ 485              	.LBE3:
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 486              		.loc 1 112 0 discriminator 2
+ 487 0382 B7F94630 		ldrsh	r3, [r7, #70]
+ 488 0386 9BB2     		uxth	r3, r3
+ 489 0388 0133     		adds	r3, r3, #1
+ 490 038a 9BB2     		uxth	r3, r3
+ 491 038c A7F84630 		strh	r3, [r7, #70]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 13
+
+
+ 492              	.L12:
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 493              		.loc 1 112 0 is_stmt 0 discriminator 1
+ 494 0390 B7F94630 		ldrsh	r3, [r7, #70]
+ 495 0394 002B     		cmp	r3, #0
+ 496 0396 FFF62AAF 		blt	.L28
+ 497              	.L27:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****                           arc*/
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             }
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         }
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         if(x_start[0] != LV_COORD_MIN) {
+ 498              		.loc 1 196 0 is_stmt 1
+ 499 039a B7F91C30 		ldrsh	r3, [r7, #28]
+ 500 039e 664A     		ldr	r2, .L41
+ 501 03a0 9342     		cmp	r3, r2
+ 502 03a2 29D0     		beq	.L29
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(x_end[0] == LV_COORD_MIN) x_end[0] = xe - 1;
+ 503              		.loc 1 197 0
+ 504 03a4 B7F91430 		ldrsh	r3, [r7, #20]
+ 505 03a8 634A     		ldr	r2, .L41
+ 506 03aa 9342     		cmp	r3, r2
+ 507 03ac 05D1     		bne	.L30
+ 508              		.loc 1 197 0 is_stmt 0 discriminator 1
+ 509 03ae 3B6C     		ldr	r3, [r7, #64]
+ 510 03b0 9BB2     		uxth	r3, r3
+ 511 03b2 013B     		subs	r3, r3, #1
+ 512 03b4 9BB2     		uxth	r3, r3
+ 513 03b6 1BB2     		sxth	r3, r3
+ 514 03b8 BB82     		strh	r3, [r7, #20]	@ movhi
+ 515              	.L30:
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             hor_line(center_x + x_start[0], center_y + yi, mask, x_end[0] - x_start[0], color, opa)
+ 516              		.loc 1 198 0 is_stmt 1
+ 517 03ba B7F91C30 		ldrsh	r3, [r7, #28]
+ 518 03be 9AB2     		uxth	r2, r3
+ 519 03c0 FB89     		ldrh	r3, [r7, #14]
+ 520 03c2 1344     		add	r3, r3, r2
+ 521 03c4 9BB2     		uxth	r3, r3
+ 522 03c6 18B2     		sxth	r0, r3
+ 523 03c8 BA89     		ldrh	r2, [r7, #12]
+ 524 03ca B7F84430 		ldrh	r3, [r7, #68]
+ 525 03ce 1344     		add	r3, r3, r2
+ 526 03d0 9BB2     		uxth	r3, r3
+ 527 03d2 19B2     		sxth	r1, r3
+ 528 03d4 B7F91430 		ldrsh	r3, [r7, #20]
+ 529 03d8 9AB2     		uxth	r2, r3
+ 530 03da B7F91C30 		ldrsh	r3, [r7, #28]
+ 531 03de 9BB2     		uxth	r3, r3
+ 532 03e0 D31A     		subs	r3, r2, r3
+ 533 03e2 9BB2     		uxth	r3, r3
+ 534 03e4 1AB2     		sxth	r2, r3
+ 535 03e6 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 536 03ea 0193     		str	r3, [sp, #4]
+ 537 03ec 3B69     		ldr	r3, [r7, #16]
+ 538 03ee 0093     		str	r3, [sp]
+ 539 03f0 1346     		mov	r3, r2
+ 540 03f2 7A68     		ldr	r2, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 14
+
+
+ 541 03f4 FFF7FEFF 		bl	hor_line
+ 542              	.L29:
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         }
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         if(x_start[1] != LV_COORD_MIN) {
+ 543              		.loc 1 201 0
+ 544 03f8 B7F91E30 		ldrsh	r3, [r7, #30]
+ 545 03fc 4E4A     		ldr	r2, .L41
+ 546 03fe 9342     		cmp	r3, r2
+ 547 0400 29D0     		beq	.L31
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(x_end[1] == LV_COORD_MIN) x_end[1] = xe - 1;
+ 548              		.loc 1 202 0
+ 549 0402 B7F91630 		ldrsh	r3, [r7, #22]
+ 550 0406 4C4A     		ldr	r2, .L41
+ 551 0408 9342     		cmp	r3, r2
+ 552 040a 05D1     		bne	.L32
+ 553              		.loc 1 202 0 is_stmt 0 discriminator 1
+ 554 040c 3B6C     		ldr	r3, [r7, #64]
+ 555 040e 9BB2     		uxth	r3, r3
+ 556 0410 013B     		subs	r3, r3, #1
+ 557 0412 9BB2     		uxth	r3, r3
+ 558 0414 1BB2     		sxth	r3, r3
+ 559 0416 FB82     		strh	r3, [r7, #22]	@ movhi
+ 560              	.L32:
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             hor_line(center_x + x_start[1], center_y - yi, mask, x_end[1] - x_start[1], color, opa)
+ 561              		.loc 1 203 0 is_stmt 1
+ 562 0418 B7F91E30 		ldrsh	r3, [r7, #30]
+ 563 041c 9AB2     		uxth	r2, r3
+ 564 041e FB89     		ldrh	r3, [r7, #14]
+ 565 0420 1344     		add	r3, r3, r2
+ 566 0422 9BB2     		uxth	r3, r3
+ 567 0424 18B2     		sxth	r0, r3
+ 568 0426 BA89     		ldrh	r2, [r7, #12]
+ 569 0428 B7F84430 		ldrh	r3, [r7, #68]
+ 570 042c D31A     		subs	r3, r2, r3
+ 571 042e 9BB2     		uxth	r3, r3
+ 572 0430 19B2     		sxth	r1, r3
+ 573 0432 B7F91630 		ldrsh	r3, [r7, #22]
+ 574 0436 9AB2     		uxth	r2, r3
+ 575 0438 B7F91E30 		ldrsh	r3, [r7, #30]
+ 576 043c 9BB2     		uxth	r3, r3
+ 577 043e D31A     		subs	r3, r2, r3
+ 578 0440 9BB2     		uxth	r3, r3
+ 579 0442 1AB2     		sxth	r2, r3
+ 580 0444 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 581 0448 0193     		str	r3, [sp, #4]
+ 582 044a 3B69     		ldr	r3, [r7, #16]
+ 583 044c 0093     		str	r3, [sp]
+ 584 044e 1346     		mov	r3, r2
+ 585 0450 7A68     		ldr	r2, [r7, #4]
+ 586 0452 FFF7FEFF 		bl	hor_line
+ 587              	.L31:
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         }
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         if(x_start[2] != LV_COORD_MIN) {
+ 588              		.loc 1 206 0
+ 589 0456 B7F92030 		ldrsh	r3, [r7, #32]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 15
+
+
+ 590 045a 374A     		ldr	r2, .L41
+ 591 045c 9342     		cmp	r3, r2
+ 592 045e 2AD0     		beq	.L33
+ 207:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(x_end[2] == LV_COORD_MIN) x_end[2] = xe - 1;
+ 593              		.loc 1 207 0
+ 594 0460 B7F91830 		ldrsh	r3, [r7, #24]
+ 595 0464 344A     		ldr	r2, .L41
+ 596 0466 9342     		cmp	r3, r2
+ 597 0468 05D1     		bne	.L34
+ 598              		.loc 1 207 0 is_stmt 0 discriminator 1
+ 599 046a 3B6C     		ldr	r3, [r7, #64]
+ 600 046c 9BB2     		uxth	r3, r3
+ 601 046e 013B     		subs	r3, r3, #1
+ 602 0470 9BB2     		uxth	r3, r3
+ 603 0472 1BB2     		sxth	r3, r3
+ 604 0474 3B83     		strh	r3, [r7, #24]	@ movhi
+ 605              	.L34:
+ 208:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             hor_line(center_x - x_end[2], center_y + yi, mask, LV_MATH_ABS(x_end[2] - x_start[2]), 
+ 606              		.loc 1 208 0 is_stmt 1
+ 607 0476 FA89     		ldrh	r2, [r7, #14]
+ 608 0478 B7F91830 		ldrsh	r3, [r7, #24]
+ 609 047c 9BB2     		uxth	r3, r3
+ 610 047e D31A     		subs	r3, r2, r3
+ 611 0480 9BB2     		uxth	r3, r3
+ 612 0482 18B2     		sxth	r0, r3
+ 613 0484 BA89     		ldrh	r2, [r7, #12]
+ 614 0486 B7F84430 		ldrh	r3, [r7, #68]
+ 615 048a 1344     		add	r3, r3, r2
+ 616 048c 9BB2     		uxth	r3, r3
+ 617 048e 19B2     		sxth	r1, r3
+ 618 0490 B7F91830 		ldrsh	r3, [r7, #24]
+ 619 0494 1A46     		mov	r2, r3
+ 620 0496 B7F92030 		ldrsh	r3, [r7, #32]
+ 621 049a D31A     		subs	r3, r2, r3
+ 622 049c 002B     		cmp	r3, #0
+ 623 049e B8BF     		it	lt
+ 624 04a0 5B42     		rsblt	r3, r3, #0
+ 625 04a2 1AB2     		sxth	r2, r3
+ 626 04a4 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 627 04a8 0193     		str	r3, [sp, #4]
+ 628 04aa 3B69     		ldr	r3, [r7, #16]
+ 629 04ac 0093     		str	r3, [sp]
+ 630 04ae 1346     		mov	r3, r2
+ 631 04b0 7A68     		ldr	r2, [r7, #4]
+ 632 04b2 FFF7FEFF 		bl	hor_line
+ 633              	.L33:
+ 209:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         }
+ 210:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 211:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         if(x_start[3] != LV_COORD_MIN) {
+ 634              		.loc 1 211 0
+ 635 04b6 B7F92230 		ldrsh	r3, [r7, #34]
+ 636 04ba 1F4A     		ldr	r2, .L41
+ 637 04bc 9342     		cmp	r3, r2
+ 638 04be 2AD0     		beq	.L35
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             if(x_end[3] == LV_COORD_MIN) x_end[3] = xe - 1;
+ 639              		.loc 1 212 0
+ 640 04c0 B7F91A30 		ldrsh	r3, [r7, #26]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 16
+
+
+ 641 04c4 1C4A     		ldr	r2, .L41
+ 642 04c6 9342     		cmp	r3, r2
+ 643 04c8 05D1     		bne	.L36
+ 644              		.loc 1 212 0 is_stmt 0 discriminator 1
+ 645 04ca 3B6C     		ldr	r3, [r7, #64]
+ 646 04cc 9BB2     		uxth	r3, r3
+ 647 04ce 013B     		subs	r3, r3, #1
+ 648 04d0 9BB2     		uxth	r3, r3
+ 649 04d2 1BB2     		sxth	r3, r3
+ 650 04d4 7B83     		strh	r3, [r7, #26]	@ movhi
+ 651              	.L36:
+ 213:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****             hor_line(center_x - x_end[3], center_y - yi, mask, LV_MATH_ABS(x_end[3] - x_start[3]), 
+ 652              		.loc 1 213 0 is_stmt 1
+ 653 04d6 FA89     		ldrh	r2, [r7, #14]
+ 654 04d8 B7F91A30 		ldrsh	r3, [r7, #26]
+ 655 04dc 9BB2     		uxth	r3, r3
+ 656 04de D31A     		subs	r3, r2, r3
+ 657 04e0 9BB2     		uxth	r3, r3
+ 658 04e2 18B2     		sxth	r0, r3
+ 659 04e4 BA89     		ldrh	r2, [r7, #12]
+ 660 04e6 B7F84430 		ldrh	r3, [r7, #68]
+ 661 04ea D31A     		subs	r3, r2, r3
+ 662 04ec 9BB2     		uxth	r3, r3
+ 663 04ee 19B2     		sxth	r1, r3
+ 664 04f0 B7F91A30 		ldrsh	r3, [r7, #26]
+ 665 04f4 1A46     		mov	r2, r3
+ 666 04f6 B7F92230 		ldrsh	r3, [r7, #34]
+ 667 04fa D31A     		subs	r3, r2, r3
+ 668 04fc 002B     		cmp	r3, #0
+ 669 04fe B8BF     		it	lt
+ 670 0500 5B42     		rsblt	r3, r3, #0
+ 671 0502 1AB2     		sxth	r2, r3
+ 672 0504 97F83B30 		ldrb	r3, [r7, #59]	@ zero_extendqisi2
+ 673 0508 0193     		str	r3, [sp, #4]
+ 674 050a 3B69     		ldr	r3, [r7, #16]
+ 675 050c 0093     		str	r3, [sp]
+ 676 050e 1346     		mov	r3, r2
+ 677 0510 7A68     		ldr	r2, [r7, #4]
+ 678 0512 FFF7FEFF 		bl	hor_line
+ 679              	.L35:
+ 680              	.LBE2:
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[0] = LV_COORD_MIN;
+ 681              		.loc 1 102 0 discriminator 2
+ 682 0516 B7F94430 		ldrsh	r3, [r7, #68]
+ 683 051a 9BB2     		uxth	r3, r3
+ 684 051c 0133     		adds	r3, r3, #1
+ 685 051e 9BB2     		uxth	r3, r3
+ 686 0520 A7F84430 		strh	r3, [r7, #68]	@ movhi
+ 687              	.L11:
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         x_start[0] = LV_COORD_MIN;
+ 688              		.loc 1 102 0 is_stmt 0 discriminator 1
+ 689 0524 B7F94430 		ldrsh	r3, [r7, #68]
+ 690 0528 002B     		cmp	r3, #0
+ 691 052a FFF640AE 		blt	.L37
+ 214:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         }
+ 215:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     }
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** }
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 17
+
+
+ 692              		.loc 1 216 0 is_stmt 1
+ 693 052e 00BF     		nop
+ 694 0530 5037     		adds	r7, r7, #80
+ 695              		.cfi_def_cfa_offset 8
+ 696 0532 BD46     		mov	sp, r7
+ 697              		.cfi_def_cfa_register 13
+ 698              		@ sp needed
+ 699 0534 80BD     		pop	{r7, pc}
+ 700              	.L42:
+ 701 0536 00BF     		.align	2
+ 702              	.L41:
+ 703 0538 E883FFFF 		.word	-31768
+ 704              		.cfi_endproc
+ 705              	.LFE31:
+ 706              		.size	lv_draw_arc, .-lv_draw_arc
+ 707              		.section	.text.ver_line,"ax",%progbits
+ 708              		.align	2
+ 709              		.thumb
+ 710              		.thumb_func
+ 711              		.type	ver_line, %function
+ 712              	ver_line:
+ 713              	.LFB32:
+ 217:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 218:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** /**********************
+ 219:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  *   STATIC FUNCTIONS
+ 220:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****  **********************/
+ 221:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static void ver_line(lv_coord_t x, lv_coord_t y, const lv_area_t * mask, lv_coord_t len, lv_color_t
+ 222:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** {
+ 714              		.loc 1 222 0
+ 715              		.cfi_startproc
+ 716              		@ args = 8, pretend = 0, frame = 24
+ 717              		@ frame_needed = 1, uses_anonymous_args = 0
+ 718 0000 90B5     		push	{r4, r7, lr}
+ 719              		.cfi_def_cfa_offset 12
+ 720              		.cfi_offset 4, -12
+ 721              		.cfi_offset 7, -8
+ 722              		.cfi_offset 14, -4
+ 723 0002 89B0     		sub	sp, sp, #36
+ 724              		.cfi_def_cfa_offset 48
+ 725 0004 02AF     		add	r7, sp, #8
+ 726              		.cfi_def_cfa 7, 40
+ 727 0006 BA60     		str	r2, [r7, #8]
+ 728 0008 1A46     		mov	r2, r3
+ 729 000a 0346     		mov	r3, r0	@ movhi
+ 730 000c FB81     		strh	r3, [r7, #14]	@ movhi
+ 731 000e 0B46     		mov	r3, r1	@ movhi
+ 732 0010 BB81     		strh	r3, [r7, #12]	@ movhi
+ 733 0012 1346     		mov	r3, r2	@ movhi
+ 734 0014 FB80     		strh	r3, [r7, #6]	@ movhi
+ 223:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_area_t area;
+ 224:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_area_set(&area, x, y, x, y + len);
+ 735              		.loc 1 224 0
+ 736 0016 BA89     		ldrh	r2, [r7, #12]
+ 737 0018 FB88     		ldrh	r3, [r7, #6]
+ 738 001a 1344     		add	r3, r3, r2
+ 739 001c 9BB2     		uxth	r3, r3
+ 740 001e 1BB2     		sxth	r3, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 18
+
+
+ 741 0020 B7F90E40 		ldrsh	r4, [r7, #14]
+ 742 0024 B7F90C20 		ldrsh	r2, [r7, #12]
+ 743 0028 B7F90E10 		ldrsh	r1, [r7, #14]
+ 744 002c 07F11000 		add	r0, r7, #16
+ 745 0030 0093     		str	r3, [sp]
+ 746 0032 2346     		mov	r3, r4
+ 747 0034 FFF7FEFF 		bl	lv_area_set
+ 225:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 226:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_draw_fill(&area, mask, color, opa);
+ 748              		.loc 1 226 0
+ 749 0038 97F82C30 		ldrb	r3, [r7, #44]	@ zero_extendqisi2
+ 750 003c 07F11000 		add	r0, r7, #16
+ 751 0040 BA6A     		ldr	r2, [r7, #40]
+ 752 0042 B968     		ldr	r1, [r7, #8]
+ 753 0044 FFF7FEFF 		bl	lv_draw_fill
+ 227:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** }
+ 754              		.loc 1 227 0
+ 755 0048 00BF     		nop
+ 756 004a 1C37     		adds	r7, r7, #28
+ 757              		.cfi_def_cfa_offset 12
+ 758 004c BD46     		mov	sp, r7
+ 759              		.cfi_def_cfa_register 13
+ 760              		@ sp needed
+ 761 004e 90BD     		pop	{r4, r7, pc}
+ 762              		.cfi_endproc
+ 763              	.LFE32:
+ 764              		.size	ver_line, .-ver_line
+ 765              		.section	.text.hor_line,"ax",%progbits
+ 766              		.align	2
+ 767              		.thumb
+ 768              		.thumb_func
+ 769              		.type	hor_line, %function
+ 770              	hor_line:
+ 771              	.LFB33:
+ 228:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 229:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static void hor_line(lv_coord_t x, lv_coord_t y, const lv_area_t * mask, lv_coord_t len, lv_color_t
+ 230:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** {
+ 772              		.loc 1 230 0
+ 773              		.cfi_startproc
+ 774              		@ args = 8, pretend = 0, frame = 24
+ 775              		@ frame_needed = 1, uses_anonymous_args = 0
+ 776 0000 90B5     		push	{r4, r7, lr}
+ 777              		.cfi_def_cfa_offset 12
+ 778              		.cfi_offset 4, -12
+ 779              		.cfi_offset 7, -8
+ 780              		.cfi_offset 14, -4
+ 781 0002 89B0     		sub	sp, sp, #36
+ 782              		.cfi_def_cfa_offset 48
+ 783 0004 02AF     		add	r7, sp, #8
+ 784              		.cfi_def_cfa 7, 40
+ 785 0006 BA60     		str	r2, [r7, #8]
+ 786 0008 1A46     		mov	r2, r3
+ 787 000a 0346     		mov	r3, r0	@ movhi
+ 788 000c FB81     		strh	r3, [r7, #14]	@ movhi
+ 789 000e 0B46     		mov	r3, r1	@ movhi
+ 790 0010 BB81     		strh	r3, [r7, #12]	@ movhi
+ 791 0012 1346     		mov	r3, r2	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 19
+
+
+ 792 0014 FB80     		strh	r3, [r7, #6]	@ movhi
+ 231:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_area_t area;
+ 232:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_area_set(&area, x, y, x + len, y);
+ 793              		.loc 1 232 0
+ 794 0016 FA89     		ldrh	r2, [r7, #14]
+ 795 0018 FB88     		ldrh	r3, [r7, #6]
+ 796 001a 1344     		add	r3, r3, r2
+ 797 001c 9BB2     		uxth	r3, r3
+ 798 001e 1CB2     		sxth	r4, r3
+ 799 0020 B7F90C20 		ldrsh	r2, [r7, #12]
+ 800 0024 B7F90E10 		ldrsh	r1, [r7, #14]
+ 801 0028 07F11000 		add	r0, r7, #16
+ 802 002c B7F90C30 		ldrsh	r3, [r7, #12]
+ 803 0030 0093     		str	r3, [sp]
+ 804 0032 2346     		mov	r3, r4
+ 805 0034 FFF7FEFF 		bl	lv_area_set
+ 233:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 234:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     lv_draw_fill(&area, mask, color, opa);
+ 806              		.loc 1 234 0
+ 807 0038 97F82C30 		ldrb	r3, [r7, #44]	@ zero_extendqisi2
+ 808 003c 07F11000 		add	r0, r7, #16
+ 809 0040 BA6A     		ldr	r2, [r7, #40]
+ 810 0042 B968     		ldr	r1, [r7, #8]
+ 811 0044 FFF7FEFF 		bl	lv_draw_fill
+ 235:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** }
+ 812              		.loc 1 235 0
+ 813 0048 00BF     		nop
+ 814 004a 1C37     		adds	r7, r7, #28
+ 815              		.cfi_def_cfa_offset 12
+ 816 004c BD46     		mov	sp, r7
+ 817              		.cfi_def_cfa_register 13
+ 818              		@ sp needed
+ 819 004e 90BD     		pop	{r4, r7, pc}
+ 820              		.cfi_endproc
+ 821              	.LFE33:
+ 822              		.size	hor_line, .-hor_line
+ 823              		.section	.text.deg_test_norm,"ax",%progbits
+ 824              		.align	2
+ 825              		.thumb
+ 826              		.thumb_func
+ 827              		.type	deg_test_norm, %function
+ 828              	deg_test_norm:
+ 829              	.LFB34:
+ 236:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 237:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static bool deg_test_norm(uint16_t deg, uint16_t start, uint16_t end)
+ 238:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** {
+ 830              		.loc 1 238 0
+ 831              		.cfi_startproc
+ 832              		@ args = 0, pretend = 0, frame = 8
+ 833              		@ frame_needed = 1, uses_anonymous_args = 0
+ 834              		@ link register save eliminated.
+ 835 0000 80B4     		push	{r7}
+ 836              		.cfi_def_cfa_offset 4
+ 837              		.cfi_offset 7, -4
+ 838 0002 83B0     		sub	sp, sp, #12
+ 839              		.cfi_def_cfa_offset 16
+ 840 0004 00AF     		add	r7, sp, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 20
+
+
+ 841              		.cfi_def_cfa_register 7
+ 842 0006 0346     		mov	r3, r0
+ 843 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 844 000a 0B46     		mov	r3, r1	@ movhi
+ 845 000c BB80     		strh	r3, [r7, #4]	@ movhi
+ 846 000e 1346     		mov	r3, r2	@ movhi
+ 847 0010 7B80     		strh	r3, [r7, #2]	@ movhi
+ 239:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg >= start && deg <= end)
+ 848              		.loc 1 239 0
+ 849 0012 FA88     		ldrh	r2, [r7, #6]
+ 850 0014 BB88     		ldrh	r3, [r7, #4]
+ 851 0016 9A42     		cmp	r2, r3
+ 852 0018 05D3     		bcc	.L46
+ 853              		.loc 1 239 0 is_stmt 0 discriminator 1
+ 854 001a FA88     		ldrh	r2, [r7, #6]
+ 855 001c 7B88     		ldrh	r3, [r7, #2]
+ 856 001e 9A42     		cmp	r2, r3
+ 857 0020 01D8     		bhi	.L46
+ 240:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         return true;
+ 858              		.loc 1 240 0 is_stmt 1
+ 859 0022 0123     		movs	r3, #1
+ 860 0024 00E0     		b	.L47
+ 861              	.L46:
+ 241:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     else
+ 242:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         return false;
+ 862              		.loc 1 242 0
+ 863 0026 0023     		movs	r3, #0
+ 864              	.L47:
+ 243:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** }
+ 865              		.loc 1 243 0
+ 866 0028 1846     		mov	r0, r3
+ 867 002a 0C37     		adds	r7, r7, #12
+ 868              		.cfi_def_cfa_offset 4
+ 869 002c BD46     		mov	sp, r7
+ 870              		.cfi_def_cfa_register 13
+ 871              		@ sp needed
+ 872 002e 5DF8047B 		ldr	r7, [sp], #4
+ 873              		.cfi_restore 7
+ 874              		.cfi_def_cfa_offset 0
+ 875 0032 7047     		bx	lr
+ 876              		.cfi_endproc
+ 877              	.LFE34:
+ 878              		.size	deg_test_norm, .-deg_test_norm
+ 879              		.section	.text.deg_test_inv,"ax",%progbits
+ 880              		.align	2
+ 881              		.thumb
+ 882              		.thumb_func
+ 883              		.type	deg_test_inv, %function
+ 884              	deg_test_inv:
+ 885              	.LFB35:
+ 244:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** 
+ 245:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** static bool deg_test_inv(uint16_t deg, uint16_t start, uint16_t end)
+ 246:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** {
+ 886              		.loc 1 246 0
+ 887              		.cfi_startproc
+ 888              		@ args = 0, pretend = 0, frame = 8
+ 889              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 21
+
+
+ 890              		@ link register save eliminated.
+ 891 0000 80B4     		push	{r7}
+ 892              		.cfi_def_cfa_offset 4
+ 893              		.cfi_offset 7, -4
+ 894 0002 83B0     		sub	sp, sp, #12
+ 895              		.cfi_def_cfa_offset 16
+ 896 0004 00AF     		add	r7, sp, #0
+ 897              		.cfi_def_cfa_register 7
+ 898 0006 0346     		mov	r3, r0
+ 899 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 900 000a 0B46     		mov	r3, r1	@ movhi
+ 901 000c BB80     		strh	r3, [r7, #4]	@ movhi
+ 902 000e 1346     		mov	r3, r2	@ movhi
+ 903 0010 7B80     		strh	r3, [r7, #2]	@ movhi
+ 247:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     if(deg >= start || deg <= end) {
+ 904              		.loc 1 247 0
+ 905 0012 FA88     		ldrh	r2, [r7, #6]
+ 906 0014 BB88     		ldrh	r3, [r7, #4]
+ 907 0016 9A42     		cmp	r2, r3
+ 908 0018 03D2     		bcs	.L49
+ 909              		.loc 1 247 0 is_stmt 0 discriminator 1
+ 910 001a FA88     		ldrh	r2, [r7, #6]
+ 911 001c 7B88     		ldrh	r3, [r7, #2]
+ 912 001e 9A42     		cmp	r2, r3
+ 913 0020 01D8     		bhi	.L50
+ 914              	.L49:
+ 248:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         return true;
+ 915              		.loc 1 248 0 is_stmt 1
+ 916 0022 0123     		movs	r3, #1
+ 917 0024 00E0     		b	.L51
+ 918              	.L50:
+ 249:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****     } else
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c ****         return false;
+ 919              		.loc 1 250 0
+ 920 0026 0023     		movs	r3, #0
+ 921              	.L51:
+ 251:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw_arc.c **** }
+ 922              		.loc 1 251 0
+ 923 0028 1846     		mov	r0, r3
+ 924 002a 0C37     		adds	r7, r7, #12
+ 925              		.cfi_def_cfa_offset 4
+ 926 002c BD46     		mov	sp, r7
+ 927              		.cfi_def_cfa_register 13
+ 928              		@ sp needed
+ 929 002e 5DF8047B 		ldr	r7, [sp], #4
+ 930              		.cfi_restore 7
+ 931              		.cfi_def_cfa_offset 0
+ 932 0032 7047     		bx	lr
+ 933              		.cfi_endproc
+ 934              	.LFE35:
+ 935              		.size	deg_test_inv, .-deg_test_inv
+ 936              		.text
+ 937              	.Letext0:
+ 938              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 939              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 940              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../../../lv_conf.h"
+ 941              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_font/lv_font.h"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 22
+
+
+ 942              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_misc/lv_color.h"
+ 943              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_misc/lv_area.h"
+ 944              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/lv_style.h"
+ 945              		.section	.debug_info,"",%progbits
+ 946              	.Ldebug_info0:
+ 947 0000 9F080000 		.4byte	0x89f
+ 948 0004 0400     		.2byte	0x4
+ 949 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 950 000a 04       		.byte	0x4
+ 951 000b 01       		.uleb128 0x1
+ 952 000c 87040000 		.4byte	.LASF108
+ 953 0010 0C       		.byte	0xc
+ 954 0011 4B050000 		.4byte	.LASF109
+ 955 0015 57000000 		.4byte	.LASF110
+ 956 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 957 001d 00000000 		.4byte	0
+ 958 0021 00000000 		.4byte	.Ldebug_line0
+ 959 0025 02       		.uleb128 0x2
+ 960 0026 A5020000 		.4byte	.LASF0
+ 961 002a 02       		.byte	0x2
+ 962 002b 1B       		.byte	0x1b
+ 963 002c 30000000 		.4byte	0x30
+ 964 0030 03       		.uleb128 0x3
+ 965 0031 01       		.byte	0x1
+ 966 0032 06       		.byte	0x6
+ 967 0033 5E040000 		.4byte	.LASF2
+ 968 0037 02       		.uleb128 0x2
+ 969 0038 6D030000 		.4byte	.LASF1
+ 970 003c 02       		.byte	0x2
+ 971 003d 1D       		.byte	0x1d
+ 972 003e 42000000 		.4byte	0x42
+ 973 0042 03       		.uleb128 0x3
+ 974 0043 01       		.byte	0x1
+ 975 0044 08       		.byte	0x8
+ 976 0045 F7030000 		.4byte	.LASF3
+ 977 0049 02       		.uleb128 0x2
+ 978 004a 5E020000 		.4byte	.LASF4
+ 979 004e 02       		.byte	0x2
+ 980 004f 29       		.byte	0x29
+ 981 0050 54000000 		.4byte	0x54
+ 982 0054 03       		.uleb128 0x3
+ 983 0055 02       		.byte	0x2
+ 984 0056 05       		.byte	0x5
+ 985 0057 09030000 		.4byte	.LASF5
+ 986 005b 02       		.uleb128 0x2
+ 987 005c 70010000 		.4byte	.LASF6
+ 988 0060 02       		.byte	0x2
+ 989 0061 2B       		.byte	0x2b
+ 990 0062 66000000 		.4byte	0x66
+ 991 0066 03       		.uleb128 0x3
+ 992 0067 02       		.byte	0x2
+ 993 0068 07       		.byte	0x7
+ 994 0069 6A040000 		.4byte	.LASF7
+ 995 006d 03       		.uleb128 0x3
+ 996 006e 04       		.byte	0x4
+ 997 006f 05       		.byte	0x5
+ 998 0070 1C030000 		.4byte	.LASF8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 23
+
+
+ 999 0074 02       		.uleb128 0x2
+ 1000 0075 05040000 		.4byte	.LASF9
+ 1001 0079 02       		.byte	0x2
+ 1002 007a 41       		.byte	0x41
+ 1003 007b 7F000000 		.4byte	0x7f
+ 1004 007f 03       		.uleb128 0x3
+ 1005 0080 04       		.byte	0x4
+ 1006 0081 07       		.byte	0x7
+ 1007 0082 A2030000 		.4byte	.LASF10
+ 1008 0086 03       		.uleb128 0x3
+ 1009 0087 08       		.byte	0x8
+ 1010 0088 05       		.byte	0x5
+ 1011 0089 3D020000 		.4byte	.LASF11
+ 1012 008d 03       		.uleb128 0x3
+ 1013 008e 08       		.byte	0x8
+ 1014 008f 07       		.byte	0x7
+ 1015 0090 3D010000 		.4byte	.LASF12
+ 1016 0094 04       		.uleb128 0x4
+ 1017 0095 04       		.byte	0x4
+ 1018 0096 05       		.byte	0x5
+ 1019 0097 696E7400 		.ascii	"int\000"
+ 1020 009b 03       		.uleb128 0x3
+ 1021 009c 04       		.byte	0x4
+ 1022 009d 07       		.byte	0x7
+ 1023 009e 25000000 		.4byte	.LASF13
+ 1024 00a2 02       		.uleb128 0x2
+ 1025 00a3 03010000 		.4byte	.LASF14
+ 1026 00a7 03       		.byte	0x3
+ 1027 00a8 14       		.byte	0x14
+ 1028 00a9 25000000 		.4byte	0x25
+ 1029 00ad 02       		.uleb128 0x2
+ 1030 00ae 0F020000 		.4byte	.LASF15
+ 1031 00b2 03       		.byte	0x3
+ 1032 00b3 18       		.byte	0x18
+ 1033 00b4 37000000 		.4byte	0x37
+ 1034 00b8 02       		.uleb128 0x2
+ 1035 00b9 35010000 		.4byte	.LASF16
+ 1036 00bd 03       		.byte	0x3
+ 1037 00be 20       		.byte	0x20
+ 1038 00bf 49000000 		.4byte	0x49
+ 1039 00c3 02       		.uleb128 0x2
+ 1040 00c4 CA020000 		.4byte	.LASF17
+ 1041 00c8 03       		.byte	0x3
+ 1042 00c9 24       		.byte	0x24
+ 1043 00ca 5B000000 		.4byte	0x5b
+ 1044 00ce 02       		.uleb128 0x2
+ 1045 00cf FA000000 		.4byte	.LASF18
+ 1046 00d3 03       		.byte	0x3
+ 1047 00d4 30       		.byte	0x30
+ 1048 00d5 74000000 		.4byte	0x74
+ 1049 00d9 02       		.uleb128 0x2
+ 1050 00da 40030000 		.4byte	.LASF19
+ 1051 00de 04       		.byte	0x4
+ 1052 00df 3C       		.byte	0x3c
+ 1053 00e0 B8000000 		.4byte	0xb8
+ 1054 00e4 05       		.uleb128 0x5
+ 1055 00e5 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 24
+
+
+ 1056 00e6 03       		.uleb128 0x3
+ 1057 00e7 08       		.byte	0x8
+ 1058 00e8 04       		.byte	0x4
+ 1059 00e9 BE020000 		.4byte	.LASF20
+ 1060 00ed 06       		.uleb128 0x6
+ 1061 00ee 08       		.byte	0x8
+ 1062 00ef 05       		.byte	0x5
+ 1063 00f0 2E       		.byte	0x2e
+ 1064 00f1 3E010000 		.4byte	0x13e
+ 1065 00f5 07       		.uleb128 0x7
+ 1066 00f6 98050000 		.4byte	.LASF21
+ 1067 00fa 05       		.byte	0x5
+ 1068 00fb 30       		.byte	0x30
+ 1069 00fc C3000000 		.4byte	0xc3
+ 1070 0100 00       		.byte	0
+ 1071 0101 07       		.uleb128 0x7
+ 1072 0102 9C030000 		.4byte	.LASF22
+ 1073 0106 05       		.byte	0x5
+ 1074 0107 31       		.byte	0x31
+ 1075 0108 AD000000 		.4byte	0xad
+ 1076 010c 02       		.byte	0x2
+ 1077 010d 07       		.uleb128 0x7
+ 1078 010e 87030000 		.4byte	.LASF23
+ 1079 0112 05       		.byte	0x5
+ 1080 0113 32       		.byte	0x32
+ 1081 0114 AD000000 		.4byte	0xad
+ 1082 0118 03       		.byte	0x3
+ 1083 0119 07       		.uleb128 0x7
+ 1084 011a 32000000 		.4byte	.LASF24
+ 1085 011e 05       		.byte	0x5
+ 1086 011f 33       		.byte	0x33
+ 1087 0120 A2000000 		.4byte	0xa2
+ 1088 0124 04       		.byte	0x4
+ 1089 0125 07       		.uleb128 0x7
+ 1090 0126 38000000 		.4byte	.LASF25
+ 1091 012a 05       		.byte	0x5
+ 1092 012b 34       		.byte	0x34
+ 1093 012c A2000000 		.4byte	0xa2
+ 1094 0130 05       		.byte	0x5
+ 1095 0131 08       		.uleb128 0x8
+ 1096 0132 62707000 		.ascii	"bpp\000"
+ 1097 0136 05       		.byte	0x5
+ 1098 0137 35       		.byte	0x35
+ 1099 0138 AD000000 		.4byte	0xad
+ 1100 013c 06       		.byte	0x6
+ 1101 013d 00       		.byte	0
+ 1102 013e 02       		.uleb128 0x2
+ 1103 013f FB010000 		.4byte	.LASF26
+ 1104 0143 05       		.byte	0x5
+ 1105 0144 36       		.byte	0x36
+ 1106 0145 ED000000 		.4byte	0xed
+ 1107 0149 09       		.uleb128 0x9
+ 1108 014a B1010000 		.4byte	.LASF111
+ 1109 014e 10       		.byte	0x10
+ 1110 014f 05       		.byte	0x5
+ 1111 0150 44       		.byte	0x44
+ 1112 0151 A1010000 		.4byte	0x1a1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 25
+
+
+ 1113 0155 07       		.uleb128 0x7
+ 1114 0156 3E000000 		.4byte	.LASF27
+ 1115 015a 05       		.byte	0x5
+ 1116 015b 47       		.byte	0x47
+ 1117 015c D7010000 		.4byte	0x1d7
+ 1118 0160 00       		.byte	0
+ 1119 0161 07       		.uleb128 0x7
+ 1120 0162 1D040000 		.4byte	.LASF28
+ 1121 0166 05       		.byte	0x5
+ 1122 0167 4A       		.byte	0x4a
+ 1123 0168 FC010000 		.4byte	0x1fc
+ 1124 016c 04       		.byte	0x4
+ 1125 016d 07       		.uleb128 0x7
+ 1126 016e D9010000 		.4byte	.LASF29
+ 1127 0172 05       		.byte	0x5
+ 1128 0173 4D       		.byte	0x4d
+ 1129 0174 AD000000 		.4byte	0xad
+ 1130 0178 08       		.byte	0x8
+ 1131 0179 07       		.uleb128 0x7
+ 1132 017a C8030000 		.4byte	.LASF30
+ 1133 017e 05       		.byte	0x5
+ 1134 017f 4E       		.byte	0x4e
+ 1135 0180 A2000000 		.4byte	0xa2
+ 1136 0184 09       		.byte	0x9
+ 1137 0185 0A       		.uleb128 0xa
+ 1138 0186 94020000 		.4byte	.LASF77
+ 1139 018a 05       		.byte	0x5
+ 1140 018b 4F       		.byte	0x4f
+ 1141 018c AD000000 		.4byte	0xad
+ 1142 0190 01       		.byte	0x1
+ 1143 0191 02       		.byte	0x2
+ 1144 0192 06       		.byte	0x6
+ 1145 0193 0A       		.byte	0xa
+ 1146 0194 08       		.uleb128 0x8
+ 1147 0195 64736300 		.ascii	"dsc\000"
+ 1148 0199 05       		.byte	0x5
+ 1149 019a 50       		.byte	0x50
+ 1150 019b E4000000 		.4byte	0xe4
+ 1151 019f 0C       		.byte	0xc
+ 1152 01a0 00       		.byte	0
+ 1153 01a1 0B       		.uleb128 0xb
+ 1154 01a2 BF010000 		.4byte	0x1bf
+ 1155 01a6 BF010000 		.4byte	0x1bf
+ 1156 01aa 0C       		.uleb128 0xc
+ 1157 01ab C6010000 		.4byte	0x1c6
+ 1158 01af 0C       		.uleb128 0xc
+ 1159 01b0 D1010000 		.4byte	0x1d1
+ 1160 01b4 0C       		.uleb128 0xc
+ 1161 01b5 CE000000 		.4byte	0xce
+ 1162 01b9 0C       		.uleb128 0xc
+ 1163 01ba CE000000 		.4byte	0xce
+ 1164 01be 00       		.byte	0
+ 1165 01bf 03       		.uleb128 0x3
+ 1166 01c0 01       		.byte	0x1
+ 1167 01c1 02       		.byte	0x2
+ 1168 01c2 AB010000 		.4byte	.LASF31
+ 1169 01c6 0D       		.uleb128 0xd
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 26
+
+
+ 1170 01c7 04       		.byte	0x4
+ 1171 01c8 CC010000 		.4byte	0x1cc
+ 1172 01cc 0E       		.uleb128 0xe
+ 1173 01cd 49010000 		.4byte	0x149
+ 1174 01d1 0D       		.uleb128 0xd
+ 1175 01d2 04       		.byte	0x4
+ 1176 01d3 3E010000 		.4byte	0x13e
+ 1177 01d7 0D       		.uleb128 0xd
+ 1178 01d8 04       		.byte	0x4
+ 1179 01d9 A1010000 		.4byte	0x1a1
+ 1180 01dd 0B       		.uleb128 0xb
+ 1181 01de F1010000 		.4byte	0x1f1
+ 1182 01e2 F1010000 		.4byte	0x1f1
+ 1183 01e6 0C       		.uleb128 0xc
+ 1184 01e7 C6010000 		.4byte	0x1c6
+ 1185 01eb 0C       		.uleb128 0xc
+ 1186 01ec CE000000 		.4byte	0xce
+ 1187 01f0 00       		.byte	0
+ 1188 01f1 0D       		.uleb128 0xd
+ 1189 01f2 04       		.byte	0x4
+ 1190 01f3 F7010000 		.4byte	0x1f7
+ 1191 01f7 0E       		.uleb128 0xe
+ 1192 01f8 AD000000 		.4byte	0xad
+ 1193 01fc 0D       		.uleb128 0xd
+ 1194 01fd 04       		.byte	0x4
+ 1195 01fe DD010000 		.4byte	0x1dd
+ 1196 0202 02       		.uleb128 0x2
+ 1197 0203 E7020000 		.4byte	.LASF32
+ 1198 0207 05       		.byte	0x5
+ 1199 0208 56       		.byte	0x56
+ 1200 0209 49010000 		.4byte	0x149
+ 1201 020d 0F       		.uleb128 0xf
+ 1202 020e 01       		.byte	0x1
+ 1203 020f 42000000 		.4byte	0x42
+ 1204 0213 06       		.byte	0x6
+ 1205 0214 3E       		.byte	0x3e
+ 1206 0215 68020000 		.4byte	0x268
+ 1207 0219 10       		.uleb128 0x10
+ 1208 021a 62010000 		.4byte	.LASF33
+ 1209 021e 00       		.byte	0
+ 1210 021f 10       		.uleb128 0x10
+ 1211 0220 1C000000 		.4byte	.LASF34
+ 1212 0224 00       		.byte	0
+ 1213 0225 10       		.uleb128 0x10
+ 1214 0226 33020000 		.4byte	.LASF35
+ 1215 022a 19       		.byte	0x19
+ 1216 022b 10       		.uleb128 0x10
+ 1217 022c 72020000 		.4byte	.LASF36
+ 1218 0230 33       		.byte	0x33
+ 1219 0231 10       		.uleb128 0x10
+ 1220 0232 B4020000 		.4byte	.LASF37
+ 1221 0236 4C       		.byte	0x4c
+ 1222 0237 10       		.uleb128 0x10
+ 1223 0238 25030000 		.4byte	.LASF38
+ 1224 023c 66       		.byte	0x66
+ 1225 023d 10       		.uleb128 0x10
+ 1226 023e 77030000 		.4byte	.LASF39
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 27
+
+
+ 1227 0242 7F       		.byte	0x7f
+ 1228 0243 10       		.uleb128 0x10
+ 1229 0244 E8030000 		.4byte	.LASF40
+ 1230 0248 99       		.byte	0x99
+ 1231 0249 10       		.uleb128 0x10
+ 1232 024a 3E040000 		.4byte	.LASF41
+ 1233 024e B2       		.byte	0xb2
+ 1234 024f 10       		.uleb128 0x10
+ 1235 0250 7D040000 		.4byte	.LASF42
+ 1236 0254 CC       		.byte	0xcc
+ 1237 0255 10       		.uleb128 0x10
+ 1238 0256 12000000 		.4byte	.LASF43
+ 1239 025a E5       		.byte	0xe5
+ 1240 025b 10       		.uleb128 0x10
+ 1241 025c 62030000 		.4byte	.LASF44
+ 1242 0260 FF       		.byte	0xff
+ 1243 0261 10       		.uleb128 0x10
+ 1244 0262 00000000 		.4byte	.LASF45
+ 1245 0266 FF       		.byte	0xff
+ 1246 0267 00       		.byte	0
+ 1247 0268 06       		.uleb128 0x6
+ 1248 0269 04       		.byte	0x4
+ 1249 026a 06       		.byte	0x6
+ 1250 026b F3       		.byte	0xf3
+ 1251 026c A1020000 		.4byte	0x2a1
+ 1252 0270 07       		.uleb128 0x7
+ 1253 0271 3B030000 		.4byte	.LASF46
+ 1254 0275 06       		.byte	0x6
+ 1255 0276 F5       		.byte	0xf5
+ 1256 0277 AD000000 		.4byte	0xad
+ 1257 027b 00       		.byte	0
+ 1258 027c 07       		.uleb128 0x7
+ 1259 027d AE020000 		.4byte	.LASF47
+ 1260 0281 06       		.byte	0x6
+ 1261 0282 F6       		.byte	0xf6
+ 1262 0283 AD000000 		.4byte	0xad
+ 1263 0287 01       		.byte	0x1
+ 1264 0288 08       		.uleb128 0x8
+ 1265 0289 72656400 		.ascii	"red\000"
+ 1266 028d 06       		.byte	0x6
+ 1267 028e F7       		.byte	0xf7
+ 1268 028f AD000000 		.4byte	0xad
+ 1269 0293 02       		.byte	0x2
+ 1270 0294 07       		.uleb128 0x7
+ 1271 0295 C2030000 		.4byte	.LASF48
+ 1272 0299 06       		.byte	0x6
+ 1273 029a F8       		.byte	0xf8
+ 1274 029b AD000000 		.4byte	0xad
+ 1275 029f 03       		.byte	0x3
+ 1276 02a0 00       		.byte	0
+ 1277 02a1 11       		.uleb128 0x11
+ 1278 02a2 04       		.byte	0x4
+ 1279 02a3 06       		.byte	0x6
+ 1280 02a4 F1       		.byte	0xf1
+ 1281 02a5 BF020000 		.4byte	0x2bf
+ 1282 02a9 12       		.uleb128 0x12
+ 1283 02aa 636800   		.ascii	"ch\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 28
+
+
+ 1284 02ad 06       		.byte	0x6
+ 1285 02ae F9       		.byte	0xf9
+ 1286 02af 68020000 		.4byte	0x268
+ 1287 02b3 13       		.uleb128 0x13
+ 1288 02b4 0D000000 		.4byte	.LASF49
+ 1289 02b8 06       		.byte	0x6
+ 1290 02b9 FA       		.byte	0xfa
+ 1291 02ba CE000000 		.4byte	0xce
+ 1292 02be 00       		.byte	0
+ 1293 02bf 02       		.uleb128 0x2
+ 1294 02c0 0A010000 		.4byte	.LASF50
+ 1295 02c4 06       		.byte	0x6
+ 1296 02c5 FB       		.byte	0xfb
+ 1297 02c6 A1020000 		.4byte	0x2a1
+ 1298 02ca 14       		.uleb128 0x14
+ 1299 02cb 9A020000 		.4byte	.LASF51
+ 1300 02cf 06       		.byte	0x6
+ 1301 02d0 0801     		.2byte	0x108
+ 1302 02d2 BF020000 		.4byte	0x2bf
+ 1303 02d6 14       		.uleb128 0x14
+ 1304 02d7 13030000 		.4byte	.LASF52
+ 1305 02db 06       		.byte	0x6
+ 1306 02dc 0D01     		.2byte	0x10d
+ 1307 02de AD000000 		.4byte	0xad
+ 1308 02e2 03       		.uleb128 0x3
+ 1309 02e3 04       		.byte	0x4
+ 1310 02e4 07       		.byte	0x7
+ 1311 02e5 DE020000 		.4byte	.LASF53
+ 1312 02e9 03       		.uleb128 0x3
+ 1313 02ea 01       		.byte	0x1
+ 1314 02eb 08       		.byte	0x8
+ 1315 02ec EF010000 		.4byte	.LASF54
+ 1316 02f0 06       		.uleb128 0x6
+ 1317 02f1 08       		.byte	0x8
+ 1318 02f2 07       		.byte	0x7
+ 1319 02f3 31       		.byte	0x31
+ 1320 02f4 25030000 		.4byte	0x325
+ 1321 02f8 08       		.uleb128 0x8
+ 1322 02f9 783100   		.ascii	"x1\000"
+ 1323 02fc 07       		.byte	0x7
+ 1324 02fd 33       		.byte	0x33
+ 1325 02fe D9000000 		.4byte	0xd9
+ 1326 0302 00       		.byte	0
+ 1327 0303 08       		.uleb128 0x8
+ 1328 0304 793100   		.ascii	"y1\000"
+ 1329 0307 07       		.byte	0x7
+ 1330 0308 34       		.byte	0x34
+ 1331 0309 D9000000 		.4byte	0xd9
+ 1332 030d 02       		.byte	0x2
+ 1333 030e 08       		.uleb128 0x8
+ 1334 030f 783200   		.ascii	"x2\000"
+ 1335 0312 07       		.byte	0x7
+ 1336 0313 35       		.byte	0x35
+ 1337 0314 D9000000 		.4byte	0xd9
+ 1338 0318 04       		.byte	0x4
+ 1339 0319 08       		.uleb128 0x8
+ 1340 031a 793200   		.ascii	"y2\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 29
+
+
+ 1341 031d 07       		.byte	0x7
+ 1342 031e 36       		.byte	0x36
+ 1343 031f D9000000 		.4byte	0xd9
+ 1344 0323 06       		.byte	0x6
+ 1345 0324 00       		.byte	0
+ 1346 0325 02       		.uleb128 0x2
+ 1347 0326 4F040000 		.4byte	.LASF55
+ 1348 032a 07       		.byte	0x7
+ 1349 032b 37       		.byte	0x37
+ 1350 032c F0020000 		.4byte	0x2f0
+ 1351 0330 02       		.uleb128 0x2
+ 1352 0331 3A050000 		.4byte	.LASF56
+ 1353 0335 08       		.byte	0x8
+ 1354 0336 2C       		.byte	0x2c
+ 1355 0337 AD000000 		.4byte	0xad
+ 1356 033b 02       		.uleb128 0x2
+ 1357 033c 1C020000 		.4byte	.LASF57
+ 1358 0340 08       		.byte	0x8
+ 1359 0341 33       		.byte	0x33
+ 1360 0342 AD000000 		.4byte	0xad
+ 1361 0346 06       		.uleb128 0x6
+ 1362 0347 08       		.byte	0x8
+ 1363 0348 08       		.byte	0x8
+ 1364 0349 48       		.byte	0x48
+ 1365 034a 7F030000 		.4byte	0x37f
+ 1366 034e 07       		.uleb128 0x7
+ 1367 034f 8B010000 		.4byte	.LASF58
+ 1368 0353 08       		.byte	0x8
+ 1369 0354 4A       		.byte	0x4a
+ 1370 0355 CA020000 		.4byte	0x2ca
+ 1371 0359 00       		.byte	0
+ 1372 035a 07       		.uleb128 0x7
+ 1373 035b 99010000 		.4byte	.LASF59
+ 1374 035f 08       		.byte	0x8
+ 1375 0360 4B       		.byte	0x4b
+ 1376 0361 D9000000 		.4byte	0xd9
+ 1377 0365 04       		.byte	0x4
+ 1378 0366 07       		.uleb128 0x7
+ 1379 0367 5D010000 		.4byte	.LASF60
+ 1380 036b 08       		.byte	0x8
+ 1381 036c 4C       		.byte	0x4c
+ 1382 036d 30030000 		.4byte	0x330
+ 1383 0371 06       		.byte	0x6
+ 1384 0372 08       		.uleb128 0x8
+ 1385 0373 6F706100 		.ascii	"opa\000"
+ 1386 0377 08       		.byte	0x8
+ 1387 0378 4D       		.byte	0x4d
+ 1388 0379 D6020000 		.4byte	0x2d6
+ 1389 037d 07       		.byte	0x7
+ 1390 037e 00       		.byte	0
+ 1391 037f 06       		.uleb128 0x6
+ 1392 0380 08       		.byte	0x8
+ 1393 0381 08       		.byte	0x8
+ 1394 0382 51       		.byte	0x51
+ 1395 0383 AC030000 		.4byte	0x3ac
+ 1396 0387 07       		.uleb128 0x7
+ 1397 0388 8B010000 		.4byte	.LASF58
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 30
+
+
+ 1398 038c 08       		.byte	0x8
+ 1399 038d 53       		.byte	0x53
+ 1400 038e CA020000 		.4byte	0x2ca
+ 1401 0392 00       		.byte	0
+ 1402 0393 07       		.uleb128 0x7
+ 1403 0394 99010000 		.4byte	.LASF59
+ 1404 0398 08       		.byte	0x8
+ 1405 0399 54       		.byte	0x54
+ 1406 039a D9000000 		.4byte	0xd9
+ 1407 039e 04       		.byte	0x4
+ 1408 039f 07       		.uleb128 0x7
+ 1409 03a0 F2030000 		.4byte	.LASF61
+ 1410 03a4 08       		.byte	0x8
+ 1411 03a5 55       		.byte	0x55
+ 1412 03a6 3B030000 		.4byte	0x33b
+ 1413 03aa 06       		.byte	0x6
+ 1414 03ab 00       		.byte	0
+ 1415 03ac 06       		.uleb128 0x6
+ 1416 03ad 0A       		.byte	0xa
+ 1417 03ae 08       		.byte	0x8
+ 1418 03af 58       		.byte	0x58
+ 1419 03b0 F1030000 		.4byte	0x3f1
+ 1420 03b4 08       		.uleb128 0x8
+ 1421 03b5 746F7000 		.ascii	"top\000"
+ 1422 03b9 08       		.byte	0x8
+ 1423 03ba 5A       		.byte	0x5a
+ 1424 03bb D9000000 		.4byte	0xd9
+ 1425 03bf 00       		.byte	0
+ 1426 03c0 07       		.uleb128 0x7
+ 1427 03c1 F4010000 		.4byte	.LASF62
+ 1428 03c5 08       		.byte	0x8
+ 1429 03c6 5B       		.byte	0x5b
+ 1430 03c7 D9000000 		.4byte	0xd9
+ 1431 03cb 02       		.byte	0x2
+ 1432 03cc 07       		.uleb128 0x7
+ 1433 03cd 5D030000 		.4byte	.LASF63
+ 1434 03d1 08       		.byte	0x8
+ 1435 03d2 5C       		.byte	0x5c
+ 1436 03d3 D9000000 		.4byte	0xd9
+ 1437 03d7 04       		.byte	0x4
+ 1438 03d8 07       		.uleb128 0x7
+ 1439 03d9 2D020000 		.4byte	.LASF64
+ 1440 03dd 08       		.byte	0x8
+ 1441 03de 5D       		.byte	0x5d
+ 1442 03df D9000000 		.4byte	0xd9
+ 1443 03e3 06       		.byte	0x6
+ 1444 03e4 07       		.uleb128 0x7
+ 1445 03e5 F4000000 		.4byte	.LASF65
+ 1446 03e9 08       		.byte	0x8
+ 1447 03ea 5E       		.byte	0x5e
+ 1448 03eb D9000000 		.4byte	0xd9
+ 1449 03ef 08       		.byte	0x8
+ 1450 03f0 00       		.byte	0
+ 1451 03f1 06       		.uleb128 0x6
+ 1452 03f2 28       		.byte	0x28
+ 1453 03f3 08       		.byte	0x8
+ 1454 03f4 41       		.byte	0x41
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 31
+
+
+ 1455 03f5 4E040000 		.4byte	0x44e
+ 1456 03f9 07       		.uleb128 0x7
+ 1457 03fa FE020000 		.4byte	.LASF66
+ 1458 03fe 08       		.byte	0x8
+ 1459 03ff 43       		.byte	0x43
+ 1460 0400 CA020000 		.4byte	0x2ca
+ 1461 0404 00       		.byte	0
+ 1462 0405 07       		.uleb128 0x7
+ 1463 0406 D3020000 		.4byte	.LASF67
+ 1464 040a 08       		.byte	0x8
+ 1465 040b 44       		.byte	0x44
+ 1466 040c CA020000 		.4byte	0x2ca
+ 1467 0410 04       		.byte	0x4
+ 1468 0411 07       		.uleb128 0x7
+ 1469 0412 D2030000 		.4byte	.LASF68
+ 1470 0416 08       		.byte	0x8
+ 1471 0417 45       		.byte	0x45
+ 1472 0418 D9000000 		.4byte	0xd9
+ 1473 041c 08       		.byte	0x8
+ 1474 041d 08       		.uleb128 0x8
+ 1475 041e 6F706100 		.ascii	"opa\000"
+ 1476 0422 08       		.byte	0x8
+ 1477 0423 46       		.byte	0x46
+ 1478 0424 D6020000 		.4byte	0x2d6
+ 1479 0428 0A       		.byte	0xa
+ 1480 0429 07       		.uleb128 0x7
+ 1481 042a 84010000 		.4byte	.LASF69
+ 1482 042e 08       		.byte	0x8
+ 1483 042f 4E       		.byte	0x4e
+ 1484 0430 46030000 		.4byte	0x346
+ 1485 0434 0C       		.byte	0xc
+ 1486 0435 07       		.uleb128 0x7
+ 1487 0436 48040000 		.4byte	.LASF70
+ 1488 043a 08       		.byte	0x8
+ 1489 043b 56       		.byte	0x56
+ 1490 043c 7F030000 		.4byte	0x37f
+ 1491 0440 14       		.byte	0x14
+ 1492 0441 07       		.uleb128 0x7
+ 1493 0442 56020000 		.4byte	.LASF71
+ 1494 0446 08       		.byte	0x8
+ 1495 0447 5F       		.byte	0x5f
+ 1496 0448 AC030000 		.4byte	0x3ac
+ 1497 044c 1C       		.byte	0x1c
+ 1498 044d 00       		.byte	0
+ 1499 044e 06       		.uleb128 0x6
+ 1500 044f 14       		.byte	0x14
+ 1501 0450 08       		.byte	0x8
+ 1502 0451 63       		.byte	0x63
+ 1503 0452 9F040000 		.4byte	0x49f
+ 1504 0456 07       		.uleb128 0x7
+ 1505 0457 8B010000 		.4byte	.LASF58
+ 1506 045b 08       		.byte	0x8
+ 1507 045c 65       		.byte	0x65
+ 1508 045d CA020000 		.4byte	0x2ca
+ 1509 0461 00       		.byte	0
+ 1510 0462 07       		.uleb128 0x7
+ 1511 0463 1D010000 		.4byte	.LASF72
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 32
+
+
+ 1512 0467 08       		.byte	0x8
+ 1513 0468 66       		.byte	0x66
+ 1514 0469 CA020000 		.4byte	0x2ca
+ 1515 046d 04       		.byte	0x4
+ 1516 046e 07       		.uleb128 0x7
+ 1517 046f 8D030000 		.4byte	.LASF73
+ 1518 0473 08       		.byte	0x8
+ 1519 0474 67       		.byte	0x67
+ 1520 0475 9F040000 		.4byte	0x49f
+ 1521 0479 08       		.byte	0x8
+ 1522 047a 07       		.uleb128 0x7
+ 1523 047b F1020000 		.4byte	.LASF74
+ 1524 047f 08       		.byte	0x8
+ 1525 0480 68       		.byte	0x68
+ 1526 0481 D9000000 		.4byte	0xd9
+ 1527 0485 0C       		.byte	0xc
+ 1528 0486 07       		.uleb128 0x7
+ 1529 0487 C1010000 		.4byte	.LASF75
+ 1530 048b 08       		.byte	0x8
+ 1531 048c 69       		.byte	0x69
+ 1532 048d D9000000 		.4byte	0xd9
+ 1533 0491 0E       		.byte	0xe
+ 1534 0492 08       		.uleb128 0x8
+ 1535 0493 6F706100 		.ascii	"opa\000"
+ 1536 0497 08       		.byte	0x8
+ 1537 0498 6A       		.byte	0x6a
+ 1538 0499 D6020000 		.4byte	0x2d6
+ 1539 049d 10       		.byte	0x10
+ 1540 049e 00       		.byte	0
+ 1541 049f 0D       		.uleb128 0xd
+ 1542 04a0 04       		.byte	0x4
+ 1543 04a1 A5040000 		.4byte	0x4a5
+ 1544 04a5 0E       		.uleb128 0xe
+ 1545 04a6 02020000 		.4byte	0x202
+ 1546 04aa 06       		.uleb128 0x6
+ 1547 04ab 08       		.byte	0x8
+ 1548 04ac 08       		.byte	0x8
+ 1549 04ad 6E       		.byte	0x6e
+ 1550 04ae D7040000 		.4byte	0x4d7
+ 1551 04b2 07       		.uleb128 0x7
+ 1552 04b3 8B010000 		.4byte	.LASF58
+ 1553 04b7 08       		.byte	0x8
+ 1554 04b8 70       		.byte	0x70
+ 1555 04b9 CA020000 		.4byte	0x2ca
+ 1556 04bd 00       		.byte	0
+ 1557 04be 07       		.uleb128 0x7
+ 1558 04bf B4030000 		.4byte	.LASF76
+ 1559 04c3 08       		.byte	0x8
+ 1560 04c4 71       		.byte	0x71
+ 1561 04c5 D6020000 		.4byte	0x2d6
+ 1562 04c9 04       		.byte	0x4
+ 1563 04ca 08       		.uleb128 0x8
+ 1564 04cb 6F706100 		.ascii	"opa\000"
+ 1565 04cf 08       		.byte	0x8
+ 1566 04d0 72       		.byte	0x72
+ 1567 04d1 D6020000 		.4byte	0x2d6
+ 1568 04d5 05       		.byte	0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 33
+
+
+ 1569 04d6 00       		.byte	0
+ 1570 04d7 06       		.uleb128 0x6
+ 1571 04d8 08       		.byte	0x8
+ 1572 04d9 08       		.byte	0x8
+ 1573 04da 76       		.byte	0x76
+ 1574 04db 13050000 		.4byte	0x513
+ 1575 04df 07       		.uleb128 0x7
+ 1576 04e0 8B010000 		.4byte	.LASF58
+ 1577 04e4 08       		.byte	0x8
+ 1578 04e5 78       		.byte	0x78
+ 1579 04e6 CA020000 		.4byte	0x2ca
+ 1580 04ea 00       		.byte	0
+ 1581 04eb 07       		.uleb128 0x7
+ 1582 04ec 99010000 		.4byte	.LASF59
+ 1583 04f0 08       		.byte	0x8
+ 1584 04f1 79       		.byte	0x79
+ 1585 04f2 D9000000 		.4byte	0xd9
+ 1586 04f6 04       		.byte	0x4
+ 1587 04f7 08       		.uleb128 0x8
+ 1588 04f8 6F706100 		.ascii	"opa\000"
+ 1589 04fc 08       		.byte	0x8
+ 1590 04fd 7A       		.byte	0x7a
+ 1591 04fe D6020000 		.4byte	0x2d6
+ 1592 0502 06       		.byte	0x6
+ 1593 0503 0A       		.uleb128 0xa
+ 1594 0504 91010000 		.4byte	.LASF78
+ 1595 0508 08       		.byte	0x8
+ 1596 0509 7B       		.byte	0x7b
+ 1597 050a AD000000 		.4byte	0xad
+ 1598 050e 01       		.byte	0x1
+ 1599 050f 01       		.byte	0x1
+ 1600 0510 07       		.byte	0x7
+ 1601 0511 07       		.byte	0x7
+ 1602 0512 00       		.byte	0
+ 1603 0513 06       		.uleb128 0x6
+ 1604 0514 50       		.byte	0x50
+ 1605 0515 08       		.byte	0x8
+ 1606 0516 3C       		.byte	0x3c
+ 1607 0517 5B050000 		.4byte	0x55b
+ 1608 051b 0A       		.uleb128 0xa
+ 1609 051c 4B020000 		.4byte	.LASF79
+ 1610 0520 08       		.byte	0x8
+ 1611 0521 3E       		.byte	0x3e
+ 1612 0522 AD000000 		.4byte	0xad
+ 1613 0526 01       		.byte	0x1
+ 1614 0527 01       		.byte	0x1
+ 1615 0528 07       		.byte	0x7
+ 1616 0529 00       		.byte	0
+ 1617 052a 07       		.uleb128 0x7
+ 1618 052b E3030000 		.4byte	.LASF80
+ 1619 052f 08       		.byte	0x8
+ 1620 0530 60       		.byte	0x60
+ 1621 0531 F1030000 		.4byte	0x3f1
+ 1622 0535 04       		.byte	0x4
+ 1623 0536 07       		.uleb128 0x7
+ 1624 0537 51020000 		.4byte	.LASF81
+ 1625 053b 08       		.byte	0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 34
+
+
+ 1626 053c 6B       		.byte	0x6b
+ 1627 053d 4E040000 		.4byte	0x44e
+ 1628 0541 2C       		.byte	0x2c
+ 1629 0542 07       		.uleb128 0x7
+ 1630 0543 7C020000 		.4byte	.LASF82
+ 1631 0547 08       		.byte	0x8
+ 1632 0548 73       		.byte	0x73
+ 1633 0549 AA040000 		.4byte	0x4aa
+ 1634 054d 40       		.byte	0x40
+ 1635 054e 07       		.uleb128 0x7
+ 1636 054f 10040000 		.4byte	.LASF83
+ 1637 0553 08       		.byte	0x8
+ 1638 0554 7C       		.byte	0x7c
+ 1639 0555 D7040000 		.4byte	0x4d7
+ 1640 0559 48       		.byte	0x48
+ 1641 055a 00       		.byte	0
+ 1642 055b 02       		.uleb128 0x2
+ 1643 055c 4C000000 		.4byte	.LASF84
+ 1644 0560 08       		.byte	0x8
+ 1645 0561 84       		.byte	0x84
+ 1646 0562 13050000 		.4byte	0x513
+ 1647 0566 0D       		.uleb128 0xd
+ 1648 0567 04       		.byte	0x4
+ 1649 0568 6C050000 		.4byte	0x56c
+ 1650 056c 0E       		.uleb128 0xe
+ 1651 056d 5B050000 		.4byte	0x55b
+ 1652 0571 15       		.uleb128 0x15
+ 1653 0572 9F010000 		.4byte	.LASF112
+ 1654 0576 01       		.byte	0x1
+ 1655 0577 35       		.byte	0x35
+ 1656 0578 00000000 		.4byte	.LFB31
+ 1657 057c 3C050000 		.4byte	.LFE31-.LFB31
+ 1658 0580 01       		.uleb128 0x1
+ 1659 0581 9C       		.byte	0x9c
+ 1660 0582 FC060000 		.4byte	0x6fc
+ 1661 0586 16       		.uleb128 0x16
+ 1662 0587 4B030000 		.4byte	.LASF85
+ 1663 058b 01       		.byte	0x1
+ 1664 058c 35       		.byte	0x35
+ 1665 058d D9000000 		.4byte	0xd9
+ 1666 0591 03       		.uleb128 0x3
+ 1667 0592 91       		.byte	0x91
+ 1668 0593 B67F     		.sleb128 -74
+ 1669 0595 16       		.uleb128 0x16
+ 1670 0596 54030000 		.4byte	.LASF86
+ 1671 059a 01       		.byte	0x1
+ 1672 059b 35       		.byte	0x35
+ 1673 059c D9000000 		.4byte	0xd9
+ 1674 05a0 03       		.uleb128 0x3
+ 1675 05a1 91       		.byte	0x91
+ 1676 05a2 B47F     		.sleb128 -76
+ 1677 05a4 16       		.uleb128 0x16
+ 1678 05a5 D2030000 		.4byte	.LASF68
+ 1679 05a9 01       		.byte	0x1
+ 1680 05aa 35       		.byte	0x35
+ 1681 05ab C3000000 		.4byte	0xc3
+ 1682 05af 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 35
+
+
+ 1683 05b0 91       		.byte	0x91
+ 1684 05b1 B27F     		.sleb128 -78
+ 1685 05b3 16       		.uleb128 0x16
+ 1686 05b4 82020000 		.4byte	.LASF87
+ 1687 05b8 01       		.byte	0x1
+ 1688 05b9 35       		.byte	0x35
+ 1689 05ba FC060000 		.4byte	0x6fc
+ 1690 05be 03       		.uleb128 0x3
+ 1691 05bf 91       		.byte	0x91
+ 1692 05c0 AC7F     		.sleb128 -84
+ 1693 05c2 16       		.uleb128 0x16
+ 1694 05c3 2F030000 		.4byte	.LASF88
+ 1695 05c7 01       		.byte	0x1
+ 1696 05c8 36       		.byte	0x36
+ 1697 05c9 C3000000 		.4byte	0xc3
+ 1698 05cd 02       		.uleb128 0x2
+ 1699 05ce 91       		.byte	0x91
+ 1700 05cf 00       		.sleb128 0
+ 1701 05d0 16       		.uleb128 0x16
+ 1702 05d1 34040000 		.4byte	.LASF89
+ 1703 05d5 01       		.byte	0x1
+ 1704 05d6 36       		.byte	0x36
+ 1705 05d7 C3000000 		.4byte	0xc3
+ 1706 05db 02       		.uleb128 0x2
+ 1707 05dc 91       		.byte	0x91
+ 1708 05dd 04       		.sleb128 4
+ 1709 05de 16       		.uleb128 0x16
+ 1710 05df 2E040000 		.4byte	.LASF90
+ 1711 05e3 01       		.byte	0x1
+ 1712 05e4 36       		.byte	0x36
+ 1713 05e5 66050000 		.4byte	0x566
+ 1714 05e9 02       		.uleb128 0x2
+ 1715 05ea 91       		.byte	0x91
+ 1716 05eb 08       		.sleb128 8
+ 1717 05ec 16       		.uleb128 0x16
+ 1718 05ed D9030000 		.4byte	.LASF91
+ 1719 05f1 01       		.byte	0x1
+ 1720 05f2 36       		.byte	0x36
+ 1721 05f3 D6020000 		.4byte	0x2d6
+ 1722 05f7 02       		.uleb128 0x2
+ 1723 05f8 91       		.byte	0x91
+ 1724 05f9 0C       		.sleb128 12
+ 1725 05fa 17       		.uleb128 0x17
+ 1726 05fb E5010000 		.4byte	.LASF92
+ 1727 05ff 01       		.byte	0x1
+ 1728 0600 38       		.byte	0x38
+ 1729 0601 D9000000 		.4byte	0xd9
+ 1730 0605 02       		.uleb128 0x2
+ 1731 0606 91       		.byte	0x91
+ 1732 0607 76       		.sleb128 -10
+ 1733 0608 17       		.uleb128 0x17
+ 1734 0609 BC030000 		.4byte	.LASF93
+ 1735 060d 01       		.byte	0x1
+ 1736 060e 40       		.byte	0x40
+ 1737 060f D9000000 		.4byte	0xd9
+ 1738 0613 02       		.uleb128 0x2
+ 1739 0614 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 36
+
+
+ 1740 0615 66       		.sleb128 -26
+ 1741 0616 17       		.uleb128 0x17
+ 1742 0617 59040000 		.4byte	.LASF94
+ 1743 061b 01       		.byte	0x1
+ 1744 061c 41       		.byte	0x41
+ 1745 061d D9000000 		.4byte	0xd9
+ 1746 0621 02       		.uleb128 0x2
+ 1747 0622 91       		.byte	0x91
+ 1748 0623 64       		.sleb128 -28
+ 1749 0624 17       		.uleb128 0x17
+ 1750 0625 9E050000 		.4byte	.LASF95
+ 1751 0629 01       		.byte	0x1
+ 1752 062a 42       		.byte	0x42
+ 1753 062b B8000000 		.4byte	0xb8
+ 1754 062f 02       		.uleb128 0x2
+ 1755 0630 91       		.byte	0x91
+ 1756 0631 4E       		.sleb128 -50
+ 1757 0632 18       		.uleb128 0x18
+ 1758 0633 64656700 		.ascii	"deg\000"
+ 1759 0637 01       		.byte	0x1
+ 1760 0638 43       		.byte	0x43
+ 1761 0639 B8000000 		.4byte	0xb8
+ 1762 063d 02       		.uleb128 0x2
+ 1763 063e 91       		.byte	0x91
+ 1764 063f 4C       		.sleb128 -52
+ 1765 0640 17       		.uleb128 0x17
+ 1766 0641 15040000 		.4byte	.LASF96
+ 1767 0645 01       		.byte	0x1
+ 1768 0646 44       		.byte	0x44
+ 1769 0647 07070000 		.4byte	0x707
+ 1770 064b 02       		.uleb128 0x2
+ 1771 064c 91       		.byte	0x91
+ 1772 064d 44       		.sleb128 -60
+ 1773 064e 17       		.uleb128 0x17
+ 1774 064f 17010000 		.4byte	.LASF97
+ 1775 0653 01       		.byte	0x1
+ 1776 0654 45       		.byte	0x45
+ 1777 0655 07070000 		.4byte	0x707
+ 1778 0659 03       		.uleb128 0x3
+ 1779 065a 91       		.byte	0x91
+ 1780 065b BC7F     		.sleb128 -68
+ 1781 065d 17       		.uleb128 0x17
+ 1782 065e 8B010000 		.4byte	.LASF58
+ 1783 0662 01       		.byte	0x1
+ 1784 0663 47       		.byte	0x47
+ 1785 0664 CA020000 		.4byte	0x2ca
+ 1786 0668 03       		.uleb128 0x3
+ 1787 0669 91       		.byte	0x91
+ 1788 066a B87F     		.sleb128 -72
+ 1789 066c 18       		.uleb128 0x18
+ 1790 066d 6F706100 		.ascii	"opa\000"
+ 1791 0671 01       		.byte	0x1
+ 1792 0672 48       		.byte	0x48
+ 1793 0673 D6020000 		.4byte	0x2d6
+ 1794 0677 02       		.uleb128 0x2
+ 1795 0678 91       		.byte	0x91
+ 1796 0679 63       		.sleb128 -29
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 37
+
+
+ 1797 067a 17       		.uleb128 0x17
+ 1798 067b 86050000 		.4byte	.LASF98
+ 1799 067f 01       		.byte	0x1
+ 1800 0680 4A       		.byte	0x4a
+ 1801 0681 30070000 		.4byte	0x730
+ 1802 0685 02       		.uleb128 0x2
+ 1803 0686 91       		.byte	0x91
+ 1804 0687 70       		.sleb128 -16
+ 1805 0688 17       		.uleb128 0x17
+ 1806 0689 87020000 		.4byte	.LASF99
+ 1807 068d 01       		.byte	0x1
+ 1808 068e 50       		.byte	0x50
+ 1809 068f 94000000 		.4byte	0x94
+ 1810 0693 02       		.uleb128 0x2
+ 1811 0694 91       		.byte	0x91
+ 1812 0695 5C       		.sleb128 -36
+ 1813 0696 17       		.uleb128 0x17
+ 1814 0697 68020000 		.4byte	.LASF100
+ 1815 069b 01       		.byte	0x1
+ 1816 069c 5E       		.byte	0x5e
+ 1817 069d CE000000 		.4byte	0xce
+ 1818 06a1 02       		.uleb128 0x2
+ 1819 06a2 91       		.byte	0x91
+ 1820 06a3 58       		.sleb128 -40
+ 1821 06a4 17       		.uleb128 0x17
+ 1822 06a5 8F050000 		.4byte	.LASF101
+ 1823 06a9 01       		.byte	0x1
+ 1824 06aa 5F       		.byte	0x5f
+ 1825 06ab CE000000 		.4byte	0xce
+ 1826 06af 02       		.uleb128 0x2
+ 1827 06b0 91       		.byte	0x91
+ 1828 06b1 54       		.sleb128 -44
+ 1829 06b2 18       		.uleb128 0x18
+ 1830 06b3 786900   		.ascii	"xi\000"
+ 1831 06b6 01       		.byte	0x1
+ 1832 06b7 64       		.byte	0x64
+ 1833 06b8 B8000000 		.4byte	0xb8
+ 1834 06bc 02       		.uleb128 0x2
+ 1835 06bd 91       		.byte	0x91
+ 1836 06be 6E       		.sleb128 -18
+ 1837 06bf 18       		.uleb128 0x18
+ 1838 06c0 796900   		.ascii	"yi\000"
+ 1839 06c3 01       		.byte	0x1
+ 1840 06c4 65       		.byte	0x65
+ 1841 06c5 B8000000 		.4byte	0xb8
+ 1842 06c9 02       		.uleb128 0x2
+ 1843 06ca 91       		.byte	0x91
+ 1844 06cb 6C       		.sleb128 -20
+ 1845 06cc 19       		.uleb128 0x19
+ 1846 06cd AE010000 		.4byte	.LBB2
+ 1847 06d1 68030000 		.4byte	.LBE2-.LBB2
+ 1848 06d5 18       		.uleb128 0x18
+ 1849 06d6 786500   		.ascii	"xe\000"
+ 1850 06d9 01       		.byte	0x1
+ 1851 06da 6F       		.byte	0x6f
+ 1852 06db 94000000 		.4byte	0x94
+ 1853 06df 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 38
+
+
+ 1854 06e0 91       		.byte	0x91
+ 1855 06e1 68       		.sleb128 -24
+ 1856 06e2 19       		.uleb128 0x19
+ 1857 06e3 EE010000 		.4byte	.LBB3
+ 1858 06e7 94010000 		.4byte	.LBE3-.LBB3
+ 1859 06eb 17       		.uleb128 0x17
+ 1860 06ec 92030000 		.4byte	.LASF102
+ 1861 06f0 01       		.byte	0x1
+ 1862 06f1 72       		.byte	0x72
+ 1863 06f2 CE000000 		.4byte	0xce
+ 1864 06f6 02       		.uleb128 0x2
+ 1865 06f7 91       		.byte	0x91
+ 1866 06f8 50       		.sleb128 -48
+ 1867 06f9 00       		.byte	0
+ 1868 06fa 00       		.byte	0
+ 1869 06fb 00       		.byte	0
+ 1870 06fc 0D       		.uleb128 0xd
+ 1871 06fd 04       		.byte	0x4
+ 1872 06fe 02070000 		.4byte	0x702
+ 1873 0702 0E       		.uleb128 0xe
+ 1874 0703 25030000 		.4byte	0x325
+ 1875 0707 1A       		.uleb128 0x1a
+ 1876 0708 D9000000 		.4byte	0xd9
+ 1877 070c 17070000 		.4byte	0x717
+ 1878 0710 1B       		.uleb128 0x1b
+ 1879 0711 E2020000 		.4byte	0x2e2
+ 1880 0715 03       		.byte	0x3
+ 1881 0716 00       		.byte	0
+ 1882 0717 0B       		.uleb128 0xb
+ 1883 0718 BF010000 		.4byte	0x1bf
+ 1884 071c 30070000 		.4byte	0x730
+ 1885 0720 0C       		.uleb128 0xc
+ 1886 0721 C3000000 		.4byte	0xc3
+ 1887 0725 0C       		.uleb128 0xc
+ 1888 0726 C3000000 		.4byte	0xc3
+ 1889 072a 0C       		.uleb128 0xc
+ 1890 072b C3000000 		.4byte	0xc3
+ 1891 072f 00       		.byte	0
+ 1892 0730 0D       		.uleb128 0xd
+ 1893 0731 04       		.byte	0x4
+ 1894 0732 17070000 		.4byte	0x717
+ 1895 0736 1C       		.uleb128 0x1c
+ 1896 0737 7B010000 		.4byte	.LASF104
+ 1897 073b 01       		.byte	0x1
+ 1898 073c DD       		.byte	0xdd
+ 1899 073d 00000000 		.4byte	.LFB32
+ 1900 0741 50000000 		.4byte	.LFE32-.LFB32
+ 1901 0745 01       		.uleb128 0x1
+ 1902 0746 9C       		.byte	0x9c
+ 1903 0747 AA070000 		.4byte	0x7aa
+ 1904 074b 1D       		.uleb128 0x1d
+ 1905 074c 7800     		.ascii	"x\000"
+ 1906 074e 01       		.byte	0x1
+ 1907 074f DD       		.byte	0xdd
+ 1908 0750 D9000000 		.4byte	0xd9
+ 1909 0754 02       		.uleb128 0x2
+ 1910 0755 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 39
+
+
+ 1911 0756 66       		.sleb128 -26
+ 1912 0757 1D       		.uleb128 0x1d
+ 1913 0758 7900     		.ascii	"y\000"
+ 1914 075a 01       		.byte	0x1
+ 1915 075b DD       		.byte	0xdd
+ 1916 075c D9000000 		.4byte	0xd9
+ 1917 0760 02       		.uleb128 0x2
+ 1918 0761 91       		.byte	0x91
+ 1919 0762 64       		.sleb128 -28
+ 1920 0763 16       		.uleb128 0x16
+ 1921 0764 82020000 		.4byte	.LASF87
+ 1922 0768 01       		.byte	0x1
+ 1923 0769 DD       		.byte	0xdd
+ 1924 076a FC060000 		.4byte	0x6fc
+ 1925 076e 02       		.uleb128 0x2
+ 1926 076f 91       		.byte	0x91
+ 1927 0770 60       		.sleb128 -32
+ 1928 0771 1D       		.uleb128 0x1d
+ 1929 0772 6C656E00 		.ascii	"len\000"
+ 1930 0776 01       		.byte	0x1
+ 1931 0777 DD       		.byte	0xdd
+ 1932 0778 D9000000 		.4byte	0xd9
+ 1933 077c 02       		.uleb128 0x2
+ 1934 077d 91       		.byte	0x91
+ 1935 077e 5E       		.sleb128 -34
+ 1936 077f 16       		.uleb128 0x16
+ 1937 0780 8B010000 		.4byte	.LASF58
+ 1938 0784 01       		.byte	0x1
+ 1939 0785 DD       		.byte	0xdd
+ 1940 0786 CA020000 		.4byte	0x2ca
+ 1941 078a 02       		.uleb128 0x2
+ 1942 078b 91       		.byte	0x91
+ 1943 078c 00       		.sleb128 0
+ 1944 078d 1D       		.uleb128 0x1d
+ 1945 078e 6F706100 		.ascii	"opa\000"
+ 1946 0792 01       		.byte	0x1
+ 1947 0793 DD       		.byte	0xdd
+ 1948 0794 D6020000 		.4byte	0x2d6
+ 1949 0798 02       		.uleb128 0x2
+ 1950 0799 91       		.byte	0x91
+ 1951 079a 04       		.sleb128 4
+ 1952 079b 17       		.uleb128 0x17
+ 1953 079c 17020000 		.4byte	.LASF103
+ 1954 07a0 01       		.byte	0x1
+ 1955 07a1 DF       		.byte	0xdf
+ 1956 07a2 25030000 		.4byte	0x325
+ 1957 07a6 02       		.uleb128 0x2
+ 1958 07a7 91       		.byte	0x91
+ 1959 07a8 68       		.sleb128 -24
+ 1960 07a9 00       		.byte	0
+ 1961 07aa 1C       		.uleb128 0x1c
+ 1962 07ab 54010000 		.4byte	.LASF105
+ 1963 07af 01       		.byte	0x1
+ 1964 07b0 E5       		.byte	0xe5
+ 1965 07b1 00000000 		.4byte	.LFB33
+ 1966 07b5 50000000 		.4byte	.LFE33-.LFB33
+ 1967 07b9 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 40
+
+
+ 1968 07ba 9C       		.byte	0x9c
+ 1969 07bb 1E080000 		.4byte	0x81e
+ 1970 07bf 1D       		.uleb128 0x1d
+ 1971 07c0 7800     		.ascii	"x\000"
+ 1972 07c2 01       		.byte	0x1
+ 1973 07c3 E5       		.byte	0xe5
+ 1974 07c4 D9000000 		.4byte	0xd9
+ 1975 07c8 02       		.uleb128 0x2
+ 1976 07c9 91       		.byte	0x91
+ 1977 07ca 66       		.sleb128 -26
+ 1978 07cb 1D       		.uleb128 0x1d
+ 1979 07cc 7900     		.ascii	"y\000"
+ 1980 07ce 01       		.byte	0x1
+ 1981 07cf E5       		.byte	0xe5
+ 1982 07d0 D9000000 		.4byte	0xd9
+ 1983 07d4 02       		.uleb128 0x2
+ 1984 07d5 91       		.byte	0x91
+ 1985 07d6 64       		.sleb128 -28
+ 1986 07d7 16       		.uleb128 0x16
+ 1987 07d8 82020000 		.4byte	.LASF87
+ 1988 07dc 01       		.byte	0x1
+ 1989 07dd E5       		.byte	0xe5
+ 1990 07de FC060000 		.4byte	0x6fc
+ 1991 07e2 02       		.uleb128 0x2
+ 1992 07e3 91       		.byte	0x91
+ 1993 07e4 60       		.sleb128 -32
+ 1994 07e5 1D       		.uleb128 0x1d
+ 1995 07e6 6C656E00 		.ascii	"len\000"
+ 1996 07ea 01       		.byte	0x1
+ 1997 07eb E5       		.byte	0xe5
+ 1998 07ec D9000000 		.4byte	0xd9
+ 1999 07f0 02       		.uleb128 0x2
+ 2000 07f1 91       		.byte	0x91
+ 2001 07f2 5E       		.sleb128 -34
+ 2002 07f3 16       		.uleb128 0x16
+ 2003 07f4 8B010000 		.4byte	.LASF58
+ 2004 07f8 01       		.byte	0x1
+ 2005 07f9 E5       		.byte	0xe5
+ 2006 07fa CA020000 		.4byte	0x2ca
+ 2007 07fe 02       		.uleb128 0x2
+ 2008 07ff 91       		.byte	0x91
+ 2009 0800 00       		.sleb128 0
+ 2010 0801 1D       		.uleb128 0x1d
+ 2011 0802 6F706100 		.ascii	"opa\000"
+ 2012 0806 01       		.byte	0x1
+ 2013 0807 E5       		.byte	0xe5
+ 2014 0808 D6020000 		.4byte	0x2d6
+ 2015 080c 02       		.uleb128 0x2
+ 2016 080d 91       		.byte	0x91
+ 2017 080e 04       		.sleb128 4
+ 2018 080f 17       		.uleb128 0x17
+ 2019 0810 17020000 		.4byte	.LASF103
+ 2020 0814 01       		.byte	0x1
+ 2021 0815 E7       		.byte	0xe7
+ 2022 0816 25030000 		.4byte	0x325
+ 2023 081a 02       		.uleb128 0x2
+ 2024 081b 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 41
+
+
+ 2025 081c 68       		.sleb128 -24
+ 2026 081d 00       		.byte	0
+ 2027 081e 1E       		.uleb128 0x1e
+ 2028 081f 27010000 		.4byte	.LASF113
+ 2029 0823 01       		.byte	0x1
+ 2030 0824 ED       		.byte	0xed
+ 2031 0825 BF010000 		.4byte	0x1bf
+ 2032 0829 00000000 		.4byte	.LFB34
+ 2033 082d 34000000 		.4byte	.LFE34-.LFB34
+ 2034 0831 01       		.uleb128 0x1
+ 2035 0832 9C       		.byte	0x9c
+ 2036 0833 62080000 		.4byte	0x862
+ 2037 0837 1D       		.uleb128 0x1d
+ 2038 0838 64656700 		.ascii	"deg\000"
+ 2039 083c 01       		.byte	0x1
+ 2040 083d ED       		.byte	0xed
+ 2041 083e C3000000 		.4byte	0xc3
+ 2042 0842 02       		.uleb128 0x2
+ 2043 0843 91       		.byte	0x91
+ 2044 0844 76       		.sleb128 -10
+ 2045 0845 16       		.uleb128 0x16
+ 2046 0846 81030000 		.4byte	.LASF106
+ 2047 084a 01       		.byte	0x1
+ 2048 084b ED       		.byte	0xed
+ 2049 084c C3000000 		.4byte	0xc3
+ 2050 0850 02       		.uleb128 0x2
+ 2051 0851 91       		.byte	0x91
+ 2052 0852 74       		.sleb128 -12
+ 2053 0853 1D       		.uleb128 0x1d
+ 2054 0854 656E6400 		.ascii	"end\000"
+ 2055 0858 01       		.byte	0x1
+ 2056 0859 ED       		.byte	0xed
+ 2057 085a C3000000 		.4byte	0xc3
+ 2058 085e 02       		.uleb128 0x2
+ 2059 085f 91       		.byte	0x91
+ 2060 0860 72       		.sleb128 -14
+ 2061 0861 00       		.byte	0
+ 2062 0862 1F       		.uleb128 0x1f
+ 2063 0863 CC010000 		.4byte	.LASF107
+ 2064 0867 01       		.byte	0x1
+ 2065 0868 F5       		.byte	0xf5
+ 2066 0869 BF010000 		.4byte	0x1bf
+ 2067 086d 00000000 		.4byte	.LFB35
+ 2068 0871 34000000 		.4byte	.LFE35-.LFB35
+ 2069 0875 01       		.uleb128 0x1
+ 2070 0876 9C       		.byte	0x9c
+ 2071 0877 1D       		.uleb128 0x1d
+ 2072 0878 64656700 		.ascii	"deg\000"
+ 2073 087c 01       		.byte	0x1
+ 2074 087d F5       		.byte	0xf5
+ 2075 087e C3000000 		.4byte	0xc3
+ 2076 0882 02       		.uleb128 0x2
+ 2077 0883 91       		.byte	0x91
+ 2078 0884 76       		.sleb128 -10
+ 2079 0885 16       		.uleb128 0x16
+ 2080 0886 81030000 		.4byte	.LASF106
+ 2081 088a 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 42
+
+
+ 2082 088b F5       		.byte	0xf5
+ 2083 088c C3000000 		.4byte	0xc3
+ 2084 0890 02       		.uleb128 0x2
+ 2085 0891 91       		.byte	0x91
+ 2086 0892 74       		.sleb128 -12
+ 2087 0893 1D       		.uleb128 0x1d
+ 2088 0894 656E6400 		.ascii	"end\000"
+ 2089 0898 01       		.byte	0x1
+ 2090 0899 F5       		.byte	0xf5
+ 2091 089a C3000000 		.4byte	0xc3
+ 2092 089e 02       		.uleb128 0x2
+ 2093 089f 91       		.byte	0x91
+ 2094 08a0 72       		.sleb128 -14
+ 2095 08a1 00       		.byte	0
+ 2096 08a2 00       		.byte	0
+ 2097              		.section	.debug_abbrev,"",%progbits
+ 2098              	.Ldebug_abbrev0:
+ 2099 0000 01       		.uleb128 0x1
+ 2100 0001 11       		.uleb128 0x11
+ 2101 0002 01       		.byte	0x1
+ 2102 0003 25       		.uleb128 0x25
+ 2103 0004 0E       		.uleb128 0xe
+ 2104 0005 13       		.uleb128 0x13
+ 2105 0006 0B       		.uleb128 0xb
+ 2106 0007 03       		.uleb128 0x3
+ 2107 0008 0E       		.uleb128 0xe
+ 2108 0009 1B       		.uleb128 0x1b
+ 2109 000a 0E       		.uleb128 0xe
+ 2110 000b 55       		.uleb128 0x55
+ 2111 000c 17       		.uleb128 0x17
+ 2112 000d 11       		.uleb128 0x11
+ 2113 000e 01       		.uleb128 0x1
+ 2114 000f 10       		.uleb128 0x10
+ 2115 0010 17       		.uleb128 0x17
+ 2116 0011 00       		.byte	0
+ 2117 0012 00       		.byte	0
+ 2118 0013 02       		.uleb128 0x2
+ 2119 0014 16       		.uleb128 0x16
+ 2120 0015 00       		.byte	0
+ 2121 0016 03       		.uleb128 0x3
+ 2122 0017 0E       		.uleb128 0xe
+ 2123 0018 3A       		.uleb128 0x3a
+ 2124 0019 0B       		.uleb128 0xb
+ 2125 001a 3B       		.uleb128 0x3b
+ 2126 001b 0B       		.uleb128 0xb
+ 2127 001c 49       		.uleb128 0x49
+ 2128 001d 13       		.uleb128 0x13
+ 2129 001e 00       		.byte	0
+ 2130 001f 00       		.byte	0
+ 2131 0020 03       		.uleb128 0x3
+ 2132 0021 24       		.uleb128 0x24
+ 2133 0022 00       		.byte	0
+ 2134 0023 0B       		.uleb128 0xb
+ 2135 0024 0B       		.uleb128 0xb
+ 2136 0025 3E       		.uleb128 0x3e
+ 2137 0026 0B       		.uleb128 0xb
+ 2138 0027 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 43
+
+
+ 2139 0028 0E       		.uleb128 0xe
+ 2140 0029 00       		.byte	0
+ 2141 002a 00       		.byte	0
+ 2142 002b 04       		.uleb128 0x4
+ 2143 002c 24       		.uleb128 0x24
+ 2144 002d 00       		.byte	0
+ 2145 002e 0B       		.uleb128 0xb
+ 2146 002f 0B       		.uleb128 0xb
+ 2147 0030 3E       		.uleb128 0x3e
+ 2148 0031 0B       		.uleb128 0xb
+ 2149 0032 03       		.uleb128 0x3
+ 2150 0033 08       		.uleb128 0x8
+ 2151 0034 00       		.byte	0
+ 2152 0035 00       		.byte	0
+ 2153 0036 05       		.uleb128 0x5
+ 2154 0037 0F       		.uleb128 0xf
+ 2155 0038 00       		.byte	0
+ 2156 0039 0B       		.uleb128 0xb
+ 2157 003a 0B       		.uleb128 0xb
+ 2158 003b 00       		.byte	0
+ 2159 003c 00       		.byte	0
+ 2160 003d 06       		.uleb128 0x6
+ 2161 003e 13       		.uleb128 0x13
+ 2162 003f 01       		.byte	0x1
+ 2163 0040 0B       		.uleb128 0xb
+ 2164 0041 0B       		.uleb128 0xb
+ 2165 0042 3A       		.uleb128 0x3a
+ 2166 0043 0B       		.uleb128 0xb
+ 2167 0044 3B       		.uleb128 0x3b
+ 2168 0045 0B       		.uleb128 0xb
+ 2169 0046 01       		.uleb128 0x1
+ 2170 0047 13       		.uleb128 0x13
+ 2171 0048 00       		.byte	0
+ 2172 0049 00       		.byte	0
+ 2173 004a 07       		.uleb128 0x7
+ 2174 004b 0D       		.uleb128 0xd
+ 2175 004c 00       		.byte	0
+ 2176 004d 03       		.uleb128 0x3
+ 2177 004e 0E       		.uleb128 0xe
+ 2178 004f 3A       		.uleb128 0x3a
+ 2179 0050 0B       		.uleb128 0xb
+ 2180 0051 3B       		.uleb128 0x3b
+ 2181 0052 0B       		.uleb128 0xb
+ 2182 0053 49       		.uleb128 0x49
+ 2183 0054 13       		.uleb128 0x13
+ 2184 0055 38       		.uleb128 0x38
+ 2185 0056 0B       		.uleb128 0xb
+ 2186 0057 00       		.byte	0
+ 2187 0058 00       		.byte	0
+ 2188 0059 08       		.uleb128 0x8
+ 2189 005a 0D       		.uleb128 0xd
+ 2190 005b 00       		.byte	0
+ 2191 005c 03       		.uleb128 0x3
+ 2192 005d 08       		.uleb128 0x8
+ 2193 005e 3A       		.uleb128 0x3a
+ 2194 005f 0B       		.uleb128 0xb
+ 2195 0060 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 44
+
+
+ 2196 0061 0B       		.uleb128 0xb
+ 2197 0062 49       		.uleb128 0x49
+ 2198 0063 13       		.uleb128 0x13
+ 2199 0064 38       		.uleb128 0x38
+ 2200 0065 0B       		.uleb128 0xb
+ 2201 0066 00       		.byte	0
+ 2202 0067 00       		.byte	0
+ 2203 0068 09       		.uleb128 0x9
+ 2204 0069 13       		.uleb128 0x13
+ 2205 006a 01       		.byte	0x1
+ 2206 006b 03       		.uleb128 0x3
+ 2207 006c 0E       		.uleb128 0xe
+ 2208 006d 0B       		.uleb128 0xb
+ 2209 006e 0B       		.uleb128 0xb
+ 2210 006f 3A       		.uleb128 0x3a
+ 2211 0070 0B       		.uleb128 0xb
+ 2212 0071 3B       		.uleb128 0x3b
+ 2213 0072 0B       		.uleb128 0xb
+ 2214 0073 01       		.uleb128 0x1
+ 2215 0074 13       		.uleb128 0x13
+ 2216 0075 00       		.byte	0
+ 2217 0076 00       		.byte	0
+ 2218 0077 0A       		.uleb128 0xa
+ 2219 0078 0D       		.uleb128 0xd
+ 2220 0079 00       		.byte	0
+ 2221 007a 03       		.uleb128 0x3
+ 2222 007b 0E       		.uleb128 0xe
+ 2223 007c 3A       		.uleb128 0x3a
+ 2224 007d 0B       		.uleb128 0xb
+ 2225 007e 3B       		.uleb128 0x3b
+ 2226 007f 0B       		.uleb128 0xb
+ 2227 0080 49       		.uleb128 0x49
+ 2228 0081 13       		.uleb128 0x13
+ 2229 0082 0B       		.uleb128 0xb
+ 2230 0083 0B       		.uleb128 0xb
+ 2231 0084 0D       		.uleb128 0xd
+ 2232 0085 0B       		.uleb128 0xb
+ 2233 0086 0C       		.uleb128 0xc
+ 2234 0087 0B       		.uleb128 0xb
+ 2235 0088 38       		.uleb128 0x38
+ 2236 0089 0B       		.uleb128 0xb
+ 2237 008a 00       		.byte	0
+ 2238 008b 00       		.byte	0
+ 2239 008c 0B       		.uleb128 0xb
+ 2240 008d 15       		.uleb128 0x15
+ 2241 008e 01       		.byte	0x1
+ 2242 008f 27       		.uleb128 0x27
+ 2243 0090 19       		.uleb128 0x19
+ 2244 0091 49       		.uleb128 0x49
+ 2245 0092 13       		.uleb128 0x13
+ 2246 0093 01       		.uleb128 0x1
+ 2247 0094 13       		.uleb128 0x13
+ 2248 0095 00       		.byte	0
+ 2249 0096 00       		.byte	0
+ 2250 0097 0C       		.uleb128 0xc
+ 2251 0098 05       		.uleb128 0x5
+ 2252 0099 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 45
+
+
+ 2253 009a 49       		.uleb128 0x49
+ 2254 009b 13       		.uleb128 0x13
+ 2255 009c 00       		.byte	0
+ 2256 009d 00       		.byte	0
+ 2257 009e 0D       		.uleb128 0xd
+ 2258 009f 0F       		.uleb128 0xf
+ 2259 00a0 00       		.byte	0
+ 2260 00a1 0B       		.uleb128 0xb
+ 2261 00a2 0B       		.uleb128 0xb
+ 2262 00a3 49       		.uleb128 0x49
+ 2263 00a4 13       		.uleb128 0x13
+ 2264 00a5 00       		.byte	0
+ 2265 00a6 00       		.byte	0
+ 2266 00a7 0E       		.uleb128 0xe
+ 2267 00a8 26       		.uleb128 0x26
+ 2268 00a9 00       		.byte	0
+ 2269 00aa 49       		.uleb128 0x49
+ 2270 00ab 13       		.uleb128 0x13
+ 2271 00ac 00       		.byte	0
+ 2272 00ad 00       		.byte	0
+ 2273 00ae 0F       		.uleb128 0xf
+ 2274 00af 04       		.uleb128 0x4
+ 2275 00b0 01       		.byte	0x1
+ 2276 00b1 0B       		.uleb128 0xb
+ 2277 00b2 0B       		.uleb128 0xb
+ 2278 00b3 49       		.uleb128 0x49
+ 2279 00b4 13       		.uleb128 0x13
+ 2280 00b5 3A       		.uleb128 0x3a
+ 2281 00b6 0B       		.uleb128 0xb
+ 2282 00b7 3B       		.uleb128 0x3b
+ 2283 00b8 0B       		.uleb128 0xb
+ 2284 00b9 01       		.uleb128 0x1
+ 2285 00ba 13       		.uleb128 0x13
+ 2286 00bb 00       		.byte	0
+ 2287 00bc 00       		.byte	0
+ 2288 00bd 10       		.uleb128 0x10
+ 2289 00be 28       		.uleb128 0x28
+ 2290 00bf 00       		.byte	0
+ 2291 00c0 03       		.uleb128 0x3
+ 2292 00c1 0E       		.uleb128 0xe
+ 2293 00c2 1C       		.uleb128 0x1c
+ 2294 00c3 0B       		.uleb128 0xb
+ 2295 00c4 00       		.byte	0
+ 2296 00c5 00       		.byte	0
+ 2297 00c6 11       		.uleb128 0x11
+ 2298 00c7 17       		.uleb128 0x17
+ 2299 00c8 01       		.byte	0x1
+ 2300 00c9 0B       		.uleb128 0xb
+ 2301 00ca 0B       		.uleb128 0xb
+ 2302 00cb 3A       		.uleb128 0x3a
+ 2303 00cc 0B       		.uleb128 0xb
+ 2304 00cd 3B       		.uleb128 0x3b
+ 2305 00ce 0B       		.uleb128 0xb
+ 2306 00cf 01       		.uleb128 0x1
+ 2307 00d0 13       		.uleb128 0x13
+ 2308 00d1 00       		.byte	0
+ 2309 00d2 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 46
+
+
+ 2310 00d3 12       		.uleb128 0x12
+ 2311 00d4 0D       		.uleb128 0xd
+ 2312 00d5 00       		.byte	0
+ 2313 00d6 03       		.uleb128 0x3
+ 2314 00d7 08       		.uleb128 0x8
+ 2315 00d8 3A       		.uleb128 0x3a
+ 2316 00d9 0B       		.uleb128 0xb
+ 2317 00da 3B       		.uleb128 0x3b
+ 2318 00db 0B       		.uleb128 0xb
+ 2319 00dc 49       		.uleb128 0x49
+ 2320 00dd 13       		.uleb128 0x13
+ 2321 00de 00       		.byte	0
+ 2322 00df 00       		.byte	0
+ 2323 00e0 13       		.uleb128 0x13
+ 2324 00e1 0D       		.uleb128 0xd
+ 2325 00e2 00       		.byte	0
+ 2326 00e3 03       		.uleb128 0x3
+ 2327 00e4 0E       		.uleb128 0xe
+ 2328 00e5 3A       		.uleb128 0x3a
+ 2329 00e6 0B       		.uleb128 0xb
+ 2330 00e7 3B       		.uleb128 0x3b
+ 2331 00e8 0B       		.uleb128 0xb
+ 2332 00e9 49       		.uleb128 0x49
+ 2333 00ea 13       		.uleb128 0x13
+ 2334 00eb 00       		.byte	0
+ 2335 00ec 00       		.byte	0
+ 2336 00ed 14       		.uleb128 0x14
+ 2337 00ee 16       		.uleb128 0x16
+ 2338 00ef 00       		.byte	0
+ 2339 00f0 03       		.uleb128 0x3
+ 2340 00f1 0E       		.uleb128 0xe
+ 2341 00f2 3A       		.uleb128 0x3a
+ 2342 00f3 0B       		.uleb128 0xb
+ 2343 00f4 3B       		.uleb128 0x3b
+ 2344 00f5 05       		.uleb128 0x5
+ 2345 00f6 49       		.uleb128 0x49
+ 2346 00f7 13       		.uleb128 0x13
+ 2347 00f8 00       		.byte	0
+ 2348 00f9 00       		.byte	0
+ 2349 00fa 15       		.uleb128 0x15
+ 2350 00fb 2E       		.uleb128 0x2e
+ 2351 00fc 01       		.byte	0x1
+ 2352 00fd 3F       		.uleb128 0x3f
+ 2353 00fe 19       		.uleb128 0x19
+ 2354 00ff 03       		.uleb128 0x3
+ 2355 0100 0E       		.uleb128 0xe
+ 2356 0101 3A       		.uleb128 0x3a
+ 2357 0102 0B       		.uleb128 0xb
+ 2358 0103 3B       		.uleb128 0x3b
+ 2359 0104 0B       		.uleb128 0xb
+ 2360 0105 27       		.uleb128 0x27
+ 2361 0106 19       		.uleb128 0x19
+ 2362 0107 11       		.uleb128 0x11
+ 2363 0108 01       		.uleb128 0x1
+ 2364 0109 12       		.uleb128 0x12
+ 2365 010a 06       		.uleb128 0x6
+ 2366 010b 40       		.uleb128 0x40
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 47
+
+
+ 2367 010c 18       		.uleb128 0x18
+ 2368 010d 9642     		.uleb128 0x2116
+ 2369 010f 19       		.uleb128 0x19
+ 2370 0110 01       		.uleb128 0x1
+ 2371 0111 13       		.uleb128 0x13
+ 2372 0112 00       		.byte	0
+ 2373 0113 00       		.byte	0
+ 2374 0114 16       		.uleb128 0x16
+ 2375 0115 05       		.uleb128 0x5
+ 2376 0116 00       		.byte	0
+ 2377 0117 03       		.uleb128 0x3
+ 2378 0118 0E       		.uleb128 0xe
+ 2379 0119 3A       		.uleb128 0x3a
+ 2380 011a 0B       		.uleb128 0xb
+ 2381 011b 3B       		.uleb128 0x3b
+ 2382 011c 0B       		.uleb128 0xb
+ 2383 011d 49       		.uleb128 0x49
+ 2384 011e 13       		.uleb128 0x13
+ 2385 011f 02       		.uleb128 0x2
+ 2386 0120 18       		.uleb128 0x18
+ 2387 0121 00       		.byte	0
+ 2388 0122 00       		.byte	0
+ 2389 0123 17       		.uleb128 0x17
+ 2390 0124 34       		.uleb128 0x34
+ 2391 0125 00       		.byte	0
+ 2392 0126 03       		.uleb128 0x3
+ 2393 0127 0E       		.uleb128 0xe
+ 2394 0128 3A       		.uleb128 0x3a
+ 2395 0129 0B       		.uleb128 0xb
+ 2396 012a 3B       		.uleb128 0x3b
+ 2397 012b 0B       		.uleb128 0xb
+ 2398 012c 49       		.uleb128 0x49
+ 2399 012d 13       		.uleb128 0x13
+ 2400 012e 02       		.uleb128 0x2
+ 2401 012f 18       		.uleb128 0x18
+ 2402 0130 00       		.byte	0
+ 2403 0131 00       		.byte	0
+ 2404 0132 18       		.uleb128 0x18
+ 2405 0133 34       		.uleb128 0x34
+ 2406 0134 00       		.byte	0
+ 2407 0135 03       		.uleb128 0x3
+ 2408 0136 08       		.uleb128 0x8
+ 2409 0137 3A       		.uleb128 0x3a
+ 2410 0138 0B       		.uleb128 0xb
+ 2411 0139 3B       		.uleb128 0x3b
+ 2412 013a 0B       		.uleb128 0xb
+ 2413 013b 49       		.uleb128 0x49
+ 2414 013c 13       		.uleb128 0x13
+ 2415 013d 02       		.uleb128 0x2
+ 2416 013e 18       		.uleb128 0x18
+ 2417 013f 00       		.byte	0
+ 2418 0140 00       		.byte	0
+ 2419 0141 19       		.uleb128 0x19
+ 2420 0142 0B       		.uleb128 0xb
+ 2421 0143 01       		.byte	0x1
+ 2422 0144 11       		.uleb128 0x11
+ 2423 0145 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 48
+
+
+ 2424 0146 12       		.uleb128 0x12
+ 2425 0147 06       		.uleb128 0x6
+ 2426 0148 00       		.byte	0
+ 2427 0149 00       		.byte	0
+ 2428 014a 1A       		.uleb128 0x1a
+ 2429 014b 01       		.uleb128 0x1
+ 2430 014c 01       		.byte	0x1
+ 2431 014d 49       		.uleb128 0x49
+ 2432 014e 13       		.uleb128 0x13
+ 2433 014f 01       		.uleb128 0x1
+ 2434 0150 13       		.uleb128 0x13
+ 2435 0151 00       		.byte	0
+ 2436 0152 00       		.byte	0
+ 2437 0153 1B       		.uleb128 0x1b
+ 2438 0154 21       		.uleb128 0x21
+ 2439 0155 00       		.byte	0
+ 2440 0156 49       		.uleb128 0x49
+ 2441 0157 13       		.uleb128 0x13
+ 2442 0158 2F       		.uleb128 0x2f
+ 2443 0159 0B       		.uleb128 0xb
+ 2444 015a 00       		.byte	0
+ 2445 015b 00       		.byte	0
+ 2446 015c 1C       		.uleb128 0x1c
+ 2447 015d 2E       		.uleb128 0x2e
+ 2448 015e 01       		.byte	0x1
+ 2449 015f 03       		.uleb128 0x3
+ 2450 0160 0E       		.uleb128 0xe
+ 2451 0161 3A       		.uleb128 0x3a
+ 2452 0162 0B       		.uleb128 0xb
+ 2453 0163 3B       		.uleb128 0x3b
+ 2454 0164 0B       		.uleb128 0xb
+ 2455 0165 27       		.uleb128 0x27
+ 2456 0166 19       		.uleb128 0x19
+ 2457 0167 11       		.uleb128 0x11
+ 2458 0168 01       		.uleb128 0x1
+ 2459 0169 12       		.uleb128 0x12
+ 2460 016a 06       		.uleb128 0x6
+ 2461 016b 40       		.uleb128 0x40
+ 2462 016c 18       		.uleb128 0x18
+ 2463 016d 9642     		.uleb128 0x2116
+ 2464 016f 19       		.uleb128 0x19
+ 2465 0170 01       		.uleb128 0x1
+ 2466 0171 13       		.uleb128 0x13
+ 2467 0172 00       		.byte	0
+ 2468 0173 00       		.byte	0
+ 2469 0174 1D       		.uleb128 0x1d
+ 2470 0175 05       		.uleb128 0x5
+ 2471 0176 00       		.byte	0
+ 2472 0177 03       		.uleb128 0x3
+ 2473 0178 08       		.uleb128 0x8
+ 2474 0179 3A       		.uleb128 0x3a
+ 2475 017a 0B       		.uleb128 0xb
+ 2476 017b 3B       		.uleb128 0x3b
+ 2477 017c 0B       		.uleb128 0xb
+ 2478 017d 49       		.uleb128 0x49
+ 2479 017e 13       		.uleb128 0x13
+ 2480 017f 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 49
+
+
+ 2481 0180 18       		.uleb128 0x18
+ 2482 0181 00       		.byte	0
+ 2483 0182 00       		.byte	0
+ 2484 0183 1E       		.uleb128 0x1e
+ 2485 0184 2E       		.uleb128 0x2e
+ 2486 0185 01       		.byte	0x1
+ 2487 0186 03       		.uleb128 0x3
+ 2488 0187 0E       		.uleb128 0xe
+ 2489 0188 3A       		.uleb128 0x3a
+ 2490 0189 0B       		.uleb128 0xb
+ 2491 018a 3B       		.uleb128 0x3b
+ 2492 018b 0B       		.uleb128 0xb
+ 2493 018c 27       		.uleb128 0x27
+ 2494 018d 19       		.uleb128 0x19
+ 2495 018e 49       		.uleb128 0x49
+ 2496 018f 13       		.uleb128 0x13
+ 2497 0190 11       		.uleb128 0x11
+ 2498 0191 01       		.uleb128 0x1
+ 2499 0192 12       		.uleb128 0x12
+ 2500 0193 06       		.uleb128 0x6
+ 2501 0194 40       		.uleb128 0x40
+ 2502 0195 18       		.uleb128 0x18
+ 2503 0196 9742     		.uleb128 0x2117
+ 2504 0198 19       		.uleb128 0x19
+ 2505 0199 01       		.uleb128 0x1
+ 2506 019a 13       		.uleb128 0x13
+ 2507 019b 00       		.byte	0
+ 2508 019c 00       		.byte	0
+ 2509 019d 1F       		.uleb128 0x1f
+ 2510 019e 2E       		.uleb128 0x2e
+ 2511 019f 01       		.byte	0x1
+ 2512 01a0 03       		.uleb128 0x3
+ 2513 01a1 0E       		.uleb128 0xe
+ 2514 01a2 3A       		.uleb128 0x3a
+ 2515 01a3 0B       		.uleb128 0xb
+ 2516 01a4 3B       		.uleb128 0x3b
+ 2517 01a5 0B       		.uleb128 0xb
+ 2518 01a6 27       		.uleb128 0x27
+ 2519 01a7 19       		.uleb128 0x19
+ 2520 01a8 49       		.uleb128 0x49
+ 2521 01a9 13       		.uleb128 0x13
+ 2522 01aa 11       		.uleb128 0x11
+ 2523 01ab 01       		.uleb128 0x1
+ 2524 01ac 12       		.uleb128 0x12
+ 2525 01ad 06       		.uleb128 0x6
+ 2526 01ae 40       		.uleb128 0x40
+ 2527 01af 18       		.uleb128 0x18
+ 2528 01b0 9742     		.uleb128 0x2117
+ 2529 01b2 19       		.uleb128 0x19
+ 2530 01b3 00       		.byte	0
+ 2531 01b4 00       		.byte	0
+ 2532 01b5 00       		.byte	0
+ 2533              		.section	.debug_aranges,"",%progbits
+ 2534 0000 3C000000 		.4byte	0x3c
+ 2535 0004 0200     		.2byte	0x2
+ 2536 0006 00000000 		.4byte	.Ldebug_info0
+ 2537 000a 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 50
+
+
+ 2538 000b 00       		.byte	0
+ 2539 000c 0000     		.2byte	0
+ 2540 000e 0000     		.2byte	0
+ 2541 0010 00000000 		.4byte	.LFB31
+ 2542 0014 3C050000 		.4byte	.LFE31-.LFB31
+ 2543 0018 00000000 		.4byte	.LFB32
+ 2544 001c 50000000 		.4byte	.LFE32-.LFB32
+ 2545 0020 00000000 		.4byte	.LFB33
+ 2546 0024 50000000 		.4byte	.LFE33-.LFB33
+ 2547 0028 00000000 		.4byte	.LFB34
+ 2548 002c 34000000 		.4byte	.LFE34-.LFB34
+ 2549 0030 00000000 		.4byte	.LFB35
+ 2550 0034 34000000 		.4byte	.LFE35-.LFB35
+ 2551 0038 00000000 		.4byte	0
+ 2552 003c 00000000 		.4byte	0
+ 2553              		.section	.debug_ranges,"",%progbits
+ 2554              	.Ldebug_ranges0:
+ 2555 0000 00000000 		.4byte	.LFB31
+ 2556 0004 3C050000 		.4byte	.LFE31
+ 2557 0008 00000000 		.4byte	.LFB32
+ 2558 000c 50000000 		.4byte	.LFE32
+ 2559 0010 00000000 		.4byte	.LFB33
+ 2560 0014 50000000 		.4byte	.LFE33
+ 2561 0018 00000000 		.4byte	.LFB34
+ 2562 001c 34000000 		.4byte	.LFE34
+ 2563 0020 00000000 		.4byte	.LFB35
+ 2564 0024 34000000 		.4byte	.LFE35
+ 2565 0028 00000000 		.4byte	0
+ 2566 002c 00000000 		.4byte	0
+ 2567              		.section	.debug_line,"",%progbits
+ 2568              	.Ldebug_line0:
+ 2569 0000 E1030000 		.section	.debug_str,"MS",%progbits,1
+ 2569      02008502 
+ 2569      00000201 
+ 2569      FB0E0D00 
+ 2569      01010101 
+ 2570              	.LASF45:
+ 2571 0000 4C565F4F 		.ascii	"LV_OPA_COVER\000"
+ 2571      50415F43 
+ 2571      4F564552 
+ 2571      00
+ 2572              	.LASF49:
+ 2573 000d 66756C6C 		.ascii	"full\000"
+ 2573      00
+ 2574              	.LASF43:
+ 2575 0012 4C565F4F 		.ascii	"LV_OPA_90\000"
+ 2575      50415F39 
+ 2575      3000
+ 2576              	.LASF34:
+ 2577 001c 4C565F4F 		.ascii	"LV_OPA_0\000"
+ 2577      50415F30 
+ 2577      00
+ 2578              	.LASF13:
+ 2579 0025 756E7369 		.ascii	"unsigned int\000"
+ 2579      676E6564 
+ 2579      20696E74 
+ 2579      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 51
+
+
+ 2580              	.LASF24:
+ 2581 0032 6F66735F 		.ascii	"ofs_x\000"
+ 2581      7800
+ 2582              	.LASF25:
+ 2583 0038 6F66735F 		.ascii	"ofs_y\000"
+ 2583      7900
+ 2584              	.LASF27:
+ 2585 003e 6765745F 		.ascii	"get_glyph_dsc\000"
+ 2585      676C7970 
+ 2585      685F6473 
+ 2585      6300
+ 2586              	.LASF84:
+ 2587 004c 6C765F73 		.ascii	"lv_style_t\000"
+ 2587      74796C65 
+ 2587      5F7400
+ 2588              	.LASF110:
+ 2589 0057 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 2589      73657273 
+ 2589      5C746D6A 
+ 2589      33325C44 
+ 2589      6F63756D 
+ 2590 0084 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 2590      6C6C6F73 
+ 2590      636F7065 
+ 2590      5F53656E 
+ 2590      696F725F 
+ 2591 00b5 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 2591      5C74636F 
+ 2591      6D5F6170 
+ 2591      705C7463 
+ 2591      6F6D5F61 
+ 2592 00e5 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 2592      736F6336 
+ 2592      2E637964 
+ 2592      736E00
+ 2593              	.LASF65:
+ 2594 00f4 696E6E65 		.ascii	"inner\000"
+ 2594      7200
+ 2595              	.LASF18:
+ 2596 00fa 75696E74 		.ascii	"uint32_t\000"
+ 2596      33325F74 
+ 2596      00
+ 2597              	.LASF14:
+ 2598 0103 696E7438 		.ascii	"int8_t\000"
+ 2598      5F7400
+ 2599              	.LASF50:
+ 2600 010a 6C765F63 		.ascii	"lv_color32_t\000"
+ 2600      6F6C6F72 
+ 2600      33325F74 
+ 2600      00
+ 2601              	.LASF97:
+ 2602 0117 785F656E 		.ascii	"x_end\000"
+ 2602      6400
+ 2603              	.LASF72:
+ 2604 011d 73656C5F 		.ascii	"sel_color\000"
+ 2604      636F6C6F 
+ 2604      7200
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 52
+
+
+ 2605              	.LASF113:
+ 2606 0127 6465675F 		.ascii	"deg_test_norm\000"
+ 2606      74657374 
+ 2606      5F6E6F72 
+ 2606      6D00
+ 2607              	.LASF16:
+ 2608 0135 696E7431 		.ascii	"int16_t\000"
+ 2608      365F7400 
+ 2609              	.LASF12:
+ 2610 013d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2610      206C6F6E 
+ 2610      6720756E 
+ 2610      7369676E 
+ 2610      65642069 
+ 2611              	.LASF105:
+ 2612 0154 686F725F 		.ascii	"hor_line\000"
+ 2612      6C696E65 
+ 2612      00
+ 2613              	.LASF60:
+ 2614 015d 70617274 		.ascii	"part\000"
+ 2614      00
+ 2615              	.LASF33:
+ 2616 0162 4C565F4F 		.ascii	"LV_OPA_TRANSP\000"
+ 2616      50415F54 
+ 2616      52414E53 
+ 2616      5000
+ 2617              	.LASF6:
+ 2618 0170 5F5F7569 		.ascii	"__uint16_t\000"
+ 2618      6E743136 
+ 2618      5F7400
+ 2619              	.LASF104:
+ 2620 017b 7665725F 		.ascii	"ver_line\000"
+ 2620      6C696E65 
+ 2620      00
+ 2621              	.LASF69:
+ 2622 0184 626F7264 		.ascii	"border\000"
+ 2622      657200
+ 2623              	.LASF58:
+ 2624 018b 636F6C6F 		.ascii	"color\000"
+ 2624      7200
+ 2625              	.LASF78:
+ 2626 0191 726F756E 		.ascii	"rounded\000"
+ 2626      64656400 
+ 2627              	.LASF59:
+ 2628 0199 77696474 		.ascii	"width\000"
+ 2628      6800
+ 2629              	.LASF112:
+ 2630 019f 6C765F64 		.ascii	"lv_draw_arc\000"
+ 2630      7261775F 
+ 2630      61726300 
+ 2631              	.LASF31:
+ 2632 01ab 5F426F6F 		.ascii	"_Bool\000"
+ 2632      6C00
+ 2633              	.LASF111:
+ 2634 01b1 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 2634      666F6E74 
+ 2634      5F737472 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 53
+
+
+ 2634      75637400 
+ 2635              	.LASF75:
+ 2636 01c1 6C696E65 		.ascii	"line_space\000"
+ 2636      5F737061 
+ 2636      636500
+ 2637              	.LASF107:
+ 2638 01cc 6465675F 		.ascii	"deg_test_inv\000"
+ 2638      74657374 
+ 2638      5F696E76 
+ 2638      00
+ 2639              	.LASF29:
+ 2640 01d9 6C696E65 		.ascii	"line_height\000"
+ 2640      5F686569 
+ 2640      67687400 
+ 2641              	.LASF92:
+ 2642 01e5 74686963 		.ascii	"thickness\000"
+ 2642      6B6E6573 
+ 2642      7300
+ 2643              	.LASF54:
+ 2644 01ef 63686172 		.ascii	"char\000"
+ 2644      00
+ 2645              	.LASF62:
+ 2646 01f4 626F7474 		.ascii	"bottom\000"
+ 2646      6F6D00
+ 2647              	.LASF26:
+ 2648 01fb 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 2648      6F6E745F 
+ 2648      676C7970 
+ 2648      685F6473 
+ 2648      635F7400 
+ 2649              	.LASF15:
+ 2650 020f 75696E74 		.ascii	"uint8_t\000"
+ 2650      385F7400 
+ 2651              	.LASF103:
+ 2652 0217 61726561 		.ascii	"area\000"
+ 2652      00
+ 2653              	.LASF57:
+ 2654 021c 6C765F73 		.ascii	"lv_shadow_type_t\000"
+ 2654      6861646F 
+ 2654      775F7479 
+ 2654      70655F74 
+ 2654      00
+ 2655              	.LASF64:
+ 2656 022d 72696768 		.ascii	"right\000"
+ 2656      7400
+ 2657              	.LASF35:
+ 2658 0233 4C565F4F 		.ascii	"LV_OPA_10\000"
+ 2658      50415F31 
+ 2658      3000
+ 2659              	.LASF11:
+ 2660 023d 6C6F6E67 		.ascii	"long long int\000"
+ 2660      206C6F6E 
+ 2660      6720696E 
+ 2660      7400
+ 2661              	.LASF79:
+ 2662 024b 676C6173 		.ascii	"glass\000"
+ 2662      7300
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 54
+
+
+ 2663              	.LASF81:
+ 2664 0251 74657874 		.ascii	"text\000"
+ 2664      00
+ 2665              	.LASF71:
+ 2666 0256 70616464 		.ascii	"padding\000"
+ 2666      696E6700 
+ 2667              	.LASF4:
+ 2668 025e 5F5F696E 		.ascii	"__int16_t\000"
+ 2668      7431365F 
+ 2668      7400
+ 2669              	.LASF100:
+ 2670 0268 725F6F75 		.ascii	"r_out_sqr\000"
+ 2670      745F7371 
+ 2670      7200
+ 2671              	.LASF36:
+ 2672 0272 4C565F4F 		.ascii	"LV_OPA_20\000"
+ 2672      50415F32 
+ 2672      3000
+ 2673              	.LASF82:
+ 2674 027c 696D6167 		.ascii	"image\000"
+ 2674      6500
+ 2675              	.LASF87:
+ 2676 0282 6D61736B 		.ascii	"mask\000"
+ 2676      00
+ 2677              	.LASF99:
+ 2678 0287 6D696464 		.ascii	"middle_r_out\000"
+ 2678      6C655F72 
+ 2678      5F6F7574 
+ 2678      00
+ 2679              	.LASF77:
+ 2680 0294 73756270 		.ascii	"subpx\000"
+ 2680      7800
+ 2681              	.LASF51:
+ 2682 029a 6C765F63 		.ascii	"lv_color_t\000"
+ 2682      6F6C6F72 
+ 2682      5F7400
+ 2683              	.LASF0:
+ 2684 02a5 5F5F696E 		.ascii	"__int8_t\000"
+ 2684      74385F74 
+ 2684      00
+ 2685              	.LASF47:
+ 2686 02ae 67726565 		.ascii	"green\000"
+ 2686      6E00
+ 2687              	.LASF37:
+ 2688 02b4 4C565F4F 		.ascii	"LV_OPA_30\000"
+ 2688      50415F33 
+ 2688      3000
+ 2689              	.LASF20:
+ 2690 02be 6C6F6E67 		.ascii	"long double\000"
+ 2690      20646F75 
+ 2690      626C6500 
+ 2691              	.LASF17:
+ 2692 02ca 75696E74 		.ascii	"uint16_t\000"
+ 2692      31365F74 
+ 2692      00
+ 2693              	.LASF67:
+ 2694 02d3 67726164 		.ascii	"grad_color\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 55
+
+
+ 2694      5F636F6C 
+ 2694      6F7200
+ 2695              	.LASF53:
+ 2696 02de 73697A65 		.ascii	"sizetype\000"
+ 2696      74797065 
+ 2696      00
+ 2697              	.LASF32:
+ 2698 02e7 6C765F66 		.ascii	"lv_font_t\000"
+ 2698      6F6E745F 
+ 2698      7400
+ 2699              	.LASF74:
+ 2700 02f1 6C657474 		.ascii	"letter_space\000"
+ 2700      65725F73 
+ 2700      70616365 
+ 2700      00
+ 2701              	.LASF66:
+ 2702 02fe 6D61696E 		.ascii	"main_color\000"
+ 2702      5F636F6C 
+ 2702      6F7200
+ 2703              	.LASF5:
+ 2704 0309 73686F72 		.ascii	"short int\000"
+ 2704      7420696E 
+ 2704      7400
+ 2705              	.LASF52:
+ 2706 0313 6C765F6F 		.ascii	"lv_opa_t\000"
+ 2706      70615F74 
+ 2706      00
+ 2707              	.LASF8:
+ 2708 031c 6C6F6E67 		.ascii	"long int\000"
+ 2708      20696E74 
+ 2708      00
+ 2709              	.LASF38:
+ 2710 0325 4C565F4F 		.ascii	"LV_OPA_40\000"
+ 2710      50415F34 
+ 2710      3000
+ 2711              	.LASF88:
+ 2712 032f 73746172 		.ascii	"start_angle\000"
+ 2712      745F616E 
+ 2712      676C6500 
+ 2713              	.LASF46:
+ 2714 033b 626C7565 		.ascii	"blue\000"
+ 2714      00
+ 2715              	.LASF19:
+ 2716 0340 6C765F63 		.ascii	"lv_coord_t\000"
+ 2716      6F6F7264 
+ 2716      5F7400
+ 2717              	.LASF85:
+ 2718 034b 63656E74 		.ascii	"center_x\000"
+ 2718      65725F78 
+ 2718      00
+ 2719              	.LASF86:
+ 2720 0354 63656E74 		.ascii	"center_y\000"
+ 2720      65725F79 
+ 2720      00
+ 2721              	.LASF63:
+ 2722 035d 6C656674 		.ascii	"left\000"
+ 2722      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 56
+
+
+ 2723              	.LASF44:
+ 2724 0362 4C565F4F 		.ascii	"LV_OPA_100\000"
+ 2724      50415F31 
+ 2724      303000
+ 2725              	.LASF1:
+ 2726 036d 5F5F7569 		.ascii	"__uint8_t\000"
+ 2726      6E74385F 
+ 2726      7400
+ 2727              	.LASF39:
+ 2728 0377 4C565F4F 		.ascii	"LV_OPA_50\000"
+ 2728      50415F35 
+ 2728      3000
+ 2729              	.LASF106:
+ 2730 0381 73746172 		.ascii	"start\000"
+ 2730      7400
+ 2731              	.LASF23:
+ 2732 0387 626F785F 		.ascii	"box_h\000"
+ 2732      6800
+ 2733              	.LASF73:
+ 2734 038d 666F6E74 		.ascii	"font\000"
+ 2734      00
+ 2735              	.LASF102:
+ 2736 0392 725F6163 		.ascii	"r_act_sqr\000"
+ 2736      745F7371 
+ 2736      7200
+ 2737              	.LASF22:
+ 2738 039c 626F785F 		.ascii	"box_w\000"
+ 2738      7700
+ 2739              	.LASF10:
+ 2740 03a2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2740      20756E73 
+ 2740      69676E65 
+ 2740      6420696E 
+ 2740      7400
+ 2741              	.LASF76:
+ 2742 03b4 696E7465 		.ascii	"intense\000"
+ 2742      6E736500 
+ 2743              	.LASF93:
+ 2744 03bc 725F6F75 		.ascii	"r_out\000"
+ 2744      7400
+ 2745              	.LASF48:
+ 2746 03c2 616C7068 		.ascii	"alpha\000"
+ 2746      6100
+ 2747              	.LASF30:
+ 2748 03c8 62617365 		.ascii	"base_line\000"
+ 2748      5F6C696E 
+ 2748      6500
+ 2749              	.LASF68:
+ 2750 03d2 72616469 		.ascii	"radius\000"
+ 2750      757300
+ 2751              	.LASF91:
+ 2752 03d9 6F70615F 		.ascii	"opa_scale\000"
+ 2752      7363616C 
+ 2752      6500
+ 2753              	.LASF80:
+ 2754 03e3 626F6479 		.ascii	"body\000"
+ 2754      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 57
+
+
+ 2755              	.LASF40:
+ 2756 03e8 4C565F4F 		.ascii	"LV_OPA_60\000"
+ 2756      50415F36 
+ 2756      3000
+ 2757              	.LASF61:
+ 2758 03f2 74797065 		.ascii	"type\000"
+ 2758      00
+ 2759              	.LASF3:
+ 2760 03f7 756E7369 		.ascii	"unsigned char\000"
+ 2760      676E6564 
+ 2760      20636861 
+ 2760      7200
+ 2761              	.LASF9:
+ 2762 0405 5F5F7569 		.ascii	"__uint32_t\000"
+ 2762      6E743332 
+ 2762      5F7400
+ 2763              	.LASF83:
+ 2764 0410 6C696E65 		.ascii	"line\000"
+ 2764      00
+ 2765              	.LASF96:
+ 2766 0415 785F7374 		.ascii	"x_start\000"
+ 2766      61727400 
+ 2767              	.LASF28:
+ 2768 041d 6765745F 		.ascii	"get_glyph_bitmap\000"
+ 2768      676C7970 
+ 2768      685F6269 
+ 2768      746D6170 
+ 2768      00
+ 2769              	.LASF90:
+ 2770 042e 7374796C 		.ascii	"style\000"
+ 2770      6500
+ 2771              	.LASF89:
+ 2772 0434 656E645F 		.ascii	"end_angle\000"
+ 2772      616E676C 
+ 2772      6500
+ 2773              	.LASF41:
+ 2774 043e 4C565F4F 		.ascii	"LV_OPA_70\000"
+ 2774      50415F37 
+ 2774      3000
+ 2775              	.LASF70:
+ 2776 0448 73686164 		.ascii	"shadow\000"
+ 2776      6F7700
+ 2777              	.LASF55:
+ 2778 044f 6C765F61 		.ascii	"lv_area_t\000"
+ 2778      7265615F 
+ 2778      7400
+ 2779              	.LASF94:
+ 2780 0459 725F696E 		.ascii	"r_in\000"
+ 2780      00
+ 2781              	.LASF2:
+ 2782 045e 7369676E 		.ascii	"signed char\000"
+ 2782      65642063 
+ 2782      68617200 
+ 2783              	.LASF7:
+ 2784 046a 73686F72 		.ascii	"short unsigned int\000"
+ 2784      7420756E 
+ 2784      7369676E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 58
+
+
+ 2784      65642069 
+ 2784      6E7400
+ 2785              	.LASF42:
+ 2786 047d 4C565F4F 		.ascii	"LV_OPA_80\000"
+ 2786      50415F38 
+ 2786      3000
+ 2787              	.LASF108:
+ 2788 0487 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2788      43313120 
+ 2788      352E342E 
+ 2788      31203230 
+ 2788      31363036 
+ 2789 04ba 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2789      20726576 
+ 2789      6973696F 
+ 2789      6E203233 
+ 2789      37373135 
+ 2790 04ed 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 2790      70202D6D 
+ 2790      6670753D 
+ 2790      66707634 
+ 2790      2D73702D 
+ 2791 0520 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2791      6F6E7320 
+ 2791      2D666661 
+ 2791      742D6C74 
+ 2791      6F2D6F62 
+ 2792              	.LASF56:
+ 2793 053a 6C765F62 		.ascii	"lv_border_part_t\000"
+ 2793      6F726465 
+ 2793      725F7061 
+ 2793      72745F74 
+ 2793      00
+ 2794              	.LASF109:
+ 2795 054b 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw"
+ 2795      2E5C2E2E 
+ 2795      5C6C7667 
+ 2795      6C5C7665 
+ 2795      7273696F 
+ 2796 0577 5C6C765F 		.ascii	"\\lv_draw_arc.c\000"
+ 2796      64726177 
+ 2796      5F617263 
+ 2796      2E6300
+ 2797              	.LASF98:
+ 2798 0586 6465675F 		.ascii	"deg_test\000"
+ 2798      74657374 
+ 2798      00
+ 2799              	.LASF101:
+ 2800 058f 725F696E 		.ascii	"r_in_sqr\000"
+ 2800      5F737172 
+ 2800      00
+ 2801              	.LASF21:
+ 2802 0598 6164765F 		.ascii	"adv_w\000"
+ 2802      7700
+ 2803              	.LASF95:
+ 2804 059e 6465675F 		.ascii	"deg_base\000"
+ 2804      62617365 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccOfsiK2.s 			page 59
+
+
+ 2804      00
+ 2805              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,857 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_hal_tick.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.bss
+  21              		.align	2
+  22              	sys_time:
+  23 0000 00000000 		.space	4
+  24              	tick_irq_flag:
+  25 0004 00       		.space	1
+  26              		.section	.text.lv_tick_inc,"ax",%progbits
+  27              		.align	2
+  28              		.global	lv_tick_inc
+  29              		.thumb
+  30              		.thumb_func
+  31              		.type	lv_tick_inc, %function
+  32              	lv_tick_inc:
+  33              	.LFB0:
+  34              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\lv_hal_tick.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @file systick.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Provide access to the system tick with 1 millisecond resolution
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "lv_conf.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #else
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "../../../lv_conf.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include "lv_hal_tick.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include <stddef.h>
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #if LV_TICK_CUSTOM == 1
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #include LV_TICK_CUSTOM_INCLUDE
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /*********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      DEFINES
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 2
+
+
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      TYPEDEFS
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *  STATIC PROTOTYPES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *  STATIC VARIABLES
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** static uint32_t sys_time = 0;
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** static volatile uint8_t tick_irq_flag;
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *      MACROS
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**********************
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  *   GLOBAL FUNCTIONS
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  **********************/
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * You have to call this function periodically
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @param tick_period the call period of this function in milliseconds
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** LV_ATTRIBUTE_TICK_INC void lv_tick_inc(uint32_t tick_period)
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+  35              		.loc 1 53 0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 8
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+  40 0000 80B4     		push	{r7}
+  41              		.cfi_def_cfa_offset 4
+  42              		.cfi_offset 7, -4
+  43 0002 83B0     		sub	sp, sp, #12
+  44              		.cfi_def_cfa_offset 16
+  45 0004 00AF     		add	r7, sp, #0
+  46              		.cfi_def_cfa_register 7
+  47 0006 7860     		str	r0, [r7, #4]
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     tick_irq_flag = 0;
+  48              		.loc 1 54 0
+  49 0008 074B     		ldr	r3, .L2
+  50 000a 0022     		movs	r2, #0
+  51 000c 1A70     		strb	r2, [r3]
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     sys_time += tick_period;
+  52              		.loc 1 55 0
+  53 000e 074B     		ldr	r3, .L2+4
+  54 0010 1A68     		ldr	r2, [r3]
+  55 0012 7B68     		ldr	r3, [r7, #4]
+  56 0014 1344     		add	r3, r3, r2
+  57 0016 054A     		ldr	r2, .L2+4
+  58 0018 1360     		str	r3, [r2]
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 3
+
+
+  59              		.loc 1 56 0
+  60 001a 00BF     		nop
+  61 001c 0C37     		adds	r7, r7, #12
+  62              		.cfi_def_cfa_offset 4
+  63 001e BD46     		mov	sp, r7
+  64              		.cfi_def_cfa_register 13
+  65              		@ sp needed
+  66 0020 5DF8047B 		ldr	r7, [sp], #4
+  67              		.cfi_restore 7
+  68              		.cfi_def_cfa_offset 0
+  69 0024 7047     		bx	lr
+  70              	.L3:
+  71 0026 00BF     		.align	2
+  72              	.L2:
+  73 0028 04000000 		.word	tick_irq_flag
+  74 002c 00000000 		.word	sys_time
+  75              		.cfi_endproc
+  76              	.LFE0:
+  77              		.size	lv_tick_inc, .-lv_tick_inc
+  78              		.section	.text.lv_tick_get,"ax",%progbits
+  79              		.align	2
+  80              		.global	lv_tick_get
+  81              		.thumb
+  82              		.thumb_func
+  83              		.type	lv_tick_get, %function
+  84              	lv_tick_get:
+  85              	.LFB1:
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Get the elapsed milliseconds since start up
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @return the elapsed milliseconds
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** uint32_t lv_tick_get(void)
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+  86              		.loc 1 63 0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 8
+  89              		@ frame_needed = 1, uses_anonymous_args = 0
+  90              		@ link register save eliminated.
+  91 0000 80B4     		push	{r7}
+  92              		.cfi_def_cfa_offset 4
+  93              		.cfi_offset 7, -4
+  94 0002 83B0     		sub	sp, sp, #12
+  95              		.cfi_def_cfa_offset 16
+  96 0004 00AF     		add	r7, sp, #0
+  97              		.cfi_def_cfa_register 7
+  98              	.L5:
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #if LV_TICK_CUSTOM == 0
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     uint32_t result;
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     do {
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         tick_irq_flag = 1;
+  99              		.loc 1 67 0 discriminator 1
+ 100 0006 094B     		ldr	r3, .L7
+ 101 0008 0122     		movs	r2, #1
+ 102 000a 1A70     		strb	r2, [r3]
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         result        = sys_time;
+ 103              		.loc 1 68 0 discriminator 1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 4
+
+
+ 104 000c 084B     		ldr	r3, .L7+4
+ 105 000e 1B68     		ldr	r3, [r3]
+ 106 0010 7B60     		str	r3, [r7, #4]
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     } while(!tick_irq_flag); /*'lv_tick_inc()' clears this flag which can be in an interrupt.
+ 107              		.loc 1 69 0 discriminator 1
+ 108 0012 064B     		ldr	r3, .L7
+ 109 0014 1B78     		ldrb	r3, [r3]
+ 110 0016 DBB2     		uxtb	r3, r3
+ 111 0018 002B     		cmp	r3, #0
+ 112 001a F4D0     		beq	.L5
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****                                 Continue until make a non interrupted cycle */
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return result;
+ 113              		.loc 1 72 0
+ 114 001c 7B68     		ldr	r3, [r7, #4]
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #else
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return LV_TICK_CUSTOM_SYS_TIME_EXPR;
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** #endif
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+ 115              		.loc 1 76 0
+ 116 001e 1846     		mov	r0, r3
+ 117 0020 0C37     		adds	r7, r7, #12
+ 118              		.cfi_def_cfa_offset 4
+ 119 0022 BD46     		mov	sp, r7
+ 120              		.cfi_def_cfa_register 13
+ 121              		@ sp needed
+ 122 0024 5DF8047B 		ldr	r7, [sp], #4
+ 123              		.cfi_restore 7
+ 124              		.cfi_def_cfa_offset 0
+ 125 0028 7047     		bx	lr
+ 126              	.L8:
+ 127 002a 00BF     		.align	2
+ 128              	.L7:
+ 129 002c 04000000 		.word	tick_irq_flag
+ 130 0030 00000000 		.word	sys_time
+ 131              		.cfi_endproc
+ 132              	.LFE1:
+ 133              		.size	lv_tick_get, .-lv_tick_get
+ 134              		.section	.text.lv_tick_elaps,"ax",%progbits
+ 135              		.align	2
+ 136              		.global	lv_tick_elaps
+ 137              		.thumb
+ 138              		.thumb_func
+ 139              		.type	lv_tick_elaps, %function
+ 140              	lv_tick_elaps:
+ 141              	.LFB2:
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** /**
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * Get the elapsed milliseconds since a previous time stamp
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @param prev_tick a previous time stamp (return value of systick_get() )
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  * @return the elapsed milliseconds since 'prev_tick'
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****  */
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** uint32_t lv_tick_elaps(uint32_t prev_tick)
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** {
+ 142              		.loc 1 84 0
+ 143              		.cfi_startproc
+ 144              		@ args = 0, pretend = 0, frame = 16
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 5
+
+
+ 145              		@ frame_needed = 1, uses_anonymous_args = 0
+ 146 0000 80B5     		push	{r7, lr}
+ 147              		.cfi_def_cfa_offset 8
+ 148              		.cfi_offset 7, -8
+ 149              		.cfi_offset 14, -4
+ 150 0002 84B0     		sub	sp, sp, #16
+ 151              		.cfi_def_cfa_offset 24
+ 152 0004 00AF     		add	r7, sp, #0
+ 153              		.cfi_def_cfa_register 7
+ 154 0006 7860     		str	r0, [r7, #4]
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     uint32_t act_time = lv_tick_get();
+ 155              		.loc 1 85 0
+ 156 0008 FFF7FEFF 		bl	lv_tick_get
+ 157 000c F860     		str	r0, [r7, #12]
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     /*If there is no overflow in sys_time simple subtract*/
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     if(act_time >= prev_tick) {
+ 158              		.loc 1 88 0
+ 159 000e FA68     		ldr	r2, [r7, #12]
+ 160 0010 7B68     		ldr	r3, [r7, #4]
+ 161 0012 9A42     		cmp	r2, r3
+ 162 0014 04D3     		bcc	.L10
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick = act_time - prev_tick;
+ 163              		.loc 1 89 0
+ 164 0016 FA68     		ldr	r2, [r7, #12]
+ 165 0018 7B68     		ldr	r3, [r7, #4]
+ 166 001a D31A     		subs	r3, r2, r3
+ 167 001c 7B60     		str	r3, [r7, #4]
+ 168 001e 06E0     		b	.L11
+ 169              	.L10:
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     } else {
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick = UINT32_MAX - prev_tick + 1;
+ 170              		.loc 1 91 0
+ 171 0020 7B68     		ldr	r3, [r7, #4]
+ 172 0022 5B42     		negs	r3, r3
+ 173 0024 7B60     		str	r3, [r7, #4]
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****         prev_tick += act_time;
+ 174              		.loc 1 92 0
+ 175 0026 7A68     		ldr	r2, [r7, #4]
+ 176 0028 FB68     		ldr	r3, [r7, #12]
+ 177 002a 1344     		add	r3, r3, r2
+ 178 002c 7B60     		str	r3, [r7, #4]
+ 179              	.L11:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     }
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** 
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c ****     return prev_tick;
+ 180              		.loc 1 95 0
+ 181 002e 7B68     		ldr	r3, [r7, #4]
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_tick.c **** }
+ 182              		.loc 1 96 0
+ 183 0030 1846     		mov	r0, r3
+ 184 0032 1037     		adds	r7, r7, #16
+ 185              		.cfi_def_cfa_offset 8
+ 186 0034 BD46     		mov	sp, r7
+ 187              		.cfi_def_cfa_register 13
+ 188              		@ sp needed
+ 189 0036 80BD     		pop	{r7, pc}
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 6
+
+
+ 190              		.cfi_endproc
+ 191              	.LFE2:
+ 192              		.size	lv_tick_elaps, .-lv_tick_elaps
+ 193              		.text
+ 194              	.Letext0:
+ 195              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 196              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 197              		.section	.debug_info,"",%progbits
+ 198              	.Ldebug_info0:
+ 199 0000 44010000 		.4byte	0x144
+ 200 0004 0400     		.2byte	0x4
+ 201 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 202 000a 04       		.byte	0x4
+ 203 000b 01       		.uleb128 0x1
+ 204 000c 6A000000 		.4byte	.LASF22
+ 205 0010 0C       		.byte	0xc
+ 206 0011 69020000 		.4byte	.LASF23
+ 207 0015 8A010000 		.4byte	.LASF24
+ 208 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 209 001d 00000000 		.4byte	0
+ 210 0021 00000000 		.4byte	.Ldebug_line0
+ 211 0025 02       		.uleb128 0x2
+ 212 0026 01       		.byte	0x1
+ 213 0027 06       		.byte	0x6
+ 214 0028 5D020000 		.4byte	.LASF0
+ 215 002c 03       		.uleb128 0x3
+ 216 002d 00000000 		.4byte	.LASF5
+ 217 0031 02       		.byte	0x2
+ 218 0032 1D       		.byte	0x1d
+ 219 0033 37000000 		.4byte	0x37
+ 220 0037 02       		.uleb128 0x2
+ 221 0038 01       		.byte	0x1
+ 222 0039 08       		.byte	0x8
+ 223 003a 29000000 		.4byte	.LASF1
+ 224 003e 02       		.uleb128 0x2
+ 225 003f 02       		.byte	0x2
+ 226 0040 05       		.byte	0x5
+ 227 0041 35020000 		.4byte	.LASF2
+ 228 0045 02       		.uleb128 0x2
+ 229 0046 02       		.byte	0x2
+ 230 0047 07       		.byte	0x7
+ 231 0048 57000000 		.4byte	.LASF3
+ 232 004c 02       		.uleb128 0x2
+ 233 004d 04       		.byte	0x4
+ 234 004e 05       		.byte	0x5
+ 235 004f 48020000 		.4byte	.LASF4
+ 236 0053 03       		.uleb128 0x3
+ 237 0054 37010000 		.4byte	.LASF6
+ 238 0058 02       		.byte	0x2
+ 239 0059 41       		.byte	0x41
+ 240 005a 5E000000 		.4byte	0x5e
+ 241 005e 02       		.uleb128 0x2
+ 242 005f 04       		.byte	0x4
+ 243 0060 07       		.byte	0x7
+ 244 0061 45000000 		.4byte	.LASF7
+ 245 0065 02       		.uleb128 0x2
+ 246 0066 08       		.byte	0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 7
+
+
+ 247 0067 05       		.byte	0x5
+ 248 0068 27020000 		.4byte	.LASF8
+ 249 006c 02       		.uleb128 0x2
+ 250 006d 08       		.byte	0x8
+ 251 006e 07       		.byte	0x7
+ 252 006f 64010000 		.4byte	.LASF9
+ 253 0073 04       		.uleb128 0x4
+ 254 0074 04       		.byte	0x4
+ 255 0075 05       		.byte	0x5
+ 256 0076 696E7400 		.ascii	"int\000"
+ 257 007a 02       		.uleb128 0x2
+ 258 007b 04       		.byte	0x4
+ 259 007c 07       		.byte	0x7
+ 260 007d 4E010000 		.4byte	.LASF10
+ 261 0081 03       		.uleb128 0x3
+ 262 0082 7B010000 		.4byte	.LASF11
+ 263 0086 03       		.byte	0x3
+ 264 0087 18       		.byte	0x18
+ 265 0088 2C000000 		.4byte	0x2c
+ 266 008c 03       		.uleb128 0x3
+ 267 008d 3F020000 		.4byte	.LASF12
+ 268 0091 03       		.byte	0x3
+ 269 0092 30       		.byte	0x30
+ 270 0093 53000000 		.4byte	0x53
+ 271 0097 02       		.uleb128 0x2
+ 272 0098 08       		.byte	0x8
+ 273 0099 04       		.byte	0x4
+ 274 009a 51020000 		.4byte	.LASF13
+ 275 009e 05       		.uleb128 0x5
+ 276 009f 42010000 		.4byte	.LASF25
+ 277 00a3 01       		.byte	0x1
+ 278 00a4 34       		.byte	0x34
+ 279 00a5 00000000 		.4byte	.LFB0
+ 280 00a9 30000000 		.4byte	.LFE0-.LFB0
+ 281 00ad 01       		.uleb128 0x1
+ 282 00ae 9C       		.byte	0x9c
+ 283 00af C2000000 		.4byte	0xc2
+ 284 00b3 06       		.uleb128 0x6
+ 285 00b4 2B010000 		.4byte	.LASF16
+ 286 00b8 01       		.byte	0x1
+ 287 00b9 34       		.byte	0x34
+ 288 00ba 8C000000 		.4byte	0x8c
+ 289 00be 02       		.uleb128 0x2
+ 290 00bf 91       		.byte	0x91
+ 291 00c0 74       		.sleb128 -12
+ 292 00c1 00       		.byte	0
+ 293 00c2 07       		.uleb128 0x7
+ 294 00c3 14000000 		.4byte	.LASF14
+ 295 00c7 01       		.byte	0x1
+ 296 00c8 3E       		.byte	0x3e
+ 297 00c9 8C000000 		.4byte	0x8c
+ 298 00cd 00000000 		.4byte	.LFB1
+ 299 00d1 34000000 		.4byte	.LFE1-.LFB1
+ 300 00d5 01       		.uleb128 0x1
+ 301 00d6 9C       		.byte	0x9c
+ 302 00d7 EA000000 		.4byte	0xea
+ 303 00db 08       		.uleb128 0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 8
+
+
+ 304 00dc 83010000 		.4byte	.LASF18
+ 305 00e0 01       		.byte	0x1
+ 306 00e1 41       		.byte	0x41
+ 307 00e2 8C000000 		.4byte	0x8c
+ 308 00e6 02       		.uleb128 0x2
+ 309 00e7 91       		.byte	0x91
+ 310 00e8 74       		.sleb128 -12
+ 311 00e9 00       		.byte	0
+ 312 00ea 09       		.uleb128 0x9
+ 313 00eb 37000000 		.4byte	.LASF15
+ 314 00ef 01       		.byte	0x1
+ 315 00f0 53       		.byte	0x53
+ 316 00f1 8C000000 		.4byte	0x8c
+ 317 00f5 00000000 		.4byte	.LFB2
+ 318 00f9 38000000 		.4byte	.LFE2-.LFB2
+ 319 00fd 01       		.uleb128 0x1
+ 320 00fe 9C       		.byte	0x9c
+ 321 00ff 20010000 		.4byte	0x120
+ 322 0103 06       		.uleb128 0x6
+ 323 0104 0A000000 		.4byte	.LASF17
+ 324 0108 01       		.byte	0x1
+ 325 0109 53       		.byte	0x53
+ 326 010a 8C000000 		.4byte	0x8c
+ 327 010e 02       		.uleb128 0x2
+ 328 010f 91       		.byte	0x91
+ 329 0110 6C       		.sleb128 -20
+ 330 0111 08       		.uleb128 0x8
+ 331 0112 5B010000 		.4byte	.LASF19
+ 332 0116 01       		.byte	0x1
+ 333 0117 55       		.byte	0x55
+ 334 0118 8C000000 		.4byte	0x8c
+ 335 011c 02       		.uleb128 0x2
+ 336 011d 91       		.byte	0x91
+ 337 011e 74       		.sleb128 -12
+ 338 011f 00       		.byte	0
+ 339 0120 08       		.uleb128 0x8
+ 340 0121 20000000 		.4byte	.LASF20
+ 341 0125 01       		.byte	0x1
+ 342 0126 25       		.byte	0x25
+ 343 0127 8C000000 		.4byte	0x8c
+ 344 012b 05       		.uleb128 0x5
+ 345 012c 03       		.byte	0x3
+ 346 012d 00000000 		.4byte	sys_time
+ 347 0131 08       		.uleb128 0x8
+ 348 0132 1D010000 		.4byte	.LASF21
+ 349 0136 01       		.byte	0x1
+ 350 0137 26       		.byte	0x26
+ 351 0138 42010000 		.4byte	0x142
+ 352 013c 05       		.uleb128 0x5
+ 353 013d 03       		.byte	0x3
+ 354 013e 04000000 		.4byte	tick_irq_flag
+ 355 0142 0A       		.uleb128 0xa
+ 356 0143 81000000 		.4byte	0x81
+ 357 0147 00       		.byte	0
+ 358              		.section	.debug_abbrev,"",%progbits
+ 359              	.Ldebug_abbrev0:
+ 360 0000 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 9
+
+
+ 361 0001 11       		.uleb128 0x11
+ 362 0002 01       		.byte	0x1
+ 363 0003 25       		.uleb128 0x25
+ 364 0004 0E       		.uleb128 0xe
+ 365 0005 13       		.uleb128 0x13
+ 366 0006 0B       		.uleb128 0xb
+ 367 0007 03       		.uleb128 0x3
+ 368 0008 0E       		.uleb128 0xe
+ 369 0009 1B       		.uleb128 0x1b
+ 370 000a 0E       		.uleb128 0xe
+ 371 000b 55       		.uleb128 0x55
+ 372 000c 17       		.uleb128 0x17
+ 373 000d 11       		.uleb128 0x11
+ 374 000e 01       		.uleb128 0x1
+ 375 000f 10       		.uleb128 0x10
+ 376 0010 17       		.uleb128 0x17
+ 377 0011 00       		.byte	0
+ 378 0012 00       		.byte	0
+ 379 0013 02       		.uleb128 0x2
+ 380 0014 24       		.uleb128 0x24
+ 381 0015 00       		.byte	0
+ 382 0016 0B       		.uleb128 0xb
+ 383 0017 0B       		.uleb128 0xb
+ 384 0018 3E       		.uleb128 0x3e
+ 385 0019 0B       		.uleb128 0xb
+ 386 001a 03       		.uleb128 0x3
+ 387 001b 0E       		.uleb128 0xe
+ 388 001c 00       		.byte	0
+ 389 001d 00       		.byte	0
+ 390 001e 03       		.uleb128 0x3
+ 391 001f 16       		.uleb128 0x16
+ 392 0020 00       		.byte	0
+ 393 0021 03       		.uleb128 0x3
+ 394 0022 0E       		.uleb128 0xe
+ 395 0023 3A       		.uleb128 0x3a
+ 396 0024 0B       		.uleb128 0xb
+ 397 0025 3B       		.uleb128 0x3b
+ 398 0026 0B       		.uleb128 0xb
+ 399 0027 49       		.uleb128 0x49
+ 400 0028 13       		.uleb128 0x13
+ 401 0029 00       		.byte	0
+ 402 002a 00       		.byte	0
+ 403 002b 04       		.uleb128 0x4
+ 404 002c 24       		.uleb128 0x24
+ 405 002d 00       		.byte	0
+ 406 002e 0B       		.uleb128 0xb
+ 407 002f 0B       		.uleb128 0xb
+ 408 0030 3E       		.uleb128 0x3e
+ 409 0031 0B       		.uleb128 0xb
+ 410 0032 03       		.uleb128 0x3
+ 411 0033 08       		.uleb128 0x8
+ 412 0034 00       		.byte	0
+ 413 0035 00       		.byte	0
+ 414 0036 05       		.uleb128 0x5
+ 415 0037 2E       		.uleb128 0x2e
+ 416 0038 01       		.byte	0x1
+ 417 0039 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 10
+
+
+ 418 003a 19       		.uleb128 0x19
+ 419 003b 03       		.uleb128 0x3
+ 420 003c 0E       		.uleb128 0xe
+ 421 003d 3A       		.uleb128 0x3a
+ 422 003e 0B       		.uleb128 0xb
+ 423 003f 3B       		.uleb128 0x3b
+ 424 0040 0B       		.uleb128 0xb
+ 425 0041 27       		.uleb128 0x27
+ 426 0042 19       		.uleb128 0x19
+ 427 0043 11       		.uleb128 0x11
+ 428 0044 01       		.uleb128 0x1
+ 429 0045 12       		.uleb128 0x12
+ 430 0046 06       		.uleb128 0x6
+ 431 0047 40       		.uleb128 0x40
+ 432 0048 18       		.uleb128 0x18
+ 433 0049 9742     		.uleb128 0x2117
+ 434 004b 19       		.uleb128 0x19
+ 435 004c 01       		.uleb128 0x1
+ 436 004d 13       		.uleb128 0x13
+ 437 004e 00       		.byte	0
+ 438 004f 00       		.byte	0
+ 439 0050 06       		.uleb128 0x6
+ 440 0051 05       		.uleb128 0x5
+ 441 0052 00       		.byte	0
+ 442 0053 03       		.uleb128 0x3
+ 443 0054 0E       		.uleb128 0xe
+ 444 0055 3A       		.uleb128 0x3a
+ 445 0056 0B       		.uleb128 0xb
+ 446 0057 3B       		.uleb128 0x3b
+ 447 0058 0B       		.uleb128 0xb
+ 448 0059 49       		.uleb128 0x49
+ 449 005a 13       		.uleb128 0x13
+ 450 005b 02       		.uleb128 0x2
+ 451 005c 18       		.uleb128 0x18
+ 452 005d 00       		.byte	0
+ 453 005e 00       		.byte	0
+ 454 005f 07       		.uleb128 0x7
+ 455 0060 2E       		.uleb128 0x2e
+ 456 0061 01       		.byte	0x1
+ 457 0062 3F       		.uleb128 0x3f
+ 458 0063 19       		.uleb128 0x19
+ 459 0064 03       		.uleb128 0x3
+ 460 0065 0E       		.uleb128 0xe
+ 461 0066 3A       		.uleb128 0x3a
+ 462 0067 0B       		.uleb128 0xb
+ 463 0068 3B       		.uleb128 0x3b
+ 464 0069 0B       		.uleb128 0xb
+ 465 006a 27       		.uleb128 0x27
+ 466 006b 19       		.uleb128 0x19
+ 467 006c 49       		.uleb128 0x49
+ 468 006d 13       		.uleb128 0x13
+ 469 006e 11       		.uleb128 0x11
+ 470 006f 01       		.uleb128 0x1
+ 471 0070 12       		.uleb128 0x12
+ 472 0071 06       		.uleb128 0x6
+ 473 0072 40       		.uleb128 0x40
+ 474 0073 18       		.uleb128 0x18
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 11
+
+
+ 475 0074 9742     		.uleb128 0x2117
+ 476 0076 19       		.uleb128 0x19
+ 477 0077 01       		.uleb128 0x1
+ 478 0078 13       		.uleb128 0x13
+ 479 0079 00       		.byte	0
+ 480 007a 00       		.byte	0
+ 481 007b 08       		.uleb128 0x8
+ 482 007c 34       		.uleb128 0x34
+ 483 007d 00       		.byte	0
+ 484 007e 03       		.uleb128 0x3
+ 485 007f 0E       		.uleb128 0xe
+ 486 0080 3A       		.uleb128 0x3a
+ 487 0081 0B       		.uleb128 0xb
+ 488 0082 3B       		.uleb128 0x3b
+ 489 0083 0B       		.uleb128 0xb
+ 490 0084 49       		.uleb128 0x49
+ 491 0085 13       		.uleb128 0x13
+ 492 0086 02       		.uleb128 0x2
+ 493 0087 18       		.uleb128 0x18
+ 494 0088 00       		.byte	0
+ 495 0089 00       		.byte	0
+ 496 008a 09       		.uleb128 0x9
+ 497 008b 2E       		.uleb128 0x2e
+ 498 008c 01       		.byte	0x1
+ 499 008d 3F       		.uleb128 0x3f
+ 500 008e 19       		.uleb128 0x19
+ 501 008f 03       		.uleb128 0x3
+ 502 0090 0E       		.uleb128 0xe
+ 503 0091 3A       		.uleb128 0x3a
+ 504 0092 0B       		.uleb128 0xb
+ 505 0093 3B       		.uleb128 0x3b
+ 506 0094 0B       		.uleb128 0xb
+ 507 0095 27       		.uleb128 0x27
+ 508 0096 19       		.uleb128 0x19
+ 509 0097 49       		.uleb128 0x49
+ 510 0098 13       		.uleb128 0x13
+ 511 0099 11       		.uleb128 0x11
+ 512 009a 01       		.uleb128 0x1
+ 513 009b 12       		.uleb128 0x12
+ 514 009c 06       		.uleb128 0x6
+ 515 009d 40       		.uleb128 0x40
+ 516 009e 18       		.uleb128 0x18
+ 517 009f 9642     		.uleb128 0x2116
+ 518 00a1 19       		.uleb128 0x19
+ 519 00a2 01       		.uleb128 0x1
+ 520 00a3 13       		.uleb128 0x13
+ 521 00a4 00       		.byte	0
+ 522 00a5 00       		.byte	0
+ 523 00a6 0A       		.uleb128 0xa
+ 524 00a7 35       		.uleb128 0x35
+ 525 00a8 00       		.byte	0
+ 526 00a9 49       		.uleb128 0x49
+ 527 00aa 13       		.uleb128 0x13
+ 528 00ab 00       		.byte	0
+ 529 00ac 00       		.byte	0
+ 530 00ad 00       		.byte	0
+ 531              		.section	.debug_aranges,"",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 12
+
+
+ 532 0000 2C000000 		.4byte	0x2c
+ 533 0004 0200     		.2byte	0x2
+ 534 0006 00000000 		.4byte	.Ldebug_info0
+ 535 000a 04       		.byte	0x4
+ 536 000b 00       		.byte	0
+ 537 000c 0000     		.2byte	0
+ 538 000e 0000     		.2byte	0
+ 539 0010 00000000 		.4byte	.LFB0
+ 540 0014 30000000 		.4byte	.LFE0-.LFB0
+ 541 0018 00000000 		.4byte	.LFB1
+ 542 001c 34000000 		.4byte	.LFE1-.LFB1
+ 543 0020 00000000 		.4byte	.LFB2
+ 544 0024 38000000 		.4byte	.LFE2-.LFB2
+ 545 0028 00000000 		.4byte	0
+ 546 002c 00000000 		.4byte	0
+ 547              		.section	.debug_ranges,"",%progbits
+ 548              	.Ldebug_ranges0:
+ 549 0000 00000000 		.4byte	.LFB0
+ 550 0004 30000000 		.4byte	.LFE0
+ 551 0008 00000000 		.4byte	.LFB1
+ 552 000c 34000000 		.4byte	.LFE1
+ 553 0010 00000000 		.4byte	.LFB2
+ 554 0014 38000000 		.4byte	.LFE2
+ 555 0018 00000000 		.4byte	0
+ 556 001c 00000000 		.4byte	0
+ 557              		.section	.debug_line,"",%progbits
+ 558              	.Ldebug_line0:
+ 559 0000 9C010000 		.section	.debug_str,"MS",%progbits,1
+ 559      02004D01 
+ 559      00000201 
+ 559      FB0E0D00 
+ 559      01010101 
+ 560              	.LASF5:
+ 561 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 561      6E74385F 
+ 561      7400
+ 562              	.LASF17:
+ 563 000a 70726576 		.ascii	"prev_tick\000"
+ 563      5F746963 
+ 563      6B00
+ 564              	.LASF14:
+ 565 0014 6C765F74 		.ascii	"lv_tick_get\000"
+ 565      69636B5F 
+ 565      67657400 
+ 566              	.LASF20:
+ 567 0020 7379735F 		.ascii	"sys_time\000"
+ 567      74696D65 
+ 567      00
+ 568              	.LASF1:
+ 569 0029 756E7369 		.ascii	"unsigned char\000"
+ 569      676E6564 
+ 569      20636861 
+ 569      7200
+ 570              	.LASF15:
+ 571 0037 6C765F74 		.ascii	"lv_tick_elaps\000"
+ 571      69636B5F 
+ 571      656C6170 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 13
+
+
+ 571      7300
+ 572              	.LASF7:
+ 573 0045 6C6F6E67 		.ascii	"long unsigned int\000"
+ 573      20756E73 
+ 573      69676E65 
+ 573      6420696E 
+ 573      7400
+ 574              	.LASF3:
+ 575 0057 73686F72 		.ascii	"short unsigned int\000"
+ 575      7420756E 
+ 575      7369676E 
+ 575      65642069 
+ 575      6E7400
+ 576              	.LASF22:
+ 577 006a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 577      43313120 
+ 577      352E342E 
+ 577      31203230 
+ 577      31363036 
+ 578 009d 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 578      20726576 
+ 578      6973696F 
+ 578      6E203233 
+ 578      37373135 
+ 579 00d0 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 579      70202D6D 
+ 579      6670753D 
+ 579      66707634 
+ 579      2D73702D 
+ 580 0103 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 580      6F6E7320 
+ 580      2D666661 
+ 580      742D6C74 
+ 580      6F2D6F62 
+ 581              	.LASF21:
+ 582 011d 7469636B 		.ascii	"tick_irq_flag\000"
+ 582      5F697271 
+ 582      5F666C61 
+ 582      6700
+ 583              	.LASF16:
+ 584 012b 7469636B 		.ascii	"tick_period\000"
+ 584      5F706572 
+ 584      696F6400 
+ 585              	.LASF6:
+ 586 0137 5F5F7569 		.ascii	"__uint32_t\000"
+ 586      6E743332 
+ 586      5F7400
+ 587              	.LASF25:
+ 588 0142 6C765F74 		.ascii	"lv_tick_inc\000"
+ 588      69636B5F 
+ 588      696E6300 
+ 589              	.LASF10:
+ 590 014e 756E7369 		.ascii	"unsigned int\000"
+ 590      676E6564 
+ 590      20696E74 
+ 590      00
+ 591              	.LASF19:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 14
+
+
+ 592 015b 6163745F 		.ascii	"act_time\000"
+ 592      74696D65 
+ 592      00
+ 593              	.LASF9:
+ 594 0164 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 594      206C6F6E 
+ 594      6720756E 
+ 594      7369676E 
+ 594      65642069 
+ 595              	.LASF11:
+ 596 017b 75696E74 		.ascii	"uint8_t\000"
+ 596      385F7400 
+ 597              	.LASF18:
+ 598 0183 72657375 		.ascii	"result\000"
+ 598      6C7400
+ 599              	.LASF24:
+ 600 018a 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 600      73657273 
+ 600      5C746D6A 
+ 600      33325C44 
+ 600      6F63756D 
+ 601 01b7 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 601      6C6C6F73 
+ 601      636F7065 
+ 601      5F53656E 
+ 601      696F725F 
+ 602 01e8 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 602      5C74636F 
+ 602      6D5F6170 
+ 602      705C7463 
+ 602      6F6D5F61 
+ 603 0218 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 603      736F6336 
+ 603      2E637964 
+ 603      736E00
+ 604              	.LASF8:
+ 605 0227 6C6F6E67 		.ascii	"long long int\000"
+ 605      206C6F6E 
+ 605      6720696E 
+ 605      7400
+ 606              	.LASF2:
+ 607 0235 73686F72 		.ascii	"short int\000"
+ 607      7420696E 
+ 607      7400
+ 608              	.LASF12:
+ 609 023f 75696E74 		.ascii	"uint32_t\000"
+ 609      33325F74 
+ 609      00
+ 610              	.LASF4:
+ 611 0248 6C6F6E67 		.ascii	"long int\000"
+ 611      20696E74 
+ 611      00
+ 612              	.LASF13:
+ 613 0251 6C6F6E67 		.ascii	"long double\000"
+ 613      20646F75 
+ 613      626C6500 
+ 614              	.LASF0:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAMvBb1.s 			page 15
+
+
+ 615 025d 7369676E 		.ascii	"signed char\000"
+ 615      65642063 
+ 615      68617200 
+ 616              	.LASF23:
+ 617 0269 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\"
+ 617      2E5C2E2E 
+ 617      5C6C7667 
+ 617      6C5C7665 
+ 617      7273696F 
+ 618 0295 6C765F68 		.ascii	"lv_hal_tick.c\000"
+ 618      616C5F74 
+ 618      69636B2E 
+ 618      6300
+ 619              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

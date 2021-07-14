@@ -1,0 +1,861 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_circ.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_circ_init,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_circ_init
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_circ_init, %function
+  26              	lv_circ_init:
+  27              	.LFB3:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_circ.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @file lv_circ.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Circle drawing algorithm (with Bresenham)
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Only a 1/8 circle is calculated. Use CIRC_OCT1_X, CIRC_OCT1_Y macros to get
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * the other octets.
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /*********************
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      INCLUDES
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *********************/
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** #include "lv_circ.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      DEFINES
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      TYPEDEFS
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *  STATIC PROTOTYPES
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *  STATIC VARIABLES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      MACROS
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *   GLOBAL FUNCTIONS
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Initialize the circle drawing
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c pointer to a point. The coordinates will be calculated here
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param tmp point to a variable. It will store temporary data
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param radius radius of the circle
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** void lv_circ_init(lv_point_t * c, lv_coord_t * tmp, lv_coord_t radius)
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+  29              		.loc 1 44 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  35 0000 10B4     		push	{r4}
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 4, -4
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->x = radius;
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->y = 0;
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     *tmp = 1 - radius;
+  38              		.loc 1 47 0
+  39 0002 C2F10103 		rsb	r3, r2, #1
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     *tmp = 1 - radius;
+  40              		.loc 1 46 0
+  41 0006 0024     		movs	r4, #0
+  42 0008 4480     		strh	r4, [r0, #2]	@ movhi
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->x = radius;
+  43              		.loc 1 45 0
+  44 000a 0280     		strh	r2, [r0]	@ movhi
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+  45              		.loc 1 48 0
+  46 000c 5DF8044B 		ldr	r4, [sp], #4
+  47              		.cfi_restore 4
+  48              		.cfi_def_cfa_offset 0
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+  49              		.loc 1 47 0
+  50 0010 0B80     		strh	r3, [r1]	@ movhi
+  51              		.loc 1 48 0
+  52 0012 7047     		bx	lr
+  53              		.cfi_endproc
+  54              	.LFE3:
+  55              		.size	lv_circ_init, .-lv_circ_init
+  56              		.section	.text.lv_circ_cont,"ax",%progbits
+  57              		.align	2
+  58              		.global	lv_circ_cont
+  59              		.thumb
+  60              		.thumb_func
+  61              		.type	lv_circ_cont, %function
+  62              	lv_circ_cont:
+  63              	.LFB4:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 3
+
+
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Test the circle drawing is ready or not
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c same as in circ_init
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @return true if the circle is not ready yet
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** bool lv_circ_cont(lv_point_t * c)
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+  64              		.loc 1 56 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  69              	.LVL1:
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     return c->y <= c->x ? true : false;
+  70              		.loc 1 57 0
+  71 0000 B0F90220 		ldrsh	r2, [r0, #2]
+  72 0004 B0F90000 		ldrsh	r0, [r0]
+  73              	.LVL2:
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+  74              		.loc 1 58 0
+  75 0008 8242     		cmp	r2, r0
+  76 000a CCBF     		ite	gt
+  77 000c 0020     		movgt	r0, #0
+  78 000e 0120     		movle	r0, #1
+  79 0010 7047     		bx	lr
+  80              		.cfi_endproc
+  81              	.LFE4:
+  82              		.size	lv_circ_cont, .-lv_circ_cont
+  83 0012 00BF     		.section	.text.lv_circ_next,"ax",%progbits
+  84              		.align	2
+  85              		.global	lv_circ_next
+  86              		.thumb
+  87              		.thumb_func
+  88              		.type	lv_circ_next, %function
+  89              	lv_circ_next:
+  90              	.LFB5:
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Get the next point from the circle
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c same as in circ_init. The next point stored here.
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param tmp same as in circ_init.
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** void lv_circ_next(lv_point_t * c, lv_coord_t * tmp)
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+  91              		.loc 1 66 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		@ link register save eliminated.
+  96              	.LVL3:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->y++;
+  97              		.loc 1 67 0
+  98 0000 4388     		ldrh	r3, [r0, #2]
+  99 0002 0133     		adds	r3, r3, #1
+ 100 0004 9BB2     		uxth	r3, r3
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->y++;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 4
+
+
+ 101              		.loc 1 66 0
+ 102 0006 10B4     		push	{r4}
+ 103              		.cfi_def_cfa_offset 4
+ 104              		.cfi_offset 4, -4
+ 105              		.loc 1 67 0
+ 106 0008 1CB2     		sxth	r4, r3
+ 107 000a 4480     		strh	r4, [r0, #2]	@ movhi
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     if(*tmp <= 0) {
+ 108              		.loc 1 69 0
+ 109 000c B1F90020 		ldrsh	r2, [r1]
+ 110 0010 002A     		cmp	r2, #0
+ 111 0012 0CDD     		ble	.L9
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         (*tmp) += 2 * c->y + 1; /*Change in decision criterion for y -> y+1*/
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     } else {
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         c->x--;
+ 112              		.loc 1 72 0
+ 113 0014 0388     		ldrh	r3, [r0]
+ 114 0016 013B     		subs	r3, r3, #1
+ 115 0018 1BB2     		sxth	r3, r3
+ 116 001a 0380     		strh	r3, [r0]	@ movhi
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         (*tmp) += 2 * (c->y - c->x) + 1; /*Change for y -> y+1, x -> x-1*/
+ 117              		.loc 1 73 0
+ 118 001c 0A88     		ldrh	r2, [r1]
+ 119 001e E31A     		subs	r3, r4, r3
+ 120 0020 0132     		adds	r2, r2, #1
+ 121 0022 02EB4303 		add	r3, r2, r3, lsl #1
+ 122 0026 0B80     		strh	r3, [r1]	@ movhi
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     }
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+ 123              		.loc 1 75 0
+ 124 0028 5DF8044B 		ldr	r4, [sp], #4
+ 125              		.cfi_remember_state
+ 126              		.cfi_restore 4
+ 127              		.cfi_def_cfa_offset 0
+ 128 002c 7047     		bx	lr
+ 129              	.L9:
+ 130              		.cfi_restore_state
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     } else {
+ 131              		.loc 1 70 0
+ 132 002e 02EB4303 		add	r3, r2, r3, lsl #1
+ 133 0032 0133     		adds	r3, r3, #1
+ 134 0034 0B80     		strh	r3, [r1]	@ movhi
+ 135              		.loc 1 75 0
+ 136 0036 5DF8044B 		ldr	r4, [sp], #4
+ 137              		.cfi_restore 4
+ 138              		.cfi_def_cfa_offset 0
+ 139 003a 7047     		bx	lr
+ 140              		.cfi_endproc
+ 141              	.LFE5:
+ 142              		.size	lv_circ_next, .-lv_circ_next
+ 143              		.text
+ 144              	.Letext0:
+ 145              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 146              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 147              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 148              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.h"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 5
+
+
+ 149              		.section	.debug_info,"",%progbits
+ 150              	.Ldebug_info0:
+ 151 0000 65010000 		.4byte	0x165
+ 152 0004 0400     		.2byte	0x4
+ 153 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 154 000a 04       		.byte	0x4
+ 155 000b 01       		.uleb128 0x1
+ 156 000c 86000000 		.4byte	.LASF18
+ 157 0010 0C       		.byte	0xc
+ 158 0011 74010000 		.4byte	.LASF19
+ 159 0015 CE010000 		.4byte	.LASF20
+ 160 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 161 001d 00000000 		.4byte	0
+ 162 0021 00000000 		.4byte	.Ldebug_line0
+ 163 0025 02       		.uleb128 0x2
+ 164 0026 04       		.byte	0x4
+ 165 0027 05       		.byte	0x5
+ 166 0028 696E7400 		.ascii	"int\000"
+ 167 002c 03       		.uleb128 0x3
+ 168 002d 04       		.byte	0x4
+ 169 002e 07       		.byte	0x7
+ 170 002f 51020000 		.4byte	.LASF0
+ 171 0033 03       		.uleb128 0x3
+ 172 0034 08       		.byte	0x8
+ 173 0035 05       		.byte	0x5
+ 174 0036 00000000 		.4byte	.LASF1
+ 175 003a 03       		.uleb128 0x3
+ 176 003b 08       		.byte	0x8
+ 177 003c 04       		.byte	0x4
+ 178 003d C2010000 		.4byte	.LASF2
+ 179 0041 03       		.uleb128 0x3
+ 180 0042 01       		.byte	0x1
+ 181 0043 06       		.byte	0x6
+ 182 0044 B6010000 		.4byte	.LASF3
+ 183 0048 03       		.uleb128 0x3
+ 184 0049 01       		.byte	0x1
+ 185 004a 08       		.byte	0x8
+ 186 004b 2B000000 		.4byte	.LASF4
+ 187 004f 04       		.uleb128 0x4
+ 188 0050 21000000 		.4byte	.LASF12
+ 189 0054 02       		.byte	0x2
+ 190 0055 29       		.byte	0x29
+ 191 0056 5A000000 		.4byte	0x5a
+ 192 005a 03       		.uleb128 0x3
+ 193 005b 02       		.byte	0x2
+ 194 005c 05       		.byte	0x5
+ 195 005d 52010000 		.4byte	.LASF5
+ 196 0061 03       		.uleb128 0x3
+ 197 0062 02       		.byte	0x2
+ 198 0063 07       		.byte	0x7
+ 199 0064 0E000000 		.4byte	.LASF6
+ 200 0068 03       		.uleb128 0x3
+ 201 0069 04       		.byte	0x4
+ 202 006a 05       		.byte	0x5
+ 203 006b 3E010000 		.4byte	.LASF7
+ 204 006f 03       		.uleb128 0x3
+ 205 0070 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 6
+
+
+ 206 0071 07       		.byte	0x7
+ 207 0072 5C010000 		.4byte	.LASF8
+ 208 0076 03       		.uleb128 0x3
+ 209 0077 08       		.byte	0x8
+ 210 0078 07       		.byte	0x7
+ 211 0079 62000000 		.4byte	.LASF9
+ 212 007d 03       		.uleb128 0x3
+ 213 007e 04       		.byte	0x4
+ 214 007f 07       		.byte	0x7
+ 215 0080 5E020000 		.4byte	.LASF10
+ 216 0084 03       		.uleb128 0x3
+ 217 0085 01       		.byte	0x1
+ 218 0086 08       		.byte	0x8
+ 219 0087 39010000 		.4byte	.LASF11
+ 220 008b 04       		.uleb128 0x4
+ 221 008c 39000000 		.4byte	.LASF13
+ 222 0090 03       		.byte	0x3
+ 223 0091 20       		.byte	0x20
+ 224 0092 4F000000 		.4byte	0x4f
+ 225 0096 04       		.uleb128 0x4
+ 226 0097 AB010000 		.4byte	.LASF14
+ 227 009b 04       		.byte	0x4
+ 228 009c 3A       		.byte	0x3a
+ 229 009d 8B000000 		.4byte	0x8b
+ 230 00a1 05       		.uleb128 0x5
+ 231 00a2 04       		.byte	0x4
+ 232 00a3 05       		.byte	0x5
+ 233 00a4 2A       		.byte	0x2a
+ 234 00a5 BE000000 		.4byte	0xbe
+ 235 00a9 06       		.uleb128 0x6
+ 236 00aa 7800     		.ascii	"x\000"
+ 237 00ac 05       		.byte	0x5
+ 238 00ad 2C       		.byte	0x2c
+ 239 00ae 96000000 		.4byte	0x96
+ 240 00b2 00       		.byte	0
+ 241 00b3 06       		.uleb128 0x6
+ 242 00b4 7900     		.ascii	"y\000"
+ 243 00b6 05       		.byte	0x5
+ 244 00b7 2D       		.byte	0x2d
+ 245 00b8 96000000 		.4byte	0x96
+ 246 00bc 02       		.byte	0x2
+ 247 00bd 00       		.byte	0
+ 248 00be 04       		.uleb128 0x4
+ 249 00bf 47010000 		.4byte	.LASF15
+ 250 00c3 05       		.byte	0x5
+ 251 00c4 2E       		.byte	0x2e
+ 252 00c5 A1000000 		.4byte	0xa1
+ 253 00c9 07       		.uleb128 0x7
+ 254 00ca 79000000 		.4byte	.LASF21
+ 255 00ce 01       		.byte	0x1
+ 256 00cf 2B       		.byte	0x2b
+ 257 00d0 00000000 		.4byte	.LFB3
+ 258 00d4 14000000 		.4byte	.LFE3-.LFB3
+ 259 00d8 01       		.uleb128 0x1
+ 260 00d9 9C       		.byte	0x9c
+ 261 00da 04010000 		.4byte	0x104
+ 262 00de 08       		.uleb128 0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 7
+
+
+ 263 00df 6300     		.ascii	"c\000"
+ 264 00e1 01       		.byte	0x1
+ 265 00e2 2B       		.byte	0x2b
+ 266 00e3 04010000 		.4byte	0x104
+ 267 00e7 01       		.uleb128 0x1
+ 268 00e8 50       		.byte	0x50
+ 269 00e9 08       		.uleb128 0x8
+ 270 00ea 746D7000 		.ascii	"tmp\000"
+ 271 00ee 01       		.byte	0x1
+ 272 00ef 2B       		.byte	0x2b
+ 273 00f0 0A010000 		.4byte	0x10a
+ 274 00f4 01       		.uleb128 0x1
+ 275 00f5 51       		.byte	0x51
+ 276 00f6 09       		.uleb128 0x9
+ 277 00f7 41000000 		.4byte	.LASF16
+ 278 00fb 01       		.byte	0x1
+ 279 00fc 2B       		.byte	0x2b
+ 280 00fd 96000000 		.4byte	0x96
+ 281 0101 01       		.uleb128 0x1
+ 282 0102 52       		.byte	0x52
+ 283 0103 00       		.byte	0
+ 284 0104 0A       		.uleb128 0xa
+ 285 0105 04       		.byte	0x4
+ 286 0106 BE000000 		.4byte	0xbe
+ 287 010a 0A       		.uleb128 0xa
+ 288 010b 04       		.byte	0x4
+ 289 010c 96000000 		.4byte	0x96
+ 290 0110 0B       		.uleb128 0xb
+ 291 0111 55000000 		.4byte	.LASF22
+ 292 0115 01       		.byte	0x1
+ 293 0116 37       		.byte	0x37
+ 294 0117 37010000 		.4byte	0x137
+ 295 011b 00000000 		.4byte	.LFB4
+ 296 011f 12000000 		.4byte	.LFE4-.LFB4
+ 297 0123 01       		.uleb128 0x1
+ 298 0124 9C       		.byte	0x9c
+ 299 0125 37010000 		.4byte	0x137
+ 300 0129 0C       		.uleb128 0xc
+ 301 012a 6300     		.ascii	"c\000"
+ 302 012c 01       		.byte	0x1
+ 303 012d 37       		.byte	0x37
+ 304 012e 04010000 		.4byte	0x104
+ 305 0132 00000000 		.4byte	.LLST0
+ 306 0136 00       		.byte	0
+ 307 0137 03       		.uleb128 0x3
+ 308 0138 01       		.byte	0x1
+ 309 0139 02       		.byte	0x2
+ 310 013a 6E010000 		.4byte	.LASF17
+ 311 013e 0D       		.uleb128 0xd
+ 312 013f 48000000 		.4byte	.LASF23
+ 313 0143 01       		.byte	0x1
+ 314 0144 41       		.byte	0x41
+ 315 0145 00000000 		.4byte	.LFB5
+ 316 0149 3C000000 		.4byte	.LFE5-.LFB5
+ 317 014d 01       		.uleb128 0x1
+ 318 014e 9C       		.byte	0x9c
+ 319 014f 08       		.uleb128 0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 8
+
+
+ 320 0150 6300     		.ascii	"c\000"
+ 321 0152 01       		.byte	0x1
+ 322 0153 41       		.byte	0x41
+ 323 0154 04010000 		.4byte	0x104
+ 324 0158 01       		.uleb128 0x1
+ 325 0159 50       		.byte	0x50
+ 326 015a 08       		.uleb128 0x8
+ 327 015b 746D7000 		.ascii	"tmp\000"
+ 328 015f 01       		.byte	0x1
+ 329 0160 41       		.byte	0x41
+ 330 0161 0A010000 		.4byte	0x10a
+ 331 0165 01       		.uleb128 0x1
+ 332 0166 51       		.byte	0x51
+ 333 0167 00       		.byte	0
+ 334 0168 00       		.byte	0
+ 335              		.section	.debug_abbrev,"",%progbits
+ 336              	.Ldebug_abbrev0:
+ 337 0000 01       		.uleb128 0x1
+ 338 0001 11       		.uleb128 0x11
+ 339 0002 01       		.byte	0x1
+ 340 0003 25       		.uleb128 0x25
+ 341 0004 0E       		.uleb128 0xe
+ 342 0005 13       		.uleb128 0x13
+ 343 0006 0B       		.uleb128 0xb
+ 344 0007 03       		.uleb128 0x3
+ 345 0008 0E       		.uleb128 0xe
+ 346 0009 1B       		.uleb128 0x1b
+ 347 000a 0E       		.uleb128 0xe
+ 348 000b 55       		.uleb128 0x55
+ 349 000c 17       		.uleb128 0x17
+ 350 000d 11       		.uleb128 0x11
+ 351 000e 01       		.uleb128 0x1
+ 352 000f 10       		.uleb128 0x10
+ 353 0010 17       		.uleb128 0x17
+ 354 0011 00       		.byte	0
+ 355 0012 00       		.byte	0
+ 356 0013 02       		.uleb128 0x2
+ 357 0014 24       		.uleb128 0x24
+ 358 0015 00       		.byte	0
+ 359 0016 0B       		.uleb128 0xb
+ 360 0017 0B       		.uleb128 0xb
+ 361 0018 3E       		.uleb128 0x3e
+ 362 0019 0B       		.uleb128 0xb
+ 363 001a 03       		.uleb128 0x3
+ 364 001b 08       		.uleb128 0x8
+ 365 001c 00       		.byte	0
+ 366 001d 00       		.byte	0
+ 367 001e 03       		.uleb128 0x3
+ 368 001f 24       		.uleb128 0x24
+ 369 0020 00       		.byte	0
+ 370 0021 0B       		.uleb128 0xb
+ 371 0022 0B       		.uleb128 0xb
+ 372 0023 3E       		.uleb128 0x3e
+ 373 0024 0B       		.uleb128 0xb
+ 374 0025 03       		.uleb128 0x3
+ 375 0026 0E       		.uleb128 0xe
+ 376 0027 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 9
+
+
+ 377 0028 00       		.byte	0
+ 378 0029 04       		.uleb128 0x4
+ 379 002a 16       		.uleb128 0x16
+ 380 002b 00       		.byte	0
+ 381 002c 03       		.uleb128 0x3
+ 382 002d 0E       		.uleb128 0xe
+ 383 002e 3A       		.uleb128 0x3a
+ 384 002f 0B       		.uleb128 0xb
+ 385 0030 3B       		.uleb128 0x3b
+ 386 0031 0B       		.uleb128 0xb
+ 387 0032 49       		.uleb128 0x49
+ 388 0033 13       		.uleb128 0x13
+ 389 0034 00       		.byte	0
+ 390 0035 00       		.byte	0
+ 391 0036 05       		.uleb128 0x5
+ 392 0037 13       		.uleb128 0x13
+ 393 0038 01       		.byte	0x1
+ 394 0039 0B       		.uleb128 0xb
+ 395 003a 0B       		.uleb128 0xb
+ 396 003b 3A       		.uleb128 0x3a
+ 397 003c 0B       		.uleb128 0xb
+ 398 003d 3B       		.uleb128 0x3b
+ 399 003e 0B       		.uleb128 0xb
+ 400 003f 01       		.uleb128 0x1
+ 401 0040 13       		.uleb128 0x13
+ 402 0041 00       		.byte	0
+ 403 0042 00       		.byte	0
+ 404 0043 06       		.uleb128 0x6
+ 405 0044 0D       		.uleb128 0xd
+ 406 0045 00       		.byte	0
+ 407 0046 03       		.uleb128 0x3
+ 408 0047 08       		.uleb128 0x8
+ 409 0048 3A       		.uleb128 0x3a
+ 410 0049 0B       		.uleb128 0xb
+ 411 004a 3B       		.uleb128 0x3b
+ 412 004b 0B       		.uleb128 0xb
+ 413 004c 49       		.uleb128 0x49
+ 414 004d 13       		.uleb128 0x13
+ 415 004e 38       		.uleb128 0x38
+ 416 004f 0B       		.uleb128 0xb
+ 417 0050 00       		.byte	0
+ 418 0051 00       		.byte	0
+ 419 0052 07       		.uleb128 0x7
+ 420 0053 2E       		.uleb128 0x2e
+ 421 0054 01       		.byte	0x1
+ 422 0055 3F       		.uleb128 0x3f
+ 423 0056 19       		.uleb128 0x19
+ 424 0057 03       		.uleb128 0x3
+ 425 0058 0E       		.uleb128 0xe
+ 426 0059 3A       		.uleb128 0x3a
+ 427 005a 0B       		.uleb128 0xb
+ 428 005b 3B       		.uleb128 0x3b
+ 429 005c 0B       		.uleb128 0xb
+ 430 005d 27       		.uleb128 0x27
+ 431 005e 19       		.uleb128 0x19
+ 432 005f 11       		.uleb128 0x11
+ 433 0060 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 10
+
+
+ 434 0061 12       		.uleb128 0x12
+ 435 0062 06       		.uleb128 0x6
+ 436 0063 40       		.uleb128 0x40
+ 437 0064 18       		.uleb128 0x18
+ 438 0065 9742     		.uleb128 0x2117
+ 439 0067 19       		.uleb128 0x19
+ 440 0068 01       		.uleb128 0x1
+ 441 0069 13       		.uleb128 0x13
+ 442 006a 00       		.byte	0
+ 443 006b 00       		.byte	0
+ 444 006c 08       		.uleb128 0x8
+ 445 006d 05       		.uleb128 0x5
+ 446 006e 00       		.byte	0
+ 447 006f 03       		.uleb128 0x3
+ 448 0070 08       		.uleb128 0x8
+ 449 0071 3A       		.uleb128 0x3a
+ 450 0072 0B       		.uleb128 0xb
+ 451 0073 3B       		.uleb128 0x3b
+ 452 0074 0B       		.uleb128 0xb
+ 453 0075 49       		.uleb128 0x49
+ 454 0076 13       		.uleb128 0x13
+ 455 0077 02       		.uleb128 0x2
+ 456 0078 18       		.uleb128 0x18
+ 457 0079 00       		.byte	0
+ 458 007a 00       		.byte	0
+ 459 007b 09       		.uleb128 0x9
+ 460 007c 05       		.uleb128 0x5
+ 461 007d 00       		.byte	0
+ 462 007e 03       		.uleb128 0x3
+ 463 007f 0E       		.uleb128 0xe
+ 464 0080 3A       		.uleb128 0x3a
+ 465 0081 0B       		.uleb128 0xb
+ 466 0082 3B       		.uleb128 0x3b
+ 467 0083 0B       		.uleb128 0xb
+ 468 0084 49       		.uleb128 0x49
+ 469 0085 13       		.uleb128 0x13
+ 470 0086 02       		.uleb128 0x2
+ 471 0087 18       		.uleb128 0x18
+ 472 0088 00       		.byte	0
+ 473 0089 00       		.byte	0
+ 474 008a 0A       		.uleb128 0xa
+ 475 008b 0F       		.uleb128 0xf
+ 476 008c 00       		.byte	0
+ 477 008d 0B       		.uleb128 0xb
+ 478 008e 0B       		.uleb128 0xb
+ 479 008f 49       		.uleb128 0x49
+ 480 0090 13       		.uleb128 0x13
+ 481 0091 00       		.byte	0
+ 482 0092 00       		.byte	0
+ 483 0093 0B       		.uleb128 0xb
+ 484 0094 2E       		.uleb128 0x2e
+ 485 0095 01       		.byte	0x1
+ 486 0096 3F       		.uleb128 0x3f
+ 487 0097 19       		.uleb128 0x19
+ 488 0098 03       		.uleb128 0x3
+ 489 0099 0E       		.uleb128 0xe
+ 490 009a 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 11
+
+
+ 491 009b 0B       		.uleb128 0xb
+ 492 009c 3B       		.uleb128 0x3b
+ 493 009d 0B       		.uleb128 0xb
+ 494 009e 27       		.uleb128 0x27
+ 495 009f 19       		.uleb128 0x19
+ 496 00a0 49       		.uleb128 0x49
+ 497 00a1 13       		.uleb128 0x13
+ 498 00a2 11       		.uleb128 0x11
+ 499 00a3 01       		.uleb128 0x1
+ 500 00a4 12       		.uleb128 0x12
+ 501 00a5 06       		.uleb128 0x6
+ 502 00a6 40       		.uleb128 0x40
+ 503 00a7 18       		.uleb128 0x18
+ 504 00a8 9742     		.uleb128 0x2117
+ 505 00aa 19       		.uleb128 0x19
+ 506 00ab 01       		.uleb128 0x1
+ 507 00ac 13       		.uleb128 0x13
+ 508 00ad 00       		.byte	0
+ 509 00ae 00       		.byte	0
+ 510 00af 0C       		.uleb128 0xc
+ 511 00b0 05       		.uleb128 0x5
+ 512 00b1 00       		.byte	0
+ 513 00b2 03       		.uleb128 0x3
+ 514 00b3 08       		.uleb128 0x8
+ 515 00b4 3A       		.uleb128 0x3a
+ 516 00b5 0B       		.uleb128 0xb
+ 517 00b6 3B       		.uleb128 0x3b
+ 518 00b7 0B       		.uleb128 0xb
+ 519 00b8 49       		.uleb128 0x49
+ 520 00b9 13       		.uleb128 0x13
+ 521 00ba 02       		.uleb128 0x2
+ 522 00bb 17       		.uleb128 0x17
+ 523 00bc 00       		.byte	0
+ 524 00bd 00       		.byte	0
+ 525 00be 0D       		.uleb128 0xd
+ 526 00bf 2E       		.uleb128 0x2e
+ 527 00c0 01       		.byte	0x1
+ 528 00c1 3F       		.uleb128 0x3f
+ 529 00c2 19       		.uleb128 0x19
+ 530 00c3 03       		.uleb128 0x3
+ 531 00c4 0E       		.uleb128 0xe
+ 532 00c5 3A       		.uleb128 0x3a
+ 533 00c6 0B       		.uleb128 0xb
+ 534 00c7 3B       		.uleb128 0x3b
+ 535 00c8 0B       		.uleb128 0xb
+ 536 00c9 27       		.uleb128 0x27
+ 537 00ca 19       		.uleb128 0x19
+ 538 00cb 11       		.uleb128 0x11
+ 539 00cc 01       		.uleb128 0x1
+ 540 00cd 12       		.uleb128 0x12
+ 541 00ce 06       		.uleb128 0x6
+ 542 00cf 40       		.uleb128 0x40
+ 543 00d0 18       		.uleb128 0x18
+ 544 00d1 9742     		.uleb128 0x2117
+ 545 00d3 19       		.uleb128 0x19
+ 546 00d4 00       		.byte	0
+ 547 00d5 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 12
+
+
+ 548 00d6 00       		.byte	0
+ 549              		.section	.debug_loc,"",%progbits
+ 550              	.Ldebug_loc0:
+ 551              	.LLST0:
+ 552 0000 00000000 		.4byte	.LVL1
+ 553 0004 08000000 		.4byte	.LVL2
+ 554 0008 0100     		.2byte	0x1
+ 555 000a 50       		.byte	0x50
+ 556 000b 08000000 		.4byte	.LVL2
+ 557 000f 12000000 		.4byte	.LFE4
+ 558 0013 0400     		.2byte	0x4
+ 559 0015 F3       		.byte	0xf3
+ 560 0016 01       		.uleb128 0x1
+ 561 0017 50       		.byte	0x50
+ 562 0018 9F       		.byte	0x9f
+ 563 0019 00000000 		.4byte	0
+ 564 001d 00000000 		.4byte	0
+ 565              		.section	.debug_aranges,"",%progbits
+ 566 0000 2C000000 		.4byte	0x2c
+ 567 0004 0200     		.2byte	0x2
+ 568 0006 00000000 		.4byte	.Ldebug_info0
+ 569 000a 04       		.byte	0x4
+ 570 000b 00       		.byte	0
+ 571 000c 0000     		.2byte	0
+ 572 000e 0000     		.2byte	0
+ 573 0010 00000000 		.4byte	.LFB3
+ 574 0014 14000000 		.4byte	.LFE3-.LFB3
+ 575 0018 00000000 		.4byte	.LFB4
+ 576 001c 12000000 		.4byte	.LFE4-.LFB4
+ 577 0020 00000000 		.4byte	.LFB5
+ 578 0024 3C000000 		.4byte	.LFE5-.LFB5
+ 579 0028 00000000 		.4byte	0
+ 580 002c 00000000 		.4byte	0
+ 581              		.section	.debug_ranges,"",%progbits
+ 582              	.Ldebug_ranges0:
+ 583 0000 00000000 		.4byte	.LFB3
+ 584 0004 14000000 		.4byte	.LFE3
+ 585 0008 00000000 		.4byte	.LFB4
+ 586 000c 12000000 		.4byte	.LFE4
+ 587 0010 00000000 		.4byte	.LFB5
+ 588 0014 3C000000 		.4byte	.LFE5
+ 589 0018 00000000 		.4byte	0
+ 590 001c 00000000 		.4byte	0
+ 591              		.section	.debug_line,"",%progbits
+ 592              	.Ldebug_line0:
+ 593 0000 DF010000 		.section	.debug_str,"MS",%progbits,1
+ 593      02009A01 
+ 593      00000201 
+ 593      FB0E0D00 
+ 593      01010101 
+ 594              	.LASF1:
+ 595 0000 6C6F6E67 		.ascii	"long long int\000"
+ 595      206C6F6E 
+ 595      6720696E 
+ 595      7400
+ 596              	.LASF6:
+ 597 000e 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 13
+
+
+ 597      7420756E 
+ 597      7369676E 
+ 597      65642069 
+ 597      6E7400
+ 598              	.LASF12:
+ 599 0021 5F5F696E 		.ascii	"__int16_t\000"
+ 599      7431365F 
+ 599      7400
+ 600              	.LASF4:
+ 601 002b 756E7369 		.ascii	"unsigned char\000"
+ 601      676E6564 
+ 601      20636861 
+ 601      7200
+ 602              	.LASF13:
+ 603 0039 696E7431 		.ascii	"int16_t\000"
+ 603      365F7400 
+ 604              	.LASF16:
+ 605 0041 72616469 		.ascii	"radius\000"
+ 605      757300
+ 606              	.LASF23:
+ 607 0048 6C765F63 		.ascii	"lv_circ_next\000"
+ 607      6972635F 
+ 607      6E657874 
+ 607      00
+ 608              	.LASF22:
+ 609 0055 6C765F63 		.ascii	"lv_circ_cont\000"
+ 609      6972635F 
+ 609      636F6E74 
+ 609      00
+ 610              	.LASF9:
+ 611 0062 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 611      206C6F6E 
+ 611      6720756E 
+ 611      7369676E 
+ 611      65642069 
+ 612              	.LASF21:
+ 613 0079 6C765F63 		.ascii	"lv_circ_init\000"
+ 613      6972635F 
+ 613      696E6974 
+ 613      00
+ 614              	.LASF18:
+ 615 0086 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 615      43313120 
+ 615      352E342E 
+ 615      31203230 
+ 615      31363036 
+ 616 00b9 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 616      20726576 
+ 616      6973696F 
+ 616      6E203233 
+ 616      37373135 
+ 617 00ec 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 617      70202D6D 
+ 617      6670753D 
+ 617      66707634 
+ 617      2D73702D 
+ 618 011f 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 14
+
+
+ 618      6F6E7320 
+ 618      2D666661 
+ 618      742D6C74 
+ 618      6F2D6F62 
+ 619              	.LASF11:
+ 620 0139 63686172 		.ascii	"char\000"
+ 620      00
+ 621              	.LASF7:
+ 622 013e 6C6F6E67 		.ascii	"long int\000"
+ 622      20696E74 
+ 622      00
+ 623              	.LASF15:
+ 624 0147 6C765F70 		.ascii	"lv_point_t\000"
+ 624      6F696E74 
+ 624      5F7400
+ 625              	.LASF5:
+ 626 0152 73686F72 		.ascii	"short int\000"
+ 626      7420696E 
+ 626      7400
+ 627              	.LASF8:
+ 628 015c 6C6F6E67 		.ascii	"long unsigned int\000"
+ 628      20756E73 
+ 628      69676E65 
+ 628      6420696E 
+ 628      7400
+ 629              	.LASF17:
+ 630 016e 5F426F6F 		.ascii	"_Bool\000"
+ 630      6C00
+ 631              	.LASF19:
+ 632 0174 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 632      2E5C2E2E 
+ 632      5C6C7667 
+ 632      6C5C7665 
+ 632      7273696F 
+ 633 01a0 5C6C765F 		.ascii	"\\lv_circ.c\000"
+ 633      63697263 
+ 633      2E6300
+ 634              	.LASF14:
+ 635 01ab 6C765F63 		.ascii	"lv_coord_t\000"
+ 635      6F6F7264 
+ 635      5F7400
+ 636              	.LASF3:
+ 637 01b6 7369676E 		.ascii	"signed char\000"
+ 637      65642063 
+ 637      68617200 
+ 638              	.LASF2:
+ 639 01c2 6C6F6E67 		.ascii	"long double\000"
+ 639      20646F75 
+ 639      626C6500 
+ 640              	.LASF20:
+ 641 01ce 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 641      73657273 
+ 641      5C706561 
+ 641      726C7374 
+ 641      6C5C446F 
+ 642 01fc 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 642      6D5F656E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccbmNKPy.s 			page 15
+
+
+ 642      67696E65 
+ 642      6572696E 
+ 642      675C656D 
+ 643 022b 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 643      6C76676C 
+ 643      365C7463 
+ 643      6F6D5F64 
+ 643      6973706C 
+ 644              	.LASF0:
+ 645 0251 756E7369 		.ascii	"unsigned int\000"
+ 645      676E6564 
+ 645      20696E74 
+ 645      00
+ 646              	.LASF10:
+ 647 025e 73697A65 		.ascii	"sizetype\000"
+ 647      74797065 
+ 647      00
+ 648              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

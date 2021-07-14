@@ -1,0 +1,16 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../FullSystem.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" \
+"../../../../FullSystem.srcs/sources_1/new/ADCInterface.v" \
+"../../../../FullSystem.srcs/sources_1/new/RAM_ReadEngine.v" \
+"../../../../FullSystem.srcs/sources_1/new/RAM_WriteEngine.v" \
+"../../../../FullSystem.srcs/sources_1/new/Regs.v" \
+"../../../../FullSystem.srcs/sources_1/new/SPI.v" \
+"../../../../FullSystem.srcs/sources_1/new/TimingGen.v" \
+"../../../../FullSystem.srcs/sources_1/new/Top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

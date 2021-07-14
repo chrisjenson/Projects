@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
+  <block name="PORT9_PIN0" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="sclk_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="select_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="miso_m_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="mosi_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCB" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="clock_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCBCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="or_sclk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_7" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
+  <block name="PORT9_PIN1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CLOCK_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="DISP_TICK_ISR" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SPI_MISO" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SEL_PIN" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SPI_Sel" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SPI_MOSI" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SPI_CLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CLOCK_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="ncs" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="d_c" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="LCD_INTERFACE" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="d" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="DISP_TICK_TIMER" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="TCPWM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
+  <block name="I2C_MASTER" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="ZeroTerminal_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_3" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_4" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCBCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCB_IRQ" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_1" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_7" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="or_sclk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCB" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_5" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_6" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="clock_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
+  <block name="PORT6_PIN2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="nwr" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="nrd" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+</blockRegMap>

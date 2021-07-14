@@ -1,0 +1,7 @@
+C:\Users\tmj32\Documents\TCNJ\Senior_Project\Oscilloscope_Senior_Project\tcom_engineering\embed_sw\tcom_app\tcom_app_psoc6_lvgl6\tcom_displ_test_psoc6.cydsn\tcom_displ_test_psoc6.cyprj|92b17254-301e-4a3d-adf9-6b4e0fd35623
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|f13c1df1-c7c4-4d3d-87a1-26c3f76eb42c
+C:\Users\tmj32\Documents\PSoC Creator\4.3\Downloads ( 4.3).cylib\Downloads ( 4.3).cyprj|6bf56224-46a3-48f8-b2eb-78bca8e34d53
+C:\Users\tmj32\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|6806c891-3821-4fce-9d1d-dca2eb18036b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|bf1da4c7-bd9d-48e2-bc78-a4ff2e9b0cdd
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|754de88c-4699-4202-8a12-3794a088a408
+C:\Program Files (x86)\Cypress\PSoC Creator\4.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|cb32c77b-8d85-43cb-bc4c-26450361eac8

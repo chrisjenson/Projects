@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Apr 26 15:24:38 2021
+# Process ID: 11660
+# Current directory: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20820 D:\SeniorProject\Oscilloscope_Senior_Project\Verilog\FullSystem\FullSystem.xpr
+# Log file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/vivado.log
+# Journal file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr
+update_compile_order -fileset sources_1

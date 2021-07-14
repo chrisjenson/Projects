@@ -1,0 +1,1166 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_utils.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_utils_num_to_str,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_utils_num_to_str
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_utils_num_to_str, %function
+  26              	lv_utils_num_to_str:
+  27              	.LFB0:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_utils.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @file lv_utils.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** #include <stdbool.h>
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** #include "lv_utils.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** #include "lv_math.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /*********************
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *      DEFINES
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *********************/
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**********************
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *      TYPEDEFS
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  **********************/
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *  STATIC PROTOTYPES
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  **********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *  STATIC VARIABLES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *      MACROS
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *   GLOBAL FUNCTIONS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /**
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * Convert a number to string
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param num a number
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param buf pointer to a `char` buffer. The result will be stored here (max 10 elements)
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @return same as `buf` (just for convenience)
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  */
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** char * lv_utils_num_to_str(int32_t num, char * buf)
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** {
+  29              		.loc 1 45 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              		.cfi_def_cfa_offset 24
+  39 0004 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  41 0006 7860     		str	r0, [r7, #4]
+  42 0008 3960     		str	r1, [r7]
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     if(num == 0) {
+  43              		.loc 1 46 0
+  44 000a 7B68     		ldr	r3, [r7, #4]
+  45 000c 002B     		cmp	r3, #0
+  46 000e 08D1     		bne	.L2
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[0] = '0';
+  47              		.loc 1 47 0
+  48 0010 3B68     		ldr	r3, [r7]
+  49 0012 3022     		movs	r2, #48
+  50 0014 1A70     		strb	r2, [r3]
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[1] = '\0';
+  51              		.loc 1 48 0
+  52 0016 3B68     		ldr	r3, [r7]
+  53 0018 0133     		adds	r3, r3, #1
+  54 001a 0022     		movs	r2, #0
+  55 001c 1A70     		strb	r2, [r3]
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         return buf;
+  56              		.loc 1 49 0
+  57 001e 3B68     		ldr	r3, [r7]
+  58 0020 75E0     		b	.L3
+  59              	.L2:
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     }
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     int8_t digitCount = 0;
+  60              		.loc 1 51 0
+  61 0022 0023     		movs	r3, #0
+  62 0024 FB73     		strb	r3, [r7, #15]
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     int8_t i          = 0;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 3
+
+
+  63              		.loc 1 52 0
+  64 0026 0023     		movs	r3, #0
+  65 0028 BB73     		strb	r3, [r7, #14]
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     if(num < 0) {
+  66              		.loc 1 53 0
+  67 002a 7B68     		ldr	r3, [r7, #4]
+  68 002c 002B     		cmp	r3, #0
+  69 002e 35DA     		bge	.L5
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[digitCount++] = '-';
+  70              		.loc 1 54 0
+  71 0030 97F90F20 		ldrsb	r2, [r7, #15]
+  72 0034 D3B2     		uxtb	r3, r2
+  73 0036 0133     		adds	r3, r3, #1
+  74 0038 DBB2     		uxtb	r3, r3
+  75 003a FB73     		strb	r3, [r7, #15]
+  76 003c 3B68     		ldr	r3, [r7]
+  77 003e 1344     		add	r3, r3, r2
+  78 0040 2D22     		movs	r2, #45
+  79 0042 1A70     		strb	r2, [r3]
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         num               = LV_MATH_ABS(num);
+  80              		.loc 1 55 0
+  81 0044 7B68     		ldr	r3, [r7, #4]
+  82 0046 002B     		cmp	r3, #0
+  83 0048 B8BF     		it	lt
+  84 004a 5B42     		rsblt	r3, r3, #0
+  85 004c 7B60     		str	r3, [r7, #4]
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         ++i;
+  86              		.loc 1 56 0
+  87 004e BB7B     		ldrb	r3, [r7, #14]	@ zero_extendqisi2
+  88 0050 0133     		adds	r3, r3, #1
+  89 0052 DBB2     		uxtb	r3, r3
+  90 0054 BB73     		strb	r3, [r7, #14]
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     }
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     while(num) {
+  91              		.loc 1 58 0
+  92 0056 21E0     		b	.L5
+  93              	.L6:
+  94              	.LBB2:
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         char digit        = num % 10;
+  95              		.loc 1 59 0
+  96 0058 7A68     		ldr	r2, [r7, #4]
+  97 005a 304B     		ldr	r3, .L9
+  98 005c 83FB0213 		smull	r1, r3, r3, r2
+  99 0060 9910     		asrs	r1, r3, #2
+ 100 0062 D317     		asrs	r3, r2, #31
+ 101 0064 C91A     		subs	r1, r1, r3
+ 102 0066 0B46     		mov	r3, r1
+ 103 0068 9B00     		lsls	r3, r3, #2
+ 104 006a 0B44     		add	r3, r3, r1
+ 105 006c 5B00     		lsls	r3, r3, #1
+ 106 006e D11A     		subs	r1, r2, r3
+ 107 0070 0B46     		mov	r3, r1
+ 108 0072 7B73     		strb	r3, [r7, #13]
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[digitCount++] = digit + 48;
+ 109              		.loc 1 60 0
+ 110 0074 97F90F20 		ldrsb	r2, [r7, #15]
+ 111 0078 D3B2     		uxtb	r3, r2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 4
+
+
+ 112 007a 0133     		adds	r3, r3, #1
+ 113 007c DBB2     		uxtb	r3, r3
+ 114 007e FB73     		strb	r3, [r7, #15]
+ 115 0080 3B68     		ldr	r3, [r7]
+ 116 0082 1344     		add	r3, r3, r2
+ 117 0084 7A7B     		ldrb	r2, [r7, #13]
+ 118 0086 3032     		adds	r2, r2, #48
+ 119 0088 D2B2     		uxtb	r2, r2
+ 120 008a 1A70     		strb	r2, [r3]
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         num /= 10;
+ 121              		.loc 1 61 0
+ 122 008c 7B68     		ldr	r3, [r7, #4]
+ 123 008e 234A     		ldr	r2, .L9
+ 124 0090 82FB0312 		smull	r1, r2, r2, r3
+ 125 0094 9210     		asrs	r2, r2, #2
+ 126 0096 DB17     		asrs	r3, r3, #31
+ 127 0098 D31A     		subs	r3, r2, r3
+ 128 009a 7B60     		str	r3, [r7, #4]
+ 129              	.L5:
+ 130              	.LBE2:
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         char digit        = num % 10;
+ 131              		.loc 1 58 0
+ 132 009c 7B68     		ldr	r3, [r7, #4]
+ 133 009e 002B     		cmp	r3, #0
+ 134 00a0 DAD1     		bne	.L6
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     }
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     buf[digitCount] = '\0';
+ 135              		.loc 1 63 0
+ 136 00a2 97F90F30 		ldrsb	r3, [r7, #15]
+ 137 00a6 3A68     		ldr	r2, [r7]
+ 138 00a8 1344     		add	r3, r3, r2
+ 139 00aa 0022     		movs	r2, #0
+ 140 00ac 1A70     		strb	r2, [r3]
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     digitCount--;
+ 141              		.loc 1 64 0
+ 142 00ae 97F90F30 		ldrsb	r3, [r7, #15]
+ 143 00b2 DBB2     		uxtb	r3, r3
+ 144 00b4 013B     		subs	r3, r3, #1
+ 145 00b6 DBB2     		uxtb	r3, r3
+ 146 00b8 FB73     		strb	r3, [r7, #15]
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     while(digitCount > i) {
+ 147              		.loc 1 65 0
+ 148 00ba 21E0     		b	.L7
+ 149              	.L8:
+ 150              	.LBB3:
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         char temp       = buf[i];
+ 151              		.loc 1 66 0
+ 152 00bc 97F90E30 		ldrsb	r3, [r7, #14]
+ 153 00c0 3A68     		ldr	r2, [r7]
+ 154 00c2 1344     		add	r3, r3, r2
+ 155 00c4 1B78     		ldrb	r3, [r3]
+ 156 00c6 3B73     		strb	r3, [r7, #12]
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[i]          = buf[digitCount];
+ 157              		.loc 1 67 0
+ 158 00c8 97F90E30 		ldrsb	r3, [r7, #14]
+ 159 00cc 3A68     		ldr	r2, [r7]
+ 160 00ce 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 5
+
+
+ 161 00d0 97F90F20 		ldrsb	r2, [r7, #15]
+ 162 00d4 3968     		ldr	r1, [r7]
+ 163 00d6 0A44     		add	r2, r2, r1
+ 164 00d8 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 165 00da 1A70     		strb	r2, [r3]
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         buf[digitCount] = temp;
+ 166              		.loc 1 68 0
+ 167 00dc 97F90F30 		ldrsb	r3, [r7, #15]
+ 168 00e0 3A68     		ldr	r2, [r7]
+ 169 00e2 1344     		add	r3, r3, r2
+ 170 00e4 3A7B     		ldrb	r2, [r7, #12]
+ 171 00e6 1A70     		strb	r2, [r3]
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         digitCount--;
+ 172              		.loc 1 69 0
+ 173 00e8 97F90F30 		ldrsb	r3, [r7, #15]
+ 174 00ec DBB2     		uxtb	r3, r3
+ 175 00ee 013B     		subs	r3, r3, #1
+ 176 00f0 DBB2     		uxtb	r3, r3
+ 177 00f2 FB73     		strb	r3, [r7, #15]
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         i++;
+ 178              		.loc 1 70 0
+ 179 00f4 97F90E30 		ldrsb	r3, [r7, #14]
+ 180 00f8 DBB2     		uxtb	r3, r3
+ 181 00fa 0133     		adds	r3, r3, #1
+ 182 00fc DBB2     		uxtb	r3, r3
+ 183 00fe BB73     		strb	r3, [r7, #14]
+ 184              	.L7:
+ 185              	.LBE3:
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         char temp       = buf[i];
+ 186              		.loc 1 65 0
+ 187 0100 97F90F20 		ldrsb	r2, [r7, #15]
+ 188 0104 97F90E30 		ldrsb	r3, [r7, #14]
+ 189 0108 9A42     		cmp	r2, r3
+ 190 010a D7DC     		bgt	.L8
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     }
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     return buf;
+ 191              		.loc 1 72 0
+ 192 010c 3B68     		ldr	r3, [r7]
+ 193              	.L3:
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** }
+ 194              		.loc 1 73 0
+ 195 010e 1846     		mov	r0, r3
+ 196 0110 1437     		adds	r7, r7, #20
+ 197              		.cfi_def_cfa_offset 4
+ 198 0112 BD46     		mov	sp, r7
+ 199              		.cfi_def_cfa_register 13
+ 200              		@ sp needed
+ 201 0114 5DF8047B 		ldr	r7, [sp], #4
+ 202              		.cfi_restore 7
+ 203              		.cfi_def_cfa_offset 0
+ 204 0118 7047     		bx	lr
+ 205              	.L10:
+ 206 011a 00BF     		.align	2
+ 207              	.L9:
+ 208 011c 67666666 		.word	1717986919
+ 209              		.cfi_endproc
+ 210              	.LFE0:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 6
+
+
+ 211              		.size	lv_utils_num_to_str, .-lv_utils_num_to_str
+ 212              		.section	.text.lv_utils_bsearch,"ax",%progbits
+ 213              		.align	2
+ 214              		.global	lv_utils_bsearch
+ 215              		.thumb
+ 216              		.thumb_func
+ 217              		.type	lv_utils_bsearch, %function
+ 218              	lv_utils_bsearch:
+ 219              	.LFB1:
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** /** Searches base[0] to base[n - 1] for an item that matches *key.
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @note The function cmp must return negative if its first
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *  argument (the search key) is less that its second (a table entry),
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *  zero if equal, and positive if greater.
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *  @note Items in the array must be in ascending order.
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param key    Pointer to item being searched for
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param base   Pointer to first element to search
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param n      Number of elements
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param size   Size of each element
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @param cmp    Pointer to comparison function (see #lv_font_codeCompare as a comparison function
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * example)
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  *
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  * @return a pointer to a matching item, or NULL if none exists.
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****  */
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** void * lv_utils_bsearch(const void * key, const void * base, uint32_t n, uint32_t size,
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****                         int32_t (*cmp)(const void * pRef, const void * pElement))
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** {
+ 220              		.loc 1 94 0
+ 221              		.cfi_startproc
+ 222              		@ args = 4, pretend = 0, frame = 24
+ 223              		@ frame_needed = 1, uses_anonymous_args = 0
+ 224 0000 80B5     		push	{r7, lr}
+ 225              		.cfi_def_cfa_offset 8
+ 226              		.cfi_offset 7, -8
+ 227              		.cfi_offset 14, -4
+ 228 0002 86B0     		sub	sp, sp, #24
+ 229              		.cfi_def_cfa_offset 32
+ 230 0004 00AF     		add	r7, sp, #0
+ 231              		.cfi_def_cfa_register 7
+ 232 0006 F860     		str	r0, [r7, #12]
+ 233 0008 B960     		str	r1, [r7, #8]
+ 234 000a 7A60     		str	r2, [r7, #4]
+ 235 000c 3B60     		str	r3, [r7]
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     const char * middle;
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     int32_t c;
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** 
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     for(middle = base; n != 0;) {
+ 236              		.loc 1 98 0
+ 237 000e BB68     		ldr	r3, [r7, #8]
+ 238 0010 7B61     		str	r3, [r7, #20]
+ 239 0012 2DE0     		b	.L12
+ 240              	.L16:
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         middle += (n / 2) * size;
+ 241              		.loc 1 99 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 7
+
+
+ 242 0014 7B68     		ldr	r3, [r7, #4]
+ 243 0016 5B08     		lsrs	r3, r3, #1
+ 244 0018 3A68     		ldr	r2, [r7]
+ 245 001a 02FB03F3 		mul	r3, r2, r3
+ 246 001e 7A69     		ldr	r2, [r7, #20]
+ 247 0020 1344     		add	r3, r3, r2
+ 248 0022 7B61     		str	r3, [r7, #20]
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         if((c = (*cmp)(key, middle)) > 0) {
+ 249              		.loc 1 100 0
+ 250 0024 3B6A     		ldr	r3, [r7, #32]
+ 251 0026 7969     		ldr	r1, [r7, #20]
+ 252 0028 F868     		ldr	r0, [r7, #12]
+ 253 002a 9847     		blx	r3
+ 254 002c 3861     		str	r0, [r7, #16]
+ 255 002e 3B69     		ldr	r3, [r7, #16]
+ 256 0030 002B     		cmp	r3, #0
+ 257 0032 12DD     		ble	.L13
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****             n    = (n / 2) - ((n & 1) == 0);
+ 258              		.loc 1 101 0
+ 259 0034 7B68     		ldr	r3, [r7, #4]
+ 260 0036 5B08     		lsrs	r3, r3, #1
+ 261 0038 7A68     		ldr	r2, [r7, #4]
+ 262 003a 02F00102 		and	r2, r2, #1
+ 263 003e 002A     		cmp	r2, #0
+ 264 0040 0CBF     		ite	eq
+ 265 0042 0122     		moveq	r2, #1
+ 266 0044 0022     		movne	r2, #0
+ 267 0046 D2B2     		uxtb	r2, r2
+ 268 0048 9B1A     		subs	r3, r3, r2
+ 269 004a 7B60     		str	r3, [r7, #4]
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****             base = (middle += size);
+ 270              		.loc 1 102 0
+ 271 004c 7A69     		ldr	r2, [r7, #20]
+ 272 004e 3B68     		ldr	r3, [r7]
+ 273 0050 1344     		add	r3, r3, r2
+ 274 0052 7B61     		str	r3, [r7, #20]
+ 275 0054 7B69     		ldr	r3, [r7, #20]
+ 276 0056 BB60     		str	r3, [r7, #8]
+ 277 0058 0AE0     		b	.L12
+ 278              	.L13:
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         } else if(c < 0) {
+ 279              		.loc 1 103 0
+ 280 005a 3B69     		ldr	r3, [r7, #16]
+ 281 005c 002B     		cmp	r3, #0
+ 282 005e 05DA     		bge	.L14
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****             n /= 2;
+ 283              		.loc 1 104 0
+ 284 0060 7B68     		ldr	r3, [r7, #4]
+ 285 0062 5B08     		lsrs	r3, r3, #1
+ 286 0064 7B60     		str	r3, [r7, #4]
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****             middle = base;
+ 287              		.loc 1 105 0
+ 288 0066 BB68     		ldr	r3, [r7, #8]
+ 289 0068 7B61     		str	r3, [r7, #20]
+ 290 006a 01E0     		b	.L12
+ 291              	.L14:
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         } else {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 8
+
+
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****             return (char *)middle;
+ 292              		.loc 1 107 0
+ 293 006c 7B69     		ldr	r3, [r7, #20]
+ 294 006e 03E0     		b	.L15
+ 295              	.L12:
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         middle += (n / 2) * size;
+ 296              		.loc 1 98 0 discriminator 1
+ 297 0070 7B68     		ldr	r3, [r7, #4]
+ 298 0072 002B     		cmp	r3, #0
+ 299 0074 CED1     		bne	.L16
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****         }
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     }
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c ****     return NULL;
+ 300              		.loc 1 110 0
+ 301 0076 0023     		movs	r3, #0
+ 302              	.L15:
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_utils.c **** }
+ 303              		.loc 1 111 0
+ 304 0078 1846     		mov	r0, r3
+ 305 007a 1837     		adds	r7, r7, #24
+ 306              		.cfi_def_cfa_offset 8
+ 307 007c BD46     		mov	sp, r7
+ 308              		.cfi_def_cfa_register 13
+ 309              		@ sp needed
+ 310 007e 80BD     		pop	{r7, pc}
+ 311              		.cfi_endproc
+ 312              	.LFE1:
+ 313              		.size	lv_utils_bsearch, .-lv_utils_bsearch
+ 314              		.text
+ 315              	.Letext0:
+ 316              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 317              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 318              		.section	.debug_info,"",%progbits
+ 319              	.Ldebug_info0:
+ 320 0000 E8010000 		.4byte	0x1e8
+ 321 0004 0400     		.2byte	0x4
+ 322 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 323 000a 04       		.byte	0x4
+ 324 000b 01       		.uleb128 0x1
+ 325 000c A9000000 		.4byte	.LASF25
+ 326 0010 0C       		.byte	0xc
+ 327 0011 47000000 		.4byte	.LASF26
+ 328 0015 A7010000 		.4byte	.LASF27
+ 329 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 330 001d 00000000 		.4byte	0
+ 331 0021 00000000 		.4byte	.Ldebug_line0
+ 332 0025 02       		.uleb128 0x2
+ 333 0026 00000000 		.4byte	.LASF4
+ 334 002a 02       		.byte	0x2
+ 335 002b 1B       		.byte	0x1b
+ 336 002c 30000000 		.4byte	0x30
+ 337 0030 03       		.uleb128 0x3
+ 338 0031 01       		.byte	0x1
+ 339 0032 06       		.byte	0x6
+ 340 0033 8E020000 		.4byte	.LASF0
+ 341 0037 03       		.uleb128 0x3
+ 342 0038 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 9
+
+
+ 343 0039 08       		.byte	0x8
+ 344 003a 39000000 		.4byte	.LASF1
+ 345 003e 03       		.uleb128 0x3
+ 346 003f 02       		.byte	0x2
+ 347 0040 05       		.byte	0x5
+ 348 0041 5F020000 		.4byte	.LASF2
+ 349 0045 03       		.uleb128 0x3
+ 350 0046 02       		.byte	0x2
+ 351 0047 07       		.byte	0x7
+ 352 0048 96000000 		.4byte	.LASF3
+ 353 004c 02       		.uleb128 0x2
+ 354 004d 14000000 		.4byte	.LASF5
+ 355 0051 02       		.byte	0x2
+ 356 0052 3F       		.byte	0x3f
+ 357 0053 57000000 		.4byte	0x57
+ 358 0057 03       		.uleb128 0x3
+ 359 0058 04       		.byte	0x4
+ 360 0059 05       		.byte	0x5
+ 361 005a 72020000 		.4byte	.LASF6
+ 362 005e 02       		.uleb128 0x2
+ 363 005f 5C010000 		.4byte	.LASF7
+ 364 0063 02       		.byte	0x2
+ 365 0064 41       		.byte	0x41
+ 366 0065 69000000 		.4byte	0x69
+ 367 0069 03       		.uleb128 0x3
+ 368 006a 04       		.byte	0x4
+ 369 006b 07       		.byte	0x7
+ 370 006c 7F000000 		.4byte	.LASF8
+ 371 0070 03       		.uleb128 0x3
+ 372 0071 08       		.byte	0x8
+ 373 0072 05       		.byte	0x5
+ 374 0073 4C020000 		.4byte	.LASF9
+ 375 0077 03       		.uleb128 0x3
+ 376 0078 08       		.byte	0x8
+ 377 0079 07       		.byte	0x7
+ 378 007a 90010000 		.4byte	.LASF10
+ 379 007e 04       		.uleb128 0x4
+ 380 007f 04       		.byte	0x4
+ 381 0080 05       		.byte	0x5
+ 382 0081 696E7400 		.ascii	"int\000"
+ 383 0085 03       		.uleb128 0x3
+ 384 0086 04       		.byte	0x4
+ 385 0087 07       		.byte	0x7
+ 386 0088 7D010000 		.4byte	.LASF11
+ 387 008c 02       		.uleb128 0x2
+ 388 008d 32000000 		.4byte	.LASF12
+ 389 0091 03       		.byte	0x3
+ 390 0092 14       		.byte	0x14
+ 391 0093 25000000 		.4byte	0x25
+ 392 0097 02       		.uleb128 0x2
+ 393 0098 44020000 		.4byte	.LASF13
+ 394 009c 03       		.byte	0x3
+ 395 009d 2C       		.byte	0x2c
+ 396 009e 4C000000 		.4byte	0x4c
+ 397 00a2 02       		.uleb128 0x2
+ 398 00a3 69020000 		.4byte	.LASF14
+ 399 00a7 03       		.byte	0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 10
+
+
+ 400 00a8 30       		.byte	0x30
+ 401 00a9 5E000000 		.4byte	0x5e
+ 402 00ad 03       		.uleb128 0x3
+ 403 00ae 08       		.byte	0x8
+ 404 00af 04       		.byte	0x4
+ 405 00b0 82020000 		.4byte	.LASF15
+ 406 00b4 05       		.uleb128 0x5
+ 407 00b5 1E000000 		.4byte	.LASF20
+ 408 00b9 01       		.byte	0x1
+ 409 00ba 2C       		.byte	0x2c
+ 410 00bb 38010000 		.4byte	0x138
+ 411 00bf 00000000 		.4byte	.LFB0
+ 412 00c3 20010000 		.4byte	.LFE0-.LFB0
+ 413 00c7 01       		.uleb128 0x1
+ 414 00c8 9C       		.byte	0x9c
+ 415 00c9 38010000 		.4byte	0x138
+ 416 00cd 06       		.uleb128 0x6
+ 417 00ce 6E756D00 		.ascii	"num\000"
+ 418 00d2 01       		.byte	0x1
+ 419 00d3 2C       		.byte	0x2c
+ 420 00d4 97000000 		.4byte	0x97
+ 421 00d8 02       		.uleb128 0x2
+ 422 00d9 91       		.byte	0x91
+ 423 00da 6C       		.sleb128 -20
+ 424 00db 06       		.uleb128 0x6
+ 425 00dc 62756600 		.ascii	"buf\000"
+ 426 00e0 01       		.byte	0x1
+ 427 00e1 2C       		.byte	0x2c
+ 428 00e2 38010000 		.4byte	0x138
+ 429 00e6 02       		.uleb128 0x2
+ 430 00e7 91       		.byte	0x91
+ 431 00e8 68       		.sleb128 -24
+ 432 00e9 07       		.uleb128 0x7
+ 433 00ea 09000000 		.4byte	.LASF16
+ 434 00ee 01       		.byte	0x1
+ 435 00ef 33       		.byte	0x33
+ 436 00f0 8C000000 		.4byte	0x8c
+ 437 00f4 02       		.uleb128 0x2
+ 438 00f5 91       		.byte	0x91
+ 439 00f6 77       		.sleb128 -9
+ 440 00f7 08       		.uleb128 0x8
+ 441 00f8 6900     		.ascii	"i\000"
+ 442 00fa 01       		.byte	0x1
+ 443 00fb 34       		.byte	0x34
+ 444 00fc 8C000000 		.4byte	0x8c
+ 445 0100 02       		.uleb128 0x2
+ 446 0101 91       		.byte	0x91
+ 447 0102 76       		.sleb128 -10
+ 448 0103 09       		.uleb128 0x9
+ 449 0104 58000000 		.4byte	.LBB2
+ 450 0108 44000000 		.4byte	.LBE2-.LBB2
+ 451 010c 1F010000 		.4byte	0x11f
+ 452 0110 07       		.uleb128 0x7
+ 453 0111 8A010000 		.4byte	.LASF17
+ 454 0115 01       		.byte	0x1
+ 455 0116 3B       		.byte	0x3b
+ 456 0117 3E010000 		.4byte	0x13e
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 11
+
+
+ 457 011b 02       		.uleb128 0x2
+ 458 011c 91       		.byte	0x91
+ 459 011d 75       		.sleb128 -11
+ 460 011e 00       		.byte	0
+ 461 011f 0A       		.uleb128 0xa
+ 462 0120 BC000000 		.4byte	.LBB3
+ 463 0124 44000000 		.4byte	.LBE3-.LBB3
+ 464 0128 07       		.uleb128 0x7
+ 465 0129 91000000 		.4byte	.LASF18
+ 466 012d 01       		.byte	0x1
+ 467 012e 42       		.byte	0x42
+ 468 012f 3E010000 		.4byte	0x13e
+ 469 0133 02       		.uleb128 0x2
+ 470 0134 91       		.byte	0x91
+ 471 0135 74       		.sleb128 -12
+ 472 0136 00       		.byte	0
+ 473 0137 00       		.byte	0
+ 474 0138 0B       		.uleb128 0xb
+ 475 0139 04       		.byte	0x4
+ 476 013a 3E010000 		.4byte	0x13e
+ 477 013e 03       		.uleb128 0x3
+ 478 013f 01       		.byte	0x1
+ 479 0140 08       		.byte	0x8
+ 480 0141 5A020000 		.4byte	.LASF19
+ 481 0145 0C       		.uleb128 0xc
+ 482 0146 67010000 		.4byte	.LASF21
+ 483 014a 01       		.byte	0x1
+ 484 014b 5C       		.byte	0x5c
+ 485 014c BD010000 		.4byte	0x1bd
+ 486 0150 00000000 		.4byte	.LFB1
+ 487 0154 80000000 		.4byte	.LFE1-.LFB1
+ 488 0158 01       		.uleb128 0x1
+ 489 0159 9C       		.byte	0x9c
+ 490 015a BD010000 		.4byte	0x1bd
+ 491 015e 06       		.uleb128 0x6
+ 492 015f 6B657900 		.ascii	"key\000"
+ 493 0163 01       		.byte	0x1
+ 494 0164 5C       		.byte	0x5c
+ 495 0165 BF010000 		.4byte	0x1bf
+ 496 0169 02       		.uleb128 0x2
+ 497 016a 91       		.byte	0x91
+ 498 016b 6C       		.sleb128 -20
+ 499 016c 0D       		.uleb128 0xd
+ 500 016d 78010000 		.4byte	.LASF22
+ 501 0171 01       		.byte	0x1
+ 502 0172 5C       		.byte	0x5c
+ 503 0173 BF010000 		.4byte	0x1bf
+ 504 0177 02       		.uleb128 0x2
+ 505 0178 91       		.byte	0x91
+ 506 0179 68       		.sleb128 -24
+ 507 017a 06       		.uleb128 0x6
+ 508 017b 6E00     		.ascii	"n\000"
+ 509 017d 01       		.byte	0x1
+ 510 017e 5C       		.byte	0x5c
+ 511 017f A2000000 		.4byte	0xa2
+ 512 0183 02       		.uleb128 0x2
+ 513 0184 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 12
+
+
+ 514 0185 64       		.sleb128 -28
+ 515 0186 0D       		.uleb128 0xd
+ 516 0187 9A020000 		.4byte	.LASF23
+ 517 018b 01       		.byte	0x1
+ 518 018c 5C       		.byte	0x5c
+ 519 018d A2000000 		.4byte	0xa2
+ 520 0191 02       		.uleb128 0x2
+ 521 0192 91       		.byte	0x91
+ 522 0193 60       		.sleb128 -32
+ 523 0194 06       		.uleb128 0x6
+ 524 0195 636D7000 		.ascii	"cmp\000"
+ 525 0199 01       		.byte	0x1
+ 526 019a 5D       		.byte	0x5d
+ 527 019b DA010000 		.4byte	0x1da
+ 528 019f 02       		.uleb128 0x2
+ 529 01a0 91       		.byte	0x91
+ 530 01a1 00       		.sleb128 0
+ 531 01a2 07       		.uleb128 0x7
+ 532 01a3 7B020000 		.4byte	.LASF24
+ 533 01a7 01       		.byte	0x1
+ 534 01a8 5F       		.byte	0x5f
+ 535 01a9 E0010000 		.4byte	0x1e0
+ 536 01ad 02       		.uleb128 0x2
+ 537 01ae 91       		.byte	0x91
+ 538 01af 74       		.sleb128 -12
+ 539 01b0 08       		.uleb128 0x8
+ 540 01b1 6300     		.ascii	"c\000"
+ 541 01b3 01       		.byte	0x1
+ 542 01b4 60       		.byte	0x60
+ 543 01b5 97000000 		.4byte	0x97
+ 544 01b9 02       		.uleb128 0x2
+ 545 01ba 91       		.byte	0x91
+ 546 01bb 70       		.sleb128 -16
+ 547 01bc 00       		.byte	0
+ 548 01bd 0E       		.uleb128 0xe
+ 549 01be 04       		.byte	0x4
+ 550 01bf 0B       		.uleb128 0xb
+ 551 01c0 04       		.byte	0x4
+ 552 01c1 C5010000 		.4byte	0x1c5
+ 553 01c5 0F       		.uleb128 0xf
+ 554 01c6 10       		.uleb128 0x10
+ 555 01c7 97000000 		.4byte	0x97
+ 556 01cb DA010000 		.4byte	0x1da
+ 557 01cf 11       		.uleb128 0x11
+ 558 01d0 BF010000 		.4byte	0x1bf
+ 559 01d4 11       		.uleb128 0x11
+ 560 01d5 BF010000 		.4byte	0x1bf
+ 561 01d9 00       		.byte	0
+ 562 01da 0B       		.uleb128 0xb
+ 563 01db 04       		.byte	0x4
+ 564 01dc C6010000 		.4byte	0x1c6
+ 565 01e0 0B       		.uleb128 0xb
+ 566 01e1 04       		.byte	0x4
+ 567 01e2 E6010000 		.4byte	0x1e6
+ 568 01e6 12       		.uleb128 0x12
+ 569 01e7 3E010000 		.4byte	0x13e
+ 570 01eb 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 13
+
+
+ 571              		.section	.debug_abbrev,"",%progbits
+ 572              	.Ldebug_abbrev0:
+ 573 0000 01       		.uleb128 0x1
+ 574 0001 11       		.uleb128 0x11
+ 575 0002 01       		.byte	0x1
+ 576 0003 25       		.uleb128 0x25
+ 577 0004 0E       		.uleb128 0xe
+ 578 0005 13       		.uleb128 0x13
+ 579 0006 0B       		.uleb128 0xb
+ 580 0007 03       		.uleb128 0x3
+ 581 0008 0E       		.uleb128 0xe
+ 582 0009 1B       		.uleb128 0x1b
+ 583 000a 0E       		.uleb128 0xe
+ 584 000b 55       		.uleb128 0x55
+ 585 000c 17       		.uleb128 0x17
+ 586 000d 11       		.uleb128 0x11
+ 587 000e 01       		.uleb128 0x1
+ 588 000f 10       		.uleb128 0x10
+ 589 0010 17       		.uleb128 0x17
+ 590 0011 00       		.byte	0
+ 591 0012 00       		.byte	0
+ 592 0013 02       		.uleb128 0x2
+ 593 0014 16       		.uleb128 0x16
+ 594 0015 00       		.byte	0
+ 595 0016 03       		.uleb128 0x3
+ 596 0017 0E       		.uleb128 0xe
+ 597 0018 3A       		.uleb128 0x3a
+ 598 0019 0B       		.uleb128 0xb
+ 599 001a 3B       		.uleb128 0x3b
+ 600 001b 0B       		.uleb128 0xb
+ 601 001c 49       		.uleb128 0x49
+ 602 001d 13       		.uleb128 0x13
+ 603 001e 00       		.byte	0
+ 604 001f 00       		.byte	0
+ 605 0020 03       		.uleb128 0x3
+ 606 0021 24       		.uleb128 0x24
+ 607 0022 00       		.byte	0
+ 608 0023 0B       		.uleb128 0xb
+ 609 0024 0B       		.uleb128 0xb
+ 610 0025 3E       		.uleb128 0x3e
+ 611 0026 0B       		.uleb128 0xb
+ 612 0027 03       		.uleb128 0x3
+ 613 0028 0E       		.uleb128 0xe
+ 614 0029 00       		.byte	0
+ 615 002a 00       		.byte	0
+ 616 002b 04       		.uleb128 0x4
+ 617 002c 24       		.uleb128 0x24
+ 618 002d 00       		.byte	0
+ 619 002e 0B       		.uleb128 0xb
+ 620 002f 0B       		.uleb128 0xb
+ 621 0030 3E       		.uleb128 0x3e
+ 622 0031 0B       		.uleb128 0xb
+ 623 0032 03       		.uleb128 0x3
+ 624 0033 08       		.uleb128 0x8
+ 625 0034 00       		.byte	0
+ 626 0035 00       		.byte	0
+ 627 0036 05       		.uleb128 0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 14
+
+
+ 628 0037 2E       		.uleb128 0x2e
+ 629 0038 01       		.byte	0x1
+ 630 0039 3F       		.uleb128 0x3f
+ 631 003a 19       		.uleb128 0x19
+ 632 003b 03       		.uleb128 0x3
+ 633 003c 0E       		.uleb128 0xe
+ 634 003d 3A       		.uleb128 0x3a
+ 635 003e 0B       		.uleb128 0xb
+ 636 003f 3B       		.uleb128 0x3b
+ 637 0040 0B       		.uleb128 0xb
+ 638 0041 27       		.uleb128 0x27
+ 639 0042 19       		.uleb128 0x19
+ 640 0043 49       		.uleb128 0x49
+ 641 0044 13       		.uleb128 0x13
+ 642 0045 11       		.uleb128 0x11
+ 643 0046 01       		.uleb128 0x1
+ 644 0047 12       		.uleb128 0x12
+ 645 0048 06       		.uleb128 0x6
+ 646 0049 40       		.uleb128 0x40
+ 647 004a 18       		.uleb128 0x18
+ 648 004b 9742     		.uleb128 0x2117
+ 649 004d 19       		.uleb128 0x19
+ 650 004e 01       		.uleb128 0x1
+ 651 004f 13       		.uleb128 0x13
+ 652 0050 00       		.byte	0
+ 653 0051 00       		.byte	0
+ 654 0052 06       		.uleb128 0x6
+ 655 0053 05       		.uleb128 0x5
+ 656 0054 00       		.byte	0
+ 657 0055 03       		.uleb128 0x3
+ 658 0056 08       		.uleb128 0x8
+ 659 0057 3A       		.uleb128 0x3a
+ 660 0058 0B       		.uleb128 0xb
+ 661 0059 3B       		.uleb128 0x3b
+ 662 005a 0B       		.uleb128 0xb
+ 663 005b 49       		.uleb128 0x49
+ 664 005c 13       		.uleb128 0x13
+ 665 005d 02       		.uleb128 0x2
+ 666 005e 18       		.uleb128 0x18
+ 667 005f 00       		.byte	0
+ 668 0060 00       		.byte	0
+ 669 0061 07       		.uleb128 0x7
+ 670 0062 34       		.uleb128 0x34
+ 671 0063 00       		.byte	0
+ 672 0064 03       		.uleb128 0x3
+ 673 0065 0E       		.uleb128 0xe
+ 674 0066 3A       		.uleb128 0x3a
+ 675 0067 0B       		.uleb128 0xb
+ 676 0068 3B       		.uleb128 0x3b
+ 677 0069 0B       		.uleb128 0xb
+ 678 006a 49       		.uleb128 0x49
+ 679 006b 13       		.uleb128 0x13
+ 680 006c 02       		.uleb128 0x2
+ 681 006d 18       		.uleb128 0x18
+ 682 006e 00       		.byte	0
+ 683 006f 00       		.byte	0
+ 684 0070 08       		.uleb128 0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 15
+
+
+ 685 0071 34       		.uleb128 0x34
+ 686 0072 00       		.byte	0
+ 687 0073 03       		.uleb128 0x3
+ 688 0074 08       		.uleb128 0x8
+ 689 0075 3A       		.uleb128 0x3a
+ 690 0076 0B       		.uleb128 0xb
+ 691 0077 3B       		.uleb128 0x3b
+ 692 0078 0B       		.uleb128 0xb
+ 693 0079 49       		.uleb128 0x49
+ 694 007a 13       		.uleb128 0x13
+ 695 007b 02       		.uleb128 0x2
+ 696 007c 18       		.uleb128 0x18
+ 697 007d 00       		.byte	0
+ 698 007e 00       		.byte	0
+ 699 007f 09       		.uleb128 0x9
+ 700 0080 0B       		.uleb128 0xb
+ 701 0081 01       		.byte	0x1
+ 702 0082 11       		.uleb128 0x11
+ 703 0083 01       		.uleb128 0x1
+ 704 0084 12       		.uleb128 0x12
+ 705 0085 06       		.uleb128 0x6
+ 706 0086 01       		.uleb128 0x1
+ 707 0087 13       		.uleb128 0x13
+ 708 0088 00       		.byte	0
+ 709 0089 00       		.byte	0
+ 710 008a 0A       		.uleb128 0xa
+ 711 008b 0B       		.uleb128 0xb
+ 712 008c 01       		.byte	0x1
+ 713 008d 11       		.uleb128 0x11
+ 714 008e 01       		.uleb128 0x1
+ 715 008f 12       		.uleb128 0x12
+ 716 0090 06       		.uleb128 0x6
+ 717 0091 00       		.byte	0
+ 718 0092 00       		.byte	0
+ 719 0093 0B       		.uleb128 0xb
+ 720 0094 0F       		.uleb128 0xf
+ 721 0095 00       		.byte	0
+ 722 0096 0B       		.uleb128 0xb
+ 723 0097 0B       		.uleb128 0xb
+ 724 0098 49       		.uleb128 0x49
+ 725 0099 13       		.uleb128 0x13
+ 726 009a 00       		.byte	0
+ 727 009b 00       		.byte	0
+ 728 009c 0C       		.uleb128 0xc
+ 729 009d 2E       		.uleb128 0x2e
+ 730 009e 01       		.byte	0x1
+ 731 009f 3F       		.uleb128 0x3f
+ 732 00a0 19       		.uleb128 0x19
+ 733 00a1 03       		.uleb128 0x3
+ 734 00a2 0E       		.uleb128 0xe
+ 735 00a3 3A       		.uleb128 0x3a
+ 736 00a4 0B       		.uleb128 0xb
+ 737 00a5 3B       		.uleb128 0x3b
+ 738 00a6 0B       		.uleb128 0xb
+ 739 00a7 27       		.uleb128 0x27
+ 740 00a8 19       		.uleb128 0x19
+ 741 00a9 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 16
+
+
+ 742 00aa 13       		.uleb128 0x13
+ 743 00ab 11       		.uleb128 0x11
+ 744 00ac 01       		.uleb128 0x1
+ 745 00ad 12       		.uleb128 0x12
+ 746 00ae 06       		.uleb128 0x6
+ 747 00af 40       		.uleb128 0x40
+ 748 00b0 18       		.uleb128 0x18
+ 749 00b1 9642     		.uleb128 0x2116
+ 750 00b3 19       		.uleb128 0x19
+ 751 00b4 01       		.uleb128 0x1
+ 752 00b5 13       		.uleb128 0x13
+ 753 00b6 00       		.byte	0
+ 754 00b7 00       		.byte	0
+ 755 00b8 0D       		.uleb128 0xd
+ 756 00b9 05       		.uleb128 0x5
+ 757 00ba 00       		.byte	0
+ 758 00bb 03       		.uleb128 0x3
+ 759 00bc 0E       		.uleb128 0xe
+ 760 00bd 3A       		.uleb128 0x3a
+ 761 00be 0B       		.uleb128 0xb
+ 762 00bf 3B       		.uleb128 0x3b
+ 763 00c0 0B       		.uleb128 0xb
+ 764 00c1 49       		.uleb128 0x49
+ 765 00c2 13       		.uleb128 0x13
+ 766 00c3 02       		.uleb128 0x2
+ 767 00c4 18       		.uleb128 0x18
+ 768 00c5 00       		.byte	0
+ 769 00c6 00       		.byte	0
+ 770 00c7 0E       		.uleb128 0xe
+ 771 00c8 0F       		.uleb128 0xf
+ 772 00c9 00       		.byte	0
+ 773 00ca 0B       		.uleb128 0xb
+ 774 00cb 0B       		.uleb128 0xb
+ 775 00cc 00       		.byte	0
+ 776 00cd 00       		.byte	0
+ 777 00ce 0F       		.uleb128 0xf
+ 778 00cf 26       		.uleb128 0x26
+ 779 00d0 00       		.byte	0
+ 780 00d1 00       		.byte	0
+ 781 00d2 00       		.byte	0
+ 782 00d3 10       		.uleb128 0x10
+ 783 00d4 15       		.uleb128 0x15
+ 784 00d5 01       		.byte	0x1
+ 785 00d6 27       		.uleb128 0x27
+ 786 00d7 19       		.uleb128 0x19
+ 787 00d8 49       		.uleb128 0x49
+ 788 00d9 13       		.uleb128 0x13
+ 789 00da 01       		.uleb128 0x1
+ 790 00db 13       		.uleb128 0x13
+ 791 00dc 00       		.byte	0
+ 792 00dd 00       		.byte	0
+ 793 00de 11       		.uleb128 0x11
+ 794 00df 05       		.uleb128 0x5
+ 795 00e0 00       		.byte	0
+ 796 00e1 49       		.uleb128 0x49
+ 797 00e2 13       		.uleb128 0x13
+ 798 00e3 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 17
+
+
+ 799 00e4 00       		.byte	0
+ 800 00e5 12       		.uleb128 0x12
+ 801 00e6 26       		.uleb128 0x26
+ 802 00e7 00       		.byte	0
+ 803 00e8 49       		.uleb128 0x49
+ 804 00e9 13       		.uleb128 0x13
+ 805 00ea 00       		.byte	0
+ 806 00eb 00       		.byte	0
+ 807 00ec 00       		.byte	0
+ 808              		.section	.debug_aranges,"",%progbits
+ 809 0000 24000000 		.4byte	0x24
+ 810 0004 0200     		.2byte	0x2
+ 811 0006 00000000 		.4byte	.Ldebug_info0
+ 812 000a 04       		.byte	0x4
+ 813 000b 00       		.byte	0
+ 814 000c 0000     		.2byte	0
+ 815 000e 0000     		.2byte	0
+ 816 0010 00000000 		.4byte	.LFB0
+ 817 0014 20010000 		.4byte	.LFE0-.LFB0
+ 818 0018 00000000 		.4byte	.LFB1
+ 819 001c 80000000 		.4byte	.LFE1-.LFB1
+ 820 0020 00000000 		.4byte	0
+ 821 0024 00000000 		.4byte	0
+ 822              		.section	.debug_ranges,"",%progbits
+ 823              	.Ldebug_ranges0:
+ 824 0000 00000000 		.4byte	.LFB0
+ 825 0004 20010000 		.4byte	.LFE0
+ 826 0008 00000000 		.4byte	.LFB1
+ 827 000c 80000000 		.4byte	.LFE1
+ 828 0010 00000000 		.4byte	0
+ 829 0014 00000000 		.4byte	0
+ 830              		.section	.debug_line,"",%progbits
+ 831              	.Ldebug_line0:
+ 832 0000 9E010000 		.section	.debug_str,"MS",%progbits,1
+ 832      02004B01 
+ 832      00000201 
+ 832      FB0E0D00 
+ 832      01010101 
+ 833              	.LASF4:
+ 834 0000 5F5F696E 		.ascii	"__int8_t\000"
+ 834      74385F74 
+ 834      00
+ 835              	.LASF16:
+ 836 0009 64696769 		.ascii	"digitCount\000"
+ 836      74436F75 
+ 836      6E7400
+ 837              	.LASF5:
+ 838 0014 5F5F696E 		.ascii	"__int32_t\000"
+ 838      7433325F 
+ 838      7400
+ 839              	.LASF20:
+ 840 001e 6C765F75 		.ascii	"lv_utils_num_to_str\000"
+ 840      74696C73 
+ 840      5F6E756D 
+ 840      5F746F5F 
+ 840      73747200 
+ 841              	.LASF12:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 18
+
+
+ 842 0032 696E7438 		.ascii	"int8_t\000"
+ 842      5F7400
+ 843              	.LASF1:
+ 844 0039 756E7369 		.ascii	"unsigned char\000"
+ 844      676E6564 
+ 844      20636861 
+ 844      7200
+ 845              	.LASF26:
+ 846 0047 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 846      2E5C2E2E 
+ 846      5C6C7667 
+ 846      6C5C7665 
+ 846      7273696F 
+ 847 0073 5C6C765F 		.ascii	"\\lv_utils.c\000"
+ 847      7574696C 
+ 847      732E6300 
+ 848              	.LASF8:
+ 849 007f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 849      20756E73 
+ 849      69676E65 
+ 849      6420696E 
+ 849      7400
+ 850              	.LASF18:
+ 851 0091 74656D70 		.ascii	"temp\000"
+ 851      00
+ 852              	.LASF3:
+ 853 0096 73686F72 		.ascii	"short unsigned int\000"
+ 853      7420756E 
+ 853      7369676E 
+ 853      65642069 
+ 853      6E7400
+ 854              	.LASF25:
+ 855 00a9 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 855      43313120 
+ 855      352E342E 
+ 855      31203230 
+ 855      31363036 
+ 856 00dc 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 856      20726576 
+ 856      6973696F 
+ 856      6E203233 
+ 856      37373135 
+ 857 010f 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 857      70202D6D 
+ 857      6670753D 
+ 857      66707634 
+ 857      2D73702D 
+ 858 0142 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 858      6F6E7320 
+ 858      2D666661 
+ 858      742D6C74 
+ 858      6F2D6F62 
+ 859              	.LASF7:
+ 860 015c 5F5F7569 		.ascii	"__uint32_t\000"
+ 860      6E743332 
+ 860      5F7400
+ 861              	.LASF21:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 19
+
+
+ 862 0167 6C765F75 		.ascii	"lv_utils_bsearch\000"
+ 862      74696C73 
+ 862      5F627365 
+ 862      61726368 
+ 862      00
+ 863              	.LASF22:
+ 864 0178 62617365 		.ascii	"base\000"
+ 864      00
+ 865              	.LASF11:
+ 866 017d 756E7369 		.ascii	"unsigned int\000"
+ 866      676E6564 
+ 866      20696E74 
+ 866      00
+ 867              	.LASF17:
+ 868 018a 64696769 		.ascii	"digit\000"
+ 868      7400
+ 869              	.LASF10:
+ 870 0190 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 870      206C6F6E 
+ 870      6720756E 
+ 870      7369676E 
+ 870      65642069 
+ 871              	.LASF27:
+ 872 01a7 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 872      73657273 
+ 872      5C746D6A 
+ 872      33325C44 
+ 872      6F63756D 
+ 873 01d4 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 873      6C6C6F73 
+ 873      636F7065 
+ 873      5F53656E 
+ 873      696F725F 
+ 874 0205 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 874      5C74636F 
+ 874      6D5F6170 
+ 874      705C7463 
+ 874      6F6D5F61 
+ 875 0235 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 875      736F6336 
+ 875      2E637964 
+ 875      736E00
+ 876              	.LASF13:
+ 877 0244 696E7433 		.ascii	"int32_t\000"
+ 877      325F7400 
+ 878              	.LASF9:
+ 879 024c 6C6F6E67 		.ascii	"long long int\000"
+ 879      206C6F6E 
+ 879      6720696E 
+ 879      7400
+ 880              	.LASF19:
+ 881 025a 63686172 		.ascii	"char\000"
+ 881      00
+ 882              	.LASF2:
+ 883 025f 73686F72 		.ascii	"short int\000"
+ 883      7420696E 
+ 883      7400
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccxpVpy6.s 			page 20
+
+
+ 884              	.LASF14:
+ 885 0269 75696E74 		.ascii	"uint32_t\000"
+ 885      33325F74 
+ 885      00
+ 886              	.LASF6:
+ 887 0272 6C6F6E67 		.ascii	"long int\000"
+ 887      20696E74 
+ 887      00
+ 888              	.LASF24:
+ 889 027b 6D696464 		.ascii	"middle\000"
+ 889      6C6500
+ 890              	.LASF15:
+ 891 0282 6C6F6E67 		.ascii	"long double\000"
+ 891      20646F75 
+ 891      626C6500 
+ 892              	.LASF0:
+ 893 028e 7369676E 		.ascii	"signed char\000"
+ 893      65642063 
+ 893      68617200 
+ 894              	.LASF23:
+ 895 029a 73697A65 		.ascii	"size\000"
+ 895      00
+ 896              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

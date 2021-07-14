@@ -1,0 +1,2408 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"LCD_INTERFACE.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.global	LCD_INTERFACE_initVar
+  21              		.bss
+  22              		.type	LCD_INTERFACE_initVar, %object
+  23              		.size	LCD_INTERFACE_initVar, 1
+  24              	LCD_INTERFACE_initVar:
+  25 0000 00       		.space	1
+  26              		.section	.text.LCD_INTERFACE_Enable,"ax",%progbits
+  27              		.align	2
+  28              		.global	LCD_INTERFACE_Enable
+  29              		.thumb
+  30              		.thumb_func
+  31              		.type	LCD_INTERFACE_Enable, %function
+  32              	LCD_INTERFACE_Enable:
+  33              	.LFB132:
+  34              		.file 1 "Generated_Source\\PSoC6\\LCD_INTERFACE.c"
+   1:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/LCD_INTERFACE.c **** * File Name: LCD_INTERFACE.c  
+   3:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Version 1.80
+   4:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+   5:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Description:
+   6:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  This file contains the setup, control and status commands for the 
+   7:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  GraphicLCDIntf component.   
+   8:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+   9:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************
+  10:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Copyright 2008-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  11:Generated_Source\PSoC6/LCD_INTERFACE.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  12:Generated_Source\PSoC6/LCD_INTERFACE.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  13:Generated_Source\PSoC6/LCD_INTERFACE.c **** * the software package with which this file was provided.
+  14:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************/
+  15:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  16:Generated_Source\PSoC6/LCD_INTERFACE.c **** #include "LCD_INTERFACE.h"  
+  17:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  18:Generated_Source\PSoC6/LCD_INTERFACE.c **** uint8 LCD_INTERFACE_initVar = 0u;
+  19:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  20:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  21:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+  22:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Enable
+  23:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 2
+
+
+  24:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  25:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+  26:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  There is no need to reset or enable this component.  This component is 
+  27:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  naturally a slave that waits for the API calls to perform any 
+  28:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  function and after a request is made that request will always complete in 
+  29:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  finite time as long as a clock is provided. The only thing provided
+  30:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  by this API is setting the Command FIFO to drive at least the half-empty status
+  31:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  from the FIFO.
+  32:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  33:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+  34:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Enable(void) 
+  35:Generated_Source\PSoC6/LCD_INTERFACE.c **** {   
+  35              		.loc 1 35 0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+  40 0000 80B4     		push	{r7}
+  41              		.cfi_def_cfa_offset 4
+  42              		.cfi_offset 7, -4
+  43 0002 00AF     		add	r7, sp, #0
+  44              		.cfi_def_cfa_register 7
+  36:Generated_Source\PSoC6/LCD_INTERFACE.c ****     /* Nothing to enable */
+  37:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+  45              		.loc 1 37 0
+  46 0004 00BF     		nop
+  47 0006 BD46     		mov	sp, r7
+  48              		.cfi_def_cfa_register 13
+  49              		@ sp needed
+  50 0008 5DF8047B 		ldr	r7, [sp], #4
+  51              		.cfi_restore 7
+  52              		.cfi_def_cfa_offset 0
+  53 000c 7047     		bx	lr
+  54              		.cfi_endproc
+  55              	.LFE132:
+  56              		.size	LCD_INTERFACE_Enable, .-LCD_INTERFACE_Enable
+  57 000e 00BF     		.section	.text.LCD_INTERFACE_Init,"ax",%progbits
+  58              		.align	2
+  59              		.global	LCD_INTERFACE_Init
+  60              		.thumb
+  61              		.thumb_func
+  62              		.type	LCD_INTERFACE_Init, %function
+  63              	LCD_INTERFACE_Init:
+  64              	.LFB133:
+  38:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  39:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  40:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+  41:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Init
+  42:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+  43:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  44:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+  45:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Inits/Restores default GraphicLCDIntf configuration provided with the customizer.
+  46:Generated_Source\PSoC6/LCD_INTERFACE.c **** * 
+  47:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+  48:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Init(void) 
+  49:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+  65              		.loc 1 49 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 3
+
+
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 1, uses_anonymous_args = 0
+  69              		@ link register save eliminated.
+  70 0000 80B4     		push	{r7}
+  71              		.cfi_def_cfa_offset 4
+  72              		.cfi_offset 7, -4
+  73 0002 00AF     		add	r7, sp, #0
+  74              		.cfi_def_cfa_register 7
+  50:Generated_Source\PSoC6/LCD_INTERFACE.c ****     /* Set low and high pulse widths for a read transaction */
+  51:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_READ_LO_PULSE_REG = LCD_INTERFACE_READ_LOW_PULSE;
+  75              		.loc 1 51 0
+  76 0004 054B     		ldr	r3, .L3
+  77 0006 1022     		movs	r2, #16
+  78 0008 1A70     		strb	r2, [r3]
+  52:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_READ_HI_PULSE_REG = LCD_INTERFACE_READ_HIGH_PULSE;
+  79              		.loc 1 52 0
+  80 000a 054B     		ldr	r3, .L3+4
+  81 000c 0422     		movs	r2, #4
+  82 000e 1A70     		strb	r2, [r3]
+  53:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+  83              		.loc 1 53 0
+  84 0010 00BF     		nop
+  85 0012 BD46     		mov	sp, r7
+  86              		.cfi_def_cfa_register 13
+  87              		@ sp needed
+  88 0014 5DF8047B 		ldr	r7, [sp], #4
+  89              		.cfi_restore 7
+  90              		.cfi_def_cfa_offset 0
+  91 0018 7047     		bx	lr
+  92              	.L4:
+  93 001a 00BF     		.align	2
+  94              	.L3:
+  95 001c 20123440 		.word	1077154336
+  96 0020 20133440 		.word	1077154592
+  97              		.cfi_endproc
+  98              	.LFE133:
+  99              		.size	LCD_INTERFACE_Init, .-LCD_INTERFACE_Init
+ 100              		.section	.text.LCD_INTERFACE_Start,"ax",%progbits
+ 101              		.align	2
+ 102              		.global	LCD_INTERFACE_Start
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.type	LCD_INTERFACE_Start, %function
+ 106              	LCD_INTERFACE_Start:
+ 107              	.LFB134:
+  54:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  55:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  56:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+  57:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Start
+  58:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+  59:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  60:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+  61:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Starts the GraphicLCDIntf interface.
+  62:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  63:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Global Variables:
+  64:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  LCD_INTERFACE_initVar - Used to check the initial configuration, modified on 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 4
+
+
+  65:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  the first function call.
+  66:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  67:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+  68:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Start(void) 
+  69:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 108              		.loc 1 69 0
+ 109              		.cfi_startproc
+ 110              		@ args = 0, pretend = 0, frame = 0
+ 111              		@ frame_needed = 1, uses_anonymous_args = 0
+ 112 0000 80B5     		push	{r7, lr}
+ 113              		.cfi_def_cfa_offset 8
+ 114              		.cfi_offset 7, -8
+ 115              		.cfi_offset 14, -4
+ 116 0002 00AF     		add	r7, sp, #0
+ 117              		.cfi_def_cfa_register 7
+  70:Generated_Source\PSoC6/LCD_INTERFACE.c ****     if (LCD_INTERFACE_initVar == 0u)
+ 118              		.loc 1 70 0
+ 119 0004 064B     		ldr	r3, .L7
+ 120 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 121 0008 002B     		cmp	r3, #0
+ 122 000a 04D1     		bne	.L6
+  71:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+  72:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_Init();
+ 123              		.loc 1 72 0
+ 124 000c FFF7FEFF 		bl	LCD_INTERFACE_Init
+  73:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_initVar = 1u;
+ 125              		.loc 1 73 0
+ 126 0010 034B     		ldr	r3, .L7
+ 127 0012 0122     		movs	r2, #1
+ 128 0014 1A70     		strb	r2, [r3]
+ 129              	.L6:
+  74:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }
+  75:Generated_Source\PSoC6/LCD_INTERFACE.c ****       
+  76:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_Enable();
+ 130              		.loc 1 76 0
+ 131 0016 FFF7FEFF 		bl	LCD_INTERFACE_Enable
+  77:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 132              		.loc 1 77 0
+ 133 001a 00BF     		nop
+ 134 001c 80BD     		pop	{r7, pc}
+ 135              	.L8:
+ 136 001e 00BF     		.align	2
+ 137              	.L7:
+ 138 0020 00000000 		.word	LCD_INTERFACE_initVar
+ 139              		.cfi_endproc
+ 140              	.LFE134:
+ 141              		.size	LCD_INTERFACE_Start, .-LCD_INTERFACE_Start
+ 142              		.section	.text.LCD_INTERFACE_Stop,"ax",%progbits
+ 143              		.align	2
+ 144              		.global	LCD_INTERFACE_Stop
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.type	LCD_INTERFACE_Stop, %function
+ 148              	LCD_INTERFACE_Stop:
+ 149              	.LFB135:
+  78:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  79:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 5
+
+
+  80:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+  81:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Stop
+  82:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+  83:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  84:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+  85:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Disables the GraphicLCDIntf interface.
+  86:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  87:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+  88:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Stop(void) 
+  89:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 150              		.loc 1 89 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 1, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155 0000 80B4     		push	{r7}
+ 156              		.cfi_def_cfa_offset 4
+ 157              		.cfi_offset 7, -4
+ 158 0002 00AF     		add	r7, sp, #0
+ 159              		.cfi_def_cfa_register 7
+  90:Generated_Source\PSoC6/LCD_INTERFACE.c ****     /* Nothing to stop */
+  91:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 160              		.loc 1 91 0
+ 161 0004 00BF     		nop
+ 162 0006 BD46     		mov	sp, r7
+ 163              		.cfi_def_cfa_register 13
+ 164              		@ sp needed
+ 165 0008 5DF8047B 		ldr	r7, [sp], #4
+ 166              		.cfi_restore 7
+ 167              		.cfi_def_cfa_offset 0
+ 168 000c 7047     		bx	lr
+ 169              		.cfi_endproc
+ 170              	.LFE135:
+ 171              		.size	LCD_INTERFACE_Stop, .-LCD_INTERFACE_Stop
+ 172 000e 00BF     		.section	.text.LCD_INTERFACE_Write8,"ax",%progbits
+ 173              		.align	2
+ 174              		.global	LCD_INTERFACE_Write8
+ 175              		.thumb
+ 176              		.thumb_func
+ 177              		.type	LCD_INTERFACE_Write8, %function
+ 178              	LCD_INTERFACE_Write8:
+ 179              	.LFB136:
+  92:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  93:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+  94:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+  95:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Write8
+  96:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+  97:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+  98:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+  99:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates a write transaction on the 8-bit parallel
+ 100:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  interface.
+ 101:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  The write is a posted write, so this function will return before the write 
+ 102:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  has actually completed on the interface. If the command queue is full, this 
+ 103:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  function will not return until space is available to queue this write request.
+ 104:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 105:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 106:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  d_c:  Data(1) or Command(0) indication. Passed to the d_c pin.
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 6
+
+
+ 107:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 108:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: Data sent to the do_msb[7:0] (most significant byte) 
+ 109:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 110:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          presents only for the 16-bit interface.
+ 111:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 112:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 113:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Write8(uint8 d_c, uint8 wrData) 
+ 114:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 180              		.loc 1 114 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 8
+ 183              		@ frame_needed = 1, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+ 185 0000 80B4     		push	{r7}
+ 186              		.cfi_def_cfa_offset 4
+ 187              		.cfi_offset 7, -4
+ 188 0002 83B0     		sub	sp, sp, #12
+ 189              		.cfi_def_cfa_offset 16
+ 190 0004 00AF     		add	r7, sp, #0
+ 191              		.cfi_def_cfa_register 7
+ 192 0006 0346     		mov	r3, r0
+ 193 0008 0A46     		mov	r2, r1
+ 194 000a FB71     		strb	r3, [r7, #7]
+ 195 000c 1346     		mov	r3, r2
+ 196 000e BB71     		strb	r3, [r7, #6]
+ 115:Generated_Source\PSoC6/LCD_INTERFACE.c ****     while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_CMD_QUEUE_FULL) != 0u)
+ 197              		.loc 1 115 0
+ 198 0010 00BF     		nop
+ 199              	.L11:
+ 200              		.loc 1 115 0 is_stmt 0 discriminator 1
+ 201 0012 094B     		ldr	r3, .L12
+ 202 0014 1B78     		ldrb	r3, [r3]
+ 203 0016 DBB2     		uxtb	r3, r3
+ 204 0018 03F00103 		and	r3, r3, #1
+ 205 001c 002B     		cmp	r3, #0
+ 206 001e F8D1     		bne	.L11
+ 116:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 117:Generated_Source\PSoC6/LCD_INTERFACE.c ****         /* The command queue is full */
+ 118:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }   
+ 119:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_CMD_FIFO_REG = d_c;
+ 207              		.loc 1 119 0 is_stmt 1
+ 208 0020 064A     		ldr	r2, .L12+4
+ 209 0022 FB79     		ldrb	r3, [r7, #7]
+ 210 0024 1370     		strb	r3, [r2]
+ 120:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #if (LCD_INTERFACE_BUS_WIDTH == 16u)
+ 121:Generated_Source\PSoC6/LCD_INTERFACE.c ****         CY_SET_REG16(LCD_INTERFACE_DATA_FIFO_PTR, wrData);
+ 122:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #else /* 8-bit interface */
+ 123:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_DATA_FIFO_REG = wrData;
+ 211              		.loc 1 123 0
+ 212 0026 064A     		ldr	r2, .L12+8
+ 213 0028 BB79     		ldrb	r3, [r7, #6]
+ 214 002a 1370     		strb	r3, [r2]
+ 124:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #endif /* LCD_INTERFACE_BUS_WIDTH == 16u */
+ 125:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 215              		.loc 1 125 0
+ 216 002c 00BF     		nop
+ 217 002e 0C37     		adds	r7, r7, #12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 7
+
+
+ 218              		.cfi_def_cfa_offset 4
+ 219 0030 BD46     		mov	sp, r7
+ 220              		.cfi_def_cfa_register 13
+ 221              		@ sp needed
+ 222 0032 5DF8047B 		ldr	r7, [sp], #4
+ 223              		.cfi_restore 7
+ 224              		.cfi_def_cfa_offset 0
+ 225 0036 7047     		bx	lr
+ 226              	.L13:
+ 227              		.align	2
+ 228              	.L12:
+ 229 0038 24163440 		.word	1077155364
+ 230 003c 20143440 		.word	1077154848
+ 231 0040 20153440 		.word	1077155104
+ 232              		.cfi_endproc
+ 233              	.LFE136:
+ 234              		.size	LCD_INTERFACE_Write8, .-LCD_INTERFACE_Write8
+ 235              		.section	.text.LCD_INTERFACE_WriteM8,"ax",%progbits
+ 236              		.align	2
+ 237              		.global	LCD_INTERFACE_WriteM8
+ 238              		.thumb
+ 239              		.thumb_func
+ 240              		.type	LCD_INTERFACE_WriteM8, %function
+ 241              	LCD_INTERFACE_WriteM8:
+ 242              	.LFB137:
+ 126:Generated_Source\PSoC6/LCD_INTERFACE.c **** 	
+ 127:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 128:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 129:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_WriteM8
+ 130:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 131:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 132:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 133:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates multiple write transactions on the 8-bit 
+ 134:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface. The write is a posted write, so this function will return
+ 135:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  before the write has actually completed on the interface. If the command 
+ 136:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  queue is full, this function will not return until space is available to queue
+ 137:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  this write request.
+ 138:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 139:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 140:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  d_c:    The Data(1) or Command(0) indication. Passed to the d_c pin.
+ 141:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 142:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: The pointer to the the first element of a data buffer sent to the do_msb[7:0]
+ 143:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 144:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          do_msb[7:0] presents only for the 16-bit interface.
+ 145:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 146:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  num:    The number of words/bytes to write.
+ 147:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 148:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 149:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_WriteM8(uint8 d_c, uint8 wrData[], uint16 num) 
+ 150:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 243              		.loc 1 150 0
+ 244              		.cfi_startproc
+ 245              		@ args = 0, pretend = 0, frame = 16
+ 246              		@ frame_needed = 1, uses_anonymous_args = 0
+ 247              		@ link register save eliminated.
+ 248 0000 80B4     		push	{r7}
+ 249              		.cfi_def_cfa_offset 4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 8
+
+
+ 250              		.cfi_offset 7, -4
+ 251 0002 85B0     		sub	sp, sp, #20
+ 252              		.cfi_def_cfa_offset 24
+ 253 0004 00AF     		add	r7, sp, #0
+ 254              		.cfi_def_cfa_register 7
+ 255 0006 0346     		mov	r3, r0
+ 256 0008 3960     		str	r1, [r7]
+ 257 000a FB71     		strb	r3, [r7, #7]
+ 258 000c 1346     		mov	r3, r2	@ movhi
+ 259 000e BB80     		strh	r3, [r7, #4]	@ movhi
+ 151:Generated_Source\PSoC6/LCD_INTERFACE.c ****     uint32 i;
+ 152:Generated_Source\PSoC6/LCD_INTERFACE.c ****     
+ 153:Generated_Source\PSoC6/LCD_INTERFACE.c ****     for(i = 0u; i < num; i++)
+ 260              		.loc 1 153 0
+ 261 0010 0023     		movs	r3, #0
+ 262 0012 FB60     		str	r3, [r7, #12]
+ 263 0014 13E0     		b	.L15
+ 264              	.L17:
+ 154:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 155:Generated_Source\PSoC6/LCD_INTERFACE.c ****         while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_CMD_QUEUE_FULL) != 0u)
+ 265              		.loc 1 155 0
+ 266 0016 00BF     		nop
+ 267              	.L16:
+ 268              		.loc 1 155 0 is_stmt 0 discriminator 1
+ 269 0018 0E4B     		ldr	r3, .L18
+ 270 001a 1B78     		ldrb	r3, [r3]
+ 271 001c DBB2     		uxtb	r3, r3
+ 272 001e 03F00103 		and	r3, r3, #1
+ 273 0022 002B     		cmp	r3, #0
+ 274 0024 F8D1     		bne	.L16
+ 156:Generated_Source\PSoC6/LCD_INTERFACE.c ****         {
+ 157:Generated_Source\PSoC6/LCD_INTERFACE.c ****             /* The command queue is full */
+ 158:Generated_Source\PSoC6/LCD_INTERFACE.c ****         }   
+ 159:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_CMD_FIFO_REG = d_c;  
+ 275              		.loc 1 159 0 is_stmt 1 discriminator 2
+ 276 0026 0C4A     		ldr	r2, .L18+4
+ 277 0028 FB79     		ldrb	r3, [r7, #7]
+ 278 002a 1370     		strb	r3, [r2]
+ 160:Generated_Source\PSoC6/LCD_INTERFACE.c ****  
+ 161:Generated_Source\PSoC6/LCD_INTERFACE.c ****         #if (LCD_INTERFACE_BUS_WIDTH == 16u)
+ 162:Generated_Source\PSoC6/LCD_INTERFACE.c ****             CY_SET_REG16(LCD_INTERFACE_DATA_FIFO_PTR, wrData[i]);
+ 163:Generated_Source\PSoC6/LCD_INTERFACE.c ****         #else /* 8-bit interface */
+ 164:Generated_Source\PSoC6/LCD_INTERFACE.c ****             LCD_INTERFACE_DATA_FIFO_REG = wrData[i];
+ 279              		.loc 1 164 0 discriminator 2
+ 280 002c 0B49     		ldr	r1, .L18+8
+ 281 002e 3A68     		ldr	r2, [r7]
+ 282 0030 FB68     		ldr	r3, [r7, #12]
+ 283 0032 1344     		add	r3, r3, r2
+ 284 0034 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 285 0036 0B70     		strb	r3, [r1]
+ 153:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 286              		.loc 1 153 0 discriminator 2
+ 287 0038 FB68     		ldr	r3, [r7, #12]
+ 288 003a 0133     		adds	r3, r3, #1
+ 289 003c FB60     		str	r3, [r7, #12]
+ 290              	.L15:
+ 153:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 9
+
+
+ 291              		.loc 1 153 0 is_stmt 0 discriminator 1
+ 292 003e BA88     		ldrh	r2, [r7, #4]
+ 293 0040 FB68     		ldr	r3, [r7, #12]
+ 294 0042 9A42     		cmp	r2, r3
+ 295 0044 E7D8     		bhi	.L17
+ 165:Generated_Source\PSoC6/LCD_INTERFACE.c ****         #endif /* LCD_INTERFACE_BUS_WIDTH == 16u */
+ 166:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }
+ 167:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 296              		.loc 1 167 0 is_stmt 1
+ 297 0046 00BF     		nop
+ 298 0048 1437     		adds	r7, r7, #20
+ 299              		.cfi_def_cfa_offset 4
+ 300 004a BD46     		mov	sp, r7
+ 301              		.cfi_def_cfa_register 13
+ 302              		@ sp needed
+ 303 004c 5DF8047B 		ldr	r7, [sp], #4
+ 304              		.cfi_restore 7
+ 305              		.cfi_def_cfa_offset 0
+ 306 0050 7047     		bx	lr
+ 307              	.L19:
+ 308 0052 00BF     		.align	2
+ 309              	.L18:
+ 310 0054 24163440 		.word	1077155364
+ 311 0058 20143440 		.word	1077154848
+ 312 005c 20153440 		.word	1077155104
+ 313              		.cfi_endproc
+ 314              	.LFE137:
+ 315              		.size	LCD_INTERFACE_WriteM8, .-LCD_INTERFACE_WriteM8
+ 316              		.section	.text.LCD_INTERFACE_Read8,"ax",%progbits
+ 317              		.align	2
+ 318              		.global	LCD_INTERFACE_Read8
+ 319              		.thumb
+ 320              		.thumb_func
+ 321              		.type	LCD_INTERFACE_Read8, %function
+ 322              	LCD_INTERFACE_Read8:
+ 323              	.LFB138:
+ 168:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 169:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 170:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 171:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Read8
+ 172:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 173:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 174:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 175:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates a read transaction on the 8-bit parallel interface.
+ 176:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  The read will execute after all currently posted writes have completed. This 
+ 177:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  function will wait until the read completes and then returns the read value.
+ 178:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 179:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 180:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  d_c: Data(1) or Command(0) indication. Passed to the d_c pin.
+ 181:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 182:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Return:
+ 183:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  The 16-bit read value from the di_msb[7:0] (most significant byte) and 
+ 184:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  di_lsb[7:0] (least significant byte) pins for the 16-bit interface or the 
+ 185:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  8-bit read value from the di_lsb[7:0] for 8-bit interface.
+ 186:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 187:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 188:Generated_Source\PSoC6/LCD_INTERFACE.c **** uint8 LCD_INTERFACE_Read8(uint8 d_c) 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 10
+
+
+ 189:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 324              		.loc 1 189 0
+ 325              		.cfi_startproc
+ 326              		@ args = 0, pretend = 0, frame = 8
+ 327              		@ frame_needed = 1, uses_anonymous_args = 0
+ 328              		@ link register save eliminated.
+ 329 0000 80B4     		push	{r7}
+ 330              		.cfi_def_cfa_offset 4
+ 331              		.cfi_offset 7, -4
+ 332 0002 83B0     		sub	sp, sp, #12
+ 333              		.cfi_def_cfa_offset 16
+ 334 0004 00AF     		add	r7, sp, #0
+ 335              		.cfi_def_cfa_register 7
+ 336 0006 0346     		mov	r3, r0
+ 337 0008 FB71     		strb	r3, [r7, #7]
+ 190:Generated_Source\PSoC6/LCD_INTERFACE.c ****     while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_CMD_QUEUE_FULL) != 0u)
+ 338              		.loc 1 190 0
+ 339 000a 00BF     		nop
+ 340              	.L21:
+ 341              		.loc 1 190 0 is_stmt 0 discriminator 1
+ 342 000c 0E4B     		ldr	r3, .L24
+ 343 000e 1B78     		ldrb	r3, [r3]
+ 344 0010 DBB2     		uxtb	r3, r3
+ 345 0012 03F00103 		and	r3, r3, #1
+ 346 0016 002B     		cmp	r3, #0
+ 347 0018 F8D1     		bne	.L21
+ 191:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 192:Generated_Source\PSoC6/LCD_INTERFACE.c ****         /* The command queue is full */
+ 193:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }   
+ 194:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_CMD_FIFO_REG = d_c | LCD_INTERFACE_READ_COMMAND;
+ 348              		.loc 1 194 0 is_stmt 1
+ 349 001a 0C4A     		ldr	r2, .L24+4
+ 350 001c FB79     		ldrb	r3, [r7, #7]
+ 351 001e 43F00203 		orr	r3, r3, #2
+ 352 0022 DBB2     		uxtb	r3, r3
+ 353 0024 1370     		strb	r3, [r2]
+ 195:Generated_Source\PSoC6/LCD_INTERFACE.c ****     
+ 196:Generated_Source\PSoC6/LCD_INTERFACE.c ****     while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_DATA_VALID) != LCD_INTERFACE_DATA_VALID)
+ 354              		.loc 1 196 0
+ 355 0026 00BF     		nop
+ 356              	.L22:
+ 357              		.loc 1 196 0 is_stmt 0 discriminator 1
+ 358 0028 074B     		ldr	r3, .L24
+ 359 002a 1B78     		ldrb	r3, [r3]
+ 360 002c DBB2     		uxtb	r3, r3
+ 361 002e 03F00203 		and	r3, r3, #2
+ 362 0032 002B     		cmp	r3, #0
+ 363 0034 F8D0     		beq	.L22
+ 197:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 198:Generated_Source\PSoC6/LCD_INTERFACE.c ****         /* Wait until input data is valid */
+ 199:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }
+ 200:Generated_Source\PSoC6/LCD_INTERFACE.c ****     
+ 201:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #if (LCD_INTERFACE_BUS_WIDTH == 8u)  /* 8-bit interface */
+ 202:Generated_Source\PSoC6/LCD_INTERFACE.c ****         return (LCD_INTERFACE_DIN_LSB_DATA_REG);
+ 364              		.loc 1 202 0 is_stmt 1
+ 365 0036 064B     		ldr	r3, .L24+8
+ 366 0038 1B78     		ldrb	r3, [r3]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 11
+
+
+ 367 003a DBB2     		uxtb	r3, r3
+ 203:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #else   /* 16-bit interface */
+ 204:Generated_Source\PSoC6/LCD_INTERFACE.c ****         return (uint16)((uint16)LCD_INTERFACE_DIN_MSB_DATA_REG << 8u) | LCD_INTERFACE_DIN_LSB_DATA_
+ 205:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #endif /* LCD_INTERFACE_BUS_WIDTH == 8u */
+ 206:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 368              		.loc 1 206 0
+ 369 003c 1846     		mov	r0, r3
+ 370 003e 0C37     		adds	r7, r7, #12
+ 371              		.cfi_def_cfa_offset 4
+ 372 0040 BD46     		mov	sp, r7
+ 373              		.cfi_def_cfa_register 13
+ 374              		@ sp needed
+ 375 0042 5DF8047B 		ldr	r7, [sp], #4
+ 376              		.cfi_restore 7
+ 377              		.cfi_def_cfa_offset 0
+ 378 0046 7047     		bx	lr
+ 379              	.L25:
+ 380              		.align	2
+ 381              	.L24:
+ 382 0048 24163440 		.word	1077155364
+ 383 004c 20143440 		.word	1077154848
+ 384 0050 20163440 		.word	1077155360
+ 385              		.cfi_endproc
+ 386              	.LFE138:
+ 387              		.size	LCD_INTERFACE_Read8, .-LCD_INTERFACE_Read8
+ 388              		.section	.text.LCD_INTERFACE_ReadM8,"ax",%progbits
+ 389              		.align	2
+ 390              		.global	LCD_INTERFACE_ReadM8
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.type	LCD_INTERFACE_ReadM8, %function
+ 394              	LCD_INTERFACE_ReadM8:
+ 395              	.LFB139:
+ 207:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 208:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 209:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 210:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_ReadM8
+ 211:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 212:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 213:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 214:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates multiple read transactions on the 8-bit 
+ 215:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface. The read will execute after all currently posted writes 
+ 216:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  have completed. This function will wait until the read completes and then 
+ 217:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  returns the read value.
+ 218:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 219:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 220:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  d_c:    The Data(1) or Command(0) indication. Passed to the d_c pin.
+ 221:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 222:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  rdData: The pointer to the the first element of a data buffer read from the do_msb[7:0]
+ 223:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 224:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          do_msb[7:0] presents only for the 16-bit interface.
+ 225:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 226:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  num:    The number of words/bytes to read.
+ 227:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 228:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 229:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_ReadM8(uint8 d_c, uint8 rdData[], uint16 num) 
+ 230:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 12
+
+
+ 396              		.loc 1 230 0
+ 397              		.cfi_startproc
+ 398              		@ args = 0, pretend = 0, frame = 16
+ 399              		@ frame_needed = 1, uses_anonymous_args = 0
+ 400 0000 90B5     		push	{r4, r7, lr}
+ 401              		.cfi_def_cfa_offset 12
+ 402              		.cfi_offset 4, -12
+ 403              		.cfi_offset 7, -8
+ 404              		.cfi_offset 14, -4
+ 405 0002 85B0     		sub	sp, sp, #20
+ 406              		.cfi_def_cfa_offset 32
+ 407 0004 00AF     		add	r7, sp, #0
+ 408              		.cfi_def_cfa_register 7
+ 409 0006 0346     		mov	r3, r0
+ 410 0008 3960     		str	r1, [r7]
+ 411 000a FB71     		strb	r3, [r7, #7]
+ 412 000c 1346     		mov	r3, r2	@ movhi
+ 413 000e BB80     		strh	r3, [r7, #4]	@ movhi
+ 231:Generated_Source\PSoC6/LCD_INTERFACE.c ****     uint32 i;
+ 232:Generated_Source\PSoC6/LCD_INTERFACE.c ****     
+ 233:Generated_Source\PSoC6/LCD_INTERFACE.c ****     for(i = 0u; i < num; i++)
+ 414              		.loc 1 233 0
+ 415 0010 0023     		movs	r3, #0
+ 416 0012 FB60     		str	r3, [r7, #12]
+ 417 0014 0BE0     		b	.L27
+ 418              	.L28:
+ 234:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 235:Generated_Source\PSoC6/LCD_INTERFACE.c ****         rdData[i] = LCD_INTERFACE_Read8(d_c);
+ 419              		.loc 1 235 0 discriminator 3
+ 420 0016 3A68     		ldr	r2, [r7]
+ 421 0018 FB68     		ldr	r3, [r7, #12]
+ 422 001a D418     		adds	r4, r2, r3
+ 423 001c FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 424 001e 1846     		mov	r0, r3
+ 425 0020 FFF7FEFF 		bl	LCD_INTERFACE_Read8
+ 426 0024 0346     		mov	r3, r0
+ 427 0026 2370     		strb	r3, [r4]
+ 233:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 428              		.loc 1 233 0 discriminator 3
+ 429 0028 FB68     		ldr	r3, [r7, #12]
+ 430 002a 0133     		adds	r3, r3, #1
+ 431 002c FB60     		str	r3, [r7, #12]
+ 432              	.L27:
+ 233:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 433              		.loc 1 233 0 is_stmt 0 discriminator 1
+ 434 002e BA88     		ldrh	r2, [r7, #4]
+ 435 0030 FB68     		ldr	r3, [r7, #12]
+ 436 0032 9A42     		cmp	r2, r3
+ 437 0034 EFD8     		bhi	.L28
+ 236:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }
+ 237:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 438              		.loc 1 237 0 is_stmt 1
+ 439 0036 00BF     		nop
+ 440 0038 1437     		adds	r7, r7, #20
+ 441              		.cfi_def_cfa_offset 12
+ 442 003a BD46     		mov	sp, r7
+ 443              		.cfi_def_cfa_register 13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 13
+
+
+ 444              		@ sp needed
+ 445 003c 90BD     		pop	{r4, r7, pc}
+ 446              		.cfi_endproc
+ 447              	.LFE139:
+ 448              		.size	LCD_INTERFACE_ReadM8, .-LCD_INTERFACE_ReadM8
+ 449 003e 00BF     		.section	.text.LCD_INTERFACE_Write8_A0,"ax",%progbits
+ 450              		.align	2
+ 451              		.global	LCD_INTERFACE_Write8_A0
+ 452              		.thumb
+ 453              		.thumb_func
+ 454              		.type	LCD_INTERFACE_Write8_A0, %function
+ 455              	LCD_INTERFACE_Write8_A0:
+ 456              	.LFB140:
+ 238:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 239:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 240:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 241:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Write8_A0
+ 242:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 243:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 244:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 245:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates a write transaction on the 8-bit parallel
+ 246:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  interface with the d_c pin set to 0.
+ 247:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  The write is a posted write, so this function will return before the write 
+ 248:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  has actually completed on the interface. If the command queue is full, this 
+ 249:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  function will not return until space is availale to queue this write request.
+ 250:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 251:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 252:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: Data sent on the do_msb[7:0] (most significant byte) 
+ 253:Generated_Source\PSoC6/LCD_INTERFACE.c **** *         and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 254:Generated_Source\PSoC6/LCD_INTERFACE.c **** *         presents only for 16-bit interface.
+ 255:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 256:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 257:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Write8_A0(uint8 wrData) 
+ 258:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 457              		.loc 1 258 0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 8
+ 460              		@ frame_needed = 1, uses_anonymous_args = 0
+ 461              		@ link register save eliminated.
+ 462 0000 80B4     		push	{r7}
+ 463              		.cfi_def_cfa_offset 4
+ 464              		.cfi_offset 7, -4
+ 465 0002 83B0     		sub	sp, sp, #12
+ 466              		.cfi_def_cfa_offset 16
+ 467 0004 00AF     		add	r7, sp, #0
+ 468              		.cfi_def_cfa_register 7
+ 469 0006 0346     		mov	r3, r0
+ 470 0008 FB71     		strb	r3, [r7, #7]
+ 259:Generated_Source\PSoC6/LCD_INTERFACE.c ****     while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_CMD_QUEUE_FULL) != 0u)
+ 471              		.loc 1 259 0
+ 472 000a 00BF     		nop
+ 473              	.L30:
+ 474              		.loc 1 259 0 is_stmt 0 discriminator 1
+ 475 000c 094B     		ldr	r3, .L31
+ 476 000e 1B78     		ldrb	r3, [r3]
+ 477 0010 DBB2     		uxtb	r3, r3
+ 478 0012 03F00103 		and	r3, r3, #1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 14
+
+
+ 479 0016 002B     		cmp	r3, #0
+ 480 0018 F8D1     		bne	.L30
+ 260:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 261:Generated_Source\PSoC6/LCD_INTERFACE.c ****         /* Command queue is full */
+ 262:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }   
+ 263:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_CMD_FIFO_REG = 0u;
+ 481              		.loc 1 263 0 is_stmt 1
+ 482 001a 074B     		ldr	r3, .L31+4
+ 483 001c 0022     		movs	r2, #0
+ 484 001e 1A70     		strb	r2, [r3]
+ 264:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #if (LCD_INTERFACE_BUS_WIDTH == 16u)
+ 265:Generated_Source\PSoC6/LCD_INTERFACE.c ****         CY_SET_REG16(LCD_INTERFACE_DATA_FIFO_PTR, wrData);
+ 266:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #else /* 8-bit interface */
+ 267:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_DATA_FIFO_REG = wrData;
+ 485              		.loc 1 267 0
+ 486 0020 064A     		ldr	r2, .L31+8
+ 487 0022 FB79     		ldrb	r3, [r7, #7]
+ 488 0024 1370     		strb	r3, [r2]
+ 268:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #endif /* LCD_INTERFACE_BUS_WIDTH == 16u */
+ 269:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 489              		.loc 1 269 0
+ 490 0026 00BF     		nop
+ 491 0028 0C37     		adds	r7, r7, #12
+ 492              		.cfi_def_cfa_offset 4
+ 493 002a BD46     		mov	sp, r7
+ 494              		.cfi_def_cfa_register 13
+ 495              		@ sp needed
+ 496 002c 5DF8047B 		ldr	r7, [sp], #4
+ 497              		.cfi_restore 7
+ 498              		.cfi_def_cfa_offset 0
+ 499 0030 7047     		bx	lr
+ 500              	.L32:
+ 501 0032 00BF     		.align	2
+ 502              	.L31:
+ 503 0034 24163440 		.word	1077155364
+ 504 0038 20143440 		.word	1077154848
+ 505 003c 20153440 		.word	1077155104
+ 506              		.cfi_endproc
+ 507              	.LFE140:
+ 508              		.size	LCD_INTERFACE_Write8_A0, .-LCD_INTERFACE_Write8_A0
+ 509              		.section	.text.LCD_INTERFACE_Write8_A1,"ax",%progbits
+ 510              		.align	2
+ 511              		.global	LCD_INTERFACE_Write8_A1
+ 512              		.thumb
+ 513              		.thumb_func
+ 514              		.type	LCD_INTERFACE_Write8_A1, %function
+ 515              	LCD_INTERFACE_Write8_A1:
+ 516              	.LFB141:
+ 270:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 271:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 272:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 273:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Write8_A1
+ 274:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 275:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 276:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 277:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates a write transaction on the 8-bit 
+ 278:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface with the d_c pin set to 1. The write is a posted write, 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 15
+
+
+ 279:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  so this function will return before the write has actually completed on the 
+ 280:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  interface. If the command queue is full, this function will not return until
+ 281:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  space is availale to queue this write request.
+ 282:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 283:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 284:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: Data sent on the do_msb[7:0] (most significant byte) 
+ 285:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          and do_lsb[7:0] (least significant byte) pins. do_msb[7:0]
+ 286:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          presents only for 16-bit interface.
+ 287:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 288:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 289:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_Write8_A1(uint8 wrData) 
+ 290:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 517              		.loc 1 290 0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 8
+ 520              		@ frame_needed = 1, uses_anonymous_args = 0
+ 521              		@ link register save eliminated.
+ 522 0000 80B4     		push	{r7}
+ 523              		.cfi_def_cfa_offset 4
+ 524              		.cfi_offset 7, -4
+ 525 0002 83B0     		sub	sp, sp, #12
+ 526              		.cfi_def_cfa_offset 16
+ 527 0004 00AF     		add	r7, sp, #0
+ 528              		.cfi_def_cfa_register 7
+ 529 0006 0346     		mov	r3, r0
+ 530 0008 FB71     		strb	r3, [r7, #7]
+ 291:Generated_Source\PSoC6/LCD_INTERFACE.c ****     while((LCD_INTERFACE_STATUS_REG & LCD_INTERFACE_CMD_QUEUE_FULL) != 0u)
+ 531              		.loc 1 291 0
+ 532 000a 00BF     		nop
+ 533              	.L34:
+ 534              		.loc 1 291 0 is_stmt 0 discriminator 1
+ 535 000c 094B     		ldr	r3, .L35
+ 536 000e 1B78     		ldrb	r3, [r3]
+ 537 0010 DBB2     		uxtb	r3, r3
+ 538 0012 03F00103 		and	r3, r3, #1
+ 539 0016 002B     		cmp	r3, #0
+ 540 0018 F8D1     		bne	.L34
+ 292:Generated_Source\PSoC6/LCD_INTERFACE.c ****     {
+ 293:Generated_Source\PSoC6/LCD_INTERFACE.c ****         /* Command queue is full */
+ 294:Generated_Source\PSoC6/LCD_INTERFACE.c ****     }   
+ 295:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_CMD_FIFO_REG = 1u;
+ 541              		.loc 1 295 0 is_stmt 1
+ 542 001a 074B     		ldr	r3, .L35+4
+ 543 001c 0122     		movs	r2, #1
+ 544 001e 1A70     		strb	r2, [r3]
+ 296:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #if (LCD_INTERFACE_BUS_WIDTH == 16u)
+ 297:Generated_Source\PSoC6/LCD_INTERFACE.c ****         CY_SET_REG16(LCD_INTERFACE_DATA_FIFO_PTR, wrData);
+ 298:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #else /* 8-bit interface */
+ 299:Generated_Source\PSoC6/LCD_INTERFACE.c ****         LCD_INTERFACE_DATA_FIFO_REG = wrData;
+ 545              		.loc 1 299 0
+ 546 0020 064A     		ldr	r2, .L35+8
+ 547 0022 FB79     		ldrb	r3, [r7, #7]
+ 548 0024 1370     		strb	r3, [r2]
+ 300:Generated_Source\PSoC6/LCD_INTERFACE.c ****     #endif /* LCD_INTERFACE_BUS_WIDTH == 16u */
+ 301:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 549              		.loc 1 301 0
+ 550 0026 00BF     		nop
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 16
+
+
+ 551 0028 0C37     		adds	r7, r7, #12
+ 552              		.cfi_def_cfa_offset 4
+ 553 002a BD46     		mov	sp, r7
+ 554              		.cfi_def_cfa_register 13
+ 555              		@ sp needed
+ 556 002c 5DF8047B 		ldr	r7, [sp], #4
+ 557              		.cfi_restore 7
+ 558              		.cfi_def_cfa_offset 0
+ 559 0030 7047     		bx	lr
+ 560              	.L36:
+ 561 0032 00BF     		.align	2
+ 562              	.L35:
+ 563 0034 24163440 		.word	1077155364
+ 564 0038 20143440 		.word	1077154848
+ 565 003c 20153440 		.word	1077155104
+ 566              		.cfi_endproc
+ 567              	.LFE141:
+ 568              		.size	LCD_INTERFACE_Write8_A1, .-LCD_INTERFACE_Write8_A1
+ 569              		.section	.text.LCD_INTERFACE_WriteM8_A0,"ax",%progbits
+ 570              		.align	2
+ 571              		.global	LCD_INTERFACE_WriteM8_A0
+ 572              		.thumb
+ 573              		.thumb_func
+ 574              		.type	LCD_INTERFACE_WriteM8_A0, %function
+ 575              	LCD_INTERFACE_WriteM8_A0:
+ 576              	.LFB142:
+ 302:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 303:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 304:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 305:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_WriteM8_A0
+ 306:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 307:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 308:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 309:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates multiple write transactions on the 8-bit 
+ 310:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface with the d_c pin set to 0. The write is a posted write, 
+ 311:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  so this function will return before the write has actually completed on the 
+ 312:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  interface. If the command queue is full, this function will not return until
+ 313:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  space is availale to queue this write request.
+ 314:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 315:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 316:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: Pointer to the the first element of a data buffer sent on the 
+ 317:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          do_msb[7:0] (most significant byte) and do_lsb[7:0] (least significant
+ 318:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          byte) pins. do_msb[7:0] presents only for 16-bit interface.
+ 319:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 320:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  num:  Number of words/bytes to write.
+ 321:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 322:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 323:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_WriteM8_A0(uint8 wrData[], int num) 
+ 324:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 577              		.loc 1 324 0
+ 578              		.cfi_startproc
+ 579              		@ args = 0, pretend = 0, frame = 8
+ 580              		@ frame_needed = 1, uses_anonymous_args = 0
+ 581 0000 80B5     		push	{r7, lr}
+ 582              		.cfi_def_cfa_offset 8
+ 583              		.cfi_offset 7, -8
+ 584              		.cfi_offset 14, -4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 17
+
+
+ 585 0002 82B0     		sub	sp, sp, #8
+ 586              		.cfi_def_cfa_offset 16
+ 587 0004 00AF     		add	r7, sp, #0
+ 588              		.cfi_def_cfa_register 7
+ 589 0006 7860     		str	r0, [r7, #4]
+ 590 0008 3960     		str	r1, [r7]
+ 325:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_WriteM8(0u, wrData, (uint16)num);
+ 591              		.loc 1 325 0
+ 592 000a 3B68     		ldr	r3, [r7]
+ 593 000c 9BB2     		uxth	r3, r3
+ 594 000e 1A46     		mov	r2, r3
+ 595 0010 7968     		ldr	r1, [r7, #4]
+ 596 0012 0020     		movs	r0, #0
+ 597 0014 FFF7FEFF 		bl	LCD_INTERFACE_WriteM8
+ 326:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 598              		.loc 1 326 0
+ 599 0018 00BF     		nop
+ 600 001a 0837     		adds	r7, r7, #8
+ 601              		.cfi_def_cfa_offset 8
+ 602 001c BD46     		mov	sp, r7
+ 603              		.cfi_def_cfa_register 13
+ 604              		@ sp needed
+ 605 001e 80BD     		pop	{r7, pc}
+ 606              		.cfi_endproc
+ 607              	.LFE142:
+ 608              		.size	LCD_INTERFACE_WriteM8_A0, .-LCD_INTERFACE_WriteM8_A0
+ 609              		.section	.text.LCD_INTERFACE_WriteM8_A1,"ax",%progbits
+ 610              		.align	2
+ 611              		.global	LCD_INTERFACE_WriteM8_A1
+ 612              		.thumb
+ 613              		.thumb_func
+ 614              		.type	LCD_INTERFACE_WriteM8_A1, %function
+ 615              	LCD_INTERFACE_WriteM8_A1:
+ 616              	.LFB143:
+ 327:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 328:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 329:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 330:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_WriteM8_A1
+ 331:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 332:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 333:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 334:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates multiple data write transactions on the 8-bit 
+ 335:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface with the d_c pin set to 1. The write is a posted write, 
+ 336:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  so this function will return before the write has actually completed on the 
+ 337:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  interface. If the command queue is full, this function will not return until
+ 338:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  space is availale to queue this write request.
+ 339:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 340:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 341:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  wrData: Pointer to the the first element of a data buffer sent on the 
+ 342:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          do_msb[7:0] (most significant byte) and do_lsb[7:0] (least significant
+ 343:Generated_Source\PSoC6/LCD_INTERFACE.c **** *          byte) pins. do_msb[7:0] presents only for 16-bit interface.
+ 344:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 345:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  num:  Number of words/bytes to write.
+ 346:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 347:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 348:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_WriteM8_A1(uint8 wrData[], int num) 
+ 349:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 18
+
+
+ 617              		.loc 1 349 0
+ 618              		.cfi_startproc
+ 619              		@ args = 0, pretend = 0, frame = 8
+ 620              		@ frame_needed = 1, uses_anonymous_args = 0
+ 621 0000 80B5     		push	{r7, lr}
+ 622              		.cfi_def_cfa_offset 8
+ 623              		.cfi_offset 7, -8
+ 624              		.cfi_offset 14, -4
+ 625 0002 82B0     		sub	sp, sp, #8
+ 626              		.cfi_def_cfa_offset 16
+ 627 0004 00AF     		add	r7, sp, #0
+ 628              		.cfi_def_cfa_register 7
+ 629 0006 7860     		str	r0, [r7, #4]
+ 630 0008 3960     		str	r1, [r7]
+ 350:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_WriteM8(1u, wrData, (uint16)num);
+ 631              		.loc 1 350 0
+ 632 000a 3B68     		ldr	r3, [r7]
+ 633 000c 9BB2     		uxth	r3, r3
+ 634 000e 1A46     		mov	r2, r3
+ 635 0010 7968     		ldr	r1, [r7, #4]
+ 636 0012 0120     		movs	r0, #1
+ 637 0014 FFF7FEFF 		bl	LCD_INTERFACE_WriteM8
+ 351:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 638              		.loc 1 351 0
+ 639 0018 00BF     		nop
+ 640 001a 0837     		adds	r7, r7, #8
+ 641              		.cfi_def_cfa_offset 8
+ 642 001c BD46     		mov	sp, r7
+ 643              		.cfi_def_cfa_register 13
+ 644              		@ sp needed
+ 645 001e 80BD     		pop	{r7, pc}
+ 646              		.cfi_endproc
+ 647              	.LFE143:
+ 648              		.size	LCD_INTERFACE_WriteM8_A1, .-LCD_INTERFACE_WriteM8_A1
+ 649              		.section	.text.LCD_INTERFACE_Read8_A1,"ax",%progbits
+ 650              		.align	2
+ 651              		.global	LCD_INTERFACE_Read8_A1
+ 652              		.thumb
+ 653              		.thumb_func
+ 654              		.type	LCD_INTERFACE_Read8_A1, %function
+ 655              	LCD_INTERFACE_Read8_A1:
+ 656              	.LFB144:
+ 352:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 353:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 354:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 355:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_Read8_A1
+ 356:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 357:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 358:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 359:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates data read transaction on the 8-bit 
+ 360:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface with the d_c pin set to 1. The read will execute after 
+ 361:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  all currently posted writes have completed. This function will wait until 
+ 362:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  the read completes and then returns the read value.
+ 363:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 364:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Return:
+ 365:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  The 16-bit read value from the di_msb[7:0] (most significant byte) and 
+ 366:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  di_lsb[7:0] (least significant byte) pins for the 16-bit interface or the 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 19
+
+
+ 367:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  8-bit read value from the di_lsb[7:0] for 8-bit interface.
+ 368:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 369:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 370:Generated_Source\PSoC6/LCD_INTERFACE.c **** uint8 LCD_INTERFACE_Read8_A1(void) 
+ 371:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ 657              		.loc 1 371 0
+ 658              		.cfi_startproc
+ 659              		@ args = 0, pretend = 0, frame = 0
+ 660              		@ frame_needed = 1, uses_anonymous_args = 0
+ 661 0000 80B5     		push	{r7, lr}
+ 662              		.cfi_def_cfa_offset 8
+ 663              		.cfi_offset 7, -8
+ 664              		.cfi_offset 14, -4
+ 665 0002 00AF     		add	r7, sp, #0
+ 666              		.cfi_def_cfa_register 7
+ 372:Generated_Source\PSoC6/LCD_INTERFACE.c ****     return LCD_INTERFACE_Read8(1u);
+ 667              		.loc 1 372 0
+ 668 0004 0120     		movs	r0, #1
+ 669 0006 FFF7FEFF 		bl	LCD_INTERFACE_Read8
+ 670 000a 0346     		mov	r3, r0
+ 373:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 671              		.loc 1 373 0
+ 672 000c 1846     		mov	r0, r3
+ 673 000e 80BD     		pop	{r7, pc}
+ 674              		.cfi_endproc
+ 675              	.LFE144:
+ 676              		.size	LCD_INTERFACE_Read8_A1, .-LCD_INTERFACE_Read8_A1
+ 677              		.section	.text.LCD_INTERFACE_ReadM8_A1,"ax",%progbits
+ 678              		.align	2
+ 679              		.global	LCD_INTERFACE_ReadM8_A1
+ 680              		.thumb
+ 681              		.thumb_func
+ 682              		.type	LCD_INTERFACE_ReadM8_A1, %function
+ 683              	LCD_INTERFACE_ReadM8_A1:
+ 684              	.LFB145:
+ 374:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 375:Generated_Source\PSoC6/LCD_INTERFACE.c **** 
+ 376:Generated_Source\PSoC6/LCD_INTERFACE.c **** /*******************************************************************************
+ 377:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Function Name: LCD_INTERFACE_ReadM8_A1
+ 378:Generated_Source\PSoC6/LCD_INTERFACE.c **** ********************************************************************************
+ 379:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 380:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Summary:
+ 381:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  Initiates multiple data read transactions on the 8-bit 
+ 382:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  parallel interface with the d_c pin set to 1. The read will execute after all 
+ 383:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  currently posted writes have completed. This function will wait until the 
+ 384:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  read completes and then returns the read value.
+ 385:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 386:Generated_Source\PSoC6/LCD_INTERFACE.c **** * Parameters:
+ 387:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  rdData: Pointer to the the first element of a data buffer read from the do_msb[7:0]
+ 388:Generated_Source\PSoC6/LCD_INTERFACE.c **** *        (most significant byte) and do_lsb[7:0] (least significant byte) pins. 
+ 389:Generated_Source\PSoC6/LCD_INTERFACE.c **** *        do_msb[7:0] presents only for 16-bit interface.
+ 390:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 391:Generated_Source\PSoC6/LCD_INTERFACE.c **** *  num:  Number of words/bytes to read.
+ 392:Generated_Source\PSoC6/LCD_INTERFACE.c **** *
+ 393:Generated_Source\PSoC6/LCD_INTERFACE.c **** *******************************************************************************/
+ 394:Generated_Source\PSoC6/LCD_INTERFACE.c **** void LCD_INTERFACE_ReadM8_A1(uint8 rdData[], int num) 
+ 395:Generated_Source\PSoC6/LCD_INTERFACE.c **** {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 20
+
+
+ 685              		.loc 1 395 0
+ 686              		.cfi_startproc
+ 687              		@ args = 0, pretend = 0, frame = 8
+ 688              		@ frame_needed = 1, uses_anonymous_args = 0
+ 689 0000 80B5     		push	{r7, lr}
+ 690              		.cfi_def_cfa_offset 8
+ 691              		.cfi_offset 7, -8
+ 692              		.cfi_offset 14, -4
+ 693 0002 82B0     		sub	sp, sp, #8
+ 694              		.cfi_def_cfa_offset 16
+ 695 0004 00AF     		add	r7, sp, #0
+ 696              		.cfi_def_cfa_register 7
+ 697 0006 7860     		str	r0, [r7, #4]
+ 698 0008 3960     		str	r1, [r7]
+ 396:Generated_Source\PSoC6/LCD_INTERFACE.c ****     LCD_INTERFACE_ReadM8(1u, rdData, (uint16)num);
+ 699              		.loc 1 396 0
+ 700 000a 3B68     		ldr	r3, [r7]
+ 701 000c 9BB2     		uxth	r3, r3
+ 702 000e 1A46     		mov	r2, r3
+ 703 0010 7968     		ldr	r1, [r7, #4]
+ 704 0012 0120     		movs	r0, #1
+ 705 0014 FFF7FEFF 		bl	LCD_INTERFACE_ReadM8
+ 397:Generated_Source\PSoC6/LCD_INTERFACE.c **** }
+ 706              		.loc 1 397 0
+ 707 0018 00BF     		nop
+ 708 001a 0837     		adds	r7, r7, #8
+ 709              		.cfi_def_cfa_offset 8
+ 710 001c BD46     		mov	sp, r7
+ 711              		.cfi_def_cfa_register 13
+ 712              		@ sp needed
+ 713 001e 80BD     		pop	{r7, pc}
+ 714              		.cfi_endproc
+ 715              	.LFE145:
+ 716              		.size	LCD_INTERFACE_ReadM8_A1, .-LCD_INTERFACE_ReadM8_A1
+ 717              		.text
+ 718              	.Letext0:
+ 719              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 720              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 721              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+ 722              		.file 5 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 723              		.section	.debug_info,"",%progbits
+ 724              	.Ldebug_info0:
+ 725 0000 77030000 		.4byte	0x377
+ 726 0004 0400     		.2byte	0x4
+ 727 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 728 000a 04       		.byte	0x4
+ 729 000b 01       		.uleb128 0x1
+ 730 000c 0C010000 		.4byte	.LASF42
+ 731 0010 0C       		.byte	0xc
+ 732 0011 2D000000 		.4byte	.LASF43
+ 733 0015 74020000 		.4byte	.LASF44
+ 734 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 735 001d 00000000 		.4byte	0
+ 736 0021 00000000 		.4byte	.Ldebug_line0
+ 737 0025 02       		.uleb128 0x2
+ 738 0026 02       		.byte	0x2
+ 739 0027 05       		.byte	0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 21
+
+
+ 740 0028 75030000 		.4byte	.LASF0
+ 741 002c 02       		.uleb128 0x2
+ 742 002d 01       		.byte	0x1
+ 743 002e 06       		.byte	0x6
+ 744 002f B3000000 		.4byte	.LASF1
+ 745 0033 03       		.uleb128 0x3
+ 746 0034 00000000 		.4byte	.LASF3
+ 747 0038 02       		.byte	0x2
+ 748 0039 1D       		.byte	0x1d
+ 749 003a 3E000000 		.4byte	0x3e
+ 750 003e 02       		.uleb128 0x2
+ 751 003f 01       		.byte	0x1
+ 752 0040 08       		.byte	0x8
+ 753 0041 CC010000 		.4byte	.LASF2
+ 754 0045 03       		.uleb128 0x3
+ 755 0046 DA010000 		.4byte	.LASF4
+ 756 004a 02       		.byte	0x2
+ 757 004b 2B       		.byte	0x2b
+ 758 004c 50000000 		.4byte	0x50
+ 759 0050 02       		.uleb128 0x2
+ 760 0051 02       		.byte	0x2
+ 761 0052 07       		.byte	0x7
+ 762 0053 54000000 		.4byte	.LASF5
+ 763 0057 03       		.uleb128 0x3
+ 764 0058 23000000 		.4byte	.LASF6
+ 765 005c 02       		.byte	0x2
+ 766 005d 3F       		.byte	0x3f
+ 767 005e 62000000 		.4byte	0x62
+ 768 0062 02       		.uleb128 0x2
+ 769 0063 04       		.byte	0x4
+ 770 0064 05       		.byte	0x5
+ 771 0065 AA030000 		.4byte	.LASF7
+ 772 0069 03       		.uleb128 0x3
+ 773 006a FA010000 		.4byte	.LASF8
+ 774 006e 02       		.byte	0x2
+ 775 006f 41       		.byte	0x41
+ 776 0070 74000000 		.4byte	0x74
+ 777 0074 02       		.uleb128 0x2
+ 778 0075 04       		.byte	0x4
+ 779 0076 07       		.byte	0x7
+ 780 0077 F4000000 		.4byte	.LASF9
+ 781 007b 02       		.uleb128 0x2
+ 782 007c 08       		.byte	0x8
+ 783 007d 05       		.byte	0x5
+ 784 007e 38030000 		.4byte	.LASF10
+ 785 0082 02       		.uleb128 0x2
+ 786 0083 08       		.byte	0x8
+ 787 0084 07       		.byte	0x7
+ 788 0085 55020000 		.4byte	.LASF11
+ 789 0089 04       		.uleb128 0x4
+ 790 008a 04       		.byte	0x4
+ 791 008b 05       		.byte	0x5
+ 792 008c 696E7400 		.ascii	"int\000"
+ 793 0090 02       		.uleb128 0x2
+ 794 0091 04       		.byte	0x4
+ 795 0092 07       		.byte	0x7
+ 796 0093 41020000 		.4byte	.LASF12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 22
+
+
+ 797 0097 03       		.uleb128 0x3
+ 798 0098 6C020000 		.4byte	.LASF13
+ 799 009c 03       		.byte	0x3
+ 800 009d 18       		.byte	0x18
+ 801 009e 33000000 		.4byte	0x33
+ 802 00a2 03       		.uleb128 0x3
+ 803 00a3 7F030000 		.4byte	.LASF14
+ 804 00a7 03       		.byte	0x3
+ 805 00a8 24       		.byte	0x24
+ 806 00a9 45000000 		.4byte	0x45
+ 807 00ad 03       		.uleb128 0x3
+ 808 00ae 27030000 		.4byte	.LASF15
+ 809 00b2 03       		.byte	0x3
+ 810 00b3 2C       		.byte	0x2c
+ 811 00b4 57000000 		.4byte	0x57
+ 812 00b8 03       		.uleb128 0x3
+ 813 00b9 A1030000 		.4byte	.LASF16
+ 814 00bd 03       		.byte	0x3
+ 815 00be 30       		.byte	0x30
+ 816 00bf 69000000 		.4byte	0x69
+ 817 00c3 02       		.uleb128 0x2
+ 818 00c4 04       		.byte	0x4
+ 819 00c5 07       		.byte	0x7
+ 820 00c6 2F030000 		.4byte	.LASF17
+ 821 00ca 05       		.uleb128 0x5
+ 822 00cb 97000000 		.4byte	0x97
+ 823 00cf 02       		.uleb128 0x2
+ 824 00d0 08       		.byte	0x8
+ 825 00d1 04       		.byte	0x4
+ 826 00d2 B3030000 		.4byte	.LASF18
+ 827 00d6 02       		.uleb128 0x2
+ 828 00d7 01       		.byte	0x1
+ 829 00d8 08       		.byte	0x8
+ 830 00d9 46030000 		.4byte	.LASF19
+ 831 00dd 02       		.uleb128 0x2
+ 832 00de 04       		.byte	0x4
+ 833 00df 04       		.byte	0x4
+ 834 00e0 AD000000 		.4byte	.LASF20
+ 835 00e4 02       		.uleb128 0x2
+ 836 00e5 08       		.byte	0x8
+ 837 00e6 04       		.byte	0x4
+ 838 00e7 67000000 		.4byte	.LASF21
+ 839 00eb 06       		.uleb128 0x6
+ 840 00ec 06010000 		.4byte	.LASF22
+ 841 00f0 04       		.byte	0x4
+ 842 00f1 EA03     		.2byte	0x3ea
+ 843 00f3 97000000 		.4byte	0x97
+ 844 00f7 06       		.uleb128 0x6
+ 845 00f8 05020000 		.4byte	.LASF23
+ 846 00fc 04       		.byte	0x4
+ 847 00fd EB03     		.2byte	0x3eb
+ 848 00ff A2000000 		.4byte	0xa2
+ 849 0103 06       		.uleb128 0x6
+ 850 0104 26020000 		.4byte	.LASF24
+ 851 0108 04       		.byte	0x4
+ 852 0109 EC03     		.2byte	0x3ec
+ 853 010b B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 23
+
+
+ 854 010f 06       		.uleb128 0x6
+ 855 0110 EF000000 		.4byte	.LASF25
+ 856 0114 04       		.byte	0x4
+ 857 0115 F603     		.2byte	0x3f6
+ 858 0117 CA000000 		.4byte	0xca
+ 859 011b 07       		.uleb128 0x7
+ 860 011c 4B030000 		.4byte	.LASF26
+ 861 0120 01       		.byte	0x1
+ 862 0121 22       		.byte	0x22
+ 863 0122 00000000 		.4byte	.LFB132
+ 864 0126 0E000000 		.4byte	.LFE132-.LFB132
+ 865 012a 01       		.uleb128 0x1
+ 866 012b 9C       		.byte	0x9c
+ 867 012c 07       		.uleb128 0x7
+ 868 012d 0C020000 		.4byte	.LASF27
+ 869 0131 01       		.byte	0x1
+ 870 0132 30       		.byte	0x30
+ 871 0133 00000000 		.4byte	.LFB133
+ 872 0137 24000000 		.4byte	.LFE133-.LFB133
+ 873 013b 01       		.uleb128 0x1
+ 874 013c 9C       		.byte	0x9c
+ 875 013d 08       		.uleb128 0x8
+ 876 013e 2D020000 		.4byte	.LASF28
+ 877 0142 01       		.byte	0x1
+ 878 0143 44       		.byte	0x44
+ 879 0144 00000000 		.4byte	.LFB134
+ 880 0148 24000000 		.4byte	.LFE134-.LFB134
+ 881 014c 01       		.uleb128 0x1
+ 882 014d 9C       		.byte	0x9c
+ 883 014e 07       		.uleb128 0x7
+ 884 014f 6E000000 		.4byte	.LASF29
+ 885 0153 01       		.byte	0x1
+ 886 0154 58       		.byte	0x58
+ 887 0155 00000000 		.4byte	.LFB135
+ 888 0159 0E000000 		.4byte	.LFE135-.LFB135
+ 889 015d 01       		.uleb128 0x1
+ 890 015e 9C       		.byte	0x9c
+ 891 015f 09       		.uleb128 0x9
+ 892 0160 E5010000 		.4byte	.LASF31
+ 893 0164 01       		.byte	0x1
+ 894 0165 71       		.byte	0x71
+ 895 0166 00000000 		.4byte	.LFB136
+ 896 016a 44000000 		.4byte	.LFE136-.LFB136
+ 897 016e 01       		.uleb128 0x1
+ 898 016f 9C       		.byte	0x9c
+ 899 0170 91010000 		.4byte	0x191
+ 900 0174 0A       		.uleb128 0xa
+ 901 0175 645F6300 		.ascii	"d_c\000"
+ 902 0179 01       		.byte	0x1
+ 903 017a 71       		.byte	0x71
+ 904 017b EB000000 		.4byte	0xeb
+ 905 017f 02       		.uleb128 0x2
+ 906 0180 91       		.byte	0x91
+ 907 0181 77       		.sleb128 -9
+ 908 0182 0B       		.uleb128 0xb
+ 909 0183 4E020000 		.4byte	.LASF30
+ 910 0187 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 24
+
+
+ 911 0188 71       		.byte	0x71
+ 912 0189 EB000000 		.4byte	0xeb
+ 913 018d 02       		.uleb128 0x2
+ 914 018e 91       		.byte	0x91
+ 915 018f 76       		.sleb128 -10
+ 916 0190 00       		.byte	0
+ 917 0191 09       		.uleb128 0x9
+ 918 0192 D6030000 		.4byte	.LASF32
+ 919 0196 01       		.byte	0x1
+ 920 0197 95       		.byte	0x95
+ 921 0198 00000000 		.4byte	.LFB137
+ 922 019c 60000000 		.4byte	.LFE137-.LFB137
+ 923 01a0 01       		.uleb128 0x1
+ 924 01a1 9C       		.byte	0x9c
+ 925 01a2 DD010000 		.4byte	0x1dd
+ 926 01a6 0A       		.uleb128 0xa
+ 927 01a7 645F6300 		.ascii	"d_c\000"
+ 928 01ab 01       		.byte	0x1
+ 929 01ac 95       		.byte	0x95
+ 930 01ad EB000000 		.4byte	0xeb
+ 931 01b1 02       		.uleb128 0x2
+ 932 01b2 91       		.byte	0x91
+ 933 01b3 6F       		.sleb128 -17
+ 934 01b4 0B       		.uleb128 0xb
+ 935 01b5 4E020000 		.4byte	.LASF30
+ 936 01b9 01       		.byte	0x1
+ 937 01ba 95       		.byte	0x95
+ 938 01bb DD010000 		.4byte	0x1dd
+ 939 01bf 02       		.uleb128 0x2
+ 940 01c0 91       		.byte	0x91
+ 941 01c1 68       		.sleb128 -24
+ 942 01c2 0A       		.uleb128 0xa
+ 943 01c3 6E756D00 		.ascii	"num\000"
+ 944 01c7 01       		.byte	0x1
+ 945 01c8 95       		.byte	0x95
+ 946 01c9 F7000000 		.4byte	0xf7
+ 947 01cd 02       		.uleb128 0x2
+ 948 01ce 91       		.byte	0x91
+ 949 01cf 6C       		.sleb128 -20
+ 950 01d0 0C       		.uleb128 0xc
+ 951 01d1 6900     		.ascii	"i\000"
+ 952 01d3 01       		.byte	0x1
+ 953 01d4 97       		.byte	0x97
+ 954 01d5 03010000 		.4byte	0x103
+ 955 01d9 02       		.uleb128 0x2
+ 956 01da 91       		.byte	0x91
+ 957 01db 74       		.sleb128 -12
+ 958 01dc 00       		.byte	0
+ 959 01dd 0D       		.uleb128 0xd
+ 960 01de 04       		.byte	0x4
+ 961 01df EB000000 		.4byte	0xeb
+ 962 01e3 0E       		.uleb128 0xe
+ 963 01e4 99000000 		.4byte	.LASF45
+ 964 01e8 01       		.byte	0x1
+ 965 01e9 BC       		.byte	0xbc
+ 966 01ea EB000000 		.4byte	0xeb
+ 967 01ee 00000000 		.4byte	.LFB138
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 25
+
+
+ 968 01f2 54000000 		.4byte	.LFE138-.LFB138
+ 969 01f6 01       		.uleb128 0x1
+ 970 01f7 9C       		.byte	0x9c
+ 971 01f8 0B020000 		.4byte	0x20b
+ 972 01fc 0A       		.uleb128 0xa
+ 973 01fd 645F6300 		.ascii	"d_c\000"
+ 974 0201 01       		.byte	0x1
+ 975 0202 BC       		.byte	0xbc
+ 976 0203 EB000000 		.4byte	0xeb
+ 977 0207 02       		.uleb128 0x2
+ 978 0208 91       		.byte	0x91
+ 979 0209 77       		.sleb128 -9
+ 980 020a 00       		.byte	0
+ 981 020b 0F       		.uleb128 0xf
+ 982 020c 60030000 		.4byte	.LASF33
+ 983 0210 01       		.byte	0x1
+ 984 0211 E5       		.byte	0xe5
+ 985 0212 00000000 		.4byte	.LFB139
+ 986 0216 3E000000 		.4byte	.LFE139-.LFB139
+ 987 021a 01       		.uleb128 0x1
+ 988 021b 9C       		.byte	0x9c
+ 989 021c 57020000 		.4byte	0x257
+ 990 0220 0A       		.uleb128 0xa
+ 991 0221 645F6300 		.ascii	"d_c\000"
+ 992 0225 01       		.byte	0x1
+ 993 0226 E5       		.byte	0xe5
+ 994 0227 EB000000 		.4byte	0xeb
+ 995 022b 02       		.uleb128 0x2
+ 996 022c 91       		.byte	0x91
+ 997 022d 67       		.sleb128 -25
+ 998 022e 0B       		.uleb128 0xb
+ 999 022f 1F020000 		.4byte	.LASF34
+ 1000 0233 01       		.byte	0x1
+ 1001 0234 E5       		.byte	0xe5
+ 1002 0235 DD010000 		.4byte	0x1dd
+ 1003 0239 02       		.uleb128 0x2
+ 1004 023a 91       		.byte	0x91
+ 1005 023b 60       		.sleb128 -32
+ 1006 023c 0A       		.uleb128 0xa
+ 1007 023d 6E756D00 		.ascii	"num\000"
+ 1008 0241 01       		.byte	0x1
+ 1009 0242 E5       		.byte	0xe5
+ 1010 0243 F7000000 		.4byte	0xf7
+ 1011 0247 02       		.uleb128 0x2
+ 1012 0248 91       		.byte	0x91
+ 1013 0249 64       		.sleb128 -28
+ 1014 024a 0C       		.uleb128 0xc
+ 1015 024b 6900     		.ascii	"i\000"
+ 1016 024d 01       		.byte	0x1
+ 1017 024e E7       		.byte	0xe7
+ 1018 024f 03010000 		.4byte	0x103
+ 1019 0253 02       		.uleb128 0x2
+ 1020 0254 91       		.byte	0x91
+ 1021 0255 6C       		.sleb128 -20
+ 1022 0256 00       		.byte	0
+ 1023 0257 10       		.uleb128 0x10
+ 1024 0258 BF000000 		.4byte	.LASF35
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 26
+
+
+ 1025 025c 01       		.byte	0x1
+ 1026 025d 0101     		.2byte	0x101
+ 1027 025f 00000000 		.4byte	.LFB140
+ 1028 0263 40000000 		.4byte	.LFE140-.LFB140
+ 1029 0267 01       		.uleb128 0x1
+ 1030 0268 9C       		.byte	0x9c
+ 1031 0269 7D020000 		.4byte	0x27d
+ 1032 026d 11       		.uleb128 0x11
+ 1033 026e 4E020000 		.4byte	.LASF30
+ 1034 0272 01       		.byte	0x1
+ 1035 0273 0101     		.2byte	0x101
+ 1036 0275 EB000000 		.4byte	0xeb
+ 1037 0279 02       		.uleb128 0x2
+ 1038 027a 91       		.byte	0x91
+ 1039 027b 77       		.sleb128 -9
+ 1040 027c 00       		.byte	0
+ 1041 027d 10       		.uleb128 0x10
+ 1042 027e D7000000 		.4byte	.LASF36
+ 1043 0282 01       		.byte	0x1
+ 1044 0283 2101     		.2byte	0x121
+ 1045 0285 00000000 		.4byte	.LFB141
+ 1046 0289 40000000 		.4byte	.LFE141-.LFB141
+ 1047 028d 01       		.uleb128 0x1
+ 1048 028e 9C       		.byte	0x9c
+ 1049 028f A3020000 		.4byte	0x2a3
+ 1050 0293 11       		.uleb128 0x11
+ 1051 0294 4E020000 		.4byte	.LASF30
+ 1052 0298 01       		.byte	0x1
+ 1053 0299 2101     		.2byte	0x121
+ 1054 029b EB000000 		.4byte	0xeb
+ 1055 029f 02       		.uleb128 0x2
+ 1056 02a0 91       		.byte	0x91
+ 1057 02a1 77       		.sleb128 -9
+ 1058 02a2 00       		.byte	0
+ 1059 02a3 12       		.uleb128 0x12
+ 1060 02a4 88030000 		.4byte	.LASF37
+ 1061 02a8 01       		.byte	0x1
+ 1062 02a9 4301     		.2byte	0x143
+ 1063 02ab 00000000 		.4byte	.LFB142
+ 1064 02af 20000000 		.4byte	.LFE142-.LFB142
+ 1065 02b3 01       		.uleb128 0x1
+ 1066 02b4 9C       		.byte	0x9c
+ 1067 02b5 D8020000 		.4byte	0x2d8
+ 1068 02b9 11       		.uleb128 0x11
+ 1069 02ba 4E020000 		.4byte	.LASF30
+ 1070 02be 01       		.byte	0x1
+ 1071 02bf 4301     		.2byte	0x143
+ 1072 02c1 DD010000 		.4byte	0x1dd
+ 1073 02c5 02       		.uleb128 0x2
+ 1074 02c6 91       		.byte	0x91
+ 1075 02c7 74       		.sleb128 -12
+ 1076 02c8 13       		.uleb128 0x13
+ 1077 02c9 6E756D00 		.ascii	"num\000"
+ 1078 02cd 01       		.byte	0x1
+ 1079 02ce 4301     		.2byte	0x143
+ 1080 02d0 89000000 		.4byte	0x89
+ 1081 02d4 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 27
+
+
+ 1082 02d5 91       		.byte	0x91
+ 1083 02d6 70       		.sleb128 -16
+ 1084 02d7 00       		.byte	0
+ 1085 02d8 12       		.uleb128 0x12
+ 1086 02d9 0A000000 		.4byte	.LASF38
+ 1087 02dd 01       		.byte	0x1
+ 1088 02de 5C01     		.2byte	0x15c
+ 1089 02e0 00000000 		.4byte	.LFB143
+ 1090 02e4 20000000 		.4byte	.LFE143-.LFB143
+ 1091 02e8 01       		.uleb128 0x1
+ 1092 02e9 9C       		.byte	0x9c
+ 1093 02ea 0D030000 		.4byte	0x30d
+ 1094 02ee 11       		.uleb128 0x11
+ 1095 02ef 4E020000 		.4byte	.LASF30
+ 1096 02f3 01       		.byte	0x1
+ 1097 02f4 5C01     		.2byte	0x15c
+ 1098 02f6 DD010000 		.4byte	0x1dd
+ 1099 02fa 02       		.uleb128 0x2
+ 1100 02fb 91       		.byte	0x91
+ 1101 02fc 74       		.sleb128 -12
+ 1102 02fd 13       		.uleb128 0x13
+ 1103 02fe 6E756D00 		.ascii	"num\000"
+ 1104 0302 01       		.byte	0x1
+ 1105 0303 5C01     		.2byte	0x15c
+ 1106 0305 89000000 		.4byte	0x89
+ 1107 0309 02       		.uleb128 0x2
+ 1108 030a 91       		.byte	0x91
+ 1109 030b 70       		.sleb128 -16
+ 1110 030c 00       		.byte	0
+ 1111 030d 14       		.uleb128 0x14
+ 1112 030e BF030000 		.4byte	.LASF46
+ 1113 0312 01       		.byte	0x1
+ 1114 0313 7201     		.2byte	0x172
+ 1115 0315 EB000000 		.4byte	0xeb
+ 1116 0319 00000000 		.4byte	.LFB144
+ 1117 031d 10000000 		.4byte	.LFE144-.LFB144
+ 1118 0321 01       		.uleb128 0x1
+ 1119 0322 9C       		.byte	0x9c
+ 1120 0323 12       		.uleb128 0x12
+ 1121 0324 81000000 		.4byte	.LASF39
+ 1122 0328 01       		.byte	0x1
+ 1123 0329 8A01     		.2byte	0x18a
+ 1124 032b 00000000 		.4byte	.LFB145
+ 1125 032f 20000000 		.4byte	.LFE145-.LFB145
+ 1126 0333 01       		.uleb128 0x1
+ 1127 0334 9C       		.byte	0x9c
+ 1128 0335 58030000 		.4byte	0x358
+ 1129 0339 11       		.uleb128 0x11
+ 1130 033a 1F020000 		.4byte	.LASF34
+ 1131 033e 01       		.byte	0x1
+ 1132 033f 8A01     		.2byte	0x18a
+ 1133 0341 DD010000 		.4byte	0x1dd
+ 1134 0345 02       		.uleb128 0x2
+ 1135 0346 91       		.byte	0x91
+ 1136 0347 74       		.sleb128 -12
+ 1137 0348 13       		.uleb128 0x13
+ 1138 0349 6E756D00 		.ascii	"num\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 28
+
+
+ 1139 034d 01       		.byte	0x1
+ 1140 034e 8A01     		.2byte	0x18a
+ 1141 0350 89000000 		.4byte	0x89
+ 1142 0354 02       		.uleb128 0x2
+ 1143 0355 91       		.byte	0x91
+ 1144 0356 70       		.sleb128 -16
+ 1145 0357 00       		.byte	0
+ 1146 0358 15       		.uleb128 0x15
+ 1147 0359 BF010000 		.4byte	.LASF40
+ 1148 035d 05       		.byte	0x5
+ 1149 035e F907     		.2byte	0x7f9
+ 1150 0360 64030000 		.4byte	0x364
+ 1151 0364 05       		.uleb128 0x5
+ 1152 0365 AD000000 		.4byte	0xad
+ 1153 0369 16       		.uleb128 0x16
+ 1154 036a 11030000 		.4byte	.LASF41
+ 1155 036e 01       		.byte	0x1
+ 1156 036f 12       		.byte	0x12
+ 1157 0370 EB000000 		.4byte	0xeb
+ 1158 0374 05       		.uleb128 0x5
+ 1159 0375 03       		.byte	0x3
+ 1160 0376 00000000 		.4byte	LCD_INTERFACE_initVar
+ 1161 037a 00       		.byte	0
+ 1162              		.section	.debug_abbrev,"",%progbits
+ 1163              	.Ldebug_abbrev0:
+ 1164 0000 01       		.uleb128 0x1
+ 1165 0001 11       		.uleb128 0x11
+ 1166 0002 01       		.byte	0x1
+ 1167 0003 25       		.uleb128 0x25
+ 1168 0004 0E       		.uleb128 0xe
+ 1169 0005 13       		.uleb128 0x13
+ 1170 0006 0B       		.uleb128 0xb
+ 1171 0007 03       		.uleb128 0x3
+ 1172 0008 0E       		.uleb128 0xe
+ 1173 0009 1B       		.uleb128 0x1b
+ 1174 000a 0E       		.uleb128 0xe
+ 1175 000b 55       		.uleb128 0x55
+ 1176 000c 17       		.uleb128 0x17
+ 1177 000d 11       		.uleb128 0x11
+ 1178 000e 01       		.uleb128 0x1
+ 1179 000f 10       		.uleb128 0x10
+ 1180 0010 17       		.uleb128 0x17
+ 1181 0011 00       		.byte	0
+ 1182 0012 00       		.byte	0
+ 1183 0013 02       		.uleb128 0x2
+ 1184 0014 24       		.uleb128 0x24
+ 1185 0015 00       		.byte	0
+ 1186 0016 0B       		.uleb128 0xb
+ 1187 0017 0B       		.uleb128 0xb
+ 1188 0018 3E       		.uleb128 0x3e
+ 1189 0019 0B       		.uleb128 0xb
+ 1190 001a 03       		.uleb128 0x3
+ 1191 001b 0E       		.uleb128 0xe
+ 1192 001c 00       		.byte	0
+ 1193 001d 00       		.byte	0
+ 1194 001e 03       		.uleb128 0x3
+ 1195 001f 16       		.uleb128 0x16
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 29
+
+
+ 1196 0020 00       		.byte	0
+ 1197 0021 03       		.uleb128 0x3
+ 1198 0022 0E       		.uleb128 0xe
+ 1199 0023 3A       		.uleb128 0x3a
+ 1200 0024 0B       		.uleb128 0xb
+ 1201 0025 3B       		.uleb128 0x3b
+ 1202 0026 0B       		.uleb128 0xb
+ 1203 0027 49       		.uleb128 0x49
+ 1204 0028 13       		.uleb128 0x13
+ 1205 0029 00       		.byte	0
+ 1206 002a 00       		.byte	0
+ 1207 002b 04       		.uleb128 0x4
+ 1208 002c 24       		.uleb128 0x24
+ 1209 002d 00       		.byte	0
+ 1210 002e 0B       		.uleb128 0xb
+ 1211 002f 0B       		.uleb128 0xb
+ 1212 0030 3E       		.uleb128 0x3e
+ 1213 0031 0B       		.uleb128 0xb
+ 1214 0032 03       		.uleb128 0x3
+ 1215 0033 08       		.uleb128 0x8
+ 1216 0034 00       		.byte	0
+ 1217 0035 00       		.byte	0
+ 1218 0036 05       		.uleb128 0x5
+ 1219 0037 35       		.uleb128 0x35
+ 1220 0038 00       		.byte	0
+ 1221 0039 49       		.uleb128 0x49
+ 1222 003a 13       		.uleb128 0x13
+ 1223 003b 00       		.byte	0
+ 1224 003c 00       		.byte	0
+ 1225 003d 06       		.uleb128 0x6
+ 1226 003e 16       		.uleb128 0x16
+ 1227 003f 00       		.byte	0
+ 1228 0040 03       		.uleb128 0x3
+ 1229 0041 0E       		.uleb128 0xe
+ 1230 0042 3A       		.uleb128 0x3a
+ 1231 0043 0B       		.uleb128 0xb
+ 1232 0044 3B       		.uleb128 0x3b
+ 1233 0045 05       		.uleb128 0x5
+ 1234 0046 49       		.uleb128 0x49
+ 1235 0047 13       		.uleb128 0x13
+ 1236 0048 00       		.byte	0
+ 1237 0049 00       		.byte	0
+ 1238 004a 07       		.uleb128 0x7
+ 1239 004b 2E       		.uleb128 0x2e
+ 1240 004c 00       		.byte	0
+ 1241 004d 3F       		.uleb128 0x3f
+ 1242 004e 19       		.uleb128 0x19
+ 1243 004f 03       		.uleb128 0x3
+ 1244 0050 0E       		.uleb128 0xe
+ 1245 0051 3A       		.uleb128 0x3a
+ 1246 0052 0B       		.uleb128 0xb
+ 1247 0053 3B       		.uleb128 0x3b
+ 1248 0054 0B       		.uleb128 0xb
+ 1249 0055 27       		.uleb128 0x27
+ 1250 0056 19       		.uleb128 0x19
+ 1251 0057 11       		.uleb128 0x11
+ 1252 0058 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 30
+
+
+ 1253 0059 12       		.uleb128 0x12
+ 1254 005a 06       		.uleb128 0x6
+ 1255 005b 40       		.uleb128 0x40
+ 1256 005c 18       		.uleb128 0x18
+ 1257 005d 9742     		.uleb128 0x2117
+ 1258 005f 19       		.uleb128 0x19
+ 1259 0060 00       		.byte	0
+ 1260 0061 00       		.byte	0
+ 1261 0062 08       		.uleb128 0x8
+ 1262 0063 2E       		.uleb128 0x2e
+ 1263 0064 00       		.byte	0
+ 1264 0065 3F       		.uleb128 0x3f
+ 1265 0066 19       		.uleb128 0x19
+ 1266 0067 03       		.uleb128 0x3
+ 1267 0068 0E       		.uleb128 0xe
+ 1268 0069 3A       		.uleb128 0x3a
+ 1269 006a 0B       		.uleb128 0xb
+ 1270 006b 3B       		.uleb128 0x3b
+ 1271 006c 0B       		.uleb128 0xb
+ 1272 006d 27       		.uleb128 0x27
+ 1273 006e 19       		.uleb128 0x19
+ 1274 006f 11       		.uleb128 0x11
+ 1275 0070 01       		.uleb128 0x1
+ 1276 0071 12       		.uleb128 0x12
+ 1277 0072 06       		.uleb128 0x6
+ 1278 0073 40       		.uleb128 0x40
+ 1279 0074 18       		.uleb128 0x18
+ 1280 0075 9642     		.uleb128 0x2116
+ 1281 0077 19       		.uleb128 0x19
+ 1282 0078 00       		.byte	0
+ 1283 0079 00       		.byte	0
+ 1284 007a 09       		.uleb128 0x9
+ 1285 007b 2E       		.uleb128 0x2e
+ 1286 007c 01       		.byte	0x1
+ 1287 007d 3F       		.uleb128 0x3f
+ 1288 007e 19       		.uleb128 0x19
+ 1289 007f 03       		.uleb128 0x3
+ 1290 0080 0E       		.uleb128 0xe
+ 1291 0081 3A       		.uleb128 0x3a
+ 1292 0082 0B       		.uleb128 0xb
+ 1293 0083 3B       		.uleb128 0x3b
+ 1294 0084 0B       		.uleb128 0xb
+ 1295 0085 27       		.uleb128 0x27
+ 1296 0086 19       		.uleb128 0x19
+ 1297 0087 11       		.uleb128 0x11
+ 1298 0088 01       		.uleb128 0x1
+ 1299 0089 12       		.uleb128 0x12
+ 1300 008a 06       		.uleb128 0x6
+ 1301 008b 40       		.uleb128 0x40
+ 1302 008c 18       		.uleb128 0x18
+ 1303 008d 9742     		.uleb128 0x2117
+ 1304 008f 19       		.uleb128 0x19
+ 1305 0090 01       		.uleb128 0x1
+ 1306 0091 13       		.uleb128 0x13
+ 1307 0092 00       		.byte	0
+ 1308 0093 00       		.byte	0
+ 1309 0094 0A       		.uleb128 0xa
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 31
+
+
+ 1310 0095 05       		.uleb128 0x5
+ 1311 0096 00       		.byte	0
+ 1312 0097 03       		.uleb128 0x3
+ 1313 0098 08       		.uleb128 0x8
+ 1314 0099 3A       		.uleb128 0x3a
+ 1315 009a 0B       		.uleb128 0xb
+ 1316 009b 3B       		.uleb128 0x3b
+ 1317 009c 0B       		.uleb128 0xb
+ 1318 009d 49       		.uleb128 0x49
+ 1319 009e 13       		.uleb128 0x13
+ 1320 009f 02       		.uleb128 0x2
+ 1321 00a0 18       		.uleb128 0x18
+ 1322 00a1 00       		.byte	0
+ 1323 00a2 00       		.byte	0
+ 1324 00a3 0B       		.uleb128 0xb
+ 1325 00a4 05       		.uleb128 0x5
+ 1326 00a5 00       		.byte	0
+ 1327 00a6 03       		.uleb128 0x3
+ 1328 00a7 0E       		.uleb128 0xe
+ 1329 00a8 3A       		.uleb128 0x3a
+ 1330 00a9 0B       		.uleb128 0xb
+ 1331 00aa 3B       		.uleb128 0x3b
+ 1332 00ab 0B       		.uleb128 0xb
+ 1333 00ac 49       		.uleb128 0x49
+ 1334 00ad 13       		.uleb128 0x13
+ 1335 00ae 02       		.uleb128 0x2
+ 1336 00af 18       		.uleb128 0x18
+ 1337 00b0 00       		.byte	0
+ 1338 00b1 00       		.byte	0
+ 1339 00b2 0C       		.uleb128 0xc
+ 1340 00b3 34       		.uleb128 0x34
+ 1341 00b4 00       		.byte	0
+ 1342 00b5 03       		.uleb128 0x3
+ 1343 00b6 08       		.uleb128 0x8
+ 1344 00b7 3A       		.uleb128 0x3a
+ 1345 00b8 0B       		.uleb128 0xb
+ 1346 00b9 3B       		.uleb128 0x3b
+ 1347 00ba 0B       		.uleb128 0xb
+ 1348 00bb 49       		.uleb128 0x49
+ 1349 00bc 13       		.uleb128 0x13
+ 1350 00bd 02       		.uleb128 0x2
+ 1351 00be 18       		.uleb128 0x18
+ 1352 00bf 00       		.byte	0
+ 1353 00c0 00       		.byte	0
+ 1354 00c1 0D       		.uleb128 0xd
+ 1355 00c2 0F       		.uleb128 0xf
+ 1356 00c3 00       		.byte	0
+ 1357 00c4 0B       		.uleb128 0xb
+ 1358 00c5 0B       		.uleb128 0xb
+ 1359 00c6 49       		.uleb128 0x49
+ 1360 00c7 13       		.uleb128 0x13
+ 1361 00c8 00       		.byte	0
+ 1362 00c9 00       		.byte	0
+ 1363 00ca 0E       		.uleb128 0xe
+ 1364 00cb 2E       		.uleb128 0x2e
+ 1365 00cc 01       		.byte	0x1
+ 1366 00cd 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 32
+
+
+ 1367 00ce 19       		.uleb128 0x19
+ 1368 00cf 03       		.uleb128 0x3
+ 1369 00d0 0E       		.uleb128 0xe
+ 1370 00d1 3A       		.uleb128 0x3a
+ 1371 00d2 0B       		.uleb128 0xb
+ 1372 00d3 3B       		.uleb128 0x3b
+ 1373 00d4 0B       		.uleb128 0xb
+ 1374 00d5 27       		.uleb128 0x27
+ 1375 00d6 19       		.uleb128 0x19
+ 1376 00d7 49       		.uleb128 0x49
+ 1377 00d8 13       		.uleb128 0x13
+ 1378 00d9 11       		.uleb128 0x11
+ 1379 00da 01       		.uleb128 0x1
+ 1380 00db 12       		.uleb128 0x12
+ 1381 00dc 06       		.uleb128 0x6
+ 1382 00dd 40       		.uleb128 0x40
+ 1383 00de 18       		.uleb128 0x18
+ 1384 00df 9742     		.uleb128 0x2117
+ 1385 00e1 19       		.uleb128 0x19
+ 1386 00e2 01       		.uleb128 0x1
+ 1387 00e3 13       		.uleb128 0x13
+ 1388 00e4 00       		.byte	0
+ 1389 00e5 00       		.byte	0
+ 1390 00e6 0F       		.uleb128 0xf
+ 1391 00e7 2E       		.uleb128 0x2e
+ 1392 00e8 01       		.byte	0x1
+ 1393 00e9 3F       		.uleb128 0x3f
+ 1394 00ea 19       		.uleb128 0x19
+ 1395 00eb 03       		.uleb128 0x3
+ 1396 00ec 0E       		.uleb128 0xe
+ 1397 00ed 3A       		.uleb128 0x3a
+ 1398 00ee 0B       		.uleb128 0xb
+ 1399 00ef 3B       		.uleb128 0x3b
+ 1400 00f0 0B       		.uleb128 0xb
+ 1401 00f1 27       		.uleb128 0x27
+ 1402 00f2 19       		.uleb128 0x19
+ 1403 00f3 11       		.uleb128 0x11
+ 1404 00f4 01       		.uleb128 0x1
+ 1405 00f5 12       		.uleb128 0x12
+ 1406 00f6 06       		.uleb128 0x6
+ 1407 00f7 40       		.uleb128 0x40
+ 1408 00f8 18       		.uleb128 0x18
+ 1409 00f9 9642     		.uleb128 0x2116
+ 1410 00fb 19       		.uleb128 0x19
+ 1411 00fc 01       		.uleb128 0x1
+ 1412 00fd 13       		.uleb128 0x13
+ 1413 00fe 00       		.byte	0
+ 1414 00ff 00       		.byte	0
+ 1415 0100 10       		.uleb128 0x10
+ 1416 0101 2E       		.uleb128 0x2e
+ 1417 0102 01       		.byte	0x1
+ 1418 0103 3F       		.uleb128 0x3f
+ 1419 0104 19       		.uleb128 0x19
+ 1420 0105 03       		.uleb128 0x3
+ 1421 0106 0E       		.uleb128 0xe
+ 1422 0107 3A       		.uleb128 0x3a
+ 1423 0108 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 33
+
+
+ 1424 0109 3B       		.uleb128 0x3b
+ 1425 010a 05       		.uleb128 0x5
+ 1426 010b 27       		.uleb128 0x27
+ 1427 010c 19       		.uleb128 0x19
+ 1428 010d 11       		.uleb128 0x11
+ 1429 010e 01       		.uleb128 0x1
+ 1430 010f 12       		.uleb128 0x12
+ 1431 0110 06       		.uleb128 0x6
+ 1432 0111 40       		.uleb128 0x40
+ 1433 0112 18       		.uleb128 0x18
+ 1434 0113 9742     		.uleb128 0x2117
+ 1435 0115 19       		.uleb128 0x19
+ 1436 0116 01       		.uleb128 0x1
+ 1437 0117 13       		.uleb128 0x13
+ 1438 0118 00       		.byte	0
+ 1439 0119 00       		.byte	0
+ 1440 011a 11       		.uleb128 0x11
+ 1441 011b 05       		.uleb128 0x5
+ 1442 011c 00       		.byte	0
+ 1443 011d 03       		.uleb128 0x3
+ 1444 011e 0E       		.uleb128 0xe
+ 1445 011f 3A       		.uleb128 0x3a
+ 1446 0120 0B       		.uleb128 0xb
+ 1447 0121 3B       		.uleb128 0x3b
+ 1448 0122 05       		.uleb128 0x5
+ 1449 0123 49       		.uleb128 0x49
+ 1450 0124 13       		.uleb128 0x13
+ 1451 0125 02       		.uleb128 0x2
+ 1452 0126 18       		.uleb128 0x18
+ 1453 0127 00       		.byte	0
+ 1454 0128 00       		.byte	0
+ 1455 0129 12       		.uleb128 0x12
+ 1456 012a 2E       		.uleb128 0x2e
+ 1457 012b 01       		.byte	0x1
+ 1458 012c 3F       		.uleb128 0x3f
+ 1459 012d 19       		.uleb128 0x19
+ 1460 012e 03       		.uleb128 0x3
+ 1461 012f 0E       		.uleb128 0xe
+ 1462 0130 3A       		.uleb128 0x3a
+ 1463 0131 0B       		.uleb128 0xb
+ 1464 0132 3B       		.uleb128 0x3b
+ 1465 0133 05       		.uleb128 0x5
+ 1466 0134 27       		.uleb128 0x27
+ 1467 0135 19       		.uleb128 0x19
+ 1468 0136 11       		.uleb128 0x11
+ 1469 0137 01       		.uleb128 0x1
+ 1470 0138 12       		.uleb128 0x12
+ 1471 0139 06       		.uleb128 0x6
+ 1472 013a 40       		.uleb128 0x40
+ 1473 013b 18       		.uleb128 0x18
+ 1474 013c 9642     		.uleb128 0x2116
+ 1475 013e 19       		.uleb128 0x19
+ 1476 013f 01       		.uleb128 0x1
+ 1477 0140 13       		.uleb128 0x13
+ 1478 0141 00       		.byte	0
+ 1479 0142 00       		.byte	0
+ 1480 0143 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 34
+
+
+ 1481 0144 05       		.uleb128 0x5
+ 1482 0145 00       		.byte	0
+ 1483 0146 03       		.uleb128 0x3
+ 1484 0147 08       		.uleb128 0x8
+ 1485 0148 3A       		.uleb128 0x3a
+ 1486 0149 0B       		.uleb128 0xb
+ 1487 014a 3B       		.uleb128 0x3b
+ 1488 014b 05       		.uleb128 0x5
+ 1489 014c 49       		.uleb128 0x49
+ 1490 014d 13       		.uleb128 0x13
+ 1491 014e 02       		.uleb128 0x2
+ 1492 014f 18       		.uleb128 0x18
+ 1493 0150 00       		.byte	0
+ 1494 0151 00       		.byte	0
+ 1495 0152 14       		.uleb128 0x14
+ 1496 0153 2E       		.uleb128 0x2e
+ 1497 0154 00       		.byte	0
+ 1498 0155 3F       		.uleb128 0x3f
+ 1499 0156 19       		.uleb128 0x19
+ 1500 0157 03       		.uleb128 0x3
+ 1501 0158 0E       		.uleb128 0xe
+ 1502 0159 3A       		.uleb128 0x3a
+ 1503 015a 0B       		.uleb128 0xb
+ 1504 015b 3B       		.uleb128 0x3b
+ 1505 015c 05       		.uleb128 0x5
+ 1506 015d 27       		.uleb128 0x27
+ 1507 015e 19       		.uleb128 0x19
+ 1508 015f 49       		.uleb128 0x49
+ 1509 0160 13       		.uleb128 0x13
+ 1510 0161 11       		.uleb128 0x11
+ 1511 0162 01       		.uleb128 0x1
+ 1512 0163 12       		.uleb128 0x12
+ 1513 0164 06       		.uleb128 0x6
+ 1514 0165 40       		.uleb128 0x40
+ 1515 0166 18       		.uleb128 0x18
+ 1516 0167 9642     		.uleb128 0x2116
+ 1517 0169 19       		.uleb128 0x19
+ 1518 016a 00       		.byte	0
+ 1519 016b 00       		.byte	0
+ 1520 016c 15       		.uleb128 0x15
+ 1521 016d 34       		.uleb128 0x34
+ 1522 016e 00       		.byte	0
+ 1523 016f 03       		.uleb128 0x3
+ 1524 0170 0E       		.uleb128 0xe
+ 1525 0171 3A       		.uleb128 0x3a
+ 1526 0172 0B       		.uleb128 0xb
+ 1527 0173 3B       		.uleb128 0x3b
+ 1528 0174 05       		.uleb128 0x5
+ 1529 0175 49       		.uleb128 0x49
+ 1530 0176 13       		.uleb128 0x13
+ 1531 0177 3F       		.uleb128 0x3f
+ 1532 0178 19       		.uleb128 0x19
+ 1533 0179 3C       		.uleb128 0x3c
+ 1534 017a 19       		.uleb128 0x19
+ 1535 017b 00       		.byte	0
+ 1536 017c 00       		.byte	0
+ 1537 017d 16       		.uleb128 0x16
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 35
+
+
+ 1538 017e 34       		.uleb128 0x34
+ 1539 017f 00       		.byte	0
+ 1540 0180 03       		.uleb128 0x3
+ 1541 0181 0E       		.uleb128 0xe
+ 1542 0182 3A       		.uleb128 0x3a
+ 1543 0183 0B       		.uleb128 0xb
+ 1544 0184 3B       		.uleb128 0x3b
+ 1545 0185 0B       		.uleb128 0xb
+ 1546 0186 49       		.uleb128 0x49
+ 1547 0187 13       		.uleb128 0x13
+ 1548 0188 3F       		.uleb128 0x3f
+ 1549 0189 19       		.uleb128 0x19
+ 1550 018a 02       		.uleb128 0x2
+ 1551 018b 18       		.uleb128 0x18
+ 1552 018c 00       		.byte	0
+ 1553 018d 00       		.byte	0
+ 1554 018e 00       		.byte	0
+ 1555              		.section	.debug_aranges,"",%progbits
+ 1556 0000 84000000 		.4byte	0x84
+ 1557 0004 0200     		.2byte	0x2
+ 1558 0006 00000000 		.4byte	.Ldebug_info0
+ 1559 000a 04       		.byte	0x4
+ 1560 000b 00       		.byte	0
+ 1561 000c 0000     		.2byte	0
+ 1562 000e 0000     		.2byte	0
+ 1563 0010 00000000 		.4byte	.LFB132
+ 1564 0014 0E000000 		.4byte	.LFE132-.LFB132
+ 1565 0018 00000000 		.4byte	.LFB133
+ 1566 001c 24000000 		.4byte	.LFE133-.LFB133
+ 1567 0020 00000000 		.4byte	.LFB134
+ 1568 0024 24000000 		.4byte	.LFE134-.LFB134
+ 1569 0028 00000000 		.4byte	.LFB135
+ 1570 002c 0E000000 		.4byte	.LFE135-.LFB135
+ 1571 0030 00000000 		.4byte	.LFB136
+ 1572 0034 44000000 		.4byte	.LFE136-.LFB136
+ 1573 0038 00000000 		.4byte	.LFB137
+ 1574 003c 60000000 		.4byte	.LFE137-.LFB137
+ 1575 0040 00000000 		.4byte	.LFB138
+ 1576 0044 54000000 		.4byte	.LFE138-.LFB138
+ 1577 0048 00000000 		.4byte	.LFB139
+ 1578 004c 3E000000 		.4byte	.LFE139-.LFB139
+ 1579 0050 00000000 		.4byte	.LFB140
+ 1580 0054 40000000 		.4byte	.LFE140-.LFB140
+ 1581 0058 00000000 		.4byte	.LFB141
+ 1582 005c 40000000 		.4byte	.LFE141-.LFB141
+ 1583 0060 00000000 		.4byte	.LFB142
+ 1584 0064 20000000 		.4byte	.LFE142-.LFB142
+ 1585 0068 00000000 		.4byte	.LFB143
+ 1586 006c 20000000 		.4byte	.LFE143-.LFB143
+ 1587 0070 00000000 		.4byte	.LFB144
+ 1588 0074 10000000 		.4byte	.LFE144-.LFB144
+ 1589 0078 00000000 		.4byte	.LFB145
+ 1590 007c 20000000 		.4byte	.LFE145-.LFB145
+ 1591 0080 00000000 		.4byte	0
+ 1592 0084 00000000 		.4byte	0
+ 1593              		.section	.debug_ranges,"",%progbits
+ 1594              	.Ldebug_ranges0:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 36
+
+
+ 1595 0000 00000000 		.4byte	.LFB132
+ 1596 0004 0E000000 		.4byte	.LFE132
+ 1597 0008 00000000 		.4byte	.LFB133
+ 1598 000c 24000000 		.4byte	.LFE133
+ 1599 0010 00000000 		.4byte	.LFB134
+ 1600 0014 24000000 		.4byte	.LFE134
+ 1601 0018 00000000 		.4byte	.LFB135
+ 1602 001c 0E000000 		.4byte	.LFE135
+ 1603 0020 00000000 		.4byte	.LFB136
+ 1604 0024 44000000 		.4byte	.LFE136
+ 1605 0028 00000000 		.4byte	.LFB137
+ 1606 002c 60000000 		.4byte	.LFE137
+ 1607 0030 00000000 		.4byte	.LFB138
+ 1608 0034 54000000 		.4byte	.LFE138
+ 1609 0038 00000000 		.4byte	.LFB139
+ 1610 003c 3E000000 		.4byte	.LFE139
+ 1611 0040 00000000 		.4byte	.LFB140
+ 1612 0044 40000000 		.4byte	.LFE140
+ 1613 0048 00000000 		.4byte	.LFB141
+ 1614 004c 40000000 		.4byte	.LFE141
+ 1615 0050 00000000 		.4byte	.LFB142
+ 1616 0054 20000000 		.4byte	.LFE142
+ 1617 0058 00000000 		.4byte	.LFB143
+ 1618 005c 20000000 		.4byte	.LFE143
+ 1619 0060 00000000 		.4byte	.LFB144
+ 1620 0064 10000000 		.4byte	.LFE144
+ 1621 0068 00000000 		.4byte	.LFB145
+ 1622 006c 20000000 		.4byte	.LFE145
+ 1623 0070 00000000 		.4byte	0
+ 1624 0074 00000000 		.4byte	0
+ 1625              		.section	.debug_line,"",%progbits
+ 1626              	.Ldebug_line0:
+ 1627 0000 16030000 		.section	.debug_str,"MS",%progbits,1
+ 1627      0200B501 
+ 1627      00000201 
+ 1627      FB0E0D00 
+ 1627      01010101 
+ 1628              	.LASF3:
+ 1629 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 1629      6E74385F 
+ 1629      7400
+ 1630              	.LASF38:
+ 1631 000a 4C43445F 		.ascii	"LCD_INTERFACE_WriteM8_A1\000"
+ 1631      494E5445 
+ 1631      52464143 
+ 1631      455F5772 
+ 1631      6974654D 
+ 1632              	.LASF6:
+ 1633 0023 5F5F696E 		.ascii	"__int32_t\000"
+ 1633      7433325F 
+ 1633      7400
+ 1634              	.LASF43:
+ 1635 002d 47656E65 		.ascii	"Generated_Source\\PSoC6\\LCD_INTERFACE.c\000"
+ 1635      72617465 
+ 1635      645F536F 
+ 1635      75726365 
+ 1635      5C50536F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 37
+
+
+ 1636              	.LASF5:
+ 1637 0054 73686F72 		.ascii	"short unsigned int\000"
+ 1637      7420756E 
+ 1637      7369676E 
+ 1637      65642069 
+ 1637      6E7400
+ 1638              	.LASF21:
+ 1639 0067 646F7562 		.ascii	"double\000"
+ 1639      6C6500
+ 1640              	.LASF29:
+ 1641 006e 4C43445F 		.ascii	"LCD_INTERFACE_Stop\000"
+ 1641      494E5445 
+ 1641      52464143 
+ 1641      455F5374 
+ 1641      6F7000
+ 1642              	.LASF39:
+ 1643 0081 4C43445F 		.ascii	"LCD_INTERFACE_ReadM8_A1\000"
+ 1643      494E5445 
+ 1643      52464143 
+ 1643      455F5265 
+ 1643      61644D38 
+ 1644              	.LASF45:
+ 1645 0099 4C43445F 		.ascii	"LCD_INTERFACE_Read8\000"
+ 1645      494E5445 
+ 1645      52464143 
+ 1645      455F5265 
+ 1645      61643800 
+ 1646              	.LASF20:
+ 1647 00ad 666C6F61 		.ascii	"float\000"
+ 1647      7400
+ 1648              	.LASF1:
+ 1649 00b3 7369676E 		.ascii	"signed char\000"
+ 1649      65642063 
+ 1649      68617200 
+ 1650              	.LASF35:
+ 1651 00bf 4C43445F 		.ascii	"LCD_INTERFACE_Write8_A0\000"
+ 1651      494E5445 
+ 1651      52464143 
+ 1651      455F5772 
+ 1651      69746538 
+ 1652              	.LASF36:
+ 1653 00d7 4C43445F 		.ascii	"LCD_INTERFACE_Write8_A1\000"
+ 1653      494E5445 
+ 1653      52464143 
+ 1653      455F5772 
+ 1653      69746538 
+ 1654              	.LASF25:
+ 1655 00ef 72656738 		.ascii	"reg8\000"
+ 1655      00
+ 1656              	.LASF9:
+ 1657 00f4 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1657      20756E73 
+ 1657      69676E65 
+ 1657      6420696E 
+ 1657      7400
+ 1658              	.LASF22:
+ 1659 0106 75696E74 		.ascii	"uint8\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 38
+
+
+ 1659      3800
+ 1660              	.LASF42:
+ 1661 010c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1661      43313120 
+ 1661      352E342E 
+ 1661      31203230 
+ 1661      31363036 
+ 1662 013f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1662      20726576 
+ 1662      6973696F 
+ 1662      6E203233 
+ 1662      37373135 
+ 1663 0172 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 1663      70202D6D 
+ 1663      6670753D 
+ 1663      66707634 
+ 1663      2D73702D 
+ 1664 01a5 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1664      6F6E7320 
+ 1664      2D666661 
+ 1664      742D6C74 
+ 1664      6F2D6F62 
+ 1665              	.LASF40:
+ 1666 01bf 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1666      52784275 
+ 1666      66666572 
+ 1666      00
+ 1667              	.LASF2:
+ 1668 01cc 756E7369 		.ascii	"unsigned char\000"
+ 1668      676E6564 
+ 1668      20636861 
+ 1668      7200
+ 1669              	.LASF4:
+ 1670 01da 5F5F7569 		.ascii	"__uint16_t\000"
+ 1670      6E743136 
+ 1670      5F7400
+ 1671              	.LASF31:
+ 1672 01e5 4C43445F 		.ascii	"LCD_INTERFACE_Write8\000"
+ 1672      494E5445 
+ 1672      52464143 
+ 1672      455F5772 
+ 1672      69746538 
+ 1673              	.LASF8:
+ 1674 01fa 5F5F7569 		.ascii	"__uint32_t\000"
+ 1674      6E743332 
+ 1674      5F7400
+ 1675              	.LASF23:
+ 1676 0205 75696E74 		.ascii	"uint16\000"
+ 1676      313600
+ 1677              	.LASF27:
+ 1678 020c 4C43445F 		.ascii	"LCD_INTERFACE_Init\000"
+ 1678      494E5445 
+ 1678      52464143 
+ 1678      455F496E 
+ 1678      697400
+ 1679              	.LASF34:
+ 1680 021f 72644461 		.ascii	"rdData\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 39
+
+
+ 1680      746100
+ 1681              	.LASF24:
+ 1682 0226 75696E74 		.ascii	"uint32\000"
+ 1682      333200
+ 1683              	.LASF28:
+ 1684 022d 4C43445F 		.ascii	"LCD_INTERFACE_Start\000"
+ 1684      494E5445 
+ 1684      52464143 
+ 1684      455F5374 
+ 1684      61727400 
+ 1685              	.LASF12:
+ 1686 0241 756E7369 		.ascii	"unsigned int\000"
+ 1686      676E6564 
+ 1686      20696E74 
+ 1686      00
+ 1687              	.LASF30:
+ 1688 024e 77724461 		.ascii	"wrData\000"
+ 1688      746100
+ 1689              	.LASF11:
+ 1690 0255 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1690      206C6F6E 
+ 1690      6720756E 
+ 1690      7369676E 
+ 1690      65642069 
+ 1691              	.LASF13:
+ 1692 026c 75696E74 		.ascii	"uint8_t\000"
+ 1692      385F7400 
+ 1693              	.LASF44:
+ 1694 0274 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 1694      73657273 
+ 1694      5C746D6A 
+ 1694      33325C44 
+ 1694      6F63756D 
+ 1695 02a1 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 1695      6C6C6F73 
+ 1695      636F7065 
+ 1695      5F53656E 
+ 1695      696F725F 
+ 1696 02d2 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 1696      5C74636F 
+ 1696      6D5F6170 
+ 1696      705C7463 
+ 1696      6F6D5F61 
+ 1697 0302 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 1697      736F6336 
+ 1697      2E637964 
+ 1697      736E00
+ 1698              	.LASF41:
+ 1699 0311 4C43445F 		.ascii	"LCD_INTERFACE_initVar\000"
+ 1699      494E5445 
+ 1699      52464143 
+ 1699      455F696E 
+ 1699      69745661 
+ 1700              	.LASF15:
+ 1701 0327 696E7433 		.ascii	"int32_t\000"
+ 1701      325F7400 
+ 1702              	.LASF17:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 40
+
+
+ 1703 032f 73697A65 		.ascii	"sizetype\000"
+ 1703      74797065 
+ 1703      00
+ 1704              	.LASF10:
+ 1705 0338 6C6F6E67 		.ascii	"long long int\000"
+ 1705      206C6F6E 
+ 1705      6720696E 
+ 1705      7400
+ 1706              	.LASF19:
+ 1707 0346 63686172 		.ascii	"char\000"
+ 1707      00
+ 1708              	.LASF26:
+ 1709 034b 4C43445F 		.ascii	"LCD_INTERFACE_Enable\000"
+ 1709      494E5445 
+ 1709      52464143 
+ 1709      455F456E 
+ 1709      61626C65 
+ 1710              	.LASF33:
+ 1711 0360 4C43445F 		.ascii	"LCD_INTERFACE_ReadM8\000"
+ 1711      494E5445 
+ 1711      52464143 
+ 1711      455F5265 
+ 1711      61644D38 
+ 1712              	.LASF0:
+ 1713 0375 73686F72 		.ascii	"short int\000"
+ 1713      7420696E 
+ 1713      7400
+ 1714              	.LASF14:
+ 1715 037f 75696E74 		.ascii	"uint16_t\000"
+ 1715      31365F74 
+ 1715      00
+ 1716              	.LASF37:
+ 1717 0388 4C43445F 		.ascii	"LCD_INTERFACE_WriteM8_A0\000"
+ 1717      494E5445 
+ 1717      52464143 
+ 1717      455F5772 
+ 1717      6974654D 
+ 1718              	.LASF16:
+ 1719 03a1 75696E74 		.ascii	"uint32_t\000"
+ 1719      33325F74 
+ 1719      00
+ 1720              	.LASF7:
+ 1721 03aa 6C6F6E67 		.ascii	"long int\000"
+ 1721      20696E74 
+ 1721      00
+ 1722              	.LASF18:
+ 1723 03b3 6C6F6E67 		.ascii	"long double\000"
+ 1723      20646F75 
+ 1723      626C6500 
+ 1724              	.LASF46:
+ 1725 03bf 4C43445F 		.ascii	"LCD_INTERFACE_Read8_A1\000"
+ 1725      494E5445 
+ 1725      52464143 
+ 1725      455F5265 
+ 1725      6164385F 
+ 1726              	.LASF32:
+ 1727 03d6 4C43445F 		.ascii	"LCD_INTERFACE_WriteM8\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\cc4GEfLW.s 			page 41
+
+
+ 1727      494E5445 
+ 1727      52464143 
+ 1727      455F5772 
+ 1727      6974654D 
+ 1728              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

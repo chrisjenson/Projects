@@ -1,0 +1,4868 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_line.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_line_get_style,"ax",%progbits
+  21              		.align	2
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	lv_line_get_style, %function
+  25              	lv_line_get_style:
+  26              	.LFB32:
+  27              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\lv_line.h"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @file lv_line.h
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #ifndef LV_LINE_H
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #define LV_LINE_H
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #ifdef __cplusplus
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** extern "C" {
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #endif
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *      INCLUDES
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #include "lv_conf.h"
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #else
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #include "../../../lv_conf.h"
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #endif
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #if LV_USE_LINE != 0
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #include "../lv_core/lv_obj.h"
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *      DEFINES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**********************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 2
+
+
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *      TYPEDEFS
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*Data of line*/
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** typedef struct
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** {
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     /*Inherited from 'base_obj' so no inherited ext.*/ /*Ext. of ancestor*/
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     const lv_point_t * point_array;                    /*Pointer to an array with the points of the
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     uint16_t point_num;                                /*Number of points in 'point_array' */
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     uint8_t auto_size : 1;                             /*1: set obj. width to x max and obj. height
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     uint8_t y_inv : 1;                                 /*1: y == 0 will be on the bottom*/
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** } lv_line_ext_t;
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*Styles*/
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** enum {
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     LV_LINE_STYLE_MAIN,
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** };
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** typedef uint8_t lv_line_style_t;
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**********************
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * GLOBAL PROTOTYPES
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  **********************/
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Create a line objects
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param par pointer to an object, it will be the parent of the new line
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @return pointer to the created line
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** lv_obj_t * lv_line_create(lv_obj_t * par, const lv_obj_t * copy);
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*=====================
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Setter functions
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *====================*/
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Set an array of points. The line object will connect these points.
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param point_a an array of points. Only the address is saved,
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * so the array can NOT be a local variable which will be destroyed
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param point_num number of points in 'point_a'
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** void lv_line_set_points(lv_obj_t * line, const lv_point_t point_a[], uint16_t point_num);
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Enable (or disable) the auto-size option. The size of the object will fit to its points.
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * (set width to x max and height to y max)
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param en true: auto size is enabled, false: auto size is disabled
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** void lv_line_set_auto_size(lv_obj_t * line, bool en);
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Enable (or disable) the y coordinate inversion.
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * If enabled then y will be subtracted from the height of the object,
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * therefore the y=0 coordinate will be on the bottom.
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param en true: enable the y inversion, false:disable the y inversion
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 3
+
+
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** void lv_line_set_y_invert(lv_obj_t * line, bool en);
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** #define lv_line_set_y_inv                                                                          
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     lv_line_set_y_invert /*The name was inconsistent. In v.6.0 only `lv_line_set_y_invert`will     
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****                             work */
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Set the style of a line
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param type which style should be set (can be only `LV_LINE_STYLE_MAIN`)
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param style pointer to a style
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** static inline void lv_line_set_style(lv_obj_t * line, lv_line_style_t type, const lv_style_t * styl
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** {
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     (void)type; /*Unused*/
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     lv_obj_set_style(line, style);
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** }
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /*=====================
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Getter functions
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  *====================*/
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Get the auto size attribute
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @return true: auto size is enabled, false: disabled
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** bool lv_line_get_auto_size(const lv_obj_t * line);
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Get the y inversion attribute
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to a line object
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @return true: y inversion is enabled, false: disabled
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** bool lv_line_get_y_invert(const lv_obj_t * line);
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** 
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** /**
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * Get the style of an line object
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param line pointer to an line object
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @param type which style should be get (can be only `LV_LINE_STYLE_MAIN`)
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  * @return pointer to the line's style
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****  */
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** static inline const lv_style_t * lv_line_get_style(const lv_obj_t * line, lv_line_style_t type)
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** {
+  28              		.loc 1 132 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 82B0     		sub	sp, sp, #8
+  37              		.cfi_def_cfa_offset 16
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 4
+
+
+  40 0006 7860     		str	r0, [r7, #4]
+  41 0008 0B46     		mov	r3, r1
+  42 000a FB70     		strb	r3, [r7, #3]
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     (void)type; /*Unused*/
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h ****     return lv_obj_get_style(line);
+  43              		.loc 1 134 0
+  44 000c 7868     		ldr	r0, [r7, #4]
+  45 000e FFF7FEFF 		bl	lv_obj_get_style
+  46 0012 0346     		mov	r3, r0
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.h **** }
+  47              		.loc 1 135 0
+  48 0014 1846     		mov	r0, r3
+  49 0016 0837     		adds	r7, r7, #8
+  50              		.cfi_def_cfa_offset 8
+  51 0018 BD46     		mov	sp, r7
+  52              		.cfi_def_cfa_register 13
+  53              		@ sp needed
+  54 001a 80BD     		pop	{r7, pc}
+  55              		.cfi_endproc
+  56              	.LFE32:
+  57              		.size	lv_line_get_style, .-lv_line_get_style
+  58              		.bss
+  59              		.align	2
+  60              	ancestor_signal:
+  61 0000 00000000 		.space	4
+  62              		.section	.text.lv_line_create,"ax",%progbits
+  63              		.align	2
+  64              		.global	lv_line_create
+  65              		.thumb
+  66              		.thumb_func
+  67              		.type	lv_line_create, %function
+  68              	lv_line_create:
+  69              	.LFB33:
+  70              		.file 2 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\lv_line.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @file lv_line.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include "lv_line.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #if LV_USE_LINE != 0
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include "../lv_core/lv_debug.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include "../lv_draw/lv_draw.h"
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include "../lv_misc/lv_math.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include <stdbool.h>
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include <stdint.h>
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #include <string.h>
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /*********************
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *      DEFINES
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *********************/
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** #define LV_OBJX_NAME "lv_line"
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 5
+
+
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *      TYPEDEFS
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *  STATIC PROTOTYPES
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** static bool lv_line_design(lv_obj_t * line, const lv_area_t * mask, lv_design_mode_t mode);
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** static lv_res_t lv_line_signal(lv_obj_t * line, lv_signal_t sign, void * param);
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *  STATIC VARIABLES
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** static lv_signal_cb_t ancestor_signal;
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *      MACROS
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *   GLOBAL FUNCTIONS
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Create a line objects
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param par pointer to an object, it will be the parent of the new line
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @return pointer to the created line
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** lv_obj_t * lv_line_create(lv_obj_t * par, const lv_obj_t * copy)
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+  71              		.loc 2 53 0
+  72              		.cfi_startproc
+  73              		@ args = 0, pretend = 0, frame = 24
+  74              		@ frame_needed = 1, uses_anonymous_args = 0
+  75 0000 80B5     		push	{r7, lr}
+  76              		.cfi_def_cfa_offset 8
+  77              		.cfi_offset 7, -8
+  78              		.cfi_offset 14, -4
+  79 0002 86B0     		sub	sp, sp, #24
+  80              		.cfi_def_cfa_offset 32
+  81 0004 00AF     		add	r7, sp, #0
+  82              		.cfi_def_cfa_register 7
+  83 0006 7860     		str	r0, [r7, #4]
+  84 0008 3960     		str	r1, [r7]
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_LOG_TRACE("line create started");
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*Create a basic object*/
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_obj_t * new_line = lv_obj_create(par, copy);
+  85              		.loc 2 57 0
+  86 000a 3968     		ldr	r1, [r7]
+  87 000c 7868     		ldr	r0, [r7, #4]
+  88 000e FFF7FEFF 		bl	lv_obj_create
+  89 0012 7861     		str	r0, [r7, #20]
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_MEM(new_line);
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(new_line == NULL) return NULL;
+  90              		.loc 2 59 0
+  91 0014 7B69     		ldr	r3, [r7, #20]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 6
+
+
+  92 0016 002B     		cmp	r3, #0
+  93 0018 01D1     		bne	.L4
+  94              		.loc 2 59 0 is_stmt 0 discriminator 1
+  95 001a 0023     		movs	r3, #0
+  96 001c 64E0     		b	.L5
+  97              	.L4:
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(ancestor_signal == NULL) ancestor_signal = lv_obj_get_signal_cb(new_line);
+  98              		.loc 2 61 0 is_stmt 1
+  99 001e 344B     		ldr	r3, .L10
+ 100 0020 1B68     		ldr	r3, [r3]
+ 101 0022 002B     		cmp	r3, #0
+ 102 0024 05D1     		bne	.L6
+ 103              		.loc 2 61 0 is_stmt 0 discriminator 1
+ 104 0026 7869     		ldr	r0, [r7, #20]
+ 105 0028 FFF7FEFF 		bl	lv_obj_get_signal_cb
+ 106 002c 0246     		mov	r2, r0
+ 107 002e 304B     		ldr	r3, .L10
+ 108 0030 1A60     		str	r2, [r3]
+ 109              	.L6:
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*Extend the basic object to line object*/
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_allocate_ext_attr(new_line, sizeof(lv_line_ext_t));
+ 110              		.loc 2 64 0 is_stmt 1
+ 111 0032 0821     		movs	r1, #8
+ 112 0034 7869     		ldr	r0, [r7, #20]
+ 113 0036 FFF7FEFF 		bl	lv_obj_allocate_ext_attr
+ 114 003a 3861     		str	r0, [r7, #16]
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_MEM(ext);
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(ext == NULL) return NULL;
+ 115              		.loc 2 66 0
+ 116 003c 3B69     		ldr	r3, [r7, #16]
+ 117 003e 002B     		cmp	r3, #0
+ 118 0040 01D1     		bne	.L7
+ 119              		.loc 2 66 0 is_stmt 0 discriminator 1
+ 120 0042 0023     		movs	r3, #0
+ 121 0044 50E0     		b	.L5
+ 122              	.L7:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->point_num   = 0;
+ 123              		.loc 2 68 0 is_stmt 1
+ 124 0046 3B69     		ldr	r3, [r7, #16]
+ 125 0048 0022     		movs	r2, #0
+ 126 004a 9A80     		strh	r2, [r3, #4]	@ movhi
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->point_array = NULL;
+ 127              		.loc 2 69 0
+ 128 004c 3B69     		ldr	r3, [r7, #16]
+ 129 004e 0022     		movs	r2, #0
+ 130 0050 1A60     		str	r2, [r3]
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->auto_size   = 1;
+ 131              		.loc 2 70 0
+ 132 0052 3A69     		ldr	r2, [r7, #16]
+ 133 0054 9379     		ldrb	r3, [r2, #6]
+ 134 0056 43F00103 		orr	r3, r3, #1
+ 135 005a 9371     		strb	r3, [r2, #6]
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->y_inv       = 0;
+ 136              		.loc 2 71 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 7
+
+
+ 137 005c 3A69     		ldr	r2, [r7, #16]
+ 138 005e 9379     		ldrb	r3, [r2, #6]
+ 139 0060 6FF34103 		bfc	r3, #1, #1
+ 140 0064 9371     		strb	r3, [r2, #6]
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_obj_set_design_cb(new_line, lv_line_design);
+ 141              		.loc 2 73 0
+ 142 0066 2349     		ldr	r1, .L10+4
+ 143 0068 7869     		ldr	r0, [r7, #20]
+ 144 006a FFF7FEFF 		bl	lv_obj_set_design_cb
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_obj_set_signal_cb(new_line, lv_line_signal);
+ 145              		.loc 2 74 0
+ 146 006e 2249     		ldr	r1, .L10+8
+ 147 0070 7869     		ldr	r0, [r7, #20]
+ 148 0072 FFF7FEFF 		bl	lv_obj_set_signal_cb
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*Init the new line*/
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(copy == NULL) {
+ 149              		.loc 2 77 0
+ 150 0076 3B68     		ldr	r3, [r7]
+ 151 0078 002B     		cmp	r3, #0
+ 152 007a 0DD1     		bne	.L8
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_set_size(new_line, LV_DPI,
+ 153              		.loc 2 78 0
+ 154 007c 9622     		movs	r2, #150
+ 155 007e 9621     		movs	r1, #150
+ 156 0080 7869     		ldr	r0, [r7, #20]
+ 157 0082 FFF7FEFF 		bl	lv_obj_set_size
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                         LV_DPI);          /*Auto size is enables, but set default size until no poi
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_set_style(new_line, NULL); /*Inherit parent's style*/
+ 158              		.loc 2 80 0
+ 159 0086 0021     		movs	r1, #0
+ 160 0088 7869     		ldr	r0, [r7, #20]
+ 161 008a FFF7FEFF 		bl	lv_obj_set_style
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_set_click(new_line, false);
+ 162              		.loc 2 81 0
+ 163 008e 0021     		movs	r1, #0
+ 164 0090 7869     		ldr	r0, [r7, #20]
+ 165 0092 FFF7FEFF 		bl	lv_obj_set_click
+ 166 0096 26E0     		b	.L9
+ 167              	.L8:
+ 168              	.LBB2:
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     }
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*Copy an existing object*/
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     else {
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_ext_t * copy_ext = lv_obj_get_ext_attr(copy);
+ 169              		.loc 2 85 0
+ 170 0098 3868     		ldr	r0, [r7]
+ 171 009a FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 172 009e F860     		str	r0, [r7, #12]
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_set_auto_size(new_line, lv_line_get_auto_size(copy));
+ 173              		.loc 2 86 0
+ 174 00a0 3868     		ldr	r0, [r7]
+ 175 00a2 FFF7FEFF 		bl	lv_line_get_auto_size
+ 176 00a6 0346     		mov	r3, r0
+ 177 00a8 1946     		mov	r1, r3
+ 178 00aa 7869     		ldr	r0, [r7, #20]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 8
+
+
+ 179 00ac FFF7FEFF 		bl	lv_line_set_auto_size
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_set_y_invert(new_line, lv_line_get_y_invert(copy));
+ 180              		.loc 2 87 0
+ 181 00b0 3868     		ldr	r0, [r7]
+ 182 00b2 FFF7FEFF 		bl	lv_line_get_y_invert
+ 183 00b6 0346     		mov	r3, r0
+ 184 00b8 1946     		mov	r1, r3
+ 185 00ba 7869     		ldr	r0, [r7, #20]
+ 186 00bc FFF7FEFF 		bl	lv_line_set_y_invert
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_set_auto_size(new_line, lv_line_get_auto_size(copy));
+ 187              		.loc 2 88 0
+ 188 00c0 3868     		ldr	r0, [r7]
+ 189 00c2 FFF7FEFF 		bl	lv_line_get_auto_size
+ 190 00c6 0346     		mov	r3, r0
+ 191 00c8 1946     		mov	r1, r3
+ 192 00ca 7869     		ldr	r0, [r7, #20]
+ 193 00cc FFF7FEFF 		bl	lv_line_set_auto_size
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_set_points(new_line, copy_ext->point_array, copy_ext->point_num);
+ 194              		.loc 2 89 0
+ 195 00d0 FB68     		ldr	r3, [r7, #12]
+ 196 00d2 1968     		ldr	r1, [r3]
+ 197 00d4 FB68     		ldr	r3, [r7, #12]
+ 198 00d6 9B88     		ldrh	r3, [r3, #4]
+ 199 00d8 1A46     		mov	r2, r3
+ 200 00da 7869     		ldr	r0, [r7, #20]
+ 201 00dc FFF7FEFF 		bl	lv_line_set_points
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         /*Refresh the style with new signal function*/
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_refresh_style(new_line);
+ 202              		.loc 2 91 0
+ 203 00e0 7869     		ldr	r0, [r7, #20]
+ 204 00e2 FFF7FEFF 		bl	lv_obj_refresh_style
+ 205              	.L9:
+ 206              	.LBE2:
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     }
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_LOG_INFO("line created");
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     return new_line;
+ 207              		.loc 2 96 0
+ 208 00e6 7B69     		ldr	r3, [r7, #20]
+ 209              	.L5:
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 210              		.loc 2 97 0
+ 211 00e8 1846     		mov	r0, r3
+ 212 00ea 1837     		adds	r7, r7, #24
+ 213              		.cfi_def_cfa_offset 8
+ 214 00ec BD46     		mov	sp, r7
+ 215              		.cfi_def_cfa_register 13
+ 216              		@ sp needed
+ 217 00ee 80BD     		pop	{r7, pc}
+ 218              	.L11:
+ 219              		.align	2
+ 220              	.L10:
+ 221 00f0 00000000 		.word	ancestor_signal
+ 222 00f4 00000000 		.word	lv_line_design
+ 223 00f8 00000000 		.word	lv_line_signal
+ 224              		.cfi_endproc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 9
+
+
+ 225              	.LFE33:
+ 226              		.size	lv_line_create, .-lv_line_create
+ 227              		.section	.text.lv_line_set_points,"ax",%progbits
+ 228              		.align	2
+ 229              		.global	lv_line_set_points
+ 230              		.thumb
+ 231              		.thumb_func
+ 232              		.type	lv_line_set_points, %function
+ 233              	lv_line_set_points:
+ 234              	.LFB34:
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /*=====================
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Setter functions
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *====================*/
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Set an array of points. The line object will connect these points.
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param point_a an array of points. Only the address is saved,
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * so the array can NOT be a local variable which will be destroyed
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param point_num number of points in 'point_a'
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** void lv_line_set_points(lv_obj_t * line, const lv_point_t point_a[], uint16_t point_num)
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 235              		.loc 2 111 0
+ 236              		.cfi_startproc
+ 237              		@ args = 0, pretend = 0, frame = 32
+ 238              		@ frame_needed = 1, uses_anonymous_args = 0
+ 239 0000 80B5     		push	{r7, lr}
+ 240              		.cfi_def_cfa_offset 8
+ 241              		.cfi_offset 7, -8
+ 242              		.cfi_offset 14, -4
+ 243 0002 88B0     		sub	sp, sp, #32
+ 244              		.cfi_def_cfa_offset 40
+ 245 0004 00AF     		add	r7, sp, #0
+ 246              		.cfi_def_cfa_register 7
+ 247 0006 F860     		str	r0, [r7, #12]
+ 248 0008 B960     		str	r1, [r7, #8]
+ 249 000a 1346     		mov	r3, r2
+ 250 000c FB80     		strh	r3, [r7, #6]	@ movhi
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_OBJ(line, LV_OBJX_NAME);
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ 251              		.loc 2 114 0
+ 252 000e F868     		ldr	r0, [r7, #12]
+ 253 0010 FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 254 0014 7861     		str	r0, [r7, #20]
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->point_array    = point_a;
+ 255              		.loc 2 115 0
+ 256 0016 7B69     		ldr	r3, [r7, #20]
+ 257 0018 BA68     		ldr	r2, [r7, #8]
+ 258 001a 1A60     		str	r2, [r3]
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->point_num      = point_num;
+ 259              		.loc 2 116 0
+ 260 001c 7B69     		ldr	r3, [r7, #20]
+ 261 001e FA88     		ldrh	r2, [r7, #6]	@ movhi
+ 262 0020 9A80     		strh	r2, [r3, #4]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 10
+
+
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(point_num > 0 && ext->auto_size != 0) {
+ 263              		.loc 2 118 0
+ 264 0022 FB88     		ldrh	r3, [r7, #6]
+ 265 0024 002B     		cmp	r3, #0
+ 266 0026 47D0     		beq	.L13
+ 267              		.loc 2 118 0 is_stmt 0 discriminator 1
+ 268 0028 7B69     		ldr	r3, [r7, #20]
+ 269 002a 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 270 002c 03F00103 		and	r3, r3, #1
+ 271 0030 DBB2     		uxtb	r3, r3
+ 272 0032 002B     		cmp	r3, #0
+ 273 0034 40D0     		beq	.L13
+ 274              	.LBB3:
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         uint16_t i;
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_coord_t xmax = LV_COORD_MIN;
+ 275              		.loc 2 120 0 is_stmt 1
+ 276 0036 48F2E833 		movw	r3, #33768
+ 277 003a BB83     		strh	r3, [r7, #28]	@ movhi
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_coord_t ymax = LV_COORD_MIN;
+ 278              		.loc 2 121 0
+ 279 003c 48F2E833 		movw	r3, #33768
+ 280 0040 7B83     		strh	r3, [r7, #26]	@ movhi
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         for(i = 0; i < point_num; i++) {
+ 281              		.loc 2 122 0
+ 282 0042 0023     		movs	r3, #0
+ 283 0044 FB83     		strh	r3, [r7, #30]	@ movhi
+ 284 0046 1AE0     		b	.L14
+ 285              	.L15:
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             xmax = LV_MATH_MAX(point_a[i].x, xmax);
+ 286              		.loc 2 123 0 discriminator 3
+ 287 0048 FB8B     		ldrh	r3, [r7, #30]
+ 288 004a 9B00     		lsls	r3, r3, #2
+ 289 004c BA68     		ldr	r2, [r7, #8]
+ 290 004e 1344     		add	r3, r3, r2
+ 291 0050 B3F90020 		ldrsh	r2, [r3]
+ 292 0054 B7F91C30 		ldrsh	r3, [r7, #28]
+ 293 0058 9342     		cmp	r3, r2
+ 294 005a B8BF     		it	lt
+ 295 005c 1346     		movlt	r3, r2
+ 296 005e BB83     		strh	r3, [r7, #28]	@ movhi
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             ymax = LV_MATH_MAX(point_a[i].y, ymax);
+ 297              		.loc 2 124 0 discriminator 3
+ 298 0060 FB8B     		ldrh	r3, [r7, #30]
+ 299 0062 9B00     		lsls	r3, r3, #2
+ 300 0064 BA68     		ldr	r2, [r7, #8]
+ 301 0066 1344     		add	r3, r3, r2
+ 302 0068 B3F90220 		ldrsh	r2, [r3, #2]
+ 303 006c B7F91A30 		ldrsh	r3, [r7, #26]
+ 304 0070 9342     		cmp	r3, r2
+ 305 0072 B8BF     		it	lt
+ 306 0074 1346     		movlt	r3, r2
+ 307 0076 7B83     		strh	r3, [r7, #26]	@ movhi
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         for(i = 0; i < point_num; i++) {
+ 308              		.loc 2 122 0 discriminator 3
+ 309 0078 FB8B     		ldrh	r3, [r7, #30]
+ 310 007a 0133     		adds	r3, r3, #1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 11
+
+
+ 311 007c FB83     		strh	r3, [r7, #30]	@ movhi
+ 312              	.L14:
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         for(i = 0; i < point_num; i++) {
+ 313              		.loc 2 122 0 is_stmt 0 discriminator 1
+ 314 007e FA8B     		ldrh	r2, [r7, #30]
+ 315 0080 FB88     		ldrh	r3, [r7, #6]
+ 316 0082 9A42     		cmp	r2, r3
+ 317 0084 E0D3     		bcc	.L15
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         }
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         const lv_style_t * style = lv_line_get_style(line, LV_LINE_STYLE_MAIN);
+ 318              		.loc 2 127 0 is_stmt 1
+ 319 0086 0021     		movs	r1, #0
+ 320 0088 F868     		ldr	r0, [r7, #12]
+ 321 008a FFF7FEFF 		bl	lv_line_get_style
+ 322 008e 3861     		str	r0, [r7, #16]
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_set_size(line, xmax + style->line.width, ymax + style->line.width);
+ 323              		.loc 2 128 0
+ 324 0090 3B69     		ldr	r3, [r7, #16]
+ 325 0092 B3F94C30 		ldrsh	r3, [r3, #76]
+ 326 0096 9AB2     		uxth	r2, r3
+ 327 0098 BB8B     		ldrh	r3, [r7, #28]
+ 328 009a 1344     		add	r3, r3, r2
+ 329 009c 9BB2     		uxth	r3, r3
+ 330 009e 19B2     		sxth	r1, r3
+ 331 00a0 3B69     		ldr	r3, [r7, #16]
+ 332 00a2 B3F94C30 		ldrsh	r3, [r3, #76]
+ 333 00a6 9AB2     		uxth	r2, r3
+ 334 00a8 7B8B     		ldrh	r3, [r7, #26]
+ 335 00aa 1344     		add	r3, r3, r2
+ 336 00ac 9BB2     		uxth	r3, r3
+ 337 00ae 1BB2     		sxth	r3, r3
+ 338 00b0 1A46     		mov	r2, r3
+ 339 00b2 F868     		ldr	r0, [r7, #12]
+ 340 00b4 FFF7FEFF 		bl	lv_obj_set_size
+ 341              	.L13:
+ 342              	.LBE3:
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     }
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_obj_invalidate(line);
+ 343              		.loc 2 131 0
+ 344 00b8 F868     		ldr	r0, [r7, #12]
+ 345 00ba FFF7FEFF 		bl	lv_obj_invalidate
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 346              		.loc 2 132 0
+ 347 00be 00BF     		nop
+ 348 00c0 2037     		adds	r7, r7, #32
+ 349              		.cfi_def_cfa_offset 8
+ 350 00c2 BD46     		mov	sp, r7
+ 351              		.cfi_def_cfa_register 13
+ 352              		@ sp needed
+ 353 00c4 80BD     		pop	{r7, pc}
+ 354              		.cfi_endproc
+ 355              	.LFE34:
+ 356              		.size	lv_line_set_points, .-lv_line_set_points
+ 357 00c6 00BF     		.section	.text.lv_line_set_auto_size,"ax",%progbits
+ 358              		.align	2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 12
+
+
+ 359              		.global	lv_line_set_auto_size
+ 360              		.thumb
+ 361              		.thumb_func
+ 362              		.type	lv_line_set_auto_size, %function
+ 363              	lv_line_set_auto_size:
+ 364              	.LFB35:
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Enable (or disable) the auto-size option. The size of the object will fit to its points.
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * (set width to x max and height to y max)
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param en true: auto size is enabled, false: auto size is disabled
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** void lv_line_set_auto_size(lv_obj_t * line, bool en)
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 365              		.loc 2 141 0
+ 366              		.cfi_startproc
+ 367              		@ args = 0, pretend = 0, frame = 16
+ 368              		@ frame_needed = 1, uses_anonymous_args = 0
+ 369 0000 80B5     		push	{r7, lr}
+ 370              		.cfi_def_cfa_offset 8
+ 371              		.cfi_offset 7, -8
+ 372              		.cfi_offset 14, -4
+ 373 0002 84B0     		sub	sp, sp, #16
+ 374              		.cfi_def_cfa_offset 24
+ 375 0004 00AF     		add	r7, sp, #0
+ 376              		.cfi_def_cfa_register 7
+ 377 0006 7860     		str	r0, [r7, #4]
+ 378 0008 0B46     		mov	r3, r1
+ 379 000a FB70     		strb	r3, [r7, #3]
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_OBJ(line, LV_OBJX_NAME);
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ 380              		.loc 2 144 0
+ 381 000c 7868     		ldr	r0, [r7, #4]
+ 382 000e FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 383 0012 F860     		str	r0, [r7, #12]
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(ext->auto_size == en) return;
+ 384              		.loc 2 145 0
+ 385 0014 FB68     		ldr	r3, [r7, #12]
+ 386 0016 9B79     		ldrb	r3, [r3, #6]
+ 387 0018 C3F30003 		ubfx	r3, r3, #0, #1
+ 388 001c DBB2     		uxtb	r3, r3
+ 389 001e FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 390 0020 9A42     		cmp	r2, r3
+ 391 0022 19D0     		beq	.L21
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->auto_size = en == false ? 0 : 1;
+ 392              		.loc 2 147 0
+ 393 0024 FB78     		ldrb	r3, [r7, #3]
+ 394 0026 83F00103 		eor	r3, r3, #1
+ 395 002a DBB2     		uxtb	r3, r3
+ 396 002c 002B     		cmp	r3, #0
+ 397 002e 01D0     		beq	.L19
+ 398              		.loc 2 147 0 is_stmt 0 discriminator 1
+ 399 0030 0021     		movs	r1, #0
+ 400 0032 00E0     		b	.L20
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 13
+
+
+ 401              	.L19:
+ 402              		.loc 2 147 0 discriminator 2
+ 403 0034 0121     		movs	r1, #1
+ 404              	.L20:
+ 405              		.loc 2 147 0 discriminator 4
+ 406 0036 FA68     		ldr	r2, [r7, #12]
+ 407 0038 9379     		ldrb	r3, [r2, #6]
+ 408 003a 61F30003 		bfi	r3, r1, #0, #1
+ 409 003e 9371     		strb	r3, [r2, #6]
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*Refresh the object*/
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(en) lv_line_set_points(line, ext->point_array, ext->point_num);
+ 410              		.loc 2 150 0 is_stmt 1 discriminator 4
+ 411 0040 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 412 0042 002B     		cmp	r3, #0
+ 413 0044 09D0     		beq	.L16
+ 414              		.loc 2 150 0 is_stmt 0 discriminator 1
+ 415 0046 FB68     		ldr	r3, [r7, #12]
+ 416 0048 1968     		ldr	r1, [r3]
+ 417 004a FB68     		ldr	r3, [r7, #12]
+ 418 004c 9B88     		ldrh	r3, [r3, #4]
+ 419 004e 1A46     		mov	r2, r3
+ 420 0050 7868     		ldr	r0, [r7, #4]
+ 421 0052 FFF7FEFF 		bl	lv_line_set_points
+ 422 0056 00E0     		b	.L16
+ 423              	.L21:
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 424              		.loc 2 145 0 is_stmt 1
+ 425 0058 00BF     		nop
+ 426              	.L16:
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 427              		.loc 2 151 0
+ 428 005a 1037     		adds	r7, r7, #16
+ 429              		.cfi_def_cfa_offset 8
+ 430 005c BD46     		mov	sp, r7
+ 431              		.cfi_def_cfa_register 13
+ 432              		@ sp needed
+ 433 005e 80BD     		pop	{r7, pc}
+ 434              		.cfi_endproc
+ 435              	.LFE35:
+ 436              		.size	lv_line_set_auto_size, .-lv_line_set_auto_size
+ 437              		.section	.text.lv_line_set_y_invert,"ax",%progbits
+ 438              		.align	2
+ 439              		.global	lv_line_set_y_invert
+ 440              		.thumb
+ 441              		.thumb_func
+ 442              		.type	lv_line_set_y_invert, %function
+ 443              	lv_line_set_y_invert:
+ 444              	.LFB36:
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Enable (or disable) the y coordinate inversion.
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * If enabled then y will be subtracted from the height of the object,
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * therefore the y=0 coordinate will be on the bottom.
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param en true: enable the y inversion, false:disable the y inversion
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 14
+
+
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** void lv_line_set_y_invert(lv_obj_t * line, bool en)
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 445              		.loc 2 161 0
+ 446              		.cfi_startproc
+ 447              		@ args = 0, pretend = 0, frame = 16
+ 448              		@ frame_needed = 1, uses_anonymous_args = 0
+ 449 0000 80B5     		push	{r7, lr}
+ 450              		.cfi_def_cfa_offset 8
+ 451              		.cfi_offset 7, -8
+ 452              		.cfi_offset 14, -4
+ 453 0002 84B0     		sub	sp, sp, #16
+ 454              		.cfi_def_cfa_offset 24
+ 455 0004 00AF     		add	r7, sp, #0
+ 456              		.cfi_def_cfa_register 7
+ 457 0006 7860     		str	r0, [r7, #4]
+ 458 0008 0B46     		mov	r3, r1
+ 459 000a FB70     		strb	r3, [r7, #3]
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_OBJ(line, LV_OBJX_NAME);
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ 460              		.loc 2 164 0
+ 461 000c 7868     		ldr	r0, [r7, #4]
+ 462 000e FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 463 0012 F860     		str	r0, [r7, #12]
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(ext->y_inv == en) return;
+ 464              		.loc 2 165 0
+ 465 0014 FB68     		ldr	r3, [r7, #12]
+ 466 0016 9B79     		ldrb	r3, [r3, #6]
+ 467 0018 C3F34003 		ubfx	r3, r3, #1, #1
+ 468 001c DBB2     		uxtb	r3, r3
+ 469 001e FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 470 0020 9A42     		cmp	r2, r3
+ 471 0022 11D0     		beq	.L27
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     ext->y_inv = en == false ? 0 : 1;
+ 472              		.loc 2 167 0
+ 473 0024 FB78     		ldrb	r3, [r7, #3]
+ 474 0026 83F00103 		eor	r3, r3, #1
+ 475 002a DBB2     		uxtb	r3, r3
+ 476 002c 002B     		cmp	r3, #0
+ 477 002e 01D0     		beq	.L25
+ 478              		.loc 2 167 0 is_stmt 0 discriminator 1
+ 479 0030 0021     		movs	r1, #0
+ 480 0032 00E0     		b	.L26
+ 481              	.L25:
+ 482              		.loc 2 167 0 discriminator 2
+ 483 0034 0121     		movs	r1, #1
+ 484              	.L26:
+ 485              		.loc 2 167 0 discriminator 4
+ 486 0036 FA68     		ldr	r2, [r7, #12]
+ 487 0038 9379     		ldrb	r3, [r2, #6]
+ 488 003a 61F34103 		bfi	r3, r1, #1, #1
+ 489 003e 9371     		strb	r3, [r2, #6]
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_obj_invalidate(line);
+ 490              		.loc 2 169 0 is_stmt 1 discriminator 4
+ 491 0040 7868     		ldr	r0, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 15
+
+
+ 492 0042 FFF7FEFF 		bl	lv_obj_invalidate
+ 493 0046 00E0     		b	.L22
+ 494              	.L27:
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 495              		.loc 2 165 0
+ 496 0048 00BF     		nop
+ 497              	.L22:
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 498              		.loc 2 170 0
+ 499 004a 1037     		adds	r7, r7, #16
+ 500              		.cfi_def_cfa_offset 8
+ 501 004c BD46     		mov	sp, r7
+ 502              		.cfi_def_cfa_register 13
+ 503              		@ sp needed
+ 504 004e 80BD     		pop	{r7, pc}
+ 505              		.cfi_endproc
+ 506              	.LFE36:
+ 507              		.size	lv_line_set_y_invert, .-lv_line_set_y_invert
+ 508              		.section	.text.lv_line_get_auto_size,"ax",%progbits
+ 509              		.align	2
+ 510              		.global	lv_line_get_auto_size
+ 511              		.thumb
+ 512              		.thumb_func
+ 513              		.type	lv_line_get_auto_size, %function
+ 514              	lv_line_get_auto_size:
+ 515              	.LFB37:
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /*=====================
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Getter functions
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *====================*/
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Get the auto size attribute
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @return true: auto size is enabled, false: disabled
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** bool lv_line_get_auto_size(const lv_obj_t * line)
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 516              		.loc 2 182 0
+ 517              		.cfi_startproc
+ 518              		@ args = 0, pretend = 0, frame = 16
+ 519              		@ frame_needed = 1, uses_anonymous_args = 0
+ 520 0000 80B5     		push	{r7, lr}
+ 521              		.cfi_def_cfa_offset 8
+ 522              		.cfi_offset 7, -8
+ 523              		.cfi_offset 14, -4
+ 524 0002 84B0     		sub	sp, sp, #16
+ 525              		.cfi_def_cfa_offset 24
+ 526 0004 00AF     		add	r7, sp, #0
+ 527              		.cfi_def_cfa_register 7
+ 528 0006 7860     		str	r0, [r7, #4]
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_OBJ(line, LV_OBJX_NAME);
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ 529              		.loc 2 185 0
+ 530 0008 7868     		ldr	r0, [r7, #4]
+ 531 000a FFF7FEFF 		bl	lv_obj_get_ext_attr
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 16
+
+
+ 532 000e F860     		str	r0, [r7, #12]
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     return ext->auto_size == 0 ? false : true;
+ 533              		.loc 2 187 0
+ 534 0010 FB68     		ldr	r3, [r7, #12]
+ 535 0012 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 536 0014 03F00103 		and	r3, r3, #1
+ 537 0018 DBB2     		uxtb	r3, r3
+ 538 001a 002B     		cmp	r3, #0
+ 539 001c 14BF     		ite	ne
+ 540 001e 0123     		movne	r3, #1
+ 541 0020 0023     		moveq	r3, #0
+ 542 0022 DBB2     		uxtb	r3, r3
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 543              		.loc 2 188 0
+ 544 0024 1846     		mov	r0, r3
+ 545 0026 1037     		adds	r7, r7, #16
+ 546              		.cfi_def_cfa_offset 8
+ 547 0028 BD46     		mov	sp, r7
+ 548              		.cfi_def_cfa_register 13
+ 549              		@ sp needed
+ 550 002a 80BD     		pop	{r7, pc}
+ 551              		.cfi_endproc
+ 552              	.LFE37:
+ 553              		.size	lv_line_get_auto_size, .-lv_line_get_auto_size
+ 554              		.section	.text.lv_line_get_y_invert,"ax",%progbits
+ 555              		.align	2
+ 556              		.global	lv_line_get_y_invert
+ 557              		.thumb
+ 558              		.thumb_func
+ 559              		.type	lv_line_get_y_invert, %function
+ 560              	lv_line_get_y_invert:
+ 561              	.LFB38:
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Get the y inversion attribute
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @return true: y inversion is enabled, false: disabled
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** bool lv_line_get_y_invert(const lv_obj_t * line)
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 562              		.loc 2 196 0
+ 563              		.cfi_startproc
+ 564              		@ args = 0, pretend = 0, frame = 16
+ 565              		@ frame_needed = 1, uses_anonymous_args = 0
+ 566 0000 80B5     		push	{r7, lr}
+ 567              		.cfi_def_cfa_offset 8
+ 568              		.cfi_offset 7, -8
+ 569              		.cfi_offset 14, -4
+ 570 0002 84B0     		sub	sp, sp, #16
+ 571              		.cfi_def_cfa_offset 24
+ 572 0004 00AF     		add	r7, sp, #0
+ 573              		.cfi_def_cfa_register 7
+ 574 0006 7860     		str	r0, [r7, #4]
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     LV_ASSERT_OBJ(line, LV_OBJX_NAME);
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 17
+
+
+ 575              		.loc 2 199 0
+ 576 0008 7868     		ldr	r0, [r7, #4]
+ 577 000a FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 578 000e F860     		str	r0, [r7, #12]
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     return ext->y_inv == 0 ? false : true;
+ 579              		.loc 2 201 0
+ 580 0010 FB68     		ldr	r3, [r7, #12]
+ 581 0012 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 582 0014 03F00203 		and	r3, r3, #2
+ 583 0018 DBB2     		uxtb	r3, r3
+ 584 001a 002B     		cmp	r3, #0
+ 585 001c 14BF     		ite	ne
+ 586 001e 0123     		movne	r3, #1
+ 587 0020 0023     		moveq	r3, #0
+ 588 0022 DBB2     		uxtb	r3, r3
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 589              		.loc 2 202 0
+ 590 0024 1846     		mov	r0, r3
+ 591 0026 1037     		adds	r7, r7, #16
+ 592              		.cfi_def_cfa_offset 8
+ 593 0028 BD46     		mov	sp, r7
+ 594              		.cfi_def_cfa_register 13
+ 595              		@ sp needed
+ 596 002a 80BD     		pop	{r7, pc}
+ 597              		.cfi_endproc
+ 598              	.LFE38:
+ 599              		.size	lv_line_get_y_invert, .-lv_line_get_y_invert
+ 600              		.section	.text.lv_line_design,"ax",%progbits
+ 601              		.align	2
+ 602              		.thumb
+ 603              		.thumb_func
+ 604              		.type	lv_line_design, %function
+ 605              	lv_line_design:
+ 606              	.LFB39:
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**********************
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *   STATIC FUNCTIONS
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  **********************/
+ 207:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 208:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 209:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Handle the drawing related tasks of the lines
+ 210:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to an object
+ 211:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param mask the object will be drawn only in this area
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param mode LV_DESIGN_COVER_CHK: only check if the object fully covers the 'mask_p' area
+ 213:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *                                  (return 'true' if yes)
+ 214:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *             LV_DESIGN_DRAW: draw the object (always return 'true')
+ 215:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  *             LV_DESIGN_DRAW_POST: drawing after every children are drawn
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param return true/false, depends on 'mode'
+ 217:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 218:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** static bool lv_line_design(lv_obj_t * line, const lv_area_t * mask, lv_design_mode_t mode)
+ 219:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 607              		.loc 2 219 0
+ 608              		.cfi_startproc
+ 609              		@ args = 0, pretend = 0, frame = 144
+ 610              		@ frame_needed = 1, uses_anonymous_args = 0
+ 611 0000 80B5     		push	{r7, lr}
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 18
+
+
+ 612              		.cfi_def_cfa_offset 8
+ 613              		.cfi_offset 7, -8
+ 614              		.cfi_offset 14, -4
+ 615 0002 A6B0     		sub	sp, sp, #152
+ 616              		.cfi_def_cfa_offset 160
+ 617 0004 02AF     		add	r7, sp, #8
+ 618              		.cfi_def_cfa 7, 152
+ 619 0006 F860     		str	r0, [r7, #12]
+ 620 0008 B960     		str	r1, [r7, #8]
+ 621 000a 1346     		mov	r3, r2
+ 622 000c FB71     		strb	r3, [r7, #7]
+ 220:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /*A line never covers an area*/
+ 221:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(mode == LV_DESIGN_COVER_CHK)
+ 623              		.loc 2 221 0
+ 624 000e FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 625 0010 022B     		cmp	r3, #2
+ 626 0012 01D1     		bne	.L33
+ 222:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         return false;
+ 627              		.loc 2 222 0
+ 628 0014 0023     		movs	r3, #0
+ 629 0016 B9E1     		b	.L34
+ 630              	.L33:
+ 223:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     else if(mode == LV_DESIGN_DRAW_MAIN) {
+ 631              		.loc 2 223 0
+ 632 0018 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 633 001a 002B     		cmp	r3, #0
+ 634 001c 40F0B581 		bne	.L35
+ 635              	.LBB4:
+ 224:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_line_ext_t * ext = lv_obj_get_ext_attr(line);
+ 636              		.loc 2 224 0
+ 637 0020 F868     		ldr	r0, [r7, #12]
+ 638 0022 FFF7FEFF 		bl	lv_obj_get_ext_attr
+ 639 0026 C7F88800 		str	r0, [r7, #136]
+ 225:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 226:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         if(ext->point_num == 0 || ext->point_array == NULL) return false;
+ 640              		.loc 2 226 0
+ 641 002a D7F88830 		ldr	r3, [r7, #136]
+ 642 002e 9B88     		ldrh	r3, [r3, #4]
+ 643 0030 002B     		cmp	r3, #0
+ 644 0032 04D0     		beq	.L36
+ 645              		.loc 2 226 0 is_stmt 0 discriminator 2
+ 646 0034 D7F88830 		ldr	r3, [r7, #136]
+ 647 0038 1B68     		ldr	r3, [r3]
+ 648 003a 002B     		cmp	r3, #0
+ 649 003c 01D1     		bne	.L37
+ 650              	.L36:
+ 651              		.loc 2 226 0 discriminator 3
+ 652 003e 0023     		movs	r3, #0
+ 653 0040 A4E1     		b	.L34
+ 654              	.L37:
+ 227:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 228:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         const lv_style_t * style = lv_obj_get_style(line);
+ 655              		.loc 2 228 0 is_stmt 1
+ 656 0042 F868     		ldr	r0, [r7, #12]
+ 657 0044 FFF7FEFF 		bl	lv_obj_get_style
+ 658 0048 C7F88400 		str	r0, [r7, #132]
+ 229:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_opa_t opa_scale       = lv_obj_get_opa_scale(line);
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 19
+
+
+ 659              		.loc 2 229 0
+ 660 004c F868     		ldr	r0, [r7, #12]
+ 661 004e FFF7FEFF 		bl	lv_obj_get_opa_scale
+ 662 0052 0346     		mov	r3, r0
+ 663 0054 87F88330 		strb	r3, [r7, #131]
+ 230:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_area_t area;
+ 231:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_obj_get_coords(line, &area);
+ 664              		.loc 2 231 0
+ 665 0058 07F17403 		add	r3, r7, #116
+ 666 005c 1946     		mov	r1, r3
+ 667 005e F868     		ldr	r0, [r7, #12]
+ 668 0060 FFF7FEFF 		bl	lv_obj_get_coords
+ 232:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_coord_t x_ofs = area.x1;
+ 669              		.loc 2 232 0
+ 670 0064 B7F87430 		ldrh	r3, [r7, #116]	@ movhi
+ 671 0068 A7F88030 		strh	r3, [r7, #128]	@ movhi
+ 233:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_coord_t y_ofs = area.y1;
+ 672              		.loc 2 233 0
+ 673 006c B7F87630 		ldrh	r3, [r7, #118]	@ movhi
+ 674 0070 A7F87E30 		strh	r3, [r7, #126]	@ movhi
+ 234:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_point_t p1;
+ 235:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_point_t p2;
+ 236:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_coord_t h = lv_obj_get_height(line);
+ 675              		.loc 2 236 0
+ 676 0074 F868     		ldr	r0, [r7, #12]
+ 677 0076 FFF7FEFF 		bl	lv_obj_get_height
+ 678 007a 0346     		mov	r3, r0
+ 679 007c A7F87C30 		strh	r3, [r7, #124]	@ movhi
+ 237:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         uint16_t i;
+ 238:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 239:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_style_t circle_style_tmp; /*If rounded...*/
+ 240:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         if(style->line.rounded) {
+ 680              		.loc 2 240 0
+ 681 0080 D7F88430 		ldr	r3, [r7, #132]
+ 682 0084 93F84F30 		ldrb	r3, [r3, #79]	@ zero_extendqisi2
+ 683 0088 03F00103 		and	r3, r3, #1
+ 684 008c DBB2     		uxtb	r3, r3
+ 685 008e 002B     		cmp	r3, #0
+ 686 0090 17D0     		beq	.L38
+ 241:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             lv_style_copy(&circle_style_tmp, style);
+ 687              		.loc 2 241 0
+ 688 0092 07F11403 		add	r3, r7, #20
+ 689 0096 D7F88410 		ldr	r1, [r7, #132]
+ 690 009a 1846     		mov	r0, r3
+ 691 009c FFF7FEFF 		bl	lv_style_copy
+ 242:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_style_tmp.body.radius     = LV_RADIUS_CIRCLE;
+ 692              		.loc 2 242 0
+ 693 00a0 47F61843 		movw	r3, #31768
+ 694 00a4 3B84     		strh	r3, [r7, #32]	@ movhi
+ 243:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_style_tmp.body.main_color = style->line.color;
+ 695              		.loc 2 243 0
+ 696 00a6 D7F88430 		ldr	r3, [r7, #132]
+ 697 00aa 9B6C     		ldr	r3, [r3, #72]
+ 698 00ac BB61     		str	r3, [r7, #24]
+ 244:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_style_tmp.body.grad_color = style->line.color;
+ 699              		.loc 2 244 0
+ 700 00ae D7F88430 		ldr	r3, [r7, #132]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 20
+
+
+ 701 00b2 9B6C     		ldr	r3, [r3, #72]
+ 702 00b4 FB61     		str	r3, [r7, #28]
+ 245:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_style_tmp.body.opa        = style->line.opa;
+ 703              		.loc 2 245 0
+ 704 00b6 D7F88430 		ldr	r3, [r7, #132]
+ 705 00ba 93F84E30 		ldrb	r3, [r3, #78]	@ zero_extendqisi2
+ 706 00be 87F82230 		strb	r3, [r7, #34]
+ 707              	.L38:
+ 246:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         }
+ 247:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         lv_area_t circle_area;
+ 248:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 249:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         /*Read all points and draw the lines*/
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         for(i = 0; i < ext->point_num - 1; i++) {
+ 708              		.loc 2 250 0
+ 709 00c2 0023     		movs	r3, #0
+ 710 00c4 A7F88E30 		strh	r3, [r7, #142]	@ movhi
+ 711 00c8 F0E0     		b	.L39
+ 712              	.L43:
+ 251:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 252:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             p1.x = ext->point_array[i].x + x_ofs;
+ 713              		.loc 2 252 0
+ 714 00ca D7F88830 		ldr	r3, [r7, #136]
+ 715 00ce 1A68     		ldr	r2, [r3]
+ 716 00d0 B7F88E30 		ldrh	r3, [r7, #142]
+ 717 00d4 9B00     		lsls	r3, r3, #2
+ 718 00d6 1344     		add	r3, r3, r2
+ 719 00d8 B3F90030 		ldrsh	r3, [r3]
+ 720 00dc 9AB2     		uxth	r2, r3
+ 721 00de B7F88030 		ldrh	r3, [r7, #128]
+ 722 00e2 1344     		add	r3, r3, r2
+ 723 00e4 9BB2     		uxth	r3, r3
+ 724 00e6 1BB2     		sxth	r3, r3
+ 725 00e8 A7F87030 		strh	r3, [r7, #112]	@ movhi
+ 253:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             p2.x = ext->point_array[i + 1].x + x_ofs;
+ 726              		.loc 2 253 0
+ 727 00ec D7F88830 		ldr	r3, [r7, #136]
+ 728 00f0 1A68     		ldr	r2, [r3]
+ 729 00f2 B7F88E30 		ldrh	r3, [r7, #142]
+ 730 00f6 0133     		adds	r3, r3, #1
+ 731 00f8 9B00     		lsls	r3, r3, #2
+ 732 00fa 1344     		add	r3, r3, r2
+ 733 00fc B3F90030 		ldrsh	r3, [r3]
+ 734 0100 9AB2     		uxth	r2, r3
+ 735 0102 B7F88030 		ldrh	r3, [r7, #128]
+ 736 0106 1344     		add	r3, r3, r2
+ 737 0108 9BB2     		uxth	r3, r3
+ 738 010a 1BB2     		sxth	r3, r3
+ 739 010c A7F86C30 		strh	r3, [r7, #108]	@ movhi
+ 254:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 255:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             if(ext->y_inv == 0) {
+ 740              		.loc 2 255 0
+ 741 0110 D7F88830 		ldr	r3, [r7, #136]
+ 742 0114 9B79     		ldrb	r3, [r3, #6]	@ zero_extendqisi2
+ 743 0116 03F00203 		and	r3, r3, #2
+ 744 011a DBB2     		uxtb	r3, r3
+ 745 011c 002B     		cmp	r3, #0
+ 746 011e 23D1     		bne	.L40
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 21
+
+
+ 256:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 p1.y = ext->point_array[i].y + y_ofs;
+ 747              		.loc 2 256 0
+ 748 0120 D7F88830 		ldr	r3, [r7, #136]
+ 749 0124 1A68     		ldr	r2, [r3]
+ 750 0126 B7F88E30 		ldrh	r3, [r7, #142]
+ 751 012a 9B00     		lsls	r3, r3, #2
+ 752 012c 1344     		add	r3, r3, r2
+ 753 012e B3F90230 		ldrsh	r3, [r3, #2]
+ 754 0132 9AB2     		uxth	r2, r3
+ 755 0134 B7F87E30 		ldrh	r3, [r7, #126]
+ 756 0138 1344     		add	r3, r3, r2
+ 757 013a 9BB2     		uxth	r3, r3
+ 758 013c 1BB2     		sxth	r3, r3
+ 759 013e A7F87230 		strh	r3, [r7, #114]	@ movhi
+ 257:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 p2.y = ext->point_array[i + 1].y + y_ofs;
+ 760              		.loc 2 257 0
+ 761 0142 D7F88830 		ldr	r3, [r7, #136]
+ 762 0146 1A68     		ldr	r2, [r3]
+ 763 0148 B7F88E30 		ldrh	r3, [r7, #142]
+ 764 014c 0133     		adds	r3, r3, #1
+ 765 014e 9B00     		lsls	r3, r3, #2
+ 766 0150 1344     		add	r3, r3, r2
+ 767 0152 B3F90230 		ldrsh	r3, [r3, #2]
+ 768 0156 9AB2     		uxth	r2, r3
+ 769 0158 B7F87E30 		ldrh	r3, [r7, #126]
+ 770 015c 1344     		add	r3, r3, r2
+ 771 015e 9BB2     		uxth	r3, r3
+ 772 0160 1BB2     		sxth	r3, r3
+ 773 0162 A7F86E30 		strh	r3, [r7, #110]	@ movhi
+ 774 0166 2AE0     		b	.L41
+ 775              	.L40:
+ 258:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             } else {
+ 259:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 p1.y = h - ext->point_array[i].y + y_ofs;
+ 776              		.loc 2 259 0
+ 777 0168 B7F87C20 		ldrh	r2, [r7, #124]
+ 778 016c D7F88830 		ldr	r3, [r7, #136]
+ 779 0170 1968     		ldr	r1, [r3]
+ 780 0172 B7F88E30 		ldrh	r3, [r7, #142]
+ 781 0176 9B00     		lsls	r3, r3, #2
+ 782 0178 0B44     		add	r3, r3, r1
+ 783 017a B3F90230 		ldrsh	r3, [r3, #2]
+ 784 017e 9BB2     		uxth	r3, r3
+ 785 0180 D31A     		subs	r3, r2, r3
+ 786 0182 9AB2     		uxth	r2, r3
+ 787 0184 B7F87E30 		ldrh	r3, [r7, #126]
+ 788 0188 1344     		add	r3, r3, r2
+ 789 018a 9BB2     		uxth	r3, r3
+ 790 018c 1BB2     		sxth	r3, r3
+ 791 018e A7F87230 		strh	r3, [r7, #114]	@ movhi
+ 260:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 p2.y = h - ext->point_array[i + 1].y + y_ofs;
+ 792              		.loc 2 260 0
+ 793 0192 B7F87C20 		ldrh	r2, [r7, #124]
+ 794 0196 D7F88830 		ldr	r3, [r7, #136]
+ 795 019a 1968     		ldr	r1, [r3]
+ 796 019c B7F88E30 		ldrh	r3, [r7, #142]
+ 797 01a0 0133     		adds	r3, r3, #1
+ 798 01a2 9B00     		lsls	r3, r3, #2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 22
+
+
+ 799 01a4 0B44     		add	r3, r3, r1
+ 800 01a6 B3F90230 		ldrsh	r3, [r3, #2]
+ 801 01aa 9BB2     		uxth	r3, r3
+ 802 01ac D31A     		subs	r3, r2, r3
+ 803 01ae 9AB2     		uxth	r2, r3
+ 804 01b0 B7F87E30 		ldrh	r3, [r7, #126]
+ 805 01b4 1344     		add	r3, r3, r2
+ 806 01b6 9BB2     		uxth	r3, r3
+ 807 01b8 1BB2     		sxth	r3, r3
+ 808 01ba A7F86E30 		strh	r3, [r7, #110]	@ movhi
+ 809              	.L41:
+ 261:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             }
+ 262:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             lv_draw_line(&p1, &p2, mask, style, opa_scale);
+ 810              		.loc 2 262 0
+ 811 01be 07F16C01 		add	r1, r7, #108
+ 812 01c2 07F17000 		add	r0, r7, #112
+ 813 01c6 97F88330 		ldrb	r3, [r7, #131]	@ zero_extendqisi2
+ 814 01ca 0093     		str	r3, [sp]
+ 815 01cc D7F88430 		ldr	r3, [r7, #132]
+ 816 01d0 BA68     		ldr	r2, [r7, #8]
+ 817 01d2 FFF7FEFF 		bl	lv_draw_line
+ 263:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 264:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             /*Draw circle on the joints if enabled*/
+ 265:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             if(style->line.rounded) {
+ 818              		.loc 2 265 0
+ 819 01d6 D7F88430 		ldr	r3, [r7, #132]
+ 820 01da 93F84F30 		ldrb	r3, [r3, #79]	@ zero_extendqisi2
+ 821 01de 03F00103 		and	r3, r3, #1
+ 822 01e2 DBB2     		uxtb	r3, r3
+ 823 01e4 002B     		cmp	r3, #0
+ 824 01e6 5CD0     		beq	.L42
+ 266:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 circle_area.x1 = p1.x - ((style->line.width - 1) >> 1) - ((style->line.width - 1) &
+ 825              		.loc 2 266 0
+ 826 01e8 B7F97030 		ldrsh	r3, [r7, #112]
+ 827 01ec 9AB2     		uxth	r2, r3
+ 828 01ee D7F88430 		ldr	r3, [r7, #132]
+ 829 01f2 B3F94C30 		ldrsh	r3, [r3, #76]
+ 830 01f6 013B     		subs	r3, r3, #1
+ 831 01f8 5B10     		asrs	r3, r3, #1
+ 832 01fa 9BB2     		uxth	r3, r3
+ 833 01fc D31A     		subs	r3, r2, r3
+ 834 01fe 9AB2     		uxth	r2, r3
+ 835 0200 D7F88430 		ldr	r3, [r7, #132]
+ 836 0204 B3F94C30 		ldrsh	r3, [r3, #76]
+ 837 0208 9BB2     		uxth	r3, r3
+ 838 020a 013B     		subs	r3, r3, #1
+ 839 020c 9BB2     		uxth	r3, r3
+ 840 020e 03F00103 		and	r3, r3, #1
+ 841 0212 9BB2     		uxth	r3, r3
+ 842 0214 D31A     		subs	r3, r2, r3
+ 843 0216 9BB2     		uxth	r3, r3
+ 844 0218 1BB2     		sxth	r3, r3
+ 845 021a A7F86430 		strh	r3, [r7, #100]	@ movhi
+ 267:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 circle_area.y1 = p1.y - ((style->line.width - 1) >> 1) - ((style->line.width - 1) &
+ 846              		.loc 2 267 0
+ 847 021e B7F97230 		ldrsh	r3, [r7, #114]
+ 848 0222 9AB2     		uxth	r2, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 23
+
+
+ 849 0224 D7F88430 		ldr	r3, [r7, #132]
+ 850 0228 B3F94C30 		ldrsh	r3, [r3, #76]
+ 851 022c 013B     		subs	r3, r3, #1
+ 852 022e 5B10     		asrs	r3, r3, #1
+ 853 0230 9BB2     		uxth	r3, r3
+ 854 0232 D31A     		subs	r3, r2, r3
+ 855 0234 9AB2     		uxth	r2, r3
+ 856 0236 D7F88430 		ldr	r3, [r7, #132]
+ 857 023a B3F94C30 		ldrsh	r3, [r3, #76]
+ 858 023e 9BB2     		uxth	r3, r3
+ 859 0240 013B     		subs	r3, r3, #1
+ 860 0242 9BB2     		uxth	r3, r3
+ 861 0244 03F00103 		and	r3, r3, #1
+ 862 0248 9BB2     		uxth	r3, r3
+ 863 024a D31A     		subs	r3, r2, r3
+ 864 024c 9BB2     		uxth	r3, r3
+ 865 024e 1BB2     		sxth	r3, r3
+ 866 0250 A7F86630 		strh	r3, [r7, #102]	@ movhi
+ 268:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 circle_area.x2 = p1.x + ((style->line.width - 1) >> 1);
+ 867              		.loc 2 268 0
+ 868 0254 B7F97030 		ldrsh	r3, [r7, #112]
+ 869 0258 9AB2     		uxth	r2, r3
+ 870 025a D7F88430 		ldr	r3, [r7, #132]
+ 871 025e B3F94C30 		ldrsh	r3, [r3, #76]
+ 872 0262 013B     		subs	r3, r3, #1
+ 873 0264 5B10     		asrs	r3, r3, #1
+ 874 0266 9BB2     		uxth	r3, r3
+ 875 0268 1344     		add	r3, r3, r2
+ 876 026a 9BB2     		uxth	r3, r3
+ 877 026c 1BB2     		sxth	r3, r3
+ 878 026e A7F86830 		strh	r3, [r7, #104]	@ movhi
+ 269:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 circle_area.y2 = p1.y + ((style->line.width - 1) >> 1);
+ 879              		.loc 2 269 0
+ 880 0272 B7F97230 		ldrsh	r3, [r7, #114]
+ 881 0276 9AB2     		uxth	r2, r3
+ 882 0278 D7F88430 		ldr	r3, [r7, #132]
+ 883 027c B3F94C30 		ldrsh	r3, [r3, #76]
+ 884 0280 013B     		subs	r3, r3, #1
+ 885 0282 5B10     		asrs	r3, r3, #1
+ 886 0284 9BB2     		uxth	r3, r3
+ 887 0286 1344     		add	r3, r3, r2
+ 888 0288 9BB2     		uxth	r3, r3
+ 889 028a 1BB2     		sxth	r3, r3
+ 890 028c A7F86A30 		strh	r3, [r7, #106]	@ movhi
+ 270:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****                 lv_draw_rect(&circle_area, mask, &circle_style_tmp, opa_scale);
+ 891              		.loc 2 270 0
+ 892 0290 97F88330 		ldrb	r3, [r7, #131]	@ zero_extendqisi2
+ 893 0294 07F11402 		add	r2, r7, #20
+ 894 0298 07F16400 		add	r0, r7, #100
+ 895 029c B968     		ldr	r1, [r7, #8]
+ 896 029e FFF7FEFF 		bl	lv_draw_rect
+ 897              	.L42:
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 898              		.loc 2 250 0 discriminator 2
+ 899 02a2 B7F88E30 		ldrh	r3, [r7, #142]
+ 900 02a6 0133     		adds	r3, r3, #1
+ 901 02a8 A7F88E30 		strh	r3, [r7, #142]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 24
+
+
+ 902              	.L39:
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 903              		.loc 2 250 0 is_stmt 0 discriminator 1
+ 904 02ac B7F88E20 		ldrh	r2, [r7, #142]
+ 905 02b0 D7F88830 		ldr	r3, [r7, #136]
+ 906 02b4 9B88     		ldrh	r3, [r3, #4]
+ 907 02b6 013B     		subs	r3, r3, #1
+ 908 02b8 9A42     		cmp	r2, r3
+ 909 02ba FFF606AF 		blt	.L43
+ 271:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             }
+ 272:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         }
+ 273:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 274:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         /*Draw circle on the last point too if enabled*/
+ 275:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         if(style->line.rounded) {
+ 910              		.loc 2 275 0 is_stmt 1
+ 911 02be D7F88430 		ldr	r3, [r7, #132]
+ 912 02c2 93F84F30 		ldrb	r3, [r3, #79]	@ zero_extendqisi2
+ 913 02c6 03F00103 		and	r3, r3, #1
+ 914 02ca DBB2     		uxtb	r3, r3
+ 915 02cc 002B     		cmp	r3, #0
+ 916 02ce 5CD0     		beq	.L35
+ 276:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_area.x1 = p2.x - ((style->line.width - 1) >> 1) - ((style->line.width - 1) & 0x1
+ 917              		.loc 2 276 0
+ 918 02d0 B7F96C30 		ldrsh	r3, [r7, #108]
+ 919 02d4 9AB2     		uxth	r2, r3
+ 920 02d6 D7F88430 		ldr	r3, [r7, #132]
+ 921 02da B3F94C30 		ldrsh	r3, [r3, #76]
+ 922 02de 013B     		subs	r3, r3, #1
+ 923 02e0 5B10     		asrs	r3, r3, #1
+ 924 02e2 9BB2     		uxth	r3, r3
+ 925 02e4 D31A     		subs	r3, r2, r3
+ 926 02e6 9AB2     		uxth	r2, r3
+ 927 02e8 D7F88430 		ldr	r3, [r7, #132]
+ 928 02ec B3F94C30 		ldrsh	r3, [r3, #76]
+ 929 02f0 9BB2     		uxth	r3, r3
+ 930 02f2 013B     		subs	r3, r3, #1
+ 931 02f4 9BB2     		uxth	r3, r3
+ 932 02f6 03F00103 		and	r3, r3, #1
+ 933 02fa 9BB2     		uxth	r3, r3
+ 934 02fc D31A     		subs	r3, r2, r3
+ 935 02fe 9BB2     		uxth	r3, r3
+ 936 0300 1BB2     		sxth	r3, r3
+ 937 0302 A7F86430 		strh	r3, [r7, #100]	@ movhi
+ 277:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_area.y1 = p2.y - ((style->line.width - 1) >> 1) - ((style->line.width - 1) & 0x1
+ 938              		.loc 2 277 0
+ 939 0306 B7F96E30 		ldrsh	r3, [r7, #110]
+ 940 030a 9AB2     		uxth	r2, r3
+ 941 030c D7F88430 		ldr	r3, [r7, #132]
+ 942 0310 B3F94C30 		ldrsh	r3, [r3, #76]
+ 943 0314 013B     		subs	r3, r3, #1
+ 944 0316 5B10     		asrs	r3, r3, #1
+ 945 0318 9BB2     		uxth	r3, r3
+ 946 031a D31A     		subs	r3, r2, r3
+ 947 031c 9AB2     		uxth	r2, r3
+ 948 031e D7F88430 		ldr	r3, [r7, #132]
+ 949 0322 B3F94C30 		ldrsh	r3, [r3, #76]
+ 950 0326 9BB2     		uxth	r3, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 25
+
+
+ 951 0328 013B     		subs	r3, r3, #1
+ 952 032a 9BB2     		uxth	r3, r3
+ 953 032c 03F00103 		and	r3, r3, #1
+ 954 0330 9BB2     		uxth	r3, r3
+ 955 0332 D31A     		subs	r3, r2, r3
+ 956 0334 9BB2     		uxth	r3, r3
+ 957 0336 1BB2     		sxth	r3, r3
+ 958 0338 A7F86630 		strh	r3, [r7, #102]	@ movhi
+ 278:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_area.x2 = p2.x + ((style->line.width - 1) >> 1);
+ 959              		.loc 2 278 0
+ 960 033c B7F96C30 		ldrsh	r3, [r7, #108]
+ 961 0340 9AB2     		uxth	r2, r3
+ 962 0342 D7F88430 		ldr	r3, [r7, #132]
+ 963 0346 B3F94C30 		ldrsh	r3, [r3, #76]
+ 964 034a 013B     		subs	r3, r3, #1
+ 965 034c 5B10     		asrs	r3, r3, #1
+ 966 034e 9BB2     		uxth	r3, r3
+ 967 0350 1344     		add	r3, r3, r2
+ 968 0352 9BB2     		uxth	r3, r3
+ 969 0354 1BB2     		sxth	r3, r3
+ 970 0356 A7F86830 		strh	r3, [r7, #104]	@ movhi
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             circle_area.y2 = p2.y + ((style->line.width - 1) >> 1);
+ 971              		.loc 2 279 0
+ 972 035a B7F96E30 		ldrsh	r3, [r7, #110]
+ 973 035e 9AB2     		uxth	r2, r3
+ 974 0360 D7F88430 		ldr	r3, [r7, #132]
+ 975 0364 B3F94C30 		ldrsh	r3, [r3, #76]
+ 976 0368 013B     		subs	r3, r3, #1
+ 977 036a 5B10     		asrs	r3, r3, #1
+ 978 036c 9BB2     		uxth	r3, r3
+ 979 036e 1344     		add	r3, r3, r2
+ 980 0370 9BB2     		uxth	r3, r3
+ 981 0372 1BB2     		sxth	r3, r3
+ 982 0374 A7F86A30 		strh	r3, [r7, #106]	@ movhi
+ 280:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****             lv_draw_rect(&circle_area, mask, &circle_style_tmp, opa_scale);
+ 983              		.loc 2 280 0
+ 984 0378 97F88330 		ldrb	r3, [r7, #131]	@ zero_extendqisi2
+ 985 037c 07F11402 		add	r2, r7, #20
+ 986 0380 07F16400 		add	r0, r7, #100
+ 987 0384 B968     		ldr	r1, [r7, #8]
+ 988 0386 FFF7FEFF 		bl	lv_draw_rect
+ 989              	.L35:
+ 990              	.LBE4:
+ 281:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         }
+ 282:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     }
+ 283:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     return true;
+ 991              		.loc 2 283 0
+ 992 038a 0123     		movs	r3, #1
+ 993              	.L34:
+ 284:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 994              		.loc 2 284 0
+ 995 038c 1846     		mov	r0, r3
+ 996 038e 9037     		adds	r7, r7, #144
+ 997              		.cfi_def_cfa_offset 8
+ 998 0390 BD46     		mov	sp, r7
+ 999              		.cfi_def_cfa_register 13
+ 1000              		@ sp needed
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 26
+
+
+ 1001 0392 80BD     		pop	{r7, pc}
+ 1002              		.cfi_endproc
+ 1003              	.LFE39:
+ 1004              		.size	lv_line_design, .-lv_line_design
+ 1005              		.section	.rodata
+ 1006              		.align	2
+ 1007              	.LC0:
+ 1008 0000 6C765F6C 		.ascii	"lv_line\000"
+ 1008      696E6500 
+ 1009              		.section	.text.lv_line_signal,"ax",%progbits
+ 1010              		.align	2
+ 1011              		.thumb
+ 1012              		.thumb_func
+ 1013              		.type	lv_line_signal, %function
+ 1014              	lv_line_signal:
+ 1015              	.LFB40:
+ 285:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 286:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** /**
+ 287:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * Signal function of the line
+ 288:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param line pointer to a line object
+ 289:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @param sign a signal type from lv_signal_t enum
+ 290:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  * @return LV_RES_OK: the object is not deleted in the function; LV_RES_INV: the object is deleted
+ 291:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****  */
+ 292:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** static lv_res_t lv_line_signal(lv_obj_t * line, lv_signal_t sign, void * param)
+ 293:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** {
+ 1016              		.loc 2 293 0
+ 1017              		.cfi_startproc
+ 1018              		@ args = 0, pretend = 0, frame = 24
+ 1019              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1020 0000 80B5     		push	{r7, lr}
+ 1021              		.cfi_def_cfa_offset 8
+ 1022              		.cfi_offset 7, -8
+ 1023              		.cfi_offset 14, -4
+ 1024 0002 86B0     		sub	sp, sp, #24
+ 1025              		.cfi_def_cfa_offset 32
+ 1026 0004 00AF     		add	r7, sp, #0
+ 1027              		.cfi_def_cfa_register 7
+ 1028 0006 F860     		str	r0, [r7, #12]
+ 1029 0008 0B46     		mov	r3, r1
+ 1030 000a 7A60     		str	r2, [r7, #4]
+ 1031 000c FB72     		strb	r3, [r7, #11]
+ 294:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     lv_res_t res;
+ 295:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 296:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     /* Include the ancient signal function */
+ 297:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     res = ancestor_signal(line, sign, param);
+ 1032              		.loc 2 297 0
+ 1033 000e 184B     		ldr	r3, .L50
+ 1034 0010 1B68     		ldr	r3, [r3]
+ 1035 0012 F97A     		ldrb	r1, [r7, #11]	@ zero_extendqisi2
+ 1036 0014 7A68     		ldr	r2, [r7, #4]
+ 1037 0016 F868     		ldr	r0, [r7, #12]
+ 1038 0018 9847     		blx	r3
+ 1039 001a 0346     		mov	r3, r0
+ 1040 001c FB75     		strb	r3, [r7, #23]
+ 298:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(res != LV_RES_OK) return res;
+ 1041              		.loc 2 298 0
+ 1042 001e FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 27
+
+
+ 1043 0020 012B     		cmp	r3, #1
+ 1044 0022 01D0     		beq	.L46
+ 1045              		.loc 2 298 0 is_stmt 0 discriminator 1
+ 1046 0024 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1047 0026 1EE0     		b	.L47
+ 1048              	.L46:
+ 299:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     if(sign == LV_SIGNAL_GET_TYPE) return lv_obj_handle_get_type_signal(param, LV_OBJX_NAME);
+ 1049              		.loc 2 299 0 is_stmt 1
+ 1050 0028 FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 1051 002a 072B     		cmp	r3, #7
+ 1052 002c 05D1     		bne	.L48
+ 1053              		.loc 2 299 0 is_stmt 0 discriminator 1
+ 1054 002e 1149     		ldr	r1, .L50+4
+ 1055 0030 7868     		ldr	r0, [r7, #4]
+ 1056 0032 FFF7FEFF 		bl	lv_obj_handle_get_type_signal
+ 1057 0036 0346     		mov	r3, r0
+ 1058 0038 15E0     		b	.L47
+ 1059              	.L48:
+ 300:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 301:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****    if(sign == LV_SIGNAL_REFR_EXT_DRAW_PAD) {
+ 1060              		.loc 2 301 0 is_stmt 1
+ 1061 003a FB7A     		ldrb	r3, [r7, #11]	@ zero_extendqisi2
+ 1062 003c 062B     		cmp	r3, #6
+ 1063 003e 11D1     		bne	.L49
+ 1064              	.LBB5:
+ 302:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         const lv_style_t * style = lv_line_get_style(line, LV_LINE_STYLE_MAIN);
+ 1065              		.loc 2 302 0
+ 1066 0040 0021     		movs	r1, #0
+ 1067 0042 F868     		ldr	r0, [r7, #12]
+ 1068 0044 FFF7FEFF 		bl	lv_line_get_style
+ 1069 0048 3861     		str	r0, [r7, #16]
+ 303:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****         if(line->ext_draw_pad < style->line.width) line->ext_draw_pad = style->line.width;
+ 1070              		.loc 2 303 0
+ 1071 004a FB68     		ldr	r3, [r7, #12]
+ 1072 004c B3F93020 		ldrsh	r2, [r3, #48]
+ 1073 0050 3B69     		ldr	r3, [r7, #16]
+ 1074 0052 B3F94C30 		ldrsh	r3, [r3, #76]
+ 1075 0056 9A42     		cmp	r2, r3
+ 1076 0058 04DA     		bge	.L49
+ 1077              		.loc 2 303 0 is_stmt 0 discriminator 1
+ 1078 005a 3B69     		ldr	r3, [r7, #16]
+ 1079 005c B3F94C20 		ldrsh	r2, [r3, #76]
+ 1080 0060 FB68     		ldr	r3, [r7, #12]
+ 1081 0062 1A86     		strh	r2, [r3, #48]	@ movhi
+ 1082              	.L49:
+ 1083              	.LBE5:
+ 304:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     }
+ 305:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** 
+ 306:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c ****     return res;
+ 1084              		.loc 2 306 0 is_stmt 1
+ 1085 0064 FB7D     		ldrb	r3, [r7, #23]	@ zero_extendqisi2
+ 1086              	.L47:
+ 307:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_objx/lv_line.c **** }
+ 1087              		.loc 2 307 0
+ 1088 0066 1846     		mov	r0, r3
+ 1089 0068 1837     		adds	r7, r7, #24
+ 1090              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 28
+
+
+ 1091 006a BD46     		mov	sp, r7
+ 1092              		.cfi_def_cfa_register 13
+ 1093              		@ sp needed
+ 1094 006c 80BD     		pop	{r7, pc}
+ 1095              	.L51:
+ 1096 006e 00BF     		.align	2
+ 1097              	.L50:
+ 1098 0070 00000000 		.word	ancestor_signal
+ 1099 0074 00000000 		.word	.LC0
+ 1100              		.cfi_endproc
+ 1101              	.LFE40:
+ 1102              		.size	lv_line_signal, .-lv_line_signal
+ 1103              		.text
+ 1104              	.Letext0:
+ 1105              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1106              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1107              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../../../lv_conf.h"
+ 1108              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_font/lv_font.h"
+ 1109              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_misc/lv_color.h"
+ 1110              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_misc/lv_area.h"
+ 1111              		.file 9 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/lv_style.h"
+ 1112              		.file 10 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_misc/lv_types.h"
+ 1113              		.file 11 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_misc/lv_ll.h"
+ 1114              		.file 12 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/../lv_misc/lv_bidi.h"
+ 1115              		.file 13 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx\\../lv_core/lv_obj.h"
+ 1116              		.section	.debug_info,"",%progbits
+ 1117              	.Ldebug_info0:
+ 1118 0000 E50C0000 		.4byte	0xce5
+ 1119 0004 0400     		.2byte	0x4
+ 1120 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1121 000a 04       		.byte	0x4
+ 1122 000b 01       		.uleb128 0x1
+ 1123 000c 63080000 		.4byte	.LASF177
+ 1124 0010 0C       		.byte	0xc
+ 1125 0011 43050000 		.4byte	.LASF178
+ 1126 0015 0A010000 		.4byte	.LASF179
+ 1127 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1128 001d 00000000 		.4byte	0
+ 1129 0021 00000000 		.4byte	.Ldebug_line0
+ 1130 0025 02       		.uleb128 0x2
+ 1131 0026 CE040000 		.4byte	.LASF0
+ 1132 002a 03       		.byte	0x3
+ 1133 002b 1B       		.byte	0x1b
+ 1134 002c 30000000 		.4byte	0x30
+ 1135 0030 03       		.uleb128 0x3
+ 1136 0031 01       		.byte	0x1
+ 1137 0032 06       		.byte	0x6
+ 1138 0033 E7070000 		.4byte	.LASF2
+ 1139 0037 02       		.uleb128 0x2
+ 1140 0038 83060000 		.4byte	.LASF1
+ 1141 003c 03       		.byte	0x3
+ 1142 003d 1D       		.byte	0x1d
+ 1143 003e 42000000 		.4byte	0x42
+ 1144 0042 03       		.uleb128 0x3
+ 1145 0043 01       		.byte	0x1
+ 1146 0044 08       		.byte	0x8
+ 1147 0045 3C070000 		.4byte	.LASF3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 29
+
+
+ 1148 0049 02       		.uleb128 0x2
+ 1149 004a 06040000 		.4byte	.LASF4
+ 1150 004e 03       		.byte	0x3
+ 1151 004f 29       		.byte	0x29
+ 1152 0050 54000000 		.4byte	0x54
+ 1153 0054 03       		.uleb128 0x3
+ 1154 0055 02       		.byte	0x2
+ 1155 0056 05       		.byte	0x5
+ 1156 0057 CD050000 		.4byte	.LASF5
+ 1157 005b 02       		.uleb128 0x2
+ 1158 005c 1E020000 		.4byte	.LASF6
+ 1159 0060 03       		.byte	0x3
+ 1160 0061 2B       		.byte	0x2b
+ 1161 0062 66000000 		.4byte	0x66
+ 1162 0066 03       		.uleb128 0x3
+ 1163 0067 02       		.byte	0x2
+ 1164 0068 07       		.byte	0x7
+ 1165 0069 FA070000 		.4byte	.LASF7
+ 1166 006d 03       		.uleb128 0x3
+ 1167 006e 04       		.byte	0x4
+ 1168 006f 05       		.byte	0x5
+ 1169 0070 FA050000 		.4byte	.LASF8
+ 1170 0074 02       		.uleb128 0x2
+ 1171 0075 5E070000 		.4byte	.LASF9
+ 1172 0079 03       		.byte	0x3
+ 1173 007a 41       		.byte	0x41
+ 1174 007b 7F000000 		.4byte	0x7f
+ 1175 007f 03       		.uleb128 0x3
+ 1176 0080 04       		.byte	0x4
+ 1177 0081 07       		.byte	0x7
+ 1178 0082 C6060000 		.4byte	.LASF10
+ 1179 0086 03       		.uleb128 0x3
+ 1180 0087 08       		.byte	0x8
+ 1181 0088 05       		.byte	0x5
+ 1182 0089 A6030000 		.4byte	.LASF11
+ 1183 008d 03       		.uleb128 0x3
+ 1184 008e 08       		.byte	0x8
+ 1185 008f 07       		.byte	0x7
+ 1186 0090 E9010000 		.4byte	.LASF12
+ 1187 0094 04       		.uleb128 0x4
+ 1188 0095 04       		.byte	0x4
+ 1189 0096 05       		.byte	0x5
+ 1190 0097 696E7400 		.ascii	"int\000"
+ 1191 009b 03       		.uleb128 0x3
+ 1192 009c 04       		.byte	0x4
+ 1193 009d 07       		.byte	0x7
+ 1194 009e 72000000 		.4byte	.LASF13
+ 1195 00a2 02       		.uleb128 0x2
+ 1196 00a3 BE010000 		.4byte	.LASF14
+ 1197 00a7 04       		.byte	0x4
+ 1198 00a8 14       		.byte	0x14
+ 1199 00a9 25000000 		.4byte	0x25
+ 1200 00ad 02       		.uleb128 0x2
+ 1201 00ae 68030000 		.4byte	.LASF15
+ 1202 00b2 04       		.byte	0x4
+ 1203 00b3 18       		.byte	0x18
+ 1204 00b4 37000000 		.4byte	0x37
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 30
+
+
+ 1205 00b8 02       		.uleb128 0x2
+ 1206 00b9 E1010000 		.4byte	.LASF16
+ 1207 00bd 04       		.byte	0x4
+ 1208 00be 20       		.byte	0x20
+ 1209 00bf 49000000 		.4byte	0x49
+ 1210 00c3 02       		.uleb128 0x2
+ 1211 00c4 11050000 		.4byte	.LASF17
+ 1212 00c8 04       		.byte	0x4
+ 1213 00c9 24       		.byte	0x24
+ 1214 00ca 5B000000 		.4byte	0x5b
+ 1215 00ce 02       		.uleb128 0x2
+ 1216 00cf B5010000 		.4byte	.LASF18
+ 1217 00d3 04       		.byte	0x4
+ 1218 00d4 30       		.byte	0x30
+ 1219 00d5 74000000 		.4byte	0x74
+ 1220 00d9 02       		.uleb128 0x2
+ 1221 00da 5E060000 		.4byte	.LASF19
+ 1222 00de 05       		.byte	0x5
+ 1223 00df 3C       		.byte	0x3c
+ 1224 00e0 B8000000 		.4byte	0xb8
+ 1225 00e4 05       		.uleb128 0x5
+ 1226 00e5 04       		.byte	0x4
+ 1227 00e6 03       		.uleb128 0x3
+ 1228 00e7 08       		.byte	0x8
+ 1229 00e8 04       		.byte	0x4
+ 1230 00e9 05050000 		.4byte	.LASF20
+ 1231 00ed 06       		.uleb128 0x6
+ 1232 00ee 08       		.byte	0x8
+ 1233 00ef 06       		.byte	0x6
+ 1234 00f0 2E       		.byte	0x2e
+ 1235 00f1 3E010000 		.4byte	0x13e
+ 1236 00f5 07       		.uleb128 0x7
+ 1237 00f6 57090000 		.4byte	.LASF21
+ 1238 00fa 06       		.byte	0x6
+ 1239 00fb 30       		.byte	0x30
+ 1240 00fc C3000000 		.4byte	0xc3
+ 1241 0100 00       		.byte	0
+ 1242 0101 07       		.uleb128 0x7
+ 1243 0102 C0060000 		.4byte	.LASF22
+ 1244 0106 06       		.byte	0x6
+ 1245 0107 31       		.byte	0x31
+ 1246 0108 AD000000 		.4byte	0xad
+ 1247 010c 02       		.byte	0x2
+ 1248 010d 07       		.uleb128 0x7
+ 1249 010e A0060000 		.4byte	.LASF23
+ 1250 0112 06       		.byte	0x6
+ 1251 0113 32       		.byte	0x32
+ 1252 0114 AD000000 		.4byte	0xad
+ 1253 0118 03       		.byte	0x3
+ 1254 0119 07       		.uleb128 0x7
+ 1255 011a 7F000000 		.4byte	.LASF24
+ 1256 011e 06       		.byte	0x6
+ 1257 011f 33       		.byte	0x33
+ 1258 0120 A2000000 		.4byte	0xa2
+ 1259 0124 04       		.byte	0x4
+ 1260 0125 07       		.uleb128 0x7
+ 1261 0126 85000000 		.4byte	.LASF25
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 31
+
+
+ 1262 012a 06       		.byte	0x6
+ 1263 012b 34       		.byte	0x34
+ 1264 012c A2000000 		.4byte	0xa2
+ 1265 0130 05       		.byte	0x5
+ 1266 0131 08       		.uleb128 0x8
+ 1267 0132 62707000 		.ascii	"bpp\000"
+ 1268 0136 06       		.byte	0x6
+ 1269 0137 35       		.byte	0x35
+ 1270 0138 AD000000 		.4byte	0xad
+ 1271 013c 06       		.byte	0x6
+ 1272 013d 00       		.byte	0
+ 1273 013e 02       		.uleb128 0x2
+ 1274 013f 41030000 		.4byte	.LASF26
+ 1275 0143 06       		.byte	0x6
+ 1276 0144 36       		.byte	0x36
+ 1277 0145 ED000000 		.4byte	0xed
+ 1278 0149 09       		.uleb128 0x9
+ 1279 014a 9A020000 		.4byte	.LASF82
+ 1280 014e 10       		.byte	0x10
+ 1281 014f 06       		.byte	0x6
+ 1282 0150 44       		.byte	0x44
+ 1283 0151 A1010000 		.4byte	0x1a1
+ 1284 0155 07       		.uleb128 0x7
+ 1285 0156 8B000000 		.4byte	.LASF27
+ 1286 015a 06       		.byte	0x6
+ 1287 015b 47       		.byte	0x47
+ 1288 015c D7010000 		.4byte	0x1d7
+ 1289 0160 00       		.byte	0
+ 1290 0161 07       		.uleb128 0x7
+ 1291 0162 6E070000 		.4byte	.LASF28
+ 1292 0166 06       		.byte	0x6
+ 1293 0167 4A       		.byte	0x4a
+ 1294 0168 FC010000 		.4byte	0x1fc
+ 1295 016c 04       		.byte	0x4
+ 1296 016d 07       		.uleb128 0x7
+ 1297 016e B5020000 		.4byte	.LASF29
+ 1298 0172 06       		.byte	0x6
+ 1299 0173 4D       		.byte	0x4d
+ 1300 0174 AD000000 		.4byte	0xad
+ 1301 0178 08       		.byte	0x8
+ 1302 0179 07       		.uleb128 0x7
+ 1303 017a EF060000 		.4byte	.LASF30
+ 1304 017e 06       		.byte	0x6
+ 1305 017f 4E       		.byte	0x4e
+ 1306 0180 A2000000 		.4byte	0xa2
+ 1307 0184 09       		.byte	0x9
+ 1308 0185 0A       		.uleb128 0xa
+ 1309 0186 BD040000 		.4byte	.LASF65
+ 1310 018a 06       		.byte	0x6
+ 1311 018b 4F       		.byte	0x4f
+ 1312 018c AD000000 		.4byte	0xad
+ 1313 0190 01       		.byte	0x1
+ 1314 0191 02       		.byte	0x2
+ 1315 0192 06       		.byte	0x6
+ 1316 0193 0A       		.byte	0xa
+ 1317 0194 08       		.uleb128 0x8
+ 1318 0195 64736300 		.ascii	"dsc\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 32
+
+
+ 1319 0199 06       		.byte	0x6
+ 1320 019a 50       		.byte	0x50
+ 1321 019b E4000000 		.4byte	0xe4
+ 1322 019f 0C       		.byte	0xc
+ 1323 01a0 00       		.byte	0
+ 1324 01a1 0B       		.uleb128 0xb
+ 1325 01a2 BF010000 		.4byte	0x1bf
+ 1326 01a6 BF010000 		.4byte	0x1bf
+ 1327 01aa 0C       		.uleb128 0xc
+ 1328 01ab C6010000 		.4byte	0x1c6
+ 1329 01af 0C       		.uleb128 0xc
+ 1330 01b0 D1010000 		.4byte	0x1d1
+ 1331 01b4 0C       		.uleb128 0xc
+ 1332 01b5 CE000000 		.4byte	0xce
+ 1333 01b9 0C       		.uleb128 0xc
+ 1334 01ba CE000000 		.4byte	0xce
+ 1335 01be 00       		.byte	0
+ 1336 01bf 03       		.uleb128 0x3
+ 1337 01c0 01       		.byte	0x1
+ 1338 01c1 02       		.byte	0x2
+ 1339 01c2 94020000 		.4byte	.LASF31
+ 1340 01c6 0D       		.uleb128 0xd
+ 1341 01c7 04       		.byte	0x4
+ 1342 01c8 CC010000 		.4byte	0x1cc
+ 1343 01cc 0E       		.uleb128 0xe
+ 1344 01cd 49010000 		.4byte	0x149
+ 1345 01d1 0D       		.uleb128 0xd
+ 1346 01d2 04       		.byte	0x4
+ 1347 01d3 3E010000 		.4byte	0x13e
+ 1348 01d7 0D       		.uleb128 0xd
+ 1349 01d8 04       		.byte	0x4
+ 1350 01d9 A1010000 		.4byte	0x1a1
+ 1351 01dd 0B       		.uleb128 0xb
+ 1352 01de F1010000 		.4byte	0x1f1
+ 1353 01e2 F1010000 		.4byte	0x1f1
+ 1354 01e6 0C       		.uleb128 0xc
+ 1355 01e7 C6010000 		.4byte	0x1c6
+ 1356 01eb 0C       		.uleb128 0xc
+ 1357 01ec CE000000 		.4byte	0xce
+ 1358 01f0 00       		.byte	0
+ 1359 01f1 0D       		.uleb128 0xd
+ 1360 01f2 04       		.byte	0x4
+ 1361 01f3 F7010000 		.4byte	0x1f7
+ 1362 01f7 0E       		.uleb128 0xe
+ 1363 01f8 AD000000 		.4byte	0xad
+ 1364 01fc 0D       		.uleb128 0xd
+ 1365 01fd 04       		.byte	0x4
+ 1366 01fe DD010000 		.4byte	0x1dd
+ 1367 0202 02       		.uleb128 0x2
+ 1368 0203 89050000 		.4byte	.LASF32
+ 1369 0207 06       		.byte	0x6
+ 1370 0208 56       		.byte	0x56
+ 1371 0209 49010000 		.4byte	0x149
+ 1372 020d 06       		.uleb128 0x6
+ 1373 020e 04       		.byte	0x4
+ 1374 020f 07       		.byte	0x7
+ 1375 0210 F3       		.byte	0xf3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 33
+
+
+ 1376 0211 46020000 		.4byte	0x246
+ 1377 0215 07       		.uleb128 0x7
+ 1378 0216 33060000 		.4byte	.LASF33
+ 1379 021a 07       		.byte	0x7
+ 1380 021b F5       		.byte	0xf5
+ 1381 021c AD000000 		.4byte	0xad
+ 1382 0220 00       		.byte	0
+ 1383 0221 07       		.uleb128 0x7
+ 1384 0222 FF040000 		.4byte	.LASF34
+ 1385 0226 07       		.byte	0x7
+ 1386 0227 F6       		.byte	0xf6
+ 1387 0228 AD000000 		.4byte	0xad
+ 1388 022c 01       		.byte	0x1
+ 1389 022d 08       		.uleb128 0x8
+ 1390 022e 72656400 		.ascii	"red\000"
+ 1391 0232 07       		.byte	0x7
+ 1392 0233 F7       		.byte	0xf7
+ 1393 0234 AD000000 		.4byte	0xad
+ 1394 0238 02       		.byte	0x2
+ 1395 0239 07       		.uleb128 0x7
+ 1396 023a E9060000 		.4byte	.LASF35
+ 1397 023e 07       		.byte	0x7
+ 1398 023f F8       		.byte	0xf8
+ 1399 0240 AD000000 		.4byte	0xad
+ 1400 0244 03       		.byte	0x3
+ 1401 0245 00       		.byte	0
+ 1402 0246 0F       		.uleb128 0xf
+ 1403 0247 04       		.byte	0x4
+ 1404 0248 07       		.byte	0x7
+ 1405 0249 F1       		.byte	0xf1
+ 1406 024a 64020000 		.4byte	0x264
+ 1407 024e 10       		.uleb128 0x10
+ 1408 024f 636800   		.ascii	"ch\000"
+ 1409 0252 07       		.byte	0x7
+ 1410 0253 F9       		.byte	0xf9
+ 1411 0254 0D020000 		.4byte	0x20d
+ 1412 0258 11       		.uleb128 0x11
+ 1413 0259 16000000 		.4byte	.LASF36
+ 1414 025d 07       		.byte	0x7
+ 1415 025e FA       		.byte	0xfa
+ 1416 025f CE000000 		.4byte	0xce
+ 1417 0263 00       		.byte	0
+ 1418 0264 02       		.uleb128 0x2
+ 1419 0265 C5010000 		.4byte	.LASF37
+ 1420 0269 07       		.byte	0x7
+ 1421 026a FB       		.byte	0xfb
+ 1422 026b 46020000 		.4byte	0x246
+ 1423 026f 12       		.uleb128 0x12
+ 1424 0270 C3040000 		.4byte	.LASF38
+ 1425 0274 07       		.byte	0x7
+ 1426 0275 0801     		.2byte	0x108
+ 1427 0277 64020000 		.4byte	0x264
+ 1428 027b 12       		.uleb128 0x12
+ 1429 027c F1050000 		.4byte	.LASF39
+ 1430 0280 07       		.byte	0x7
+ 1431 0281 0D01     		.2byte	0x10d
+ 1432 0283 AD000000 		.4byte	0xad
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 34
+
+
+ 1433 0287 03       		.uleb128 0x3
+ 1434 0288 04       		.byte	0x4
+ 1435 0289 07       		.byte	0x7
+ 1436 028a 7A050000 		.4byte	.LASF40
+ 1437 028e 03       		.uleb128 0x3
+ 1438 028f 01       		.byte	0x1
+ 1439 0290 08       		.byte	0x8
+ 1440 0291 05030000 		.4byte	.LASF41
+ 1441 0295 06       		.uleb128 0x6
+ 1442 0296 04       		.byte	0x4
+ 1443 0297 08       		.byte	0x8
+ 1444 0298 2A       		.byte	0x2a
+ 1445 0299 B2020000 		.4byte	0x2b2
+ 1446 029d 08       		.uleb128 0x8
+ 1447 029e 7800     		.ascii	"x\000"
+ 1448 02a0 08       		.byte	0x8
+ 1449 02a1 2C       		.byte	0x2c
+ 1450 02a2 D9000000 		.4byte	0xd9
+ 1451 02a6 00       		.byte	0
+ 1452 02a7 08       		.uleb128 0x8
+ 1453 02a8 7900     		.ascii	"y\000"
+ 1454 02aa 08       		.byte	0x8
+ 1455 02ab 2D       		.byte	0x2d
+ 1456 02ac D9000000 		.4byte	0xd9
+ 1457 02b0 02       		.byte	0x2
+ 1458 02b1 00       		.byte	0
+ 1459 02b2 02       		.uleb128 0x2
+ 1460 02b3 A9000000 		.4byte	.LASF42
+ 1461 02b7 08       		.byte	0x8
+ 1462 02b8 2E       		.byte	0x2e
+ 1463 02b9 95020000 		.4byte	0x295
+ 1464 02bd 06       		.uleb128 0x6
+ 1465 02be 08       		.byte	0x8
+ 1466 02bf 08       		.byte	0x8
+ 1467 02c0 31       		.byte	0x31
+ 1468 02c1 F2020000 		.4byte	0x2f2
+ 1469 02c5 08       		.uleb128 0x8
+ 1470 02c6 783100   		.ascii	"x1\000"
+ 1471 02c9 08       		.byte	0x8
+ 1472 02ca 33       		.byte	0x33
+ 1473 02cb D9000000 		.4byte	0xd9
+ 1474 02cf 00       		.byte	0
+ 1475 02d0 08       		.uleb128 0x8
+ 1476 02d1 793100   		.ascii	"y1\000"
+ 1477 02d4 08       		.byte	0x8
+ 1478 02d5 34       		.byte	0x34
+ 1479 02d6 D9000000 		.4byte	0xd9
+ 1480 02da 02       		.byte	0x2
+ 1481 02db 08       		.uleb128 0x8
+ 1482 02dc 783200   		.ascii	"x2\000"
+ 1483 02df 08       		.byte	0x8
+ 1484 02e0 35       		.byte	0x35
+ 1485 02e1 D9000000 		.4byte	0xd9
+ 1486 02e5 04       		.byte	0x4
+ 1487 02e6 08       		.uleb128 0x8
+ 1488 02e7 793200   		.ascii	"y2\000"
+ 1489 02ea 08       		.byte	0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 35
+
+
+ 1490 02eb 36       		.byte	0x36
+ 1491 02ec D9000000 		.4byte	0xd9
+ 1492 02f0 06       		.byte	0x6
+ 1493 02f1 00       		.byte	0
+ 1494 02f2 02       		.uleb128 0x2
+ 1495 02f3 DD070000 		.4byte	.LASF43
+ 1496 02f7 08       		.byte	0x8
+ 1497 02f8 37       		.byte	0x37
+ 1498 02f9 BD020000 		.4byte	0x2bd
+ 1499 02fd 02       		.uleb128 0x2
+ 1500 02fe 16090000 		.4byte	.LASF44
+ 1501 0302 09       		.byte	0x9
+ 1502 0303 2C       		.byte	0x2c
+ 1503 0304 AD000000 		.4byte	0xad
+ 1504 0308 02       		.uleb128 0x2
+ 1505 0309 8F030000 		.4byte	.LASF45
+ 1506 030d 09       		.byte	0x9
+ 1507 030e 33       		.byte	0x33
+ 1508 030f AD000000 		.4byte	0xad
+ 1509 0313 06       		.uleb128 0x6
+ 1510 0314 08       		.byte	0x8
+ 1511 0315 09       		.byte	0x9
+ 1512 0316 48       		.byte	0x48
+ 1513 0317 4C030000 		.4byte	0x34c
+ 1514 031b 07       		.uleb128 0x7
+ 1515 031c 30020000 		.4byte	.LASF46
+ 1516 0320 09       		.byte	0x9
+ 1517 0321 4A       		.byte	0x4a
+ 1518 0322 6F020000 		.4byte	0x26f
+ 1519 0326 00       		.byte	0
+ 1520 0327 07       		.uleb128 0x7
+ 1521 0328 6E020000 		.4byte	.LASF47
+ 1522 032c 09       		.byte	0x9
+ 1523 032d 4B       		.byte	0x4b
+ 1524 032e D9000000 		.4byte	0xd9
+ 1525 0332 04       		.byte	0x4
+ 1526 0333 07       		.uleb128 0x7
+ 1527 0334 0F020000 		.4byte	.LASF48
+ 1528 0338 09       		.byte	0x9
+ 1529 0339 4C       		.byte	0x4c
+ 1530 033a FD020000 		.4byte	0x2fd
+ 1531 033e 06       		.byte	0x6
+ 1532 033f 08       		.uleb128 0x8
+ 1533 0340 6F706100 		.ascii	"opa\000"
+ 1534 0344 09       		.byte	0x9
+ 1535 0345 4D       		.byte	0x4d
+ 1536 0346 7B020000 		.4byte	0x27b
+ 1537 034a 07       		.byte	0x7
+ 1538 034b 00       		.byte	0
+ 1539 034c 06       		.uleb128 0x6
+ 1540 034d 08       		.byte	0x8
+ 1541 034e 09       		.byte	0x9
+ 1542 034f 51       		.byte	0x51
+ 1543 0350 79030000 		.4byte	0x379
+ 1544 0354 07       		.uleb128 0x7
+ 1545 0355 30020000 		.4byte	.LASF46
+ 1546 0359 09       		.byte	0x9
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 36
+
+
+ 1547 035a 53       		.byte	0x53
+ 1548 035b 6F020000 		.4byte	0x26f
+ 1549 035f 00       		.byte	0
+ 1550 0360 07       		.uleb128 0x7
+ 1551 0361 6E020000 		.4byte	.LASF47
+ 1552 0365 09       		.byte	0x9
+ 1553 0366 54       		.byte	0x54
+ 1554 0367 D9000000 		.4byte	0xd9
+ 1555 036b 04       		.byte	0x4
+ 1556 036c 07       		.uleb128 0x7
+ 1557 036d 2E070000 		.4byte	.LASF49
+ 1558 0371 09       		.byte	0x9
+ 1559 0372 55       		.byte	0x55
+ 1560 0373 08030000 		.4byte	0x308
+ 1561 0377 06       		.byte	0x6
+ 1562 0378 00       		.byte	0
+ 1563 0379 06       		.uleb128 0x6
+ 1564 037a 0A       		.byte	0xa
+ 1565 037b 09       		.byte	0x9
+ 1566 037c 58       		.byte	0x58
+ 1567 037d BE030000 		.4byte	0x3be
+ 1568 0381 08       		.uleb128 0x8
+ 1569 0382 746F7000 		.ascii	"top\000"
+ 1570 0386 09       		.byte	0x9
+ 1571 0387 5A       		.byte	0x5a
+ 1572 0388 D9000000 		.4byte	0xd9
+ 1573 038c 00       		.byte	0
+ 1574 038d 07       		.uleb128 0x7
+ 1575 038e 3A030000 		.4byte	.LASF50
+ 1576 0392 09       		.byte	0x9
+ 1577 0393 5B       		.byte	0x5b
+ 1578 0394 D9000000 		.4byte	0xd9
+ 1579 0398 02       		.byte	0x2
+ 1580 0399 07       		.uleb128 0x7
+ 1581 039a 76060000 		.4byte	.LASF51
+ 1582 039e 09       		.byte	0x9
+ 1583 039f 5C       		.byte	0x5c
+ 1584 03a0 D9000000 		.4byte	0xd9
+ 1585 03a4 04       		.byte	0x4
+ 1586 03a5 07       		.uleb128 0x7
+ 1587 03a6 A0030000 		.4byte	.LASF52
+ 1588 03aa 09       		.byte	0x9
+ 1589 03ab 5D       		.byte	0x5d
+ 1590 03ac D9000000 		.4byte	0xd9
+ 1591 03b0 06       		.byte	0x6
+ 1592 03b1 07       		.uleb128 0x7
+ 1593 03b2 AF010000 		.4byte	.LASF53
+ 1594 03b6 09       		.byte	0x9
+ 1595 03b7 5E       		.byte	0x5e
+ 1596 03b8 D9000000 		.4byte	0xd9
+ 1597 03bc 08       		.byte	0x8
+ 1598 03bd 00       		.byte	0
+ 1599 03be 06       		.uleb128 0x6
+ 1600 03bf 28       		.byte	0x28
+ 1601 03c0 09       		.byte	0x9
+ 1602 03c1 41       		.byte	0x41
+ 1603 03c2 1B040000 		.4byte	0x41b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 37
+
+
+ 1604 03c6 07       		.uleb128 0x7
+ 1605 03c7 A0050000 		.4byte	.LASF54
+ 1606 03cb 09       		.byte	0x9
+ 1607 03cc 43       		.byte	0x43
+ 1608 03cd 6F020000 		.4byte	0x26f
+ 1609 03d1 00       		.byte	0
+ 1610 03d2 07       		.uleb128 0x7
+ 1611 03d3 28050000 		.4byte	.LASF55
+ 1612 03d7 09       		.byte	0x9
+ 1613 03d8 44       		.byte	0x44
+ 1614 03d9 6F020000 		.4byte	0x26f
+ 1615 03dd 04       		.byte	0x4
+ 1616 03de 07       		.uleb128 0x7
+ 1617 03df 0C070000 		.4byte	.LASF56
+ 1618 03e3 09       		.byte	0x9
+ 1619 03e4 45       		.byte	0x45
+ 1620 03e5 D9000000 		.4byte	0xd9
+ 1621 03e9 08       		.byte	0x8
+ 1622 03ea 08       		.uleb128 0x8
+ 1623 03eb 6F706100 		.ascii	"opa\000"
+ 1624 03ef 09       		.byte	0x9
+ 1625 03f0 46       		.byte	0x46
+ 1626 03f1 7B020000 		.4byte	0x27b
+ 1627 03f5 0A       		.byte	0xa
+ 1628 03f6 07       		.uleb128 0x7
+ 1629 03f7 29020000 		.4byte	.LASF57
+ 1630 03fb 09       		.byte	0x9
+ 1631 03fc 4E       		.byte	0x4e
+ 1632 03fd 13030000 		.4byte	0x313
+ 1633 0401 0C       		.byte	0xc
+ 1634 0402 07       		.uleb128 0x7
+ 1635 0403 D6070000 		.4byte	.LASF58
+ 1636 0407 09       		.byte	0x9
+ 1637 0408 56       		.byte	0x56
+ 1638 0409 4C030000 		.4byte	0x34c
+ 1639 040d 14       		.byte	0x14
+ 1640 040e 07       		.uleb128 0x7
+ 1641 040f E4030000 		.4byte	.LASF59
+ 1642 0413 09       		.byte	0x9
+ 1643 0414 5F       		.byte	0x5f
+ 1644 0415 79030000 		.4byte	0x379
+ 1645 0419 1C       		.byte	0x1c
+ 1646 041a 00       		.byte	0
+ 1647 041b 06       		.uleb128 0x6
+ 1648 041c 14       		.byte	0x14
+ 1649 041d 09       		.byte	0x9
+ 1650 041e 63       		.byte	0x63
+ 1651 041f 6C040000 		.4byte	0x46c
+ 1652 0423 07       		.uleb128 0x7
+ 1653 0424 30020000 		.4byte	.LASF46
+ 1654 0428 09       		.byte	0x9
+ 1655 0429 65       		.byte	0x65
+ 1656 042a 6F020000 		.4byte	0x26f
+ 1657 042e 00       		.byte	0
+ 1658 042f 07       		.uleb128 0x7
+ 1659 0430 D2010000 		.4byte	.LASF60
+ 1660 0434 09       		.byte	0x9
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 38
+
+
+ 1661 0435 66       		.byte	0x66
+ 1662 0436 6F020000 		.4byte	0x26f
+ 1663 043a 04       		.byte	0x4
+ 1664 043b 07       		.uleb128 0x7
+ 1665 043c A6060000 		.4byte	.LASF61
+ 1666 0440 09       		.byte	0x9
+ 1667 0441 67       		.byte	0x67
+ 1668 0442 6C040000 		.4byte	0x46c
+ 1669 0446 08       		.byte	0x8
+ 1670 0447 07       		.uleb128 0x7
+ 1671 0448 93050000 		.4byte	.LASF62
+ 1672 044c 09       		.byte	0x9
+ 1673 044d 68       		.byte	0x68
+ 1674 044e D9000000 		.4byte	0xd9
+ 1675 0452 0C       		.byte	0xc
+ 1676 0453 07       		.uleb128 0x7
+ 1677 0454 AA020000 		.4byte	.LASF63
+ 1678 0458 09       		.byte	0x9
+ 1679 0459 69       		.byte	0x69
+ 1680 045a D9000000 		.4byte	0xd9
+ 1681 045e 0E       		.byte	0xe
+ 1682 045f 08       		.uleb128 0x8
+ 1683 0460 6F706100 		.ascii	"opa\000"
+ 1684 0464 09       		.byte	0x9
+ 1685 0465 6A       		.byte	0x6a
+ 1686 0466 7B020000 		.4byte	0x27b
+ 1687 046a 10       		.byte	0x10
+ 1688 046b 00       		.byte	0
+ 1689 046c 0D       		.uleb128 0xd
+ 1690 046d 04       		.byte	0x4
+ 1691 046e 72040000 		.4byte	0x472
+ 1692 0472 0E       		.uleb128 0xe
+ 1693 0473 02020000 		.4byte	0x202
+ 1694 0477 06       		.uleb128 0x6
+ 1695 0478 08       		.byte	0x8
+ 1696 0479 09       		.byte	0x9
+ 1697 047a 6E       		.byte	0x6e
+ 1698 047b A4040000 		.4byte	0x4a4
+ 1699 047f 07       		.uleb128 0x7
+ 1700 0480 30020000 		.4byte	.LASF46
+ 1701 0484 09       		.byte	0x9
+ 1702 0485 70       		.byte	0x70
+ 1703 0486 6F020000 		.4byte	0x26f
+ 1704 048a 00       		.byte	0
+ 1705 048b 07       		.uleb128 0x7
+ 1706 048c 7B060000 		.4byte	.LASF64
+ 1707 0490 09       		.byte	0x9
+ 1708 0491 71       		.byte	0x71
+ 1709 0492 7B020000 		.4byte	0x27b
+ 1710 0496 04       		.byte	0x4
+ 1711 0497 08       		.uleb128 0x8
+ 1712 0498 6F706100 		.ascii	"opa\000"
+ 1713 049c 09       		.byte	0x9
+ 1714 049d 72       		.byte	0x72
+ 1715 049e 7B020000 		.4byte	0x27b
+ 1716 04a2 05       		.byte	0x5
+ 1717 04a3 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 39
+
+
+ 1718 04a4 06       		.uleb128 0x6
+ 1719 04a5 08       		.byte	0x8
+ 1720 04a6 09       		.byte	0x9
+ 1721 04a7 76       		.byte	0x76
+ 1722 04a8 E0040000 		.4byte	0x4e0
+ 1723 04ac 07       		.uleb128 0x7
+ 1724 04ad 30020000 		.4byte	.LASF46
+ 1725 04b1 09       		.byte	0x9
+ 1726 04b2 78       		.byte	0x78
+ 1727 04b3 6F020000 		.4byte	0x26f
+ 1728 04b7 00       		.byte	0
+ 1729 04b8 07       		.uleb128 0x7
+ 1730 04b9 6E020000 		.4byte	.LASF47
+ 1731 04bd 09       		.byte	0x9
+ 1732 04be 79       		.byte	0x79
+ 1733 04bf D9000000 		.4byte	0xd9
+ 1734 04c3 04       		.byte	0x4
+ 1735 04c4 08       		.uleb128 0x8
+ 1736 04c5 6F706100 		.ascii	"opa\000"
+ 1737 04c9 09       		.byte	0x9
+ 1738 04ca 7A       		.byte	0x7a
+ 1739 04cb 7B020000 		.4byte	0x27b
+ 1740 04cf 06       		.byte	0x6
+ 1741 04d0 0A       		.uleb128 0xa
+ 1742 04d1 4B020000 		.4byte	.LASF66
+ 1743 04d5 09       		.byte	0x9
+ 1744 04d6 7B       		.byte	0x7b
+ 1745 04d7 AD000000 		.4byte	0xad
+ 1746 04db 01       		.byte	0x1
+ 1747 04dc 01       		.byte	0x1
+ 1748 04dd 07       		.byte	0x7
+ 1749 04de 07       		.byte	0x7
+ 1750 04df 00       		.byte	0
+ 1751 04e0 06       		.uleb128 0x6
+ 1752 04e1 50       		.byte	0x50
+ 1753 04e2 09       		.byte	0x9
+ 1754 04e3 3C       		.byte	0x3c
+ 1755 04e4 28050000 		.4byte	0x528
+ 1756 04e8 0A       		.uleb128 0xa
+ 1757 04e9 B4030000 		.4byte	.LASF67
+ 1758 04ed 09       		.byte	0x9
+ 1759 04ee 3E       		.byte	0x3e
+ 1760 04ef AD000000 		.4byte	0xad
+ 1761 04f3 01       		.byte	0x1
+ 1762 04f4 01       		.byte	0x1
+ 1763 04f5 07       		.byte	0x7
+ 1764 04f6 00       		.byte	0
+ 1765 04f7 07       		.uleb128 0x7
+ 1766 04f8 1D070000 		.4byte	.LASF68
+ 1767 04fc 09       		.byte	0x9
+ 1768 04fd 60       		.byte	0x60
+ 1769 04fe BE030000 		.4byte	0x3be
+ 1770 0502 04       		.byte	0x4
+ 1771 0503 07       		.uleb128 0x7
+ 1772 0504 C2030000 		.4byte	.LASF69
+ 1773 0508 09       		.byte	0x9
+ 1774 0509 6B       		.byte	0x6b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 40
+
+
+ 1775 050a 1B040000 		.4byte	0x41b
+ 1776 050e 2C       		.byte	0x2c
+ 1777 050f 07       		.uleb128 0x7
+ 1778 0510 93040000 		.4byte	.LASF70
+ 1779 0514 09       		.byte	0x9
+ 1780 0515 73       		.byte	0x73
+ 1781 0516 77040000 		.4byte	0x477
+ 1782 051a 40       		.byte	0x40
+ 1783 051b 07       		.uleb128 0x7
+ 1784 051c 69070000 		.4byte	.LASF71
+ 1785 0520 09       		.byte	0x9
+ 1786 0521 7C       		.byte	0x7c
+ 1787 0522 A4040000 		.4byte	0x4a4
+ 1788 0526 48       		.byte	0x48
+ 1789 0527 00       		.byte	0
+ 1790 0528 02       		.uleb128 0x2
+ 1791 0529 99000000 		.4byte	.LASF72
+ 1792 052d 09       		.byte	0x9
+ 1793 052e 84       		.byte	0x84
+ 1794 052f E0040000 		.4byte	0x4e0
+ 1795 0533 13       		.uleb128 0x13
+ 1796 0534 01       		.byte	0x1
+ 1797 0535 42000000 		.4byte	0x42
+ 1798 0539 0A       		.byte	0xa
+ 1799 053a 27       		.byte	0x27
+ 1800 053b 4C050000 		.4byte	0x54c
+ 1801 053f 14       		.uleb128 0x14
+ 1802 0540 27090000 		.4byte	.LASF73
+ 1803 0544 00       		.byte	0
+ 1804 0545 14       		.uleb128 0x14
+ 1805 0546 F7030000 		.4byte	.LASF74
+ 1806 054a 01       		.byte	0x1
+ 1807 054b 00       		.byte	0
+ 1808 054c 02       		.uleb128 0x2
+ 1809 054d 24030000 		.4byte	.LASF75
+ 1810 0551 0A       		.byte	0xa
+ 1811 0552 2C       		.byte	0x2c
+ 1812 0553 AD000000 		.4byte	0xad
+ 1813 0557 02       		.uleb128 0x2
+ 1814 0558 87020000 		.4byte	.LASF76
+ 1815 055c 0B       		.byte	0xb
+ 1816 055d 1E       		.byte	0x1e
+ 1817 055e AD000000 		.4byte	0xad
+ 1818 0562 06       		.uleb128 0x6
+ 1819 0563 0C       		.byte	0xc
+ 1820 0564 0B       		.byte	0xb
+ 1821 0565 21       		.byte	0x21
+ 1822 0566 8F050000 		.4byte	0x58f
+ 1823 056a 07       		.uleb128 0x7
+ 1824 056b D7000000 		.4byte	.LASF77
+ 1825 056f 0B       		.byte	0xb
+ 1826 0570 23       		.byte	0x23
+ 1827 0571 CE000000 		.4byte	0xce
+ 1828 0575 00       		.byte	0
+ 1829 0576 07       		.uleb128 0x7
+ 1830 0577 A4000000 		.4byte	.LASF78
+ 1831 057b 0B       		.byte	0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 41
+
+
+ 1832 057c 24       		.byte	0x24
+ 1833 057d 8F050000 		.4byte	0x58f
+ 1834 0581 04       		.byte	0x4
+ 1835 0582 07       		.uleb128 0x7
+ 1836 0583 7F070000 		.4byte	.LASF79
+ 1837 0587 0B       		.byte	0xb
+ 1838 0588 25       		.byte	0x25
+ 1839 0589 8F050000 		.4byte	0x58f
+ 1840 058d 08       		.byte	0x8
+ 1841 058e 00       		.byte	0
+ 1842 058f 0D       		.uleb128 0xd
+ 1843 0590 04       		.byte	0x4
+ 1844 0591 57050000 		.4byte	0x557
+ 1845 0595 02       		.uleb128 0x2
+ 1846 0596 BA030000 		.4byte	.LASF80
+ 1847 059a 0B       		.byte	0xb
+ 1848 059b 26       		.byte	0x26
+ 1849 059c 62050000 		.4byte	0x562
+ 1850 05a0 02       		.uleb128 0x2
+ 1851 05a1 BF050000 		.4byte	.LASF81
+ 1852 05a5 0C       		.byte	0xc
+ 1853 05a6 30       		.byte	0x30
+ 1854 05a7 AD000000 		.4byte	0xad
+ 1855 05ab 0D       		.uleb128 0xd
+ 1856 05ac 04       		.byte	0x4
+ 1857 05ad B1050000 		.4byte	0x5b1
+ 1858 05b1 0E       		.uleb128 0xe
+ 1859 05b2 F2020000 		.4byte	0x2f2
+ 1860 05b6 09       		.uleb128 0x9
+ 1861 05b7 06000000 		.4byte	.LASF83
+ 1862 05bb 40       		.byte	0x40
+ 1863 05bc 0D       		.byte	0xd
+ 1864 05bd BB       		.byte	0xbb
+ 1865 05be F8060000 		.4byte	0x6f8
+ 1866 05c2 08       		.uleb128 0x8
+ 1867 05c3 70617200 		.ascii	"par\000"
+ 1868 05c7 0D       		.byte	0xd
+ 1869 05c8 BD       		.byte	0xbd
+ 1870 05c9 F8060000 		.4byte	0x6f8
+ 1871 05cd 00       		.byte	0
+ 1872 05ce 07       		.uleb128 0x7
+ 1873 05cf 84070000 		.4byte	.LASF84
+ 1874 05d3 0D       		.byte	0xd
+ 1875 05d4 BE       		.byte	0xbe
+ 1876 05d5 95050000 		.4byte	0x595
+ 1877 05d9 04       		.byte	0x4
+ 1878 05da 07       		.uleb128 0x7
+ 1879 05db D7050000 		.4byte	.LASF85
+ 1880 05df 0D       		.byte	0xd
+ 1881 05e0 C0       		.byte	0xc0
+ 1882 05e1 F2020000 		.4byte	0x2f2
+ 1883 05e5 10       		.byte	0x10
+ 1884 05e6 07       		.uleb128 0x7
+ 1885 05e7 AA070000 		.4byte	.LASF86
+ 1886 05eb 0D       		.byte	0xd
+ 1887 05ec C2       		.byte	0xc2
+ 1888 05ed 68070000 		.4byte	0x768
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 42
+
+
+ 1889 05f1 18       		.byte	0x18
+ 1890 05f2 07       		.uleb128 0x7
+ 1891 05f3 59080000 		.4byte	.LASF87
+ 1892 05f7 0D       		.byte	0xd
+ 1893 05f8 C3       		.byte	0xc3
+ 1894 05f9 19080000 		.4byte	0x819
+ 1895 05fd 1C       		.byte	0x1c
+ 1896 05fe 07       		.uleb128 0x7
+ 1897 05ff B3070000 		.4byte	.LASF88
+ 1898 0603 0D       		.byte	0xd
+ 1899 0604 C4       		.byte	0xc4
+ 1900 0605 33070000 		.4byte	0x733
+ 1901 0609 20       		.byte	0x20
+ 1902 060a 07       		.uleb128 0x7
+ 1903 060b DE000000 		.4byte	.LASF89
+ 1904 060f 0D       		.byte	0xd
+ 1905 0610 C6       		.byte	0xc6
+ 1906 0611 E4000000 		.4byte	0xe4
+ 1907 0615 24       		.byte	0x24
+ 1908 0616 07       		.uleb128 0x7
+ 1909 0617 66020000 		.4byte	.LASF90
+ 1910 061b 0D       		.byte	0xd
+ 1911 061c C7       		.byte	0xc7
+ 1912 061d C6080000 		.4byte	0x8c6
+ 1913 0621 28       		.byte	0x28
+ 1914 0622 0A       		.uleb128 0xa
+ 1915 0623 00000000 		.4byte	.LASF91
+ 1916 0627 0D       		.byte	0xd
+ 1917 0628 D7       		.byte	0xd7
+ 1918 0629 AD000000 		.4byte	0xad
+ 1919 062d 01       		.byte	0x1
+ 1920 062e 01       		.byte	0x1
+ 1921 062f 07       		.byte	0x7
+ 1922 0630 2C       		.byte	0x2c
+ 1923 0631 0A       		.uleb128 0xa
+ 1924 0632 4B080000 		.4byte	.LASF92
+ 1925 0636 0D       		.byte	0xd
+ 1926 0637 D8       		.byte	0xd8
+ 1927 0638 AD000000 		.4byte	0xad
+ 1928 063c 01       		.byte	0x1
+ 1929 063d 01       		.byte	0x1
+ 1930 063e 06       		.byte	0x6
+ 1931 063f 2C       		.byte	0x2c
+ 1932 0640 0A       		.uleb128 0xa
+ 1933 0641 67000000 		.4byte	.LASF93
+ 1934 0645 0D       		.byte	0xd
+ 1935 0646 D9       		.byte	0xd9
+ 1936 0647 AD000000 		.4byte	0xad
+ 1937 064b 01       		.byte	0x1
+ 1938 064c 01       		.byte	0x1
+ 1939 064d 05       		.byte	0x5
+ 1940 064e 2C       		.byte	0x2c
+ 1941 064f 0A       		.uleb128 0xa
+ 1942 0650 8D070000 		.4byte	.LASF94
+ 1943 0654 0D       		.byte	0xd
+ 1944 0655 DA       		.byte	0xda
+ 1945 0656 AD000000 		.4byte	0xad
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 43
+
+
+ 1946 065a 01       		.byte	0x1
+ 1947 065b 01       		.byte	0x1
+ 1948 065c 04       		.byte	0x4
+ 1949 065d 2C       		.byte	0x2c
+ 1950 065e 0A       		.uleb128 0xa
+ 1951 065f F3070000 		.4byte	.LASF95
+ 1952 0663 0D       		.byte	0xd
+ 1953 0664 DB       		.byte	0xdb
+ 1954 0665 AD000000 		.4byte	0xad
+ 1955 0669 01       		.byte	0x1
+ 1956 066a 01       		.byte	0x1
+ 1957 066b 03       		.byte	0x3
+ 1958 066c 2C       		.byte	0x2c
+ 1959 066d 15       		.uleb128 0x15
+ 1960 066e 746F7000 		.ascii	"top\000"
+ 1961 0672 0D       		.byte	0xd
+ 1962 0673 DC       		.byte	0xdc
+ 1963 0674 AD000000 		.4byte	0xad
+ 1964 0678 01       		.byte	0x1
+ 1965 0679 01       		.byte	0x1
+ 1966 067a 02       		.byte	0x2
+ 1967 067b 2C       		.byte	0x2c
+ 1968 067c 0A       		.uleb128 0xa
+ 1969 067d 69060000 		.4byte	.LASF96
+ 1970 0681 0D       		.byte	0xd
+ 1971 0682 DD       		.byte	0xdd
+ 1972 0683 AD000000 		.4byte	0xad
+ 1973 0687 01       		.byte	0x1
+ 1974 0688 01       		.byte	0x1
+ 1975 0689 01       		.byte	0x1
+ 1976 068a 2C       		.byte	0x2c
+ 1977 068b 0A       		.uleb128 0xa
+ 1978 068c 5A000000 		.4byte	.LASF97
+ 1979 0690 0D       		.byte	0xd
+ 1980 0691 DE       		.byte	0xde
+ 1981 0692 AD000000 		.4byte	0xad
+ 1982 0696 01       		.byte	0x1
+ 1983 0697 01       		.byte	0x1
+ 1984 0698 00       		.byte	0
+ 1985 0699 2C       		.byte	0x2c
+ 1986 069a 0A       		.uleb128 0xa
+ 1987 069b 1F050000 		.4byte	.LASF98
+ 1988 069f 0D       		.byte	0xd
+ 1989 06a0 DF       		.byte	0xdf
+ 1990 06a1 BB080000 		.4byte	0x8bb
+ 1991 06a5 01       		.byte	0x1
+ 1992 06a6 02       		.byte	0x2
+ 1993 06a7 06       		.byte	0x6
+ 1994 06a8 2D       		.byte	0x2d
+ 1995 06a9 0A       		.uleb128 0xa
+ 1996 06aa 51000000 		.4byte	.LASF99
+ 1997 06ae 0D       		.byte	0xd
+ 1998 06af E0       		.byte	0xe0
+ 1999 06b0 A0050000 		.4byte	0x5a0
+ 2000 06b4 01       		.byte	0x1
+ 2001 06b5 02       		.byte	0x2
+ 2002 06b6 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 44
+
+
+ 2003 06b7 2D       		.byte	0x2d
+ 2004 06b8 0A       		.uleb128 0xa
+ 2005 06b9 2D080000 		.4byte	.LASF100
+ 2006 06bd 0D       		.byte	0xd
+ 2007 06be E1       		.byte	0xe1
+ 2008 06bf AD000000 		.4byte	0xad
+ 2009 06c3 01       		.byte	0x1
+ 2010 06c4 03       		.byte	0x3
+ 2011 06c5 01       		.byte	0x1
+ 2012 06c6 2D       		.byte	0x2d
+ 2013 06c7 07       		.uleb128 0x7
+ 2014 06c8 99040000 		.4byte	.LASF101
+ 2015 06cc 0D       		.byte	0xd
+ 2016 06cd E2       		.byte	0xe2
+ 2017 06ce AD000000 		.4byte	0xad
+ 2018 06d2 2E       		.byte	0x2e
+ 2019 06d3 07       		.uleb128 0x7
+ 2020 06d4 13070000 		.4byte	.LASF102
+ 2021 06d8 0D       		.byte	0xd
+ 2022 06d9 E4       		.byte	0xe4
+ 2023 06da 7B020000 		.4byte	0x27b
+ 2024 06de 2F       		.byte	0x2f
+ 2025 06df 07       		.uleb128 0x7
+ 2026 06e0 2D030000 		.4byte	.LASF103
+ 2027 06e4 0D       		.byte	0xd
+ 2028 06e5 E6       		.byte	0xe6
+ 2029 06e6 D9000000 		.4byte	0xd9
+ 2030 06ea 30       		.byte	0x30
+ 2031 06eb 07       		.uleb128 0x7
+ 2032 06ec A7010000 		.4byte	.LASF104
+ 2033 06f0 0D       		.byte	0xd
+ 2034 06f1 E9       		.byte	0xe9
+ 2035 06f2 B0080000 		.4byte	0x8b0
+ 2036 06f6 34       		.byte	0x34
+ 2037 06f7 00       		.byte	0
+ 2038 06f8 0D       		.uleb128 0xd
+ 2039 06f9 04       		.byte	0x4
+ 2040 06fa B6050000 		.4byte	0x5b6
+ 2041 06fe 0D       		.uleb128 0xd
+ 2042 06ff 04       		.byte	0x4
+ 2043 0700 04070000 		.4byte	0x704
+ 2044 0704 0E       		.uleb128 0xe
+ 2045 0705 B2020000 		.4byte	0x2b2
+ 2046 0709 13       		.uleb128 0x13
+ 2047 070a 01       		.byte	0x1
+ 2048 070b 42000000 		.4byte	0x42
+ 2049 070f 0D       		.byte	0xd
+ 2050 0710 3D       		.byte	0x3d
+ 2051 0711 28070000 		.4byte	0x728
+ 2052 0715 14       		.uleb128 0x14
+ 2053 0716 38060000 		.4byte	.LASF105
+ 2054 071a 00       		.byte	0
+ 2055 071b 14       		.uleb128 0x14
+ 2056 071c AB050000 		.4byte	.LASF106
+ 2057 0720 01       		.byte	0x1
+ 2058 0721 14       		.uleb128 0x14
+ 2059 0722 4A070000 		.4byte	.LASF107
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 45
+
+
+ 2060 0726 02       		.byte	0x2
+ 2061 0727 00       		.byte	0
+ 2062 0728 02       		.uleb128 0x2
+ 2063 0729 99070000 		.4byte	.LASF108
+ 2064 072d 0D       		.byte	0xd
+ 2065 072e 42       		.byte	0x42
+ 2066 072f AD000000 		.4byte	0xad
+ 2067 0733 02       		.uleb128 0x2
+ 2068 0734 B9000000 		.4byte	.LASF109
+ 2069 0738 0D       		.byte	0xd
+ 2070 0739 48       		.byte	0x48
+ 2071 073a 3E070000 		.4byte	0x73e
+ 2072 073e 0D       		.uleb128 0xd
+ 2073 073f 04       		.byte	0x4
+ 2074 0740 44070000 		.4byte	0x744
+ 2075 0744 0B       		.uleb128 0xb
+ 2076 0745 BF010000 		.4byte	0x1bf
+ 2077 0749 5D070000 		.4byte	0x75d
+ 2078 074d 0C       		.uleb128 0xc
+ 2079 074e F8060000 		.4byte	0x6f8
+ 2080 0752 0C       		.uleb128 0xc
+ 2081 0753 AB050000 		.4byte	0x5ab
+ 2082 0757 0C       		.uleb128 0xc
+ 2083 0758 28070000 		.4byte	0x728
+ 2084 075c 00       		.byte	0
+ 2085 075d 02       		.uleb128 0x2
+ 2086 075e 1E040000 		.4byte	.LASF110
+ 2087 0762 0D       		.byte	0xd
+ 2088 0763 61       		.byte	0x61
+ 2089 0764 AD000000 		.4byte	0xad
+ 2090 0768 02       		.uleb128 0x2
+ 2091 0769 37090000 		.4byte	.LASF111
+ 2092 076d 0D       		.byte	0xd
+ 2093 076e 68       		.byte	0x68
+ 2094 076f 73070000 		.4byte	0x773
+ 2095 0773 0D       		.uleb128 0xd
+ 2096 0774 04       		.byte	0x4
+ 2097 0775 79070000 		.4byte	0x779
+ 2098 0779 16       		.uleb128 0x16
+ 2099 077a 89070000 		.4byte	0x789
+ 2100 077e 0C       		.uleb128 0xc
+ 2101 077f F8060000 		.4byte	0x6f8
+ 2102 0783 0C       		.uleb128 0xc
+ 2103 0784 5D070000 		.4byte	0x75d
+ 2104 0788 00       		.byte	0
+ 2105 0789 13       		.uleb128 0x13
+ 2106 078a 01       		.byte	0x1
+ 2107 078b 42000000 		.4byte	0x42
+ 2108 078f 0D       		.byte	0xd
+ 2109 0790 6D       		.byte	0x6d
+ 2110 0791 0E080000 		.4byte	0x80e
+ 2111 0795 14       		.uleb128 0x14
+ 2112 0796 4C060000 		.4byte	.LASF112
+ 2113 079a 00       		.byte	0
+ 2114 079b 14       		.uleb128 0x14
+ 2115 079c 70030000 		.4byte	.LASF113
+ 2116 07a0 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 46
+
+
+ 2117 07a1 14       		.uleb128 0x14
+ 2118 07a2 1A080000 		.4byte	.LASF114
+ 2119 07a6 02       		.byte	0x2
+ 2120 07a7 14       		.uleb128 0x14
+ 2121 07a8 0A030000 		.4byte	.LASF115
+ 2122 07ac 03       		.byte	0x3
+ 2123 07ad 14       		.uleb128 0x14
+ 2124 07ae 1B000000 		.4byte	.LASF116
+ 2125 07b2 04       		.byte	0x4
+ 2126 07b3 14       		.uleb128 0x14
+ 2127 07b4 CB020000 		.4byte	.LASF117
+ 2128 07b8 05       		.byte	0x5
+ 2129 07b9 14       		.uleb128 0x14
+ 2130 07ba 29040000 		.4byte	.LASF118
+ 2131 07be 06       		.byte	0x6
+ 2132 07bf 14       		.uleb128 0x14
+ 2133 07c0 55030000 		.4byte	.LASF119
+ 2134 07c4 07       		.byte	0x7
+ 2135 07c5 14       		.uleb128 0x14
+ 2136 07c6 45090000 		.4byte	.LASF120
+ 2137 07ca 08       		.byte	0x8
+ 2138 07cb 14       		.uleb128 0x14
+ 2139 07cc 3E000000 		.4byte	.LASF121
+ 2140 07d0 09       		.byte	0x9
+ 2141 07d1 14       		.uleb128 0x14
+ 2142 07d2 EC000000 		.4byte	.LASF122
+ 2143 07d6 0A       		.byte	0xa
+ 2144 07d7 14       		.uleb128 0x14
+ 2145 07d8 DE050000 		.4byte	.LASF123
+ 2146 07dc 0B       		.byte	0xb
+ 2147 07dd 14       		.uleb128 0x14
+ 2148 07de 36020000 		.4byte	.LASF124
+ 2149 07e2 0C       		.byte	0xc
+ 2150 07e3 14       		.uleb128 0x14
+ 2151 07e4 BD070000 		.4byte	.LASF125
+ 2152 07e8 0D       		.byte	0xd
+ 2153 07e9 14       		.uleb128 0x14
+ 2154 07ea 12060000 		.4byte	.LASF126
+ 2155 07ee 0E       		.byte	0xe
+ 2156 07ef 14       		.uleb128 0x14
+ 2157 07f0 F9060000 		.4byte	.LASF127
+ 2158 07f4 0F       		.byte	0xf
+ 2159 07f5 14       		.uleb128 0x14
+ 2160 07f6 D4030000 		.4byte	.LASF128
+ 2161 07fa 10       		.byte	0x10
+ 2162 07fb 14       		.uleb128 0x14
+ 2163 07fc E2020000 		.4byte	.LASF129
+ 2164 0800 11       		.byte	0x11
+ 2165 0801 14       		.uleb128 0x14
+ 2166 0802 67040000 		.4byte	.LASF130
+ 2167 0806 12       		.byte	0x12
+ 2168 0807 14       		.uleb128 0x14
+ 2169 0808 A6040000 		.4byte	.LASF131
+ 2170 080c 13       		.byte	0x13
+ 2171 080d 00       		.byte	0
+ 2172 080e 02       		.uleb128 0x2
+ 2173 080f 22070000 		.4byte	.LASF132
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 47
+
+
+ 2174 0813 0D       		.byte	0xd
+ 2175 0814 88       		.byte	0x88
+ 2176 0815 AD000000 		.4byte	0xad
+ 2177 0819 02       		.uleb128 0x2
+ 2178 081a 00020000 		.4byte	.LASF133
+ 2179 081e 0D       		.byte	0xd
+ 2180 081f 8A       		.byte	0x8a
+ 2181 0820 24080000 		.4byte	0x824
+ 2182 0824 0D       		.uleb128 0xd
+ 2183 0825 04       		.byte	0x4
+ 2184 0826 2A080000 		.4byte	0x82a
+ 2185 082a 0B       		.uleb128 0xb
+ 2186 082b 4C050000 		.4byte	0x54c
+ 2187 082f 43080000 		.4byte	0x843
+ 2188 0833 0C       		.uleb128 0xc
+ 2189 0834 F8060000 		.4byte	0x6f8
+ 2190 0838 0C       		.uleb128 0xc
+ 2191 0839 0E080000 		.4byte	0x80e
+ 2192 083d 0C       		.uleb128 0xc
+ 2193 083e E4000000 		.4byte	0xe4
+ 2194 0842 00       		.byte	0
+ 2195 0843 02       		.uleb128 0x2
+ 2196 0844 EC030000 		.4byte	.LASF134
+ 2197 0848 0D       		.byte	0xd
+ 2198 0849 A4       		.byte	0xa4
+ 2199 084a AD000000 		.4byte	0xad
+ 2200 084e 06       		.uleb128 0x6
+ 2201 084f 0C       		.byte	0xc
+ 2202 0850 0D       		.byte	0xd
+ 2203 0851 A7       		.byte	0xa7
+ 2204 0852 A5080000 		.4byte	0x8a5
+ 2205 0856 07       		.uleb128 0x7
+ 2206 0857 DC010000 		.4byte	.LASF135
+ 2207 085b 0D       		.byte	0xd
+ 2208 085c A9       		.byte	0xa9
+ 2209 085d A5080000 		.4byte	0x8a5
+ 2210 0861 00       		.byte	0
+ 2211 0862 07       		.uleb128 0x7
+ 2212 0863 01040000 		.4byte	.LASF136
+ 2213 0867 0D       		.byte	0xd
+ 2214 0868 AA       		.byte	0xaa
+ 2215 0869 D9000000 		.4byte	0xd9
+ 2216 086d 04       		.byte	0x4
+ 2217 086e 07       		.uleb128 0x7
+ 2218 086f B4000000 		.4byte	.LASF137
+ 2219 0873 0D       		.byte	0xd
+ 2220 0874 AB       		.byte	0xab
+ 2221 0875 D9000000 		.4byte	0xd9
+ 2222 0879 06       		.byte	0x6
+ 2223 087a 07       		.uleb128 0x7
+ 2224 087b 87040000 		.4byte	.LASF138
+ 2225 087f 0D       		.byte	0xd
+ 2226 0880 AC       		.byte	0xac
+ 2227 0881 43080000 		.4byte	0x843
+ 2228 0885 08       		.byte	0x8
+ 2229 0886 0A       		.uleb128 0xa
+ 2230 0887 C7030000 		.4byte	.LASF139
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 48
+
+
+ 2231 088b 0D       		.byte	0xd
+ 2232 088c AD       		.byte	0xad
+ 2233 088d AD000000 		.4byte	0xad
+ 2234 0891 01       		.byte	0x1
+ 2235 0892 01       		.byte	0x1
+ 2236 0893 07       		.byte	0x7
+ 2237 0894 09       		.byte	0x9
+ 2238 0895 0A       		.uleb128 0xa
+ 2239 0896 5B040000 		.4byte	.LASF140
+ 2240 089a 0D       		.byte	0xd
+ 2241 089b AE       		.byte	0xae
+ 2242 089c AD000000 		.4byte	0xad
+ 2243 08a0 01       		.byte	0x1
+ 2244 08a1 01       		.byte	0x1
+ 2245 08a2 06       		.byte	0x6
+ 2246 08a3 09       		.byte	0x9
+ 2247 08a4 00       		.byte	0
+ 2248 08a5 0D       		.uleb128 0xd
+ 2249 08a6 04       		.byte	0x4
+ 2250 08a7 AB080000 		.4byte	0x8ab
+ 2251 08ab 0E       		.uleb128 0xe
+ 2252 08ac B6050000 		.4byte	0x5b6
+ 2253 08b0 02       		.uleb128 0x2
+ 2254 08b1 0D080000 		.4byte	.LASF141
+ 2255 08b5 0D       		.byte	0xd
+ 2256 08b6 B0       		.byte	0xb0
+ 2257 08b7 4E080000 		.4byte	0x84e
+ 2258 08bb 02       		.uleb128 0x2
+ 2259 08bc 79040000 		.4byte	.LASF142
+ 2260 08c0 0D       		.byte	0xd
+ 2261 08c1 B9       		.byte	0xb9
+ 2262 08c2 AD000000 		.4byte	0xad
+ 2263 08c6 0D       		.uleb128 0xd
+ 2264 08c7 04       		.byte	0x4
+ 2265 08c8 CC080000 		.4byte	0x8cc
+ 2266 08cc 0E       		.uleb128 0xe
+ 2267 08cd 28050000 		.4byte	0x528
+ 2268 08d1 02       		.uleb128 0x2
+ 2269 08d2 01010000 		.4byte	.LASF143
+ 2270 08d6 0D       		.byte	0xd
+ 2271 08d7 F0       		.byte	0xf0
+ 2272 08d8 B6050000 		.4byte	0x5b6
+ 2273 08dc 06       		.uleb128 0x6
+ 2274 08dd 08       		.byte	0x8
+ 2275 08de 01       		.byte	0x1
+ 2276 08df 23       		.byte	0x23
+ 2277 08e0 1B090000 		.4byte	0x91b
+ 2278 08e4 07       		.uleb128 0x7
+ 2279 08e5 27060000 		.4byte	.LASF144
+ 2280 08e9 01       		.byte	0x1
+ 2281 08ea 26       		.byte	0x26
+ 2282 08eb FE060000 		.4byte	0x6fe
+ 2283 08ef 00       		.byte	0
+ 2284 08f0 07       		.uleb128 0x7
+ 2285 08f1 C1020000 		.4byte	.LASF145
+ 2286 08f5 01       		.byte	0x1
+ 2287 08f6 27       		.byte	0x27
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 49
+
+
+ 2288 08f7 C3000000 		.4byte	0xc3
+ 2289 08fb 04       		.byte	0x4
+ 2290 08fc 0A       		.uleb128 0xa
+ 2291 08fd 14020000 		.4byte	.LASF146
+ 2292 0901 01       		.byte	0x1
+ 2293 0902 28       		.byte	0x28
+ 2294 0903 AD000000 		.4byte	0xad
+ 2295 0907 01       		.byte	0x1
+ 2296 0908 01       		.byte	0x1
+ 2297 0909 07       		.byte	0x7
+ 2298 090a 06       		.byte	0x6
+ 2299 090b 0A       		.uleb128 0xa
+ 2300 090c 84030000 		.4byte	.LASF147
+ 2301 0910 01       		.byte	0x1
+ 2302 0911 29       		.byte	0x29
+ 2303 0912 AD000000 		.4byte	0xad
+ 2304 0916 01       		.byte	0x1
+ 2305 0917 01       		.byte	0x1
+ 2306 0918 06       		.byte	0x6
+ 2307 0919 06       		.byte	0x6
+ 2308 091a 00       		.byte	0
+ 2309 091b 02       		.uleb128 0x2
+ 2310 091c 10040000 		.4byte	.LASF148
+ 2311 0920 01       		.byte	0x1
+ 2312 0921 2A       		.byte	0x2a
+ 2313 0922 DC080000 		.4byte	0x8dc
+ 2314 0926 13       		.uleb128 0x13
+ 2315 0927 01       		.byte	0x1
+ 2316 0928 42000000 		.4byte	0x42
+ 2317 092c 01       		.byte	0x1
+ 2318 092d 2D       		.byte	0x2d
+ 2319 092e 39090000 		.4byte	0x939
+ 2320 0932 14       		.uleb128 0x14
+ 2321 0933 8D060000 		.4byte	.LASF149
+ 2322 0937 00       		.byte	0
+ 2323 0938 00       		.byte	0
+ 2324 0939 02       		.uleb128 0x2
+ 2325 093a 33050000 		.4byte	.LASF150
+ 2326 093e 01       		.byte	0x1
+ 2327 093f 30       		.byte	0x30
+ 2328 0940 AD000000 		.4byte	0xad
+ 2329 0944 17       		.uleb128 0x17
+ 2330 0945 ED040000 		.4byte	.LASF164
+ 2331 0949 01       		.byte	0x1
+ 2332 094a 83       		.byte	0x83
+ 2333 094b C6080000 		.4byte	0x8c6
+ 2334 094f 00000000 		.4byte	.LFB32
+ 2335 0953 1C000000 		.4byte	.LFE32-.LFB32
+ 2336 0957 01       		.uleb128 0x1
+ 2337 0958 9C       		.byte	0x9c
+ 2338 0959 7A090000 		.4byte	0x97a
+ 2339 095d 18       		.uleb128 0x18
+ 2340 095e 69070000 		.4byte	.LASF71
+ 2341 0962 01       		.byte	0x1
+ 2342 0963 83       		.byte	0x83
+ 2343 0964 7A090000 		.4byte	0x97a
+ 2344 0968 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 50
+
+
+ 2345 0969 91       		.byte	0x91
+ 2346 096a 74       		.sleb128 -12
+ 2347 096b 18       		.uleb128 0x18
+ 2348 096c 2E070000 		.4byte	.LASF49
+ 2349 0970 01       		.byte	0x1
+ 2350 0971 83       		.byte	0x83
+ 2351 0972 39090000 		.4byte	0x939
+ 2352 0976 02       		.uleb128 0x2
+ 2353 0977 91       		.byte	0x91
+ 2354 0978 73       		.sleb128 -13
+ 2355 0979 00       		.byte	0
+ 2356 097a 0D       		.uleb128 0xd
+ 2357 097b 04       		.byte	0x4
+ 2358 097c 80090000 		.4byte	0x980
+ 2359 0980 0E       		.uleb128 0xe
+ 2360 0981 D1080000 		.4byte	0x8d1
+ 2361 0985 19       		.uleb128 0x19
+ 2362 0986 C8000000 		.4byte	.LASF161
+ 2363 098a 02       		.byte	0x2
+ 2364 098b 34       		.byte	0x34
+ 2365 098c EF090000 		.4byte	0x9ef
+ 2366 0990 00000000 		.4byte	.LFB33
+ 2367 0994 FC000000 		.4byte	.LFE33-.LFB33
+ 2368 0998 01       		.uleb128 0x1
+ 2369 0999 9C       		.byte	0x9c
+ 2370 099a EF090000 		.4byte	0x9ef
+ 2371 099e 1A       		.uleb128 0x1a
+ 2372 099f 70617200 		.ascii	"par\000"
+ 2373 09a3 02       		.byte	0x2
+ 2374 09a4 34       		.byte	0x34
+ 2375 09a5 EF090000 		.4byte	0x9ef
+ 2376 09a9 02       		.uleb128 0x2
+ 2377 09aa 91       		.byte	0x91
+ 2378 09ab 64       		.sleb128 -28
+ 2379 09ac 18       		.uleb128 0x18
+ 2380 09ad 1A050000 		.4byte	.LASF151
+ 2381 09b1 02       		.byte	0x2
+ 2382 09b2 34       		.byte	0x34
+ 2383 09b3 7A090000 		.4byte	0x97a
+ 2384 09b7 02       		.uleb128 0x2
+ 2385 09b8 91       		.byte	0x91
+ 2386 09b9 60       		.sleb128 -32
+ 2387 09ba 1B       		.uleb128 0x1b
+ 2388 09bb 50080000 		.4byte	.LASF152
+ 2389 09bf 02       		.byte	0x2
+ 2390 09c0 39       		.byte	0x39
+ 2391 09c1 EF090000 		.4byte	0x9ef
+ 2392 09c5 02       		.uleb128 0x2
+ 2393 09c6 91       		.byte	0x91
+ 2394 09c7 74       		.sleb128 -12
+ 2395 09c8 1C       		.uleb128 0x1c
+ 2396 09c9 65787400 		.ascii	"ext\000"
+ 2397 09cd 02       		.byte	0x2
+ 2398 09ce 40       		.byte	0x40
+ 2399 09cf F5090000 		.4byte	0x9f5
+ 2400 09d3 02       		.uleb128 0x2
+ 2401 09d4 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 51
+
+
+ 2402 09d5 70       		.sleb128 -16
+ 2403 09d6 1D       		.uleb128 0x1d
+ 2404 09d7 98000000 		.4byte	.LBB2
+ 2405 09db 4E000000 		.4byte	.LBE2-.LBB2
+ 2406 09df 1B       		.uleb128 0x1b
+ 2407 09e0 33070000 		.4byte	.LASF153
+ 2408 09e4 02       		.byte	0x2
+ 2409 09e5 55       		.byte	0x55
+ 2410 09e6 F5090000 		.4byte	0x9f5
+ 2411 09ea 02       		.uleb128 0x2
+ 2412 09eb 91       		.byte	0x91
+ 2413 09ec 6C       		.sleb128 -20
+ 2414 09ed 00       		.byte	0
+ 2415 09ee 00       		.byte	0
+ 2416 09ef 0D       		.uleb128 0xd
+ 2417 09f0 04       		.byte	0x4
+ 2418 09f1 D1080000 		.4byte	0x8d1
+ 2419 09f5 0D       		.uleb128 0xd
+ 2420 09f6 04       		.byte	0x4
+ 2421 09f7 1B090000 		.4byte	0x91b
+ 2422 09fb 1E       		.uleb128 0x1e
+ 2423 09fc 74020000 		.4byte	.LASF158
+ 2424 0a00 02       		.byte	0x2
+ 2425 0a01 6E       		.byte	0x6e
+ 2426 0a02 00000000 		.4byte	.LFB34
+ 2427 0a06 C6000000 		.4byte	.LFE34-.LFB34
+ 2428 0a0a 01       		.uleb128 0x1
+ 2429 0a0b 9C       		.byte	0x9c
+ 2430 0a0c 890A0000 		.4byte	0xa89
+ 2431 0a10 18       		.uleb128 0x18
+ 2432 0a11 69070000 		.4byte	.LASF71
+ 2433 0a15 02       		.byte	0x2
+ 2434 0a16 6E       		.byte	0x6e
+ 2435 0a17 EF090000 		.4byte	0x9ef
+ 2436 0a1b 02       		.uleb128 0x2
+ 2437 0a1c 91       		.byte	0x91
+ 2438 0a1d 64       		.sleb128 -28
+ 2439 0a1e 18       		.uleb128 0x18
+ 2440 0a1f 59020000 		.4byte	.LASF154
+ 2441 0a23 02       		.byte	0x2
+ 2442 0a24 6E       		.byte	0x6e
+ 2443 0a25 FE060000 		.4byte	0x6fe
+ 2444 0a29 02       		.uleb128 0x2
+ 2445 0a2a 91       		.byte	0x91
+ 2446 0a2b 60       		.sleb128 -32
+ 2447 0a2c 18       		.uleb128 0x18
+ 2448 0a2d C1020000 		.4byte	.LASF145
+ 2449 0a31 02       		.byte	0x2
+ 2450 0a32 6E       		.byte	0x6e
+ 2451 0a33 C3000000 		.4byte	0xc3
+ 2452 0a37 02       		.uleb128 0x2
+ 2453 0a38 91       		.byte	0x91
+ 2454 0a39 5E       		.sleb128 -34
+ 2455 0a3a 1C       		.uleb128 0x1c
+ 2456 0a3b 65787400 		.ascii	"ext\000"
+ 2457 0a3f 02       		.byte	0x2
+ 2458 0a40 72       		.byte	0x72
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 52
+
+
+ 2459 0a41 F5090000 		.4byte	0x9f5
+ 2460 0a45 02       		.uleb128 0x2
+ 2461 0a46 91       		.byte	0x91
+ 2462 0a47 6C       		.sleb128 -20
+ 2463 0a48 1D       		.uleb128 0x1d
+ 2464 0a49 36000000 		.4byte	.LBB3
+ 2465 0a4d 82000000 		.4byte	.LBE3-.LBB3
+ 2466 0a51 1C       		.uleb128 0x1c
+ 2467 0a52 6900     		.ascii	"i\000"
+ 2468 0a54 02       		.byte	0x2
+ 2469 0a55 77       		.byte	0x77
+ 2470 0a56 C3000000 		.4byte	0xc3
+ 2471 0a5a 02       		.uleb128 0x2
+ 2472 0a5b 91       		.byte	0x91
+ 2473 0a5c 76       		.sleb128 -10
+ 2474 0a5d 1B       		.uleb128 0x1b
+ 2475 0a5e 00030000 		.4byte	.LASF155
+ 2476 0a62 02       		.byte	0x2
+ 2477 0a63 78       		.byte	0x78
+ 2478 0a64 D9000000 		.4byte	0xd9
+ 2479 0a68 02       		.uleb128 0x2
+ 2480 0a69 91       		.byte	0x91
+ 2481 0a6a 74       		.sleb128 -12
+ 2482 0a6b 1B       		.uleb128 0x1b
+ 2483 0a6c 32090000 		.4byte	.LASF156
+ 2484 0a70 02       		.byte	0x2
+ 2485 0a71 79       		.byte	0x79
+ 2486 0a72 D9000000 		.4byte	0xd9
+ 2487 0a76 02       		.uleb128 0x2
+ 2488 0a77 91       		.byte	0x91
+ 2489 0a78 72       		.sleb128 -14
+ 2490 0a79 1B       		.uleb128 0x1b
+ 2491 0a7a 10000000 		.4byte	.LASF157
+ 2492 0a7e 02       		.byte	0x2
+ 2493 0a7f 7F       		.byte	0x7f
+ 2494 0a80 C6080000 		.4byte	0x8c6
+ 2495 0a84 02       		.uleb128 0x2
+ 2496 0a85 91       		.byte	0x91
+ 2497 0a86 68       		.sleb128 -24
+ 2498 0a87 00       		.byte	0
+ 2499 0a88 00       		.byte	0
+ 2500 0a89 1E       		.uleb128 0x1e
+ 2501 0a8a 45040000 		.4byte	.LASF159
+ 2502 0a8e 02       		.byte	0x2
+ 2503 0a8f 8C       		.byte	0x8c
+ 2504 0a90 00000000 		.4byte	.LFB35
+ 2505 0a94 60000000 		.4byte	.LFE35-.LFB35
+ 2506 0a98 01       		.uleb128 0x1
+ 2507 0a99 9C       		.byte	0x9c
+ 2508 0a9a C80A0000 		.4byte	0xac8
+ 2509 0a9e 18       		.uleb128 0x18
+ 2510 0a9f 69070000 		.4byte	.LASF71
+ 2511 0aa3 02       		.byte	0x2
+ 2512 0aa4 8C       		.byte	0x8c
+ 2513 0aa5 EF090000 		.4byte	0x9ef
+ 2514 0aa9 02       		.uleb128 0x2
+ 2515 0aaa 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 53
+
+
+ 2516 0aab 6C       		.sleb128 -20
+ 2517 0aac 1A       		.uleb128 0x1a
+ 2518 0aad 656E00   		.ascii	"en\000"
+ 2519 0ab0 02       		.byte	0x2
+ 2520 0ab1 8C       		.byte	0x8c
+ 2521 0ab2 BF010000 		.4byte	0x1bf
+ 2522 0ab6 02       		.uleb128 0x2
+ 2523 0ab7 91       		.byte	0x91
+ 2524 0ab8 6B       		.sleb128 -21
+ 2525 0ab9 1C       		.uleb128 0x1c
+ 2526 0aba 65787400 		.ascii	"ext\000"
+ 2527 0abe 02       		.byte	0x2
+ 2528 0abf 90       		.byte	0x90
+ 2529 0ac0 F5090000 		.4byte	0x9f5
+ 2530 0ac4 02       		.uleb128 0x2
+ 2531 0ac5 91       		.byte	0x91
+ 2532 0ac6 74       		.sleb128 -12
+ 2533 0ac7 00       		.byte	0
+ 2534 0ac8 1E       		.uleb128 0x1e
+ 2535 0ac9 36080000 		.4byte	.LASF160
+ 2536 0acd 02       		.byte	0x2
+ 2537 0ace A0       		.byte	0xa0
+ 2538 0acf 00000000 		.4byte	.LFB36
+ 2539 0ad3 50000000 		.4byte	.LFE36-.LFB36
+ 2540 0ad7 01       		.uleb128 0x1
+ 2541 0ad8 9C       		.byte	0x9c
+ 2542 0ad9 070B0000 		.4byte	0xb07
+ 2543 0add 18       		.uleb128 0x18
+ 2544 0ade 69070000 		.4byte	.LASF71
+ 2545 0ae2 02       		.byte	0x2
+ 2546 0ae3 A0       		.byte	0xa0
+ 2547 0ae4 EF090000 		.4byte	0x9ef
+ 2548 0ae8 02       		.uleb128 0x2
+ 2549 0ae9 91       		.byte	0x91
+ 2550 0aea 6C       		.sleb128 -20
+ 2551 0aeb 1A       		.uleb128 0x1a
+ 2552 0aec 656E00   		.ascii	"en\000"
+ 2553 0aef 02       		.byte	0x2
+ 2554 0af0 A0       		.byte	0xa0
+ 2555 0af1 BF010000 		.4byte	0x1bf
+ 2556 0af5 02       		.uleb128 0x2
+ 2557 0af6 91       		.byte	0x91
+ 2558 0af7 6B       		.sleb128 -21
+ 2559 0af8 1C       		.uleb128 0x1c
+ 2560 0af9 65787400 		.ascii	"ext\000"
+ 2561 0afd 02       		.byte	0x2
+ 2562 0afe A4       		.byte	0xa4
+ 2563 0aff F5090000 		.4byte	0x9f5
+ 2564 0b03 02       		.uleb128 0x2
+ 2565 0b04 91       		.byte	0x91
+ 2566 0b05 74       		.sleb128 -12
+ 2567 0b06 00       		.byte	0
+ 2568 0b07 19       		.uleb128 0x19
+ 2569 0b08 D7040000 		.4byte	.LASF162
+ 2570 0b0c 02       		.byte	0x2
+ 2571 0b0d B5       		.byte	0xb5
+ 2572 0b0e BF010000 		.4byte	0x1bf
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 54
+
+
+ 2573 0b12 00000000 		.4byte	.LFB37
+ 2574 0b16 2C000000 		.4byte	.LFE37-.LFB37
+ 2575 0b1a 01       		.uleb128 0x1
+ 2576 0b1b 9C       		.byte	0x9c
+ 2577 0b1c 3D0B0000 		.4byte	0xb3d
+ 2578 0b20 18       		.uleb128 0x18
+ 2579 0b21 69070000 		.4byte	.LASF71
+ 2580 0b25 02       		.byte	0x2
+ 2581 0b26 B5       		.byte	0xb5
+ 2582 0b27 7A090000 		.4byte	0x97a
+ 2583 0b2b 02       		.uleb128 0x2
+ 2584 0b2c 91       		.byte	0x91
+ 2585 0b2d 6C       		.sleb128 -20
+ 2586 0b2e 1C       		.uleb128 0x1c
+ 2587 0b2f 65787400 		.ascii	"ext\000"
+ 2588 0b33 02       		.byte	0x2
+ 2589 0b34 B9       		.byte	0xb9
+ 2590 0b35 F5090000 		.4byte	0x9f5
+ 2591 0b39 02       		.uleb128 0x2
+ 2592 0b3a 91       		.byte	0x91
+ 2593 0b3b 74       		.sleb128 -12
+ 2594 0b3c 00       		.byte	0
+ 2595 0b3d 19       		.uleb128 0x19
+ 2596 0b3e AB060000 		.4byte	.LASF163
+ 2597 0b42 02       		.byte	0x2
+ 2598 0b43 C3       		.byte	0xc3
+ 2599 0b44 BF010000 		.4byte	0x1bf
+ 2600 0b48 00000000 		.4byte	.LFB38
+ 2601 0b4c 2C000000 		.4byte	.LFE38-.LFB38
+ 2602 0b50 01       		.uleb128 0x1
+ 2603 0b51 9C       		.byte	0x9c
+ 2604 0b52 730B0000 		.4byte	0xb73
+ 2605 0b56 18       		.uleb128 0x18
+ 2606 0b57 69070000 		.4byte	.LASF71
+ 2607 0b5b 02       		.byte	0x2
+ 2608 0b5c C3       		.byte	0xc3
+ 2609 0b5d 7A090000 		.4byte	0x97a
+ 2610 0b61 02       		.uleb128 0x2
+ 2611 0b62 91       		.byte	0x91
+ 2612 0b63 6C       		.sleb128 -20
+ 2613 0b64 1C       		.uleb128 0x1c
+ 2614 0b65 65787400 		.ascii	"ext\000"
+ 2615 0b69 02       		.byte	0x2
+ 2616 0b6a C7       		.byte	0xc7
+ 2617 0b6b F5090000 		.4byte	0x9f5
+ 2618 0b6f 02       		.uleb128 0x2
+ 2619 0b70 91       		.byte	0x91
+ 2620 0b71 74       		.sleb128 -12
+ 2621 0b72 00       		.byte	0
+ 2622 0b73 17       		.uleb128 0x17
+ 2623 0b74 03060000 		.4byte	.LASF165
+ 2624 0b78 02       		.byte	0x2
+ 2625 0b79 DA       		.byte	0xda
+ 2626 0b7a BF010000 		.4byte	0x1bf
+ 2627 0b7e 00000000 		.4byte	.LFB39
+ 2628 0b82 94030000 		.4byte	.LFE39-.LFB39
+ 2629 0b86 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 55
+
+
+ 2630 0b87 9C       		.byte	0x9c
+ 2631 0b88 670C0000 		.4byte	0xc67
+ 2632 0b8c 18       		.uleb128 0x18
+ 2633 0b8d 69070000 		.4byte	.LASF71
+ 2634 0b91 02       		.byte	0x2
+ 2635 0b92 DA       		.byte	0xda
+ 2636 0b93 EF090000 		.4byte	0x9ef
+ 2637 0b97 03       		.uleb128 0x3
+ 2638 0b98 91       		.byte	0x91
+ 2639 0b99 F47E     		.sleb128 -140
+ 2640 0b9b 18       		.uleb128 0x18
+ 2641 0b9c A1040000 		.4byte	.LASF166
+ 2642 0ba0 02       		.byte	0x2
+ 2643 0ba1 DA       		.byte	0xda
+ 2644 0ba2 AB050000 		.4byte	0x5ab
+ 2645 0ba6 03       		.uleb128 0x3
+ 2646 0ba7 91       		.byte	0x91
+ 2647 0ba8 F07E     		.sleb128 -144
+ 2648 0baa 18       		.uleb128 0x18
+ 2649 0bab E7000000 		.4byte	.LASF167
+ 2650 0baf 02       		.byte	0x2
+ 2651 0bb0 DA       		.byte	0xda
+ 2652 0bb1 28070000 		.4byte	0x728
+ 2653 0bb5 03       		.uleb128 0x3
+ 2654 0bb6 91       		.byte	0x91
+ 2655 0bb7 EF7E     		.sleb128 -145
+ 2656 0bb9 1D       		.uleb128 0x1d
+ 2657 0bba 20000000 		.4byte	.LBB4
+ 2658 0bbe 6A030000 		.4byte	.LBE4-.LBB4
+ 2659 0bc2 1C       		.uleb128 0x1c
+ 2660 0bc3 65787400 		.ascii	"ext\000"
+ 2661 0bc7 02       		.byte	0x2
+ 2662 0bc8 E0       		.byte	0xe0
+ 2663 0bc9 F5090000 		.4byte	0x9f5
+ 2664 0bcd 02       		.uleb128 0x2
+ 2665 0bce 91       		.byte	0x91
+ 2666 0bcf 70       		.sleb128 -16
+ 2667 0bd0 1B       		.uleb128 0x1b
+ 2668 0bd1 10000000 		.4byte	.LASF157
+ 2669 0bd5 02       		.byte	0x2
+ 2670 0bd6 E4       		.byte	0xe4
+ 2671 0bd7 C6080000 		.4byte	0x8c6
+ 2672 0bdb 02       		.uleb128 0x2
+ 2673 0bdc 91       		.byte	0x91
+ 2674 0bdd 6C       		.sleb128 -20
+ 2675 0bde 1B       		.uleb128 0x1b
+ 2676 0bdf 13070000 		.4byte	.LASF102
+ 2677 0be3 02       		.byte	0x2
+ 2678 0be4 E5       		.byte	0xe5
+ 2679 0be5 7B020000 		.4byte	0x27b
+ 2680 0be9 02       		.uleb128 0x2
+ 2681 0bea 91       		.byte	0x91
+ 2682 0beb 6B       		.sleb128 -21
+ 2683 0bec 1B       		.uleb128 0x1b
+ 2684 0bed 8A030000 		.4byte	.LASF168
+ 2685 0bf1 02       		.byte	0x2
+ 2686 0bf2 E6       		.byte	0xe6
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 56
+
+
+ 2687 0bf3 F2020000 		.4byte	0x2f2
+ 2688 0bf7 02       		.uleb128 0x2
+ 2689 0bf8 91       		.byte	0x91
+ 2690 0bf9 5C       		.sleb128 -36
+ 2691 0bfa 1B       		.uleb128 0x1b
+ 2692 0bfb 83050000 		.4byte	.LASF169
+ 2693 0bff 02       		.byte	0x2
+ 2694 0c00 E8       		.byte	0xe8
+ 2695 0c01 D9000000 		.4byte	0xd9
+ 2696 0c05 02       		.uleb128 0x2
+ 2697 0c06 91       		.byte	0x91
+ 2698 0c07 68       		.sleb128 -24
+ 2699 0c08 1B       		.uleb128 0x1b
+ 2700 0c09 53020000 		.4byte	.LASF170
+ 2701 0c0d 02       		.byte	0x2
+ 2702 0c0e E9       		.byte	0xe9
+ 2703 0c0f D9000000 		.4byte	0xd9
+ 2704 0c13 02       		.uleb128 0x2
+ 2705 0c14 91       		.byte	0x91
+ 2706 0c15 66       		.sleb128 -26
+ 2707 0c16 1C       		.uleb128 0x1c
+ 2708 0c17 703100   		.ascii	"p1\000"
+ 2709 0c1a 02       		.byte	0x2
+ 2710 0c1b EA       		.byte	0xea
+ 2711 0c1c B2020000 		.4byte	0x2b2
+ 2712 0c20 02       		.uleb128 0x2
+ 2713 0c21 91       		.byte	0x91
+ 2714 0c22 58       		.sleb128 -40
+ 2715 0c23 1C       		.uleb128 0x1c
+ 2716 0c24 703200   		.ascii	"p2\000"
+ 2717 0c27 02       		.byte	0x2
+ 2718 0c28 EB       		.byte	0xeb
+ 2719 0c29 B2020000 		.4byte	0x2b2
+ 2720 0c2d 02       		.uleb128 0x2
+ 2721 0c2e 91       		.byte	0x91
+ 2722 0c2f 54       		.sleb128 -44
+ 2723 0c30 1C       		.uleb128 0x1c
+ 2724 0c31 6800     		.ascii	"h\000"
+ 2725 0c33 02       		.byte	0x2
+ 2726 0c34 EC       		.byte	0xec
+ 2727 0c35 D9000000 		.4byte	0xd9
+ 2728 0c39 02       		.uleb128 0x2
+ 2729 0c3a 91       		.byte	0x91
+ 2730 0c3b 64       		.sleb128 -28
+ 2731 0c3c 1C       		.uleb128 0x1c
+ 2732 0c3d 6900     		.ascii	"i\000"
+ 2733 0c3f 02       		.byte	0x2
+ 2734 0c40 ED       		.byte	0xed
+ 2735 0c41 C3000000 		.4byte	0xc3
+ 2736 0c45 02       		.uleb128 0x2
+ 2737 0c46 91       		.byte	0x91
+ 2738 0c47 76       		.sleb128 -10
+ 2739 0c48 1B       		.uleb128 0x1b
+ 2740 0c49 D8060000 		.4byte	.LASF171
+ 2741 0c4d 02       		.byte	0x2
+ 2742 0c4e EF       		.byte	0xef
+ 2743 0c4f 28050000 		.4byte	0x528
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 57
+
+
+ 2744 0c53 03       		.uleb128 0x3
+ 2745 0c54 91       		.byte	0x91
+ 2746 0c55 FC7E     		.sleb128 -132
+ 2747 0c57 1B       		.uleb128 0x1b
+ 2748 0c58 F4020000 		.4byte	.LASF172
+ 2749 0c5c 02       		.byte	0x2
+ 2750 0c5d F7       		.byte	0xf7
+ 2751 0c5e F2020000 		.4byte	0x2f2
+ 2752 0c62 02       		.uleb128 0x2
+ 2753 0c63 91       		.byte	0x91
+ 2754 0c64 4C       		.sleb128 -52
+ 2755 0c65 00       		.byte	0
+ 2756 0c66 00       		.byte	0
+ 2757 0c67 1F       		.uleb128 0x1f
+ 2758 0c68 2F000000 		.4byte	.LASF173
+ 2759 0c6c 02       		.byte	0x2
+ 2760 0c6d 2401     		.2byte	0x124
+ 2761 0c6f 4C050000 		.4byte	0x54c
+ 2762 0c73 00000000 		.4byte	.LFB40
+ 2763 0c77 78000000 		.4byte	.LFE40-.LFB40
+ 2764 0c7b 01       		.uleb128 0x1
+ 2765 0c7c 9C       		.byte	0x9c
+ 2766 0c7d D70C0000 		.4byte	0xcd7
+ 2767 0c81 20       		.uleb128 0x20
+ 2768 0c82 69070000 		.4byte	.LASF71
+ 2769 0c86 02       		.byte	0x2
+ 2770 0c87 2401     		.2byte	0x124
+ 2771 0c89 EF090000 		.4byte	0x9ef
+ 2772 0c8d 02       		.uleb128 0x2
+ 2773 0c8e 91       		.byte	0x91
+ 2774 0c8f 6C       		.sleb128 -20
+ 2775 0c90 20       		.uleb128 0x20
+ 2776 0c91 61020000 		.4byte	.LASF174
+ 2777 0c95 02       		.byte	0x2
+ 2778 0c96 2401     		.2byte	0x124
+ 2779 0c98 0E080000 		.4byte	0x80e
+ 2780 0c9c 02       		.uleb128 0x2
+ 2781 0c9d 91       		.byte	0x91
+ 2782 0c9e 6B       		.sleb128 -21
+ 2783 0c9f 20       		.uleb128 0x20
+ 2784 0ca0 8D040000 		.4byte	.LASF175
+ 2785 0ca4 02       		.byte	0x2
+ 2786 0ca5 2401     		.2byte	0x124
+ 2787 0ca7 E4000000 		.4byte	0xe4
+ 2788 0cab 02       		.uleb128 0x2
+ 2789 0cac 91       		.byte	0x91
+ 2790 0cad 64       		.sleb128 -28
+ 2791 0cae 21       		.uleb128 0x21
+ 2792 0caf 72657300 		.ascii	"res\000"
+ 2793 0cb3 02       		.byte	0x2
+ 2794 0cb4 2601     		.2byte	0x126
+ 2795 0cb6 4C050000 		.4byte	0x54c
+ 2796 0cba 02       		.uleb128 0x2
+ 2797 0cbb 91       		.byte	0x91
+ 2798 0cbc 77       		.sleb128 -9
+ 2799 0cbd 1D       		.uleb128 0x1d
+ 2800 0cbe 40000000 		.4byte	.LBB5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 58
+
+
+ 2801 0cc2 24000000 		.4byte	.LBE5-.LBB5
+ 2802 0cc6 22       		.uleb128 0x22
+ 2803 0cc7 10000000 		.4byte	.LASF157
+ 2804 0ccb 02       		.byte	0x2
+ 2805 0ccc 2E01     		.2byte	0x12e
+ 2806 0cce C6080000 		.4byte	0x8c6
+ 2807 0cd2 02       		.uleb128 0x2
+ 2808 0cd3 91       		.byte	0x91
+ 2809 0cd4 70       		.sleb128 -16
+ 2810 0cd5 00       		.byte	0
+ 2811 0cd6 00       		.byte	0
+ 2812 0cd7 1B       		.uleb128 0x1b
+ 2813 0cd8 5D090000 		.4byte	.LASF176
+ 2814 0cdc 02       		.byte	0x2
+ 2815 0cdd 25       		.byte	0x25
+ 2816 0cde 19080000 		.4byte	0x819
+ 2817 0ce2 05       		.uleb128 0x5
+ 2818 0ce3 03       		.byte	0x3
+ 2819 0ce4 00000000 		.4byte	ancestor_signal
+ 2820 0ce8 00       		.byte	0
+ 2821              		.section	.debug_abbrev,"",%progbits
+ 2822              	.Ldebug_abbrev0:
+ 2823 0000 01       		.uleb128 0x1
+ 2824 0001 11       		.uleb128 0x11
+ 2825 0002 01       		.byte	0x1
+ 2826 0003 25       		.uleb128 0x25
+ 2827 0004 0E       		.uleb128 0xe
+ 2828 0005 13       		.uleb128 0x13
+ 2829 0006 0B       		.uleb128 0xb
+ 2830 0007 03       		.uleb128 0x3
+ 2831 0008 0E       		.uleb128 0xe
+ 2832 0009 1B       		.uleb128 0x1b
+ 2833 000a 0E       		.uleb128 0xe
+ 2834 000b 55       		.uleb128 0x55
+ 2835 000c 17       		.uleb128 0x17
+ 2836 000d 11       		.uleb128 0x11
+ 2837 000e 01       		.uleb128 0x1
+ 2838 000f 10       		.uleb128 0x10
+ 2839 0010 17       		.uleb128 0x17
+ 2840 0011 00       		.byte	0
+ 2841 0012 00       		.byte	0
+ 2842 0013 02       		.uleb128 0x2
+ 2843 0014 16       		.uleb128 0x16
+ 2844 0015 00       		.byte	0
+ 2845 0016 03       		.uleb128 0x3
+ 2846 0017 0E       		.uleb128 0xe
+ 2847 0018 3A       		.uleb128 0x3a
+ 2848 0019 0B       		.uleb128 0xb
+ 2849 001a 3B       		.uleb128 0x3b
+ 2850 001b 0B       		.uleb128 0xb
+ 2851 001c 49       		.uleb128 0x49
+ 2852 001d 13       		.uleb128 0x13
+ 2853 001e 00       		.byte	0
+ 2854 001f 00       		.byte	0
+ 2855 0020 03       		.uleb128 0x3
+ 2856 0021 24       		.uleb128 0x24
+ 2857 0022 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 59
+
+
+ 2858 0023 0B       		.uleb128 0xb
+ 2859 0024 0B       		.uleb128 0xb
+ 2860 0025 3E       		.uleb128 0x3e
+ 2861 0026 0B       		.uleb128 0xb
+ 2862 0027 03       		.uleb128 0x3
+ 2863 0028 0E       		.uleb128 0xe
+ 2864 0029 00       		.byte	0
+ 2865 002a 00       		.byte	0
+ 2866 002b 04       		.uleb128 0x4
+ 2867 002c 24       		.uleb128 0x24
+ 2868 002d 00       		.byte	0
+ 2869 002e 0B       		.uleb128 0xb
+ 2870 002f 0B       		.uleb128 0xb
+ 2871 0030 3E       		.uleb128 0x3e
+ 2872 0031 0B       		.uleb128 0xb
+ 2873 0032 03       		.uleb128 0x3
+ 2874 0033 08       		.uleb128 0x8
+ 2875 0034 00       		.byte	0
+ 2876 0035 00       		.byte	0
+ 2877 0036 05       		.uleb128 0x5
+ 2878 0037 0F       		.uleb128 0xf
+ 2879 0038 00       		.byte	0
+ 2880 0039 0B       		.uleb128 0xb
+ 2881 003a 0B       		.uleb128 0xb
+ 2882 003b 00       		.byte	0
+ 2883 003c 00       		.byte	0
+ 2884 003d 06       		.uleb128 0x6
+ 2885 003e 13       		.uleb128 0x13
+ 2886 003f 01       		.byte	0x1
+ 2887 0040 0B       		.uleb128 0xb
+ 2888 0041 0B       		.uleb128 0xb
+ 2889 0042 3A       		.uleb128 0x3a
+ 2890 0043 0B       		.uleb128 0xb
+ 2891 0044 3B       		.uleb128 0x3b
+ 2892 0045 0B       		.uleb128 0xb
+ 2893 0046 01       		.uleb128 0x1
+ 2894 0047 13       		.uleb128 0x13
+ 2895 0048 00       		.byte	0
+ 2896 0049 00       		.byte	0
+ 2897 004a 07       		.uleb128 0x7
+ 2898 004b 0D       		.uleb128 0xd
+ 2899 004c 00       		.byte	0
+ 2900 004d 03       		.uleb128 0x3
+ 2901 004e 0E       		.uleb128 0xe
+ 2902 004f 3A       		.uleb128 0x3a
+ 2903 0050 0B       		.uleb128 0xb
+ 2904 0051 3B       		.uleb128 0x3b
+ 2905 0052 0B       		.uleb128 0xb
+ 2906 0053 49       		.uleb128 0x49
+ 2907 0054 13       		.uleb128 0x13
+ 2908 0055 38       		.uleb128 0x38
+ 2909 0056 0B       		.uleb128 0xb
+ 2910 0057 00       		.byte	0
+ 2911 0058 00       		.byte	0
+ 2912 0059 08       		.uleb128 0x8
+ 2913 005a 0D       		.uleb128 0xd
+ 2914 005b 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 60
+
+
+ 2915 005c 03       		.uleb128 0x3
+ 2916 005d 08       		.uleb128 0x8
+ 2917 005e 3A       		.uleb128 0x3a
+ 2918 005f 0B       		.uleb128 0xb
+ 2919 0060 3B       		.uleb128 0x3b
+ 2920 0061 0B       		.uleb128 0xb
+ 2921 0062 49       		.uleb128 0x49
+ 2922 0063 13       		.uleb128 0x13
+ 2923 0064 38       		.uleb128 0x38
+ 2924 0065 0B       		.uleb128 0xb
+ 2925 0066 00       		.byte	0
+ 2926 0067 00       		.byte	0
+ 2927 0068 09       		.uleb128 0x9
+ 2928 0069 13       		.uleb128 0x13
+ 2929 006a 01       		.byte	0x1
+ 2930 006b 03       		.uleb128 0x3
+ 2931 006c 0E       		.uleb128 0xe
+ 2932 006d 0B       		.uleb128 0xb
+ 2933 006e 0B       		.uleb128 0xb
+ 2934 006f 3A       		.uleb128 0x3a
+ 2935 0070 0B       		.uleb128 0xb
+ 2936 0071 3B       		.uleb128 0x3b
+ 2937 0072 0B       		.uleb128 0xb
+ 2938 0073 01       		.uleb128 0x1
+ 2939 0074 13       		.uleb128 0x13
+ 2940 0075 00       		.byte	0
+ 2941 0076 00       		.byte	0
+ 2942 0077 0A       		.uleb128 0xa
+ 2943 0078 0D       		.uleb128 0xd
+ 2944 0079 00       		.byte	0
+ 2945 007a 03       		.uleb128 0x3
+ 2946 007b 0E       		.uleb128 0xe
+ 2947 007c 3A       		.uleb128 0x3a
+ 2948 007d 0B       		.uleb128 0xb
+ 2949 007e 3B       		.uleb128 0x3b
+ 2950 007f 0B       		.uleb128 0xb
+ 2951 0080 49       		.uleb128 0x49
+ 2952 0081 13       		.uleb128 0x13
+ 2953 0082 0B       		.uleb128 0xb
+ 2954 0083 0B       		.uleb128 0xb
+ 2955 0084 0D       		.uleb128 0xd
+ 2956 0085 0B       		.uleb128 0xb
+ 2957 0086 0C       		.uleb128 0xc
+ 2958 0087 0B       		.uleb128 0xb
+ 2959 0088 38       		.uleb128 0x38
+ 2960 0089 0B       		.uleb128 0xb
+ 2961 008a 00       		.byte	0
+ 2962 008b 00       		.byte	0
+ 2963 008c 0B       		.uleb128 0xb
+ 2964 008d 15       		.uleb128 0x15
+ 2965 008e 01       		.byte	0x1
+ 2966 008f 27       		.uleb128 0x27
+ 2967 0090 19       		.uleb128 0x19
+ 2968 0091 49       		.uleb128 0x49
+ 2969 0092 13       		.uleb128 0x13
+ 2970 0093 01       		.uleb128 0x1
+ 2971 0094 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 61
+
+
+ 2972 0095 00       		.byte	0
+ 2973 0096 00       		.byte	0
+ 2974 0097 0C       		.uleb128 0xc
+ 2975 0098 05       		.uleb128 0x5
+ 2976 0099 00       		.byte	0
+ 2977 009a 49       		.uleb128 0x49
+ 2978 009b 13       		.uleb128 0x13
+ 2979 009c 00       		.byte	0
+ 2980 009d 00       		.byte	0
+ 2981 009e 0D       		.uleb128 0xd
+ 2982 009f 0F       		.uleb128 0xf
+ 2983 00a0 00       		.byte	0
+ 2984 00a1 0B       		.uleb128 0xb
+ 2985 00a2 0B       		.uleb128 0xb
+ 2986 00a3 49       		.uleb128 0x49
+ 2987 00a4 13       		.uleb128 0x13
+ 2988 00a5 00       		.byte	0
+ 2989 00a6 00       		.byte	0
+ 2990 00a7 0E       		.uleb128 0xe
+ 2991 00a8 26       		.uleb128 0x26
+ 2992 00a9 00       		.byte	0
+ 2993 00aa 49       		.uleb128 0x49
+ 2994 00ab 13       		.uleb128 0x13
+ 2995 00ac 00       		.byte	0
+ 2996 00ad 00       		.byte	0
+ 2997 00ae 0F       		.uleb128 0xf
+ 2998 00af 17       		.uleb128 0x17
+ 2999 00b0 01       		.byte	0x1
+ 3000 00b1 0B       		.uleb128 0xb
+ 3001 00b2 0B       		.uleb128 0xb
+ 3002 00b3 3A       		.uleb128 0x3a
+ 3003 00b4 0B       		.uleb128 0xb
+ 3004 00b5 3B       		.uleb128 0x3b
+ 3005 00b6 0B       		.uleb128 0xb
+ 3006 00b7 01       		.uleb128 0x1
+ 3007 00b8 13       		.uleb128 0x13
+ 3008 00b9 00       		.byte	0
+ 3009 00ba 00       		.byte	0
+ 3010 00bb 10       		.uleb128 0x10
+ 3011 00bc 0D       		.uleb128 0xd
+ 3012 00bd 00       		.byte	0
+ 3013 00be 03       		.uleb128 0x3
+ 3014 00bf 08       		.uleb128 0x8
+ 3015 00c0 3A       		.uleb128 0x3a
+ 3016 00c1 0B       		.uleb128 0xb
+ 3017 00c2 3B       		.uleb128 0x3b
+ 3018 00c3 0B       		.uleb128 0xb
+ 3019 00c4 49       		.uleb128 0x49
+ 3020 00c5 13       		.uleb128 0x13
+ 3021 00c6 00       		.byte	0
+ 3022 00c7 00       		.byte	0
+ 3023 00c8 11       		.uleb128 0x11
+ 3024 00c9 0D       		.uleb128 0xd
+ 3025 00ca 00       		.byte	0
+ 3026 00cb 03       		.uleb128 0x3
+ 3027 00cc 0E       		.uleb128 0xe
+ 3028 00cd 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 62
+
+
+ 3029 00ce 0B       		.uleb128 0xb
+ 3030 00cf 3B       		.uleb128 0x3b
+ 3031 00d0 0B       		.uleb128 0xb
+ 3032 00d1 49       		.uleb128 0x49
+ 3033 00d2 13       		.uleb128 0x13
+ 3034 00d3 00       		.byte	0
+ 3035 00d4 00       		.byte	0
+ 3036 00d5 12       		.uleb128 0x12
+ 3037 00d6 16       		.uleb128 0x16
+ 3038 00d7 00       		.byte	0
+ 3039 00d8 03       		.uleb128 0x3
+ 3040 00d9 0E       		.uleb128 0xe
+ 3041 00da 3A       		.uleb128 0x3a
+ 3042 00db 0B       		.uleb128 0xb
+ 3043 00dc 3B       		.uleb128 0x3b
+ 3044 00dd 05       		.uleb128 0x5
+ 3045 00de 49       		.uleb128 0x49
+ 3046 00df 13       		.uleb128 0x13
+ 3047 00e0 00       		.byte	0
+ 3048 00e1 00       		.byte	0
+ 3049 00e2 13       		.uleb128 0x13
+ 3050 00e3 04       		.uleb128 0x4
+ 3051 00e4 01       		.byte	0x1
+ 3052 00e5 0B       		.uleb128 0xb
+ 3053 00e6 0B       		.uleb128 0xb
+ 3054 00e7 49       		.uleb128 0x49
+ 3055 00e8 13       		.uleb128 0x13
+ 3056 00e9 3A       		.uleb128 0x3a
+ 3057 00ea 0B       		.uleb128 0xb
+ 3058 00eb 3B       		.uleb128 0x3b
+ 3059 00ec 0B       		.uleb128 0xb
+ 3060 00ed 01       		.uleb128 0x1
+ 3061 00ee 13       		.uleb128 0x13
+ 3062 00ef 00       		.byte	0
+ 3063 00f0 00       		.byte	0
+ 3064 00f1 14       		.uleb128 0x14
+ 3065 00f2 28       		.uleb128 0x28
+ 3066 00f3 00       		.byte	0
+ 3067 00f4 03       		.uleb128 0x3
+ 3068 00f5 0E       		.uleb128 0xe
+ 3069 00f6 1C       		.uleb128 0x1c
+ 3070 00f7 0B       		.uleb128 0xb
+ 3071 00f8 00       		.byte	0
+ 3072 00f9 00       		.byte	0
+ 3073 00fa 15       		.uleb128 0x15
+ 3074 00fb 0D       		.uleb128 0xd
+ 3075 00fc 00       		.byte	0
+ 3076 00fd 03       		.uleb128 0x3
+ 3077 00fe 08       		.uleb128 0x8
+ 3078 00ff 3A       		.uleb128 0x3a
+ 3079 0100 0B       		.uleb128 0xb
+ 3080 0101 3B       		.uleb128 0x3b
+ 3081 0102 0B       		.uleb128 0xb
+ 3082 0103 49       		.uleb128 0x49
+ 3083 0104 13       		.uleb128 0x13
+ 3084 0105 0B       		.uleb128 0xb
+ 3085 0106 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 63
+
+
+ 3086 0107 0D       		.uleb128 0xd
+ 3087 0108 0B       		.uleb128 0xb
+ 3088 0109 0C       		.uleb128 0xc
+ 3089 010a 0B       		.uleb128 0xb
+ 3090 010b 38       		.uleb128 0x38
+ 3091 010c 0B       		.uleb128 0xb
+ 3092 010d 00       		.byte	0
+ 3093 010e 00       		.byte	0
+ 3094 010f 16       		.uleb128 0x16
+ 3095 0110 15       		.uleb128 0x15
+ 3096 0111 01       		.byte	0x1
+ 3097 0112 27       		.uleb128 0x27
+ 3098 0113 19       		.uleb128 0x19
+ 3099 0114 01       		.uleb128 0x1
+ 3100 0115 13       		.uleb128 0x13
+ 3101 0116 00       		.byte	0
+ 3102 0117 00       		.byte	0
+ 3103 0118 17       		.uleb128 0x17
+ 3104 0119 2E       		.uleb128 0x2e
+ 3105 011a 01       		.byte	0x1
+ 3106 011b 03       		.uleb128 0x3
+ 3107 011c 0E       		.uleb128 0xe
+ 3108 011d 3A       		.uleb128 0x3a
+ 3109 011e 0B       		.uleb128 0xb
+ 3110 011f 3B       		.uleb128 0x3b
+ 3111 0120 0B       		.uleb128 0xb
+ 3112 0121 27       		.uleb128 0x27
+ 3113 0122 19       		.uleb128 0x19
+ 3114 0123 49       		.uleb128 0x49
+ 3115 0124 13       		.uleb128 0x13
+ 3116 0125 11       		.uleb128 0x11
+ 3117 0126 01       		.uleb128 0x1
+ 3118 0127 12       		.uleb128 0x12
+ 3119 0128 06       		.uleb128 0x6
+ 3120 0129 40       		.uleb128 0x40
+ 3121 012a 18       		.uleb128 0x18
+ 3122 012b 9642     		.uleb128 0x2116
+ 3123 012d 19       		.uleb128 0x19
+ 3124 012e 01       		.uleb128 0x1
+ 3125 012f 13       		.uleb128 0x13
+ 3126 0130 00       		.byte	0
+ 3127 0131 00       		.byte	0
+ 3128 0132 18       		.uleb128 0x18
+ 3129 0133 05       		.uleb128 0x5
+ 3130 0134 00       		.byte	0
+ 3131 0135 03       		.uleb128 0x3
+ 3132 0136 0E       		.uleb128 0xe
+ 3133 0137 3A       		.uleb128 0x3a
+ 3134 0138 0B       		.uleb128 0xb
+ 3135 0139 3B       		.uleb128 0x3b
+ 3136 013a 0B       		.uleb128 0xb
+ 3137 013b 49       		.uleb128 0x49
+ 3138 013c 13       		.uleb128 0x13
+ 3139 013d 02       		.uleb128 0x2
+ 3140 013e 18       		.uleb128 0x18
+ 3141 013f 00       		.byte	0
+ 3142 0140 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 64
+
+
+ 3143 0141 19       		.uleb128 0x19
+ 3144 0142 2E       		.uleb128 0x2e
+ 3145 0143 01       		.byte	0x1
+ 3146 0144 3F       		.uleb128 0x3f
+ 3147 0145 19       		.uleb128 0x19
+ 3148 0146 03       		.uleb128 0x3
+ 3149 0147 0E       		.uleb128 0xe
+ 3150 0148 3A       		.uleb128 0x3a
+ 3151 0149 0B       		.uleb128 0xb
+ 3152 014a 3B       		.uleb128 0x3b
+ 3153 014b 0B       		.uleb128 0xb
+ 3154 014c 27       		.uleb128 0x27
+ 3155 014d 19       		.uleb128 0x19
+ 3156 014e 49       		.uleb128 0x49
+ 3157 014f 13       		.uleb128 0x13
+ 3158 0150 11       		.uleb128 0x11
+ 3159 0151 01       		.uleb128 0x1
+ 3160 0152 12       		.uleb128 0x12
+ 3161 0153 06       		.uleb128 0x6
+ 3162 0154 40       		.uleb128 0x40
+ 3163 0155 18       		.uleb128 0x18
+ 3164 0156 9642     		.uleb128 0x2116
+ 3165 0158 19       		.uleb128 0x19
+ 3166 0159 01       		.uleb128 0x1
+ 3167 015a 13       		.uleb128 0x13
+ 3168 015b 00       		.byte	0
+ 3169 015c 00       		.byte	0
+ 3170 015d 1A       		.uleb128 0x1a
+ 3171 015e 05       		.uleb128 0x5
+ 3172 015f 00       		.byte	0
+ 3173 0160 03       		.uleb128 0x3
+ 3174 0161 08       		.uleb128 0x8
+ 3175 0162 3A       		.uleb128 0x3a
+ 3176 0163 0B       		.uleb128 0xb
+ 3177 0164 3B       		.uleb128 0x3b
+ 3178 0165 0B       		.uleb128 0xb
+ 3179 0166 49       		.uleb128 0x49
+ 3180 0167 13       		.uleb128 0x13
+ 3181 0168 02       		.uleb128 0x2
+ 3182 0169 18       		.uleb128 0x18
+ 3183 016a 00       		.byte	0
+ 3184 016b 00       		.byte	0
+ 3185 016c 1B       		.uleb128 0x1b
+ 3186 016d 34       		.uleb128 0x34
+ 3187 016e 00       		.byte	0
+ 3188 016f 03       		.uleb128 0x3
+ 3189 0170 0E       		.uleb128 0xe
+ 3190 0171 3A       		.uleb128 0x3a
+ 3191 0172 0B       		.uleb128 0xb
+ 3192 0173 3B       		.uleb128 0x3b
+ 3193 0174 0B       		.uleb128 0xb
+ 3194 0175 49       		.uleb128 0x49
+ 3195 0176 13       		.uleb128 0x13
+ 3196 0177 02       		.uleb128 0x2
+ 3197 0178 18       		.uleb128 0x18
+ 3198 0179 00       		.byte	0
+ 3199 017a 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 65
+
+
+ 3200 017b 1C       		.uleb128 0x1c
+ 3201 017c 34       		.uleb128 0x34
+ 3202 017d 00       		.byte	0
+ 3203 017e 03       		.uleb128 0x3
+ 3204 017f 08       		.uleb128 0x8
+ 3205 0180 3A       		.uleb128 0x3a
+ 3206 0181 0B       		.uleb128 0xb
+ 3207 0182 3B       		.uleb128 0x3b
+ 3208 0183 0B       		.uleb128 0xb
+ 3209 0184 49       		.uleb128 0x49
+ 3210 0185 13       		.uleb128 0x13
+ 3211 0186 02       		.uleb128 0x2
+ 3212 0187 18       		.uleb128 0x18
+ 3213 0188 00       		.byte	0
+ 3214 0189 00       		.byte	0
+ 3215 018a 1D       		.uleb128 0x1d
+ 3216 018b 0B       		.uleb128 0xb
+ 3217 018c 01       		.byte	0x1
+ 3218 018d 11       		.uleb128 0x11
+ 3219 018e 01       		.uleb128 0x1
+ 3220 018f 12       		.uleb128 0x12
+ 3221 0190 06       		.uleb128 0x6
+ 3222 0191 00       		.byte	0
+ 3223 0192 00       		.byte	0
+ 3224 0193 1E       		.uleb128 0x1e
+ 3225 0194 2E       		.uleb128 0x2e
+ 3226 0195 01       		.byte	0x1
+ 3227 0196 3F       		.uleb128 0x3f
+ 3228 0197 19       		.uleb128 0x19
+ 3229 0198 03       		.uleb128 0x3
+ 3230 0199 0E       		.uleb128 0xe
+ 3231 019a 3A       		.uleb128 0x3a
+ 3232 019b 0B       		.uleb128 0xb
+ 3233 019c 3B       		.uleb128 0x3b
+ 3234 019d 0B       		.uleb128 0xb
+ 3235 019e 27       		.uleb128 0x27
+ 3236 019f 19       		.uleb128 0x19
+ 3237 01a0 11       		.uleb128 0x11
+ 3238 01a1 01       		.uleb128 0x1
+ 3239 01a2 12       		.uleb128 0x12
+ 3240 01a3 06       		.uleb128 0x6
+ 3241 01a4 40       		.uleb128 0x40
+ 3242 01a5 18       		.uleb128 0x18
+ 3243 01a6 9642     		.uleb128 0x2116
+ 3244 01a8 19       		.uleb128 0x19
+ 3245 01a9 01       		.uleb128 0x1
+ 3246 01aa 13       		.uleb128 0x13
+ 3247 01ab 00       		.byte	0
+ 3248 01ac 00       		.byte	0
+ 3249 01ad 1F       		.uleb128 0x1f
+ 3250 01ae 2E       		.uleb128 0x2e
+ 3251 01af 01       		.byte	0x1
+ 3252 01b0 03       		.uleb128 0x3
+ 3253 01b1 0E       		.uleb128 0xe
+ 3254 01b2 3A       		.uleb128 0x3a
+ 3255 01b3 0B       		.uleb128 0xb
+ 3256 01b4 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 66
+
+
+ 3257 01b5 05       		.uleb128 0x5
+ 3258 01b6 27       		.uleb128 0x27
+ 3259 01b7 19       		.uleb128 0x19
+ 3260 01b8 49       		.uleb128 0x49
+ 3261 01b9 13       		.uleb128 0x13
+ 3262 01ba 11       		.uleb128 0x11
+ 3263 01bb 01       		.uleb128 0x1
+ 3264 01bc 12       		.uleb128 0x12
+ 3265 01bd 06       		.uleb128 0x6
+ 3266 01be 40       		.uleb128 0x40
+ 3267 01bf 18       		.uleb128 0x18
+ 3268 01c0 9642     		.uleb128 0x2116
+ 3269 01c2 19       		.uleb128 0x19
+ 3270 01c3 01       		.uleb128 0x1
+ 3271 01c4 13       		.uleb128 0x13
+ 3272 01c5 00       		.byte	0
+ 3273 01c6 00       		.byte	0
+ 3274 01c7 20       		.uleb128 0x20
+ 3275 01c8 05       		.uleb128 0x5
+ 3276 01c9 00       		.byte	0
+ 3277 01ca 03       		.uleb128 0x3
+ 3278 01cb 0E       		.uleb128 0xe
+ 3279 01cc 3A       		.uleb128 0x3a
+ 3280 01cd 0B       		.uleb128 0xb
+ 3281 01ce 3B       		.uleb128 0x3b
+ 3282 01cf 05       		.uleb128 0x5
+ 3283 01d0 49       		.uleb128 0x49
+ 3284 01d1 13       		.uleb128 0x13
+ 3285 01d2 02       		.uleb128 0x2
+ 3286 01d3 18       		.uleb128 0x18
+ 3287 01d4 00       		.byte	0
+ 3288 01d5 00       		.byte	0
+ 3289 01d6 21       		.uleb128 0x21
+ 3290 01d7 34       		.uleb128 0x34
+ 3291 01d8 00       		.byte	0
+ 3292 01d9 03       		.uleb128 0x3
+ 3293 01da 08       		.uleb128 0x8
+ 3294 01db 3A       		.uleb128 0x3a
+ 3295 01dc 0B       		.uleb128 0xb
+ 3296 01dd 3B       		.uleb128 0x3b
+ 3297 01de 05       		.uleb128 0x5
+ 3298 01df 49       		.uleb128 0x49
+ 3299 01e0 13       		.uleb128 0x13
+ 3300 01e1 02       		.uleb128 0x2
+ 3301 01e2 18       		.uleb128 0x18
+ 3302 01e3 00       		.byte	0
+ 3303 01e4 00       		.byte	0
+ 3304 01e5 22       		.uleb128 0x22
+ 3305 01e6 34       		.uleb128 0x34
+ 3306 01e7 00       		.byte	0
+ 3307 01e8 03       		.uleb128 0x3
+ 3308 01e9 0E       		.uleb128 0xe
+ 3309 01ea 3A       		.uleb128 0x3a
+ 3310 01eb 0B       		.uleb128 0xb
+ 3311 01ec 3B       		.uleb128 0x3b
+ 3312 01ed 05       		.uleb128 0x5
+ 3313 01ee 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 67
+
+
+ 3314 01ef 13       		.uleb128 0x13
+ 3315 01f0 02       		.uleb128 0x2
+ 3316 01f1 18       		.uleb128 0x18
+ 3317 01f2 00       		.byte	0
+ 3318 01f3 00       		.byte	0
+ 3319 01f4 00       		.byte	0
+ 3320              		.section	.debug_aranges,"",%progbits
+ 3321 0000 5C000000 		.4byte	0x5c
+ 3322 0004 0200     		.2byte	0x2
+ 3323 0006 00000000 		.4byte	.Ldebug_info0
+ 3324 000a 04       		.byte	0x4
+ 3325 000b 00       		.byte	0
+ 3326 000c 0000     		.2byte	0
+ 3327 000e 0000     		.2byte	0
+ 3328 0010 00000000 		.4byte	.LFB32
+ 3329 0014 1C000000 		.4byte	.LFE32-.LFB32
+ 3330 0018 00000000 		.4byte	.LFB33
+ 3331 001c FC000000 		.4byte	.LFE33-.LFB33
+ 3332 0020 00000000 		.4byte	.LFB34
+ 3333 0024 C6000000 		.4byte	.LFE34-.LFB34
+ 3334 0028 00000000 		.4byte	.LFB35
+ 3335 002c 60000000 		.4byte	.LFE35-.LFB35
+ 3336 0030 00000000 		.4byte	.LFB36
+ 3337 0034 50000000 		.4byte	.LFE36-.LFB36
+ 3338 0038 00000000 		.4byte	.LFB37
+ 3339 003c 2C000000 		.4byte	.LFE37-.LFB37
+ 3340 0040 00000000 		.4byte	.LFB38
+ 3341 0044 2C000000 		.4byte	.LFE38-.LFB38
+ 3342 0048 00000000 		.4byte	.LFB39
+ 3343 004c 94030000 		.4byte	.LFE39-.LFB39
+ 3344 0050 00000000 		.4byte	.LFB40
+ 3345 0054 78000000 		.4byte	.LFE40-.LFB40
+ 3346 0058 00000000 		.4byte	0
+ 3347 005c 00000000 		.4byte	0
+ 3348              		.section	.debug_ranges,"",%progbits
+ 3349              	.Ldebug_ranges0:
+ 3350 0000 00000000 		.4byte	.LFB32
+ 3351 0004 1C000000 		.4byte	.LFE32
+ 3352 0008 00000000 		.4byte	.LFB33
+ 3353 000c FC000000 		.4byte	.LFE33
+ 3354 0010 00000000 		.4byte	.LFB34
+ 3355 0014 C6000000 		.4byte	.LFE34
+ 3356 0018 00000000 		.4byte	.LFB35
+ 3357 001c 60000000 		.4byte	.LFE35
+ 3358 0020 00000000 		.4byte	.LFB36
+ 3359 0024 50000000 		.4byte	.LFE36
+ 3360 0028 00000000 		.4byte	.LFB37
+ 3361 002c 2C000000 		.4byte	.LFE37
+ 3362 0030 00000000 		.4byte	.LFB38
+ 3363 0034 2C000000 		.4byte	.LFE38
+ 3364 0038 00000000 		.4byte	.LFB39
+ 3365 003c 94030000 		.4byte	.LFE39
+ 3366 0040 00000000 		.4byte	.LFB40
+ 3367 0044 78000000 		.4byte	.LFE40
+ 3368 0048 00000000 		.4byte	0
+ 3369 004c 00000000 		.4byte	0
+ 3370              		.section	.debug_line,"",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 68
+
+
+ 3371              	.Ldebug_line0:
+ 3372 0000 6A040000 		.section	.debug_str,"MS",%progbits,1
+ 3372      0200C002 
+ 3372      00000201 
+ 3372      FB0E0D00 
+ 3372      01010101 
+ 3373              	.LASF91:
+ 3374 0000 636C6963 		.ascii	"click\000"
+ 3374      6B00
+ 3375              	.LASF83:
+ 3376 0006 5F6C765F 		.ascii	"_lv_obj_t\000"
+ 3376      6F626A5F 
+ 3376      7400
+ 3377              	.LASF157:
+ 3378 0010 7374796C 		.ascii	"style\000"
+ 3378      6500
+ 3379              	.LASF36:
+ 3380 0016 66756C6C 		.ascii	"full\000"
+ 3380      00
+ 3381              	.LASF116:
+ 3382 001b 4C565F53 		.ascii	"LV_SIGNAL_STYLE_CHG\000"
+ 3382      49474E41 
+ 3382      4C5F5354 
+ 3382      594C455F 
+ 3382      43484700 
+ 3383              	.LASF173:
+ 3384 002f 6C765F6C 		.ascii	"lv_line_signal\000"
+ 3384      696E655F 
+ 3384      7369676E 
+ 3384      616C00
+ 3385              	.LASF121:
+ 3386 003e 4C565F53 		.ascii	"LV_SIGNAL_PRESSING\000"
+ 3386      49474E41 
+ 3386      4C5F5052 
+ 3386      45535349 
+ 3386      4E4700
+ 3387              	.LASF99:
+ 3388 0051 62617365 		.ascii	"base_dir\000"
+ 3388      5F646972 
+ 3388      00
+ 3389              	.LASF97:
+ 3390 005a 70617265 		.ascii	"parent_event\000"
+ 3390      6E745F65 
+ 3390      76656E74 
+ 3390      00
+ 3391              	.LASF93:
+ 3392 0067 64726167 		.ascii	"drag_throw\000"
+ 3392      5F746872 
+ 3392      6F7700
+ 3393              	.LASF13:
+ 3394 0072 756E7369 		.ascii	"unsigned int\000"
+ 3394      676E6564 
+ 3394      20696E74 
+ 3394      00
+ 3395              	.LASF24:
+ 3396 007f 6F66735F 		.ascii	"ofs_x\000"
+ 3396      7800
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 69
+
+
+ 3397              	.LASF25:
+ 3398 0085 6F66735F 		.ascii	"ofs_y\000"
+ 3398      7900
+ 3399              	.LASF27:
+ 3400 008b 6765745F 		.ascii	"get_glyph_dsc\000"
+ 3400      676C7970 
+ 3400      685F6473 
+ 3400      6300
+ 3401              	.LASF72:
+ 3402 0099 6C765F73 		.ascii	"lv_style_t\000"
+ 3402      74796C65 
+ 3402      5F7400
+ 3403              	.LASF78:
+ 3404 00a4 68656164 		.ascii	"head\000"
+ 3404      00
+ 3405              	.LASF42:
+ 3406 00a9 6C765F70 		.ascii	"lv_point_t\000"
+ 3406      6F696E74 
+ 3406      5F7400
+ 3407              	.LASF137:
+ 3408 00b4 796F6673 		.ascii	"yofs\000"
+ 3408      00
+ 3409              	.LASF109:
+ 3410 00b9 6C765F64 		.ascii	"lv_design_cb_t\000"
+ 3410      65736967 
+ 3410      6E5F6362 
+ 3410      5F7400
+ 3411              	.LASF161:
+ 3412 00c8 6C765F6C 		.ascii	"lv_line_create\000"
+ 3412      696E655F 
+ 3412      63726561 
+ 3412      746500
+ 3413              	.LASF77:
+ 3414 00d7 6E5F7369 		.ascii	"n_size\000"
+ 3414      7A6500
+ 3415              	.LASF89:
+ 3416 00de 6578745F 		.ascii	"ext_attr\000"
+ 3416      61747472 
+ 3416      00
+ 3417              	.LASF167:
+ 3418 00e7 6D6F6465 		.ascii	"mode\000"
+ 3418      00
+ 3419              	.LASF122:
+ 3420 00ec 4C565F53 		.ascii	"LV_SIGNAL_PRESS_LOST\000"
+ 3420      49474E41 
+ 3420      4C5F5052 
+ 3420      4553535F 
+ 3420      4C4F5354 
+ 3421              	.LASF143:
+ 3422 0101 6C765F6F 		.ascii	"lv_obj_t\000"
+ 3422      626A5F74 
+ 3422      00
+ 3423              	.LASF179:
+ 3424 010a 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 3424      73657273 
+ 3424      5C746D6A 
+ 3424      33325C44 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 70
+
+
+ 3424      6F63756D 
+ 3425 0137 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 3425      6C6C6F73 
+ 3425      636F7065 
+ 3425      5F53656E 
+ 3425      696F725F 
+ 3426 0168 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 3426      5C74636F 
+ 3426      6D5F6170 
+ 3426      705C7463 
+ 3426      6F6D5F61 
+ 3427 0198 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 3427      736F6336 
+ 3427      2E637964 
+ 3427      736E00
+ 3428              	.LASF104:
+ 3429 01a7 7265616C 		.ascii	"realign\000"
+ 3429      69676E00 
+ 3430              	.LASF53:
+ 3431 01af 696E6E65 		.ascii	"inner\000"
+ 3431      7200
+ 3432              	.LASF18:
+ 3433 01b5 75696E74 		.ascii	"uint32_t\000"
+ 3433      33325F74 
+ 3433      00
+ 3434              	.LASF14:
+ 3435 01be 696E7438 		.ascii	"int8_t\000"
+ 3435      5F7400
+ 3436              	.LASF37:
+ 3437 01c5 6C765F63 		.ascii	"lv_color32_t\000"
+ 3437      6F6C6F72 
+ 3437      33325F74 
+ 3437      00
+ 3438              	.LASF60:
+ 3439 01d2 73656C5F 		.ascii	"sel_color\000"
+ 3439      636F6C6F 
+ 3439      7200
+ 3440              	.LASF135:
+ 3441 01dc 62617365 		.ascii	"base\000"
+ 3441      00
+ 3442              	.LASF16:
+ 3443 01e1 696E7431 		.ascii	"int16_t\000"
+ 3443      365F7400 
+ 3444              	.LASF12:
+ 3445 01e9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3445      206C6F6E 
+ 3445      6720756E 
+ 3445      7369676E 
+ 3445      65642069 
+ 3446              	.LASF133:
+ 3447 0200 6C765F73 		.ascii	"lv_signal_cb_t\000"
+ 3447      69676E61 
+ 3447      6C5F6362 
+ 3447      5F7400
+ 3448              	.LASF48:
+ 3449 020f 70617274 		.ascii	"part\000"
+ 3449      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 71
+
+
+ 3450              	.LASF146:
+ 3451 0214 6175746F 		.ascii	"auto_size\000"
+ 3451      5F73697A 
+ 3451      6500
+ 3452              	.LASF6:
+ 3453 021e 5F5F7569 		.ascii	"__uint16_t\000"
+ 3453      6E743136 
+ 3453      5F7400
+ 3454              	.LASF57:
+ 3455 0229 626F7264 		.ascii	"border\000"
+ 3455      657200
+ 3456              	.LASF46:
+ 3457 0230 636F6C6F 		.ascii	"color\000"
+ 3457      7200
+ 3458              	.LASF124:
+ 3459 0236 4C565F53 		.ascii	"LV_SIGNAL_LONG_PRESS\000"
+ 3459      49474E41 
+ 3459      4C5F4C4F 
+ 3459      4E475F50 
+ 3459      52455353 
+ 3460              	.LASF66:
+ 3461 024b 726F756E 		.ascii	"rounded\000"
+ 3461      64656400 
+ 3462              	.LASF170:
+ 3463 0253 795F6F66 		.ascii	"y_ofs\000"
+ 3463      7300
+ 3464              	.LASF154:
+ 3465 0259 706F696E 		.ascii	"point_a\000"
+ 3465      745F6100 
+ 3466              	.LASF174:
+ 3467 0261 7369676E 		.ascii	"sign\000"
+ 3467      00
+ 3468              	.LASF90:
+ 3469 0266 7374796C 		.ascii	"style_p\000"
+ 3469      655F7000 
+ 3470              	.LASF47:
+ 3471 026e 77696474 		.ascii	"width\000"
+ 3471      6800
+ 3472              	.LASF158:
+ 3473 0274 6C765F6C 		.ascii	"lv_line_set_points\000"
+ 3473      696E655F 
+ 3473      7365745F 
+ 3473      706F696E 
+ 3473      747300
+ 3474              	.LASF76:
+ 3475 0287 6C765F6C 		.ascii	"lv_ll_node_t\000"
+ 3475      6C5F6E6F 
+ 3475      64655F74 
+ 3475      00
+ 3476              	.LASF31:
+ 3477 0294 5F426F6F 		.ascii	"_Bool\000"
+ 3477      6C00
+ 3478              	.LASF82:
+ 3479 029a 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 3479      666F6E74 
+ 3479      5F737472 
+ 3479      75637400 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 72
+
+
+ 3480              	.LASF63:
+ 3481 02aa 6C696E65 		.ascii	"line_space\000"
+ 3481      5F737061 
+ 3481      636500
+ 3482              	.LASF29:
+ 3483 02b5 6C696E65 		.ascii	"line_height\000"
+ 3483      5F686569 
+ 3483      67687400 
+ 3484              	.LASF145:
+ 3485 02c1 706F696E 		.ascii	"point_num\000"
+ 3485      745F6E75 
+ 3485      6D00
+ 3486              	.LASF117:
+ 3487 02cb 4C565F53 		.ascii	"LV_SIGNAL_BASE_DIR_CHG\000"
+ 3487      49474E41 
+ 3487      4C5F4241 
+ 3487      53455F44 
+ 3487      49525F43 
+ 3488              	.LASF129:
+ 3489 02e2 4C565F53 		.ascii	"LV_SIGNAL_DEFOCUS\000"
+ 3489      49474E41 
+ 3489      4C5F4445 
+ 3489      464F4355 
+ 3489      5300
+ 3490              	.LASF172:
+ 3491 02f4 63697263 		.ascii	"circle_area\000"
+ 3491      6C655F61 
+ 3491      72656100 
+ 3492              	.LASF155:
+ 3493 0300 786D6178 		.ascii	"xmax\000"
+ 3493      00
+ 3494              	.LASF41:
+ 3495 0305 63686172 		.ascii	"char\000"
+ 3495      00
+ 3496              	.LASF115:
+ 3497 030a 4C565F53 		.ascii	"LV_SIGNAL_PARENT_SIZE_CHG\000"
+ 3497      49474E41 
+ 3497      4C5F5041 
+ 3497      52454E54 
+ 3497      5F53495A 
+ 3498              	.LASF75:
+ 3499 0324 6C765F72 		.ascii	"lv_res_t\000"
+ 3499      65735F74 
+ 3499      00
+ 3500              	.LASF103:
+ 3501 032d 6578745F 		.ascii	"ext_draw_pad\000"
+ 3501      64726177 
+ 3501      5F706164 
+ 3501      00
+ 3502              	.LASF50:
+ 3503 033a 626F7474 		.ascii	"bottom\000"
+ 3503      6F6D00
+ 3504              	.LASF26:
+ 3505 0341 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 3505      6F6E745F 
+ 3505      676C7970 
+ 3505      685F6473 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 73
+
+
+ 3505      635F7400 
+ 3506              	.LASF119:
+ 3507 0355 4C565F53 		.ascii	"LV_SIGNAL_GET_TYPE\000"
+ 3507      49474E41 
+ 3507      4C5F4745 
+ 3507      545F5459 
+ 3507      504500
+ 3508              	.LASF15:
+ 3509 0368 75696E74 		.ascii	"uint8_t\000"
+ 3509      385F7400 
+ 3510              	.LASF113:
+ 3511 0370 4C565F53 		.ascii	"LV_SIGNAL_CHILD_CHG\000"
+ 3511      49474E41 
+ 3511      4C5F4348 
+ 3511      494C445F 
+ 3511      43484700 
+ 3512              	.LASF147:
+ 3513 0384 795F696E 		.ascii	"y_inv\000"
+ 3513      7600
+ 3514              	.LASF168:
+ 3515 038a 61726561 		.ascii	"area\000"
+ 3515      00
+ 3516              	.LASF45:
+ 3517 038f 6C765F73 		.ascii	"lv_shadow_type_t\000"
+ 3517      6861646F 
+ 3517      775F7479 
+ 3517      70655F74 
+ 3517      00
+ 3518              	.LASF52:
+ 3519 03a0 72696768 		.ascii	"right\000"
+ 3519      7400
+ 3520              	.LASF11:
+ 3521 03a6 6C6F6E67 		.ascii	"long long int\000"
+ 3521      206C6F6E 
+ 3521      6720696E 
+ 3521      7400
+ 3522              	.LASF67:
+ 3523 03b4 676C6173 		.ascii	"glass\000"
+ 3523      7300
+ 3524              	.LASF80:
+ 3525 03ba 6C765F6C 		.ascii	"lv_ll_t\000"
+ 3525      6C5F7400 
+ 3526              	.LASF69:
+ 3527 03c2 74657874 		.ascii	"text\000"
+ 3527      00
+ 3528              	.LASF139:
+ 3529 03c7 6175746F 		.ascii	"auto_realign\000"
+ 3529      5F726561 
+ 3529      6C69676E 
+ 3529      00
+ 3530              	.LASF128:
+ 3531 03d4 4C565F53 		.ascii	"LV_SIGNAL_FOCUS\000"
+ 3531      49474E41 
+ 3531      4C5F464F 
+ 3531      43555300 
+ 3532              	.LASF59:
+ 3533 03e4 70616464 		.ascii	"padding\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 74
+
+
+ 3533      696E6700 
+ 3534              	.LASF134:
+ 3535 03ec 6C765F61 		.ascii	"lv_align_t\000"
+ 3535      6C69676E 
+ 3535      5F7400
+ 3536              	.LASF74:
+ 3537 03f7 4C565F52 		.ascii	"LV_RES_OK\000"
+ 3537      45535F4F 
+ 3537      4B00
+ 3538              	.LASF136:
+ 3539 0401 786F6673 		.ascii	"xofs\000"
+ 3539      00
+ 3540              	.LASF4:
+ 3541 0406 5F5F696E 		.ascii	"__int16_t\000"
+ 3541      7431365F 
+ 3541      7400
+ 3542              	.LASF148:
+ 3543 0410 6C765F6C 		.ascii	"lv_line_ext_t\000"
+ 3543      696E655F 
+ 3543      6578745F 
+ 3543      7400
+ 3544              	.LASF110:
+ 3545 041e 6C765F65 		.ascii	"lv_event_t\000"
+ 3545      76656E74 
+ 3545      5F7400
+ 3546              	.LASF118:
+ 3547 0429 4C565F53 		.ascii	"LV_SIGNAL_REFR_EXT_DRAW_PAD\000"
+ 3547      49474E41 
+ 3547      4C5F5245 
+ 3547      46525F45 
+ 3547      58545F44 
+ 3548              	.LASF159:
+ 3549 0445 6C765F6C 		.ascii	"lv_line_set_auto_size\000"
+ 3549      696E655F 
+ 3549      7365745F 
+ 3549      6175746F 
+ 3549      5F73697A 
+ 3550              	.LASF140:
+ 3551 045b 6F726967 		.ascii	"origo_align\000"
+ 3551      6F5F616C 
+ 3551      69676E00 
+ 3552              	.LASF130:
+ 3553 0467 4C565F53 		.ascii	"LV_SIGNAL_CONTROL\000"
+ 3553      49474E41 
+ 3553      4C5F434F 
+ 3553      4E54524F 
+ 3553      4C00
+ 3554              	.LASF142:
+ 3555 0479 6C765F64 		.ascii	"lv_drag_dir_t\000"
+ 3555      7261675F 
+ 3555      6469725F 
+ 3555      7400
+ 3556              	.LASF138:
+ 3557 0487 616C6967 		.ascii	"align\000"
+ 3557      6E00
+ 3558              	.LASF175:
+ 3559 048d 70617261 		.ascii	"param\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 75
+
+
+ 3559      6D00
+ 3560              	.LASF70:
+ 3561 0493 696D6167 		.ascii	"image\000"
+ 3561      6500
+ 3562              	.LASF101:
+ 3563 0499 70726F74 		.ascii	"protect\000"
+ 3563      65637400 
+ 3564              	.LASF166:
+ 3565 04a1 6D61736B 		.ascii	"mask\000"
+ 3565      00
+ 3566              	.LASF131:
+ 3567 04a6 4C565F53 		.ascii	"LV_SIGNAL_GET_EDITABLE\000"
+ 3567      49474E41 
+ 3567      4C5F4745 
+ 3567      545F4544 
+ 3567      49544142 
+ 3568              	.LASF65:
+ 3569 04bd 73756270 		.ascii	"subpx\000"
+ 3569      7800
+ 3570              	.LASF38:
+ 3571 04c3 6C765F63 		.ascii	"lv_color_t\000"
+ 3571      6F6C6F72 
+ 3571      5F7400
+ 3572              	.LASF0:
+ 3573 04ce 5F5F696E 		.ascii	"__int8_t\000"
+ 3573      74385F74 
+ 3573      00
+ 3574              	.LASF162:
+ 3575 04d7 6C765F6C 		.ascii	"lv_line_get_auto_size\000"
+ 3575      696E655F 
+ 3575      6765745F 
+ 3575      6175746F 
+ 3575      5F73697A 
+ 3576              	.LASF164:
+ 3577 04ed 6C765F6C 		.ascii	"lv_line_get_style\000"
+ 3577      696E655F 
+ 3577      6765745F 
+ 3577      7374796C 
+ 3577      6500
+ 3578              	.LASF34:
+ 3579 04ff 67726565 		.ascii	"green\000"
+ 3579      6E00
+ 3580              	.LASF20:
+ 3581 0505 6C6F6E67 		.ascii	"long double\000"
+ 3581      20646F75 
+ 3581      626C6500 
+ 3582              	.LASF17:
+ 3583 0511 75696E74 		.ascii	"uint16_t\000"
+ 3583      31365F74 
+ 3583      00
+ 3584              	.LASF151:
+ 3585 051a 636F7079 		.ascii	"copy\000"
+ 3585      00
+ 3586              	.LASF98:
+ 3587 051f 64726167 		.ascii	"drag_dir\000"
+ 3587      5F646972 
+ 3587      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 76
+
+
+ 3588              	.LASF55:
+ 3589 0528 67726164 		.ascii	"grad_color\000"
+ 3589      5F636F6C 
+ 3589      6F7200
+ 3590              	.LASF150:
+ 3591 0533 6C765F6C 		.ascii	"lv_line_style_t\000"
+ 3591      696E655F 
+ 3591      7374796C 
+ 3591      655F7400 
+ 3592              	.LASF178:
+ 3593 0543 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_objx"
+ 3593      2E5C2E2E 
+ 3593      5C6C7667 
+ 3593      6C5C7665 
+ 3593      7273696F 
+ 3594 056f 5C6C765F 		.ascii	"\\lv_line.c\000"
+ 3594      6C696E65 
+ 3594      2E6300
+ 3595              	.LASF40:
+ 3596 057a 73697A65 		.ascii	"sizetype\000"
+ 3596      74797065 
+ 3596      00
+ 3597              	.LASF169:
+ 3598 0583 785F6F66 		.ascii	"x_ofs\000"
+ 3598      7300
+ 3599              	.LASF32:
+ 3600 0589 6C765F66 		.ascii	"lv_font_t\000"
+ 3600      6F6E745F 
+ 3600      7400
+ 3601              	.LASF62:
+ 3602 0593 6C657474 		.ascii	"letter_space\000"
+ 3602      65725F73 
+ 3602      70616365 
+ 3602      00
+ 3603              	.LASF54:
+ 3604 05a0 6D61696E 		.ascii	"main_color\000"
+ 3604      5F636F6C 
+ 3604      6F7200
+ 3605              	.LASF106:
+ 3606 05ab 4C565F44 		.ascii	"LV_DESIGN_DRAW_POST\000"
+ 3606      45534947 
+ 3606      4E5F4452 
+ 3606      41575F50 
+ 3606      4F535400 
+ 3607              	.LASF81:
+ 3608 05bf 6C765F62 		.ascii	"lv_bidi_dir_t\000"
+ 3608      6964695F 
+ 3608      6469725F 
+ 3608      7400
+ 3609              	.LASF5:
+ 3610 05cd 73686F72 		.ascii	"short int\000"
+ 3610      7420696E 
+ 3610      7400
+ 3611              	.LASF85:
+ 3612 05d7 636F6F72 		.ascii	"coords\000"
+ 3612      647300
+ 3613              	.LASF123:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 77
+
+
+ 3614 05de 4C565F53 		.ascii	"LV_SIGNAL_RELEASED\000"
+ 3614      49474E41 
+ 3614      4C5F5245 
+ 3614      4C454153 
+ 3614      454400
+ 3615              	.LASF39:
+ 3616 05f1 6C765F6F 		.ascii	"lv_opa_t\000"
+ 3616      70615F74 
+ 3616      00
+ 3617              	.LASF8:
+ 3618 05fa 6C6F6E67 		.ascii	"long int\000"
+ 3618      20696E74 
+ 3618      00
+ 3619              	.LASF165:
+ 3620 0603 6C765F6C 		.ascii	"lv_line_design\000"
+ 3620      696E655F 
+ 3620      64657369 
+ 3620      676E00
+ 3621              	.LASF126:
+ 3622 0612 4C565F53 		.ascii	"LV_SIGNAL_DRAG_BEGIN\000"
+ 3622      49474E41 
+ 3622      4C5F4452 
+ 3622      41475F42 
+ 3622      4547494E 
+ 3623              	.LASF144:
+ 3624 0627 706F696E 		.ascii	"point_array\000"
+ 3624      745F6172 
+ 3624      72617900 
+ 3625              	.LASF33:
+ 3626 0633 626C7565 		.ascii	"blue\000"
+ 3626      00
+ 3627              	.LASF105:
+ 3628 0638 4C565F44 		.ascii	"LV_DESIGN_DRAW_MAIN\000"
+ 3628      45534947 
+ 3628      4E5F4452 
+ 3628      41575F4D 
+ 3628      41494E00 
+ 3629              	.LASF112:
+ 3630 064c 4C565F53 		.ascii	"LV_SIGNAL_CLEANUP\000"
+ 3630      49474E41 
+ 3630      4C5F434C 
+ 3630      45414E55 
+ 3630      5000
+ 3631              	.LASF19:
+ 3632 065e 6C765F63 		.ascii	"lv_coord_t\000"
+ 3632      6F6F7264 
+ 3632      5F7400
+ 3633              	.LASF96:
+ 3634 0669 6F70615F 		.ascii	"opa_scale_en\000"
+ 3634      7363616C 
+ 3634      655F656E 
+ 3634      00
+ 3635              	.LASF51:
+ 3636 0676 6C656674 		.ascii	"left\000"
+ 3636      00
+ 3637              	.LASF64:
+ 3638 067b 696E7465 		.ascii	"intense\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 78
+
+
+ 3638      6E736500 
+ 3639              	.LASF1:
+ 3640 0683 5F5F7569 		.ascii	"__uint8_t\000"
+ 3640      6E74385F 
+ 3640      7400
+ 3641              	.LASF149:
+ 3642 068d 4C565F4C 		.ascii	"LV_LINE_STYLE_MAIN\000"
+ 3642      494E455F 
+ 3642      5354594C 
+ 3642      455F4D41 
+ 3642      494E00
+ 3643              	.LASF23:
+ 3644 06a0 626F785F 		.ascii	"box_h\000"
+ 3644      6800
+ 3645              	.LASF61:
+ 3646 06a6 666F6E74 		.ascii	"font\000"
+ 3646      00
+ 3647              	.LASF163:
+ 3648 06ab 6C765F6C 		.ascii	"lv_line_get_y_invert\000"
+ 3648      696E655F 
+ 3648      6765745F 
+ 3648      795F696E 
+ 3648      76657274 
+ 3649              	.LASF22:
+ 3650 06c0 626F785F 		.ascii	"box_w\000"
+ 3650      7700
+ 3651              	.LASF10:
+ 3652 06c6 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3652      20756E73 
+ 3652      69676E65 
+ 3652      6420696E 
+ 3652      7400
+ 3653              	.LASF171:
+ 3654 06d8 63697263 		.ascii	"circle_style_tmp\000"
+ 3654      6C655F73 
+ 3654      74796C65 
+ 3654      5F746D70 
+ 3654      00
+ 3655              	.LASF35:
+ 3656 06e9 616C7068 		.ascii	"alpha\000"
+ 3656      6100
+ 3657              	.LASF30:
+ 3658 06ef 62617365 		.ascii	"base_line\000"
+ 3658      5F6C696E 
+ 3658      6500
+ 3659              	.LASF127:
+ 3660 06f9 4C565F53 		.ascii	"LV_SIGNAL_DRAG_END\000"
+ 3660      49474E41 
+ 3660      4C5F4452 
+ 3660      41475F45 
+ 3660      4E4400
+ 3661              	.LASF56:
+ 3662 070c 72616469 		.ascii	"radius\000"
+ 3662      757300
+ 3663              	.LASF102:
+ 3664 0713 6F70615F 		.ascii	"opa_scale\000"
+ 3664      7363616C 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 79
+
+
+ 3664      6500
+ 3665              	.LASF68:
+ 3666 071d 626F6479 		.ascii	"body\000"
+ 3666      00
+ 3667              	.LASF132:
+ 3668 0722 6C765F73 		.ascii	"lv_signal_t\000"
+ 3668      69676E61 
+ 3668      6C5F7400 
+ 3669              	.LASF49:
+ 3670 072e 74797065 		.ascii	"type\000"
+ 3670      00
+ 3671              	.LASF153:
+ 3672 0733 636F7079 		.ascii	"copy_ext\000"
+ 3672      5F657874 
+ 3672      00
+ 3673              	.LASF3:
+ 3674 073c 756E7369 		.ascii	"unsigned char\000"
+ 3674      676E6564 
+ 3674      20636861 
+ 3674      7200
+ 3675              	.LASF107:
+ 3676 074a 4C565F44 		.ascii	"LV_DESIGN_COVER_CHK\000"
+ 3676      45534947 
+ 3676      4E5F434F 
+ 3676      5645525F 
+ 3676      43484B00 
+ 3677              	.LASF9:
+ 3678 075e 5F5F7569 		.ascii	"__uint32_t\000"
+ 3678      6E743332 
+ 3678      5F7400
+ 3679              	.LASF71:
+ 3680 0769 6C696E65 		.ascii	"line\000"
+ 3680      00
+ 3681              	.LASF28:
+ 3682 076e 6765745F 		.ascii	"get_glyph_bitmap\000"
+ 3682      676C7970 
+ 3682      685F6269 
+ 3682      746D6170 
+ 3682      00
+ 3683              	.LASF79:
+ 3684 077f 7461696C 		.ascii	"tail\000"
+ 3684      00
+ 3685              	.LASF84:
+ 3686 0784 6368696C 		.ascii	"child_ll\000"
+ 3686      645F6C6C 
+ 3686      00
+ 3687              	.LASF94:
+ 3688 078d 64726167 		.ascii	"drag_parent\000"
+ 3688      5F706172 
+ 3688      656E7400 
+ 3689              	.LASF108:
+ 3690 0799 6C765F64 		.ascii	"lv_design_mode_t\000"
+ 3690      65736967 
+ 3690      6E5F6D6F 
+ 3690      64655F74 
+ 3690      00
+ 3691              	.LASF86:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 80
+
+
+ 3692 07aa 6576656E 		.ascii	"event_cb\000"
+ 3692      745F6362 
+ 3692      00
+ 3693              	.LASF88:
+ 3694 07b3 64657369 		.ascii	"design_cb\000"
+ 3694      676E5F63 
+ 3694      6200
+ 3695              	.LASF125:
+ 3696 07bd 4C565F53 		.ascii	"LV_SIGNAL_LONG_PRESS_REP\000"
+ 3696      49474E41 
+ 3696      4C5F4C4F 
+ 3696      4E475F50 
+ 3696      52455353 
+ 3697              	.LASF58:
+ 3698 07d6 73686164 		.ascii	"shadow\000"
+ 3698      6F7700
+ 3699              	.LASF43:
+ 3700 07dd 6C765F61 		.ascii	"lv_area_t\000"
+ 3700      7265615F 
+ 3700      7400
+ 3701              	.LASF2:
+ 3702 07e7 7369676E 		.ascii	"signed char\000"
+ 3702      65642063 
+ 3702      68617200 
+ 3703              	.LASF95:
+ 3704 07f3 68696464 		.ascii	"hidden\000"
+ 3704      656E00
+ 3705              	.LASF7:
+ 3706 07fa 73686F72 		.ascii	"short unsigned int\000"
+ 3706      7420756E 
+ 3706      7369676E 
+ 3706      65642069 
+ 3706      6E7400
+ 3707              	.LASF141:
+ 3708 080d 6C765F72 		.ascii	"lv_reailgn_t\000"
+ 3708      6561696C 
+ 3708      676E5F74 
+ 3708      00
+ 3709              	.LASF114:
+ 3710 081a 4C565F53 		.ascii	"LV_SIGNAL_CORD_CHG\000"
+ 3710      49474E41 
+ 3710      4C5F434F 
+ 3710      52445F43 
+ 3710      484700
+ 3711              	.LASF100:
+ 3712 082d 72657365 		.ascii	"reserved\000"
+ 3712      72766564 
+ 3712      00
+ 3713              	.LASF160:
+ 3714 0836 6C765F6C 		.ascii	"lv_line_set_y_invert\000"
+ 3714      696E655F 
+ 3714      7365745F 
+ 3714      795F696E 
+ 3714      76657274 
+ 3715              	.LASF92:
+ 3716 084b 64726167 		.ascii	"drag\000"
+ 3716      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 81
+
+
+ 3717              	.LASF152:
+ 3718 0850 6E65775F 		.ascii	"new_line\000"
+ 3718      6C696E65 
+ 3718      00
+ 3719              	.LASF87:
+ 3720 0859 7369676E 		.ascii	"signal_cb\000"
+ 3720      616C5F63 
+ 3720      6200
+ 3721              	.LASF177:
+ 3722 0863 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3722      43313120 
+ 3722      352E342E 
+ 3722      31203230 
+ 3722      31363036 
+ 3723 0896 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 3723      20726576 
+ 3723      6973696F 
+ 3723      6E203233 
+ 3723      37373135 
+ 3724 08c9 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 3724      70202D6D 
+ 3724      6670753D 
+ 3724      66707634 
+ 3724      2D73702D 
+ 3725 08fc 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 3725      6F6E7320 
+ 3725      2D666661 
+ 3725      742D6C74 
+ 3725      6F2D6F62 
+ 3726              	.LASF44:
+ 3727 0916 6C765F62 		.ascii	"lv_border_part_t\000"
+ 3727      6F726465 
+ 3727      725F7061 
+ 3727      72745F74 
+ 3727      00
+ 3728              	.LASF73:
+ 3729 0927 4C565F52 		.ascii	"LV_RES_INV\000"
+ 3729      45535F49 
+ 3729      4E5600
+ 3730              	.LASF156:
+ 3731 0932 796D6178 		.ascii	"ymax\000"
+ 3731      00
+ 3732              	.LASF111:
+ 3733 0937 6C765F65 		.ascii	"lv_event_cb_t\000"
+ 3733      76656E74 
+ 3733      5F63625F 
+ 3733      7400
+ 3734              	.LASF120:
+ 3735 0945 4C565F53 		.ascii	"LV_SIGNAL_PRESSED\000"
+ 3735      49474E41 
+ 3735      4C5F5052 
+ 3735      45535345 
+ 3735      4400
+ 3736              	.LASF21:
+ 3737 0957 6164765F 		.ascii	"adv_w\000"
+ 3737      7700
+ 3738              	.LASF176:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccAEAlZv.s 			page 82
+
+
+ 3739 095d 616E6365 		.ascii	"ancestor_signal\000"
+ 3739      73746F72 
+ 3739      5F736967 
+ 3739      6E616C00 
+ 3740              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

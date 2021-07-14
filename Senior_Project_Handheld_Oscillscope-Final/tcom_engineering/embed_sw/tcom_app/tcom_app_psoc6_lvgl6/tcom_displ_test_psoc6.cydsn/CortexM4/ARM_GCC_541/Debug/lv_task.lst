@@ -1,0 +1,3333 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_task.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.bss
+  21              	lv_task_run:
+  22 0000 00       		.space	1
+  23              	idle_last:
+  24 0001 00       		.space	1
+  25              	task_deleted:
+  26 0002 00       		.space	1
+  27              	task_created:
+  28 0003 00       		.space	1
+  29              		.section	.text.lv_task_core_init,"ax",%progbits
+  30              		.align	2
+  31              		.global	lv_task_core_init
+  32              		.thumb
+  33              		.thumb_func
+  34              		.type	lv_task_core_init, %function
+  35              	lv_task_core_init:
+  36              	.LFB31:
+  37              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_task.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @file lv_task.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * An 'lv_task'  is a void (*fp) (void* param) type function which will be called periodically.
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * A priority (5 levels + disable) can be assigned to lv_tasks.
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /*********************
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *      INCLUDES
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *********************/
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include <stddef.h>
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include "lv_task.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include "../lv_core/lv_debug.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include "../lv_hal/lv_hal_tick.h"
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include "lv_gc.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #if defined(LV_GC_INCLUDE)
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #include LV_GC_INCLUDE
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #endif /* LV_ENABLE_GC */
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /*********************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 2
+
+
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *      DEFINES
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *********************/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #define IDLE_MEAS_PERIOD 500 /*[ms]*/
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #define DEF_PRIO LV_TASK_PRIO_MID
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** #define DEF_PERIOD 500
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *      TYPEDEFS
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *  STATIC PROTOTYPES
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static bool lv_task_exec(lv_task_t * task);
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *  STATIC VARIABLES
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static bool lv_task_run  = false;
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static uint8_t idle_last = 0;
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static bool task_deleted;
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static bool task_created;
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *      MACROS
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *   GLOBAL FUNCTIONS
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Init the lv_task module
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_core_init(void)
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+  38              		.loc 1 56 0
+  39              		.cfi_startproc
+  40              		@ args = 0, pretend = 0, frame = 0
+  41              		@ frame_needed = 1, uses_anonymous_args = 0
+  42 0000 80B5     		push	{r7, lr}
+  43              		.cfi_def_cfa_offset 8
+  44              		.cfi_offset 7, -8
+  45              		.cfi_offset 14, -4
+  46 0002 00AF     		add	r7, sp, #0
+  47              		.cfi_def_cfa_register 7
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_ll_init(&LV_GC_ROOT(_lv_task_ll), sizeof(lv_task_t));
+  48              		.loc 1 57 0
+  49 0004 1421     		movs	r1, #20
+  50 0006 0448     		ldr	r0, .L2
+  51 0008 FFF7FEFF 		bl	lv_ll_init
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Initially enable the lv_task handling*/
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_enable(true);
+  52              		.loc 1 60 0
+  53 000c 0120     		movs	r0, #1
+  54 000e FFF7FEFF 		bl	lv_task_enable
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 3
+
+
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+  55              		.loc 1 61 0
+  56 0012 00BF     		nop
+  57 0014 80BD     		pop	{r7, pc}
+  58              	.L3:
+  59 0016 00BF     		.align	2
+  60              	.L2:
+  61 0018 00000000 		.word	_lv_task_ll
+  62              		.cfi_endproc
+  63              	.LFE31:
+  64              		.size	lv_task_core_init, .-lv_task_core_init
+  65              		.section	.text.lv_task_handler,"ax",%progbits
+  66              		.align	2
+  67              		.global	lv_task_handler
+  68              		.thumb
+  69              		.thumb_func
+  70              		.type	lv_task_handler, %function
+  71              	lv_task_handler:
+  72              	.LFB32:
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Call it  periodically to handle lv_tasks.
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** LV_ATTRIBUTE_TASK_HANDLER void lv_task_handler(void)
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+  73              		.loc 1 67 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 16
+  76              		@ frame_needed = 1, uses_anonymous_args = 0
+  77 0000 80B5     		push	{r7, lr}
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 7, -8
+  80              		.cfi_offset 14, -4
+  81 0002 84B0     		sub	sp, sp, #16
+  82              		.cfi_def_cfa_offset 24
+  83 0004 00AF     		add	r7, sp, #0
+  84              		.cfi_def_cfa_register 7
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     LV_LOG_TRACE("lv_task_handler started");
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Avoid concurrent running of the task handler*/
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     static bool already_running = false;
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(already_running) return;
+  85              		.loc 1 72 0
+  86 0006 7A4B     		ldr	r3, .L24
+  87 0008 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  88 000a 002B     		cmp	r3, #0
+  89 000c 40F0EB80 		bne	.L22
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     already_running = true;
+  90              		.loc 1 73 0
+  91 0010 774B     		ldr	r3, .L24
+  92 0012 0122     		movs	r2, #1
+  93 0014 1A70     		strb	r2, [r3]
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     static uint32_t idle_period_start = 0;
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     static uint32_t handler_start     = 0;
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     static uint32_t busy_time         = 0;
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 4
+
+
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(lv_task_run == false) {
+  94              		.loc 1 79 0
+  95 0016 774B     		ldr	r3, .L24+4
+  96 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  97 001a 83F00103 		eor	r3, r3, #1
+  98 001e DBB2     		uxtb	r3, r3
+  99 0020 002B     		cmp	r3, #0
+ 100 0022 03D0     		beq	.L7
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         already_running = false; /*Release mutex*/
+ 101              		.loc 1 80 0
+ 102 0024 724B     		ldr	r3, .L24
+ 103 0026 0022     		movs	r2, #0
+ 104 0028 1A70     		strb	r2, [r3]
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         return;
+ 105              		.loc 1 81 0
+ 106 002a DDE0     		b	.L4
+ 107              	.L7:
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     handler_start = lv_tick_get();
+ 108              		.loc 1 84 0
+ 109 002c FFF7FEFF 		bl	lv_tick_get
+ 110 0030 0246     		mov	r2, r0
+ 111 0032 714B     		ldr	r3, .L24+8
+ 112 0034 1A60     		str	r2, [r3]
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /* Run all task from the highest to the lowest priority
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****      * If a lower priority task is executed check task again from the highest priority
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****      * but on the priority of executed tasks don't run tasks before the executed*/
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * task_interrupter = NULL;
+ 113              		.loc 1 89 0
+ 114 0036 0023     		movs	r3, #0
+ 115 0038 FB60     		str	r3, [r7, #12]
+ 116              	.L18:
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * next;
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     bool end_flag;
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     do {
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         end_flag                 = true;
+ 117              		.loc 1 93 0
+ 118 003a 0123     		movs	r3, #1
+ 119 003c FB72     		strb	r3, [r7, #11]
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         task_deleted             = false;
+ 120              		.loc 1 94 0
+ 121 003e 6F4B     		ldr	r3, .L24+12
+ 122 0040 0022     		movs	r2, #0
+ 123 0042 1A70     		strb	r2, [r3]
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         task_created             = false;
+ 124              		.loc 1 95 0
+ 125 0044 6E4B     		ldr	r3, .L24+16
+ 126 0046 0022     		movs	r2, #0
+ 127 0048 1A70     		strb	r2, [r3]
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         LV_GC_ROOT(_lv_task_act) = lv_ll_get_head(&LV_GC_ROOT(_lv_task_ll));
+ 128              		.loc 1 96 0
+ 129 004a 6E48     		ldr	r0, .L24+20
+ 130 004c FFF7FEFF 		bl	lv_ll_get_head
+ 131 0050 0246     		mov	r2, r0
+ 132 0052 6D4B     		ldr	r3, .L24+24
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 5
+
+
+ 133 0054 1A60     		str	r2, [r3]
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         while(LV_GC_ROOT(_lv_task_act)) {
+ 134              		.loc 1 97 0
+ 135 0056 7EE0     		b	.L8
+ 136              	.L17:
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /* The task might be deleted if it runs only once ('once = 1')
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****              * So get next element until the current is surely valid*/
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             next = lv_ll_get_next(&LV_GC_ROOT(_lv_task_ll), LV_GC_ROOT(_lv_task_act));
+ 137              		.loc 1 100 0
+ 138 0058 6B4B     		ldr	r3, .L24+24
+ 139 005a 1B68     		ldr	r3, [r3]
+ 140 005c 1946     		mov	r1, r3
+ 141 005e 6948     		ldr	r0, .L24+20
+ 142 0060 FFF7FEFF 		bl	lv_ll_get_next
+ 143 0064 7860     		str	r0, [r7, #4]
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /*We reach priority of the turned off task. There is nothing more to do.*/
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(((lv_task_t *)LV_GC_ROOT(_lv_task_act))->prio == LV_TASK_PRIO_OFF) {
+ 144              		.loc 1 103 0
+ 145 0066 684B     		ldr	r3, .L24+24
+ 146 0068 1B68     		ldr	r3, [r3]
+ 147 006a 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 148 006c 03F00703 		and	r3, r3, #7
+ 149 0070 DBB2     		uxtb	r3, r3
+ 150 0072 002B     		cmp	r3, #0
+ 151 0074 75D0     		beq	.L23
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 break;
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /*Here is the interrupter task. Don't execute it again.*/
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(LV_GC_ROOT(_lv_task_act) == task_interrupter) {
+ 152              		.loc 1 108 0
+ 153 0076 644B     		ldr	r3, .L24+24
+ 154 0078 1A68     		ldr	r2, [r3]
+ 155 007a FB68     		ldr	r3, [r7, #12]
+ 156 007c 9A42     		cmp	r2, r3
+ 157 007e 05D1     		bne	.L11
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 task_interrupter = NULL; /*From this point only task after the interrupter comes, s
+ 158              		.loc 1 109 0
+ 159 0080 0023     		movs	r3, #0
+ 160 0082 FB60     		str	r3, [r7, #12]
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                                             the interrupter is not interesting anymore*/
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 LV_GC_ROOT(_lv_task_act) = next;
+ 161              		.loc 1 111 0
+ 162 0084 604A     		ldr	r2, .L24+24
+ 163 0086 7B68     		ldr	r3, [r7, #4]
+ 164 0088 1360     		str	r3, [r2]
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 continue; /*Load the next task*/
+ 165              		.loc 1 112 0
+ 166 008a 64E0     		b	.L8
+ 167              	.L11:
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /*Just try to run the tasks with highest priority.*/
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(((lv_task_t *)LV_GC_ROOT(_lv_task_act))->prio == LV_TASK_PRIO_HIGHEST) {
+ 168              		.loc 1 116 0
+ 169 008c 5E4B     		ldr	r3, .L24+24
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 6
+
+
+ 170 008e 1B68     		ldr	r3, [r3]
+ 171 0090 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 172 0092 03F00703 		and	r3, r3, #7
+ 173 0096 DBB2     		uxtb	r3, r3
+ 174 0098 052B     		cmp	r3, #5
+ 175 009a 05D1     		bne	.L12
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 lv_task_exec(LV_GC_ROOT(_lv_task_act));
+ 176              		.loc 1 117 0
+ 177 009c 5A4B     		ldr	r3, .L24+24
+ 178 009e 1B68     		ldr	r3, [r3]
+ 179 00a0 1846     		mov	r0, r3
+ 180 00a2 FFF7FEFF 		bl	lv_task_exec
+ 181 00a6 48E0     		b	.L13
+ 182              	.L12:
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /*Tasks with higher priority than the interrupted shall be run in every case*/
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             else if(task_interrupter) {
+ 183              		.loc 1 120 0
+ 184 00a8 FB68     		ldr	r3, [r7, #12]
+ 185 00aa 002B     		cmp	r3, #0
+ 186 00ac 29D0     		beq	.L14
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 if(((lv_task_t *)LV_GC_ROOT(_lv_task_act))->prio > task_interrupter->prio) {
+ 187              		.loc 1 121 0
+ 188 00ae 564B     		ldr	r3, .L24+24
+ 189 00b0 1B68     		ldr	r3, [r3]
+ 190 00b2 1B7C     		ldrb	r3, [r3, #16]
+ 191 00b4 C3F30203 		ubfx	r3, r3, #0, #3
+ 192 00b8 DBB2     		uxtb	r3, r3
+ 193 00ba 1A46     		mov	r2, r3
+ 194 00bc FB68     		ldr	r3, [r7, #12]
+ 195 00be 1B7C     		ldrb	r3, [r3, #16]
+ 196 00c0 C3F30203 		ubfx	r3, r3, #0, #3
+ 197 00c4 DBB2     		uxtb	r3, r3
+ 198 00c6 9A42     		cmp	r2, r3
+ 199 00c8 37DD     		ble	.L13
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                     if(lv_task_exec(LV_GC_ROOT(_lv_task_act))) {
+ 200              		.loc 1 122 0
+ 201 00ca 4F4B     		ldr	r3, .L24+24
+ 202 00cc 1B68     		ldr	r3, [r3]
+ 203 00ce 1846     		mov	r0, r3
+ 204 00d0 FFF7FEFF 		bl	lv_task_exec
+ 205 00d4 0346     		mov	r3, r0
+ 206 00d6 002B     		cmp	r3, #0
+ 207 00d8 2FD0     		beq	.L13
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                         if(!task_created && !task_deleted) {
+ 208              		.loc 1 123 0
+ 209 00da 494B     		ldr	r3, .L24+16
+ 210 00dc 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 211 00de 83F00103 		eor	r3, r3, #1
+ 212 00e2 DBB2     		uxtb	r3, r3
+ 213 00e4 002B     		cmp	r3, #0
+ 214 00e6 28D0     		beq	.L13
+ 215              		.loc 1 123 0 is_stmt 0 discriminator 1
+ 216 00e8 444B     		ldr	r3, .L24+12
+ 217 00ea 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 218 00ec 83F00103 		eor	r3, r3, #1
+ 219 00f0 DBB2     		uxtb	r3, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 7
+
+
+ 220 00f2 002B     		cmp	r3, #0
+ 221 00f4 21D0     		beq	.L13
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                             /*Check all tasks again from the highest priority */
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                             task_interrupter = LV_GC_ROOT(_lv_task_act);
+ 222              		.loc 1 125 0 is_stmt 1
+ 223 00f6 444B     		ldr	r3, .L24+24
+ 224 00f8 1B68     		ldr	r3, [r3]
+ 225 00fa FB60     		str	r3, [r7, #12]
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                             end_flag = false;
+ 226              		.loc 1 126 0
+ 227 00fc 0023     		movs	r3, #0
+ 228 00fe FB72     		strb	r3, [r7, #11]
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                             break;
+ 229              		.loc 1 127 0
+ 230 0100 30E0     		b	.L10
+ 231              	.L14:
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                         }
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                     }
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 }
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /* It is no interrupter task or we already reached it earlier.
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****              * Just run the remaining tasks*/
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             else {
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 if(lv_task_exec(LV_GC_ROOT(_lv_task_act))) {
+ 232              		.loc 1 135 0
+ 233 0102 414B     		ldr	r3, .L24+24
+ 234 0104 1B68     		ldr	r3, [r3]
+ 235 0106 1846     		mov	r0, r3
+ 236 0108 FFF7FEFF 		bl	lv_task_exec
+ 237 010c 0346     		mov	r3, r0
+ 238 010e 002B     		cmp	r3, #0
+ 239 0110 13D0     		beq	.L13
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                     if(!task_created && !task_deleted) {
+ 240              		.loc 1 136 0
+ 241 0112 3B4B     		ldr	r3, .L24+16
+ 242 0114 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 243 0116 83F00103 		eor	r3, r3, #1
+ 244 011a DBB2     		uxtb	r3, r3
+ 245 011c 002B     		cmp	r3, #0
+ 246 011e 0CD0     		beq	.L13
+ 247              		.loc 1 136 0 is_stmt 0 discriminator 1
+ 248 0120 364B     		ldr	r3, .L24+12
+ 249 0122 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 250 0124 83F00103 		eor	r3, r3, #1
+ 251 0128 DBB2     		uxtb	r3, r3
+ 252 012a 002B     		cmp	r3, #0
+ 253 012c 05D0     		beq	.L13
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                         task_interrupter = LV_GC_ROOT(_lv_task_act); /*Check all tasks again from t
+ 254              		.loc 1 137 0 is_stmt 1
+ 255 012e 364B     		ldr	r3, .L24+24
+ 256 0130 1B68     		ldr	r3, [r3]
+ 257 0132 FB60     		str	r3, [r7, #12]
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                         end_flag         = false;
+ 258              		.loc 1 138 0
+ 259 0134 0023     		movs	r3, #0
+ 260 0136 FB72     		strb	r3, [r7, #11]
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                         break;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 8
+
+
+ 261              		.loc 1 139 0
+ 262 0138 14E0     		b	.L10
+ 263              	.L13:
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                     }
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 }
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /*If a task was created or deleted then this or the next item might be corrupted*/
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(task_created || task_deleted) {
+ 264              		.loc 1 145 0
+ 265 013a 314B     		ldr	r3, .L24+16
+ 266 013c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 267 013e 002B     		cmp	r3, #0
+ 268 0140 03D1     		bne	.L15
+ 269              		.loc 1 145 0 is_stmt 0 discriminator 1
+ 270 0142 2E4B     		ldr	r3, .L24+12
+ 271 0144 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 272 0146 002B     		cmp	r3, #0
+ 273 0148 02D0     		beq	.L16
+ 274              	.L15:
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 task_interrupter = NULL;
+ 275              		.loc 1 146 0 is_stmt 1
+ 276 014a 0023     		movs	r3, #0
+ 277 014c FB60     		str	r3, [r7, #12]
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 break;
+ 278              		.loc 1 147 0
+ 279 014e 09E0     		b	.L10
+ 280              	.L16:
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             LV_GC_ROOT(_lv_task_act) = next; /*Load the next task*/
+ 281              		.loc 1 150 0
+ 282 0150 2D4A     		ldr	r2, .L24+24
+ 283 0152 7B68     		ldr	r3, [r7, #4]
+ 284 0154 1360     		str	r3, [r2]
+ 285              	.L8:
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             /* The task might be deleted if it runs only once ('once = 1')
+ 286              		.loc 1 97 0
+ 287 0156 2C4B     		ldr	r3, .L24+24
+ 288 0158 1B68     		ldr	r3, [r3]
+ 289 015a 002B     		cmp	r3, #0
+ 290 015c 7FF47CAF 		bne	.L17
+ 291 0160 00E0     		b	.L10
+ 292              	.L23:
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 293              		.loc 1 104 0
+ 294 0162 00BF     		nop
+ 295              	.L10:
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         }
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     } while(!end_flag);
+ 296              		.loc 1 152 0
+ 297 0164 FB7A     		ldrb	r3, [r7, #11]
+ 298 0166 83F00103 		eor	r3, r3, #1
+ 299 016a DBB2     		uxtb	r3, r3
+ 300 016c 002B     		cmp	r3, #0
+ 301 016e 7FF464AF 		bne	.L18
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 9
+
+
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     busy_time += lv_tick_elaps(handler_start);
+ 302              		.loc 1 154 0
+ 303 0172 214B     		ldr	r3, .L24+8
+ 304 0174 1B68     		ldr	r3, [r3]
+ 305 0176 1846     		mov	r0, r3
+ 306 0178 FFF7FEFF 		bl	lv_tick_elaps
+ 307 017c 0246     		mov	r2, r0
+ 308 017e 234B     		ldr	r3, .L24+28
+ 309 0180 1B68     		ldr	r3, [r3]
+ 310 0182 1344     		add	r3, r3, r2
+ 311 0184 214A     		ldr	r2, .L24+28
+ 312 0186 1360     		str	r3, [r2]
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     uint32_t idle_period_time = lv_tick_elaps(idle_period_start);
+ 313              		.loc 1 155 0
+ 314 0188 214B     		ldr	r3, .L24+32
+ 315 018a 1B68     		ldr	r3, [r3]
+ 316 018c 1846     		mov	r0, r3
+ 317 018e FFF7FEFF 		bl	lv_tick_elaps
+ 318 0192 3860     		str	r0, [r7]
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(idle_period_time >= IDLE_MEAS_PERIOD) {
+ 319              		.loc 1 156 0
+ 320 0194 3B68     		ldr	r3, [r7]
+ 321 0196 B3F5FA7F 		cmp	r3, #500
+ 322 019a 20D3     		bcc	.L19
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         idle_last         = (uint32_t)((uint32_t)busy_time * 100) / IDLE_MEAS_PERIOD; /*Calculate t
+ 323              		.loc 1 158 0
+ 324 019c 1B4B     		ldr	r3, .L24+28
+ 325 019e 1B68     		ldr	r3, [r3]
+ 326 01a0 6422     		movs	r2, #100
+ 327 01a2 02FB03F3 		mul	r3, r2, r3
+ 328 01a6 1B4A     		ldr	r2, .L24+36
+ 329 01a8 A2FB0323 		umull	r2, r3, r2, r3
+ 330 01ac 5B09     		lsrs	r3, r3, #5
+ 331 01ae DAB2     		uxtb	r2, r3
+ 332 01b0 194B     		ldr	r3, .L24+40
+ 333 01b2 1A70     		strb	r2, [r3]
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         idle_last         = idle_last > 100 ? 0 : 100 - idle_last;                    /*But we need
+ 334              		.loc 1 159 0
+ 335 01b4 184B     		ldr	r3, .L24+40
+ 336 01b6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 337 01b8 642B     		cmp	r3, #100
+ 338 01ba 05D8     		bhi	.L20
+ 339              		.loc 1 159 0 is_stmt 0 discriminator 1
+ 340 01bc 164B     		ldr	r3, .L24+40
+ 341 01be 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 342 01c0 C3F16403 		rsb	r3, r3, #100
+ 343 01c4 DBB2     		uxtb	r3, r3
+ 344 01c6 00E0     		b	.L21
+ 345              	.L20:
+ 346              		.loc 1 159 0 discriminator 2
+ 347 01c8 0023     		movs	r3, #0
+ 348              	.L21:
+ 349              		.loc 1 159 0 discriminator 4
+ 350 01ca 134A     		ldr	r2, .L24+40
+ 351 01cc 1370     		strb	r3, [r2]
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         busy_time         = 0;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 10
+
+
+ 352              		.loc 1 160 0 is_stmt 1 discriminator 4
+ 353 01ce 0F4B     		ldr	r3, .L24+28
+ 354 01d0 0022     		movs	r2, #0
+ 355 01d2 1A60     		str	r2, [r3]
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         idle_period_start = lv_tick_get();
+ 356              		.loc 1 161 0 discriminator 4
+ 357 01d4 FFF7FEFF 		bl	lv_tick_get
+ 358 01d8 0246     		mov	r2, r0
+ 359 01da 0D4B     		ldr	r3, .L24+32
+ 360 01dc 1A60     		str	r2, [r3]
+ 361              	.L19:
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     already_running = false; /*Release the mutex*/
+ 362              		.loc 1 164 0
+ 363 01de 044B     		ldr	r3, .L24
+ 364 01e0 0022     		movs	r2, #0
+ 365 01e2 1A70     		strb	r2, [r3]
+ 366 01e4 00E0     		b	.L4
+ 367              	.L22:
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     already_running = true;
+ 368              		.loc 1 72 0
+ 369 01e6 00BF     		nop
+ 370              	.L4:
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     LV_LOG_TRACE("lv_task_handler ready");
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 371              		.loc 1 167 0
+ 372 01e8 1037     		adds	r7, r7, #16
+ 373              		.cfi_def_cfa_offset 8
+ 374 01ea BD46     		mov	sp, r7
+ 375              		.cfi_def_cfa_register 13
+ 376              		@ sp needed
+ 377 01ec 80BD     		pop	{r7, pc}
+ 378              	.L25:
+ 379 01ee 00BF     		.align	2
+ 380              	.L24:
+ 381 01f0 04000000 		.word	already_running.5919
+ 382 01f4 00000000 		.word	lv_task_run
+ 383 01f8 08000000 		.word	handler_start.5921
+ 384 01fc 02000000 		.word	task_deleted
+ 385 0200 03000000 		.word	task_created
+ 386 0204 00000000 		.word	_lv_task_ll
+ 387 0208 00000000 		.word	_lv_task_act
+ 388 020c 0C000000 		.word	busy_time.5922
+ 389 0210 10000000 		.word	idle_period_start.5920
+ 390 0214 D34D6210 		.word	274877907
+ 391 0218 01000000 		.word	idle_last
+ 392              		.cfi_endproc
+ 393              	.LFE32:
+ 394              		.size	lv_task_handler, .-lv_task_handler
+ 395              		.section	.text.lv_task_create_basic,"ax",%progbits
+ 396              		.align	2
+ 397              		.global	lv_task_create_basic
+ 398              		.thumb
+ 399              		.thumb_func
+ 400              		.type	lv_task_create_basic, %function
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 11
+
+
+ 401              	lv_task_create_basic:
+ 402              	.LFB33:
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Create an "empty" task. It needs to initialzed with at least
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * `lv_task_set_cb` and `lv_task_set_period`
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @return pointer to the craeted task
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** lv_task_t * lv_task_create_basic(void)
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 403              		.loc 1 174 0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 8
+ 406              		@ frame_needed = 1, uses_anonymous_args = 0
+ 407 0000 80B5     		push	{r7, lr}
+ 408              		.cfi_def_cfa_offset 8
+ 409              		.cfi_offset 7, -8
+ 410              		.cfi_offset 14, -4
+ 411 0002 82B0     		sub	sp, sp, #8
+ 412              		.cfi_def_cfa_offset 16
+ 413 0004 00AF     		add	r7, sp, #0
+ 414              		.cfi_def_cfa_register 7
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * new_task = NULL;
+ 415              		.loc 1 175 0
+ 416 0006 0023     		movs	r3, #0
+ 417 0008 7B60     		str	r3, [r7, #4]
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * tmp;
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Create task lists in order of priority from high to low*/
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     tmp = lv_ll_get_head(&LV_GC_ROOT(_lv_task_ll));
+ 418              		.loc 1 179 0
+ 419 000a 2C48     		ldr	r0, .L34
+ 420 000c FFF7FEFF 		bl	lv_ll_get_head
+ 421 0010 3860     		str	r0, [r7]
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*It's the first task*/
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(NULL == tmp) {
+ 422              		.loc 1 182 0
+ 423 0012 3B68     		ldr	r3, [r7]
+ 424 0014 002B     		cmp	r3, #0
+ 425 0016 08D1     		bne	.L27
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         new_task = lv_ll_ins_head(&LV_GC_ROOT(_lv_task_ll));
+ 426              		.loc 1 183 0
+ 427 0018 2848     		ldr	r0, .L34
+ 428 001a FFF7FEFF 		bl	lv_ll_ins_head
+ 429 001e 7860     		str	r0, [r7, #4]
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         LV_ASSERT_MEM(new_task);
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         if(new_task == NULL) return NULL;
+ 430              		.loc 1 185 0
+ 431 0020 7B68     		ldr	r3, [r7, #4]
+ 432 0022 002B     		cmp	r3, #0
+ 433 0024 28D1     		bne	.L28
+ 434              		.loc 1 185 0 is_stmt 0 discriminator 1
+ 435 0026 0023     		movs	r3, #0
+ 436 0028 44E0     		b	.L29
+ 437              	.L27:
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Insert the new task to proper place according to its priority*/
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 12
+
+
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     else {
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         do {
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(tmp->prio <= DEF_PRIO) {
+ 438              		.loc 1 190 0 is_stmt 1
+ 439 002a 3B68     		ldr	r3, [r7]
+ 440 002c 1B7C     		ldrb	r3, [r3, #16]
+ 441 002e C3F30203 		ubfx	r3, r3, #0, #3
+ 442 0032 DBB2     		uxtb	r3, r3
+ 443 0034 032B     		cmp	r3, #3
+ 444 0036 09DC     		bgt	.L30
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 new_task = lv_ll_ins_prev(&LV_GC_ROOT(_lv_task_ll), tmp);
+ 445              		.loc 1 191 0
+ 446 0038 3968     		ldr	r1, [r7]
+ 447 003a 2048     		ldr	r0, .L34
+ 448 003c FFF7FEFF 		bl	lv_ll_ins_prev
+ 449 0040 7860     		str	r0, [r7, #4]
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 LV_ASSERT_MEM(new_task);
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 if(new_task == NULL) return NULL;
+ 450              		.loc 1 193 0
+ 451 0042 7B68     		ldr	r3, [r7, #4]
+ 452 0044 002B     		cmp	r3, #0
+ 453 0046 0AD1     		bne	.L33
+ 454              		.loc 1 193 0 is_stmt 0 discriminator 1
+ 455 0048 0023     		movs	r3, #0
+ 456 004a 33E0     		b	.L29
+ 457              	.L30:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 break;
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             tmp = lv_ll_get_next(&LV_GC_ROOT(_lv_task_ll), tmp);
+ 458              		.loc 1 196 0 is_stmt 1
+ 459 004c 3968     		ldr	r1, [r7]
+ 460 004e 1B48     		ldr	r0, .L34
+ 461 0050 FFF7FEFF 		bl	lv_ll_get_next
+ 462 0054 3860     		str	r0, [r7]
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         } while(tmp != NULL);
+ 463              		.loc 1 197 0
+ 464 0056 3B68     		ldr	r3, [r7]
+ 465 0058 002B     		cmp	r3, #0
+ 466 005a E6D1     		bne	.L27
+ 467 005c 00E0     		b	.L32
+ 468              	.L33:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 break;
+ 469              		.loc 1 194 0
+ 470 005e 00BF     		nop
+ 471              	.L32:
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         /*Only too high priority tasks were found. Add the task to the end*/
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         if(tmp == NULL) {
+ 472              		.loc 1 200 0
+ 473 0060 3B68     		ldr	r3, [r7]
+ 474 0062 002B     		cmp	r3, #0
+ 475 0064 08D1     		bne	.L28
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             new_task = lv_ll_ins_tail(&LV_GC_ROOT(_lv_task_ll));
+ 476              		.loc 1 201 0
+ 477 0066 1548     		ldr	r0, .L34
+ 478 0068 FFF7FEFF 		bl	lv_ll_ins_tail
+ 479 006c 7860     		str	r0, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 13
+
+
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             LV_ASSERT_MEM(new_task);
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(new_task == NULL) return NULL;
+ 480              		.loc 1 203 0
+ 481 006e 7B68     		ldr	r3, [r7, #4]
+ 482 0070 002B     		cmp	r3, #0
+ 483 0072 01D1     		bne	.L28
+ 484              		.loc 1 203 0 is_stmt 0 discriminator 1
+ 485 0074 0023     		movs	r3, #0
+ 486 0076 1DE0     		b	.L29
+ 487              	.L28:
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         }
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 207:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->period  = DEF_PERIOD;
+ 488              		.loc 1 207 0 is_stmt 1
+ 489 0078 7B68     		ldr	r3, [r7, #4]
+ 490 007a 4FF4FA72 		mov	r2, #500
+ 491 007e 1A60     		str	r2, [r3]
+ 208:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->task_cb = NULL;
+ 492              		.loc 1 208 0
+ 493 0080 7B68     		ldr	r3, [r7, #4]
+ 494 0082 0022     		movs	r2, #0
+ 495 0084 9A60     		str	r2, [r3, #8]
+ 209:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->prio    = DEF_PRIO;
+ 496              		.loc 1 209 0
+ 497 0086 7A68     		ldr	r2, [r7, #4]
+ 498 0088 137C     		ldrb	r3, [r2, #16]
+ 499 008a 0321     		movs	r1, #3
+ 500 008c 61F30203 		bfi	r3, r1, #0, #3
+ 501 0090 1374     		strb	r3, [r2, #16]
+ 210:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 211:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->once     = 0;
+ 502              		.loc 1 211 0
+ 503 0092 7A68     		ldr	r2, [r7, #4]
+ 504 0094 137C     		ldrb	r3, [r2, #16]
+ 505 0096 6FF3C303 		bfc	r3, #3, #1
+ 506 009a 1374     		strb	r3, [r2, #16]
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->last_run = lv_tick_get();
+ 507              		.loc 1 212 0
+ 508 009c FFF7FEFF 		bl	lv_tick_get
+ 509 00a0 0246     		mov	r2, r0
+ 510 00a2 7B68     		ldr	r3, [r7, #4]
+ 511 00a4 5A60     		str	r2, [r3, #4]
+ 213:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 214:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->user_data = NULL;
+ 512              		.loc 1 214 0
+ 513 00a6 7B68     		ldr	r3, [r7, #4]
+ 514 00a8 0022     		movs	r2, #0
+ 515 00aa DA60     		str	r2, [r3, #12]
+ 215:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task_created = true;
+ 516              		.loc 1 216 0
+ 517 00ac 044B     		ldr	r3, .L34+4
+ 518 00ae 0122     		movs	r2, #1
+ 519 00b0 1A70     		strb	r2, [r3]
+ 217:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 218:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     return new_task;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 14
+
+
+ 520              		.loc 1 218 0
+ 521 00b2 7B68     		ldr	r3, [r7, #4]
+ 522              	.L29:
+ 219:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 523              		.loc 1 219 0
+ 524 00b4 1846     		mov	r0, r3
+ 525 00b6 0837     		adds	r7, r7, #8
+ 526              		.cfi_def_cfa_offset 8
+ 527 00b8 BD46     		mov	sp, r7
+ 528              		.cfi_def_cfa_register 13
+ 529              		@ sp needed
+ 530 00ba 80BD     		pop	{r7, pc}
+ 531              	.L35:
+ 532              		.align	2
+ 533              	.L34:
+ 534 00bc 00000000 		.word	_lv_task_ll
+ 535 00c0 03000000 		.word	task_created
+ 536              		.cfi_endproc
+ 537              	.LFE33:
+ 538              		.size	lv_task_create_basic, .-lv_task_create_basic
+ 539              		.section	.text.lv_task_create,"ax",%progbits
+ 540              		.align	2
+ 541              		.global	lv_task_create
+ 542              		.thumb
+ 543              		.thumb_func
+ 544              		.type	lv_task_create, %function
+ 545              	lv_task_create:
+ 546              	.LFB34:
+ 220:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 221:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 222:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Create a new lv_task
+ 223:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task_xcb a callback which is the task itself. It will be called periodically.
+ 224:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *                 (the 'x' in the argument name indicates that its not a fully generic function be
+ 225:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *                  the `func_name(object, callback, ...)` convention)
+ 226:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param period call period in ms unit
+ 227:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param prio priority of the task (LV_TASK_PRIO_OFF means the task is stopped)
+ 228:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param user_data custom parameter
+ 229:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @return pointer to the new task
+ 230:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 231:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** lv_task_t * lv_task_create(lv_task_cb_t task_cb, uint32_t period, lv_task_prio_t prio, void * user_
+ 232:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 547              		.loc 1 232 0
+ 548              		.cfi_startproc
+ 549              		@ args = 0, pretend = 0, frame = 24
+ 550              		@ frame_needed = 1, uses_anonymous_args = 0
+ 551 0000 80B5     		push	{r7, lr}
+ 552              		.cfi_def_cfa_offset 8
+ 553              		.cfi_offset 7, -8
+ 554              		.cfi_offset 14, -4
+ 555 0002 86B0     		sub	sp, sp, #24
+ 556              		.cfi_def_cfa_offset 32
+ 557 0004 00AF     		add	r7, sp, #0
+ 558              		.cfi_def_cfa_register 7
+ 559 0006 F860     		str	r0, [r7, #12]
+ 560 0008 B960     		str	r1, [r7, #8]
+ 561 000a 3B60     		str	r3, [r7]
+ 562 000c 1346     		mov	r3, r2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 15
+
+
+ 563 000e FB71     		strb	r3, [r7, #7]
+ 233:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * new_task = lv_task_create_basic();
+ 564              		.loc 1 233 0
+ 565 0010 FFF7FEFF 		bl	lv_task_create_basic
+ 566 0014 7861     		str	r0, [r7, #20]
+ 234:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     LV_ASSERT_MEM(new_task);
+ 235:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(new_task == NULL) return NULL;
+ 567              		.loc 1 235 0
+ 568 0016 7B69     		ldr	r3, [r7, #20]
+ 569 0018 002B     		cmp	r3, #0
+ 570 001a 01D1     		bne	.L37
+ 571              		.loc 1 235 0 is_stmt 0 discriminator 1
+ 572 001c 0023     		movs	r3, #0
+ 573 001e 10E0     		b	.L38
+ 574              	.L37:
+ 236:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 237:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_set_cb(new_task, task_cb);
+ 575              		.loc 1 237 0 is_stmt 1
+ 576 0020 F968     		ldr	r1, [r7, #12]
+ 577 0022 7869     		ldr	r0, [r7, #20]
+ 578 0024 FFF7FEFF 		bl	lv_task_set_cb
+ 238:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_set_period(new_task, period);
+ 579              		.loc 1 238 0
+ 580 0028 B968     		ldr	r1, [r7, #8]
+ 581 002a 7869     		ldr	r0, [r7, #20]
+ 582 002c FFF7FEFF 		bl	lv_task_set_period
+ 239:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_set_prio(new_task, prio);
+ 583              		.loc 1 239 0
+ 584 0030 FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 585 0032 1946     		mov	r1, r3
+ 586 0034 7869     		ldr	r0, [r7, #20]
+ 587 0036 FFF7FEFF 		bl	lv_task_set_prio
+ 240:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     new_task->user_data = user_data;
+ 588              		.loc 1 240 0
+ 589 003a 7B69     		ldr	r3, [r7, #20]
+ 590 003c 3A68     		ldr	r2, [r7]
+ 591 003e DA60     		str	r2, [r3, #12]
+ 241:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 242:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     return new_task;
+ 592              		.loc 1 242 0
+ 593 0040 7B69     		ldr	r3, [r7, #20]
+ 594              	.L38:
+ 243:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 595              		.loc 1 243 0
+ 596 0042 1846     		mov	r0, r3
+ 597 0044 1837     		adds	r7, r7, #24
+ 598              		.cfi_def_cfa_offset 8
+ 599 0046 BD46     		mov	sp, r7
+ 600              		.cfi_def_cfa_register 13
+ 601              		@ sp needed
+ 602 0048 80BD     		pop	{r7, pc}
+ 603              		.cfi_endproc
+ 604              	.LFE34:
+ 605              		.size	lv_task_create, .-lv_task_create
+ 606 004a 00BF     		.section	.text.lv_task_set_cb,"ax",%progbits
+ 607              		.align	2
+ 608              		.global	lv_task_set_cb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 16
+
+
+ 609              		.thumb
+ 610              		.thumb_func
+ 611              		.type	lv_task_set_cb, %function
+ 612              	lv_task_set_cb:
+ 613              	.LFB35:
+ 244:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 245:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 246:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Set the callback the task (the function to call periodically)
+ 247:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a task
+ 248:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task_cb teh function to call periodically
+ 249:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_set_cb(lv_task_t * task, lv_task_cb_t task_cb)
+ 251:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 614              		.loc 1 251 0
+ 615              		.cfi_startproc
+ 616              		@ args = 0, pretend = 0, frame = 8
+ 617              		@ frame_needed = 1, uses_anonymous_args = 0
+ 618              		@ link register save eliminated.
+ 619 0000 80B4     		push	{r7}
+ 620              		.cfi_def_cfa_offset 4
+ 621              		.cfi_offset 7, -4
+ 622 0002 83B0     		sub	sp, sp, #12
+ 623              		.cfi_def_cfa_offset 16
+ 624 0004 00AF     		add	r7, sp, #0
+ 625              		.cfi_def_cfa_register 7
+ 626 0006 7860     		str	r0, [r7, #4]
+ 627 0008 3960     		str	r1, [r7]
+ 252:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->task_cb = task_cb;
+ 628              		.loc 1 252 0
+ 629 000a 7B68     		ldr	r3, [r7, #4]
+ 630 000c 3A68     		ldr	r2, [r7]
+ 631 000e 9A60     		str	r2, [r3, #8]
+ 253:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 632              		.loc 1 253 0
+ 633 0010 00BF     		nop
+ 634 0012 0C37     		adds	r7, r7, #12
+ 635              		.cfi_def_cfa_offset 4
+ 636 0014 BD46     		mov	sp, r7
+ 637              		.cfi_def_cfa_register 13
+ 638              		@ sp needed
+ 639 0016 5DF8047B 		ldr	r7, [sp], #4
+ 640              		.cfi_restore 7
+ 641              		.cfi_def_cfa_offset 0
+ 642 001a 7047     		bx	lr
+ 643              		.cfi_endproc
+ 644              	.LFE35:
+ 645              		.size	lv_task_set_cb, .-lv_task_set_cb
+ 646              		.section	.text.lv_task_del,"ax",%progbits
+ 647              		.align	2
+ 648              		.global	lv_task_del
+ 649              		.thumb
+ 650              		.thumb_func
+ 651              		.type	lv_task_del, %function
+ 652              	lv_task_del:
+ 653              	.LFB36:
+ 254:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 255:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 17
+
+
+ 256:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Delete a lv_task
+ 257:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to task created by task
+ 258:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 259:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_del(lv_task_t * task)
+ 260:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 654              		.loc 1 260 0
+ 655              		.cfi_startproc
+ 656              		@ args = 0, pretend = 0, frame = 8
+ 657              		@ frame_needed = 1, uses_anonymous_args = 0
+ 658 0000 80B5     		push	{r7, lr}
+ 659              		.cfi_def_cfa_offset 8
+ 660              		.cfi_offset 7, -8
+ 661              		.cfi_offset 14, -4
+ 662 0002 82B0     		sub	sp, sp, #8
+ 663              		.cfi_def_cfa_offset 16
+ 664 0004 00AF     		add	r7, sp, #0
+ 665              		.cfi_def_cfa_register 7
+ 666 0006 7860     		str	r0, [r7, #4]
+ 261:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_ll_rem(&LV_GC_ROOT(_lv_task_ll), task);
+ 667              		.loc 1 261 0
+ 668 0008 7968     		ldr	r1, [r7, #4]
+ 669 000a 0948     		ldr	r0, .L43
+ 670 000c FFF7FEFF 		bl	lv_ll_rem
+ 262:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 263:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_mem_free(task);
+ 671              		.loc 1 263 0
+ 672 0010 7868     		ldr	r0, [r7, #4]
+ 673 0012 FFF7FEFF 		bl	lv_mem_free
+ 264:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 265:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(LV_GC_ROOT(_lv_task_act) == task) task_deleted = true; /*The active task was deleted*/
+ 674              		.loc 1 265 0
+ 675 0016 074B     		ldr	r3, .L43+4
+ 676 0018 1A68     		ldr	r2, [r3]
+ 677 001a 7B68     		ldr	r3, [r7, #4]
+ 678 001c 9A42     		cmp	r2, r3
+ 679 001e 02D1     		bne	.L42
+ 680              		.loc 1 265 0 is_stmt 0 discriminator 1
+ 681 0020 054B     		ldr	r3, .L43+8
+ 682 0022 0122     		movs	r2, #1
+ 683 0024 1A70     		strb	r2, [r3]
+ 684              	.L42:
+ 266:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 685              		.loc 1 266 0 is_stmt 1
+ 686 0026 00BF     		nop
+ 687 0028 0837     		adds	r7, r7, #8
+ 688              		.cfi_def_cfa_offset 8
+ 689 002a BD46     		mov	sp, r7
+ 690              		.cfi_def_cfa_register 13
+ 691              		@ sp needed
+ 692 002c 80BD     		pop	{r7, pc}
+ 693              	.L44:
+ 694 002e 00BF     		.align	2
+ 695              	.L43:
+ 696 0030 00000000 		.word	_lv_task_ll
+ 697 0034 00000000 		.word	_lv_task_act
+ 698 0038 02000000 		.word	task_deleted
+ 699              		.cfi_endproc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 18
+
+
+ 700              	.LFE36:
+ 701              		.size	lv_task_del, .-lv_task_del
+ 702              		.section	.text.lv_task_set_prio,"ax",%progbits
+ 703              		.align	2
+ 704              		.global	lv_task_set_prio
+ 705              		.thumb
+ 706              		.thumb_func
+ 707              		.type	lv_task_set_prio, %function
+ 708              	lv_task_set_prio:
+ 709              	.LFB37:
+ 267:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 268:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 269:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Set new priority for a lv_task
+ 270:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a lv_task
+ 271:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param prio the new priority
+ 272:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 273:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_set_prio(lv_task_t * task, lv_task_prio_t prio)
+ 274:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 710              		.loc 1 274 0
+ 711              		.cfi_startproc
+ 712              		@ args = 0, pretend = 0, frame = 16
+ 713              		@ frame_needed = 1, uses_anonymous_args = 0
+ 714 0000 80B5     		push	{r7, lr}
+ 715              		.cfi_def_cfa_offset 8
+ 716              		.cfi_offset 7, -8
+ 717              		.cfi_offset 14, -4
+ 718 0002 84B0     		sub	sp, sp, #16
+ 719              		.cfi_def_cfa_offset 24
+ 720 0004 00AF     		add	r7, sp, #0
+ 721              		.cfi_def_cfa_register 7
+ 722 0006 7860     		str	r0, [r7, #4]
+ 723 0008 0B46     		mov	r3, r1
+ 724 000a FB70     		strb	r3, [r7, #3]
+ 275:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(task->prio == prio) return;
+ 725              		.loc 1 275 0
+ 726 000c 7B68     		ldr	r3, [r7, #4]
+ 727 000e 1B7C     		ldrb	r3, [r3, #16]
+ 728 0010 C3F30203 		ubfx	r3, r3, #0, #3
+ 729 0014 DBB2     		uxtb	r3, r3
+ 730 0016 1A46     		mov	r2, r3
+ 731 0018 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 732 001a 9A42     		cmp	r2, r3
+ 733 001c 33D0     		beq	.L54
+ 276:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 277:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Find the tasks with new priority*/
+ 278:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_t * i;
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     LV_LL_READ(LV_GC_ROOT(_lv_task_ll), i)
+ 734              		.loc 1 279 0
+ 735 001e 1C48     		ldr	r0, .L56
+ 736 0020 FFF7FEFF 		bl	lv_ll_get_head
+ 737 0024 F860     		str	r0, [r7, #12]
+ 738 0026 17E0     		b	.L48
+ 739              	.L52:
+ 280:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     {
+ 281:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         if(i->prio <= prio) {
+ 740              		.loc 1 281 0
+ 741 0028 FB68     		ldr	r3, [r7, #12]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 19
+
+
+ 742 002a 1B7C     		ldrb	r3, [r3, #16]
+ 743 002c C3F30203 		ubfx	r3, r3, #0, #3
+ 744 0030 DBB2     		uxtb	r3, r3
+ 745 0032 1A46     		mov	r2, r3
+ 746 0034 FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+ 747 0036 9A42     		cmp	r2, r3
+ 748 0038 09DC     		bgt	.L49
+ 282:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(i != task) lv_ll_move_before(&LV_GC_ROOT(_lv_task_ll), task, i);
+ 749              		.loc 1 282 0
+ 750 003a FA68     		ldr	r2, [r7, #12]
+ 751 003c 7B68     		ldr	r3, [r7, #4]
+ 752 003e 9A42     		cmp	r2, r3
+ 753 0040 0ED0     		beq	.L55
+ 754              		.loc 1 282 0 is_stmt 0 discriminator 1
+ 755 0042 FA68     		ldr	r2, [r7, #12]
+ 756 0044 7968     		ldr	r1, [r7, #4]
+ 757 0046 1248     		ldr	r0, .L56
+ 758 0048 FFF7FEFF 		bl	lv_ll_move_before
+ 283:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             break;
+ 759              		.loc 1 283 0 is_stmt 1 discriminator 1
+ 760 004c 08E0     		b	.L55
+ 761              	.L49:
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     {
+ 762              		.loc 1 279 0 discriminator 2
+ 763 004e F968     		ldr	r1, [r7, #12]
+ 764 0050 0F48     		ldr	r0, .L56
+ 765 0052 FFF7FEFF 		bl	lv_ll_get_next
+ 766 0056 F860     		str	r0, [r7, #12]
+ 767              	.L48:
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     {
+ 768              		.loc 1 279 0 is_stmt 0 discriminator 1
+ 769 0058 FB68     		ldr	r3, [r7, #12]
+ 770 005a 002B     		cmp	r3, #0
+ 771 005c E4D1     		bne	.L52
+ 772 005e 00E0     		b	.L51
+ 773              	.L55:
+ 774              		.loc 1 283 0 is_stmt 1
+ 775 0060 00BF     		nop
+ 776              	.L51:
+ 284:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         }
+ 285:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 286:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 287:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*There was no such a low priority so far then add the node to the tail*/
+ 288:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(i == NULL) {
+ 777              		.loc 1 288 0
+ 778 0062 FB68     		ldr	r3, [r7, #12]
+ 779 0064 002B     		cmp	r3, #0
+ 780 0066 04D1     		bne	.L53
+ 289:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         lv_ll_move_before(&LV_GC_ROOT(_lv_task_ll), task, NULL);
+ 781              		.loc 1 289 0
+ 782 0068 0022     		movs	r2, #0
+ 783 006a 7968     		ldr	r1, [r7, #4]
+ 784 006c 0848     		ldr	r0, .L56
+ 785 006e FFF7FEFF 		bl	lv_ll_move_before
+ 786              	.L53:
+ 290:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 291:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 20
+
+
+ 292:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->prio = prio;
+ 787              		.loc 1 292 0
+ 788 0072 FB78     		ldrb	r3, [r7, #3]
+ 789 0074 03F00703 		and	r3, r3, #7
+ 790 0078 D9B2     		uxtb	r1, r3
+ 791 007a 7A68     		ldr	r2, [r7, #4]
+ 792 007c 137C     		ldrb	r3, [r2, #16]
+ 793 007e 61F30203 		bfi	r3, r1, #0, #3
+ 794 0082 1374     		strb	r3, [r2, #16]
+ 795 0084 00E0     		b	.L45
+ 796              	.L54:
+ 275:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 797              		.loc 1 275 0
+ 798 0086 00BF     		nop
+ 799              	.L45:
+ 293:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 800              		.loc 1 293 0
+ 801 0088 1037     		adds	r7, r7, #16
+ 802              		.cfi_def_cfa_offset 8
+ 803 008a BD46     		mov	sp, r7
+ 804              		.cfi_def_cfa_register 13
+ 805              		@ sp needed
+ 806 008c 80BD     		pop	{r7, pc}
+ 807              	.L57:
+ 808 008e 00BF     		.align	2
+ 809              	.L56:
+ 810 0090 00000000 		.word	_lv_task_ll
+ 811              		.cfi_endproc
+ 812              	.LFE37:
+ 813              		.size	lv_task_set_prio, .-lv_task_set_prio
+ 814              		.section	.text.lv_task_set_period,"ax",%progbits
+ 815              		.align	2
+ 816              		.global	lv_task_set_period
+ 817              		.thumb
+ 818              		.thumb_func
+ 819              		.type	lv_task_set_period, %function
+ 820              	lv_task_set_period:
+ 821              	.LFB38:
+ 294:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 295:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 296:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Set new period for a lv_task
+ 297:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a lv_task
+ 298:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param period the new period
+ 299:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 300:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_set_period(lv_task_t * task, uint32_t period)
+ 301:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 822              		.loc 1 301 0
+ 823              		.cfi_startproc
+ 824              		@ args = 0, pretend = 0, frame = 8
+ 825              		@ frame_needed = 1, uses_anonymous_args = 0
+ 826              		@ link register save eliminated.
+ 827 0000 80B4     		push	{r7}
+ 828              		.cfi_def_cfa_offset 4
+ 829              		.cfi_offset 7, -4
+ 830 0002 83B0     		sub	sp, sp, #12
+ 831              		.cfi_def_cfa_offset 16
+ 832 0004 00AF     		add	r7, sp, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 21
+
+
+ 833              		.cfi_def_cfa_register 7
+ 834 0006 7860     		str	r0, [r7, #4]
+ 835 0008 3960     		str	r1, [r7]
+ 302:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->period = period;
+ 836              		.loc 1 302 0
+ 837 000a 7B68     		ldr	r3, [r7, #4]
+ 838 000c 3A68     		ldr	r2, [r7]
+ 839 000e 1A60     		str	r2, [r3]
+ 303:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 840              		.loc 1 303 0
+ 841 0010 00BF     		nop
+ 842 0012 0C37     		adds	r7, r7, #12
+ 843              		.cfi_def_cfa_offset 4
+ 844 0014 BD46     		mov	sp, r7
+ 845              		.cfi_def_cfa_register 13
+ 846              		@ sp needed
+ 847 0016 5DF8047B 		ldr	r7, [sp], #4
+ 848              		.cfi_restore 7
+ 849              		.cfi_def_cfa_offset 0
+ 850 001a 7047     		bx	lr
+ 851              		.cfi_endproc
+ 852              	.LFE38:
+ 853              		.size	lv_task_set_period, .-lv_task_set_period
+ 854              		.section	.text.lv_task_ready,"ax",%progbits
+ 855              		.align	2
+ 856              		.global	lv_task_ready
+ 857              		.thumb
+ 858              		.thumb_func
+ 859              		.type	lv_task_ready, %function
+ 860              	lv_task_ready:
+ 861              	.LFB39:
+ 304:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 305:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 306:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Make a lv_task ready. It will not wait its period.
+ 307:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a lv_task.
+ 308:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 309:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_ready(lv_task_t * task)
+ 310:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 862              		.loc 1 310 0
+ 863              		.cfi_startproc
+ 864              		@ args = 0, pretend = 0, frame = 8
+ 865              		@ frame_needed = 1, uses_anonymous_args = 0
+ 866 0000 80B5     		push	{r7, lr}
+ 867              		.cfi_def_cfa_offset 8
+ 868              		.cfi_offset 7, -8
+ 869              		.cfi_offset 14, -4
+ 870 0002 82B0     		sub	sp, sp, #8
+ 871              		.cfi_def_cfa_offset 16
+ 872 0004 00AF     		add	r7, sp, #0
+ 873              		.cfi_def_cfa_register 7
+ 874 0006 7860     		str	r0, [r7, #4]
+ 311:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->last_run = lv_tick_get() - task->period - 1;
+ 875              		.loc 1 311 0
+ 876 0008 FFF7FEFF 		bl	lv_tick_get
+ 877 000c 0246     		mov	r2, r0
+ 878 000e 7B68     		ldr	r3, [r7, #4]
+ 879 0010 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 22
+
+
+ 880 0012 D31A     		subs	r3, r2, r3
+ 881 0014 5A1E     		subs	r2, r3, #1
+ 882 0016 7B68     		ldr	r3, [r7, #4]
+ 883 0018 5A60     		str	r2, [r3, #4]
+ 312:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 884              		.loc 1 312 0
+ 885 001a 00BF     		nop
+ 886 001c 0837     		adds	r7, r7, #8
+ 887              		.cfi_def_cfa_offset 8
+ 888 001e BD46     		mov	sp, r7
+ 889              		.cfi_def_cfa_register 13
+ 890              		@ sp needed
+ 891 0020 80BD     		pop	{r7, pc}
+ 892              		.cfi_endproc
+ 893              	.LFE39:
+ 894              		.size	lv_task_ready, .-lv_task_ready
+ 895 0022 00BF     		.section	.text.lv_task_once,"ax",%progbits
+ 896              		.align	2
+ 897              		.global	lv_task_once
+ 898              		.thumb
+ 899              		.thumb_func
+ 900              		.type	lv_task_once, %function
+ 901              	lv_task_once:
+ 902              	.LFB40:
+ 313:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 314:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 315:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Delete the lv_task after one call
+ 316:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a lv_task.
+ 317:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 318:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_once(lv_task_t * task)
+ 319:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 903              		.loc 1 319 0
+ 904              		.cfi_startproc
+ 905              		@ args = 0, pretend = 0, frame = 8
+ 906              		@ frame_needed = 1, uses_anonymous_args = 0
+ 907              		@ link register save eliminated.
+ 908 0000 80B4     		push	{r7}
+ 909              		.cfi_def_cfa_offset 4
+ 910              		.cfi_offset 7, -4
+ 911 0002 83B0     		sub	sp, sp, #12
+ 912              		.cfi_def_cfa_offset 16
+ 913 0004 00AF     		add	r7, sp, #0
+ 914              		.cfi_def_cfa_register 7
+ 915 0006 7860     		str	r0, [r7, #4]
+ 320:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->once = 1;
+ 916              		.loc 1 320 0
+ 917 0008 7A68     		ldr	r2, [r7, #4]
+ 918 000a 137C     		ldrb	r3, [r2, #16]
+ 919 000c 43F00803 		orr	r3, r3, #8
+ 920 0010 1374     		strb	r3, [r2, #16]
+ 321:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 921              		.loc 1 321 0
+ 922 0012 00BF     		nop
+ 923 0014 0C37     		adds	r7, r7, #12
+ 924              		.cfi_def_cfa_offset 4
+ 925 0016 BD46     		mov	sp, r7
+ 926              		.cfi_def_cfa_register 13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 23
+
+
+ 927              		@ sp needed
+ 928 0018 5DF8047B 		ldr	r7, [sp], #4
+ 929              		.cfi_restore 7
+ 930              		.cfi_def_cfa_offset 0
+ 931 001c 7047     		bx	lr
+ 932              		.cfi_endproc
+ 933              	.LFE40:
+ 934              		.size	lv_task_once, .-lv_task_once
+ 935 001e 00BF     		.section	.text.lv_task_reset,"ax",%progbits
+ 936              		.align	2
+ 937              		.global	lv_task_reset
+ 938              		.thumb
+ 939              		.thumb_func
+ 940              		.type	lv_task_reset, %function
+ 941              	lv_task_reset:
+ 942              	.LFB41:
+ 322:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 323:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 324:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Reset a lv_task.
+ 325:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * It will be called the previously set period milliseconds later.
+ 326:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to a lv_task.
+ 327:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 328:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_reset(lv_task_t * task)
+ 329:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 943              		.loc 1 329 0
+ 944              		.cfi_startproc
+ 945              		@ args = 0, pretend = 0, frame = 8
+ 946              		@ frame_needed = 1, uses_anonymous_args = 0
+ 947 0000 80B5     		push	{r7, lr}
+ 948              		.cfi_def_cfa_offset 8
+ 949              		.cfi_offset 7, -8
+ 950              		.cfi_offset 14, -4
+ 951 0002 82B0     		sub	sp, sp, #8
+ 952              		.cfi_def_cfa_offset 16
+ 953 0004 00AF     		add	r7, sp, #0
+ 954              		.cfi_def_cfa_register 7
+ 955 0006 7860     		str	r0, [r7, #4]
+ 330:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     task->last_run = lv_tick_get();
+ 956              		.loc 1 330 0
+ 957 0008 FFF7FEFF 		bl	lv_tick_get
+ 958 000c 0246     		mov	r2, r0
+ 959 000e 7B68     		ldr	r3, [r7, #4]
+ 960 0010 5A60     		str	r2, [r3, #4]
+ 331:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 961              		.loc 1 331 0
+ 962 0012 00BF     		nop
+ 963 0014 0837     		adds	r7, r7, #8
+ 964              		.cfi_def_cfa_offset 8
+ 965 0016 BD46     		mov	sp, r7
+ 966              		.cfi_def_cfa_register 13
+ 967              		@ sp needed
+ 968 0018 80BD     		pop	{r7, pc}
+ 969              		.cfi_endproc
+ 970              	.LFE41:
+ 971              		.size	lv_task_reset, .-lv_task_reset
+ 972 001a 00BF     		.section	.text.lv_task_enable,"ax",%progbits
+ 973              		.align	2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 24
+
+
+ 974              		.global	lv_task_enable
+ 975              		.thumb
+ 976              		.thumb_func
+ 977              		.type	lv_task_enable, %function
+ 978              	lv_task_enable:
+ 979              	.LFB42:
+ 332:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 333:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 334:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Enable or disable the whole lv_task handling
+ 335:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param en: true: lv_task handling is running, false: lv_task handling is suspended
+ 336:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 337:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** void lv_task_enable(bool en)
+ 338:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 980              		.loc 1 338 0
+ 981              		.cfi_startproc
+ 982              		@ args = 0, pretend = 0, frame = 8
+ 983              		@ frame_needed = 1, uses_anonymous_args = 0
+ 984              		@ link register save eliminated.
+ 985 0000 80B4     		push	{r7}
+ 986              		.cfi_def_cfa_offset 4
+ 987              		.cfi_offset 7, -4
+ 988 0002 83B0     		sub	sp, sp, #12
+ 989              		.cfi_def_cfa_offset 16
+ 990 0004 00AF     		add	r7, sp, #0
+ 991              		.cfi_def_cfa_register 7
+ 992 0006 0346     		mov	r3, r0
+ 993 0008 FB71     		strb	r3, [r7, #7]
+ 339:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     lv_task_run = en;
+ 994              		.loc 1 339 0
+ 995 000a 044A     		ldr	r2, .L63
+ 996 000c FB79     		ldrb	r3, [r7, #7]
+ 997 000e 1370     		strb	r3, [r2]
+ 340:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 998              		.loc 1 340 0
+ 999 0010 00BF     		nop
+ 1000 0012 0C37     		adds	r7, r7, #12
+ 1001              		.cfi_def_cfa_offset 4
+ 1002 0014 BD46     		mov	sp, r7
+ 1003              		.cfi_def_cfa_register 13
+ 1004              		@ sp needed
+ 1005 0016 5DF8047B 		ldr	r7, [sp], #4
+ 1006              		.cfi_restore 7
+ 1007              		.cfi_def_cfa_offset 0
+ 1008 001a 7047     		bx	lr
+ 1009              	.L64:
+ 1010              		.align	2
+ 1011              	.L63:
+ 1012 001c 00000000 		.word	lv_task_run
+ 1013              		.cfi_endproc
+ 1014              	.LFE42:
+ 1015              		.size	lv_task_enable, .-lv_task_enable
+ 1016              		.section	.text.lv_task_get_idle,"ax",%progbits
+ 1017              		.align	2
+ 1018              		.global	lv_task_get_idle
+ 1019              		.thumb
+ 1020              		.thumb_func
+ 1021              		.type	lv_task_get_idle, %function
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 25
+
+
+ 1022              	lv_task_get_idle:
+ 1023              	.LFB43:
+ 341:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 342:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 343:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Get idle percentage
+ 344:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @return the lv_task idle in percentage
+ 345:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ 346:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** uint8_t lv_task_get_idle(void)
+ 347:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 1024              		.loc 1 347 0
+ 1025              		.cfi_startproc
+ 1026              		@ args = 0, pretend = 0, frame = 0
+ 1027              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1028              		@ link register save eliminated.
+ 1029 0000 80B4     		push	{r7}
+ 1030              		.cfi_def_cfa_offset 4
+ 1031              		.cfi_offset 7, -4
+ 1032 0002 00AF     		add	r7, sp, #0
+ 1033              		.cfi_def_cfa_register 7
+ 348:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     return idle_last;
+ 1034              		.loc 1 348 0
+ 1035 0004 034B     		ldr	r3, .L67
+ 1036 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 349:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 1037              		.loc 1 349 0
+ 1038 0008 1846     		mov	r0, r3
+ 1039 000a BD46     		mov	sp, r7
+ 1040              		.cfi_def_cfa_register 13
+ 1041              		@ sp needed
+ 1042 000c 5DF8047B 		ldr	r7, [sp], #4
+ 1043              		.cfi_restore 7
+ 1044              		.cfi_def_cfa_offset 0
+ 1045 0010 7047     		bx	lr
+ 1046              	.L68:
+ 1047 0012 00BF     		.align	2
+ 1048              	.L67:
+ 1049 0014 01000000 		.word	idle_last
+ 1050              		.cfi_endproc
+ 1051              	.LFE43:
+ 1052              		.size	lv_task_get_idle, .-lv_task_get_idle
+ 1053              		.section	.text.lv_task_exec,"ax",%progbits
+ 1054              		.align	2
+ 1055              		.thumb
+ 1056              		.thumb_func
+ 1057              		.type	lv_task_exec, %function
+ 1058              	lv_task_exec:
+ 1059              	.LFB44:
+ 350:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 351:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**********************
+ 352:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  *   STATIC FUNCTIONS
+ 353:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  **********************/
+ 354:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 355:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** /**
+ 356:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * Execute task if its the priority is appropriate
+ 357:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @param task pointer to lv_task
+ 358:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  * @return true: execute, false: not executed
+ 359:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****  */
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 26
+
+
+ 360:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** static bool lv_task_exec(lv_task_t * task)
+ 361:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** {
+ 1060              		.loc 1 361 0
+ 1061              		.cfi_startproc
+ 1062              		@ args = 0, pretend = 0, frame = 16
+ 1063              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1064 0000 80B5     		push	{r7, lr}
+ 1065              		.cfi_def_cfa_offset 8
+ 1066              		.cfi_offset 7, -8
+ 1067              		.cfi_offset 14, -4
+ 1068 0002 84B0     		sub	sp, sp, #16
+ 1069              		.cfi_def_cfa_offset 24
+ 1070 0004 00AF     		add	r7, sp, #0
+ 1071              		.cfi_def_cfa_register 7
+ 1072 0006 7860     		str	r0, [r7, #4]
+ 362:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     bool exec = false;
+ 1073              		.loc 1 362 0
+ 1074 0008 0023     		movs	r3, #0
+ 1075 000a FB73     		strb	r3, [r7, #15]
+ 363:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 364:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     /*Execute if at least 'period' time elapsed*/
+ 365:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     uint32_t elp = lv_tick_elaps(task->last_run);
+ 1076              		.loc 1 365 0
+ 1077 000c 7B68     		ldr	r3, [r7, #4]
+ 1078 000e 5B68     		ldr	r3, [r3, #4]
+ 1079 0010 1846     		mov	r0, r3
+ 1080 0012 FFF7FEFF 		bl	lv_tick_elaps
+ 1081 0016 B860     		str	r0, [r7, #8]
+ 366:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     if(elp >= task->period) {
+ 1082              		.loc 1 366 0
+ 1083 0018 7B68     		ldr	r3, [r7, #4]
+ 1084 001a 1A68     		ldr	r2, [r3]
+ 1085 001c BB68     		ldr	r3, [r7, #8]
+ 1086 001e 9A42     		cmp	r2, r3
+ 1087 0020 25D8     		bhi	.L70
+ 367:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         task->last_run = lv_tick_get();
+ 1088              		.loc 1 367 0
+ 1089 0022 FFF7FEFF 		bl	lv_tick_get
+ 1090 0026 0246     		mov	r2, r0
+ 1091 0028 7B68     		ldr	r3, [r7, #4]
+ 1092 002a 5A60     		str	r2, [r3, #4]
+ 368:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         task_deleted   = false;
+ 1093              		.loc 1 368 0
+ 1094 002c 124B     		ldr	r3, .L74
+ 1095 002e 0022     		movs	r2, #0
+ 1096 0030 1A70     		strb	r2, [r3]
+ 369:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         task_created   = false;
+ 1097              		.loc 1 369 0
+ 1098 0032 124B     		ldr	r3, .L74+4
+ 1099 0034 0022     		movs	r2, #0
+ 1100 0036 1A70     		strb	r2, [r3]
+ 370:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         if(task->task_cb) task->task_cb(task);
+ 1101              		.loc 1 370 0
+ 1102 0038 7B68     		ldr	r3, [r7, #4]
+ 1103 003a 9B68     		ldr	r3, [r3, #8]
+ 1104 003c 002B     		cmp	r3, #0
+ 1105 003e 03D0     		beq	.L71
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 27
+
+
+ 1106              		.loc 1 370 0 is_stmt 0 discriminator 1
+ 1107 0040 7B68     		ldr	r3, [r7, #4]
+ 1108 0042 9B68     		ldr	r3, [r3, #8]
+ 1109 0044 7868     		ldr	r0, [r7, #4]
+ 1110 0046 9847     		blx	r3
+ 1111              	.L71:
+ 371:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 372:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         /*Delete if it was a one shot lv_task*/
+ 373:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         if(task_deleted == false) { /*The task might be deleted by itself as well*/
+ 1112              		.loc 1 373 0 is_stmt 1
+ 1113 0048 0B4B     		ldr	r3, .L74
+ 1114 004a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1115 004c 83F00103 		eor	r3, r3, #1
+ 1116 0050 DBB2     		uxtb	r3, r3
+ 1117 0052 002B     		cmp	r3, #0
+ 1118 0054 09D0     		beq	.L72
+ 374:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             if(task->once != 0) {
+ 1119              		.loc 1 374 0
+ 1120 0056 7B68     		ldr	r3, [r7, #4]
+ 1121 0058 1B7C     		ldrb	r3, [r3, #16]	@ zero_extendqisi2
+ 1122 005a 03F00803 		and	r3, r3, #8
+ 1123 005e DBB2     		uxtb	r3, r3
+ 1124 0060 002B     		cmp	r3, #0
+ 1125 0062 02D0     		beq	.L72
+ 375:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****                 lv_task_del(task);
+ 1126              		.loc 1 375 0
+ 1127 0064 7868     		ldr	r0, [r7, #4]
+ 1128 0066 FFF7FEFF 		bl	lv_task_del
+ 1129              	.L72:
+ 376:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****             }
+ 377:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         }
+ 378:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****         exec = true;
+ 1130              		.loc 1 378 0
+ 1131 006a 0123     		movs	r3, #1
+ 1132 006c FB73     		strb	r3, [r7, #15]
+ 1133              	.L70:
+ 379:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     }
+ 380:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** 
+ 381:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c ****     return exec;
+ 1134              		.loc 1 381 0
+ 1135 006e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 382:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_task.c **** }
+ 1136              		.loc 1 382 0
+ 1137 0070 1846     		mov	r0, r3
+ 1138 0072 1037     		adds	r7, r7, #16
+ 1139              		.cfi_def_cfa_offset 8
+ 1140 0074 BD46     		mov	sp, r7
+ 1141              		.cfi_def_cfa_register 13
+ 1142              		@ sp needed
+ 1143 0076 80BD     		pop	{r7, pc}
+ 1144              	.L75:
+ 1145              		.align	2
+ 1146              	.L74:
+ 1147 0078 02000000 		.word	task_deleted
+ 1148 007c 03000000 		.word	task_created
+ 1149              		.cfi_endproc
+ 1150              	.LFE44:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 28
+
+
+ 1151              		.size	lv_task_exec, .-lv_task_exec
+ 1152              		.bss
+ 1153              	already_running.5919:
+ 1154 0004 00       		.space	1
+ 1155 0005 000000   		.align	2
+ 1156              	handler_start.5921:
+ 1157 0008 00000000 		.space	4
+ 1158              		.align	2
+ 1159              	busy_time.5922:
+ 1160 000c 00000000 		.space	4
+ 1161              		.align	2
+ 1162              	idle_period_start.5920:
+ 1163 0010 00000000 		.space	4
+ 1164              		.text
+ 1165              	.Letext0:
+ 1166              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1167              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1168              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_ll.h"
+ 1169              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_task.h"
+ 1170              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_gc.h"
+ 1171              		.section	.debug_info,"",%progbits
+ 1172              	.Ldebug_info0:
+ 1173 0000 22050000 		.4byte	0x522
+ 1174 0004 0400     		.2byte	0x4
+ 1175 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1176 000a 04       		.byte	0x4
+ 1177 000b 01       		.uleb128 0x1
+ 1178 000c CC000000 		.4byte	.LASF66
+ 1179 0010 0C       		.byte	0xc
+ 1180 0011 A1010000 		.4byte	.LASF67
+ 1181 0015 D7030000 		.4byte	.LASF68
+ 1182 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1183 001d 00000000 		.4byte	0
+ 1184 0021 00000000 		.4byte	.Ldebug_line0
+ 1185 0025 02       		.uleb128 0x2
+ 1186 0026 04       		.byte	0x4
+ 1187 0027 05       		.byte	0x5
+ 1188 0028 696E7400 		.ascii	"int\000"
+ 1189 002c 03       		.uleb128 0x3
+ 1190 002d 04       		.byte	0x4
+ 1191 002e 07       		.byte	0x7
+ 1192 002f 04030000 		.4byte	.LASF0
+ 1193 0033 03       		.uleb128 0x3
+ 1194 0034 08       		.byte	0x8
+ 1195 0035 05       		.byte	0x5
+ 1196 0036 06020000 		.4byte	.LASF1
+ 1197 003a 03       		.uleb128 0x3
+ 1198 003b 08       		.byte	0x8
+ 1199 003c 04       		.byte	0x4
+ 1200 003d A9020000 		.4byte	.LASF2
+ 1201 0041 03       		.uleb128 0x3
+ 1202 0042 01       		.byte	0x1
+ 1203 0043 06       		.byte	0x6
+ 1204 0044 DC020000 		.4byte	.LASF3
+ 1205 0048 04       		.uleb128 0x4
+ 1206 0049 73020000 		.4byte	.LASF8
+ 1207 004d 02       		.byte	0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 29
+
+
+ 1208 004e 1D       		.byte	0x1d
+ 1209 004f 53000000 		.4byte	0x53
+ 1210 0053 03       		.uleb128 0x3
+ 1211 0054 01       		.byte	0x1
+ 1212 0055 08       		.byte	0x8
+ 1213 0056 9B020000 		.4byte	.LASF4
+ 1214 005a 03       		.uleb128 0x3
+ 1215 005b 02       		.byte	0x2
+ 1216 005c 05       		.byte	0x5
+ 1217 005d 2E000000 		.4byte	.LASF5
+ 1218 0061 03       		.uleb128 0x3
+ 1219 0062 02       		.byte	0x2
+ 1220 0063 07       		.byte	0x7
+ 1221 0064 2C030000 		.4byte	.LASF6
+ 1222 0068 03       		.uleb128 0x3
+ 1223 0069 04       		.byte	0x4
+ 1224 006a 05       		.byte	0x5
+ 1225 006b 60030000 		.4byte	.LASF7
+ 1226 006f 04       		.uleb128 0x4
+ 1227 0070 75000000 		.4byte	.LASF9
+ 1228 0074 02       		.byte	0x2
+ 1229 0075 41       		.byte	0x41
+ 1230 0076 7A000000 		.4byte	0x7a
+ 1231 007a 03       		.uleb128 0x3
+ 1232 007b 04       		.byte	0x4
+ 1233 007c 07       		.byte	0x7
+ 1234 007d C5030000 		.4byte	.LASF10
+ 1235 0081 03       		.uleb128 0x3
+ 1236 0082 08       		.byte	0x8
+ 1237 0083 07       		.byte	0x7
+ 1238 0084 E8020000 		.4byte	.LASF11
+ 1239 0088 04       		.uleb128 0x4
+ 1240 0089 7F010000 		.4byte	.LASF12
+ 1241 008d 03       		.byte	0x3
+ 1242 008e 18       		.byte	0x18
+ 1243 008f 48000000 		.4byte	0x48
+ 1244 0093 04       		.uleb128 0x4
+ 1245 0094 87010000 		.4byte	.LASF13
+ 1246 0098 03       		.byte	0x3
+ 1247 0099 30       		.byte	0x30
+ 1248 009a 6F000000 		.4byte	0x6f
+ 1249 009e 05       		.uleb128 0x5
+ 1250 009f 04       		.byte	0x4
+ 1251 00a0 04       		.uleb128 0x4
+ 1252 00a1 00000000 		.4byte	.LASF14
+ 1253 00a5 04       		.byte	0x4
+ 1254 00a6 1E       		.byte	0x1e
+ 1255 00a7 88000000 		.4byte	0x88
+ 1256 00ab 06       		.uleb128 0x6
+ 1257 00ac 0C       		.byte	0xc
+ 1258 00ad 04       		.byte	0x4
+ 1259 00ae 21       		.byte	0x21
+ 1260 00af D8000000 		.4byte	0xd8
+ 1261 00b3 07       		.uleb128 0x7
+ 1262 00b4 EE040000 		.4byte	.LASF15
+ 1263 00b8 04       		.byte	0x4
+ 1264 00b9 23       		.byte	0x23
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 30
+
+
+ 1265 00ba 93000000 		.4byte	0x93
+ 1266 00be 00       		.byte	0
+ 1267 00bf 07       		.uleb128 0x7
+ 1268 00c0 B2000000 		.4byte	.LASF16
+ 1269 00c4 04       		.byte	0x4
+ 1270 00c5 24       		.byte	0x24
+ 1271 00c6 D8000000 		.4byte	0xd8
+ 1272 00ca 04       		.byte	0x4
+ 1273 00cb 07       		.uleb128 0x7
+ 1274 00cc D7020000 		.4byte	.LASF17
+ 1275 00d0 04       		.byte	0x4
+ 1276 00d1 25       		.byte	0x25
+ 1277 00d2 D8000000 		.4byte	0xd8
+ 1278 00d6 08       		.byte	0x8
+ 1279 00d7 00       		.byte	0
+ 1280 00d8 08       		.uleb128 0x8
+ 1281 00d9 04       		.byte	0x4
+ 1282 00da A0000000 		.4byte	0xa0
+ 1283 00de 04       		.uleb128 0x4
+ 1284 00df 93020000 		.4byte	.LASF18
+ 1285 00e3 04       		.byte	0x4
+ 1286 00e4 26       		.byte	0x26
+ 1287 00e5 AB000000 		.4byte	0xab
+ 1288 00e9 04       		.uleb128 0x4
+ 1289 00ea 8F040000 		.4byte	.LASF19
+ 1290 00ee 05       		.byte	0x5
+ 1291 00ef 2B       		.byte	0x2b
+ 1292 00f0 F4000000 		.4byte	0xf4
+ 1293 00f4 08       		.uleb128 0x8
+ 1294 00f5 04       		.byte	0x4
+ 1295 00f6 FA000000 		.4byte	0xfa
+ 1296 00fa 09       		.uleb128 0x9
+ 1297 00fb 05010000 		.4byte	0x105
+ 1298 00ff 0A       		.uleb128 0xa
+ 1299 0100 05010000 		.4byte	0x105
+ 1300 0104 00       		.byte	0
+ 1301 0105 08       		.uleb128 0x8
+ 1302 0106 04       		.byte	0x4
+ 1303 0107 0B010000 		.4byte	0x10b
+ 1304 010b 0B       		.uleb128 0xb
+ 1305 010c FB010000 		.4byte	.LASF69
+ 1306 0110 14       		.byte	0x14
+ 1307 0111 05       		.byte	0x5
+ 1308 0112 3E       		.byte	0x3e
+ 1309 0113 66010000 		.4byte	0x166
+ 1310 0117 07       		.uleb128 0x7
+ 1311 0118 62020000 		.4byte	.LASF20
+ 1312 011c 05       		.byte	0x5
+ 1313 011d 40       		.byte	0x40
+ 1314 011e 93000000 		.4byte	0x93
+ 1315 0122 00       		.byte	0
+ 1316 0123 07       		.uleb128 0x7
+ 1317 0124 7D020000 		.4byte	.LASF21
+ 1318 0128 05       		.byte	0x5
+ 1319 0129 41       		.byte	0x41
+ 1320 012a 93000000 		.4byte	0x93
+ 1321 012e 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 31
+
+
+ 1322 012f 07       		.uleb128 0x7
+ 1323 0130 69030000 		.4byte	.LASF22
+ 1324 0134 05       		.byte	0x5
+ 1325 0135 42       		.byte	0x42
+ 1326 0136 E9000000 		.4byte	0xe9
+ 1327 013a 08       		.byte	0x8
+ 1328 013b 07       		.uleb128 0x7
+ 1329 013c D8010000 		.4byte	.LASF23
+ 1330 0140 05       		.byte	0x5
+ 1331 0141 44       		.byte	0x44
+ 1332 0142 9E000000 		.4byte	0x9e
+ 1333 0146 0C       		.byte	0xc
+ 1334 0147 0C       		.uleb128 0xc
+ 1335 0148 E4040000 		.4byte	.LASF24
+ 1336 014c 05       		.byte	0x5
+ 1337 014d 46       		.byte	0x46
+ 1338 014e 88000000 		.4byte	0x88
+ 1339 0152 01       		.byte	0x1
+ 1340 0153 03       		.byte	0x3
+ 1341 0154 05       		.byte	0x5
+ 1342 0155 10       		.byte	0x10
+ 1343 0156 0C       		.uleb128 0xc
+ 1344 0157 FF020000 		.4byte	.LASF25
+ 1345 015b 05       		.byte	0x5
+ 1346 015c 47       		.byte	0x47
+ 1347 015d 88000000 		.4byte	0x88
+ 1348 0161 01       		.byte	0x1
+ 1349 0162 01       		.byte	0x1
+ 1350 0163 04       		.byte	0x4
+ 1351 0164 10       		.byte	0x10
+ 1352 0165 00       		.byte	0
+ 1353 0166 0D       		.uleb128 0xd
+ 1354 0167 01       		.byte	0x1
+ 1355 0168 53000000 		.4byte	0x53
+ 1356 016c 05       		.byte	0x5
+ 1357 016d 30       		.byte	0x30
+ 1358 016e 9D010000 		.4byte	0x19d
+ 1359 0172 0E       		.uleb128 0xe
+ 1360 0173 14020000 		.4byte	.LASF26
+ 1361 0177 00       		.byte	0
+ 1362 0178 0E       		.uleb128 0xe
+ 1363 0179 E2010000 		.4byte	.LASF27
+ 1364 017d 01       		.byte	0x1
+ 1365 017e 0E       		.uleb128 0xe
+ 1366 017f 64000000 		.4byte	.LASF28
+ 1367 0183 02       		.byte	0x2
+ 1368 0184 0E       		.uleb128 0xe
+ 1369 0185 4E000000 		.4byte	.LASF29
+ 1370 0189 03       		.byte	0x3
+ 1371 018a 0E       		.uleb128 0xe
+ 1372 018b 93030000 		.4byte	.LASF30
+ 1373 018f 04       		.byte	0x4
+ 1374 0190 0E       		.uleb128 0xe
+ 1375 0191 B7000000 		.4byte	.LASF31
+ 1376 0195 05       		.byte	0x5
+ 1377 0196 0E       		.uleb128 0xe
+ 1378 0197 80000000 		.4byte	.LASF32
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 32
+
+
+ 1379 019b 06       		.byte	0x6
+ 1380 019c 00       		.byte	0
+ 1381 019d 04       		.uleb128 0x4
+ 1382 019e 92000000 		.4byte	.LASF33
+ 1383 01a2 05       		.byte	0x5
+ 1384 01a3 39       		.byte	0x39
+ 1385 01a4 88000000 		.4byte	0x88
+ 1386 01a8 04       		.uleb128 0x4
+ 1387 01a9 16000000 		.4byte	.LASF34
+ 1388 01ad 05       		.byte	0x5
+ 1389 01ae 48       		.byte	0x48
+ 1390 01af 0B010000 		.4byte	0x10b
+ 1391 01b3 03       		.uleb128 0x3
+ 1392 01b4 01       		.byte	0x1
+ 1393 01b5 02       		.byte	0x2
+ 1394 01b6 71030000 		.4byte	.LASF35
+ 1395 01ba 03       		.uleb128 0x3
+ 1396 01bb 04       		.byte	0x4
+ 1397 01bc 07       		.byte	0x7
+ 1398 01bd 45000000 		.4byte	.LASF36
+ 1399 01c1 03       		.uleb128 0x3
+ 1400 01c2 01       		.byte	0x1
+ 1401 01c3 08       		.byte	0x8
+ 1402 01c4 51030000 		.4byte	.LASF37
+ 1403 01c8 08       		.uleb128 0x8
+ 1404 01c9 04       		.byte	0x4
+ 1405 01ca A8010000 		.4byte	0x1a8
+ 1406 01ce 0F       		.uleb128 0xf
+ 1407 01cf 3F030000 		.4byte	.LASF70
+ 1408 01d3 01       		.byte	0x1
+ 1409 01d4 37       		.byte	0x37
+ 1410 01d5 00000000 		.4byte	.LFB31
+ 1411 01d9 1C000000 		.4byte	.LFE31-.LFB31
+ 1412 01dd 01       		.uleb128 0x1
+ 1413 01de 9C       		.byte	0x9c
+ 1414 01df 10       		.uleb128 0x10
+ 1415 01e0 CB040000 		.4byte	.LASF49
+ 1416 01e4 01       		.byte	0x1
+ 1417 01e5 42       		.byte	0x42
+ 1418 01e6 00000000 		.4byte	.LFB32
+ 1419 01ea 1C020000 		.4byte	.LFE32-.LFB32
+ 1420 01ee 01       		.uleb128 0x1
+ 1421 01ef 9C       		.byte	0x9c
+ 1422 01f0 71020000 		.4byte	0x271
+ 1423 01f4 11       		.uleb128 0x11
+ 1424 01f5 77030000 		.4byte	.LASF38
+ 1425 01f9 01       		.byte	0x1
+ 1426 01fa 47       		.byte	0x47
+ 1427 01fb B3010000 		.4byte	0x1b3
+ 1428 01ff 05       		.uleb128 0x5
+ 1429 0200 03       		.byte	0x3
+ 1430 0201 04000000 		.4byte	already_running.5919
+ 1431 0205 11       		.uleb128 0x11
+ 1432 0206 9C040000 		.4byte	.LASF39
+ 1433 020a 01       		.byte	0x1
+ 1434 020b 4B       		.byte	0x4b
+ 1435 020c 93000000 		.4byte	0x93
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 33
+
+
+ 1436 0210 05       		.uleb128 0x5
+ 1437 0211 03       		.byte	0x3
+ 1438 0212 10000000 		.4byte	idle_period_start.5920
+ 1439 0216 11       		.uleb128 0x11
+ 1440 0217 1E030000 		.4byte	.LASF40
+ 1441 021b 01       		.byte	0x1
+ 1442 021c 4C       		.byte	0x4c
+ 1443 021d 93000000 		.4byte	0x93
+ 1444 0221 05       		.uleb128 0x5
+ 1445 0222 03       		.byte	0x3
+ 1446 0223 08000000 		.4byte	handler_start.5921
+ 1447 0227 11       		.uleb128 0x11
+ 1448 0228 56030000 		.4byte	.LASF41
+ 1449 022c 01       		.byte	0x1
+ 1450 022d 4D       		.byte	0x4d
+ 1451 022e 93000000 		.4byte	0x93
+ 1452 0232 05       		.uleb128 0x5
+ 1453 0233 03       		.byte	0x3
+ 1454 0234 0C000000 		.4byte	busy_time.5922
+ 1455 0238 11       		.uleb128 0x11
+ 1456 0239 3E020000 		.4byte	.LASF42
+ 1457 023d 01       		.byte	0x1
+ 1458 023e 59       		.byte	0x59
+ 1459 023f C8010000 		.4byte	0x1c8
+ 1460 0243 02       		.uleb128 0x2
+ 1461 0244 91       		.byte	0x91
+ 1462 0245 74       		.sleb128 -12
+ 1463 0246 11       		.uleb128 0x11
+ 1464 0247 E9040000 		.4byte	.LASF43
+ 1465 024b 01       		.byte	0x1
+ 1466 024c 5A       		.byte	0x5a
+ 1467 024d C8010000 		.4byte	0x1c8
+ 1468 0251 02       		.uleb128 0x2
+ 1469 0252 91       		.byte	0x91
+ 1470 0253 6C       		.sleb128 -20
+ 1471 0254 11       		.uleb128 0x11
+ 1472 0255 DB040000 		.4byte	.LASF44
+ 1473 0259 01       		.byte	0x1
+ 1474 025a 5B       		.byte	0x5b
+ 1475 025b B3010000 		.4byte	0x1b3
+ 1476 025f 02       		.uleb128 0x2
+ 1477 0260 91       		.byte	0x91
+ 1478 0261 73       		.sleb128 -13
+ 1479 0262 11       		.uleb128 0x11
+ 1480 0263 A1000000 		.4byte	.LASF45
+ 1481 0267 01       		.byte	0x1
+ 1482 0268 9B       		.byte	0x9b
+ 1483 0269 93000000 		.4byte	0x93
+ 1484 026d 02       		.uleb128 0x2
+ 1485 026e 91       		.byte	0x91
+ 1486 026f 68       		.sleb128 -24
+ 1487 0270 00       		.byte	0
+ 1488 0271 12       		.uleb128 0x12
+ 1489 0272 B5020000 		.4byte	.LASF47
+ 1490 0276 01       		.byte	0x1
+ 1491 0277 AD       		.byte	0xad
+ 1492 0278 C8010000 		.4byte	0x1c8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 34
+
+
+ 1493 027c 00000000 		.4byte	.LFB33
+ 1494 0280 C4000000 		.4byte	.LFE33-.LFB33
+ 1495 0284 01       		.uleb128 0x1
+ 1496 0285 9C       		.byte	0x9c
+ 1497 0286 A7020000 		.4byte	0x2a7
+ 1498 028a 11       		.uleb128 0x11
+ 1499 028b 0D000000 		.4byte	.LASF46
+ 1500 028f 01       		.byte	0x1
+ 1501 0290 AF       		.byte	0xaf
+ 1502 0291 C8010000 		.4byte	0x1c8
+ 1503 0295 02       		.uleb128 0x2
+ 1504 0296 91       		.byte	0x91
+ 1505 0297 74       		.sleb128 -12
+ 1506 0298 13       		.uleb128 0x13
+ 1507 0299 746D7000 		.ascii	"tmp\000"
+ 1508 029d 01       		.byte	0x1
+ 1509 029e B0       		.byte	0xb0
+ 1510 029f C8010000 		.4byte	0x1c8
+ 1511 02a3 02       		.uleb128 0x2
+ 1512 02a4 91       		.byte	0x91
+ 1513 02a5 70       		.sleb128 -16
+ 1514 02a6 00       		.byte	0
+ 1515 02a7 12       		.uleb128 0x12
+ 1516 02a8 BC040000 		.4byte	.LASF48
+ 1517 02ac 01       		.byte	0x1
+ 1518 02ad E7       		.byte	0xe7
+ 1519 02ae C8010000 		.4byte	0x1c8
+ 1520 02b2 00000000 		.4byte	.LFB34
+ 1521 02b6 4A000000 		.4byte	.LFE34-.LFB34
+ 1522 02ba 01       		.uleb128 0x1
+ 1523 02bb 9C       		.byte	0x9c
+ 1524 02bc 07030000 		.4byte	0x307
+ 1525 02c0 14       		.uleb128 0x14
+ 1526 02c1 69030000 		.4byte	.LASF22
+ 1527 02c5 01       		.byte	0x1
+ 1528 02c6 E7       		.byte	0xe7
+ 1529 02c7 E9000000 		.4byte	0xe9
+ 1530 02cb 02       		.uleb128 0x2
+ 1531 02cc 91       		.byte	0x91
+ 1532 02cd 6C       		.sleb128 -20
+ 1533 02ce 14       		.uleb128 0x14
+ 1534 02cf 62020000 		.4byte	.LASF20
+ 1535 02d3 01       		.byte	0x1
+ 1536 02d4 E7       		.byte	0xe7
+ 1537 02d5 93000000 		.4byte	0x93
+ 1538 02d9 02       		.uleb128 0x2
+ 1539 02da 91       		.byte	0x91
+ 1540 02db 68       		.sleb128 -24
+ 1541 02dc 14       		.uleb128 0x14
+ 1542 02dd E4040000 		.4byte	.LASF24
+ 1543 02e1 01       		.byte	0x1
+ 1544 02e2 E7       		.byte	0xe7
+ 1545 02e3 9D010000 		.4byte	0x19d
+ 1546 02e7 02       		.uleb128 0x2
+ 1547 02e8 91       		.byte	0x91
+ 1548 02e9 67       		.sleb128 -25
+ 1549 02ea 14       		.uleb128 0x14
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 35
+
+
+ 1550 02eb D8010000 		.4byte	.LASF23
+ 1551 02ef 01       		.byte	0x1
+ 1552 02f0 E7       		.byte	0xe7
+ 1553 02f1 9E000000 		.4byte	0x9e
+ 1554 02f5 02       		.uleb128 0x2
+ 1555 02f6 91       		.byte	0x91
+ 1556 02f7 60       		.sleb128 -32
+ 1557 02f8 11       		.uleb128 0x11
+ 1558 02f9 0D000000 		.4byte	.LASF46
+ 1559 02fd 01       		.byte	0x1
+ 1560 02fe E9       		.byte	0xe9
+ 1561 02ff C8010000 		.4byte	0x1c8
+ 1562 0303 02       		.uleb128 0x2
+ 1563 0304 91       		.byte	0x91
+ 1564 0305 74       		.sleb128 -12
+ 1565 0306 00       		.byte	0
+ 1566 0307 15       		.uleb128 0x15
+ 1567 0308 80040000 		.4byte	.LASF50
+ 1568 030c 01       		.byte	0x1
+ 1569 030d FA       		.byte	0xfa
+ 1570 030e 00000000 		.4byte	.LFB35
+ 1571 0312 1C000000 		.4byte	.LFE35-.LFB35
+ 1572 0316 01       		.uleb128 0x1
+ 1573 0317 9C       		.byte	0x9c
+ 1574 0318 39030000 		.4byte	0x339
+ 1575 031c 14       		.uleb128 0x14
+ 1576 031d 5F000000 		.4byte	.LASF51
+ 1577 0321 01       		.byte	0x1
+ 1578 0322 FA       		.byte	0xfa
+ 1579 0323 C8010000 		.4byte	0x1c8
+ 1580 0327 02       		.uleb128 0x2
+ 1581 0328 91       		.byte	0x91
+ 1582 0329 74       		.sleb128 -12
+ 1583 032a 14       		.uleb128 0x14
+ 1584 032b 69030000 		.4byte	.LASF22
+ 1585 032f 01       		.byte	0x1
+ 1586 0330 FA       		.byte	0xfa
+ 1587 0331 E9000000 		.4byte	0xe9
+ 1588 0335 02       		.uleb128 0x2
+ 1589 0336 91       		.byte	0x91
+ 1590 0337 70       		.sleb128 -16
+ 1591 0338 00       		.byte	0
+ 1592 0339 16       		.uleb128 0x16
+ 1593 033a 87030000 		.4byte	.LASF52
+ 1594 033e 01       		.byte	0x1
+ 1595 033f 0301     		.2byte	0x103
+ 1596 0341 00000000 		.4byte	.LFB36
+ 1597 0345 3C000000 		.4byte	.LFE36-.LFB36
+ 1598 0349 01       		.uleb128 0x1
+ 1599 034a 9C       		.byte	0x9c
+ 1600 034b 5F030000 		.4byte	0x35f
+ 1601 034f 17       		.uleb128 0x17
+ 1602 0350 5F000000 		.4byte	.LASF51
+ 1603 0354 01       		.byte	0x1
+ 1604 0355 0301     		.2byte	0x103
+ 1605 0357 C8010000 		.4byte	0x1c8
+ 1606 035b 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 36
+
+
+ 1607 035c 91       		.byte	0x91
+ 1608 035d 74       		.sleb128 -12
+ 1609 035e 00       		.byte	0
+ 1610 035f 16       		.uleb128 0x16
+ 1611 0360 90010000 		.4byte	.LASF53
+ 1612 0364 01       		.byte	0x1
+ 1613 0365 1101     		.2byte	0x111
+ 1614 0367 00000000 		.4byte	.LFB37
+ 1615 036b 94000000 		.4byte	.LFE37-.LFB37
+ 1616 036f 01       		.uleb128 0x1
+ 1617 0370 9C       		.byte	0x9c
+ 1618 0371 A1030000 		.4byte	0x3a1
+ 1619 0375 17       		.uleb128 0x17
+ 1620 0376 5F000000 		.4byte	.LASF51
+ 1621 037a 01       		.byte	0x1
+ 1622 037b 1101     		.2byte	0x111
+ 1623 037d C8010000 		.4byte	0x1c8
+ 1624 0381 02       		.uleb128 0x2
+ 1625 0382 91       		.byte	0x91
+ 1626 0383 6C       		.sleb128 -20
+ 1627 0384 17       		.uleb128 0x17
+ 1628 0385 E4040000 		.4byte	.LASF24
+ 1629 0389 01       		.byte	0x1
+ 1630 038a 1101     		.2byte	0x111
+ 1631 038c 9D010000 		.4byte	0x19d
+ 1632 0390 02       		.uleb128 0x2
+ 1633 0391 91       		.byte	0x91
+ 1634 0392 6B       		.sleb128 -21
+ 1635 0393 18       		.uleb128 0x18
+ 1636 0394 6900     		.ascii	"i\000"
+ 1637 0396 01       		.byte	0x1
+ 1638 0397 1601     		.2byte	0x116
+ 1639 0399 C8010000 		.4byte	0x1c8
+ 1640 039d 02       		.uleb128 0x2
+ 1641 039e 91       		.byte	0x91
+ 1642 039f 74       		.sleb128 -12
+ 1643 03a0 00       		.byte	0
+ 1644 03a1 19       		.uleb128 0x19
+ 1645 03a2 4F020000 		.4byte	.LASF54
+ 1646 03a6 01       		.byte	0x1
+ 1647 03a7 2C01     		.2byte	0x12c
+ 1648 03a9 00000000 		.4byte	.LFB38
+ 1649 03ad 1C000000 		.4byte	.LFE38-.LFB38
+ 1650 03b1 01       		.uleb128 0x1
+ 1651 03b2 9C       		.byte	0x9c
+ 1652 03b3 D6030000 		.4byte	0x3d6
+ 1653 03b7 17       		.uleb128 0x17
+ 1654 03b8 5F000000 		.4byte	.LASF51
+ 1655 03bc 01       		.byte	0x1
+ 1656 03bd 2C01     		.2byte	0x12c
+ 1657 03bf C8010000 		.4byte	0x1c8
+ 1658 03c3 02       		.uleb128 0x2
+ 1659 03c4 91       		.byte	0x91
+ 1660 03c5 74       		.sleb128 -12
+ 1661 03c6 17       		.uleb128 0x17
+ 1662 03c7 62020000 		.4byte	.LASF20
+ 1663 03cb 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 37
+
+
+ 1664 03cc 2C01     		.2byte	0x12c
+ 1665 03ce 93000000 		.4byte	0x93
+ 1666 03d2 02       		.uleb128 0x2
+ 1667 03d3 91       		.byte	0x91
+ 1668 03d4 70       		.sleb128 -16
+ 1669 03d5 00       		.byte	0
+ 1670 03d6 16       		.uleb128 0x16
+ 1671 03d7 AE040000 		.4byte	.LASF55
+ 1672 03db 01       		.byte	0x1
+ 1673 03dc 3501     		.2byte	0x135
+ 1674 03de 00000000 		.4byte	.LFB39
+ 1675 03e2 22000000 		.4byte	.LFE39-.LFB39
+ 1676 03e6 01       		.uleb128 0x1
+ 1677 03e7 9C       		.byte	0x9c
+ 1678 03e8 FC030000 		.4byte	0x3fc
+ 1679 03ec 17       		.uleb128 0x17
+ 1680 03ed 5F000000 		.4byte	.LASF51
+ 1681 03f1 01       		.byte	0x1
+ 1682 03f2 3501     		.2byte	0x135
+ 1683 03f4 C8010000 		.4byte	0x1c8
+ 1684 03f8 02       		.uleb128 0x2
+ 1685 03f9 91       		.byte	0x91
+ 1686 03fa 74       		.sleb128 -12
+ 1687 03fb 00       		.byte	0
+ 1688 03fc 19       		.uleb128 0x19
+ 1689 03fd 11030000 		.4byte	.LASF56
+ 1690 0401 01       		.byte	0x1
+ 1691 0402 3E01     		.2byte	0x13e
+ 1692 0404 00000000 		.4byte	.LFB40
+ 1693 0408 1E000000 		.4byte	.LFE40-.LFB40
+ 1694 040c 01       		.uleb128 0x1
+ 1695 040d 9C       		.byte	0x9c
+ 1696 040e 22040000 		.4byte	0x422
+ 1697 0412 17       		.uleb128 0x17
+ 1698 0413 5F000000 		.4byte	.LASF51
+ 1699 0417 01       		.byte	0x1
+ 1700 0418 3E01     		.2byte	0x13e
+ 1701 041a C8010000 		.4byte	0x1c8
+ 1702 041e 02       		.uleb128 0x2
+ 1703 041f 91       		.byte	0x91
+ 1704 0420 74       		.sleb128 -12
+ 1705 0421 00       		.byte	0
+ 1706 0422 16       		.uleb128 0x16
+ 1707 0423 20000000 		.4byte	.LASF57
+ 1708 0427 01       		.byte	0x1
+ 1709 0428 4801     		.2byte	0x148
+ 1710 042a 00000000 		.4byte	.LFB41
+ 1711 042e 1A000000 		.4byte	.LFE41-.LFB41
+ 1712 0432 01       		.uleb128 0x1
+ 1713 0433 9C       		.byte	0x9c
+ 1714 0434 48040000 		.4byte	0x448
+ 1715 0438 17       		.uleb128 0x17
+ 1716 0439 5F000000 		.4byte	.LASF51
+ 1717 043d 01       		.byte	0x1
+ 1718 043e 4801     		.2byte	0x148
+ 1719 0440 C8010000 		.4byte	0x1c8
+ 1720 0444 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 38
+
+
+ 1721 0445 91       		.byte	0x91
+ 1722 0446 74       		.sleb128 -12
+ 1723 0447 00       		.byte	0
+ 1724 0448 19       		.uleb128 0x19
+ 1725 0449 B6030000 		.4byte	.LASF58
+ 1726 044d 01       		.byte	0x1
+ 1727 044e 5101     		.2byte	0x151
+ 1728 0450 00000000 		.4byte	.LFB42
+ 1729 0454 20000000 		.4byte	.LFE42-.LFB42
+ 1730 0458 01       		.uleb128 0x1
+ 1731 0459 9C       		.byte	0x9c
+ 1732 045a 6D040000 		.4byte	0x46d
+ 1733 045e 1A       		.uleb128 0x1a
+ 1734 045f 656E00   		.ascii	"en\000"
+ 1735 0462 01       		.byte	0x1
+ 1736 0463 5101     		.2byte	0x151
+ 1737 0465 B3010000 		.4byte	0x1b3
+ 1738 0469 02       		.uleb128 0x2
+ 1739 046a 91       		.byte	0x91
+ 1740 046b 77       		.sleb128 -9
+ 1741 046c 00       		.byte	0
+ 1742 046d 1B       		.uleb128 0x1b
+ 1743 046e A5030000 		.4byte	.LASF71
+ 1744 0472 01       		.byte	0x1
+ 1745 0473 5A01     		.2byte	0x15a
+ 1746 0475 88000000 		.4byte	0x88
+ 1747 0479 00000000 		.4byte	.LFB43
+ 1748 047d 18000000 		.4byte	.LFE43-.LFB43
+ 1749 0481 01       		.uleb128 0x1
+ 1750 0482 9C       		.byte	0x9c
+ 1751 0483 1C       		.uleb128 0x1c
+ 1752 0484 31020000 		.4byte	.LASF72
+ 1753 0488 01       		.byte	0x1
+ 1754 0489 6801     		.2byte	0x168
+ 1755 048b B3010000 		.4byte	0x1b3
+ 1756 048f 00000000 		.4byte	.LFB44
+ 1757 0493 80000000 		.4byte	.LFE44-.LFB44
+ 1758 0497 01       		.uleb128 0x1
+ 1759 0498 9C       		.byte	0x9c
+ 1760 0499 CB040000 		.4byte	0x4cb
+ 1761 049d 17       		.uleb128 0x17
+ 1762 049e 5F000000 		.4byte	.LASF51
+ 1763 04a2 01       		.byte	0x1
+ 1764 04a3 6801     		.2byte	0x168
+ 1765 04a5 C8010000 		.4byte	0x1c8
+ 1766 04a9 02       		.uleb128 0x2
+ 1767 04aa 91       		.byte	0x91
+ 1768 04ab 6C       		.sleb128 -20
+ 1769 04ac 1D       		.uleb128 0x1d
+ 1770 04ad F6010000 		.4byte	.LASF59
+ 1771 04b1 01       		.byte	0x1
+ 1772 04b2 6A01     		.2byte	0x16a
+ 1773 04b4 B3010000 		.4byte	0x1b3
+ 1774 04b8 02       		.uleb128 0x2
+ 1775 04b9 91       		.byte	0x91
+ 1776 04ba 77       		.sleb128 -9
+ 1777 04bb 18       		.uleb128 0x18
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 39
+
+
+ 1778 04bc 656C7000 		.ascii	"elp\000"
+ 1779 04c0 01       		.byte	0x1
+ 1780 04c1 6D01     		.2byte	0x16d
+ 1781 04c3 93000000 		.4byte	0x93
+ 1782 04c7 02       		.uleb128 0x2
+ 1783 04c8 91       		.byte	0x91
+ 1784 04c9 70       		.sleb128 -16
+ 1785 04ca 00       		.byte	0
+ 1786 04cb 11       		.uleb128 0x11
+ 1787 04cc 25020000 		.4byte	.LASF60
+ 1788 04d0 01       		.byte	0x1
+ 1789 04d1 27       		.byte	0x27
+ 1790 04d2 B3010000 		.4byte	0x1b3
+ 1791 04d6 05       		.uleb128 0x5
+ 1792 04d7 03       		.byte	0x3
+ 1793 04d8 00000000 		.4byte	lv_task_run
+ 1794 04dc 11       		.uleb128 0x11
+ 1795 04dd 69020000 		.4byte	.LASF61
+ 1796 04e1 01       		.byte	0x1
+ 1797 04e2 28       		.byte	0x28
+ 1798 04e3 88000000 		.4byte	0x88
+ 1799 04e7 05       		.uleb128 0x5
+ 1800 04e8 03       		.byte	0x3
+ 1801 04e9 01000000 		.4byte	idle_last
+ 1802 04ed 11       		.uleb128 0x11
+ 1803 04ee 38000000 		.4byte	.LASF62
+ 1804 04f2 01       		.byte	0x1
+ 1805 04f3 29       		.byte	0x29
+ 1806 04f4 B3010000 		.4byte	0x1b3
+ 1807 04f8 05       		.uleb128 0x5
+ 1808 04f9 03       		.byte	0x3
+ 1809 04fa 02000000 		.4byte	task_deleted
+ 1810 04fe 11       		.uleb128 0x11
+ 1811 04ff CA020000 		.4byte	.LASF63
+ 1812 0503 01       		.byte	0x1
+ 1813 0504 2A       		.byte	0x2a
+ 1814 0505 B3010000 		.4byte	0x1b3
+ 1815 0509 05       		.uleb128 0x5
+ 1816 050a 03       		.byte	0x3
+ 1817 050b 03000000 		.4byte	task_created
+ 1818 050f 1E       		.uleb128 0x1e
+ 1819 0510 74040000 		.4byte	.LASF64
+ 1820 0514 06       		.byte	0x6
+ 1821 0515 38       		.byte	0x38
+ 1822 0516 DE000000 		.4byte	0xde
+ 1823 051a 1E       		.uleb128 0x1e
+ 1824 051b 86020000 		.4byte	.LASF65
+ 1825 051f 06       		.byte	0x6
+ 1826 0520 38       		.byte	0x38
+ 1827 0521 9E000000 		.4byte	0x9e
+ 1828 0525 00       		.byte	0
+ 1829              		.section	.debug_abbrev,"",%progbits
+ 1830              	.Ldebug_abbrev0:
+ 1831 0000 01       		.uleb128 0x1
+ 1832 0001 11       		.uleb128 0x11
+ 1833 0002 01       		.byte	0x1
+ 1834 0003 25       		.uleb128 0x25
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 40
+
+
+ 1835 0004 0E       		.uleb128 0xe
+ 1836 0005 13       		.uleb128 0x13
+ 1837 0006 0B       		.uleb128 0xb
+ 1838 0007 03       		.uleb128 0x3
+ 1839 0008 0E       		.uleb128 0xe
+ 1840 0009 1B       		.uleb128 0x1b
+ 1841 000a 0E       		.uleb128 0xe
+ 1842 000b 55       		.uleb128 0x55
+ 1843 000c 17       		.uleb128 0x17
+ 1844 000d 11       		.uleb128 0x11
+ 1845 000e 01       		.uleb128 0x1
+ 1846 000f 10       		.uleb128 0x10
+ 1847 0010 17       		.uleb128 0x17
+ 1848 0011 00       		.byte	0
+ 1849 0012 00       		.byte	0
+ 1850 0013 02       		.uleb128 0x2
+ 1851 0014 24       		.uleb128 0x24
+ 1852 0015 00       		.byte	0
+ 1853 0016 0B       		.uleb128 0xb
+ 1854 0017 0B       		.uleb128 0xb
+ 1855 0018 3E       		.uleb128 0x3e
+ 1856 0019 0B       		.uleb128 0xb
+ 1857 001a 03       		.uleb128 0x3
+ 1858 001b 08       		.uleb128 0x8
+ 1859 001c 00       		.byte	0
+ 1860 001d 00       		.byte	0
+ 1861 001e 03       		.uleb128 0x3
+ 1862 001f 24       		.uleb128 0x24
+ 1863 0020 00       		.byte	0
+ 1864 0021 0B       		.uleb128 0xb
+ 1865 0022 0B       		.uleb128 0xb
+ 1866 0023 3E       		.uleb128 0x3e
+ 1867 0024 0B       		.uleb128 0xb
+ 1868 0025 03       		.uleb128 0x3
+ 1869 0026 0E       		.uleb128 0xe
+ 1870 0027 00       		.byte	0
+ 1871 0028 00       		.byte	0
+ 1872 0029 04       		.uleb128 0x4
+ 1873 002a 16       		.uleb128 0x16
+ 1874 002b 00       		.byte	0
+ 1875 002c 03       		.uleb128 0x3
+ 1876 002d 0E       		.uleb128 0xe
+ 1877 002e 3A       		.uleb128 0x3a
+ 1878 002f 0B       		.uleb128 0xb
+ 1879 0030 3B       		.uleb128 0x3b
+ 1880 0031 0B       		.uleb128 0xb
+ 1881 0032 49       		.uleb128 0x49
+ 1882 0033 13       		.uleb128 0x13
+ 1883 0034 00       		.byte	0
+ 1884 0035 00       		.byte	0
+ 1885 0036 05       		.uleb128 0x5
+ 1886 0037 0F       		.uleb128 0xf
+ 1887 0038 00       		.byte	0
+ 1888 0039 0B       		.uleb128 0xb
+ 1889 003a 0B       		.uleb128 0xb
+ 1890 003b 00       		.byte	0
+ 1891 003c 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 41
+
+
+ 1892 003d 06       		.uleb128 0x6
+ 1893 003e 13       		.uleb128 0x13
+ 1894 003f 01       		.byte	0x1
+ 1895 0040 0B       		.uleb128 0xb
+ 1896 0041 0B       		.uleb128 0xb
+ 1897 0042 3A       		.uleb128 0x3a
+ 1898 0043 0B       		.uleb128 0xb
+ 1899 0044 3B       		.uleb128 0x3b
+ 1900 0045 0B       		.uleb128 0xb
+ 1901 0046 01       		.uleb128 0x1
+ 1902 0047 13       		.uleb128 0x13
+ 1903 0048 00       		.byte	0
+ 1904 0049 00       		.byte	0
+ 1905 004a 07       		.uleb128 0x7
+ 1906 004b 0D       		.uleb128 0xd
+ 1907 004c 00       		.byte	0
+ 1908 004d 03       		.uleb128 0x3
+ 1909 004e 0E       		.uleb128 0xe
+ 1910 004f 3A       		.uleb128 0x3a
+ 1911 0050 0B       		.uleb128 0xb
+ 1912 0051 3B       		.uleb128 0x3b
+ 1913 0052 0B       		.uleb128 0xb
+ 1914 0053 49       		.uleb128 0x49
+ 1915 0054 13       		.uleb128 0x13
+ 1916 0055 38       		.uleb128 0x38
+ 1917 0056 0B       		.uleb128 0xb
+ 1918 0057 00       		.byte	0
+ 1919 0058 00       		.byte	0
+ 1920 0059 08       		.uleb128 0x8
+ 1921 005a 0F       		.uleb128 0xf
+ 1922 005b 00       		.byte	0
+ 1923 005c 0B       		.uleb128 0xb
+ 1924 005d 0B       		.uleb128 0xb
+ 1925 005e 49       		.uleb128 0x49
+ 1926 005f 13       		.uleb128 0x13
+ 1927 0060 00       		.byte	0
+ 1928 0061 00       		.byte	0
+ 1929 0062 09       		.uleb128 0x9
+ 1930 0063 15       		.uleb128 0x15
+ 1931 0064 01       		.byte	0x1
+ 1932 0065 27       		.uleb128 0x27
+ 1933 0066 19       		.uleb128 0x19
+ 1934 0067 01       		.uleb128 0x1
+ 1935 0068 13       		.uleb128 0x13
+ 1936 0069 00       		.byte	0
+ 1937 006a 00       		.byte	0
+ 1938 006b 0A       		.uleb128 0xa
+ 1939 006c 05       		.uleb128 0x5
+ 1940 006d 00       		.byte	0
+ 1941 006e 49       		.uleb128 0x49
+ 1942 006f 13       		.uleb128 0x13
+ 1943 0070 00       		.byte	0
+ 1944 0071 00       		.byte	0
+ 1945 0072 0B       		.uleb128 0xb
+ 1946 0073 13       		.uleb128 0x13
+ 1947 0074 01       		.byte	0x1
+ 1948 0075 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 42
+
+
+ 1949 0076 0E       		.uleb128 0xe
+ 1950 0077 0B       		.uleb128 0xb
+ 1951 0078 0B       		.uleb128 0xb
+ 1952 0079 3A       		.uleb128 0x3a
+ 1953 007a 0B       		.uleb128 0xb
+ 1954 007b 3B       		.uleb128 0x3b
+ 1955 007c 0B       		.uleb128 0xb
+ 1956 007d 01       		.uleb128 0x1
+ 1957 007e 13       		.uleb128 0x13
+ 1958 007f 00       		.byte	0
+ 1959 0080 00       		.byte	0
+ 1960 0081 0C       		.uleb128 0xc
+ 1961 0082 0D       		.uleb128 0xd
+ 1962 0083 00       		.byte	0
+ 1963 0084 03       		.uleb128 0x3
+ 1964 0085 0E       		.uleb128 0xe
+ 1965 0086 3A       		.uleb128 0x3a
+ 1966 0087 0B       		.uleb128 0xb
+ 1967 0088 3B       		.uleb128 0x3b
+ 1968 0089 0B       		.uleb128 0xb
+ 1969 008a 49       		.uleb128 0x49
+ 1970 008b 13       		.uleb128 0x13
+ 1971 008c 0B       		.uleb128 0xb
+ 1972 008d 0B       		.uleb128 0xb
+ 1973 008e 0D       		.uleb128 0xd
+ 1974 008f 0B       		.uleb128 0xb
+ 1975 0090 0C       		.uleb128 0xc
+ 1976 0091 0B       		.uleb128 0xb
+ 1977 0092 38       		.uleb128 0x38
+ 1978 0093 0B       		.uleb128 0xb
+ 1979 0094 00       		.byte	0
+ 1980 0095 00       		.byte	0
+ 1981 0096 0D       		.uleb128 0xd
+ 1982 0097 04       		.uleb128 0x4
+ 1983 0098 01       		.byte	0x1
+ 1984 0099 0B       		.uleb128 0xb
+ 1985 009a 0B       		.uleb128 0xb
+ 1986 009b 49       		.uleb128 0x49
+ 1987 009c 13       		.uleb128 0x13
+ 1988 009d 3A       		.uleb128 0x3a
+ 1989 009e 0B       		.uleb128 0xb
+ 1990 009f 3B       		.uleb128 0x3b
+ 1991 00a0 0B       		.uleb128 0xb
+ 1992 00a1 01       		.uleb128 0x1
+ 1993 00a2 13       		.uleb128 0x13
+ 1994 00a3 00       		.byte	0
+ 1995 00a4 00       		.byte	0
+ 1996 00a5 0E       		.uleb128 0xe
+ 1997 00a6 28       		.uleb128 0x28
+ 1998 00a7 00       		.byte	0
+ 1999 00a8 03       		.uleb128 0x3
+ 2000 00a9 0E       		.uleb128 0xe
+ 2001 00aa 1C       		.uleb128 0x1c
+ 2002 00ab 0B       		.uleb128 0xb
+ 2003 00ac 00       		.byte	0
+ 2004 00ad 00       		.byte	0
+ 2005 00ae 0F       		.uleb128 0xf
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 43
+
+
+ 2006 00af 2E       		.uleb128 0x2e
+ 2007 00b0 00       		.byte	0
+ 2008 00b1 3F       		.uleb128 0x3f
+ 2009 00b2 19       		.uleb128 0x19
+ 2010 00b3 03       		.uleb128 0x3
+ 2011 00b4 0E       		.uleb128 0xe
+ 2012 00b5 3A       		.uleb128 0x3a
+ 2013 00b6 0B       		.uleb128 0xb
+ 2014 00b7 3B       		.uleb128 0x3b
+ 2015 00b8 0B       		.uleb128 0xb
+ 2016 00b9 27       		.uleb128 0x27
+ 2017 00ba 19       		.uleb128 0x19
+ 2018 00bb 11       		.uleb128 0x11
+ 2019 00bc 01       		.uleb128 0x1
+ 2020 00bd 12       		.uleb128 0x12
+ 2021 00be 06       		.uleb128 0x6
+ 2022 00bf 40       		.uleb128 0x40
+ 2023 00c0 18       		.uleb128 0x18
+ 2024 00c1 9642     		.uleb128 0x2116
+ 2025 00c3 19       		.uleb128 0x19
+ 2026 00c4 00       		.byte	0
+ 2027 00c5 00       		.byte	0
+ 2028 00c6 10       		.uleb128 0x10
+ 2029 00c7 2E       		.uleb128 0x2e
+ 2030 00c8 01       		.byte	0x1
+ 2031 00c9 3F       		.uleb128 0x3f
+ 2032 00ca 19       		.uleb128 0x19
+ 2033 00cb 03       		.uleb128 0x3
+ 2034 00cc 0E       		.uleb128 0xe
+ 2035 00cd 3A       		.uleb128 0x3a
+ 2036 00ce 0B       		.uleb128 0xb
+ 2037 00cf 3B       		.uleb128 0x3b
+ 2038 00d0 0B       		.uleb128 0xb
+ 2039 00d1 27       		.uleb128 0x27
+ 2040 00d2 19       		.uleb128 0x19
+ 2041 00d3 11       		.uleb128 0x11
+ 2042 00d4 01       		.uleb128 0x1
+ 2043 00d5 12       		.uleb128 0x12
+ 2044 00d6 06       		.uleb128 0x6
+ 2045 00d7 40       		.uleb128 0x40
+ 2046 00d8 18       		.uleb128 0x18
+ 2047 00d9 9642     		.uleb128 0x2116
+ 2048 00db 19       		.uleb128 0x19
+ 2049 00dc 01       		.uleb128 0x1
+ 2050 00dd 13       		.uleb128 0x13
+ 2051 00de 00       		.byte	0
+ 2052 00df 00       		.byte	0
+ 2053 00e0 11       		.uleb128 0x11
+ 2054 00e1 34       		.uleb128 0x34
+ 2055 00e2 00       		.byte	0
+ 2056 00e3 03       		.uleb128 0x3
+ 2057 00e4 0E       		.uleb128 0xe
+ 2058 00e5 3A       		.uleb128 0x3a
+ 2059 00e6 0B       		.uleb128 0xb
+ 2060 00e7 3B       		.uleb128 0x3b
+ 2061 00e8 0B       		.uleb128 0xb
+ 2062 00e9 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 44
+
+
+ 2063 00ea 13       		.uleb128 0x13
+ 2064 00eb 02       		.uleb128 0x2
+ 2065 00ec 18       		.uleb128 0x18
+ 2066 00ed 00       		.byte	0
+ 2067 00ee 00       		.byte	0
+ 2068 00ef 12       		.uleb128 0x12
+ 2069 00f0 2E       		.uleb128 0x2e
+ 2070 00f1 01       		.byte	0x1
+ 2071 00f2 3F       		.uleb128 0x3f
+ 2072 00f3 19       		.uleb128 0x19
+ 2073 00f4 03       		.uleb128 0x3
+ 2074 00f5 0E       		.uleb128 0xe
+ 2075 00f6 3A       		.uleb128 0x3a
+ 2076 00f7 0B       		.uleb128 0xb
+ 2077 00f8 3B       		.uleb128 0x3b
+ 2078 00f9 0B       		.uleb128 0xb
+ 2079 00fa 27       		.uleb128 0x27
+ 2080 00fb 19       		.uleb128 0x19
+ 2081 00fc 49       		.uleb128 0x49
+ 2082 00fd 13       		.uleb128 0x13
+ 2083 00fe 11       		.uleb128 0x11
+ 2084 00ff 01       		.uleb128 0x1
+ 2085 0100 12       		.uleb128 0x12
+ 2086 0101 06       		.uleb128 0x6
+ 2087 0102 40       		.uleb128 0x40
+ 2088 0103 18       		.uleb128 0x18
+ 2089 0104 9642     		.uleb128 0x2116
+ 2090 0106 19       		.uleb128 0x19
+ 2091 0107 01       		.uleb128 0x1
+ 2092 0108 13       		.uleb128 0x13
+ 2093 0109 00       		.byte	0
+ 2094 010a 00       		.byte	0
+ 2095 010b 13       		.uleb128 0x13
+ 2096 010c 34       		.uleb128 0x34
+ 2097 010d 00       		.byte	0
+ 2098 010e 03       		.uleb128 0x3
+ 2099 010f 08       		.uleb128 0x8
+ 2100 0110 3A       		.uleb128 0x3a
+ 2101 0111 0B       		.uleb128 0xb
+ 2102 0112 3B       		.uleb128 0x3b
+ 2103 0113 0B       		.uleb128 0xb
+ 2104 0114 49       		.uleb128 0x49
+ 2105 0115 13       		.uleb128 0x13
+ 2106 0116 02       		.uleb128 0x2
+ 2107 0117 18       		.uleb128 0x18
+ 2108 0118 00       		.byte	0
+ 2109 0119 00       		.byte	0
+ 2110 011a 14       		.uleb128 0x14
+ 2111 011b 05       		.uleb128 0x5
+ 2112 011c 00       		.byte	0
+ 2113 011d 03       		.uleb128 0x3
+ 2114 011e 0E       		.uleb128 0xe
+ 2115 011f 3A       		.uleb128 0x3a
+ 2116 0120 0B       		.uleb128 0xb
+ 2117 0121 3B       		.uleb128 0x3b
+ 2118 0122 0B       		.uleb128 0xb
+ 2119 0123 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 45
+
+
+ 2120 0124 13       		.uleb128 0x13
+ 2121 0125 02       		.uleb128 0x2
+ 2122 0126 18       		.uleb128 0x18
+ 2123 0127 00       		.byte	0
+ 2124 0128 00       		.byte	0
+ 2125 0129 15       		.uleb128 0x15
+ 2126 012a 2E       		.uleb128 0x2e
+ 2127 012b 01       		.byte	0x1
+ 2128 012c 3F       		.uleb128 0x3f
+ 2129 012d 19       		.uleb128 0x19
+ 2130 012e 03       		.uleb128 0x3
+ 2131 012f 0E       		.uleb128 0xe
+ 2132 0130 3A       		.uleb128 0x3a
+ 2133 0131 0B       		.uleb128 0xb
+ 2134 0132 3B       		.uleb128 0x3b
+ 2135 0133 0B       		.uleb128 0xb
+ 2136 0134 27       		.uleb128 0x27
+ 2137 0135 19       		.uleb128 0x19
+ 2138 0136 11       		.uleb128 0x11
+ 2139 0137 01       		.uleb128 0x1
+ 2140 0138 12       		.uleb128 0x12
+ 2141 0139 06       		.uleb128 0x6
+ 2142 013a 40       		.uleb128 0x40
+ 2143 013b 18       		.uleb128 0x18
+ 2144 013c 9742     		.uleb128 0x2117
+ 2145 013e 19       		.uleb128 0x19
+ 2146 013f 01       		.uleb128 0x1
+ 2147 0140 13       		.uleb128 0x13
+ 2148 0141 00       		.byte	0
+ 2149 0142 00       		.byte	0
+ 2150 0143 16       		.uleb128 0x16
+ 2151 0144 2E       		.uleb128 0x2e
+ 2152 0145 01       		.byte	0x1
+ 2153 0146 3F       		.uleb128 0x3f
+ 2154 0147 19       		.uleb128 0x19
+ 2155 0148 03       		.uleb128 0x3
+ 2156 0149 0E       		.uleb128 0xe
+ 2157 014a 3A       		.uleb128 0x3a
+ 2158 014b 0B       		.uleb128 0xb
+ 2159 014c 3B       		.uleb128 0x3b
+ 2160 014d 05       		.uleb128 0x5
+ 2161 014e 27       		.uleb128 0x27
+ 2162 014f 19       		.uleb128 0x19
+ 2163 0150 11       		.uleb128 0x11
+ 2164 0151 01       		.uleb128 0x1
+ 2165 0152 12       		.uleb128 0x12
+ 2166 0153 06       		.uleb128 0x6
+ 2167 0154 40       		.uleb128 0x40
+ 2168 0155 18       		.uleb128 0x18
+ 2169 0156 9642     		.uleb128 0x2116
+ 2170 0158 19       		.uleb128 0x19
+ 2171 0159 01       		.uleb128 0x1
+ 2172 015a 13       		.uleb128 0x13
+ 2173 015b 00       		.byte	0
+ 2174 015c 00       		.byte	0
+ 2175 015d 17       		.uleb128 0x17
+ 2176 015e 05       		.uleb128 0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 46
+
+
+ 2177 015f 00       		.byte	0
+ 2178 0160 03       		.uleb128 0x3
+ 2179 0161 0E       		.uleb128 0xe
+ 2180 0162 3A       		.uleb128 0x3a
+ 2181 0163 0B       		.uleb128 0xb
+ 2182 0164 3B       		.uleb128 0x3b
+ 2183 0165 05       		.uleb128 0x5
+ 2184 0166 49       		.uleb128 0x49
+ 2185 0167 13       		.uleb128 0x13
+ 2186 0168 02       		.uleb128 0x2
+ 2187 0169 18       		.uleb128 0x18
+ 2188 016a 00       		.byte	0
+ 2189 016b 00       		.byte	0
+ 2190 016c 18       		.uleb128 0x18
+ 2191 016d 34       		.uleb128 0x34
+ 2192 016e 00       		.byte	0
+ 2193 016f 03       		.uleb128 0x3
+ 2194 0170 08       		.uleb128 0x8
+ 2195 0171 3A       		.uleb128 0x3a
+ 2196 0172 0B       		.uleb128 0xb
+ 2197 0173 3B       		.uleb128 0x3b
+ 2198 0174 05       		.uleb128 0x5
+ 2199 0175 49       		.uleb128 0x49
+ 2200 0176 13       		.uleb128 0x13
+ 2201 0177 02       		.uleb128 0x2
+ 2202 0178 18       		.uleb128 0x18
+ 2203 0179 00       		.byte	0
+ 2204 017a 00       		.byte	0
+ 2205 017b 19       		.uleb128 0x19
+ 2206 017c 2E       		.uleb128 0x2e
+ 2207 017d 01       		.byte	0x1
+ 2208 017e 3F       		.uleb128 0x3f
+ 2209 017f 19       		.uleb128 0x19
+ 2210 0180 03       		.uleb128 0x3
+ 2211 0181 0E       		.uleb128 0xe
+ 2212 0182 3A       		.uleb128 0x3a
+ 2213 0183 0B       		.uleb128 0xb
+ 2214 0184 3B       		.uleb128 0x3b
+ 2215 0185 05       		.uleb128 0x5
+ 2216 0186 27       		.uleb128 0x27
+ 2217 0187 19       		.uleb128 0x19
+ 2218 0188 11       		.uleb128 0x11
+ 2219 0189 01       		.uleb128 0x1
+ 2220 018a 12       		.uleb128 0x12
+ 2221 018b 06       		.uleb128 0x6
+ 2222 018c 40       		.uleb128 0x40
+ 2223 018d 18       		.uleb128 0x18
+ 2224 018e 9742     		.uleb128 0x2117
+ 2225 0190 19       		.uleb128 0x19
+ 2226 0191 01       		.uleb128 0x1
+ 2227 0192 13       		.uleb128 0x13
+ 2228 0193 00       		.byte	0
+ 2229 0194 00       		.byte	0
+ 2230 0195 1A       		.uleb128 0x1a
+ 2231 0196 05       		.uleb128 0x5
+ 2232 0197 00       		.byte	0
+ 2233 0198 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 47
+
+
+ 2234 0199 08       		.uleb128 0x8
+ 2235 019a 3A       		.uleb128 0x3a
+ 2236 019b 0B       		.uleb128 0xb
+ 2237 019c 3B       		.uleb128 0x3b
+ 2238 019d 05       		.uleb128 0x5
+ 2239 019e 49       		.uleb128 0x49
+ 2240 019f 13       		.uleb128 0x13
+ 2241 01a0 02       		.uleb128 0x2
+ 2242 01a1 18       		.uleb128 0x18
+ 2243 01a2 00       		.byte	0
+ 2244 01a3 00       		.byte	0
+ 2245 01a4 1B       		.uleb128 0x1b
+ 2246 01a5 2E       		.uleb128 0x2e
+ 2247 01a6 00       		.byte	0
+ 2248 01a7 3F       		.uleb128 0x3f
+ 2249 01a8 19       		.uleb128 0x19
+ 2250 01a9 03       		.uleb128 0x3
+ 2251 01aa 0E       		.uleb128 0xe
+ 2252 01ab 3A       		.uleb128 0x3a
+ 2253 01ac 0B       		.uleb128 0xb
+ 2254 01ad 3B       		.uleb128 0x3b
+ 2255 01ae 05       		.uleb128 0x5
+ 2256 01af 27       		.uleb128 0x27
+ 2257 01b0 19       		.uleb128 0x19
+ 2258 01b1 49       		.uleb128 0x49
+ 2259 01b2 13       		.uleb128 0x13
+ 2260 01b3 11       		.uleb128 0x11
+ 2261 01b4 01       		.uleb128 0x1
+ 2262 01b5 12       		.uleb128 0x12
+ 2263 01b6 06       		.uleb128 0x6
+ 2264 01b7 40       		.uleb128 0x40
+ 2265 01b8 18       		.uleb128 0x18
+ 2266 01b9 9742     		.uleb128 0x2117
+ 2267 01bb 19       		.uleb128 0x19
+ 2268 01bc 00       		.byte	0
+ 2269 01bd 00       		.byte	0
+ 2270 01be 1C       		.uleb128 0x1c
+ 2271 01bf 2E       		.uleb128 0x2e
+ 2272 01c0 01       		.byte	0x1
+ 2273 01c1 03       		.uleb128 0x3
+ 2274 01c2 0E       		.uleb128 0xe
+ 2275 01c3 3A       		.uleb128 0x3a
+ 2276 01c4 0B       		.uleb128 0xb
+ 2277 01c5 3B       		.uleb128 0x3b
+ 2278 01c6 05       		.uleb128 0x5
+ 2279 01c7 27       		.uleb128 0x27
+ 2280 01c8 19       		.uleb128 0x19
+ 2281 01c9 49       		.uleb128 0x49
+ 2282 01ca 13       		.uleb128 0x13
+ 2283 01cb 11       		.uleb128 0x11
+ 2284 01cc 01       		.uleb128 0x1
+ 2285 01cd 12       		.uleb128 0x12
+ 2286 01ce 06       		.uleb128 0x6
+ 2287 01cf 40       		.uleb128 0x40
+ 2288 01d0 18       		.uleb128 0x18
+ 2289 01d1 9642     		.uleb128 0x2116
+ 2290 01d3 19       		.uleb128 0x19
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 48
+
+
+ 2291 01d4 01       		.uleb128 0x1
+ 2292 01d5 13       		.uleb128 0x13
+ 2293 01d6 00       		.byte	0
+ 2294 01d7 00       		.byte	0
+ 2295 01d8 1D       		.uleb128 0x1d
+ 2296 01d9 34       		.uleb128 0x34
+ 2297 01da 00       		.byte	0
+ 2298 01db 03       		.uleb128 0x3
+ 2299 01dc 0E       		.uleb128 0xe
+ 2300 01dd 3A       		.uleb128 0x3a
+ 2301 01de 0B       		.uleb128 0xb
+ 2302 01df 3B       		.uleb128 0x3b
+ 2303 01e0 05       		.uleb128 0x5
+ 2304 01e1 49       		.uleb128 0x49
+ 2305 01e2 13       		.uleb128 0x13
+ 2306 01e3 02       		.uleb128 0x2
+ 2307 01e4 18       		.uleb128 0x18
+ 2308 01e5 00       		.byte	0
+ 2309 01e6 00       		.byte	0
+ 2310 01e7 1E       		.uleb128 0x1e
+ 2311 01e8 34       		.uleb128 0x34
+ 2312 01e9 00       		.byte	0
+ 2313 01ea 03       		.uleb128 0x3
+ 2314 01eb 0E       		.uleb128 0xe
+ 2315 01ec 3A       		.uleb128 0x3a
+ 2316 01ed 0B       		.uleb128 0xb
+ 2317 01ee 3B       		.uleb128 0x3b
+ 2318 01ef 0B       		.uleb128 0xb
+ 2319 01f0 49       		.uleb128 0x49
+ 2320 01f1 13       		.uleb128 0x13
+ 2321 01f2 3F       		.uleb128 0x3f
+ 2322 01f3 19       		.uleb128 0x19
+ 2323 01f4 3C       		.uleb128 0x3c
+ 2324 01f5 19       		.uleb128 0x19
+ 2325 01f6 00       		.byte	0
+ 2326 01f7 00       		.byte	0
+ 2327 01f8 00       		.byte	0
+ 2328              		.section	.debug_aranges,"",%progbits
+ 2329 0000 84000000 		.4byte	0x84
+ 2330 0004 0200     		.2byte	0x2
+ 2331 0006 00000000 		.4byte	.Ldebug_info0
+ 2332 000a 04       		.byte	0x4
+ 2333 000b 00       		.byte	0
+ 2334 000c 0000     		.2byte	0
+ 2335 000e 0000     		.2byte	0
+ 2336 0010 00000000 		.4byte	.LFB31
+ 2337 0014 1C000000 		.4byte	.LFE31-.LFB31
+ 2338 0018 00000000 		.4byte	.LFB32
+ 2339 001c 1C020000 		.4byte	.LFE32-.LFB32
+ 2340 0020 00000000 		.4byte	.LFB33
+ 2341 0024 C4000000 		.4byte	.LFE33-.LFB33
+ 2342 0028 00000000 		.4byte	.LFB34
+ 2343 002c 4A000000 		.4byte	.LFE34-.LFB34
+ 2344 0030 00000000 		.4byte	.LFB35
+ 2345 0034 1C000000 		.4byte	.LFE35-.LFB35
+ 2346 0038 00000000 		.4byte	.LFB36
+ 2347 003c 3C000000 		.4byte	.LFE36-.LFB36
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 49
+
+
+ 2348 0040 00000000 		.4byte	.LFB37
+ 2349 0044 94000000 		.4byte	.LFE37-.LFB37
+ 2350 0048 00000000 		.4byte	.LFB38
+ 2351 004c 1C000000 		.4byte	.LFE38-.LFB38
+ 2352 0050 00000000 		.4byte	.LFB39
+ 2353 0054 22000000 		.4byte	.LFE39-.LFB39
+ 2354 0058 00000000 		.4byte	.LFB40
+ 2355 005c 1E000000 		.4byte	.LFE40-.LFB40
+ 2356 0060 00000000 		.4byte	.LFB41
+ 2357 0064 1A000000 		.4byte	.LFE41-.LFB41
+ 2358 0068 00000000 		.4byte	.LFB42
+ 2359 006c 20000000 		.4byte	.LFE42-.LFB42
+ 2360 0070 00000000 		.4byte	.LFB43
+ 2361 0074 18000000 		.4byte	.LFE43-.LFB43
+ 2362 0078 00000000 		.4byte	.LFB44
+ 2363 007c 80000000 		.4byte	.LFE44-.LFB44
+ 2364 0080 00000000 		.4byte	0
+ 2365 0084 00000000 		.4byte	0
+ 2366              		.section	.debug_ranges,"",%progbits
+ 2367              	.Ldebug_ranges0:
+ 2368 0000 00000000 		.4byte	.LFB31
+ 2369 0004 1C000000 		.4byte	.LFE31
+ 2370 0008 00000000 		.4byte	.LFB32
+ 2371 000c 1C020000 		.4byte	.LFE32
+ 2372 0010 00000000 		.4byte	.LFB33
+ 2373 0014 C4000000 		.4byte	.LFE33
+ 2374 0018 00000000 		.4byte	.LFB34
+ 2375 001c 4A000000 		.4byte	.LFE34
+ 2376 0020 00000000 		.4byte	.LFB35
+ 2377 0024 1C000000 		.4byte	.LFE35
+ 2378 0028 00000000 		.4byte	.LFB36
+ 2379 002c 3C000000 		.4byte	.LFE36
+ 2380 0030 00000000 		.4byte	.LFB37
+ 2381 0034 94000000 		.4byte	.LFE37
+ 2382 0038 00000000 		.4byte	.LFB38
+ 2383 003c 1C000000 		.4byte	.LFE38
+ 2384 0040 00000000 		.4byte	.LFB39
+ 2385 0044 22000000 		.4byte	.LFE39
+ 2386 0048 00000000 		.4byte	.LFB40
+ 2387 004c 1E000000 		.4byte	.LFE40
+ 2388 0050 00000000 		.4byte	.LFB41
+ 2389 0054 1A000000 		.4byte	.LFE41
+ 2390 0058 00000000 		.4byte	.LFB42
+ 2391 005c 20000000 		.4byte	.LFE42
+ 2392 0060 00000000 		.4byte	.LFB43
+ 2393 0064 18000000 		.4byte	.LFE43
+ 2394 0068 00000000 		.4byte	.LFB44
+ 2395 006c 80000000 		.4byte	.LFE44
+ 2396 0070 00000000 		.4byte	0
+ 2397 0074 00000000 		.4byte	0
+ 2398              		.section	.debug_line,"",%progbits
+ 2399              	.Ldebug_line0:
+ 2400 0000 4C030000 		.section	.debug_str,"MS",%progbits,1
+ 2400      02006D01 
+ 2400      00000201 
+ 2400      FB0E0D00 
+ 2400      01010101 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 50
+
+
+ 2401              	.LASF14:
+ 2402 0000 6C765F6C 		.ascii	"lv_ll_node_t\000"
+ 2402      6C5F6E6F 
+ 2402      64655F74 
+ 2402      00
+ 2403              	.LASF46:
+ 2404 000d 6E65775F 		.ascii	"new_task\000"
+ 2404      7461736B 
+ 2404      00
+ 2405              	.LASF34:
+ 2406 0016 6C765F74 		.ascii	"lv_task_t\000"
+ 2406      61736B5F 
+ 2406      7400
+ 2407              	.LASF57:
+ 2408 0020 6C765F74 		.ascii	"lv_task_reset\000"
+ 2408      61736B5F 
+ 2408      72657365 
+ 2408      7400
+ 2409              	.LASF5:
+ 2410 002e 73686F72 		.ascii	"short int\000"
+ 2410      7420696E 
+ 2410      7400
+ 2411              	.LASF62:
+ 2412 0038 7461736B 		.ascii	"task_deleted\000"
+ 2412      5F64656C 
+ 2412      65746564 
+ 2412      00
+ 2413              	.LASF36:
+ 2414 0045 73697A65 		.ascii	"sizetype\000"
+ 2414      74797065 
+ 2414      00
+ 2415              	.LASF29:
+ 2416 004e 4C565F54 		.ascii	"LV_TASK_PRIO_MID\000"
+ 2416      41534B5F 
+ 2416      5052494F 
+ 2416      5F4D4944 
+ 2416      00
+ 2417              	.LASF51:
+ 2418 005f 7461736B 		.ascii	"task\000"
+ 2418      00
+ 2419              	.LASF28:
+ 2420 0064 4C565F54 		.ascii	"LV_TASK_PRIO_LOW\000"
+ 2420      41534B5F 
+ 2420      5052494F 
+ 2420      5F4C4F57 
+ 2420      00
+ 2421              	.LASF9:
+ 2422 0075 5F5F7569 		.ascii	"__uint32_t\000"
+ 2422      6E743332 
+ 2422      5F7400
+ 2423              	.LASF32:
+ 2424 0080 5F4C565F 		.ascii	"_LV_TASK_PRIO_NUM\000"
+ 2424      5441534B 
+ 2424      5F505249 
+ 2424      4F5F4E55 
+ 2424      4D00
+ 2425              	.LASF33:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 51
+
+
+ 2426 0092 6C765F74 		.ascii	"lv_task_prio_t\000"
+ 2426      61736B5F 
+ 2426      7072696F 
+ 2426      5F7400
+ 2427              	.LASF45:
+ 2428 00a1 69646C65 		.ascii	"idle_period_time\000"
+ 2428      5F706572 
+ 2428      696F645F 
+ 2428      74696D65 
+ 2428      00
+ 2429              	.LASF16:
+ 2430 00b2 68656164 		.ascii	"head\000"
+ 2430      00
+ 2431              	.LASF31:
+ 2432 00b7 4C565F54 		.ascii	"LV_TASK_PRIO_HIGHEST\000"
+ 2432      41534B5F 
+ 2432      5052494F 
+ 2432      5F484947 
+ 2432      48455354 
+ 2433              	.LASF66:
+ 2434 00cc 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2434      43313120 
+ 2434      352E342E 
+ 2434      31203230 
+ 2434      31363036 
+ 2435 00ff 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2435      20726576 
+ 2435      6973696F 
+ 2435      6E203233 
+ 2435      37373135 
+ 2436 0132 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 2436      70202D6D 
+ 2436      6670753D 
+ 2436      66707634 
+ 2436      2D73702D 
+ 2437 0165 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2437      6F6E7320 
+ 2437      2D666661 
+ 2437      742D6C74 
+ 2437      6F2D6F62 
+ 2438              	.LASF12:
+ 2439 017f 75696E74 		.ascii	"uint8_t\000"
+ 2439      385F7400 
+ 2440              	.LASF13:
+ 2441 0187 75696E74 		.ascii	"uint32_t\000"
+ 2441      33325F74 
+ 2441      00
+ 2442              	.LASF53:
+ 2443 0190 6C765F74 		.ascii	"lv_task_set_prio\000"
+ 2443      61736B5F 
+ 2443      7365745F 
+ 2443      7072696F 
+ 2443      00
+ 2444              	.LASF67:
+ 2445 01a1 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 2445      2E5C2E2E 
+ 2445      5C6C7667 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 52
+
+
+ 2445      6C5C7665 
+ 2445      7273696F 
+ 2446 01cd 5C6C765F 		.ascii	"\\lv_task.c\000"
+ 2446      7461736B 
+ 2446      2E6300
+ 2447              	.LASF23:
+ 2448 01d8 75736572 		.ascii	"user_data\000"
+ 2448      5F646174 
+ 2448      6100
+ 2449              	.LASF27:
+ 2450 01e2 4C565F54 		.ascii	"LV_TASK_PRIO_LOWEST\000"
+ 2450      41534B5F 
+ 2450      5052494F 
+ 2450      5F4C4F57 
+ 2450      45535400 
+ 2451              	.LASF59:
+ 2452 01f6 65786563 		.ascii	"exec\000"
+ 2452      00
+ 2453              	.LASF69:
+ 2454 01fb 5F6C765F 		.ascii	"_lv_task_t\000"
+ 2454      7461736B 
+ 2454      5F7400
+ 2455              	.LASF1:
+ 2456 0206 6C6F6E67 		.ascii	"long long int\000"
+ 2456      206C6F6E 
+ 2456      6720696E 
+ 2456      7400
+ 2457              	.LASF26:
+ 2458 0214 4C565F54 		.ascii	"LV_TASK_PRIO_OFF\000"
+ 2458      41534B5F 
+ 2458      5052494F 
+ 2458      5F4F4646 
+ 2458      00
+ 2459              	.LASF60:
+ 2460 0225 6C765F74 		.ascii	"lv_task_run\000"
+ 2460      61736B5F 
+ 2460      72756E00 
+ 2461              	.LASF72:
+ 2462 0231 6C765F74 		.ascii	"lv_task_exec\000"
+ 2462      61736B5F 
+ 2462      65786563 
+ 2462      00
+ 2463              	.LASF42:
+ 2464 023e 7461736B 		.ascii	"task_interrupter\000"
+ 2464      5F696E74 
+ 2464      65727275 
+ 2464      70746572 
+ 2464      00
+ 2465              	.LASF54:
+ 2466 024f 6C765F74 		.ascii	"lv_task_set_period\000"
+ 2466      61736B5F 
+ 2466      7365745F 
+ 2466      70657269 
+ 2466      6F6400
+ 2467              	.LASF20:
+ 2468 0262 70657269 		.ascii	"period\000"
+ 2468      6F6400
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 53
+
+
+ 2469              	.LASF61:
+ 2470 0269 69646C65 		.ascii	"idle_last\000"
+ 2470      5F6C6173 
+ 2470      7400
+ 2471              	.LASF8:
+ 2472 0273 5F5F7569 		.ascii	"__uint8_t\000"
+ 2472      6E74385F 
+ 2472      7400
+ 2473              	.LASF21:
+ 2474 027d 6C617374 		.ascii	"last_run\000"
+ 2474      5F72756E 
+ 2474      00
+ 2475              	.LASF65:
+ 2476 0286 5F6C765F 		.ascii	"_lv_task_act\000"
+ 2476      7461736B 
+ 2476      5F616374 
+ 2476      00
+ 2477              	.LASF18:
+ 2478 0293 6C765F6C 		.ascii	"lv_ll_t\000"
+ 2478      6C5F7400 
+ 2479              	.LASF4:
+ 2480 029b 756E7369 		.ascii	"unsigned char\000"
+ 2480      676E6564 
+ 2480      20636861 
+ 2480      7200
+ 2481              	.LASF2:
+ 2482 02a9 6C6F6E67 		.ascii	"long double\000"
+ 2482      20646F75 
+ 2482      626C6500 
+ 2483              	.LASF47:
+ 2484 02b5 6C765F74 		.ascii	"lv_task_create_basic\000"
+ 2484      61736B5F 
+ 2484      63726561 
+ 2484      74655F62 
+ 2484      61736963 
+ 2485              	.LASF63:
+ 2486 02ca 7461736B 		.ascii	"task_created\000"
+ 2486      5F637265 
+ 2486      61746564 
+ 2486      00
+ 2487              	.LASF17:
+ 2488 02d7 7461696C 		.ascii	"tail\000"
+ 2488      00
+ 2489              	.LASF3:
+ 2490 02dc 7369676E 		.ascii	"signed char\000"
+ 2490      65642063 
+ 2490      68617200 
+ 2491              	.LASF11:
+ 2492 02e8 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2492      206C6F6E 
+ 2492      6720756E 
+ 2492      7369676E 
+ 2492      65642069 
+ 2493              	.LASF25:
+ 2494 02ff 6F6E6365 		.ascii	"once\000"
+ 2494      00
+ 2495              	.LASF0:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 54
+
+
+ 2496 0304 756E7369 		.ascii	"unsigned int\000"
+ 2496      676E6564 
+ 2496      20696E74 
+ 2496      00
+ 2497              	.LASF56:
+ 2498 0311 6C765F74 		.ascii	"lv_task_once\000"
+ 2498      61736B5F 
+ 2498      6F6E6365 
+ 2498      00
+ 2499              	.LASF40:
+ 2500 031e 68616E64 		.ascii	"handler_start\000"
+ 2500      6C65725F 
+ 2500      73746172 
+ 2500      7400
+ 2501              	.LASF6:
+ 2502 032c 73686F72 		.ascii	"short unsigned int\000"
+ 2502      7420756E 
+ 2502      7369676E 
+ 2502      65642069 
+ 2502      6E7400
+ 2503              	.LASF70:
+ 2504 033f 6C765F74 		.ascii	"lv_task_core_init\000"
+ 2504      61736B5F 
+ 2504      636F7265 
+ 2504      5F696E69 
+ 2504      7400
+ 2505              	.LASF37:
+ 2506 0351 63686172 		.ascii	"char\000"
+ 2506      00
+ 2507              	.LASF41:
+ 2508 0356 62757379 		.ascii	"busy_time\000"
+ 2508      5F74696D 
+ 2508      6500
+ 2509              	.LASF7:
+ 2510 0360 6C6F6E67 		.ascii	"long int\000"
+ 2510      20696E74 
+ 2510      00
+ 2511              	.LASF22:
+ 2512 0369 7461736B 		.ascii	"task_cb\000"
+ 2512      5F636200 
+ 2513              	.LASF35:
+ 2514 0371 5F426F6F 		.ascii	"_Bool\000"
+ 2514      6C00
+ 2515              	.LASF38:
+ 2516 0377 616C7265 		.ascii	"already_running\000"
+ 2516      6164795F 
+ 2516      72756E6E 
+ 2516      696E6700 
+ 2517              	.LASF52:
+ 2518 0387 6C765F74 		.ascii	"lv_task_del\000"
+ 2518      61736B5F 
+ 2518      64656C00 
+ 2519              	.LASF30:
+ 2520 0393 4C565F54 		.ascii	"LV_TASK_PRIO_HIGH\000"
+ 2520      41534B5F 
+ 2520      5052494F 
+ 2520      5F484947 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 55
+
+
+ 2520      4800
+ 2521              	.LASF71:
+ 2522 03a5 6C765F74 		.ascii	"lv_task_get_idle\000"
+ 2522      61736B5F 
+ 2522      6765745F 
+ 2522      69646C65 
+ 2522      00
+ 2523              	.LASF58:
+ 2524 03b6 6C765F74 		.ascii	"lv_task_enable\000"
+ 2524      61736B5F 
+ 2524      656E6162 
+ 2524      6C6500
+ 2525              	.LASF10:
+ 2526 03c5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2526      20756E73 
+ 2526      69676E65 
+ 2526      6420696E 
+ 2526      7400
+ 2527              	.LASF68:
+ 2528 03d7 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 2528      73657273 
+ 2528      5C746D6A 
+ 2528      33325C44 
+ 2528      6F63756D 
+ 2529 0404 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 2529      6C6C6F73 
+ 2529      636F7065 
+ 2529      5F53656E 
+ 2529      696F725F 
+ 2530 0435 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 2530      5C74636F 
+ 2530      6D5F6170 
+ 2530      705C7463 
+ 2530      6F6D5F61 
+ 2531 0465 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 2531      736F6336 
+ 2531      2E637964 
+ 2531      736E00
+ 2532              	.LASF64:
+ 2533 0474 5F6C765F 		.ascii	"_lv_task_ll\000"
+ 2533      7461736B 
+ 2533      5F6C6C00 
+ 2534              	.LASF50:
+ 2535 0480 6C765F74 		.ascii	"lv_task_set_cb\000"
+ 2535      61736B5F 
+ 2535      7365745F 
+ 2535      636200
+ 2536              	.LASF19:
+ 2537 048f 6C765F74 		.ascii	"lv_task_cb_t\000"
+ 2537      61736B5F 
+ 2537      63625F74 
+ 2537      00
+ 2538              	.LASF39:
+ 2539 049c 69646C65 		.ascii	"idle_period_start\000"
+ 2539      5F706572 
+ 2539      696F645F 
+ 2539      73746172 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccBnQeBE.s 			page 56
+
+
+ 2539      7400
+ 2540              	.LASF55:
+ 2541 04ae 6C765F74 		.ascii	"lv_task_ready\000"
+ 2541      61736B5F 
+ 2541      72656164 
+ 2541      7900
+ 2542              	.LASF48:
+ 2543 04bc 6C765F74 		.ascii	"lv_task_create\000"
+ 2543      61736B5F 
+ 2543      63726561 
+ 2543      746500
+ 2544              	.LASF49:
+ 2545 04cb 6C765F74 		.ascii	"lv_task_handler\000"
+ 2545      61736B5F 
+ 2545      68616E64 
+ 2545      6C657200 
+ 2546              	.LASF44:
+ 2547 04db 656E645F 		.ascii	"end_flag\000"
+ 2547      666C6167 
+ 2547      00
+ 2548              	.LASF24:
+ 2549 04e4 7072696F 		.ascii	"prio\000"
+ 2549      00
+ 2550              	.LASF43:
+ 2551 04e9 6E657874 		.ascii	"next\000"
+ 2551      00
+ 2552              	.LASF15:
+ 2553 04ee 6E5F7369 		.ascii	"n_size\000"
+ 2553      7A6500
+ 2554              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

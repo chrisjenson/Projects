@@ -1,0 +1,2413 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"slider_activity.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              	.Letext0:
+  21              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+  22              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+  23              		.file 3 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
+  24              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_i2c.h"
+  25              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_spi.h"
+  26              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_counter.h"
+  27              		.file 7 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+  28              		.file 8 "Generated_Source\\PSoC6/DISP_TICK_TIMER.h"
+  29              		.file 9 "Generated_Source\\PSoC6/I2C_MASTER.h"
+  30              		.file 10 "Generated_Source\\PSoC6/SPIM.h"
+  31              		.section	.debug_info,"",%progbits
+  32              	.Ldebug_info0:
+  33 0000 99080000 		.4byte	0x899
+  34 0004 0400     		.2byte	0x4
+  35 0006 00000000 		.4byte	.Ldebug_abbrev0
+  36 000a 04       		.byte	0x4
+  37 000b 01       		.uleb128 0x1
+  38 000c C1000000 		.4byte	.LASF177
+  39 0010 0C       		.byte	0xc
+  40 0011 51050000 		.4byte	.LASF178
+  41 0015 E3050000 		.4byte	.LASF179
+  42 0019 00000000 		.4byte	.Ldebug_line0
+  43 001d 02       		.uleb128 0x2
+  44 001e 01       		.byte	0x1
+  45 001f 06       		.byte	0x6
+  46 0020 270B0000 		.4byte	.LASF0
+  47 0024 03       		.uleb128 0x3
+  48 0025 9A000000 		.4byte	.LASF2
+  49 0029 01       		.byte	0x1
+  50 002a 1D       		.byte	0x1d
+  51 002b 2F000000 		.4byte	0x2f
+  52 002f 02       		.uleb128 0x2
+  53 0030 01       		.byte	0x1
+  54 0031 08       		.byte	0x8
+  55 0032 11080000 		.4byte	.LASF1
+  56 0036 03       		.uleb128 0x3
+  57 0037 79040000 		.4byte	.LASF3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 2
+
+
+  58 003b 01       		.byte	0x1
+  59 003c 29       		.byte	0x29
+  60 003d 41000000 		.4byte	0x41
+  61 0041 02       		.uleb128 0x2
+  62 0042 02       		.byte	0x2
+  63 0043 05       		.byte	0x5
+  64 0044 D9050000 		.4byte	.LASF4
+  65 0048 03       		.uleb128 0x3
+  66 0049 7E090000 		.4byte	.LASF5
+  67 004d 01       		.byte	0x1
+  68 004e 2B       		.byte	0x2b
+  69 004f 53000000 		.4byte	0x53
+  70 0053 02       		.uleb128 0x2
+  71 0054 02       		.byte	0x2
+  72 0055 07       		.byte	0x7
+  73 0056 E9090000 		.4byte	.LASF6
+  74 005a 03       		.uleb128 0x3
+  75 005b 9C090000 		.4byte	.LASF7
+  76 005f 01       		.byte	0x1
+  77 0060 3F       		.byte	0x3f
+  78 0061 65000000 		.4byte	0x65
+  79 0065 02       		.uleb128 0x2
+  80 0066 04       		.byte	0x4
+  81 0067 05       		.byte	0x5
+  82 0068 82030000 		.4byte	.LASF8
+  83 006c 03       		.uleb128 0x3
+  84 006d 5E040000 		.4byte	.LASF9
+  85 0071 01       		.byte	0x1
+  86 0072 41       		.byte	0x41
+  87 0073 77000000 		.4byte	0x77
+  88 0077 02       		.uleb128 0x2
+  89 0078 04       		.byte	0x4
+  90 0079 07       		.byte	0x7
+  91 007a 14050000 		.4byte	.LASF10
+  92 007e 02       		.uleb128 0x2
+  93 007f 08       		.byte	0x8
+  94 0080 05       		.byte	0x5
+  95 0081 A8020000 		.4byte	.LASF11
+  96 0085 02       		.uleb128 0x2
+  97 0086 08       		.byte	0x8
+  98 0087 07       		.byte	0x7
+  99 0088 DF010000 		.4byte	.LASF12
+ 100 008c 04       		.uleb128 0x4
+ 101 008d 04       		.byte	0x4
+ 102 008e 05       		.byte	0x5
+ 103 008f 696E7400 		.ascii	"int\000"
+ 104 0093 02       		.uleb128 0x2
+ 105 0094 04       		.byte	0x4
+ 106 0095 07       		.byte	0x7
+ 107 0096 D4040000 		.4byte	.LASF13
+ 108 009a 02       		.uleb128 0x2
+ 109 009b 08       		.byte	0x8
+ 110 009c 04       		.byte	0x4
+ 111 009d 10070000 		.4byte	.LASF14
+ 112 00a1 05       		.uleb128 0x5
+ 113 00a2 04       		.byte	0x4
+ 114 00a3 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 3
+
+
+ 115 00a4 04       		.byte	0x4
+ 116 00a5 07       		.byte	0x7
+ 117 00a6 FC060000 		.4byte	.LASF15
+ 118 00aa 02       		.uleb128 0x2
+ 119 00ab 01       		.byte	0x1
+ 120 00ac 08       		.byte	0x8
+ 121 00ad 65090000 		.4byte	.LASF16
+ 122 00b1 03       		.uleb128 0x3
+ 123 00b2 C00A0000 		.4byte	.LASF17
+ 124 00b6 02       		.byte	0x2
+ 125 00b7 18       		.byte	0x18
+ 126 00b8 24000000 		.4byte	0x24
+ 127 00bc 03       		.uleb128 0x3
+ 128 00bd A0020000 		.4byte	.LASF18
+ 129 00c1 02       		.byte	0x2
+ 130 00c2 20       		.byte	0x20
+ 131 00c3 36000000 		.4byte	0x36
+ 132 00c7 03       		.uleb128 0x3
+ 133 00c8 CE030000 		.4byte	.LASF19
+ 134 00cc 02       		.byte	0x2
+ 135 00cd 24       		.byte	0x24
+ 136 00ce 48000000 		.4byte	0x48
+ 137 00d2 03       		.uleb128 0x3
+ 138 00d3 09080000 		.4byte	.LASF20
+ 139 00d7 02       		.byte	0x2
+ 140 00d8 2C       		.byte	0x2c
+ 141 00d9 5A000000 		.4byte	0x5a
+ 142 00dd 03       		.uleb128 0x3
+ 143 00de 700B0000 		.4byte	.LASF21
+ 144 00e2 02       		.byte	0x2
+ 145 00e3 30       		.byte	0x30
+ 146 00e4 6C000000 		.4byte	0x6c
+ 147 00e8 06       		.uleb128 0x6
+ 148 00e9 DD000000 		.4byte	0xdd
+ 149 00ed 07       		.uleb128 0x7
+ 150 00ee B8       		.byte	0xb8
+ 151 00ef 03       		.byte	0x3
+ 152 00f0 34       		.byte	0x34
+ 153 00f1 FE040000 		.4byte	0x4fe
+ 154 00f5 08       		.uleb128 0x8
+ 155 00f6 A8010000 		.4byte	.LASF22
+ 156 00fa 03       		.byte	0x3
+ 157 00fb 37       		.byte	0x37
+ 158 00fc DD000000 		.4byte	0xdd
+ 159 0100 00       		.byte	0
+ 160 0101 08       		.uleb128 0x8
+ 161 0102 42040000 		.4byte	.LASF23
+ 162 0106 03       		.byte	0x3
+ 163 0107 38       		.byte	0x38
+ 164 0108 DD000000 		.4byte	0xdd
+ 165 010c 04       		.byte	0x4
+ 166 010d 08       		.uleb128 0x8
+ 167 010e B4030000 		.4byte	.LASF24
+ 168 0112 03       		.byte	0x3
+ 169 0113 39       		.byte	0x39
+ 170 0114 DD000000 		.4byte	0xdd
+ 171 0118 08       		.byte	0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 4
+
+
+ 172 0119 08       		.uleb128 0x8
+ 173 011a F2070000 		.4byte	.LASF25
+ 174 011e 03       		.byte	0x3
+ 175 011f 3A       		.byte	0x3a
+ 176 0120 DD000000 		.4byte	0xdd
+ 177 0124 0C       		.byte	0xc
+ 178 0125 08       		.uleb128 0x8
+ 179 0126 80060000 		.4byte	.LASF26
+ 180 012a 03       		.byte	0x3
+ 181 012b 3B       		.byte	0x3b
+ 182 012c DD000000 		.4byte	0xdd
+ 183 0130 10       		.byte	0x10
+ 184 0131 08       		.uleb128 0x8
+ 185 0132 54030000 		.4byte	.LASF27
+ 186 0136 03       		.byte	0x3
+ 187 0137 3C       		.byte	0x3c
+ 188 0138 DD000000 		.4byte	0xdd
+ 189 013c 14       		.byte	0x14
+ 190 013d 08       		.uleb128 0x8
+ 191 013e 340A0000 		.4byte	.LASF28
+ 192 0142 03       		.byte	0x3
+ 193 0143 3D       		.byte	0x3d
+ 194 0144 DD000000 		.4byte	0xdd
+ 195 0148 18       		.byte	0x18
+ 196 0149 08       		.uleb128 0x8
+ 197 014a 75000000 		.4byte	.LASF29
+ 198 014e 03       		.byte	0x3
+ 199 014f 3E       		.byte	0x3e
+ 200 0150 DD000000 		.4byte	0xdd
+ 201 0154 1C       		.byte	0x1c
+ 202 0155 08       		.uleb128 0x8
+ 203 0156 330B0000 		.4byte	.LASF30
+ 204 015a 03       		.byte	0x3
+ 205 015b 3F       		.byte	0x3f
+ 206 015c DD000000 		.4byte	0xdd
+ 207 0160 20       		.byte	0x20
+ 208 0161 08       		.uleb128 0x8
+ 209 0162 BD060000 		.4byte	.LASF31
+ 210 0166 03       		.byte	0x3
+ 211 0167 40       		.byte	0x40
+ 212 0168 DD000000 		.4byte	0xdd
+ 213 016c 24       		.byte	0x24
+ 214 016d 08       		.uleb128 0x8
+ 215 016e 630B0000 		.4byte	.LASF32
+ 216 0172 03       		.byte	0x3
+ 217 0173 43       		.byte	0x43
+ 218 0174 B1000000 		.4byte	0xb1
+ 219 0178 28       		.byte	0x28
+ 220 0179 08       		.uleb128 0x8
+ 221 017a 58000000 		.4byte	.LASF33
+ 222 017e 03       		.byte	0x3
+ 223 017f 44       		.byte	0x44
+ 224 0180 B1000000 		.4byte	0xb1
+ 225 0184 29       		.byte	0x29
+ 226 0185 08       		.uleb128 0x8
+ 227 0186 A6090000 		.4byte	.LASF34
+ 228 018a 03       		.byte	0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 5
+
+
+ 229 018b 45       		.byte	0x45
+ 230 018c B1000000 		.4byte	0xb1
+ 231 0190 2A       		.byte	0x2a
+ 232 0191 08       		.uleb128 0x8
+ 233 0192 77070000 		.4byte	.LASF35
+ 234 0196 03       		.byte	0x3
+ 235 0197 46       		.byte	0x46
+ 236 0198 B1000000 		.4byte	0xb1
+ 237 019c 2B       		.byte	0x2b
+ 238 019d 08       		.uleb128 0x8
+ 239 019e A4050000 		.4byte	.LASF36
+ 240 01a2 03       		.byte	0x3
+ 241 01a3 47       		.byte	0x47
+ 242 01a4 B1000000 		.4byte	0xb1
+ 243 01a8 2C       		.byte	0x2c
+ 244 01a9 08       		.uleb128 0x8
+ 245 01aa B0090000 		.4byte	.LASF37
+ 246 01ae 03       		.byte	0x3
+ 247 01af 48       		.byte	0x48
+ 248 01b0 B1000000 		.4byte	0xb1
+ 249 01b4 2D       		.byte	0x2d
+ 250 01b5 08       		.uleb128 0x8
+ 251 01b6 16030000 		.4byte	.LASF38
+ 252 01ba 03       		.byte	0x3
+ 253 01bb 49       		.byte	0x49
+ 254 01bc B1000000 		.4byte	0xb1
+ 255 01c0 2E       		.byte	0x2e
+ 256 01c1 08       		.uleb128 0x8
+ 257 01c2 A3070000 		.4byte	.LASF39
+ 258 01c6 03       		.byte	0x3
+ 259 01c7 4A       		.byte	0x4a
+ 260 01c8 B1000000 		.4byte	0xb1
+ 261 01cc 2F       		.byte	0x2f
+ 262 01cd 08       		.uleb128 0x8
+ 263 01ce 4F070000 		.4byte	.LASF40
+ 264 01d2 03       		.byte	0x3
+ 265 01d3 4B       		.byte	0x4b
+ 266 01d4 B1000000 		.4byte	0xb1
+ 267 01d8 30       		.byte	0x30
+ 268 01d9 08       		.uleb128 0x8
+ 269 01da 26050000 		.4byte	.LASF41
+ 270 01de 03       		.byte	0x3
+ 271 01df 4E       		.byte	0x4e
+ 272 01e0 B1000000 		.4byte	0xb1
+ 273 01e4 31       		.byte	0x31
+ 274 01e5 08       		.uleb128 0x8
+ 275 01e6 8C000000 		.4byte	.LASF42
+ 276 01ea 03       		.byte	0x3
+ 277 01eb 4F       		.byte	0x4f
+ 278 01ec B1000000 		.4byte	0xb1
+ 279 01f0 32       		.byte	0x32
+ 280 01f1 08       		.uleb128 0x8
+ 281 01f2 31050000 		.4byte	.LASF43
+ 282 01f6 03       		.byte	0x3
+ 283 01f7 50       		.byte	0x50
+ 284 01f8 B1000000 		.4byte	0xb1
+ 285 01fc 33       		.byte	0x33
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 6
+
+
+ 286 01fd 08       		.uleb128 0x8
+ 287 01fe B0000000 		.4byte	.LASF44
+ 288 0202 03       		.byte	0x3
+ 289 0203 51       		.byte	0x51
+ 290 0204 B1000000 		.4byte	0xb1
+ 291 0208 34       		.byte	0x34
+ 292 0209 08       		.uleb128 0x8
+ 293 020a 270A0000 		.4byte	.LASF45
+ 294 020e 03       		.byte	0x3
+ 295 020f 52       		.byte	0x52
+ 296 0210 BC000000 		.4byte	0xbc
+ 297 0214 36       		.byte	0x36
+ 298 0215 08       		.uleb128 0x8
+ 299 0216 17090000 		.4byte	.LASF46
+ 300 021a 03       		.byte	0x3
+ 301 021b 53       		.byte	0x53
+ 302 021c BC000000 		.4byte	0xbc
+ 303 0220 38       		.byte	0x38
+ 304 0221 08       		.uleb128 0x8
+ 305 0222 860A0000 		.4byte	.LASF47
+ 306 0226 03       		.byte	0x3
+ 307 0227 54       		.byte	0x54
+ 308 0228 BC000000 		.4byte	0xbc
+ 309 022c 3A       		.byte	0x3a
+ 310 022d 08       		.uleb128 0x8
+ 311 022e 180B0000 		.4byte	.LASF48
+ 312 0232 03       		.byte	0x3
+ 313 0233 55       		.byte	0x55
+ 314 0234 B1000000 		.4byte	0xb1
+ 315 0238 3C       		.byte	0x3c
+ 316 0239 08       		.uleb128 0x8
+ 317 023a F3030000 		.4byte	.LASF49
+ 318 023e 03       		.byte	0x3
+ 319 023f 56       		.byte	0x56
+ 320 0240 B1000000 		.4byte	0xb1
+ 321 0244 3D       		.byte	0x3d
+ 322 0245 08       		.uleb128 0x8
+ 323 0246 710A0000 		.4byte	.LASF50
+ 324 024a 03       		.byte	0x3
+ 325 024b 57       		.byte	0x57
+ 326 024c B1000000 		.4byte	0xb1
+ 327 0250 3E       		.byte	0x3e
+ 328 0251 08       		.uleb128 0x8
+ 329 0252 B9010000 		.4byte	.LASF51
+ 330 0256 03       		.byte	0x3
+ 331 0257 58       		.byte	0x58
+ 332 0258 B1000000 		.4byte	0xb1
+ 333 025c 3F       		.byte	0x3f
+ 334 025d 08       		.uleb128 0x8
+ 335 025e 85070000 		.4byte	.LASF52
+ 336 0262 03       		.byte	0x3
+ 337 0263 59       		.byte	0x59
+ 338 0264 B1000000 		.4byte	0xb1
+ 339 0268 40       		.byte	0x40
+ 340 0269 08       		.uleb128 0x8
+ 341 026a 69040000 		.4byte	.LASF53
+ 342 026e 03       		.byte	0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 7
+
+
+ 343 026f 5A       		.byte	0x5a
+ 344 0270 B1000000 		.4byte	0xb1
+ 345 0274 41       		.byte	0x41
+ 346 0275 08       		.uleb128 0x8
+ 347 0276 43070000 		.4byte	.LASF54
+ 348 027a 03       		.byte	0x3
+ 349 027b 5B       		.byte	0x5b
+ 350 027c B1000000 		.4byte	0xb1
+ 351 0280 42       		.byte	0x42
+ 352 0281 08       		.uleb128 0x8
+ 353 0282 6C070000 		.4byte	.LASF55
+ 354 0286 03       		.byte	0x3
+ 355 0287 5C       		.byte	0x5c
+ 356 0288 B1000000 		.4byte	0xb1
+ 357 028c 43       		.byte	0x43
+ 358 028d 08       		.uleb128 0x8
+ 359 028e BD030000 		.4byte	.LASF56
+ 360 0292 03       		.byte	0x3
+ 361 0293 5D       		.byte	0x5d
+ 362 0294 B1000000 		.4byte	0xb1
+ 363 0298 44       		.byte	0x44
+ 364 0299 08       		.uleb128 0x8
+ 365 029a 00000000 		.4byte	.LASF57
+ 366 029e 03       		.byte	0x3
+ 367 029f 5E       		.byte	0x5e
+ 368 02a0 DD000000 		.4byte	0xdd
+ 369 02a4 48       		.byte	0x48
+ 370 02a5 08       		.uleb128 0x8
+ 371 02a6 A6030000 		.4byte	.LASF58
+ 372 02aa 03       		.byte	0x3
+ 373 02ab 5F       		.byte	0x5f
+ 374 02ac DD000000 		.4byte	0xdd
+ 375 02b0 4C       		.byte	0x4c
+ 376 02b1 08       		.uleb128 0x8
+ 377 02b2 790B0000 		.4byte	.LASF59
+ 378 02b6 03       		.byte	0x3
+ 379 02b7 60       		.byte	0x60
+ 380 02b8 B1000000 		.4byte	0xb1
+ 381 02bc 50       		.byte	0x50
+ 382 02bd 08       		.uleb128 0x8
+ 383 02be 51020000 		.4byte	.LASF60
+ 384 02c2 03       		.byte	0x3
+ 385 02c3 61       		.byte	0x61
+ 386 02c4 B1000000 		.4byte	0xb1
+ 387 02c8 51       		.byte	0x51
+ 388 02c9 08       		.uleb128 0x8
+ 389 02ca B00A0000 		.4byte	.LASF61
+ 390 02ce 03       		.byte	0x3
+ 391 02cf 62       		.byte	0x62
+ 392 02d0 B1000000 		.4byte	0xb1
+ 393 02d4 52       		.byte	0x52
+ 394 02d5 08       		.uleb128 0x8
+ 395 02d6 510B0000 		.4byte	.LASF62
+ 396 02da 03       		.byte	0x3
+ 397 02db 63       		.byte	0x63
+ 398 02dc B1000000 		.4byte	0xb1
+ 399 02e0 53       		.byte	0x53
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 8
+
+
+ 400 02e1 08       		.uleb128 0x8
+ 401 02e2 07090000 		.4byte	.LASF63
+ 402 02e6 03       		.byte	0x3
+ 403 02e7 64       		.byte	0x64
+ 404 02e8 B1000000 		.4byte	0xb1
+ 405 02ec 54       		.byte	0x54
+ 406 02ed 08       		.uleb128 0x8
+ 407 02ee 8C020000 		.4byte	.LASF64
+ 408 02f2 03       		.byte	0x3
+ 409 02f3 65       		.byte	0x65
+ 410 02f4 B1000000 		.4byte	0xb1
+ 411 02f8 55       		.byte	0x55
+ 412 02f9 08       		.uleb128 0x8
+ 413 02fa 6A090000 		.4byte	.LASF65
+ 414 02fe 03       		.byte	0x3
+ 415 02ff 66       		.byte	0x66
+ 416 0300 B1000000 		.4byte	0xb1
+ 417 0304 56       		.byte	0x56
+ 418 0305 08       		.uleb128 0x8
+ 419 0306 3D050000 		.4byte	.LASF66
+ 420 030a 03       		.byte	0x3
+ 421 030b 67       		.byte	0x67
+ 422 030c B1000000 		.4byte	0xb1
+ 423 0310 57       		.byte	0x57
+ 424 0311 08       		.uleb128 0x8
+ 425 0312 24000000 		.4byte	.LASF67
+ 426 0316 03       		.byte	0x3
+ 427 0317 68       		.byte	0x68
+ 428 0318 B1000000 		.4byte	0xb1
+ 429 031c 58       		.byte	0x58
+ 430 031d 08       		.uleb128 0x8
+ 431 031e 1F080000 		.4byte	.LASF68
+ 432 0322 03       		.byte	0x3
+ 433 0323 69       		.byte	0x69
+ 434 0324 B1000000 		.4byte	0xb1
+ 435 0328 59       		.byte	0x59
+ 436 0329 08       		.uleb128 0x8
+ 437 032a 05070000 		.4byte	.LASF69
+ 438 032e 03       		.byte	0x3
+ 439 032f 6E       		.byte	0x6e
+ 440 0330 C7000000 		.4byte	0xc7
+ 441 0334 5A       		.byte	0x5a
+ 442 0335 08       		.uleb128 0x8
+ 443 0336 FC090000 		.4byte	.LASF70
+ 444 033a 03       		.byte	0x3
+ 445 033b 6F       		.byte	0x6f
+ 446 033c C7000000 		.4byte	0xc7
+ 447 0340 5C       		.byte	0x5c
+ 448 0341 08       		.uleb128 0x8
+ 449 0342 66000000 		.4byte	.LASF71
+ 450 0346 03       		.byte	0x3
+ 451 0347 70       		.byte	0x70
+ 452 0348 B1000000 		.4byte	0xb1
+ 453 034c 5E       		.byte	0x5e
+ 454 034d 08       		.uleb128 0x8
+ 455 034e DC070000 		.4byte	.LASF72
+ 456 0352 03       		.byte	0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 9
+
+
+ 457 0353 71       		.byte	0x71
+ 458 0354 B1000000 		.4byte	0xb1
+ 459 0358 5F       		.byte	0x5f
+ 460 0359 08       		.uleb128 0x8
+ 461 035a 5B070000 		.4byte	.LASF73
+ 462 035e 03       		.byte	0x3
+ 463 035f 72       		.byte	0x72
+ 464 0360 B1000000 		.4byte	0xb1
+ 465 0364 60       		.byte	0x60
+ 466 0365 08       		.uleb128 0x8
+ 467 0366 B5070000 		.4byte	.LASF74
+ 468 036a 03       		.byte	0x3
+ 469 036b 73       		.byte	0x73
+ 470 036c DD000000 		.4byte	0xdd
+ 471 0370 64       		.byte	0x64
+ 472 0371 08       		.uleb128 0x8
+ 473 0372 05020000 		.4byte	.LASF75
+ 474 0376 03       		.byte	0x3
+ 475 0377 76       		.byte	0x76
+ 476 0378 C7000000 		.4byte	0xc7
+ 477 037c 68       		.byte	0x68
+ 478 037d 08       		.uleb128 0x8
+ 479 037e 02050000 		.4byte	.LASF76
+ 480 0382 03       		.byte	0x3
+ 481 0383 77       		.byte	0x77
+ 482 0384 C7000000 		.4byte	0xc7
+ 483 0388 6A       		.byte	0x6a
+ 484 0389 08       		.uleb128 0x8
+ 485 038a 6D050000 		.4byte	.LASF77
+ 486 038e 03       		.byte	0x3
+ 487 038f 78       		.byte	0x78
+ 488 0390 C7000000 		.4byte	0xc7
+ 489 0394 6C       		.byte	0x6c
+ 490 0395 08       		.uleb128 0x8
+ 491 0396 22090000 		.4byte	.LASF78
+ 492 039a 03       		.byte	0x3
+ 493 039b 79       		.byte	0x79
+ 494 039c C7000000 		.4byte	0xc7
+ 495 03a0 6E       		.byte	0x6e
+ 496 03a1 08       		.uleb128 0x8
+ 497 03a2 9A080000 		.4byte	.LASF79
+ 498 03a6 03       		.byte	0x3
+ 499 03a7 7B       		.byte	0x7b
+ 500 03a8 B1000000 		.4byte	0xb1
+ 501 03ac 70       		.byte	0x70
+ 502 03ad 08       		.uleb128 0x8
+ 503 03ae EB020000 		.4byte	.LASF80
+ 504 03b2 03       		.byte	0x3
+ 505 03b3 7C       		.byte	0x7c
+ 506 03b4 B1000000 		.4byte	0xb1
+ 507 03b8 71       		.byte	0x71
+ 508 03b9 08       		.uleb128 0x8
+ 509 03ba 3B0B0000 		.4byte	.LASF81
+ 510 03be 03       		.byte	0x3
+ 511 03bf 7D       		.byte	0x7d
+ 512 03c0 B1000000 		.4byte	0xb1
+ 513 03c4 72       		.byte	0x72
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 10
+
+
+ 514 03c5 08       		.uleb128 0x8
+ 515 03c6 2C070000 		.4byte	.LASF82
+ 516 03ca 03       		.byte	0x3
+ 517 03cb 7E       		.byte	0x7e
+ 518 03cc B1000000 		.4byte	0xb1
+ 519 03d0 73       		.byte	0x73
+ 520 03d1 08       		.uleb128 0x8
+ 521 03d2 15040000 		.4byte	.LASF83
+ 522 03d6 03       		.byte	0x3
+ 523 03d7 80       		.byte	0x80
+ 524 03d8 C7000000 		.4byte	0xc7
+ 525 03dc 74       		.byte	0x74
+ 526 03dd 08       		.uleb128 0x8
+ 527 03de 89090000 		.4byte	.LASF84
+ 528 03e2 03       		.byte	0x3
+ 529 03e3 81       		.byte	0x81
+ 530 03e4 C7000000 		.4byte	0xc7
+ 531 03e8 76       		.byte	0x76
+ 532 03e9 08       		.uleb128 0x8
+ 533 03ea DE030000 		.4byte	.LASF85
+ 534 03ee 03       		.byte	0x3
+ 535 03ef 82       		.byte	0x82
+ 536 03f0 C7000000 		.4byte	0xc7
+ 537 03f4 78       		.byte	0x78
+ 538 03f5 08       		.uleb128 0x8
+ 539 03f6 54080000 		.4byte	.LASF86
+ 540 03fa 03       		.byte	0x3
+ 541 03fb 83       		.byte	0x83
+ 542 03fc C7000000 		.4byte	0xc7
+ 543 0400 7A       		.byte	0x7a
+ 544 0401 08       		.uleb128 0x8
+ 545 0402 DD0A0000 		.4byte	.LASF87
+ 546 0406 03       		.byte	0x3
+ 547 0407 86       		.byte	0x86
+ 548 0408 B1000000 		.4byte	0xb1
+ 549 040c 7C       		.byte	0x7c
+ 550 040d 08       		.uleb128 0x8
+ 551 040e 93050000 		.4byte	.LASF88
+ 552 0412 03       		.byte	0x3
+ 553 0413 87       		.byte	0x87
+ 554 0414 B1000000 		.4byte	0xb1
+ 555 0418 7D       		.byte	0x7d
+ 556 0419 08       		.uleb128 0x8
+ 557 041a 38000000 		.4byte	.LASF89
+ 558 041e 03       		.byte	0x3
+ 559 041f 88       		.byte	0x88
+ 560 0420 B1000000 		.4byte	0xb1
+ 561 0424 7E       		.byte	0x7e
+ 562 0425 08       		.uleb128 0x8
+ 563 0426 27040000 		.4byte	.LASF90
+ 564 042a 03       		.byte	0x3
+ 565 042b 89       		.byte	0x89
+ 566 042c B1000000 		.4byte	0xb1
+ 567 0430 7F       		.byte	0x7f
+ 568 0431 08       		.uleb128 0x8
+ 569 0432 AB040000 		.4byte	.LASF91
+ 570 0436 03       		.byte	0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 11
+
+
+ 571 0437 8A       		.byte	0x8a
+ 572 0438 B1000000 		.4byte	0xb1
+ 573 043c 80       		.byte	0x80
+ 574 043d 08       		.uleb128 0x8
+ 575 043e A6060000 		.4byte	.LASF92
+ 576 0442 03       		.byte	0x3
+ 577 0443 8D       		.byte	0x8d
+ 578 0444 DD000000 		.4byte	0xdd
+ 579 0448 84       		.byte	0x84
+ 580 0449 08       		.uleb128 0x8
+ 581 044a 74010000 		.4byte	.LASF93
+ 582 044e 03       		.byte	0x3
+ 583 044f 8E       		.byte	0x8e
+ 584 0450 DD000000 		.4byte	0xdd
+ 585 0454 88       		.byte	0x88
+ 586 0455 08       		.uleb128 0x8
+ 587 0456 C80A0000 		.4byte	.LASF94
+ 588 045a 03       		.byte	0x3
+ 589 045b 8F       		.byte	0x8f
+ 590 045c DD000000 		.4byte	0xdd
+ 591 0460 8C       		.byte	0x8c
+ 592 0461 08       		.uleb128 0x8
+ 593 0462 BF040000 		.4byte	.LASF95
+ 594 0466 03       		.byte	0x3
+ 595 0467 90       		.byte	0x90
+ 596 0468 DD000000 		.4byte	0xdd
+ 597 046c 90       		.byte	0x90
+ 598 046d 08       		.uleb128 0x8
+ 599 046e 8C040000 		.4byte	.LASF96
+ 600 0472 03       		.byte	0x3
+ 601 0473 91       		.byte	0x91
+ 602 0474 DD000000 		.4byte	0xdd
+ 603 0478 94       		.byte	0x94
+ 604 0479 08       		.uleb128 0x8
+ 605 047a 00030000 		.4byte	.LASF97
+ 606 047e 03       		.byte	0x3
+ 607 047f 92       		.byte	0x92
+ 608 0480 DD000000 		.4byte	0xdd
+ 609 0484 98       		.byte	0x98
+ 610 0485 08       		.uleb128 0x8
+ 611 0486 020B0000 		.4byte	.LASF98
+ 612 048a 03       		.byte	0x3
+ 613 048b 93       		.byte	0x93
+ 614 048c DD000000 		.4byte	0xdd
+ 615 0490 9C       		.byte	0x9c
+ 616 0491 08       		.uleb128 0x8
+ 617 0492 15020000 		.4byte	.LASF99
+ 618 0496 03       		.byte	0x3
+ 619 0497 94       		.byte	0x94
+ 620 0498 DD000000 		.4byte	0xdd
+ 621 049c A0       		.byte	0xa0
+ 622 049d 08       		.uleb128 0x8
+ 623 049e 21030000 		.4byte	.LASF100
+ 624 04a2 03       		.byte	0x3
+ 625 04a3 95       		.byte	0x95
+ 626 04a4 C7000000 		.4byte	0xc7
+ 627 04a8 A4       		.byte	0xa4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 12
+
+
+ 628 04a9 08       		.uleb128 0x8
+ 629 04aa 9B0A0000 		.4byte	.LASF101
+ 630 04ae 03       		.byte	0x3
+ 631 04af 96       		.byte	0x96
+ 632 04b0 C7000000 		.4byte	0xc7
+ 633 04b4 A6       		.byte	0xa6
+ 634 04b5 08       		.uleb128 0x8
+ 635 04b6 D0070000 		.4byte	.LASF102
+ 636 04ba 03       		.byte	0x3
+ 637 04bb 97       		.byte	0x97
+ 638 04bc C7000000 		.4byte	0xc7
+ 639 04c0 A8       		.byte	0xa8
+ 640 04c1 08       		.uleb128 0x8
+ 641 04c2 7B080000 		.4byte	.LASF103
+ 642 04c6 03       		.byte	0x3
+ 643 04c7 98       		.byte	0x98
+ 644 04c8 C7000000 		.4byte	0xc7
+ 645 04cc AA       		.byte	0xaa
+ 646 04cd 08       		.uleb128 0x8
+ 647 04ce 7C050000 		.4byte	.LASF104
+ 648 04d2 03       		.byte	0x3
+ 649 04d3 99       		.byte	0x99
+ 650 04d4 C7000000 		.4byte	0xc7
+ 651 04d8 AC       		.byte	0xac
+ 652 04d9 08       		.uleb128 0x8
+ 653 04da 7E000000 		.4byte	.LASF105
+ 654 04de 03       		.byte	0x3
+ 655 04df 9A       		.byte	0x9a
+ 656 04e0 C7000000 		.4byte	0xc7
+ 657 04e4 AE       		.byte	0xae
+ 658 04e5 08       		.uleb128 0x8
+ 659 04e6 0F0A0000 		.4byte	.LASF106
+ 660 04ea 03       		.byte	0x3
+ 661 04eb 9D       		.byte	0x9d
+ 662 04ec C7000000 		.4byte	0xc7
+ 663 04f0 B0       		.byte	0xb0
+ 664 04f1 08       		.uleb128 0x8
+ 665 04f2 40080000 		.4byte	.LASF107
+ 666 04f6 03       		.byte	0x3
+ 667 04f7 9E       		.byte	0x9e
+ 668 04f8 DD000000 		.4byte	0xdd
+ 669 04fc B4       		.byte	0xb4
+ 670 04fd 00       		.byte	0
+ 671 04fe 03       		.uleb128 0x3
+ 672 04ff B0050000 		.4byte	.LASF108
+ 673 0503 03       		.byte	0x3
+ 674 0504 9F       		.byte	0x9f
+ 675 0505 ED000000 		.4byte	0xed
+ 676 0509 02       		.uleb128 0x2
+ 677 050a 04       		.byte	0x4
+ 678 050b 04       		.byte	0x4
+ 679 050c AF070000 		.4byte	.LASF109
+ 680 0510 02       		.uleb128 0x2
+ 681 0511 08       		.byte	0x8
+ 682 0512 04       		.byte	0x4
+ 683 0513 D7030000 		.4byte	.LASF110
+ 684 0517 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 13
+
+
+ 685 0518 01       		.byte	0x1
+ 686 0519 02       		.byte	0x2
+ 687 051a 6B0A0000 		.4byte	.LASF111
+ 688 051e 09       		.uleb128 0x9
+ 689 051f 01       		.byte	0x1
+ 690 0520 2F000000 		.4byte	0x2f
+ 691 0524 04       		.byte	0x4
+ 692 0525 2402     		.2byte	0x224
+ 693 0527 38050000 		.4byte	0x538
+ 694 052b 0A       		.uleb128 0xa
+ 695 052c BD090000 		.4byte	.LASF112
+ 696 0530 00       		.byte	0
+ 697 0531 0A       		.uleb128 0xa
+ 698 0532 97030000 		.4byte	.LASF113
+ 699 0536 01       		.byte	0x1
+ 700 0537 00       		.byte	0
+ 701 0538 0B       		.uleb128 0xb
+ 702 0539 C8060000 		.4byte	.LASF114
+ 703 053d 04       		.byte	0x4
+ 704 053e 2702     		.2byte	0x227
+ 705 0540 1E050000 		.4byte	0x51e
+ 706 0544 0B       		.uleb128 0xb
+ 707 0545 64030000 		.4byte	.LASF115
+ 708 0549 04       		.byte	0x4
+ 709 054a 3902     		.2byte	0x239
+ 710 054c 50050000 		.4byte	0x550
+ 711 0550 0C       		.uleb128 0xc
+ 712 0551 04       		.byte	0x4
+ 713 0552 56050000 		.4byte	0x556
+ 714 0556 0D       		.uleb128 0xd
+ 715 0557 61050000 		.4byte	0x561
+ 716 055b 0E       		.uleb128 0xe
+ 717 055c DD000000 		.4byte	0xdd
+ 718 0560 00       		.byte	0
+ 719 0561 0B       		.uleb128 0xb
+ 720 0562 BA080000 		.4byte	.LASF116
+ 721 0566 04       		.byte	0x4
+ 722 0567 4402     		.2byte	0x244
+ 723 0569 6D050000 		.4byte	0x56d
+ 724 056d 0C       		.uleb128 0xc
+ 725 056e 04       		.byte	0x4
+ 726 056f 73050000 		.4byte	0x573
+ 727 0573 0F       		.uleb128 0xf
+ 728 0574 38050000 		.4byte	0x538
+ 729 0578 82050000 		.4byte	0x582
+ 730 057c 0E       		.uleb128 0xe
+ 731 057d DD000000 		.4byte	0xdd
+ 732 0581 00       		.byte	0
+ 733 0582 10       		.uleb128 0x10
+ 734 0583 75020000 		.4byte	.LASF140
+ 735 0587 4C       		.byte	0x4c
+ 736 0588 04       		.byte	0x4
+ 737 0589 C302     		.2byte	0x2c3
+ 738 058b A1060000 		.4byte	0x6a1
+ 739 058f 11       		.uleb128 0x11
+ 740 0590 1D0A0000 		.4byte	.LASF117
+ 741 0594 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 14
+
+
+ 742 0595 C602     		.2byte	0x2c6
+ 743 0597 17050000 		.4byte	0x517
+ 744 059b 00       		.byte	0
+ 745 059c 11       		.uleb128 0x11
+ 746 059d 63050000 		.4byte	.LASF118
+ 747 05a1 04       		.byte	0x4
+ 748 05a2 C702     		.2byte	0x2c7
+ 749 05a4 17050000 		.4byte	0x517
+ 750 05a8 01       		.byte	0x1
+ 751 05a9 11       		.uleb128 0x11
+ 752 05aa 5E030000 		.4byte	.LASF119
+ 753 05ae 04       		.byte	0x4
+ 754 05af C902     		.2byte	0x2c9
+ 755 05b1 E8000000 		.4byte	0xe8
+ 756 05b5 04       		.byte	0x4
+ 757 05b6 11       		.uleb128 0x11
+ 758 05b7 2B020000 		.4byte	.LASF120
+ 759 05bb 04       		.byte	0x4
+ 760 05bc CB02     		.2byte	0x2cb
+ 761 05be E8000000 		.4byte	0xe8
+ 762 05c2 08       		.byte	0x8
+ 763 05c3 11       		.uleb128 0x11
+ 764 05c4 AE080000 		.4byte	.LASF121
+ 765 05c8 04       		.byte	0x4
+ 766 05c9 CC02     		.2byte	0x2cc
+ 767 05cb 17050000 		.4byte	0x517
+ 768 05cf 0C       		.byte	0xc
+ 769 05d0 11       		.uleb128 0x11
+ 770 05d1 8B030000 		.4byte	.LASF122
+ 771 05d5 04       		.byte	0x4
+ 772 05d6 CD02     		.2byte	0x2cd
+ 773 05d8 17050000 		.4byte	0x517
+ 774 05dc 0D       		.byte	0xd
+ 775 05dd 11       		.uleb128 0x11
+ 776 05de 4B000000 		.4byte	.LASF123
+ 777 05e2 04       		.byte	0x4
+ 778 05e3 CF02     		.2byte	0x2cf
+ 779 05e5 A1060000 		.4byte	0x6a1
+ 780 05e9 10       		.byte	0x10
+ 781 05ea 11       		.uleb128 0x11
+ 782 05eb 89080000 		.4byte	.LASF124
+ 783 05ef 04       		.byte	0x4
+ 784 05f0 D002     		.2byte	0x2d0
+ 785 05f2 DD000000 		.4byte	0xdd
+ 786 05f6 14       		.byte	0x14
+ 787 05f7 11       		.uleb128 0x11
+ 788 05f8 1C070000 		.4byte	.LASF125
+ 789 05fc 04       		.byte	0x4
+ 790 05fd D102     		.2byte	0x2d1
+ 791 05ff E8000000 		.4byte	0xe8
+ 792 0603 18       		.byte	0x18
+ 793 0604 11       		.uleb128 0x11
+ 794 0605 E7080000 		.4byte	.LASF126
+ 795 0609 04       		.byte	0x4
+ 796 060a D202     		.2byte	0x2d2
+ 797 060c E8000000 		.4byte	0xe8
+ 798 0610 1C       		.byte	0x1c
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 15
+
+
+ 799 0611 11       		.uleb128 0x11
+ 800 0612 A4000000 		.4byte	.LASF127
+ 801 0616 04       		.byte	0x4
+ 802 0617 D402     		.2byte	0x2d4
+ 803 0619 E8000000 		.4byte	0xe8
+ 804 061d 20       		.byte	0x20
+ 805 061e 11       		.uleb128 0x11
+ 806 061f F2040000 		.4byte	.LASF128
+ 807 0623 04       		.byte	0x4
+ 808 0624 D502     		.2byte	0x2d5
+ 809 0626 A7060000 		.4byte	0x6a7
+ 810 062a 24       		.byte	0x24
+ 811 062b 11       		.uleb128 0x11
+ 812 062c 4B0A0000 		.4byte	.LASF129
+ 813 0630 04       		.byte	0x4
+ 814 0631 D702     		.2byte	0x2d7
+ 815 0633 A1060000 		.4byte	0x6a1
+ 816 0637 28       		.byte	0x28
+ 817 0638 11       		.uleb128 0x11
+ 818 0639 590A0000 		.4byte	.LASF130
+ 819 063d 04       		.byte	0x4
+ 820 063e D802     		.2byte	0x2d8
+ 821 0640 DD000000 		.4byte	0xdd
+ 822 0644 2C       		.byte	0x2c
+ 823 0645 11       		.uleb128 0x11
+ 824 0646 E1040000 		.4byte	.LASF131
+ 825 064a 04       		.byte	0x4
+ 826 064b D902     		.2byte	0x2d9
+ 827 064d E8000000 		.4byte	0xe8
+ 828 0651 30       		.byte	0x30
+ 829 0652 11       		.uleb128 0x11
+ 830 0653 F6080000 		.4byte	.LASF132
+ 831 0657 04       		.byte	0x4
+ 832 0658 DA02     		.2byte	0x2da
+ 833 065a E8000000 		.4byte	0xe8
+ 834 065e 34       		.byte	0x34
+ 835 065f 11       		.uleb128 0x11
+ 836 0660 98060000 		.4byte	.LASF133
+ 837 0664 04       		.byte	0x4
+ 838 0665 DC02     		.2byte	0x2dc
+ 839 0667 A1060000 		.4byte	0x6a1
+ 840 066b 38       		.byte	0x38
+ 841 066c 11       		.uleb128 0x11
+ 842 066d 63020000 		.4byte	.LASF134
+ 843 0671 04       		.byte	0x4
+ 844 0672 DD02     		.2byte	0x2dd
+ 845 0674 DD000000 		.4byte	0xdd
+ 846 0678 3C       		.byte	0x3c
+ 847 0679 11       		.uleb128 0x11
+ 848 067a 92070000 		.4byte	.LASF135
+ 849 067e 04       		.byte	0x4
+ 850 067f DE02     		.2byte	0x2de
+ 851 0681 E8000000 		.4byte	0xe8
+ 852 0685 40       		.byte	0x40
+ 853 0686 11       		.uleb128 0x11
+ 854 0687 8A050000 		.4byte	.LASF136
+ 855 068b 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 16
+
+
+ 856 068c E402     		.2byte	0x2e4
+ 857 068e 44050000 		.4byte	0x544
+ 858 0692 44       		.byte	0x44
+ 859 0693 11       		.uleb128 0x11
+ 860 0694 3B040000 		.4byte	.LASF137
+ 861 0698 04       		.byte	0x4
+ 862 0699 EB02     		.2byte	0x2eb
+ 863 069b 61050000 		.4byte	0x561
+ 864 069f 48       		.byte	0x48
+ 865 06a0 00       		.byte	0
+ 866 06a1 0C       		.uleb128 0xc
+ 867 06a2 04       		.byte	0x4
+ 868 06a3 B1000000 		.4byte	0xb1
+ 869 06a7 06       		.uleb128 0x6
+ 870 06a8 17050000 		.4byte	0x517
+ 871 06ac 0B       		.uleb128 0xb
+ 872 06ad 2F090000 		.4byte	.LASF138
+ 873 06b1 04       		.byte	0x4
+ 874 06b2 EE02     		.2byte	0x2ee
+ 875 06b4 82050000 		.4byte	0x582
+ 876 06b8 0B       		.uleb128 0xb
+ 877 06b9 36030000 		.4byte	.LASF139
+ 878 06bd 05       		.byte	0x5
+ 879 06be F201     		.2byte	0x1f2
+ 880 06c0 50050000 		.4byte	0x550
+ 881 06c4 10       		.uleb128 0x10
+ 882 06c5 D4020000 		.4byte	.LASF141
+ 883 06c9 24       		.byte	0x24
+ 884 06ca 05       		.byte	0x5
+ 885 06cb 7402     		.2byte	0x274
+ 886 06cd 47070000 		.4byte	0x747
+ 887 06d1 11       		.uleb128 0x11
+ 888 06d2 7F0A0000 		.4byte	.LASF142
+ 889 06d6 05       		.byte	0x5
+ 890 06d7 7702     		.2byte	0x277
+ 891 06d9 E8000000 		.4byte	0xe8
+ 892 06dd 00       		.byte	0
+ 893 06de 11       		.uleb128 0x11
+ 894 06df 450A0000 		.4byte	.LASF143
+ 895 06e3 05       		.byte	0x5
+ 896 06e4 7902     		.2byte	0x279
+ 897 06e6 A1000000 		.4byte	0xa1
+ 898 06ea 04       		.byte	0x4
+ 899 06eb 11       		.uleb128 0x11
+ 900 06ec 1A000000 		.4byte	.LASF144
+ 901 06f0 05       		.byte	0x5
+ 902 06f1 7A02     		.2byte	0x27a
+ 903 06f3 DD000000 		.4byte	0xdd
+ 904 06f7 08       		.byte	0x8
+ 905 06f8 11       		.uleb128 0x11
+ 906 06f9 83040000 		.4byte	.LASF145
+ 907 06fd 05       		.byte	0x5
+ 908 06fe 7B02     		.2byte	0x27b
+ 909 0700 E8000000 		.4byte	0xe8
+ 910 0704 0C       		.byte	0xc
+ 911 0705 11       		.uleb128 0x11
+ 912 0706 4B020000 		.4byte	.LASF146
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 17
+
+
+ 913 070a 05       		.byte	0x5
+ 914 070b 7D02     		.2byte	0x27d
+ 915 070d A1000000 		.4byte	0xa1
+ 916 0711 10       		.byte	0x10
+ 917 0712 11       		.uleb128 0x11
+ 918 0713 A1040000 		.4byte	.LASF147
+ 919 0717 05       		.byte	0x5
+ 920 0718 7E02     		.2byte	0x27e
+ 921 071a DD000000 		.4byte	0xdd
+ 922 071e 14       		.byte	0x14
+ 923 071f 11       		.uleb128 0x11
+ 924 0720 8A0B0000 		.4byte	.LASF148
+ 925 0724 05       		.byte	0x5
+ 926 0725 7F02     		.2byte	0x27f
+ 927 0727 E8000000 		.4byte	0xe8
+ 928 072b 18       		.byte	0x18
+ 929 072c 11       		.uleb128 0x11
+ 930 072d 8A050000 		.4byte	.LASF136
+ 931 0731 05       		.byte	0x5
+ 932 0732 8502     		.2byte	0x285
+ 933 0734 B8060000 		.4byte	0x6b8
+ 934 0738 1C       		.byte	0x1c
+ 935 0739 11       		.uleb128 0x11
+ 936 073a 3D0A0000 		.4byte	.LASF149
+ 937 073e 05       		.byte	0x5
+ 938 073f 8802     		.2byte	0x288
+ 939 0741 DD000000 		.4byte	0xdd
+ 940 0745 20       		.byte	0x20
+ 941 0746 00       		.byte	0
+ 942 0747 0B       		.uleb128 0xb
+ 943 0748 C0050000 		.4byte	.LASF150
+ 944 074c 05       		.byte	0x5
+ 945 074d 8B02     		.2byte	0x28b
+ 946 074f C4060000 		.4byte	0x6c4
+ 947 0753 12       		.uleb128 0x12
+ 948 0754 E0060000 		.4byte	.LASF151
+ 949 0758 4C       		.byte	0x4c
+ 950 0759 06       		.byte	0x6
+ 951 075a 2F       		.byte	0x2f
+ 952 075b 44080000 		.4byte	0x844
+ 953 075f 08       		.uleb128 0x8
+ 954 0760 B2010000 		.4byte	.LASF152
+ 955 0764 06       		.byte	0x6
+ 956 0765 31       		.byte	0x31
+ 957 0766 DD000000 		.4byte	0xdd
+ 958 076a 00       		.byte	0
+ 959 076b 08       		.uleb128 0x8
+ 960 076c F6010000 		.4byte	.LASF153
+ 961 0770 06       		.byte	0x6
+ 962 0771 33       		.byte	0x33
+ 963 0772 DD000000 		.4byte	0xdd
+ 964 0776 04       		.byte	0x4
+ 965 0777 08       		.uleb128 0x8
+ 966 0778 12000000 		.4byte	.LASF154
+ 967 077c 06       		.byte	0x6
+ 968 077d 34       		.byte	0x34
+ 969 077e DD000000 		.4byte	0xdd
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 18
+
+
+ 970 0782 08       		.byte	0x8
+ 971 0783 08       		.uleb128 0x8
+ 972 0784 8B010000 		.4byte	.LASF155
+ 973 0788 06       		.byte	0x6
+ 974 0789 35       		.byte	0x35
+ 975 078a DD000000 		.4byte	0xdd
+ 976 078e 0C       		.byte	0xc
+ 977 078f 08       		.uleb128 0x8
+ 978 0790 D6080000 		.4byte	.LASF156
+ 979 0794 06       		.byte	0x6
+ 980 0795 37       		.byte	0x37
+ 981 0796 DD000000 		.4byte	0xdd
+ 982 079a 10       		.byte	0x10
+ 983 079b 08       		.uleb128 0x8
+ 984 079c 48090000 		.4byte	.LASF157
+ 985 07a0 06       		.byte	0x6
+ 986 07a1 38       		.byte	0x38
+ 987 07a2 DD000000 		.4byte	0xdd
+ 988 07a6 14       		.byte	0x14
+ 989 07a7 08       		.uleb128 0x8
+ 990 07a8 51090000 		.4byte	.LASF158
+ 991 07ac 06       		.byte	0x6
+ 992 07ad 39       		.byte	0x39
+ 993 07ae DD000000 		.4byte	0xdd
+ 994 07b2 18       		.byte	0x18
+ 995 07b3 08       		.uleb128 0x8
+ 996 07b4 69080000 		.4byte	.LASF159
+ 997 07b8 06       		.byte	0x6
+ 998 07b9 3A       		.byte	0x3a
+ 999 07ba 17050000 		.4byte	0x517
+ 1000 07be 1C       		.byte	0x1c
+ 1001 07bf 08       		.uleb128 0x8
+ 1002 07c0 CC090000 		.4byte	.LASF160
+ 1003 07c4 06       		.byte	0x6
+ 1004 07c5 3C       		.byte	0x3c
+ 1005 07c6 DD000000 		.4byte	0xdd
+ 1006 07ca 20       		.byte	0x20
+ 1007 07cb 08       		.uleb128 0x8
+ 1008 07cc 4D040000 		.4byte	.LASF161
+ 1009 07d0 06       		.byte	0x6
+ 1010 07d1 3D       		.byte	0x3d
+ 1011 07d2 DD000000 		.4byte	0xdd
+ 1012 07d6 24       		.byte	0x24
+ 1013 07d7 08       		.uleb128 0x8
+ 1014 07d8 C5010000 		.4byte	.LASF162
+ 1015 07dc 06       		.byte	0x6
+ 1016 07dd 3F       		.byte	0x3f
+ 1017 07de DD000000 		.4byte	0xdd
+ 1018 07e2 28       		.byte	0x28
+ 1019 07e3 08       		.uleb128 0x8
+ 1020 07e4 F20A0000 		.4byte	.LASF163
+ 1021 07e8 06       		.byte	0x6
+ 1022 07e9 40       		.byte	0x40
+ 1023 07ea DD000000 		.4byte	0xdd
+ 1024 07ee 2C       		.byte	0x2c
+ 1025 07ef 08       		.uleb128 0x8
+ 1026 07f0 DD090000 		.4byte	.LASF164
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 19
+
+
+ 1027 07f4 06       		.byte	0x6
+ 1028 07f5 42       		.byte	0x42
+ 1029 07f6 DD000000 		.4byte	0xdd
+ 1030 07fa 30       		.byte	0x30
+ 1031 07fb 08       		.uleb128 0x8
+ 1032 07fc FA070000 		.4byte	.LASF165
+ 1033 0800 06       		.byte	0x6
+ 1034 0801 43       		.byte	0x43
+ 1035 0802 DD000000 		.4byte	0xdd
+ 1036 0806 34       		.byte	0x34
+ 1037 0807 08       		.uleb128 0x8
+ 1038 0808 930B0000 		.4byte	.LASF166
+ 1039 080c 06       		.byte	0x6
+ 1040 080d 45       		.byte	0x45
+ 1041 080e DD000000 		.4byte	0xdd
+ 1042 0812 38       		.byte	0x38
+ 1043 0813 08       		.uleb128 0x8
+ 1044 0814 9A010000 		.4byte	.LASF167
+ 1045 0818 06       		.byte	0x6
+ 1046 0819 46       		.byte	0x46
+ 1047 081a DD000000 		.4byte	0xdd
+ 1048 081e 3C       		.byte	0x3c
+ 1049 081f 08       		.uleb128 0x8
+ 1050 0820 050A0000 		.4byte	.LASF168
+ 1051 0824 06       		.byte	0x6
+ 1052 0825 48       		.byte	0x48
+ 1053 0826 DD000000 		.4byte	0xdd
+ 1054 082a 40       		.byte	0x40
+ 1055 082b 08       		.uleb128 0x8
+ 1056 082c 89060000 		.4byte	.LASF169
+ 1057 0830 06       		.byte	0x6
+ 1058 0831 49       		.byte	0x49
+ 1059 0832 DD000000 		.4byte	0xdd
+ 1060 0836 44       		.byte	0x44
+ 1061 0837 08       		.uleb128 0x8
+ 1062 0838 5A090000 		.4byte	.LASF170
+ 1063 083c 06       		.byte	0x6
+ 1064 083d 4B       		.byte	0x4b
+ 1065 083e DD000000 		.4byte	0xdd
+ 1066 0842 48       		.byte	0x48
+ 1067 0843 00       		.byte	0
+ 1068 0844 03       		.uleb128 0x3
+ 1069 0845 B6020000 		.4byte	.LASF171
+ 1070 0849 06       		.byte	0x6
+ 1071 084a 4C       		.byte	0x4c
+ 1072 084b 53070000 		.4byte	0x753
+ 1073 084f 13       		.uleb128 0x13
+ 1074 0850 33080000 		.4byte	.LASF172
+ 1075 0854 07       		.byte	0x7
+ 1076 0855 F907     		.2byte	0x7f9
+ 1077 0857 5B080000 		.4byte	0x85b
+ 1078 085b 06       		.uleb128 0x6
+ 1079 085c D2000000 		.4byte	0xd2
+ 1080 0860 14       		.uleb128 0x14
+ 1081 0861 C6070000 		.4byte	.LASF173
+ 1082 0865 03       		.byte	0x3
+ 1083 0866 A7       		.byte	0xa7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 20
+
+
+ 1084 0867 6B080000 		.4byte	0x86b
+ 1085 086b 0C       		.uleb128 0xc
+ 1086 086c 04       		.byte	0x4
+ 1087 086d 71080000 		.4byte	0x871
+ 1088 0871 15       		.uleb128 0x15
+ 1089 0872 FE040000 		.4byte	0x4fe
+ 1090 0876 14       		.uleb128 0x14
+ 1091 0877 FE030000 		.4byte	.LASF174
+ 1092 087b 08       		.byte	0x8
+ 1093 087c 1F       		.byte	0x1f
+ 1094 087d 81080000 		.4byte	0x881
+ 1095 0881 15       		.uleb128 0x15
+ 1096 0882 44080000 		.4byte	0x844
+ 1097 0886 14       		.uleb128 0x14
+ 1098 0887 38020000 		.4byte	.LASF175
+ 1099 088b 09       		.byte	0x9
+ 1100 088c 7F       		.byte	0x7f
+ 1101 088d AC060000 		.4byte	0x6ac
+ 1102 0891 14       		.uleb128 0x14
+ 1103 0892 D2010000 		.4byte	.LASF176
+ 1104 0896 0A       		.byte	0xa
+ 1105 0897 5E       		.byte	0x5e
+ 1106 0898 47070000 		.4byte	0x747
+ 1107 089c 00       		.byte	0
+ 1108              		.section	.debug_abbrev,"",%progbits
+ 1109              	.Ldebug_abbrev0:
+ 1110 0000 01       		.uleb128 0x1
+ 1111 0001 11       		.uleb128 0x11
+ 1112 0002 01       		.byte	0x1
+ 1113 0003 25       		.uleb128 0x25
+ 1114 0004 0E       		.uleb128 0xe
+ 1115 0005 13       		.uleb128 0x13
+ 1116 0006 0B       		.uleb128 0xb
+ 1117 0007 03       		.uleb128 0x3
+ 1118 0008 0E       		.uleb128 0xe
+ 1119 0009 1B       		.uleb128 0x1b
+ 1120 000a 0E       		.uleb128 0xe
+ 1121 000b 10       		.uleb128 0x10
+ 1122 000c 17       		.uleb128 0x17
+ 1123 000d 00       		.byte	0
+ 1124 000e 00       		.byte	0
+ 1125 000f 02       		.uleb128 0x2
+ 1126 0010 24       		.uleb128 0x24
+ 1127 0011 00       		.byte	0
+ 1128 0012 0B       		.uleb128 0xb
+ 1129 0013 0B       		.uleb128 0xb
+ 1130 0014 3E       		.uleb128 0x3e
+ 1131 0015 0B       		.uleb128 0xb
+ 1132 0016 03       		.uleb128 0x3
+ 1133 0017 0E       		.uleb128 0xe
+ 1134 0018 00       		.byte	0
+ 1135 0019 00       		.byte	0
+ 1136 001a 03       		.uleb128 0x3
+ 1137 001b 16       		.uleb128 0x16
+ 1138 001c 00       		.byte	0
+ 1139 001d 03       		.uleb128 0x3
+ 1140 001e 0E       		.uleb128 0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 21
+
+
+ 1141 001f 3A       		.uleb128 0x3a
+ 1142 0020 0B       		.uleb128 0xb
+ 1143 0021 3B       		.uleb128 0x3b
+ 1144 0022 0B       		.uleb128 0xb
+ 1145 0023 49       		.uleb128 0x49
+ 1146 0024 13       		.uleb128 0x13
+ 1147 0025 00       		.byte	0
+ 1148 0026 00       		.byte	0
+ 1149 0027 04       		.uleb128 0x4
+ 1150 0028 24       		.uleb128 0x24
+ 1151 0029 00       		.byte	0
+ 1152 002a 0B       		.uleb128 0xb
+ 1153 002b 0B       		.uleb128 0xb
+ 1154 002c 3E       		.uleb128 0x3e
+ 1155 002d 0B       		.uleb128 0xb
+ 1156 002e 03       		.uleb128 0x3
+ 1157 002f 08       		.uleb128 0x8
+ 1158 0030 00       		.byte	0
+ 1159 0031 00       		.byte	0
+ 1160 0032 05       		.uleb128 0x5
+ 1161 0033 0F       		.uleb128 0xf
+ 1162 0034 00       		.byte	0
+ 1163 0035 0B       		.uleb128 0xb
+ 1164 0036 0B       		.uleb128 0xb
+ 1165 0037 00       		.byte	0
+ 1166 0038 00       		.byte	0
+ 1167 0039 06       		.uleb128 0x6
+ 1168 003a 35       		.uleb128 0x35
+ 1169 003b 00       		.byte	0
+ 1170 003c 49       		.uleb128 0x49
+ 1171 003d 13       		.uleb128 0x13
+ 1172 003e 00       		.byte	0
+ 1173 003f 00       		.byte	0
+ 1174 0040 07       		.uleb128 0x7
+ 1175 0041 13       		.uleb128 0x13
+ 1176 0042 01       		.byte	0x1
+ 1177 0043 0B       		.uleb128 0xb
+ 1178 0044 0B       		.uleb128 0xb
+ 1179 0045 3A       		.uleb128 0x3a
+ 1180 0046 0B       		.uleb128 0xb
+ 1181 0047 3B       		.uleb128 0x3b
+ 1182 0048 0B       		.uleb128 0xb
+ 1183 0049 01       		.uleb128 0x1
+ 1184 004a 13       		.uleb128 0x13
+ 1185 004b 00       		.byte	0
+ 1186 004c 00       		.byte	0
+ 1187 004d 08       		.uleb128 0x8
+ 1188 004e 0D       		.uleb128 0xd
+ 1189 004f 00       		.byte	0
+ 1190 0050 03       		.uleb128 0x3
+ 1191 0051 0E       		.uleb128 0xe
+ 1192 0052 3A       		.uleb128 0x3a
+ 1193 0053 0B       		.uleb128 0xb
+ 1194 0054 3B       		.uleb128 0x3b
+ 1195 0055 0B       		.uleb128 0xb
+ 1196 0056 49       		.uleb128 0x49
+ 1197 0057 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 22
+
+
+ 1198 0058 38       		.uleb128 0x38
+ 1199 0059 0B       		.uleb128 0xb
+ 1200 005a 00       		.byte	0
+ 1201 005b 00       		.byte	0
+ 1202 005c 09       		.uleb128 0x9
+ 1203 005d 04       		.uleb128 0x4
+ 1204 005e 01       		.byte	0x1
+ 1205 005f 0B       		.uleb128 0xb
+ 1206 0060 0B       		.uleb128 0xb
+ 1207 0061 49       		.uleb128 0x49
+ 1208 0062 13       		.uleb128 0x13
+ 1209 0063 3A       		.uleb128 0x3a
+ 1210 0064 0B       		.uleb128 0xb
+ 1211 0065 3B       		.uleb128 0x3b
+ 1212 0066 05       		.uleb128 0x5
+ 1213 0067 01       		.uleb128 0x1
+ 1214 0068 13       		.uleb128 0x13
+ 1215 0069 00       		.byte	0
+ 1216 006a 00       		.byte	0
+ 1217 006b 0A       		.uleb128 0xa
+ 1218 006c 28       		.uleb128 0x28
+ 1219 006d 00       		.byte	0
+ 1220 006e 03       		.uleb128 0x3
+ 1221 006f 0E       		.uleb128 0xe
+ 1222 0070 1C       		.uleb128 0x1c
+ 1223 0071 0B       		.uleb128 0xb
+ 1224 0072 00       		.byte	0
+ 1225 0073 00       		.byte	0
+ 1226 0074 0B       		.uleb128 0xb
+ 1227 0075 16       		.uleb128 0x16
+ 1228 0076 00       		.byte	0
+ 1229 0077 03       		.uleb128 0x3
+ 1230 0078 0E       		.uleb128 0xe
+ 1231 0079 3A       		.uleb128 0x3a
+ 1232 007a 0B       		.uleb128 0xb
+ 1233 007b 3B       		.uleb128 0x3b
+ 1234 007c 05       		.uleb128 0x5
+ 1235 007d 49       		.uleb128 0x49
+ 1236 007e 13       		.uleb128 0x13
+ 1237 007f 00       		.byte	0
+ 1238 0080 00       		.byte	0
+ 1239 0081 0C       		.uleb128 0xc
+ 1240 0082 0F       		.uleb128 0xf
+ 1241 0083 00       		.byte	0
+ 1242 0084 0B       		.uleb128 0xb
+ 1243 0085 0B       		.uleb128 0xb
+ 1244 0086 49       		.uleb128 0x49
+ 1245 0087 13       		.uleb128 0x13
+ 1246 0088 00       		.byte	0
+ 1247 0089 00       		.byte	0
+ 1248 008a 0D       		.uleb128 0xd
+ 1249 008b 15       		.uleb128 0x15
+ 1250 008c 01       		.byte	0x1
+ 1251 008d 27       		.uleb128 0x27
+ 1252 008e 19       		.uleb128 0x19
+ 1253 008f 01       		.uleb128 0x1
+ 1254 0090 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 23
+
+
+ 1255 0091 00       		.byte	0
+ 1256 0092 00       		.byte	0
+ 1257 0093 0E       		.uleb128 0xe
+ 1258 0094 05       		.uleb128 0x5
+ 1259 0095 00       		.byte	0
+ 1260 0096 49       		.uleb128 0x49
+ 1261 0097 13       		.uleb128 0x13
+ 1262 0098 00       		.byte	0
+ 1263 0099 00       		.byte	0
+ 1264 009a 0F       		.uleb128 0xf
+ 1265 009b 15       		.uleb128 0x15
+ 1266 009c 01       		.byte	0x1
+ 1267 009d 27       		.uleb128 0x27
+ 1268 009e 19       		.uleb128 0x19
+ 1269 009f 49       		.uleb128 0x49
+ 1270 00a0 13       		.uleb128 0x13
+ 1271 00a1 01       		.uleb128 0x1
+ 1272 00a2 13       		.uleb128 0x13
+ 1273 00a3 00       		.byte	0
+ 1274 00a4 00       		.byte	0
+ 1275 00a5 10       		.uleb128 0x10
+ 1276 00a6 13       		.uleb128 0x13
+ 1277 00a7 01       		.byte	0x1
+ 1278 00a8 03       		.uleb128 0x3
+ 1279 00a9 0E       		.uleb128 0xe
+ 1280 00aa 0B       		.uleb128 0xb
+ 1281 00ab 0B       		.uleb128 0xb
+ 1282 00ac 3A       		.uleb128 0x3a
+ 1283 00ad 0B       		.uleb128 0xb
+ 1284 00ae 3B       		.uleb128 0x3b
+ 1285 00af 05       		.uleb128 0x5
+ 1286 00b0 01       		.uleb128 0x1
+ 1287 00b1 13       		.uleb128 0x13
+ 1288 00b2 00       		.byte	0
+ 1289 00b3 00       		.byte	0
+ 1290 00b4 11       		.uleb128 0x11
+ 1291 00b5 0D       		.uleb128 0xd
+ 1292 00b6 00       		.byte	0
+ 1293 00b7 03       		.uleb128 0x3
+ 1294 00b8 0E       		.uleb128 0xe
+ 1295 00b9 3A       		.uleb128 0x3a
+ 1296 00ba 0B       		.uleb128 0xb
+ 1297 00bb 3B       		.uleb128 0x3b
+ 1298 00bc 05       		.uleb128 0x5
+ 1299 00bd 49       		.uleb128 0x49
+ 1300 00be 13       		.uleb128 0x13
+ 1301 00bf 38       		.uleb128 0x38
+ 1302 00c0 0B       		.uleb128 0xb
+ 1303 00c1 00       		.byte	0
+ 1304 00c2 00       		.byte	0
+ 1305 00c3 12       		.uleb128 0x12
+ 1306 00c4 13       		.uleb128 0x13
+ 1307 00c5 01       		.byte	0x1
+ 1308 00c6 03       		.uleb128 0x3
+ 1309 00c7 0E       		.uleb128 0xe
+ 1310 00c8 0B       		.uleb128 0xb
+ 1311 00c9 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 24
+
+
+ 1312 00ca 3A       		.uleb128 0x3a
+ 1313 00cb 0B       		.uleb128 0xb
+ 1314 00cc 3B       		.uleb128 0x3b
+ 1315 00cd 0B       		.uleb128 0xb
+ 1316 00ce 01       		.uleb128 0x1
+ 1317 00cf 13       		.uleb128 0x13
+ 1318 00d0 00       		.byte	0
+ 1319 00d1 00       		.byte	0
+ 1320 00d2 13       		.uleb128 0x13
+ 1321 00d3 34       		.uleb128 0x34
+ 1322 00d4 00       		.byte	0
+ 1323 00d5 03       		.uleb128 0x3
+ 1324 00d6 0E       		.uleb128 0xe
+ 1325 00d7 3A       		.uleb128 0x3a
+ 1326 00d8 0B       		.uleb128 0xb
+ 1327 00d9 3B       		.uleb128 0x3b
+ 1328 00da 05       		.uleb128 0x5
+ 1329 00db 49       		.uleb128 0x49
+ 1330 00dc 13       		.uleb128 0x13
+ 1331 00dd 3F       		.uleb128 0x3f
+ 1332 00de 19       		.uleb128 0x19
+ 1333 00df 3C       		.uleb128 0x3c
+ 1334 00e0 19       		.uleb128 0x19
+ 1335 00e1 00       		.byte	0
+ 1336 00e2 00       		.byte	0
+ 1337 00e3 14       		.uleb128 0x14
+ 1338 00e4 34       		.uleb128 0x34
+ 1339 00e5 00       		.byte	0
+ 1340 00e6 03       		.uleb128 0x3
+ 1341 00e7 0E       		.uleb128 0xe
+ 1342 00e8 3A       		.uleb128 0x3a
+ 1343 00e9 0B       		.uleb128 0xb
+ 1344 00ea 3B       		.uleb128 0x3b
+ 1345 00eb 0B       		.uleb128 0xb
+ 1346 00ec 49       		.uleb128 0x49
+ 1347 00ed 13       		.uleb128 0x13
+ 1348 00ee 3F       		.uleb128 0x3f
+ 1349 00ef 19       		.uleb128 0x19
+ 1350 00f0 3C       		.uleb128 0x3c
+ 1351 00f1 19       		.uleb128 0x19
+ 1352 00f2 00       		.byte	0
+ 1353 00f3 00       		.byte	0
+ 1354 00f4 15       		.uleb128 0x15
+ 1355 00f5 26       		.uleb128 0x26
+ 1356 00f6 00       		.byte	0
+ 1357 00f7 49       		.uleb128 0x49
+ 1358 00f8 13       		.uleb128 0x13
+ 1359 00f9 00       		.byte	0
+ 1360 00fa 00       		.byte	0
+ 1361 00fb 00       		.byte	0
+ 1362              		.section	.debug_aranges,"",%progbits
+ 1363 0000 14000000 		.4byte	0x14
+ 1364 0004 0200     		.2byte	0x2
+ 1365 0006 00000000 		.4byte	.Ldebug_info0
+ 1366 000a 04       		.byte	0x4
+ 1367 000b 00       		.byte	0
+ 1368 000c 0000     		.2byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 25
+
+
+ 1369 000e 0000     		.2byte	0
+ 1370 0010 00000000 		.4byte	0
+ 1371 0014 00000000 		.4byte	0
+ 1372              		.section	.debug_line,"",%progbits
+ 1373              	.Ldebug_line0:
+ 1374 0000 73020000 		.section	.debug_str,"MS",%progbits,1
+ 1374      02006D02 
+ 1374      00000201 
+ 1374      FB0E0D00 
+ 1374      01010101 
+ 1375              	.LASF57:
+ 1376 0000 70726F74 		.ascii	"protBusMasterMask\000"
+ 1376      4275734D 
+ 1376      61737465 
+ 1376      724D6173 
+ 1376      6B00
+ 1377              	.LASF154:
+ 1378 0012 72756E4D 		.ascii	"runMode\000"
+ 1378      6F646500 
+ 1379              	.LASF144:
+ 1380 001a 72784275 		.ascii	"rxBufSize\000"
+ 1380      6653697A 
+ 1380      6500
+ 1381              	.LASF67:
+ 1382 0024 666C6173 		.ascii	"flashCtlMainWs3Freq\000"
+ 1382      6843746C 
+ 1382      4D61696E 
+ 1382      57733346 
+ 1382      72657100 
+ 1383              	.LASF89:
+ 1384 0038 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
+ 1384      50727443 
+ 1384      6667496E 
+ 1384      4F666673 
+ 1384      657400
+ 1385              	.LASF123:
+ 1386 004b 6D617374 		.ascii	"masterBuffer\000"
+ 1386      65724275 
+ 1386      66666572 
+ 1386      00
+ 1387              	.LASF33:
+ 1388 0058 63727970 		.ascii	"cryptoVersion\000"
+ 1388      746F5665 
+ 1388      7273696F 
+ 1388      6E00
+ 1389              	.LASF71:
+ 1390 0066 64774368 		.ascii	"dwChCtlPrioPos\000"
+ 1390      43746C50 
+ 1390      72696F50 
+ 1390      6F7300
+ 1391              	.LASF29:
+ 1392 0075 70617373 		.ascii	"passBase\000"
+ 1392      42617365 
+ 1392      00
+ 1393              	.LASF105:
+ 1394 007e 63707573 		.ascii	"cpussRam2Ctl0\000"
+ 1394      7352616D 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 26
+
+
+ 1394      3243746C 
+ 1394      3000
+ 1395              	.LASF42:
+ 1396 008c 63707573 		.ascii	"cpussIpcIrqNr\000"
+ 1396      73497063 
+ 1396      4972714E 
+ 1396      7200
+ 1397              	.LASF2:
+ 1398 009a 5F5F7569 		.ascii	"__uint8_t\000"
+ 1398      6E74385F 
+ 1398      7400
+ 1399              	.LASF127:
+ 1400 00a4 736C6176 		.ascii	"slaveStatus\000"
+ 1400      65537461 
+ 1400      74757300 
+ 1401              	.LASF44:
+ 1402 00b0 63707573 		.ascii	"cpussFlashPaSize\000"
+ 1402      73466C61 
+ 1402      73685061 
+ 1402      53697A65 
+ 1402      00
+ 1403              	.LASF177:
+ 1404 00c1 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1404      43313120 
+ 1404      352E342E 
+ 1404      31203230 
+ 1404      31363036 
+ 1405 00f4 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1405      20726576 
+ 1405      6973696F 
+ 1405      6E203233 
+ 1405      37373135 
+ 1406 0127 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 1406      70202D6D 
+ 1406      6670753D 
+ 1406      66707634 
+ 1406      2D73702D 
+ 1407 015a 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1407      6F6E7320 
+ 1407      2D666661 
+ 1407      742D6C74 
+ 1407      6F2D6F62 
+ 1408              	.LASF93:
+ 1409 0174 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
+ 1409      73436D34 
+ 1409      436C6F63 
+ 1409      6B43746C 
+ 1409      4F666673 
+ 1410              	.LASF155:
+ 1411 018b 636F756E 		.ascii	"countDirection\000"
+ 1411      74446972 
+ 1411      65637469 
+ 1411      6F6E00
+ 1412              	.LASF167:
+ 1413 019a 73746F70 		.ascii	"stopInputMode\000"
+ 1413      496E7075 
+ 1413      744D6F64 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 27
+
+
+ 1413      6500
+ 1414              	.LASF22:
+ 1415 01a8 63707573 		.ascii	"cpussBase\000"
+ 1415      73426173 
+ 1415      6500
+ 1416              	.LASF152:
+ 1417 01b2 70657269 		.ascii	"period\000"
+ 1417      6F6400
+ 1418              	.LASF51:
+ 1419 01b9 70657269 		.ascii	"periClockNr\000"
+ 1419      436C6F63 
+ 1419      6B4E7200 
+ 1420              	.LASF162:
+ 1421 01c5 63617074 		.ascii	"captureInput\000"
+ 1421      75726549 
+ 1421      6E707574 
+ 1421      00
+ 1422              	.LASF176:
+ 1423 01d2 5350494D 		.ascii	"SPIM_context\000"
+ 1423      5F636F6E 
+ 1423      74657874 
+ 1423      00
+ 1424              	.LASF12:
+ 1425 01df 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1425      206C6F6E 
+ 1425      6720756E 
+ 1425      7369676E 
+ 1425      65642069 
+ 1426              	.LASF153:
+ 1427 01f6 636C6F63 		.ascii	"clockPrescaler\000"
+ 1427      6B507265 
+ 1427      7363616C 
+ 1427      657200
+ 1428              	.LASF75:
+ 1429 0205 70657269 		.ascii	"periTrCmdOffset\000"
+ 1429      5472436D 
+ 1429      644F6666 
+ 1429      73657400 
+ 1430              	.LASF99:
+ 1431 0215 63707573 		.ascii	"cpussSysTickCtlOffset\000"
+ 1431      73537973 
+ 1431      5469636B 
+ 1431      43746C4F 
+ 1431      66667365 
+ 1432              	.LASF120:
+ 1433 022b 6D617374 		.ascii	"masterStatus\000"
+ 1433      65725374 
+ 1433      61747573 
+ 1433      00
+ 1434              	.LASF175:
+ 1435 0238 4932435F 		.ascii	"I2C_MASTER_context\000"
+ 1435      4D415354 
+ 1435      45525F63 
+ 1435      6F6E7465 
+ 1435      787400
+ 1436              	.LASF146:
+ 1437 024b 74784275 		.ascii	"txBuf\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 28
+
+
+ 1437      6600
+ 1438              	.LASF60:
+ 1439 0251 666C6173 		.ascii	"flashPipeRequired\000"
+ 1439      68506970 
+ 1439      65526571 
+ 1439      75697265 
+ 1439      6400
+ 1440              	.LASF134:
+ 1441 0263 736C6176 		.ascii	"slaveRxBufferSize\000"
+ 1441      65527842 
+ 1441      75666665 
+ 1441      7253697A 
+ 1441      6500
+ 1442              	.LASF140:
+ 1443 0275 63795F73 		.ascii	"cy_stc_scb_i2c_context\000"
+ 1443      74635F73 
+ 1443      63625F69 
+ 1443      32635F63 
+ 1443      6F6E7465 
+ 1444              	.LASF64:
+ 1445 028c 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
+ 1445      6843746C 
+ 1445      4D61696E 
+ 1445      57733046 
+ 1445      72657100 
+ 1446              	.LASF18:
+ 1447 02a0 696E7431 		.ascii	"int16_t\000"
+ 1447      365F7400 
+ 1448              	.LASF11:
+ 1449 02a8 6C6F6E67 		.ascii	"long long int\000"
+ 1449      206C6F6E 
+ 1449      6720696E 
+ 1449      7400
+ 1450              	.LASF171:
+ 1451 02b6 63795F73 		.ascii	"cy_stc_tcpwm_counter_config_t\000"
+ 1451      74635F74 
+ 1451      6370776D 
+ 1451      5F636F75 
+ 1451      6E746572 
+ 1452              	.LASF141:
+ 1453 02d4 63795F73 		.ascii	"cy_stc_scb_spi_context\000"
+ 1453      74635F73 
+ 1453      63625F73 
+ 1453      70695F63 
+ 1453      6F6E7465 
+ 1454              	.LASF80:
+ 1455 02eb 70657269 		.ascii	"periDivCmdTypeSelPos\000"
+ 1455      44697643 
+ 1455      6D645479 
+ 1455      70655365 
+ 1455      6C506F73 
+ 1456              	.LASF97:
+ 1457 0300 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
+ 1457      73547269 
+ 1457      6D52616D 
+ 1457      43746C4F 
+ 1457      66667365 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 29
+
+
+ 1458              	.LASF38:
+ 1459 0316 69706356 		.ascii	"ipcVersion\000"
+ 1459      65727369 
+ 1459      6F6E00
+ 1460              	.LASF100:
+ 1461 0321 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
+ 1461      73436D30 
+ 1461      4E6D6943 
+ 1461      746C4F66 
+ 1461      66736574 
+ 1462              	.LASF139:
+ 1463 0336 63795F63 		.ascii	"cy_cb_scb_spi_handle_events_t\000"
+ 1463      625F7363 
+ 1463      625F7370 
+ 1463      695F6861 
+ 1463      6E646C65 
+ 1464              	.LASF27:
+ 1465 0354 6873696F 		.ascii	"hsiomBase\000"
+ 1465      6D426173 
+ 1465      6500
+ 1466              	.LASF119:
+ 1467 035e 73746174 		.ascii	"state\000"
+ 1467      6500
+ 1468              	.LASF115:
+ 1469 0364 63795F63 		.ascii	"cy_cb_scb_i2c_handle_events_t\000"
+ 1469      625F7363 
+ 1469      625F6932 
+ 1469      635F6861 
+ 1469      6E646C65 
+ 1470              	.LASF8:
+ 1471 0382 6C6F6E67 		.ascii	"long int\000"
+ 1471      20696E74 
+ 1471      00
+ 1472              	.LASF122:
+ 1473 038b 6D617374 		.ascii	"masterRdDir\000"
+ 1473      65725264 
+ 1473      44697200 
+ 1474              	.LASF113:
+ 1475 0397 43595F53 		.ascii	"CY_SCB_I2C_NAK\000"
+ 1475      43425F49 
+ 1475      32435F4E 
+ 1475      414B00
+ 1476              	.LASF58:
+ 1477 03a6 63727970 		.ascii	"cryptoMemSize\000"
+ 1477      746F4D65 
+ 1477      6D53697A 
+ 1477      6500
+ 1478              	.LASF24:
+ 1479 03b4 70657269 		.ascii	"periBase\000"
+ 1479      42617365 
+ 1479      00
+ 1480              	.LASF56:
+ 1481 03bd 73797350 		.ascii	"sysPmSimoPresent\000"
+ 1481      6D53696D 
+ 1481      6F507265 
+ 1481      73656E74 
+ 1481      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 30
+
+
+ 1482              	.LASF19:
+ 1483 03ce 75696E74 		.ascii	"uint16_t\000"
+ 1483      31365F74 
+ 1483      00
+ 1484              	.LASF110:
+ 1485 03d7 646F7562 		.ascii	"double\000"
+ 1485      6C6500
+ 1486              	.LASF85:
+ 1487 03de 70657269 		.ascii	"periDiv16_5CtlOffset\000"
+ 1487      44697631 
+ 1487      365F3543 
+ 1487      746C4F66 
+ 1487      66736574 
+ 1488              	.LASF49:
+ 1489 03f3 73727373 		.ascii	"srssNumPll\000"
+ 1489      4E756D50 
+ 1489      6C6C00
+ 1490              	.LASF174:
+ 1491 03fe 44495350 		.ascii	"DISP_TICK_TIMER_config\000"
+ 1491      5F544943 
+ 1491      4B5F5449 
+ 1491      4D45525F 
+ 1491      636F6E66 
+ 1492              	.LASF83:
+ 1493 0415 70657269 		.ascii	"periDiv8CtlOffset\000"
+ 1493      44697638 
+ 1493      43746C4F 
+ 1493      66667365 
+ 1493      7400
+ 1494              	.LASF90:
+ 1495 0427 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
+ 1495      50727443 
+ 1495      66674F75 
+ 1495      744F6666 
+ 1495      73657400 
+ 1496              	.LASF137:
+ 1497 043b 63624164 		.ascii	"cbAddr\000"
+ 1497      647200
+ 1498              	.LASF23:
+ 1499 0442 666C6173 		.ascii	"flashcBase\000"
+ 1499      68634261 
+ 1499      736500
+ 1500              	.LASF161:
+ 1501 044d 63617074 		.ascii	"captureInputMode\000"
+ 1501      75726549 
+ 1501      6E707574 
+ 1501      4D6F6465 
+ 1501      00
+ 1502              	.LASF9:
+ 1503 045e 5F5F7569 		.ascii	"__uint32_t\000"
+ 1503      6E743332 
+ 1503      5F7400
+ 1504              	.LASF53:
+ 1505 0469 70617373 		.ascii	"passSarChannels\000"
+ 1505      53617243 
+ 1505      68616E6E 
+ 1505      656C7300 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 31
+
+
+ 1506              	.LASF3:
+ 1507 0479 5F5F696E 		.ascii	"__int16_t\000"
+ 1507      7431365F 
+ 1507      7400
+ 1508              	.LASF145:
+ 1509 0483 72784275 		.ascii	"rxBufIdx\000"
+ 1509      66496478 
+ 1509      00
+ 1510              	.LASF96:
+ 1511 048c 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
+ 1511      73436D34 
+ 1511      50777243 
+ 1511      746C4F66 
+ 1511      66736574 
+ 1512              	.LASF147:
+ 1513 04a1 74784275 		.ascii	"txBufSize\000"
+ 1513      6653697A 
+ 1513      6500
+ 1514              	.LASF91:
+ 1515 04ab 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
+ 1515      50727443 
+ 1515      66675369 
+ 1515      6F4F6666 
+ 1515      73657400 
+ 1516              	.LASF95:
+ 1517 04bf 63707573 		.ascii	"cpussCm0StatusOffset\000"
+ 1517      73436D30 
+ 1517      53746174 
+ 1517      75734F66 
+ 1517      66736574 
+ 1518              	.LASF13:
+ 1519 04d4 756E7369 		.ascii	"unsigned int\000"
+ 1519      676E6564 
+ 1519      20696E74 
+ 1519      00
+ 1520              	.LASF131:
+ 1521 04e1 736C6176 		.ascii	"slaveTxBufferIdx\000"
+ 1521      65547842 
+ 1521      75666665 
+ 1521      72496478 
+ 1521      00
+ 1522              	.LASF128:
+ 1523 04f2 736C6176 		.ascii	"slaveRdBufEmpty\000"
+ 1523      65526442 
+ 1523      7566456D 
+ 1523      70747900 
+ 1524              	.LASF76:
+ 1525 0502 70657269 		.ascii	"periTrCmdGrSelMsk\000"
+ 1525      5472436D 
+ 1525      64477253 
+ 1525      656C4D73 
+ 1525      6B00
+ 1526              	.LASF10:
+ 1527 0514 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1527      20756E73 
+ 1527      69676E65 
+ 1527      6420696E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 32
+
+
+ 1527      7400
+ 1528              	.LASF41:
+ 1529 0526 63707573 		.ascii	"cpussIpcNr\000"
+ 1529      73497063 
+ 1529      4E7200
+ 1530              	.LASF43:
+ 1531 0531 63707573 		.ascii	"cpussDwChNr\000"
+ 1531      73447743 
+ 1531      684E7200 
+ 1532              	.LASF66:
+ 1533 053d 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
+ 1533      6843746C 
+ 1533      4D61696E 
+ 1533      57733246 
+ 1533      72657100 
+ 1534              	.LASF178:
+ 1535 0551 736C6964 		.ascii	"slider_activity.c\000"
+ 1535      65725F61 
+ 1535      63746976 
+ 1535      6974792E 
+ 1535      6300
+ 1536              	.LASF118:
+ 1537 0563 75736554 		.ascii	"useTxFifo\000"
+ 1537      78466966 
+ 1537      6F00
+ 1538              	.LASF77:
+ 1539 056d 70657269 		.ascii	"periTrGrOffset\000"
+ 1539      54724772 
+ 1539      4F666673 
+ 1539      657400
+ 1540              	.LASF104:
+ 1541 057c 63707573 		.ascii	"cpussRam1Ctl0\000"
+ 1541      7352616D 
+ 1541      3143746C 
+ 1541      3000
+ 1542              	.LASF136:
+ 1543 058a 63624576 		.ascii	"cbEvents\000"
+ 1543      656E7473 
+ 1543      00
+ 1544              	.LASF88:
+ 1545 0593 6770696F 		.ascii	"gpioPrtCfgOffset\000"
+ 1545      50727443 
+ 1545      66674F66 
+ 1545      66736574 
+ 1545      00
+ 1546              	.LASF36:
+ 1547 05a4 6770696F 		.ascii	"gpioVersion\000"
+ 1547      56657273 
+ 1547      696F6E00 
+ 1548              	.LASF108:
+ 1549 05b0 63795F73 		.ascii	"cy_stc_device_t\000"
+ 1549      74635F64 
+ 1549      65766963 
+ 1549      655F7400 
+ 1550              	.LASF150:
+ 1551 05c0 63795F73 		.ascii	"cy_stc_scb_spi_context_t\000"
+ 1551      74635F73 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 33
+
+
+ 1551      63625F73 
+ 1551      70695F63 
+ 1551      6F6E7465 
+ 1552              	.LASF4:
+ 1553 05d9 73686F72 		.ascii	"short int\000"
+ 1553      7420696E 
+ 1553      7400
+ 1554              	.LASF179:
+ 1555 05e3 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 1555      73657273 
+ 1555      5C746D6A 
+ 1555      33325C44 
+ 1555      6F63756D 
+ 1556 0610 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 1556      6C6C6F73 
+ 1556      636F7065 
+ 1556      5F53656E 
+ 1556      696F725F 
+ 1557 0641 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 1557      5C74636F 
+ 1557      6D5F6170 
+ 1557      705C7463 
+ 1557      6F6D5F61 
+ 1558 0671 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 1558      736F6336 
+ 1558      2E637964 
+ 1558      736E00
+ 1559              	.LASF26:
+ 1560 0680 70726F74 		.ascii	"protBase\000"
+ 1560      42617365 
+ 1560      00
+ 1561              	.LASF169:
+ 1562 0689 636F756E 		.ascii	"countInputMode\000"
+ 1562      74496E70 
+ 1562      75744D6F 
+ 1562      646500
+ 1563              	.LASF133:
+ 1564 0698 736C6176 		.ascii	"slaveRxBuffer\000"
+ 1564      65527842 
+ 1564      75666665 
+ 1564      7200
+ 1565              	.LASF92:
+ 1566 06a6 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
+ 1566      73436D30 
+ 1566      436C6F63 
+ 1566      6B43746C 
+ 1566      4F666673 
+ 1567              	.LASF31:
+ 1568 06bd 63727970 		.ascii	"cryptoBase\000"
+ 1568      746F4261 
+ 1568      736500
+ 1569              	.LASF114:
+ 1570 06c8 63795F65 		.ascii	"cy_en_scb_i2c_command_t\000"
+ 1570      6E5F7363 
+ 1570      625F6932 
+ 1570      635F636F 
+ 1570      6D6D616E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 34
+
+
+ 1571              	.LASF151:
+ 1572 06e0 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
+ 1572      74635F74 
+ 1572      6370776D 
+ 1572      5F636F75 
+ 1572      6E746572 
+ 1573              	.LASF15:
+ 1574 06fc 73697A65 		.ascii	"sizetype\000"
+ 1574      74797065 
+ 1574      00
+ 1575              	.LASF69:
+ 1576 0705 64774368 		.ascii	"dwChOffset\000"
+ 1576      4F666673 
+ 1576      657400
+ 1577              	.LASF14:
+ 1578 0710 6C6F6E67 		.ascii	"long double\000"
+ 1578      20646F75 
+ 1578      626C6500 
+ 1579              	.LASF125:
+ 1580 071c 6D617374 		.ascii	"masterBufferIdx\000"
+ 1580      65724275 
+ 1580      66666572 
+ 1580      49647800 
+ 1581              	.LASF82:
+ 1582 072c 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
+ 1582      44697643 
+ 1582      6D645061 
+ 1582      54797065 
+ 1582      53656C50 
+ 1583              	.LASF54:
+ 1584 0743 65704D6F 		.ascii	"epMonitorNr\000"
+ 1584      6E69746F 
+ 1584      724E7200 
+ 1585              	.LASF40:
+ 1586 074f 70726F74 		.ascii	"protVersion\000"
+ 1586      56657273 
+ 1586      696F6E00 
+ 1587              	.LASF73:
+ 1588 075b 64775374 		.ascii	"dwStatusChIdxPos\000"
+ 1588      61747573 
+ 1588      43684964 
+ 1588      78506F73 
+ 1588      00
+ 1589              	.LASF55:
+ 1590 076c 75646250 		.ascii	"udbPresent\000"
+ 1590      72657365 
+ 1590      6E7400
+ 1591              	.LASF35:
+ 1592 0777 666C6173 		.ascii	"flashcVersion\000"
+ 1592      68635665 
+ 1592      7273696F 
+ 1592      6E00
+ 1593              	.LASF52:
+ 1594 0785 736D6966 		.ascii	"smifDeviceNr\000"
+ 1594      44657669 
+ 1594      63654E72 
+ 1594      00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 35
+
+
+ 1595              	.LASF135:
+ 1596 0792 736C6176 		.ascii	"slaveRxBufferIdx\000"
+ 1596      65527842 
+ 1596      75666665 
+ 1596      72496478 
+ 1596      00
+ 1597              	.LASF39:
+ 1598 07a3 70657269 		.ascii	"periVersion\000"
+ 1598      56657273 
+ 1598      696F6E00 
+ 1599              	.LASF109:
+ 1600 07af 666C6F61 		.ascii	"float\000"
+ 1600      7400
+ 1601              	.LASF74:
+ 1602 07b5 64775374 		.ascii	"dwStatusChIdxMsk\000"
+ 1602      61747573 
+ 1602      43684964 
+ 1602      784D736B 
+ 1602      00
+ 1603              	.LASF173:
+ 1604 07c6 63795F64 		.ascii	"cy_device\000"
+ 1604      65766963 
+ 1604      6500
+ 1605              	.LASF102:
+ 1606 07d0 63707573 		.ascii	"cpussRomCtl\000"
+ 1606      73526F6D 
+ 1606      43746C00 
+ 1607              	.LASF72:
+ 1608 07dc 64774368 		.ascii	"dwChCtlPreemptablePos\000"
+ 1608      43746C50 
+ 1608      7265656D 
+ 1608      70746162 
+ 1608      6C65506F 
+ 1609              	.LASF25:
+ 1610 07f2 75646242 		.ascii	"udbBase\000"
+ 1610      61736500 
+ 1611              	.LASF165:
+ 1612 07fa 73746172 		.ascii	"startInputMode\000"
+ 1612      74496E70 
+ 1612      75744D6F 
+ 1612      646500
+ 1613              	.LASF20:
+ 1614 0809 696E7433 		.ascii	"int32_t\000"
+ 1614      325F7400 
+ 1615              	.LASF1:
+ 1616 0811 756E7369 		.ascii	"unsigned char\000"
+ 1616      676E6564 
+ 1616      20636861 
+ 1616      7200
+ 1617              	.LASF68:
+ 1618 081f 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
+ 1618      6843746C 
+ 1618      4D61696E 
+ 1618      57733446 
+ 1618      72657100 
+ 1619              	.LASF172:
+ 1620 0833 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 36
+
+
+ 1620      52784275 
+ 1620      66666572 
+ 1620      00
+ 1621              	.LASF107:
+ 1622 0840 6970634C 		.ascii	"ipcLockStatusOffset\000"
+ 1622      6F636B53 
+ 1622      74617475 
+ 1622      734F6666 
+ 1622      73657400 
+ 1623              	.LASF86:
+ 1624 0854 70657269 		.ascii	"periDiv24_5CtlOffset\000"
+ 1624      44697632 
+ 1624      345F3543 
+ 1624      746C4F66 
+ 1624      66736574 
+ 1625              	.LASF159:
+ 1626 0869 656E6162 		.ascii	"enableCompareSwap\000"
+ 1626      6C65436F 
+ 1626      6D706172 
+ 1626      65537761 
+ 1626      7000
+ 1627              	.LASF103:
+ 1628 087b 63707573 		.ascii	"cpussRam0Ctl0\000"
+ 1628      7352616D 
+ 1628      3043746C 
+ 1628      3000
+ 1629              	.LASF124:
+ 1630 0889 6D617374 		.ascii	"masterBufferSize\000"
+ 1630      65724275 
+ 1630      66666572 
+ 1630      53697A65 
+ 1630      00
+ 1631              	.LASF79:
+ 1632 089a 70657269 		.ascii	"periDivCmdDivSelMsk\000"
+ 1632      44697643 
+ 1632      6D644469 
+ 1632      7653656C 
+ 1632      4D736B00 
+ 1633              	.LASF121:
+ 1634 08ae 6D617374 		.ascii	"masterPause\000"
+ 1634      65725061 
+ 1634      75736500 
+ 1635              	.LASF116:
+ 1636 08ba 63795F63 		.ascii	"cy_cb_scb_i2c_handle_addr_t\000"
+ 1636      625F7363 
+ 1636      625F6932 
+ 1636      635F6861 
+ 1636      6E646C65 
+ 1637              	.LASF156:
+ 1638 08d6 636F6D70 		.ascii	"compareOrCapture\000"
+ 1638      6172654F 
+ 1638      72436170 
+ 1638      74757265 
+ 1638      00
+ 1639              	.LASF126:
+ 1640 08e7 6D617374 		.ascii	"masterNumBytes\000"
+ 1640      65724E75 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 37
+
+
+ 1640      6D427974 
+ 1640      657300
+ 1641              	.LASF132:
+ 1642 08f6 736C6176 		.ascii	"slaveTxBufferCnt\000"
+ 1642      65547842 
+ 1642      75666665 
+ 1642      72436E74 
+ 1642      00
+ 1643              	.LASF63:
+ 1644 0907 666C6173 		.ascii	"flashEraseDelay\000"
+ 1644      68457261 
+ 1644      73654465 
+ 1644      6C617900 
+ 1645              	.LASF46:
+ 1646 0917 63707573 		.ascii	"cpussFmIrq\000"
+ 1646      73466D49 
+ 1646      727100
+ 1647              	.LASF78:
+ 1648 0922 70657269 		.ascii	"periTrGrSize\000"
+ 1648      54724772 
+ 1648      53697A65 
+ 1648      00
+ 1649              	.LASF138:
+ 1650 092f 63795F73 		.ascii	"cy_stc_scb_i2c_context_t\000"
+ 1650      74635F73 
+ 1650      63625F69 
+ 1650      32635F63 
+ 1650      6F6E7465 
+ 1651              	.LASF157:
+ 1652 0948 636F6D70 		.ascii	"compare0\000"
+ 1652      61726530 
+ 1652      00
+ 1653              	.LASF158:
+ 1654 0951 636F6D70 		.ascii	"compare1\000"
+ 1654      61726531 
+ 1654      00
+ 1655              	.LASF170:
+ 1656 095a 636F756E 		.ascii	"countInput\000"
+ 1656      74496E70 
+ 1656      757400
+ 1657              	.LASF16:
+ 1658 0965 63686172 		.ascii	"char\000"
+ 1658      00
+ 1659              	.LASF65:
+ 1660 096a 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
+ 1660      6843746C 
+ 1660      4D61696E 
+ 1660      57733146 
+ 1660      72657100 
+ 1661              	.LASF5:
+ 1662 097e 5F5F7569 		.ascii	"__uint16_t\000"
+ 1662      6E743136 
+ 1662      5F7400
+ 1663              	.LASF84:
+ 1664 0989 70657269 		.ascii	"periDiv16CtlOffset\000"
+ 1664      44697631 
+ 1664      3643746C 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 38
+
+
+ 1664      4F666673 
+ 1664      657400
+ 1665              	.LASF7:
+ 1666 099c 5F5F696E 		.ascii	"__int32_t\000"
+ 1666      7433325F 
+ 1666      7400
+ 1667              	.LASF34:
+ 1668 09a6 64775665 		.ascii	"dwVersion\000"
+ 1668      7273696F 
+ 1668      6E00
+ 1669              	.LASF37:
+ 1670 09b0 6873696F 		.ascii	"hsiomVersion\000"
+ 1670      6D566572 
+ 1670      73696F6E 
+ 1670      00
+ 1671              	.LASF112:
+ 1672 09bd 43595F53 		.ascii	"CY_SCB_I2C_ACK\000"
+ 1672      43425F49 
+ 1672      32435F41 
+ 1672      434B00
+ 1673              	.LASF160:
+ 1674 09cc 696E7465 		.ascii	"interruptSources\000"
+ 1674      72727570 
+ 1674      74536F75 
+ 1674      72636573 
+ 1674      00
+ 1675              	.LASF164:
+ 1676 09dd 72656C6F 		.ascii	"reloadInput\000"
+ 1676      6164496E 
+ 1676      70757400 
+ 1677              	.LASF6:
+ 1678 09e9 73686F72 		.ascii	"short unsigned int\000"
+ 1678      7420756E 
+ 1678      7369676E 
+ 1678      65642069 
+ 1678      6E7400
+ 1679              	.LASF70:
+ 1680 09fc 64774368 		.ascii	"dwChSize\000"
+ 1680      53697A65 
+ 1680      00
+ 1681              	.LASF168:
+ 1682 0a05 73746F70 		.ascii	"stopInput\000"
+ 1682      496E7075 
+ 1682      7400
+ 1683              	.LASF106:
+ 1684 0a0f 69706353 		.ascii	"ipcStructSize\000"
+ 1684      74727563 
+ 1684      7453697A 
+ 1684      6500
+ 1685              	.LASF117:
+ 1686 0a1d 75736552 		.ascii	"useRxFifo\000"
+ 1686      78466966 
+ 1686      6F00
+ 1687              	.LASF45:
+ 1688 0a27 63707573 		.ascii	"cpussIpc0Irq\000"
+ 1688      73497063 
+ 1688      30497271 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 39
+
+
+ 1688      00
+ 1689              	.LASF28:
+ 1690 0a34 6770696F 		.ascii	"gpioBase\000"
+ 1690      42617365 
+ 1690      00
+ 1691              	.LASF149:
+ 1692 0a3d 696E6974 		.ascii	"initKey\000"
+ 1692      4B657900 
+ 1693              	.LASF143:
+ 1694 0a45 72784275 		.ascii	"rxBuf\000"
+ 1694      6600
+ 1695              	.LASF129:
+ 1696 0a4b 736C6176 		.ascii	"slaveTxBuffer\000"
+ 1696      65547842 
+ 1696      75666665 
+ 1696      7200
+ 1697              	.LASF130:
+ 1698 0a59 736C6176 		.ascii	"slaveTxBufferSize\000"
+ 1698      65547842 
+ 1698      75666665 
+ 1698      7253697A 
+ 1698      6500
+ 1699              	.LASF111:
+ 1700 0a6b 5F426F6F 		.ascii	"_Bool\000"
+ 1700      6C00
+ 1701              	.LASF50:
+ 1702 0a71 73727373 		.ascii	"srssNumHfroot\000"
+ 1702      4E756D48 
+ 1702      66726F6F 
+ 1702      7400
+ 1703              	.LASF142:
+ 1704 0a7f 73746174 		.ascii	"status\000"
+ 1704      757300
+ 1705              	.LASF47:
+ 1706 0a86 63707573 		.ascii	"cpussNotConnectedIrq\000"
+ 1706      734E6F74 
+ 1706      436F6E6E 
+ 1706      65637465 
+ 1706      64497271 
+ 1707              	.LASF101:
+ 1708 0a9b 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
+ 1708      73436D34 
+ 1708      4E6D6943 
+ 1708      746C4F66 
+ 1708      66736574 
+ 1709              	.LASF61:
+ 1710 0ab0 666C6173 		.ascii	"flashWriteDelay\000"
+ 1710      68577269 
+ 1710      74654465 
+ 1710      6C617900 
+ 1711              	.LASF17:
+ 1712 0ac0 75696E74 		.ascii	"uint8_t\000"
+ 1712      385F7400 
+ 1713              	.LASF94:
+ 1714 0ac8 63707573 		.ascii	"cpussCm4StatusOffset\000"
+ 1714      73436D34 
+ 1714      53746174 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 40
+
+
+ 1714      75734F66 
+ 1714      66736574 
+ 1715              	.LASF87:
+ 1716 0add 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
+ 1716      50727449 
+ 1716      6E747243 
+ 1716      66674F66 
+ 1716      66736574 
+ 1717              	.LASF163:
+ 1718 0af2 72656C6F 		.ascii	"reloadInputMode\000"
+ 1718      6164496E 
+ 1718      7075744D 
+ 1718      6F646500 
+ 1719              	.LASF98:
+ 1720 0b02 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
+ 1720      73547269 
+ 1720      6D526F6D 
+ 1720      43746C4F 
+ 1720      66667365 
+ 1721              	.LASF48:
+ 1722 0b18 73727373 		.ascii	"srssNumClkpath\000"
+ 1722      4E756D43 
+ 1722      6C6B7061 
+ 1722      746800
+ 1723              	.LASF0:
+ 1724 0b27 7369676E 		.ascii	"signed char\000"
+ 1724      65642063 
+ 1724      68617200 
+ 1725              	.LASF30:
+ 1726 0b33 69706342 		.ascii	"ipcBase\000"
+ 1726      61736500 
+ 1727              	.LASF81:
+ 1728 0b3b 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ 1728      44697643 
+ 1728      6D645061 
+ 1728      44697653 
+ 1728      656C506F 
+ 1729              	.LASF62:
+ 1730 0b51 666C6173 		.ascii	"flashProgramDelay\000"
+ 1730      6850726F 
+ 1730      6772616D 
+ 1730      44656C61 
+ 1730      7900
+ 1731              	.LASF32:
+ 1732 0b63 63707573 		.ascii	"cpussVersion\000"
+ 1732      73566572 
+ 1732      73696F6E 
+ 1732      00
+ 1733              	.LASF21:
+ 1734 0b70 75696E74 		.ascii	"uint32_t\000"
+ 1734      33325F74 
+ 1734      00
+ 1735              	.LASF59:
+ 1736 0b79 666C6173 		.ascii	"flashRwwRequired\000"
+ 1736      68527777 
+ 1736      52657175 
+ 1736      69726564 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccnPVKRR.s 			page 41
+
+
+ 1736      00
+ 1737              	.LASF148:
+ 1738 0b8a 74784275 		.ascii	"txBufIdx\000"
+ 1738      66496478 
+ 1738      00
+ 1739              	.LASF166:
+ 1740 0b93 73746172 		.ascii	"startInput\000"
+ 1740      74496E70 
+ 1740      757400
+ 1741              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

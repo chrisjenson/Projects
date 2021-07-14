@@ -1,0 +1,3457 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_font_dejavu_10.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.rodata
+  21              		.align	2
+  22              		.type	lv_font_dejavu_10_glyph_bitmap, %object
+  23              		.size	lv_font_dejavu_10_glyph_bitmap, 2060
+  24              	lv_font_dejavu_10_glyph_bitmap:
+  25 0000 00       		.byte	0
+  26 0001 00       		.byte	0
+  27 0002 00       		.byte	0
+  28 0003 00       		.byte	0
+  29 0004 00       		.byte	0
+  30 0005 00       		.byte	0
+  31 0006 00       		.byte	0
+  32 0007 00       		.byte	0
+  33 0008 00       		.byte	0
+  34 0009 00       		.byte	0
+  35 000a 00       		.byte	0
+  36 000b 00       		.byte	0
+  37 000c 00       		.byte	0
+  38 000d 00       		.byte	0
+  39 000e 00       		.byte	0
+  40 000f 00       		.byte	0
+  41 0010 00       		.byte	0
+  42 0011 00       		.byte	0
+  43 0012 00       		.byte	0
+  44 0013 00       		.byte	0
+  45 0014 00       		.byte	0
+  46 0015 F0       		.byte	-16
+  47 0016 F0       		.byte	-16
+  48 0017 F0       		.byte	-16
+  49 0018 D0       		.byte	-48
+  50 0019 00       		.byte	0
+  51 001a F0       		.byte	-16
+  52 001b 00       		.byte	0
+  53 001c 00       		.byte	0
+  54 001d 00       		.byte	0
+  55 001e 00       		.byte	0
+  56 001f 00       		.byte	0
+  57 0020 F0       		.byte	-16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 2
+
+
+  58 0021 F0       		.byte	-16
+  59 0022 F0       		.byte	-16
+  60 0023 F0       		.byte	-16
+  61 0024 00       		.byte	0
+  62 0025 00       		.byte	0
+  63 0026 00       		.byte	0
+  64 0027 00       		.byte	0
+  65 0028 00       		.byte	0
+  66 0029 00       		.byte	0
+  67 002a 00       		.byte	0
+  68 002b 00       		.byte	0
+  69 002c 00       		.byte	0
+  70 002d 00       		.byte	0
+  71 002e 00       		.byte	0
+  72 002f 00       		.byte	0
+  73 0030 00       		.byte	0
+  74 0031 00       		.byte	0
+  75 0032 00       		.byte	0
+  76 0033 86       		.byte	-122
+  77 0034 20       		.byte	32
+  78 0035 03       		.byte	3
+  79 0036 58       		.byte	88
+  80 0037 00       		.byte	0
+  81 0038 9F       		.byte	-97
+  82 0039 FF       		.byte	-1
+  83 003a F0       		.byte	-16
+  84 003b 08       		.byte	8
+  85 003c 08       		.byte	8
+  86 003d 00       		.byte	0
+  87 003e FF       		.byte	-1
+  88 003f FF       		.byte	-1
+  89 0040 90       		.byte	-112
+  90 0041 08       		.byte	8
+  91 0042 53       		.byte	83
+  92 0043 00       		.byte	0
+  93 0044 26       		.byte	38
+  94 0045 80       		.byte	-128
+  95 0046 00       		.byte	0
+  96 0047 00       		.byte	0
+  97 0048 00       		.byte	0
+  98 0049 00       		.byte	0
+  99 004a 00       		.byte	0
+ 100 004b 00       		.byte	0
+ 101 004c 00       		.byte	0
+ 102 004d 00       		.byte	0
+ 103 004e 00       		.byte	0
+ 104 004f 00       		.byte	0
+ 105 0050 00       		.byte	0
+ 106 0051 00       		.byte	0
+ 107 0052 00       		.byte	0
+ 108 0053 00       		.byte	0
+ 109 0054 F0       		.byte	-16
+ 110 0055 00       		.byte	0
+ 111 0056 7E       		.byte	126
+ 112 0057 FF       		.byte	-1
+ 113 0058 F0       		.byte	-16
+ 114 0059 E7       		.byte	-25
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 3
+
+
+ 115 005a F0       		.byte	-16
+ 116 005b 00       		.byte	0
+ 117 005c 4B       		.byte	75
+ 118 005d FE       		.byte	-2
+ 119 005e 70       		.byte	112
+ 120 005f 00       		.byte	0
+ 121 0060 F3       		.byte	-13
+ 122 0061 F0       		.byte	-16
+ 123 0062 FF       		.byte	-1
+ 124 0063 FE       		.byte	-2
+ 125 0064 70       		.byte	112
+ 126 0065 00       		.byte	0
+ 127 0066 F0       		.byte	-16
+ 128 0067 00       		.byte	0
+ 129 0068 00       		.byte	0
+ 130 0069 00       		.byte	0
+ 131 006a 00       		.byte	0
+ 132 006b 00       		.byte	0
+ 133 006c 00       		.byte	0
+ 134 006d 00       		.byte	0
+ 135 006e 00       		.byte	0
+ 136 006f 00       		.byte	0
+ 137 0070 00       		.byte	0
+ 138 0071 00       		.byte	0
+ 139 0072 9F       		.byte	-97
+ 140 0073 90       		.byte	-112
+ 141 0074 C5       		.byte	-59
+ 142 0075 00       		.byte	0
+ 143 0076 F4       		.byte	-12
+ 144 0077 F4       		.byte	-12
+ 145 0078 D0       		.byte	-48
+ 146 0079 00       		.byte	0
+ 147 007a 9F       		.byte	-97
+ 148 007b 9C       		.byte	-100
+ 149 007c 50       		.byte	80
+ 150 007d 00       		.byte	0
+ 151 007e 00       		.byte	0
+ 152 007f 4D       		.byte	77
+ 153 0080 9F       		.byte	-97
+ 154 0081 90       		.byte	-112
+ 155 0082 00       		.byte	0
+ 156 0083 C5       		.byte	-59
+ 157 0084 F4       		.byte	-12
+ 158 0085 F0       		.byte	-16
+ 159 0086 05       		.byte	5
+ 160 0087 D0       		.byte	-48
+ 161 0088 9F       		.byte	-97
+ 162 0089 90       		.byte	-112
+ 163 008a 00       		.byte	0
+ 164 008b 00       		.byte	0
+ 165 008c 00       		.byte	0
+ 166 008d 00       		.byte	0
+ 167 008e 00       		.byte	0
+ 168 008f 00       		.byte	0
+ 169 0090 00       		.byte	0
+ 170 0091 00       		.byte	0
+ 171 0092 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 4
+
+
+ 172 0093 00       		.byte	0
+ 173 0094 00       		.byte	0
+ 174 0095 00       		.byte	0
+ 175 0096 00       		.byte	0
+ 176 0097 00       		.byte	0
+ 177 0098 00       		.byte	0
+ 178 0099 08       		.byte	8
+ 179 009a FF       		.byte	-1
+ 180 009b 00       		.byte	0
+ 181 009c 0F       		.byte	15
+ 182 009d 20       		.byte	32
+ 183 009e 00       		.byte	0
+ 184 009f 0D       		.byte	13
+ 185 00a0 80       		.byte	-128
+ 186 00a1 00       		.byte	0
+ 187 00a2 B9       		.byte	-71
+ 188 00a3 FA       		.byte	-6
+ 189 00a4 C0       		.byte	-64
+ 190 00a5 E5       		.byte	-27
+ 191 00a6 DF       		.byte	-33
+ 192 00a7 30       		.byte	48
+ 193 00a8 5E       		.byte	94
+ 194 00a9 C9       		.byte	-55
+ 195 00aa A0       		.byte	-96
+ 196 00ab 00       		.byte	0
+ 197 00ac 00       		.byte	0
+ 198 00ad 00       		.byte	0
+ 199 00ae 00       		.byte	0
+ 200 00af 00       		.byte	0
+ 201 00b0 00       		.byte	0
+ 202 00b1 00       		.byte	0
+ 203 00b2 00       		.byte	0
+ 204 00b3 00       		.byte	0
+ 205 00b4 00       		.byte	0
+ 206 00b5 F0       		.byte	-16
+ 207 00b6 F0       		.byte	-16
+ 208 00b7 00       		.byte	0
+ 209 00b8 00       		.byte	0
+ 210 00b9 00       		.byte	0
+ 211 00ba 00       		.byte	0
+ 212 00bb 00       		.byte	0
+ 213 00bc 00       		.byte	0
+ 214 00bd 00       		.byte	0
+ 215 00be 0A       		.byte	10
+ 216 00bf 85       		.byte	-123
+ 217 00c0 D1       		.byte	-47
+ 218 00c1 F0       		.byte	-16
+ 219 00c2 D1       		.byte	-47
+ 220 00c3 85       		.byte	-123
+ 221 00c4 0A       		.byte	10
+ 222 00c5 00       		.byte	0
+ 223 00c6 00       		.byte	0
+ 224 00c7 00       		.byte	0
+ 225 00c8 A0       		.byte	-96
+ 226 00c9 58       		.byte	88
+ 227 00ca 1D       		.byte	29
+ 228 00cb 0F       		.byte	15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 5
+
+
+ 229 00cc 1D       		.byte	29
+ 230 00cd 58       		.byte	88
+ 231 00ce A0       		.byte	-96
+ 232 00cf 00       		.byte	0
+ 233 00d0 00       		.byte	0
+ 234 00d1 00       		.byte	0
+ 235 00d2 00       		.byte	0
+ 236 00d3 00       		.byte	0
+ 237 00d4 00       		.byte	0
+ 238 00d5 91       		.byte	-111
+ 239 00d6 F1       		.byte	-15
+ 240 00d7 90       		.byte	-112
+ 241 00d8 1A       		.byte	26
+ 242 00d9 FA       		.byte	-6
+ 243 00da 10       		.byte	16
+ 244 00db 1A       		.byte	26
+ 245 00dc FA       		.byte	-6
+ 246 00dd 10       		.byte	16
+ 247 00de 91       		.byte	-111
+ 248 00df F1       		.byte	-15
+ 249 00e0 90       		.byte	-112
+ 250 00e1 00       		.byte	0
+ 251 00e2 00       		.byte	0
+ 252 00e3 00       		.byte	0
+ 253 00e4 00       		.byte	0
+ 254 00e5 00       		.byte	0
+ 255 00e6 00       		.byte	0
+ 256 00e7 00       		.byte	0
+ 257 00e8 00       		.byte	0
+ 258 00e9 00       		.byte	0
+ 259 00ea 00       		.byte	0
+ 260 00eb 00       		.byte	0
+ 261 00ec 00       		.byte	0
+ 262 00ed 00       		.byte	0
+ 263 00ee 00       		.byte	0
+ 264 00ef 00       		.byte	0
+ 265 00f0 00       		.byte	0
+ 266 00f1 00       		.byte	0
+ 267 00f2 00       		.byte	0
+ 268 00f3 00       		.byte	0
+ 269 00f4 00       		.byte	0
+ 270 00f5 00       		.byte	0
+ 271 00f6 00       		.byte	0
+ 272 00f7 F0       		.byte	-16
+ 273 00f8 00       		.byte	0
+ 274 00f9 00       		.byte	0
+ 275 00fa F0       		.byte	-16
+ 276 00fb 00       		.byte	0
+ 277 00fc FF       		.byte	-1
+ 278 00fd FF       		.byte	-1
+ 279 00fe F0       		.byte	-16
+ 280 00ff 00       		.byte	0
+ 281 0100 F0       		.byte	-16
+ 282 0101 00       		.byte	0
+ 283 0102 00       		.byte	0
+ 284 0103 F0       		.byte	-16
+ 285 0104 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 6
+
+
+ 286 0105 00       		.byte	0
+ 287 0106 00       		.byte	0
+ 288 0107 00       		.byte	0
+ 289 0108 00       		.byte	0
+ 290 0109 00       		.byte	0
+ 291 010a 00       		.byte	0
+ 292 010b 00       		.byte	0
+ 293 010c 00       		.byte	0
+ 294 010d 00       		.byte	0
+ 295 010e 00       		.byte	0
+ 296 010f 00       		.byte	0
+ 297 0110 00       		.byte	0
+ 298 0111 00       		.byte	0
+ 299 0112 00       		.byte	0
+ 300 0113 00       		.byte	0
+ 301 0114 F0       		.byte	-16
+ 302 0115 F0       		.byte	-16
+ 303 0116 00       		.byte	0
+ 304 0117 00       		.byte	0
+ 305 0118 00       		.byte	0
+ 306 0119 00       		.byte	0
+ 307 011a 00       		.byte	0
+ 308 011b 00       		.byte	0
+ 309 011c FF       		.byte	-1
+ 310 011d 00       		.byte	0
+ 311 011e 00       		.byte	0
+ 312 011f 00       		.byte	0
+ 313 0120 00       		.byte	0
+ 314 0121 00       		.byte	0
+ 315 0122 00       		.byte	0
+ 316 0123 00       		.byte	0
+ 317 0124 00       		.byte	0
+ 318 0125 00       		.byte	0
+ 319 0126 00       		.byte	0
+ 320 0127 00       		.byte	0
+ 321 0128 F0       		.byte	-16
+ 322 0129 00       		.byte	0
+ 323 012a 00       		.byte	0
+ 324 012b 00       		.byte	0
+ 325 012c 00       		.byte	0
+ 326 012d 00       		.byte	0
+ 327 012e 02       		.byte	2
+ 328 012f D0       		.byte	-48
+ 329 0130 07       		.byte	7
+ 330 0131 90       		.byte	-112
+ 331 0132 0B       		.byte	11
+ 332 0133 40       		.byte	64
+ 333 0134 0F       		.byte	15
+ 334 0135 00       		.byte	0
+ 335 0136 4B       		.byte	75
+ 336 0137 00       		.byte	0
+ 337 0138 97       		.byte	-105
+ 338 0139 00       		.byte	0
+ 339 013a D2       		.byte	-46
+ 340 013b 00       		.byte	0
+ 341 013c 00       		.byte	0
+ 342 013d 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 7
+
+
+ 343 013e 00       		.byte	0
+ 344 013f 00       		.byte	0
+ 345 0140 00       		.byte	0
+ 346 0141 00       		.byte	0
+ 347 0142 3E       		.byte	62
+ 348 0143 E3       		.byte	-29
+ 349 0144 C5       		.byte	-59
+ 350 0145 5C       		.byte	92
+ 351 0146 F0       		.byte	-16
+ 352 0147 0F       		.byte	15
+ 353 0148 F0       		.byte	-16
+ 354 0149 0F       		.byte	15
+ 355 014a C5       		.byte	-59
+ 356 014b 5C       		.byte	92
+ 357 014c 3E       		.byte	62
+ 358 014d E3       		.byte	-29
+ 359 014e 00       		.byte	0
+ 360 014f 00       		.byte	0
+ 361 0150 00       		.byte	0
+ 362 0151 00       		.byte	0
+ 363 0152 00       		.byte	0
+ 364 0153 00       		.byte	0
+ 365 0154 00       		.byte	0
+ 366 0155 00       		.byte	0
+ 367 0156 FF       		.byte	-1
+ 368 0157 00       		.byte	0
+ 369 0158 0F       		.byte	15
+ 370 0159 00       		.byte	0
+ 371 015a 0F       		.byte	15
+ 372 015b 00       		.byte	0
+ 373 015c 0F       		.byte	15
+ 374 015d 00       		.byte	0
+ 375 015e 0F       		.byte	15
+ 376 015f 00       		.byte	0
+ 377 0160 FF       		.byte	-1
+ 378 0161 F0       		.byte	-16
+ 379 0162 00       		.byte	0
+ 380 0163 00       		.byte	0
+ 381 0164 00       		.byte	0
+ 382 0165 00       		.byte	0
+ 383 0166 00       		.byte	0
+ 384 0167 00       		.byte	0
+ 385 0168 00       		.byte	0
+ 386 0169 00       		.byte	0
+ 387 016a 00       		.byte	0
+ 388 016b FF       		.byte	-1
+ 389 016c E6       		.byte	-26
+ 390 016d 00       		.byte	0
+ 391 016e 00       		.byte	0
+ 392 016f 3F       		.byte	63
+ 393 0170 00       		.byte	0
+ 394 0171 00       		.byte	0
+ 395 0172 4B       		.byte	75
+ 396 0173 00       		.byte	0
+ 397 0174 04       		.byte	4
+ 398 0175 D1       		.byte	-47
+ 399 0176 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 8
+
+
+ 400 0177 6E       		.byte	110
+ 401 0178 20       		.byte	32
+ 402 0179 00       		.byte	0
+ 403 017a FF       		.byte	-1
+ 404 017b FF       		.byte	-1
+ 405 017c 00       		.byte	0
+ 406 017d 00       		.byte	0
+ 407 017e 00       		.byte	0
+ 408 017f 00       		.byte	0
+ 409 0180 00       		.byte	0
+ 410 0181 00       		.byte	0
+ 411 0182 00       		.byte	0
+ 412 0183 00       		.byte	0
+ 413 0184 00       		.byte	0
+ 414 0185 00       		.byte	0
+ 415 0186 00       		.byte	0
+ 416 0187 00       		.byte	0
+ 417 0188 FF       		.byte	-1
+ 418 0189 E5       		.byte	-27
+ 419 018a 00       		.byte	0
+ 420 018b 3E       		.byte	62
+ 421 018c 00       		.byte	0
+ 422 018d 3D       		.byte	61
+ 423 018e 0F       		.byte	15
+ 424 018f F5       		.byte	-11
+ 425 0190 00       		.byte	0
+ 426 0191 4E       		.byte	78
+ 427 0192 FF       		.byte	-1
+ 428 0193 E7       		.byte	-25
+ 429 0194 00       		.byte	0
+ 430 0195 00       		.byte	0
+ 431 0196 00       		.byte	0
+ 432 0197 00       		.byte	0
+ 433 0198 00       		.byte	0
+ 434 0199 00       		.byte	0
+ 435 019a 00       		.byte	0
+ 436 019b 00       		.byte	0
+ 437 019c 02       		.byte	2
+ 438 019d F0       		.byte	-16
+ 439 019e 0A       		.byte	10
+ 440 019f F0       		.byte	-16
+ 441 01a0 2E       		.byte	46
+ 442 01a1 F0       		.byte	-16
+ 443 01a2 A7       		.byte	-89
+ 444 01a3 F0       		.byte	-16
+ 445 01a4 FF       		.byte	-1
+ 446 01a5 FF       		.byte	-1
+ 447 01a6 00       		.byte	0
+ 448 01a7 F0       		.byte	-16
+ 449 01a8 00       		.byte	0
+ 450 01a9 00       		.byte	0
+ 451 01aa 00       		.byte	0
+ 452 01ab 00       		.byte	0
+ 453 01ac 00       		.byte	0
+ 454 01ad 00       		.byte	0
+ 455 01ae 00       		.byte	0
+ 456 01af 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 9
+
+
+ 457 01b0 FF       		.byte	-1
+ 458 01b1 FF       		.byte	-1
+ 459 01b2 F0       		.byte	-16
+ 460 01b3 00       		.byte	0
+ 461 01b4 FF       		.byte	-1
+ 462 01b5 D4       		.byte	-44
+ 463 01b6 00       		.byte	0
+ 464 01b7 4E       		.byte	78
+ 465 01b8 00       		.byte	0
+ 466 01b9 4E       		.byte	78
+ 467 01ba FF       		.byte	-1
+ 468 01bb D4       		.byte	-44
+ 469 01bc 00       		.byte	0
+ 470 01bd 00       		.byte	0
+ 471 01be 00       		.byte	0
+ 472 01bf 00       		.byte	0
+ 473 01c0 00       		.byte	0
+ 474 01c1 00       		.byte	0
+ 475 01c2 00       		.byte	0
+ 476 01c3 00       		.byte	0
+ 477 01c4 1B       		.byte	27
+ 478 01c5 FF       		.byte	-1
+ 479 01c6 AB       		.byte	-85
+ 480 01c7 10       		.byte	16
+ 481 01c8 E3       		.byte	-29
+ 482 01c9 00       		.byte	0
+ 483 01ca FA       		.byte	-6
+ 484 01cb F8       		.byte	-8
+ 485 01cc C3       		.byte	-61
+ 486 01cd 3F       		.byte	63
+ 487 01ce 3D       		.byte	61
+ 488 01cf E7       		.byte	-25
+ 489 01d0 00       		.byte	0
+ 490 01d1 00       		.byte	0
+ 491 01d2 00       		.byte	0
+ 492 01d3 00       		.byte	0
+ 493 01d4 00       		.byte	0
+ 494 01d5 00       		.byte	0
+ 495 01d6 00       		.byte	0
+ 496 01d7 00       		.byte	0
+ 497 01d8 FF       		.byte	-1
+ 498 01d9 FE       		.byte	-2
+ 499 01da 00       		.byte	0
+ 500 01db 79       		.byte	121
+ 501 01dc 00       		.byte	0
+ 502 01dd C4       		.byte	-60
+ 503 01de 02       		.byte	2
+ 504 01df E0       		.byte	-32
+ 505 01e0 07       		.byte	7
+ 506 01e1 90       		.byte	-112
+ 507 01e2 0D       		.byte	13
+ 508 01e3 30       		.byte	48
+ 509 01e4 00       		.byte	0
+ 510 01e5 00       		.byte	0
+ 511 01e6 00       		.byte	0
+ 512 01e7 00       		.byte	0
+ 513 01e8 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 10
+
+
+ 514 01e9 00       		.byte	0
+ 515 01ea 00       		.byte	0
+ 516 01eb 00       		.byte	0
+ 517 01ec 6E       		.byte	110
+ 518 01ed E6       		.byte	-26
+ 519 01ee E3       		.byte	-29
+ 520 01ef 3E       		.byte	62
+ 521 01f0 D3       		.byte	-45
+ 522 01f1 3D       		.byte	61
+ 523 01f2 5F       		.byte	95
+ 524 01f3 F5       		.byte	-11
+ 525 01f4 E3       		.byte	-29
+ 526 01f5 3E       		.byte	62
+ 527 01f6 8F       		.byte	-113
+ 528 01f7 F8       		.byte	-8
+ 529 01f8 00       		.byte	0
+ 530 01f9 00       		.byte	0
+ 531 01fa 00       		.byte	0
+ 532 01fb 00       		.byte	0
+ 533 01fc 00       		.byte	0
+ 534 01fd 00       		.byte	0
+ 535 01fe 00       		.byte	0
+ 536 01ff 00       		.byte	0
+ 537 0200 7E       		.byte	126
+ 538 0201 D3       		.byte	-45
+ 539 0202 F3       		.byte	-13
+ 540 0203 3C       		.byte	60
+ 541 0204 8F       		.byte	-113
+ 542 0205 AF       		.byte	-81
+ 543 0206 00       		.byte	0
+ 544 0207 3E       		.byte	62
+ 545 0208 01       		.byte	1
+ 546 0209 BA       		.byte	-70
+ 547 020a FF       		.byte	-1
+ 548 020b B1       		.byte	-79
+ 549 020c 00       		.byte	0
+ 550 020d 00       		.byte	0
+ 551 020e 00       		.byte	0
+ 552 020f 00       		.byte	0
+ 553 0210 00       		.byte	0
+ 554 0211 00       		.byte	0
+ 555 0212 00       		.byte	0
+ 556 0213 00       		.byte	0
+ 557 0214 00       		.byte	0
+ 558 0215 F0       		.byte	-16
+ 559 0216 00       		.byte	0
+ 560 0217 00       		.byte	0
+ 561 0218 F0       		.byte	-16
+ 562 0219 00       		.byte	0
+ 563 021a 00       		.byte	0
+ 564 021b 00       		.byte	0
+ 565 021c 00       		.byte	0
+ 566 021d 00       		.byte	0
+ 567 021e 00       		.byte	0
+ 568 021f F0       		.byte	-16
+ 569 0220 00       		.byte	0
+ 570 0221 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 11
+
+
+ 571 0222 F0       		.byte	-16
+ 572 0223 F0       		.byte	-16
+ 573 0224 00       		.byte	0
+ 574 0225 00       		.byte	0
+ 575 0226 00       		.byte	0
+ 576 0227 00       		.byte	0
+ 577 0228 00       		.byte	0
+ 578 0229 00       		.byte	0
+ 579 022a 00       		.byte	0
+ 580 022b 00       		.byte	0
+ 581 022c 00       		.byte	0
+ 582 022d 27       		.byte	39
+ 583 022e D0       		.byte	-48
+ 584 022f 7C       		.byte	124
+ 585 0230 E9       		.byte	-23
+ 586 0231 30       		.byte	48
+ 587 0232 7C       		.byte	124
+ 588 0233 E8       		.byte	-24
+ 589 0234 30       		.byte	48
+ 590 0235 00       		.byte	0
+ 591 0236 27       		.byte	39
+ 592 0237 D0       		.byte	-48
+ 593 0238 00       		.byte	0
+ 594 0239 00       		.byte	0
+ 595 023a 00       		.byte	0
+ 596 023b 00       		.byte	0
+ 597 023c 00       		.byte	0
+ 598 023d 00       		.byte	0
+ 599 023e 00       		.byte	0
+ 600 023f 00       		.byte	0
+ 601 0240 00       		.byte	0
+ 602 0241 00       		.byte	0
+ 603 0242 00       		.byte	0
+ 604 0243 00       		.byte	0
+ 605 0244 00       		.byte	0
+ 606 0245 00       		.byte	0
+ 607 0246 00       		.byte	0
+ 608 0247 00       		.byte	0
+ 609 0248 00       		.byte	0
+ 610 0249 00       		.byte	0
+ 611 024a 00       		.byte	0
+ 612 024b 00       		.byte	0
+ 613 024c 00       		.byte	0
+ 614 024d FF       		.byte	-1
+ 615 024e FF       		.byte	-1
+ 616 024f F0       		.byte	-16
+ 617 0250 00       		.byte	0
+ 618 0251 00       		.byte	0
+ 619 0252 00       		.byte	0
+ 620 0253 FF       		.byte	-1
+ 621 0254 FF       		.byte	-1
+ 622 0255 F0       		.byte	-16
+ 623 0256 00       		.byte	0
+ 624 0257 00       		.byte	0
+ 625 0258 00       		.byte	0
+ 626 0259 00       		.byte	0
+ 627 025a 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 12
+
+
+ 628 025b 00       		.byte	0
+ 629 025c 00       		.byte	0
+ 630 025d 00       		.byte	0
+ 631 025e 00       		.byte	0
+ 632 025f 00       		.byte	0
+ 633 0260 00       		.byte	0
+ 634 0261 00       		.byte	0
+ 635 0262 00       		.byte	0
+ 636 0263 00       		.byte	0
+ 637 0264 00       		.byte	0
+ 638 0265 00       		.byte	0
+ 639 0266 00       		.byte	0
+ 640 0267 00       		.byte	0
+ 641 0268 D7       		.byte	-41
+ 642 0269 20       		.byte	32
+ 643 026a 00       		.byte	0
+ 644 026b 39       		.byte	57
+ 645 026c EC       		.byte	-20
+ 646 026d 70       		.byte	112
+ 647 026e 38       		.byte	56
+ 648 026f EC       		.byte	-20
+ 649 0270 70       		.byte	112
+ 650 0271 D7       		.byte	-41
+ 651 0272 20       		.byte	32
+ 652 0273 00       		.byte	0
+ 653 0274 00       		.byte	0
+ 654 0275 00       		.byte	0
+ 655 0276 00       		.byte	0
+ 656 0277 00       		.byte	0
+ 657 0278 00       		.byte	0
+ 658 0279 00       		.byte	0
+ 659 027a 00       		.byte	0
+ 660 027b 00       		.byte	0
+ 661 027c 00       		.byte	0
+ 662 027d 00       		.byte	0
+ 663 027e 00       		.byte	0
+ 664 027f 00       		.byte	0
+ 665 0280 00       		.byte	0
+ 666 0281 00       		.byte	0
+ 667 0282 FF       		.byte	-1
+ 668 0283 90       		.byte	-112
+ 669 0284 01       		.byte	1
+ 670 0285 D0       		.byte	-48
+ 671 0286 08       		.byte	8
+ 672 0287 20       		.byte	32
+ 673 0288 0F       		.byte	15
+ 674 0289 00       		.byte	0
+ 675 028a 00       		.byte	0
+ 676 028b 00       		.byte	0
+ 677 028c 0F       		.byte	15
+ 678 028d 00       		.byte	0
+ 679 028e 00       		.byte	0
+ 680 028f 00       		.byte	0
+ 681 0290 00       		.byte	0
+ 682 0291 00       		.byte	0
+ 683 0292 00       		.byte	0
+ 684 0293 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 13
+
+
+ 685 0294 00       		.byte	0
+ 686 0295 00       		.byte	0
+ 687 0296 00       		.byte	0
+ 688 0297 00       		.byte	0
+ 689 0298 04       		.byte	4
+ 690 0299 CF       		.byte	-49
+ 691 029a D7       		.byte	-41
+ 692 029b 00       		.byte	0
+ 693 029c 4E       		.byte	78
+ 694 029d 40       		.byte	64
+ 695 029e 2B       		.byte	43
+ 696 029f 80       		.byte	-128
+ 697 02a0 D3       		.byte	-45
+ 698 02a1 AB       		.byte	-85
+ 699 02a2 F1       		.byte	-15
+ 700 02a3 E0       		.byte	-32
+ 701 02a4 F0       		.byte	-16
+ 702 02a5 F4       		.byte	-12
+ 703 02a6 F4       		.byte	-12
+ 704 02a7 D0       		.byte	-48
+ 705 02a8 D4       		.byte	-44
+ 706 02a9 AB       		.byte	-85
+ 707 02aa EB       		.byte	-21
+ 708 02ab 20       		.byte	32
+ 709 02ac 5E       		.byte	94
+ 710 02ad 40       		.byte	64
+ 711 02ae 53       		.byte	83
+ 712 02af 00       		.byte	0
+ 713 02b0 05       		.byte	5
+ 714 02b1 DF       		.byte	-33
+ 715 02b2 60       		.byte	96
+ 716 02b3 00       		.byte	0
+ 717 02b4 00       		.byte	0
+ 718 02b5 00       		.byte	0
+ 719 02b6 00       		.byte	0
+ 720 02b7 00       		.byte	0
+ 721 02b8 00       		.byte	0
+ 722 02b9 00       		.byte	0
+ 723 02ba 00       		.byte	0
+ 724 02bb 00       		.byte	0
+ 725 02bc 00       		.byte	0
+ 726 02bd 00       		.byte	0
+ 727 02be 00       		.byte	0
+ 728 02bf 01       		.byte	1
+ 729 02c0 F1       		.byte	-15
+ 730 02c1 00       		.byte	0
+ 731 02c2 07       		.byte	7
+ 732 02c3 F6       		.byte	-10
+ 733 02c4 00       		.byte	0
+ 734 02c5 0C       		.byte	12
+ 735 02c6 8C       		.byte	-116
+ 736 02c7 00       		.byte	0
+ 737 02c8 2E       		.byte	46
+ 738 02c9 0E       		.byte	14
+ 739 02ca 20       		.byte	32
+ 740 02cb 7F       		.byte	127
+ 741 02cc FF       		.byte	-1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 14
+
+
+ 742 02cd 70       		.byte	112
+ 743 02ce D3       		.byte	-45
+ 744 02cf 03       		.byte	3
+ 745 02d0 D0       		.byte	-48
+ 746 02d1 00       		.byte	0
+ 747 02d2 00       		.byte	0
+ 748 02d3 00       		.byte	0
+ 749 02d4 00       		.byte	0
+ 750 02d5 00       		.byte	0
+ 751 02d6 00       		.byte	0
+ 752 02d7 00       		.byte	0
+ 753 02d8 00       		.byte	0
+ 754 02d9 00       		.byte	0
+ 755 02da 00       		.byte	0
+ 756 02db 00       		.byte	0
+ 757 02dc FF       		.byte	-1
+ 758 02dd E6       		.byte	-26
+ 759 02de F0       		.byte	-16
+ 760 02df 2E       		.byte	46
+ 761 02e0 F0       		.byte	-16
+ 762 02e1 2D       		.byte	45
+ 763 02e2 FF       		.byte	-1
+ 764 02e3 F6       		.byte	-10
+ 765 02e4 F0       		.byte	-16
+ 766 02e5 3E       		.byte	62
+ 767 02e6 FF       		.byte	-1
+ 768 02e7 F8       		.byte	-8
+ 769 02e8 00       		.byte	0
+ 770 02e9 00       		.byte	0
+ 771 02ea 00       		.byte	0
+ 772 02eb 00       		.byte	0
+ 773 02ec 00       		.byte	0
+ 774 02ed 00       		.byte	0
+ 775 02ee 00       		.byte	0
+ 776 02ef 00       		.byte	0
+ 777 02f0 00       		.byte	0
+ 778 02f1 09       		.byte	9
+ 779 02f2 EE       		.byte	-18
+ 780 02f3 60       		.byte	96
+ 781 02f4 9A       		.byte	-102
+ 782 02f5 10       		.byte	16
+ 783 02f6 80       		.byte	-128
+ 784 02f7 E1       		.byte	-31
+ 785 02f8 00       		.byte	0
+ 786 02f9 00       		.byte	0
+ 787 02fa E1       		.byte	-31
+ 788 02fb 00       		.byte	0
+ 789 02fc 00       		.byte	0
+ 790 02fd 9A       		.byte	-102
+ 791 02fe 10       		.byte	16
+ 792 02ff 80       		.byte	-128
+ 793 0300 09       		.byte	9
+ 794 0301 EE       		.byte	-18
+ 795 0302 60       		.byte	96
+ 796 0303 00       		.byte	0
+ 797 0304 00       		.byte	0
+ 798 0305 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 15
+
+
+ 799 0306 00       		.byte	0
+ 800 0307 00       		.byte	0
+ 801 0308 00       		.byte	0
+ 802 0309 00       		.byte	0
+ 803 030a 00       		.byte	0
+ 804 030b 00       		.byte	0
+ 805 030c 00       		.byte	0
+ 806 030d 00       		.byte	0
+ 807 030e 00       		.byte	0
+ 808 030f FF       		.byte	-1
+ 809 0310 EA       		.byte	-22
+ 810 0311 10       		.byte	16
+ 811 0312 F0       		.byte	-16
+ 812 0313 19       		.byte	25
+ 813 0314 A0       		.byte	-96
+ 814 0315 F0       		.byte	-16
+ 815 0316 01       		.byte	1
+ 816 0317 E0       		.byte	-32
+ 817 0318 F0       		.byte	-16
+ 818 0319 01       		.byte	1
+ 819 031a E0       		.byte	-32
+ 820 031b F0       		.byte	-16
+ 821 031c 19       		.byte	25
+ 822 031d A0       		.byte	-96
+ 823 031e FF       		.byte	-1
+ 824 031f EA       		.byte	-22
+ 825 0320 10       		.byte	16
+ 826 0321 00       		.byte	0
+ 827 0322 00       		.byte	0
+ 828 0323 00       		.byte	0
+ 829 0324 00       		.byte	0
+ 830 0325 00       		.byte	0
+ 831 0326 00       		.byte	0
+ 832 0327 00       		.byte	0
+ 833 0328 00       		.byte	0
+ 834 0329 00       		.byte	0
+ 835 032a 00       		.byte	0
+ 836 032b 00       		.byte	0
+ 837 032c FF       		.byte	-1
+ 838 032d FF       		.byte	-1
+ 839 032e F0       		.byte	-16
+ 840 032f 00       		.byte	0
+ 841 0330 F0       		.byte	-16
+ 842 0331 00       		.byte	0
+ 843 0332 FF       		.byte	-1
+ 844 0333 FF       		.byte	-1
+ 845 0334 F0       		.byte	-16
+ 846 0335 00       		.byte	0
+ 847 0336 FF       		.byte	-1
+ 848 0337 FF       		.byte	-1
+ 849 0338 00       		.byte	0
+ 850 0339 00       		.byte	0
+ 851 033a 00       		.byte	0
+ 852 033b 00       		.byte	0
+ 853 033c 00       		.byte	0
+ 854 033d 00       		.byte	0
+ 855 033e 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 16
+
+
+ 856 033f 00       		.byte	0
+ 857 0340 FF       		.byte	-1
+ 858 0341 F0       		.byte	-16
+ 859 0342 F0       		.byte	-16
+ 860 0343 00       		.byte	0
+ 861 0344 F0       		.byte	-16
+ 862 0345 00       		.byte	0
+ 863 0346 FF       		.byte	-1
+ 864 0347 F0       		.byte	-16
+ 865 0348 F0       		.byte	-16
+ 866 0349 00       		.byte	0
+ 867 034a F0       		.byte	-16
+ 868 034b 00       		.byte	0
+ 869 034c 00       		.byte	0
+ 870 034d 00       		.byte	0
+ 871 034e 00       		.byte	0
+ 872 034f 00       		.byte	0
+ 873 0350 00       		.byte	0
+ 874 0351 00       		.byte	0
+ 875 0352 00       		.byte	0
+ 876 0353 00       		.byte	0
+ 877 0354 00       		.byte	0
+ 878 0355 1A       		.byte	26
+ 879 0356 EE       		.byte	-18
+ 880 0357 60       		.byte	96
+ 881 0358 A9       		.byte	-87
+ 882 0359 11       		.byte	17
+ 883 035a 80       		.byte	-128
+ 884 035b E1       		.byte	-31
+ 885 035c 0F       		.byte	15
+ 886 035d F0       		.byte	-16
+ 887 035e E1       		.byte	-31
+ 888 035f 00       		.byte	0
+ 889 0360 F0       		.byte	-16
+ 890 0361 A8       		.byte	-88
+ 891 0362 01       		.byte	1
+ 892 0363 F0       		.byte	-16
+ 893 0364 1A       		.byte	26
+ 894 0365 EE       		.byte	-18
+ 895 0366 50       		.byte	80
+ 896 0367 00       		.byte	0
+ 897 0368 00       		.byte	0
+ 898 0369 00       		.byte	0
+ 899 036a 00       		.byte	0
+ 900 036b 00       		.byte	0
+ 901 036c 00       		.byte	0
+ 902 036d 00       		.byte	0
+ 903 036e 00       		.byte	0
+ 904 036f 00       		.byte	0
+ 905 0370 00       		.byte	0
+ 906 0371 00       		.byte	0
+ 907 0372 F0       		.byte	-16
+ 908 0373 0F       		.byte	15
+ 909 0374 F0       		.byte	-16
+ 910 0375 0F       		.byte	15
+ 911 0376 F0       		.byte	-16
+ 912 0377 0F       		.byte	15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 17
+
+
+ 913 0378 FF       		.byte	-1
+ 914 0379 FF       		.byte	-1
+ 915 037a F0       		.byte	-16
+ 916 037b 0F       		.byte	15
+ 917 037c F0       		.byte	-16
+ 918 037d 0F       		.byte	15
+ 919 037e 00       		.byte	0
+ 920 037f 00       		.byte	0
+ 921 0380 00       		.byte	0
+ 922 0381 00       		.byte	0
+ 923 0382 00       		.byte	0
+ 924 0383 00       		.byte	0
+ 925 0384 00       		.byte	0
+ 926 0385 F0       		.byte	-16
+ 927 0386 F0       		.byte	-16
+ 928 0387 F0       		.byte	-16
+ 929 0388 F0       		.byte	-16
+ 930 0389 F0       		.byte	-16
+ 931 038a F0       		.byte	-16
+ 932 038b 00       		.byte	0
+ 933 038c 00       		.byte	0
+ 934 038d 00       		.byte	0
+ 935 038e 00       		.byte	0
+ 936 038f 0F       		.byte	15
+ 937 0390 0F       		.byte	15
+ 938 0391 0F       		.byte	15
+ 939 0392 0F       		.byte	15
+ 940 0393 0F       		.byte	15
+ 941 0394 0F       		.byte	15
+ 942 0395 2E       		.byte	46
+ 943 0396 F6       		.byte	-10
+ 944 0397 00       		.byte	0
+ 945 0398 00       		.byte	0
+ 946 0399 00       		.byte	0
+ 947 039a 00       		.byte	0
+ 948 039b F0       		.byte	-16
+ 949 039c 3E       		.byte	62
+ 950 039d 60       		.byte	96
+ 951 039e F4       		.byte	-12
+ 952 039f E5       		.byte	-27
+ 953 03a0 00       		.byte	0
+ 954 03a1 FF       		.byte	-1
+ 955 03a2 30       		.byte	48
+ 956 03a3 00       		.byte	0
+ 957 03a4 FC       		.byte	-4
+ 958 03a5 80       		.byte	-128
+ 959 03a6 00       		.byte	0
+ 960 03a7 F1       		.byte	-15
+ 961 03a8 D8       		.byte	-40
+ 962 03a9 00       		.byte	0
+ 963 03aa F0       		.byte	-16
+ 964 03ab 1D       		.byte	29
+ 965 03ac 70       		.byte	112
+ 966 03ad 00       		.byte	0
+ 967 03ae 00       		.byte	0
+ 968 03af 00       		.byte	0
+ 969 03b0 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 18
+
+
+ 970 03b1 00       		.byte	0
+ 971 03b2 00       		.byte	0
+ 972 03b3 00       		.byte	0
+ 973 03b4 00       		.byte	0
+ 974 03b5 00       		.byte	0
+ 975 03b6 00       		.byte	0
+ 976 03b7 00       		.byte	0
+ 977 03b8 F0       		.byte	-16
+ 978 03b9 00       		.byte	0
+ 979 03ba F0       		.byte	-16
+ 980 03bb 00       		.byte	0
+ 981 03bc F0       		.byte	-16
+ 982 03bd 00       		.byte	0
+ 983 03be F0       		.byte	-16
+ 984 03bf 00       		.byte	0
+ 985 03c0 F0       		.byte	-16
+ 986 03c1 00       		.byte	0
+ 987 03c2 FF       		.byte	-1
+ 988 03c3 FF       		.byte	-1
+ 989 03c4 00       		.byte	0
+ 990 03c5 00       		.byte	0
+ 991 03c6 00       		.byte	0
+ 992 03c7 00       		.byte	0
+ 993 03c8 00       		.byte	0
+ 994 03c9 00       		.byte	0
+ 995 03ca 00       		.byte	0
+ 996 03cb 00       		.byte	0
+ 997 03cc 00       		.byte	0
+ 998 03cd FE       		.byte	-2
+ 999 03ce 0E       		.byte	14
+ 1000 03cf F0       		.byte	-16
+ 1001 03d0 FC       		.byte	-4
+ 1002 03d1 7C       		.byte	124
+ 1003 03d2 F0       		.byte	-16
+ 1004 03d3 F8       		.byte	-8
+ 1005 03d4 F8       		.byte	-8
+ 1006 03d5 F0       		.byte	-16
+ 1007 03d6 F3       		.byte	-13
+ 1008 03d7 F3       		.byte	-13
+ 1009 03d8 F0       		.byte	-16
+ 1010 03d9 F0       		.byte	-16
+ 1011 03da D0       		.byte	-48
+ 1012 03db F0       		.byte	-16
+ 1013 03dc F0       		.byte	-16
+ 1014 03dd 00       		.byte	0
+ 1015 03de F0       		.byte	-16
+ 1016 03df 00       		.byte	0
+ 1017 03e0 00       		.byte	0
+ 1018 03e1 00       		.byte	0
+ 1019 03e2 00       		.byte	0
+ 1020 03e3 00       		.byte	0
+ 1021 03e4 00       		.byte	0
+ 1022 03e5 00       		.byte	0
+ 1023 03e6 00       		.byte	0
+ 1024 03e7 00       		.byte	0
+ 1025 03e8 00       		.byte	0
+ 1026 03e9 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 19
+
+
+ 1027 03ea F7       		.byte	-9
+ 1028 03eb 0F       		.byte	15
+ 1029 03ec FE       		.byte	-2
+ 1030 03ed 0F       		.byte	15
+ 1031 03ee FB       		.byte	-5
+ 1032 03ef 7F       		.byte	127
+ 1033 03f0 F4       		.byte	-12
+ 1034 03f1 EF       		.byte	-17
+ 1035 03f2 F0       		.byte	-16
+ 1036 03f3 DF       		.byte	-33
+ 1037 03f4 F0       		.byte	-16
+ 1038 03f5 6F       		.byte	111
+ 1039 03f6 00       		.byte	0
+ 1040 03f7 00       		.byte	0
+ 1041 03f8 00       		.byte	0
+ 1042 03f9 00       		.byte	0
+ 1043 03fa 00       		.byte	0
+ 1044 03fb 00       		.byte	0
+ 1045 03fc 00       		.byte	0
+ 1046 03fd 00       		.byte	0
+ 1047 03fe 00       		.byte	0
+ 1048 03ff 1B       		.byte	27
+ 1049 0400 FB       		.byte	-5
+ 1050 0401 10       		.byte	16
+ 1051 0402 A8       		.byte	-88
+ 1052 0403 08       		.byte	8
+ 1053 0404 A0       		.byte	-96
+ 1054 0405 E1       		.byte	-31
+ 1055 0406 01       		.byte	1
+ 1056 0407 E0       		.byte	-32
+ 1057 0408 E0       		.byte	-32
+ 1058 0409 01       		.byte	1
+ 1059 040a E0       		.byte	-32
+ 1060 040b A8       		.byte	-88
+ 1061 040c 08       		.byte	8
+ 1062 040d A0       		.byte	-96
+ 1063 040e 1B       		.byte	27
+ 1064 040f FB       		.byte	-5
+ 1065 0410 10       		.byte	16
+ 1066 0411 00       		.byte	0
+ 1067 0412 00       		.byte	0
+ 1068 0413 00       		.byte	0
+ 1069 0414 00       		.byte	0
+ 1070 0415 00       		.byte	0
+ 1071 0416 00       		.byte	0
+ 1072 0417 00       		.byte	0
+ 1073 0418 00       		.byte	0
+ 1074 0419 00       		.byte	0
+ 1075 041a 00       		.byte	0
+ 1076 041b 00       		.byte	0
+ 1077 041c FF       		.byte	-1
+ 1078 041d E7       		.byte	-25
+ 1079 041e F0       		.byte	-16
+ 1080 041f 3F       		.byte	63
+ 1081 0420 FF       		.byte	-1
+ 1082 0421 E7       		.byte	-25
+ 1083 0422 F0       		.byte	-16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 20
+
+
+ 1084 0423 00       		.byte	0
+ 1085 0424 F0       		.byte	-16
+ 1086 0425 00       		.byte	0
+ 1087 0426 F0       		.byte	-16
+ 1088 0427 00       		.byte	0
+ 1089 0428 00       		.byte	0
+ 1090 0429 00       		.byte	0
+ 1091 042a 00       		.byte	0
+ 1092 042b 00       		.byte	0
+ 1093 042c 00       		.byte	0
+ 1094 042d 00       		.byte	0
+ 1095 042e 00       		.byte	0
+ 1096 042f 00       		.byte	0
+ 1097 0430 00       		.byte	0
+ 1098 0431 1B       		.byte	27
+ 1099 0432 FB       		.byte	-5
+ 1100 0433 10       		.byte	16
+ 1101 0434 A8       		.byte	-88
+ 1102 0435 08       		.byte	8
+ 1103 0436 A0       		.byte	-96
+ 1104 0437 E1       		.byte	-31
+ 1105 0438 01       		.byte	1
+ 1106 0439 E0       		.byte	-32
+ 1107 043a E0       		.byte	-32
+ 1108 043b 01       		.byte	1
+ 1109 043c E0       		.byte	-32
+ 1110 043d A8       		.byte	-88
+ 1111 043e 08       		.byte	8
+ 1112 043f 90       		.byte	-112
+ 1113 0440 1B       		.byte	27
+ 1114 0441 FB       		.byte	-5
+ 1115 0442 00       		.byte	0
+ 1116 0443 00       		.byte	0
+ 1117 0444 3E       		.byte	62
+ 1118 0445 10       		.byte	16
+ 1119 0446 00       		.byte	0
+ 1120 0447 00       		.byte	0
+ 1121 0448 00       		.byte	0
+ 1122 0449 00       		.byte	0
+ 1123 044a 00       		.byte	0
+ 1124 044b 00       		.byte	0
+ 1125 044c 00       		.byte	0
+ 1126 044d 00       		.byte	0
+ 1127 044e 00       		.byte	0
+ 1128 044f FF       		.byte	-1
+ 1129 0450 E8       		.byte	-24
+ 1130 0451 00       		.byte	0
+ 1131 0452 F0       		.byte	-16
+ 1132 0453 3F       		.byte	63
+ 1133 0454 00       		.byte	0
+ 1134 0455 FF       		.byte	-1
+ 1135 0456 F5       		.byte	-11
+ 1136 0457 00       		.byte	0
+ 1137 0458 F0       		.byte	-16
+ 1138 0459 8A       		.byte	-118
+ 1139 045a 00       		.byte	0
+ 1140 045b F0       		.byte	-16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 21
+
+
+ 1141 045c 0E       		.byte	14
+ 1142 045d 30       		.byte	48
+ 1143 045e F0       		.byte	-16
+ 1144 045f 06       		.byte	6
+ 1145 0460 B0       		.byte	-80
+ 1146 0461 00       		.byte	0
+ 1147 0462 00       		.byte	0
+ 1148 0463 00       		.byte	0
+ 1149 0464 00       		.byte	0
+ 1150 0465 00       		.byte	0
+ 1151 0466 00       		.byte	0
+ 1152 0467 00       		.byte	0
+ 1153 0468 00       		.byte	0
+ 1154 0469 00       		.byte	0
+ 1155 046a 00       		.byte	0
+ 1156 046b 00       		.byte	0
+ 1157 046c 6E       		.byte	110
+ 1158 046d FF       		.byte	-1
+ 1159 046e F3       		.byte	-13
+ 1160 046f 00       		.byte	0
+ 1161 0470 BC       		.byte	-68
+ 1162 0471 81       		.byte	-127
+ 1163 0472 03       		.byte	3
+ 1164 0473 9D       		.byte	-99
+ 1165 0474 00       		.byte	0
+ 1166 0475 3F       		.byte	63
+ 1167 0476 FF       		.byte	-1
+ 1168 0477 E6       		.byte	-26
+ 1169 0478 00       		.byte	0
+ 1170 0479 00       		.byte	0
+ 1171 047a 00       		.byte	0
+ 1172 047b 00       		.byte	0
+ 1173 047c 00       		.byte	0
+ 1174 047d 00       		.byte	0
+ 1175 047e 00       		.byte	0
+ 1176 047f 00       		.byte	0
+ 1177 0480 00       		.byte	0
+ 1178 0481 FF       		.byte	-1
+ 1179 0482 FF       		.byte	-1
+ 1180 0483 F0       		.byte	-16
+ 1181 0484 00       		.byte	0
+ 1182 0485 F0       		.byte	-16
+ 1183 0486 00       		.byte	0
+ 1184 0487 00       		.byte	0
+ 1185 0488 F0       		.byte	-16
+ 1186 0489 00       		.byte	0
+ 1187 048a 00       		.byte	0
+ 1188 048b F0       		.byte	-16
+ 1189 048c 00       		.byte	0
+ 1190 048d 00       		.byte	0
+ 1191 048e F0       		.byte	-16
+ 1192 048f 00       		.byte	0
+ 1193 0490 00       		.byte	0
+ 1194 0491 F0       		.byte	-16
+ 1195 0492 00       		.byte	0
+ 1196 0493 00       		.byte	0
+ 1197 0494 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 22
+
+
+ 1198 0495 00       		.byte	0
+ 1199 0496 00       		.byte	0
+ 1200 0497 00       		.byte	0
+ 1201 0498 00       		.byte	0
+ 1202 0499 00       		.byte	0
+ 1203 049a 00       		.byte	0
+ 1204 049b 00       		.byte	0
+ 1205 049c 00       		.byte	0
+ 1206 049d 00       		.byte	0
+ 1207 049e F0       		.byte	-16
+ 1208 049f 0F       		.byte	15
+ 1209 04a0 F0       		.byte	-16
+ 1210 04a1 0F       		.byte	15
+ 1211 04a2 F0       		.byte	-16
+ 1212 04a3 0F       		.byte	15
+ 1213 04a4 F0       		.byte	-16
+ 1214 04a5 0F       		.byte	15
+ 1215 04a6 D4       		.byte	-44
+ 1216 04a7 4D       		.byte	77
+ 1217 04a8 4E       		.byte	78
+ 1218 04a9 E4       		.byte	-28
+ 1219 04aa 00       		.byte	0
+ 1220 04ab 00       		.byte	0
+ 1221 04ac 00       		.byte	0
+ 1222 04ad 00       		.byte	0
+ 1223 04ae 00       		.byte	0
+ 1224 04af 00       		.byte	0
+ 1225 04b0 00       		.byte	0
+ 1226 04b1 00       		.byte	0
+ 1227 04b2 00       		.byte	0
+ 1228 04b3 D3       		.byte	-45
+ 1229 04b4 03       		.byte	3
+ 1230 04b5 D0       		.byte	-48
+ 1231 04b6 79       		.byte	121
+ 1232 04b7 09       		.byte	9
+ 1233 04b8 70       		.byte	112
+ 1234 04b9 2E       		.byte	46
+ 1235 04ba 0E       		.byte	14
+ 1236 04bb 20       		.byte	32
+ 1237 04bc 0C       		.byte	12
+ 1238 04bd 8C       		.byte	-116
+ 1239 04be 00       		.byte	0
+ 1240 04bf 07       		.byte	7
+ 1241 04c0 F6       		.byte	-10
+ 1242 04c1 00       		.byte	0
+ 1243 04c2 01       		.byte	1
+ 1244 04c3 F1       		.byte	-15
+ 1245 04c4 00       		.byte	0
+ 1246 04c5 00       		.byte	0
+ 1247 04c6 00       		.byte	0
+ 1248 04c7 00       		.byte	0
+ 1249 04c8 00       		.byte	0
+ 1250 04c9 00       		.byte	0
+ 1251 04ca 00       		.byte	0
+ 1252 04cb 00       		.byte	0
+ 1253 04cc 00       		.byte	0
+ 1254 04cd 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 23
+
+
+ 1255 04ce 00       		.byte	0
+ 1256 04cf 00       		.byte	0
+ 1257 04d0 00       		.byte	0
+ 1258 04d1 00       		.byte	0
+ 1259 04d2 E2       		.byte	-30
+ 1260 04d3 7F       		.byte	127
+ 1261 04d4 72       		.byte	114
+ 1262 04d5 E0       		.byte	-32
+ 1263 04d6 A5       		.byte	-91
+ 1264 04d7 AA       		.byte	-86
+ 1265 04d8 A5       		.byte	-91
+ 1266 04d9 A0       		.byte	-96
+ 1267 04da 69       		.byte	105
+ 1268 04db E3       		.byte	-29
+ 1269 04dc E9       		.byte	-23
+ 1270 04dd 60       		.byte	96
+ 1271 04de 2E       		.byte	46
+ 1272 04df E0       		.byte	-32
+ 1273 04e0 EE       		.byte	-18
+ 1274 04e1 20       		.byte	32
+ 1275 04e2 0F       		.byte	15
+ 1276 04e3 A0       		.byte	-96
+ 1277 04e4 AF       		.byte	-81
+ 1278 04e5 00       		.byte	0
+ 1279 04e6 0B       		.byte	11
+ 1280 04e7 60       		.byte	96
+ 1281 04e8 7B       		.byte	123
+ 1282 04e9 00       		.byte	0
+ 1283 04ea 00       		.byte	0
+ 1284 04eb 00       		.byte	0
+ 1285 04ec 00       		.byte	0
+ 1286 04ed 00       		.byte	0
+ 1287 04ee 00       		.byte	0
+ 1288 04ef 00       		.byte	0
+ 1289 04f0 00       		.byte	0
+ 1290 04f1 00       		.byte	0
+ 1291 04f2 00       		.byte	0
+ 1292 04f3 00       		.byte	0
+ 1293 04f4 00       		.byte	0
+ 1294 04f5 00       		.byte	0
+ 1295 04f6 00       		.byte	0
+ 1296 04f7 00       		.byte	0
+ 1297 04f8 00       		.byte	0
+ 1298 04f9 A8       		.byte	-88
+ 1299 04fa 08       		.byte	8
+ 1300 04fb A0       		.byte	-96
+ 1301 04fc 1E       		.byte	30
+ 1302 04fd 5E       		.byte	94
+ 1303 04fe 10       		.byte	16
+ 1304 04ff 06       		.byte	6
+ 1305 0500 F6       		.byte	-10
+ 1306 0501 00       		.byte	0
+ 1307 0502 06       		.byte	6
+ 1308 0503 F6       		.byte	-10
+ 1309 0504 00       		.byte	0
+ 1310 0505 1E       		.byte	30
+ 1311 0506 4E       		.byte	78
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 24
+
+
+ 1312 0507 10       		.byte	16
+ 1313 0508 A7       		.byte	-89
+ 1314 0509 07       		.byte	7
+ 1315 050a A0       		.byte	-96
+ 1316 050b 00       		.byte	0
+ 1317 050c 00       		.byte	0
+ 1318 050d 00       		.byte	0
+ 1319 050e 00       		.byte	0
+ 1320 050f 00       		.byte	0
+ 1321 0510 00       		.byte	0
+ 1322 0511 00       		.byte	0
+ 1323 0512 00       		.byte	0
+ 1324 0513 00       		.byte	0
+ 1325 0514 00       		.byte	0
+ 1326 0515 00       		.byte	0
+ 1327 0516 00       		.byte	0
+ 1328 0517 A8       		.byte	-88
+ 1329 0518 08       		.byte	8
+ 1330 0519 A0       		.byte	-96
+ 1331 051a 1E       		.byte	30
+ 1332 051b 5E       		.byte	94
+ 1333 051c 10       		.byte	16
+ 1334 051d 06       		.byte	6
+ 1335 051e F6       		.byte	-10
+ 1336 051f 00       		.byte	0
+ 1337 0520 00       		.byte	0
+ 1338 0521 F0       		.byte	-16
+ 1339 0522 00       		.byte	0
+ 1340 0523 00       		.byte	0
+ 1341 0524 F0       		.byte	-16
+ 1342 0525 00       		.byte	0
+ 1343 0526 00       		.byte	0
+ 1344 0527 F0       		.byte	-16
+ 1345 0528 00       		.byte	0
+ 1346 0529 00       		.byte	0
+ 1347 052a 00       		.byte	0
+ 1348 052b 00       		.byte	0
+ 1349 052c 00       		.byte	0
+ 1350 052d 00       		.byte	0
+ 1351 052e 00       		.byte	0
+ 1352 052f 00       		.byte	0
+ 1353 0530 00       		.byte	0
+ 1354 0531 00       		.byte	0
+ 1355 0532 00       		.byte	0
+ 1356 0533 00       		.byte	0
+ 1357 0534 00       		.byte	0
+ 1358 0535 FF       		.byte	-1
+ 1359 0536 FF       		.byte	-1
+ 1360 0537 E0       		.byte	-32
+ 1361 0538 00       		.byte	0
+ 1362 0539 2F       		.byte	47
+ 1363 053a 40       		.byte	64
+ 1364 053b 00       		.byte	0
+ 1365 053c C7       		.byte	-57
+ 1366 053d 00       		.byte	0
+ 1367 053e 09       		.byte	9
+ 1368 053f B0       		.byte	-80
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 25
+
+
+ 1369 0540 00       		.byte	0
+ 1370 0541 5D       		.byte	93
+ 1371 0542 10       		.byte	16
+ 1372 0543 00       		.byte	0
+ 1373 0544 EF       		.byte	-17
+ 1374 0545 FF       		.byte	-1
+ 1375 0546 F0       		.byte	-16
+ 1376 0547 00       		.byte	0
+ 1377 0548 00       		.byte	0
+ 1378 0549 00       		.byte	0
+ 1379 054a 00       		.byte	0
+ 1380 054b 00       		.byte	0
+ 1381 054c 00       		.byte	0
+ 1382 054d 00       		.byte	0
+ 1383 054e 00       		.byte	0
+ 1384 054f 00       		.byte	0
+ 1385 0550 00       		.byte	0
+ 1386 0551 FF       		.byte	-1
+ 1387 0552 F0       		.byte	-16
+ 1388 0553 F0       		.byte	-16
+ 1389 0554 F0       		.byte	-16
+ 1390 0555 F0       		.byte	-16
+ 1391 0556 F0       		.byte	-16
+ 1392 0557 FF       		.byte	-1
+ 1393 0558 00       		.byte	0
+ 1394 0559 00       		.byte	0
+ 1395 055a 00       		.byte	0
+ 1396 055b 00       		.byte	0
+ 1397 055c D2       		.byte	-46
+ 1398 055d 00       		.byte	0
+ 1399 055e 97       		.byte	-105
+ 1400 055f 00       		.byte	0
+ 1401 0560 4B       		.byte	75
+ 1402 0561 00       		.byte	0
+ 1403 0562 0F       		.byte	15
+ 1404 0563 00       		.byte	0
+ 1405 0564 0B       		.byte	11
+ 1406 0565 40       		.byte	64
+ 1407 0566 07       		.byte	7
+ 1408 0567 90       		.byte	-112
+ 1409 0568 02       		.byte	2
+ 1410 0569 D0       		.byte	-48
+ 1411 056a 00       		.byte	0
+ 1412 056b 00       		.byte	0
+ 1413 056c 00       		.byte	0
+ 1414 056d 00       		.byte	0
+ 1415 056e 00       		.byte	0
+ 1416 056f FF       		.byte	-1
+ 1417 0570 0F       		.byte	15
+ 1418 0571 0F       		.byte	15
+ 1419 0572 0F       		.byte	15
+ 1420 0573 0F       		.byte	15
+ 1421 0574 0F       		.byte	15
+ 1422 0575 FF       		.byte	-1
+ 1423 0576 00       		.byte	0
+ 1424 0577 00       		.byte	0
+ 1425 0578 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 26
+
+
+ 1426 0579 00       		.byte	0
+ 1427 057a 00       		.byte	0
+ 1428 057b 06       		.byte	6
+ 1429 057c C6       		.byte	-58
+ 1430 057d 00       		.byte	0
+ 1431 057e 76       		.byte	118
+ 1432 057f 06       		.byte	6
+ 1433 0580 70       		.byte	112
+ 1434 0581 00       		.byte	0
+ 1435 0582 00       		.byte	0
+ 1436 0583 00       		.byte	0
+ 1437 0584 00       		.byte	0
+ 1438 0585 00       		.byte	0
+ 1439 0586 00       		.byte	0
+ 1440 0587 00       		.byte	0
+ 1441 0588 00       		.byte	0
+ 1442 0589 00       		.byte	0
+ 1443 058a 00       		.byte	0
+ 1444 058b 00       		.byte	0
+ 1445 058c 00       		.byte	0
+ 1446 058d 00       		.byte	0
+ 1447 058e 00       		.byte	0
+ 1448 058f 00       		.byte	0
+ 1449 0590 00       		.byte	0
+ 1450 0591 00       		.byte	0
+ 1451 0592 00       		.byte	0
+ 1452 0593 00       		.byte	0
+ 1453 0594 00       		.byte	0
+ 1454 0595 00       		.byte	0
+ 1455 0596 00       		.byte	0
+ 1456 0597 00       		.byte	0
+ 1457 0598 00       		.byte	0
+ 1458 0599 00       		.byte	0
+ 1459 059a 00       		.byte	0
+ 1460 059b 00       		.byte	0
+ 1461 059c 00       		.byte	0
+ 1462 059d 00       		.byte	0
+ 1463 059e 00       		.byte	0
+ 1464 059f 00       		.byte	0
+ 1465 05a0 00       		.byte	0
+ 1466 05a1 00       		.byte	0
+ 1467 05a2 00       		.byte	0
+ 1468 05a3 00       		.byte	0
+ 1469 05a4 00       		.byte	0
+ 1470 05a5 00       		.byte	0
+ 1471 05a6 FF       		.byte	-1
+ 1472 05a7 FF       		.byte	-1
+ 1473 05a8 00       		.byte	0
+ 1474 05a9 00       		.byte	0
+ 1475 05aa 00       		.byte	0
+ 1476 05ab 55       		.byte	85
+ 1477 05ac 00       		.byte	0
+ 1478 05ad 00       		.byte	0
+ 1479 05ae 00       		.byte	0
+ 1480 05af 00       		.byte	0
+ 1481 05b0 00       		.byte	0
+ 1482 05b1 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 27
+
+
+ 1483 05b2 00       		.byte	0
+ 1484 05b3 00       		.byte	0
+ 1485 05b4 00       		.byte	0
+ 1486 05b5 00       		.byte	0
+ 1487 05b6 00       		.byte	0
+ 1488 05b7 00       		.byte	0
+ 1489 05b8 00       		.byte	0
+ 1490 05b9 00       		.byte	0
+ 1491 05ba 0F       		.byte	15
+ 1492 05bb F9       		.byte	-7
+ 1493 05bc 7E       		.byte	126
+ 1494 05bd FF       		.byte	-1
+ 1495 05be F3       		.byte	-13
+ 1496 05bf 3F       		.byte	63
+ 1497 05c0 9F       		.byte	-97
+ 1498 05c1 9F       		.byte	-97
+ 1499 05c2 00       		.byte	0
+ 1500 05c3 00       		.byte	0
+ 1501 05c4 00       		.byte	0
+ 1502 05c5 00       		.byte	0
+ 1503 05c6 00       		.byte	0
+ 1504 05c7 00       		.byte	0
+ 1505 05c8 F0       		.byte	-16
+ 1506 05c9 00       		.byte	0
+ 1507 05ca F0       		.byte	-16
+ 1508 05cb 00       		.byte	0
+ 1509 05cc F0       		.byte	-16
+ 1510 05cd 00       		.byte	0
+ 1511 05ce FA       		.byte	-6
+ 1512 05cf F6       		.byte	-10
+ 1513 05d0 F3       		.byte	-13
+ 1514 05d1 3E       		.byte	62
+ 1515 05d2 F3       		.byte	-13
+ 1516 05d3 3E       		.byte	62
+ 1517 05d4 FA       		.byte	-6
+ 1518 05d5 F6       		.byte	-10
+ 1519 05d6 00       		.byte	0
+ 1520 05d7 00       		.byte	0
+ 1521 05d8 00       		.byte	0
+ 1522 05d9 00       		.byte	0
+ 1523 05da 00       		.byte	0
+ 1524 05db 00       		.byte	0
+ 1525 05dc 00       		.byte	0
+ 1526 05dd 00       		.byte	0
+ 1527 05de 00       		.byte	0
+ 1528 05df 00       		.byte	0
+ 1529 05e0 00       		.byte	0
+ 1530 05e1 00       		.byte	0
+ 1531 05e2 6E       		.byte	110
+ 1532 05e3 F0       		.byte	-16
+ 1533 05e4 E3       		.byte	-29
+ 1534 05e5 00       		.byte	0
+ 1535 05e6 E3       		.byte	-29
+ 1536 05e7 00       		.byte	0
+ 1537 05e8 6E       		.byte	110
+ 1538 05e9 F0       		.byte	-16
+ 1539 05ea 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 28
+
+
+ 1540 05eb 00       		.byte	0
+ 1541 05ec 00       		.byte	0
+ 1542 05ed 00       		.byte	0
+ 1543 05ee 00       		.byte	0
+ 1544 05ef 00       		.byte	0
+ 1545 05f0 00       		.byte	0
+ 1546 05f1 0F       		.byte	15
+ 1547 05f2 00       		.byte	0
+ 1548 05f3 0F       		.byte	15
+ 1549 05f4 00       		.byte	0
+ 1550 05f5 0F       		.byte	15
+ 1551 05f6 6F       		.byte	111
+ 1552 05f7 9F       		.byte	-97
+ 1553 05f8 E3       		.byte	-29
+ 1554 05f9 3F       		.byte	63
+ 1555 05fa E3       		.byte	-29
+ 1556 05fb 3F       		.byte	63
+ 1557 05fc 6F       		.byte	111
+ 1558 05fd 9F       		.byte	-97
+ 1559 05fe 00       		.byte	0
+ 1560 05ff 00       		.byte	0
+ 1561 0600 00       		.byte	0
+ 1562 0601 00       		.byte	0
+ 1563 0602 00       		.byte	0
+ 1564 0603 00       		.byte	0
+ 1565 0604 00       		.byte	0
+ 1566 0605 00       		.byte	0
+ 1567 0606 00       		.byte	0
+ 1568 0607 00       		.byte	0
+ 1569 0608 00       		.byte	0
+ 1570 0609 00       		.byte	0
+ 1571 060a 5E       		.byte	94
+ 1572 060b F8       		.byte	-8
+ 1573 060c EF       		.byte	-17
+ 1574 060d FF       		.byte	-1
+ 1575 060e E4       		.byte	-28
+ 1576 060f 00       		.byte	0
+ 1577 0610 4D       		.byte	77
+ 1578 0611 FF       		.byte	-1
+ 1579 0612 00       		.byte	0
+ 1580 0613 00       		.byte	0
+ 1581 0614 00       		.byte	0
+ 1582 0615 00       		.byte	0
+ 1583 0616 00       		.byte	0
+ 1584 0617 00       		.byte	0
+ 1585 0618 07       		.byte	7
+ 1586 0619 F0       		.byte	-16
+ 1587 061a 0E       		.byte	14
+ 1588 061b 10       		.byte	16
+ 1589 061c 0F       		.byte	15
+ 1590 061d 00       		.byte	0
+ 1591 061e FF       		.byte	-1
+ 1592 061f F0       		.byte	-16
+ 1593 0620 0F       		.byte	15
+ 1594 0621 00       		.byte	0
+ 1595 0622 0F       		.byte	15
+ 1596 0623 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 29
+
+
+ 1597 0624 0F       		.byte	15
+ 1598 0625 00       		.byte	0
+ 1599 0626 00       		.byte	0
+ 1600 0627 00       		.byte	0
+ 1601 0628 00       		.byte	0
+ 1602 0629 00       		.byte	0
+ 1603 062a 00       		.byte	0
+ 1604 062b 00       		.byte	0
+ 1605 062c 00       		.byte	0
+ 1606 062d 00       		.byte	0
+ 1607 062e 00       		.byte	0
+ 1608 062f 00       		.byte	0
+ 1609 0630 00       		.byte	0
+ 1610 0631 00       		.byte	0
+ 1611 0632 6F       		.byte	111
+ 1612 0633 AF       		.byte	-81
+ 1613 0634 E3       		.byte	-29
+ 1614 0635 3F       		.byte	63
+ 1615 0636 E3       		.byte	-29
+ 1616 0637 3F       		.byte	63
+ 1617 0638 6F       		.byte	111
+ 1618 0639 AF       		.byte	-81
+ 1619 063a 00       		.byte	0
+ 1620 063b 4D       		.byte	77
+ 1621 063c 0F       		.byte	15
+ 1622 063d E5       		.byte	-27
+ 1623 063e 00       		.byte	0
+ 1624 063f 00       		.byte	0
+ 1625 0640 F0       		.byte	-16
+ 1626 0641 00       		.byte	0
+ 1627 0642 F0       		.byte	-16
+ 1628 0643 00       		.byte	0
+ 1629 0644 F0       		.byte	-16
+ 1630 0645 00       		.byte	0
+ 1631 0646 F9       		.byte	-7
+ 1632 0647 F8       		.byte	-8
+ 1633 0648 F3       		.byte	-13
+ 1634 0649 3F       		.byte	63
+ 1635 064a F0       		.byte	-16
+ 1636 064b 0F       		.byte	15
+ 1637 064c F0       		.byte	-16
+ 1638 064d 0F       		.byte	15
+ 1639 064e 00       		.byte	0
+ 1640 064f 00       		.byte	0
+ 1641 0650 00       		.byte	0
+ 1642 0651 00       		.byte	0
+ 1643 0652 00       		.byte	0
+ 1644 0653 00       		.byte	0
+ 1645 0654 00       		.byte	0
+ 1646 0655 F0       		.byte	-16
+ 1647 0656 00       		.byte	0
+ 1648 0657 F0       		.byte	-16
+ 1649 0658 F0       		.byte	-16
+ 1650 0659 F0       		.byte	-16
+ 1651 065a F0       		.byte	-16
+ 1652 065b 00       		.byte	0
+ 1653 065c 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 30
+
+
+ 1654 065d 00       		.byte	0
+ 1655 065e 00       		.byte	0
+ 1656 065f 0F       		.byte	15
+ 1657 0660 00       		.byte	0
+ 1658 0661 0F       		.byte	15
+ 1659 0662 0F       		.byte	15
+ 1660 0663 0F       		.byte	15
+ 1661 0664 0F       		.byte	15
+ 1662 0665 1F       		.byte	31
+ 1663 0666 F8       		.byte	-8
+ 1664 0667 00       		.byte	0
+ 1665 0668 F0       		.byte	-16
+ 1666 0669 00       		.byte	0
+ 1667 066a F0       		.byte	-16
+ 1668 066b 00       		.byte	0
+ 1669 066c F0       		.byte	-16
+ 1670 066d 00       		.byte	0
+ 1671 066e F3       		.byte	-13
+ 1672 066f E6       		.byte	-26
+ 1673 0670 FE       		.byte	-2
+ 1674 0671 40       		.byte	64
+ 1675 0672 FE       		.byte	-2
+ 1676 0673 60       		.byte	96
+ 1677 0674 F2       		.byte	-14
+ 1678 0675 D7       		.byte	-41
+ 1679 0676 00       		.byte	0
+ 1680 0677 00       		.byte	0
+ 1681 0678 00       		.byte	0
+ 1682 0679 00       		.byte	0
+ 1683 067a 00       		.byte	0
+ 1684 067b 00       		.byte	0
+ 1685 067c F0       		.byte	-16
+ 1686 067d F0       		.byte	-16
+ 1687 067e F0       		.byte	-16
+ 1688 067f F0       		.byte	-16
+ 1689 0680 F0       		.byte	-16
+ 1690 0681 F0       		.byte	-16
+ 1691 0682 F0       		.byte	-16
+ 1692 0683 00       		.byte	0
+ 1693 0684 00       		.byte	0
+ 1694 0685 00       		.byte	0
+ 1695 0686 00       		.byte	0
+ 1696 0687 00       		.byte	0
+ 1697 0688 00       		.byte	0
+ 1698 0689 00       		.byte	0
+ 1699 068a 00       		.byte	0
+ 1700 068b 00       		.byte	0
+ 1701 068c 00       		.byte	0
+ 1702 068d 00       		.byte	0
+ 1703 068e 00       		.byte	0
+ 1704 068f 00       		.byte	0
+ 1705 0690 00       		.byte	0
+ 1706 0691 00       		.byte	0
+ 1707 0692 F9       		.byte	-7
+ 1708 0693 F7       		.byte	-9
+ 1709 0694 AF       		.byte	-81
+ 1710 0695 80       		.byte	-128
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 31
+
+
+ 1711 0696 F3       		.byte	-13
+ 1712 0697 2F       		.byte	47
+ 1713 0698 32       		.byte	50
+ 1714 0699 F0       		.byte	-16
+ 1715 069a F0       		.byte	-16
+ 1716 069b 0F       		.byte	15
+ 1717 069c 00       		.byte	0
+ 1718 069d F0       		.byte	-16
+ 1719 069e F0       		.byte	-16
+ 1720 069f 0F       		.byte	15
+ 1721 06a0 00       		.byte	0
+ 1722 06a1 F0       		.byte	-16
+ 1723 06a2 00       		.byte	0
+ 1724 06a3 00       		.byte	0
+ 1725 06a4 00       		.byte	0
+ 1726 06a5 00       		.byte	0
+ 1727 06a6 00       		.byte	0
+ 1728 06a7 00       		.byte	0
+ 1729 06a8 00       		.byte	0
+ 1730 06a9 00       		.byte	0
+ 1731 06aa 00       		.byte	0
+ 1732 06ab 00       		.byte	0
+ 1733 06ac 00       		.byte	0
+ 1734 06ad 00       		.byte	0
+ 1735 06ae 00       		.byte	0
+ 1736 06af 00       		.byte	0
+ 1737 06b0 00       		.byte	0
+ 1738 06b1 00       		.byte	0
+ 1739 06b2 00       		.byte	0
+ 1740 06b3 00       		.byte	0
+ 1741 06b4 F9       		.byte	-7
+ 1742 06b5 F8       		.byte	-8
+ 1743 06b6 F3       		.byte	-13
+ 1744 06b7 3F       		.byte	63
+ 1745 06b8 F0       		.byte	-16
+ 1746 06b9 0F       		.byte	15
+ 1747 06ba F0       		.byte	-16
+ 1748 06bb 0F       		.byte	15
+ 1749 06bc 00       		.byte	0
+ 1750 06bd 00       		.byte	0
+ 1751 06be 00       		.byte	0
+ 1752 06bf 00       		.byte	0
+ 1753 06c0 00       		.byte	0
+ 1754 06c1 00       		.byte	0
+ 1755 06c2 00       		.byte	0
+ 1756 06c3 00       		.byte	0
+ 1757 06c4 00       		.byte	0
+ 1758 06c5 00       		.byte	0
+ 1759 06c6 00       		.byte	0
+ 1760 06c7 00       		.byte	0
+ 1761 06c8 5E       		.byte	94
+ 1762 06c9 E5       		.byte	-27
+ 1763 06ca E3       		.byte	-29
+ 1764 06cb 3E       		.byte	62
+ 1765 06cc E3       		.byte	-29
+ 1766 06cd 3E       		.byte	62
+ 1767 06ce 5E       		.byte	94
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 32
+
+
+ 1768 06cf E5       		.byte	-27
+ 1769 06d0 00       		.byte	0
+ 1770 06d1 00       		.byte	0
+ 1771 06d2 00       		.byte	0
+ 1772 06d3 00       		.byte	0
+ 1773 06d4 00       		.byte	0
+ 1774 06d5 00       		.byte	0
+ 1775 06d6 00       		.byte	0
+ 1776 06d7 00       		.byte	0
+ 1777 06d8 00       		.byte	0
+ 1778 06d9 00       		.byte	0
+ 1779 06da 00       		.byte	0
+ 1780 06db 00       		.byte	0
+ 1781 06dc FA       		.byte	-6
+ 1782 06dd F6       		.byte	-10
+ 1783 06de F3       		.byte	-13
+ 1784 06df 3E       		.byte	62
+ 1785 06e0 F3       		.byte	-13
+ 1786 06e1 3E       		.byte	62
+ 1787 06e2 FA       		.byte	-6
+ 1788 06e3 F6       		.byte	-10
+ 1789 06e4 F0       		.byte	-16
+ 1790 06e5 00       		.byte	0
+ 1791 06e6 F0       		.byte	-16
+ 1792 06e7 00       		.byte	0
+ 1793 06e8 00       		.byte	0
+ 1794 06e9 00       		.byte	0
+ 1795 06ea 00       		.byte	0
+ 1796 06eb 00       		.byte	0
+ 1797 06ec 00       		.byte	0
+ 1798 06ed 00       		.byte	0
+ 1799 06ee 00       		.byte	0
+ 1800 06ef 00       		.byte	0
+ 1801 06f0 6F       		.byte	111
+ 1802 06f1 9F       		.byte	-97
+ 1803 06f2 E3       		.byte	-29
+ 1804 06f3 3F       		.byte	63
+ 1805 06f4 E3       		.byte	-29
+ 1806 06f5 3F       		.byte	63
+ 1807 06f6 6F       		.byte	111
+ 1808 06f7 9F       		.byte	-97
+ 1809 06f8 00       		.byte	0
+ 1810 06f9 0F       		.byte	15
+ 1811 06fa 00       		.byte	0
+ 1812 06fb 0F       		.byte	15
+ 1813 06fc 00       		.byte	0
+ 1814 06fd 00       		.byte	0
+ 1815 06fe 00       		.byte	0
+ 1816 06ff 00       		.byte	0
+ 1817 0700 00       		.byte	0
+ 1818 0701 00       		.byte	0
+ 1819 0702 00       		.byte	0
+ 1820 0703 00       		.byte	0
+ 1821 0704 F9       		.byte	-7
+ 1822 0705 F0       		.byte	-16
+ 1823 0706 F4       		.byte	-12
+ 1824 0707 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 33
+
+
+ 1825 0708 F0       		.byte	-16
+ 1826 0709 00       		.byte	0
+ 1827 070a F0       		.byte	-16
+ 1828 070b 00       		.byte	0
+ 1829 070c 00       		.byte	0
+ 1830 070d 00       		.byte	0
+ 1831 070e 00       		.byte	0
+ 1832 070f 00       		.byte	0
+ 1833 0710 00       		.byte	0
+ 1834 0711 00       		.byte	0
+ 1835 0712 00       		.byte	0
+ 1836 0713 00       		.byte	0
+ 1837 0714 00       		.byte	0
+ 1838 0715 00       		.byte	0
+ 1839 0716 00       		.byte	0
+ 1840 0717 00       		.byte	0
+ 1841 0718 AF       		.byte	-81
+ 1842 0719 F0       		.byte	-16
+ 1843 071a DC       		.byte	-36
+ 1844 071b 50       		.byte	80
+ 1845 071c 05       		.byte	5
+ 1846 071d F0       		.byte	-16
+ 1847 071e FF       		.byte	-1
+ 1848 071f A0       		.byte	-96
+ 1849 0720 00       		.byte	0
+ 1850 0721 00       		.byte	0
+ 1851 0722 00       		.byte	0
+ 1852 0723 00       		.byte	0
+ 1853 0724 00       		.byte	0
+ 1854 0725 00       		.byte	0
+ 1855 0726 00       		.byte	0
+ 1856 0727 00       		.byte	0
+ 1857 0728 00       		.byte	0
+ 1858 0729 00       		.byte	0
+ 1859 072a 0F       		.byte	15
+ 1860 072b 00       		.byte	0
+ 1861 072c FF       		.byte	-1
+ 1862 072d F0       		.byte	-16
+ 1863 072e 0F       		.byte	15
+ 1864 072f 00       		.byte	0
+ 1865 0730 0F       		.byte	15
+ 1866 0731 00       		.byte	0
+ 1867 0732 0A       		.byte	10
+ 1868 0733 F0       		.byte	-16
+ 1869 0734 00       		.byte	0
+ 1870 0735 00       		.byte	0
+ 1871 0736 00       		.byte	0
+ 1872 0737 00       		.byte	0
+ 1873 0738 00       		.byte	0
+ 1874 0739 00       		.byte	0
+ 1875 073a 00       		.byte	0
+ 1876 073b 00       		.byte	0
+ 1877 073c 00       		.byte	0
+ 1878 073d 00       		.byte	0
+ 1879 073e 00       		.byte	0
+ 1880 073f 00       		.byte	0
+ 1881 0740 F0       		.byte	-16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 34
+
+
+ 1882 0741 0F       		.byte	15
+ 1883 0742 F0       		.byte	-16
+ 1884 0743 0F       		.byte	15
+ 1885 0744 F3       		.byte	-13
+ 1886 0745 3F       		.byte	63
+ 1887 0746 8F       		.byte	-113
+ 1888 0747 9F       		.byte	-97
+ 1889 0748 00       		.byte	0
+ 1890 0749 00       		.byte	0
+ 1891 074a 00       		.byte	0
+ 1892 074b 00       		.byte	0
+ 1893 074c 00       		.byte	0
+ 1894 074d 00       		.byte	0
+ 1895 074e 00       		.byte	0
+ 1896 074f 00       		.byte	0
+ 1897 0750 00       		.byte	0
+ 1898 0751 00       		.byte	0
+ 1899 0752 00       		.byte	0
+ 1900 0753 00       		.byte	0
+ 1901 0754 C4       		.byte	-60
+ 1902 0755 4C       		.byte	76
+ 1903 0756 6A       		.byte	106
+ 1904 0757 A6       		.byte	-90
+ 1905 0758 0E       		.byte	14
+ 1906 0759 E0       		.byte	-32
+ 1907 075a 0A       		.byte	10
+ 1908 075b A0       		.byte	-96
+ 1909 075c 00       		.byte	0
+ 1910 075d 00       		.byte	0
+ 1911 075e 00       		.byte	0
+ 1912 075f 00       		.byte	0
+ 1913 0760 00       		.byte	0
+ 1914 0761 00       		.byte	0
+ 1915 0762 00       		.byte	0
+ 1916 0763 00       		.byte	0
+ 1917 0764 00       		.byte	0
+ 1918 0765 00       		.byte	0
+ 1919 0766 00       		.byte	0
+ 1920 0767 00       		.byte	0
+ 1921 0768 00       		.byte	0
+ 1922 0769 00       		.byte	0
+ 1923 076a 00       		.byte	0
+ 1924 076b D3       		.byte	-45
+ 1925 076c EE       		.byte	-18
+ 1926 076d 3D       		.byte	61
+ 1927 076e 8C       		.byte	-116
+ 1928 076f CC       		.byte	-52
+ 1929 0770 C8       		.byte	-56
+ 1930 0771 4F       		.byte	79
+ 1931 0772 77       		.byte	119
+ 1932 0773 F4       		.byte	-12
+ 1933 0774 0F       		.byte	15
+ 1934 0775 22       		.byte	34
+ 1935 0776 F0       		.byte	-16
+ 1936 0777 00       		.byte	0
+ 1937 0778 00       		.byte	0
+ 1938 0779 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 35
+
+
+ 1939 077a 00       		.byte	0
+ 1940 077b 00       		.byte	0
+ 1941 077c 00       		.byte	0
+ 1942 077d 00       		.byte	0
+ 1943 077e 00       		.byte	0
+ 1944 077f 00       		.byte	0
+ 1945 0780 00       		.byte	0
+ 1946 0781 00       		.byte	0
+ 1947 0782 00       		.byte	0
+ 1948 0783 00       		.byte	0
+ 1949 0784 00       		.byte	0
+ 1950 0785 00       		.byte	0
+ 1951 0786 9A       		.byte	-102
+ 1952 0787 A9       		.byte	-87
+ 1953 0788 0C       		.byte	12
+ 1954 0789 C0       		.byte	-64
+ 1955 078a 0D       		.byte	13
+ 1956 078b C0       		.byte	-64
+ 1957 078c A9       		.byte	-87
+ 1958 078d A9       		.byte	-87
+ 1959 078e 00       		.byte	0
+ 1960 078f 00       		.byte	0
+ 1961 0790 00       		.byte	0
+ 1962 0791 00       		.byte	0
+ 1963 0792 00       		.byte	0
+ 1964 0793 00       		.byte	0
+ 1965 0794 00       		.byte	0
+ 1966 0795 00       		.byte	0
+ 1967 0796 00       		.byte	0
+ 1968 0797 00       		.byte	0
+ 1969 0798 00       		.byte	0
+ 1970 0799 00       		.byte	0
+ 1971 079a D3       		.byte	-45
+ 1972 079b 5C       		.byte	92
+ 1973 079c 79       		.byte	121
+ 1974 079d C5       		.byte	-59
+ 1975 079e 1F       		.byte	31
+ 1976 079f D0       		.byte	-48
+ 1977 07a0 0D       		.byte	13
+ 1978 07a1 60       		.byte	96
+ 1979 07a2 0E       		.byte	14
+ 1980 07a3 00       		.byte	0
+ 1981 07a4 F7       		.byte	-9
+ 1982 07a5 00       		.byte	0
+ 1983 07a6 00       		.byte	0
+ 1984 07a7 00       		.byte	0
+ 1985 07a8 00       		.byte	0
+ 1986 07a9 00       		.byte	0
+ 1987 07aa 00       		.byte	0
+ 1988 07ab 00       		.byte	0
+ 1989 07ac 00       		.byte	0
+ 1990 07ad 00       		.byte	0
+ 1991 07ae FF       		.byte	-1
+ 1992 07af FE       		.byte	-2
+ 1993 07b0 02       		.byte	2
+ 1994 07b1 E4       		.byte	-28
+ 1995 07b2 2E       		.byte	46
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 36
+
+
+ 1996 07b3 80       		.byte	-128
+ 1997 07b4 EF       		.byte	-17
+ 1998 07b5 FF       		.byte	-1
+ 1999 07b6 00       		.byte	0
+ 2000 07b7 00       		.byte	0
+ 2001 07b8 00       		.byte	0
+ 2002 07b9 00       		.byte	0
+ 2003 07ba 00       		.byte	0
+ 2004 07bb 00       		.byte	0
+ 2005 07bc 00       		.byte	0
+ 2006 07bd 00       		.byte	0
+ 2007 07be 0A       		.byte	10
+ 2008 07bf F0       		.byte	-16
+ 2009 07c0 0F       		.byte	15
+ 2010 07c1 00       		.byte	0
+ 2011 07c2 1F       		.byte	31
+ 2012 07c3 00       		.byte	0
+ 2013 07c4 F8       		.byte	-8
+ 2014 07c5 00       		.byte	0
+ 2015 07c6 1F       		.byte	31
+ 2016 07c7 00       		.byte	0
+ 2017 07c8 0F       		.byte	15
+ 2018 07c9 00       		.byte	0
+ 2019 07ca 0A       		.byte	10
+ 2020 07cb F0       		.byte	-16
+ 2021 07cc 00       		.byte	0
+ 2022 07cd 00       		.byte	0
+ 2023 07ce 00       		.byte	0
+ 2024 07cf 00       		.byte	0
+ 2025 07d0 00       		.byte	0
+ 2026 07d1 F0       		.byte	-16
+ 2027 07d2 F0       		.byte	-16
+ 2028 07d3 F0       		.byte	-16
+ 2029 07d4 F0       		.byte	-16
+ 2030 07d5 F0       		.byte	-16
+ 2031 07d6 F0       		.byte	-16
+ 2032 07d7 F0       		.byte	-16
+ 2033 07d8 F0       		.byte	-16
+ 2034 07d9 00       		.byte	0
+ 2035 07da 00       		.byte	0
+ 2036 07db 00       		.byte	0
+ 2037 07dc FA       		.byte	-6
+ 2038 07dd 00       		.byte	0
+ 2039 07de 1F       		.byte	31
+ 2040 07df 00       		.byte	0
+ 2041 07e0 0F       		.byte	15
+ 2042 07e1 10       		.byte	16
+ 2043 07e2 08       		.byte	8
+ 2044 07e3 F0       		.byte	-16
+ 2045 07e4 0F       		.byte	15
+ 2046 07e5 10       		.byte	16
+ 2047 07e6 0F       		.byte	15
+ 2048 07e7 00       		.byte	0
+ 2049 07e8 FA       		.byte	-6
+ 2050 07e9 00       		.byte	0
+ 2051 07ea 00       		.byte	0
+ 2052 07eb 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 37
+
+
+ 2053 07ec 00       		.byte	0
+ 2054 07ed 00       		.byte	0
+ 2055 07ee 00       		.byte	0
+ 2056 07ef 00       		.byte	0
+ 2057 07f0 00       		.byte	0
+ 2058 07f1 00       		.byte	0
+ 2059 07f2 00       		.byte	0
+ 2060 07f3 00       		.byte	0
+ 2061 07f4 00       		.byte	0
+ 2062 07f5 00       		.byte	0
+ 2063 07f6 00       		.byte	0
+ 2064 07f7 00       		.byte	0
+ 2065 07f8 00       		.byte	0
+ 2066 07f9 00       		.byte	0
+ 2067 07fa 8E       		.byte	-114
+ 2068 07fb 81       		.byte	-127
+ 2069 07fc 80       		.byte	-128
+ 2070 07fd 41       		.byte	65
+ 2071 07fe 8E       		.byte	-114
+ 2072 07ff 80       		.byte	-128
+ 2073 0800 00       		.byte	0
+ 2074 0801 00       		.byte	0
+ 2075 0802 00       		.byte	0
+ 2076 0803 00       		.byte	0
+ 2077 0804 00       		.byte	0
+ 2078 0805 00       		.byte	0
+ 2079 0806 00       		.byte	0
+ 2080 0807 00       		.byte	0
+ 2081 0808 00       		.byte	0
+ 2082 0809 00       		.byte	0
+ 2083 080a 00       		.byte	0
+ 2084 080b 00       		.byte	0
+ 2085              		.align	2
+ 2086              		.type	lv_font_dejavu_10_glyph_dsc, %object
+ 2087              		.size	lv_font_dejavu_10_glyph_dsc, 380
+ 2088              	lv_font_dejavu_10_glyph_dsc:
+ 2089 080c 03       		.byte	3
+ 2090 080d 00       		.byte	0
+ 2091 080e 00       		.byte	0
+ 2092 080f 00       		.byte	0
+ 2093 0810 01       		.byte	1
+ 2094 0811 14       		.byte	20
+ 2095 0812 00       		.byte	0
+ 2096 0813 00       		.byte	0
+ 2097 0814 03       		.byte	3
+ 2098 0815 1E       		.byte	30
+ 2099 0816 00       		.byte	0
+ 2100 0817 00       		.byte	0
+ 2101 0818 05       		.byte	5
+ 2102 0819 32       		.byte	50
+ 2103 081a 00       		.byte	0
+ 2104 081b 00       		.byte	0
+ 2105 081c 05       		.byte	5
+ 2106 081d 50       		.byte	80
+ 2107 081e 00       		.byte	0
+ 2108 081f 00       		.byte	0
+ 2109 0820 07       		.byte	7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 38
+
+
+ 2110 0821 6E       		.byte	110
+ 2111 0822 00       		.byte	0
+ 2112 0823 00       		.byte	0
+ 2113 0824 05       		.byte	5
+ 2114 0825 96       		.byte	150
+ 2115 0826 00       		.byte	0
+ 2116 0827 00       		.byte	0
+ 2117 0828 01       		.byte	1
+ 2118 0829 B4       		.byte	180
+ 2119 082a 00       		.byte	0
+ 2120 082b 00       		.byte	0
+ 2121 082c 02       		.byte	2
+ 2122 082d BE       		.byte	190
+ 2123 082e 00       		.byte	0
+ 2124 082f 00       		.byte	0
+ 2125 0830 02       		.byte	2
+ 2126 0831 C8       		.byte	200
+ 2127 0832 00       		.byte	0
+ 2128 0833 00       		.byte	0
+ 2129 0834 05       		.byte	5
+ 2130 0835 D2       		.byte	210
+ 2131 0836 00       		.byte	0
+ 2132 0837 00       		.byte	0
+ 2133 0838 05       		.byte	5
+ 2134 0839 F0       		.byte	240
+ 2135 083a 00       		.byte	0
+ 2136 083b 00       		.byte	0
+ 2137 083c 01       		.byte	1
+ 2138 083d 0E       		.byte	14
+ 2139 083e 01       		.byte	1
+ 2140 083f 00       		.byte	0
+ 2141 0840 02       		.byte	2
+ 2142 0841 18       		.byte	24
+ 2143 0842 01       		.byte	1
+ 2144 0843 00       		.byte	0
+ 2145 0844 01       		.byte	1
+ 2146 0845 22       		.byte	34
+ 2147 0846 01       		.byte	1
+ 2148 0847 00       		.byte	0
+ 2149 0848 03       		.byte	3
+ 2150 0849 2C       		.byte	44
+ 2151 084a 01       		.byte	1
+ 2152 084b 00       		.byte	0
+ 2153 084c 04       		.byte	4
+ 2154 084d 40       		.byte	64
+ 2155 084e 01       		.byte	1
+ 2156 084f 00       		.byte	0
+ 2157 0850 03       		.byte	3
+ 2158 0851 54       		.byte	84
+ 2159 0852 01       		.byte	1
+ 2160 0853 00       		.byte	0
+ 2161 0854 05       		.byte	5
+ 2162 0855 68       		.byte	104
+ 2163 0856 01       		.byte	1
+ 2164 0857 00       		.byte	0
+ 2165 0858 04       		.byte	4
+ 2166 0859 86       		.byte	134
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 39
+
+
+ 2167 085a 01       		.byte	1
+ 2168 085b 00       		.byte	0
+ 2169 085c 04       		.byte	4
+ 2170 085d 9A       		.byte	154
+ 2171 085e 01       		.byte	1
+ 2172 085f 00       		.byte	0
+ 2173 0860 04       		.byte	4
+ 2174 0861 AE       		.byte	174
+ 2175 0862 01       		.byte	1
+ 2176 0863 00       		.byte	0
+ 2177 0864 04       		.byte	4
+ 2178 0865 C2       		.byte	194
+ 2179 0866 01       		.byte	1
+ 2180 0867 00       		.byte	0
+ 2181 0868 04       		.byte	4
+ 2182 0869 D6       		.byte	214
+ 2183 086a 01       		.byte	1
+ 2184 086b 00       		.byte	0
+ 2185 086c 04       		.byte	4
+ 2186 086d EA       		.byte	234
+ 2187 086e 01       		.byte	1
+ 2188 086f 00       		.byte	0
+ 2189 0870 04       		.byte	4
+ 2190 0871 FE       		.byte	254
+ 2191 0872 01       		.byte	1
+ 2192 0873 00       		.byte	0
+ 2193 0874 01       		.byte	1
+ 2194 0875 12       		.byte	18
+ 2195 0876 02       		.byte	2
+ 2196 0877 00       		.byte	0
+ 2197 0878 01       		.byte	1
+ 2198 0879 1C       		.byte	28
+ 2199 087a 02       		.byte	2
+ 2200 087b 00       		.byte	0
+ 2201 087c 05       		.byte	5
+ 2202 087d 26       		.byte	38
+ 2203 087e 02       		.byte	2
+ 2204 087f 00       		.byte	0
+ 2205 0880 05       		.byte	5
+ 2206 0881 44       		.byte	68
+ 2207 0882 02       		.byte	2
+ 2208 0883 00       		.byte	0
+ 2209 0884 05       		.byte	5
+ 2210 0885 62       		.byte	98
+ 2211 0886 02       		.byte	2
+ 2212 0887 00       		.byte	0
+ 2213 0888 03       		.byte	3
+ 2214 0889 80       		.byte	128
+ 2215 088a 02       		.byte	2
+ 2216 088b 00       		.byte	0
+ 2217 088c 07       		.byte	7
+ 2218 088d 94       		.byte	148
+ 2219 088e 02       		.byte	2
+ 2220 088f 00       		.byte	0
+ 2221 0890 05       		.byte	5
+ 2222 0891 BC       		.byte	188
+ 2223 0892 02       		.byte	2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 40
+
+
+ 2224 0893 00       		.byte	0
+ 2225 0894 04       		.byte	4
+ 2226 0895 DA       		.byte	218
+ 2227 0896 02       		.byte	2
+ 2228 0897 00       		.byte	0
+ 2229 0898 05       		.byte	5
+ 2230 0899 EE       		.byte	238
+ 2231 089a 02       		.byte	2
+ 2232 089b 00       		.byte	0
+ 2233 089c 05       		.byte	5
+ 2234 089d 0C       		.byte	12
+ 2235 089e 03       		.byte	3
+ 2236 089f 00       		.byte	0
+ 2237 08a0 04       		.byte	4
+ 2238 08a1 2A       		.byte	42
+ 2239 08a2 03       		.byte	3
+ 2240 08a3 00       		.byte	0
+ 2241 08a4 03       		.byte	3
+ 2242 08a5 3E       		.byte	62
+ 2243 08a6 03       		.byte	3
+ 2244 08a7 00       		.byte	0
+ 2245 08a8 05       		.byte	5
+ 2246 08a9 52       		.byte	82
+ 2247 08aa 03       		.byte	3
+ 2248 08ab 00       		.byte	0
+ 2249 08ac 04       		.byte	4
+ 2250 08ad 70       		.byte	112
+ 2251 08ae 03       		.byte	3
+ 2252 08af 00       		.byte	0
+ 2253 08b0 01       		.byte	1
+ 2254 08b1 84       		.byte	132
+ 2255 08b2 03       		.byte	3
+ 2256 08b3 00       		.byte	0
+ 2257 08b4 02       		.byte	2
+ 2258 08b5 8E       		.byte	142
+ 2259 08b6 03       		.byte	3
+ 2260 08b7 00       		.byte	0
+ 2261 08b8 05       		.byte	5
+ 2262 08b9 98       		.byte	152
+ 2263 08ba 03       		.byte	3
+ 2264 08bb 00       		.byte	0
+ 2265 08bc 04       		.byte	4
+ 2266 08bd B6       		.byte	182
+ 2267 08be 03       		.byte	3
+ 2268 08bf 00       		.byte	0
+ 2269 08c0 05       		.byte	5
+ 2270 08c1 CA       		.byte	202
+ 2271 08c2 03       		.byte	3
+ 2272 08c3 00       		.byte	0
+ 2273 08c4 04       		.byte	4
+ 2274 08c5 E8       		.byte	232
+ 2275 08c6 03       		.byte	3
+ 2276 08c7 00       		.byte	0
+ 2277 08c8 05       		.byte	5
+ 2278 08c9 FC       		.byte	252
+ 2279 08ca 03       		.byte	3
+ 2280 08cb 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 41
+
+
+ 2281 08cc 04       		.byte	4
+ 2282 08cd 1A       		.byte	26
+ 2283 08ce 04       		.byte	4
+ 2284 08cf 00       		.byte	0
+ 2285 08d0 05       		.byte	5
+ 2286 08d1 2E       		.byte	46
+ 2287 08d2 04       		.byte	4
+ 2288 08d3 00       		.byte	0
+ 2289 08d4 05       		.byte	5
+ 2290 08d5 4C       		.byte	76
+ 2291 08d6 04       		.byte	4
+ 2292 08d7 00       		.byte	0
+ 2293 08d8 04       		.byte	4
+ 2294 08d9 6A       		.byte	106
+ 2295 08da 04       		.byte	4
+ 2296 08db 00       		.byte	0
+ 2297 08dc 05       		.byte	5
+ 2298 08dd 7E       		.byte	126
+ 2299 08de 04       		.byte	4
+ 2300 08df 00       		.byte	0
+ 2301 08e0 04       		.byte	4
+ 2302 08e1 9C       		.byte	156
+ 2303 08e2 04       		.byte	4
+ 2304 08e3 00       		.byte	0
+ 2305 08e4 05       		.byte	5
+ 2306 08e5 B0       		.byte	176
+ 2307 08e6 04       		.byte	4
+ 2308 08e7 00       		.byte	0
+ 2309 08e8 07       		.byte	7
+ 2310 08e9 CE       		.byte	206
+ 2311 08ea 04       		.byte	4
+ 2312 08eb 00       		.byte	0
+ 2313 08ec 05       		.byte	5
+ 2314 08ed F6       		.byte	246
+ 2315 08ee 04       		.byte	4
+ 2316 08ef 00       		.byte	0
+ 2317 08f0 05       		.byte	5
+ 2318 08f1 14       		.byte	20
+ 2319 08f2 05       		.byte	5
+ 2320 08f3 00       		.byte	0
+ 2321 08f4 05       		.byte	5
+ 2322 08f5 32       		.byte	50
+ 2323 08f6 05       		.byte	5
+ 2324 08f7 00       		.byte	0
+ 2325 08f8 02       		.byte	2
+ 2326 08f9 50       		.byte	80
+ 2327 08fa 05       		.byte	5
+ 2328 08fb 00       		.byte	0
+ 2329 08fc 03       		.byte	3
+ 2330 08fd 5A       		.byte	90
+ 2331 08fe 05       		.byte	5
+ 2332 08ff 00       		.byte	0
+ 2333 0900 02       		.byte	2
+ 2334 0901 6E       		.byte	110
+ 2335 0902 05       		.byte	5
+ 2336 0903 00       		.byte	0
+ 2337 0904 05       		.byte	5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 42
+
+
+ 2338 0905 78       		.byte	120
+ 2339 0906 05       		.byte	5
+ 2340 0907 00       		.byte	0
+ 2341 0908 04       		.byte	4
+ 2342 0909 96       		.byte	150
+ 2343 090a 05       		.byte	5
+ 2344 090b 00       		.byte	0
+ 2345 090c 02       		.byte	2
+ 2346 090d AA       		.byte	170
+ 2347 090e 05       		.byte	5
+ 2348 090f 00       		.byte	0
+ 2349 0910 04       		.byte	4
+ 2350 0911 B4       		.byte	180
+ 2351 0912 05       		.byte	5
+ 2352 0913 00       		.byte	0
+ 2353 0914 04       		.byte	4
+ 2354 0915 C8       		.byte	200
+ 2355 0916 05       		.byte	5
+ 2356 0917 00       		.byte	0
+ 2357 0918 03       		.byte	3
+ 2358 0919 DC       		.byte	220
+ 2359 091a 05       		.byte	5
+ 2360 091b 00       		.byte	0
+ 2361 091c 04       		.byte	4
+ 2362 091d F0       		.byte	240
+ 2363 091e 05       		.byte	5
+ 2364 091f 00       		.byte	0
+ 2365 0920 04       		.byte	4
+ 2366 0921 04       		.byte	4
+ 2367 0922 06       		.byte	6
+ 2368 0923 00       		.byte	0
+ 2369 0924 03       		.byte	3
+ 2370 0925 18       		.byte	24
+ 2371 0926 06       		.byte	6
+ 2372 0927 00       		.byte	0
+ 2373 0928 04       		.byte	4
+ 2374 0929 2C       		.byte	44
+ 2375 092a 06       		.byte	6
+ 2376 092b 00       		.byte	0
+ 2377 092c 04       		.byte	4
+ 2378 092d 40       		.byte	64
+ 2379 092e 06       		.byte	6
+ 2380 092f 00       		.byte	0
+ 2381 0930 01       		.byte	1
+ 2382 0931 54       		.byte	84
+ 2383 0932 06       		.byte	6
+ 2384 0933 00       		.byte	0
+ 2385 0934 02       		.byte	2
+ 2386 0935 5E       		.byte	94
+ 2387 0936 06       		.byte	6
+ 2388 0937 00       		.byte	0
+ 2389 0938 04       		.byte	4
+ 2390 0939 68       		.byte	104
+ 2391 093a 06       		.byte	6
+ 2392 093b 00       		.byte	0
+ 2393 093c 01       		.byte	1
+ 2394 093d 7C       		.byte	124
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 43
+
+
+ 2395 093e 06       		.byte	6
+ 2396 093f 00       		.byte	0
+ 2397 0940 07       		.byte	7
+ 2398 0941 86       		.byte	134
+ 2399 0942 06       		.byte	6
+ 2400 0943 00       		.byte	0
+ 2401 0944 04       		.byte	4
+ 2402 0945 AE       		.byte	174
+ 2403 0946 06       		.byte	6
+ 2404 0947 00       		.byte	0
+ 2405 0948 04       		.byte	4
+ 2406 0949 C2       		.byte	194
+ 2407 094a 06       		.byte	6
+ 2408 094b 00       		.byte	0
+ 2409 094c 04       		.byte	4
+ 2410 094d D6       		.byte	214
+ 2411 094e 06       		.byte	6
+ 2412 094f 00       		.byte	0
+ 2413 0950 04       		.byte	4
+ 2414 0951 EA       		.byte	234
+ 2415 0952 06       		.byte	6
+ 2416 0953 00       		.byte	0
+ 2417 0954 03       		.byte	3
+ 2418 0955 FE       		.byte	254
+ 2419 0956 06       		.byte	6
+ 2420 0957 00       		.byte	0
+ 2421 0958 03       		.byte	3
+ 2422 0959 12       		.byte	18
+ 2423 095a 07       		.byte	7
+ 2424 095b 00       		.byte	0
+ 2425 095c 03       		.byte	3
+ 2426 095d 26       		.byte	38
+ 2427 095e 07       		.byte	7
+ 2428 095f 00       		.byte	0
+ 2429 0960 04       		.byte	4
+ 2430 0961 3A       		.byte	58
+ 2431 0962 07       		.byte	7
+ 2432 0963 00       		.byte	0
+ 2433 0964 04       		.byte	4
+ 2434 0965 4E       		.byte	78
+ 2435 0966 07       		.byte	7
+ 2436 0967 00       		.byte	0
+ 2437 0968 06       		.byte	6
+ 2438 0969 62       		.byte	98
+ 2439 096a 07       		.byte	7
+ 2440 096b 00       		.byte	0
+ 2441 096c 04       		.byte	4
+ 2442 096d 80       		.byte	128
+ 2443 096e 07       		.byte	7
+ 2444 096f 00       		.byte	0
+ 2445 0970 04       		.byte	4
+ 2446 0971 94       		.byte	148
+ 2447 0972 07       		.byte	7
+ 2448 0973 00       		.byte	0
+ 2449 0974 04       		.byte	4
+ 2450 0975 A8       		.byte	168
+ 2451 0976 07       		.byte	7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 44
+
+
+ 2452 0977 00       		.byte	0
+ 2453 0978 03       		.byte	3
+ 2454 0979 BC       		.byte	188
+ 2455 097a 07       		.byte	7
+ 2456 097b 00       		.byte	0
+ 2457 097c 01       		.byte	1
+ 2458 097d D0       		.byte	208
+ 2459 097e 07       		.byte	7
+ 2460 097f 00       		.byte	0
+ 2461 0980 03       		.byte	3
+ 2462 0981 DA       		.byte	218
+ 2463 0982 07       		.byte	7
+ 2464 0983 00       		.byte	0
+ 2465 0984 05       		.byte	5
+ 2466 0985 EE       		.byte	238
+ 2467 0986 07       		.byte	7
+ 2468 0987 00       		.byte	0
+ 2469              		.global	lv_font_dejavu_10
+ 2470              		.data
+ 2471              		.align	2
+ 2472              		.type	lv_font_dejavu_10, %object
+ 2473              		.size	lv_font_dejavu_10, 40
+ 2474              	lv_font_dejavu_10:
+ 2475 0000 20000000 		.word	32
+ 2476 0004 7E000000 		.word	126
+ 2477 0008 00000000 		.word	lv_font_dejavu_10_glyph_bitmap
+ 2478 000c 0C080000 		.word	lv_font_dejavu_10_glyph_dsc
+ 2479 0010 00000000 		.word	0
+ 2480 0014 00000000 		.word	lv_font_get_bitmap_continuous
+ 2481 0018 00000000 		.word	lv_font_get_width_continuous
+ 2482 001c 00000000 		.word	0
+ 2483 0020 0A       		.byte	10
+ 2484 0021 04       		.byte	4
+ 2485 0022 00       		.byte	0
+ 2486 0023 00       		.space	1
+ 2487 0024 5F00     		.short	95
+ 2488 0026 0000     		.space	2
+ 2489              		.text
+ 2490              	.Letext0:
+ 2491              		.file 1 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2492              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 2493              		.file 3 "..\\..\\..\\display\\lvgl\\lv_fonts\\../lv_misc/lv_font.h"
+ 2494              		.file 4 "..\\..\\..\\display\\lvgl\\lv_fonts\\lv_font_dejavu_10.c"
+ 2495              		.section	.debug_info,"",%progbits
+ 2496              	.Ldebug_info0:
+ 2497 0000 6F020000 		.4byte	0x26f
+ 2498 0004 0400     		.2byte	0x4
+ 2499 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 2500 000a 04       		.byte	0x4
+ 2501 000b 01       		.uleb128 0x1
+ 2502 000c 7A000000 		.4byte	.LASF36
+ 2503 0010 0C       		.byte	0xc
+ 2504 0011 2D010000 		.4byte	.LASF37
+ 2505 0015 23020000 		.4byte	.LASF38
+ 2506 0019 00000000 		.4byte	.Ldebug_line0
+ 2507 001d 02       		.uleb128 0x2
+ 2508 001e 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 45
+
+
+ 2509 001f 06       		.byte	0x6
+ 2510 0020 AF010000 		.4byte	.LASF0
+ 2511 0024 03       		.uleb128 0x3
+ 2512 0025 65010000 		.4byte	.LASF2
+ 2513 0029 01       		.byte	0x1
+ 2514 002a 1D       		.byte	0x1d
+ 2515 002b 2F000000 		.4byte	0x2f
+ 2516 002f 02       		.uleb128 0x2
+ 2517 0030 01       		.byte	0x1
+ 2518 0031 08       		.byte	0x8
+ 2519 0032 A1010000 		.4byte	.LASF1
+ 2520 0036 03       		.uleb128 0x3
+ 2521 0037 0D030000 		.4byte	.LASF3
+ 2522 003b 01       		.byte	0x1
+ 2523 003c 29       		.byte	0x29
+ 2524 003d 41000000 		.4byte	0x41
+ 2525 0041 02       		.uleb128 0x2
+ 2526 0042 02       		.byte	0x2
+ 2527 0043 05       		.byte	0x5
+ 2528 0044 24000000 		.4byte	.LASF4
+ 2529 0048 03       		.uleb128 0x3
+ 2530 0049 42000000 		.4byte	.LASF5
+ 2531 004d 01       		.byte	0x1
+ 2532 004e 2B       		.byte	0x2b
+ 2533 004f 53000000 		.4byte	0x53
+ 2534 0053 02       		.uleb128 0x2
+ 2535 0054 02       		.byte	0x2
+ 2536 0055 07       		.byte	0x7
+ 2537 0056 10020000 		.4byte	.LASF6
+ 2538 005a 02       		.uleb128 0x2
+ 2539 005b 04       		.byte	0x4
+ 2540 005c 05       		.byte	0x5
+ 2541 005d A9020000 		.4byte	.LASF7
+ 2542 0061 03       		.uleb128 0x3
+ 2543 0062 37000000 		.4byte	.LASF8
+ 2544 0066 01       		.byte	0x1
+ 2545 0067 41       		.byte	0x41
+ 2546 0068 6C000000 		.4byte	0x6c
+ 2547 006c 02       		.uleb128 0x2
+ 2548 006d 04       		.byte	0x4
+ 2549 006e 07       		.byte	0x7
+ 2550 006f D2020000 		.4byte	.LASF9
+ 2551 0073 02       		.uleb128 0x2
+ 2552 0074 08       		.byte	0x8
+ 2553 0075 05       		.byte	0x5
+ 2554 0076 6C000000 		.4byte	.LASF10
+ 2555 007a 02       		.uleb128 0x2
+ 2556 007b 08       		.byte	0x8
+ 2557 007c 07       		.byte	0x7
+ 2558 007d BB010000 		.4byte	.LASF11
+ 2559 0081 04       		.uleb128 0x4
+ 2560 0082 04       		.byte	0x4
+ 2561 0083 05       		.byte	0x5
+ 2562 0084 696E7400 		.ascii	"int\000"
+ 2563 0088 02       		.uleb128 0x2
+ 2564 0089 04       		.byte	0x4
+ 2565 008a 07       		.byte	0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 46
+
+
+ 2566 008b DB010000 		.4byte	.LASF12
+ 2567 008f 03       		.uleb128 0x3
+ 2568 0090 5A000000 		.4byte	.LASF13
+ 2569 0094 02       		.byte	0x2
+ 2570 0095 18       		.byte	0x18
+ 2571 0096 24000000 		.4byte	0x24
+ 2572 009a 03       		.uleb128 0x3
+ 2573 009b B2020000 		.4byte	.LASF14
+ 2574 009f 02       		.byte	0x2
+ 2575 00a0 20       		.byte	0x20
+ 2576 00a1 36000000 		.4byte	0x36
+ 2577 00a5 03       		.uleb128 0x3
+ 2578 00a6 E8010000 		.4byte	.LASF15
+ 2579 00aa 02       		.byte	0x2
+ 2580 00ab 24       		.byte	0x24
+ 2581 00ac 48000000 		.4byte	0x48
+ 2582 00b0 03       		.uleb128 0x3
+ 2583 00b1 D2010000 		.4byte	.LASF16
+ 2584 00b5 02       		.byte	0x2
+ 2585 00b6 30       		.byte	0x30
+ 2586 00b7 61000000 		.4byte	0x61
+ 2587 00bb 02       		.uleb128 0x2
+ 2588 00bc 08       		.byte	0x8
+ 2589 00bd 04       		.byte	0x4
+ 2590 00be 79010000 		.4byte	.LASF17
+ 2591 00c2 05       		.uleb128 0x5
+ 2592 00c3 04       		.byte	0x4
+ 2593 00c4 03       		.byte	0x3
+ 2594 00c5 25       		.byte	0x25
+ 2595 00c6 E9000000 		.4byte	0xe9
+ 2596 00ca 06       		.uleb128 0x6
+ 2597 00cb 60010000 		.4byte	.LASF18
+ 2598 00cf 03       		.byte	0x3
+ 2599 00d0 27       		.byte	0x27
+ 2600 00d1 B0000000 		.4byte	0xb0
+ 2601 00d5 04       		.byte	0x4
+ 2602 00d6 08       		.byte	0x8
+ 2603 00d7 18       		.byte	0x18
+ 2604 00d8 00       		.byte	0
+ 2605 00d9 06       		.uleb128 0x6
+ 2606 00da 17030000 		.4byte	.LASF19
+ 2607 00de 03       		.byte	0x3
+ 2608 00df 28       		.byte	0x28
+ 2609 00e0 B0000000 		.4byte	0xb0
+ 2610 00e4 04       		.byte	0x4
+ 2611 00e5 18       		.byte	0x18
+ 2612 00e6 00       		.byte	0
+ 2613 00e7 00       		.byte	0
+ 2614 00e8 00       		.byte	0
+ 2615 00e9 03       		.uleb128 0x3
+ 2616 00ea 40030000 		.4byte	.LASF20
+ 2617 00ee 03       		.byte	0x3
+ 2618 00ef 29       		.byte	0x29
+ 2619 00f0 C2000000 		.4byte	0xc2
+ 2620 00f4 07       		.uleb128 0x7
+ 2621 00f5 23030000 		.4byte	.LASF39
+ 2622 00f9 28       		.byte	0x28
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 47
+
+
+ 2623 00fa 03       		.byte	0x3
+ 2624 00fb 31       		.byte	0x31
+ 2625 00fc 9A010000 		.4byte	0x19a
+ 2626 0100 08       		.uleb128 0x8
+ 2627 0101 BA020000 		.4byte	.LASF21
+ 2628 0105 03       		.byte	0x3
+ 2629 0106 33       		.byte	0x33
+ 2630 0107 B0000000 		.4byte	0xb0
+ 2631 010b 00       		.byte	0
+ 2632 010c 08       		.uleb128 0x8
+ 2633 010d 00030000 		.4byte	.LASF22
+ 2634 0111 03       		.byte	0x3
+ 2635 0112 34       		.byte	0x34
+ 2636 0113 B0000000 		.4byte	0xb0
+ 2637 0117 04       		.byte	0x4
+ 2638 0118 08       		.uleb128 0x8
+ 2639 0119 4D000000 		.4byte	.LASF23
+ 2640 011d 03       		.byte	0x3
+ 2641 011e 35       		.byte	0x35
+ 2642 011f 9A010000 		.4byte	0x19a
+ 2643 0123 08       		.byte	0x8
+ 2644 0124 08       		.uleb128 0x8
+ 2645 0125 6F010000 		.4byte	.LASF24
+ 2646 0129 03       		.byte	0x3
+ 2647 012a 36       		.byte	0x36
+ 2648 012b A5010000 		.4byte	0x1a5
+ 2649 012f 0C       		.byte	0xc
+ 2650 0130 08       		.uleb128 0x8
+ 2651 0131 33030000 		.4byte	.LASF25
+ 2652 0135 03       		.byte	0x3
+ 2653 0136 37       		.byte	0x37
+ 2654 0137 B0010000 		.4byte	0x1b0
+ 2655 013b 10       		.byte	0x10
+ 2656 013c 08       		.uleb128 0x8
+ 2657 013d 19000000 		.4byte	.LASF26
+ 2658 0141 03       		.byte	0x3
+ 2659 0142 38       		.byte	0x38
+ 2660 0143 DA010000 		.4byte	0x1da
+ 2661 0147 14       		.byte	0x14
+ 2662 0148 08       		.uleb128 0x8
+ 2663 0149 0F000000 		.4byte	.LASF27
+ 2664 014d 03       		.byte	0x3
+ 2665 014e 39       		.byte	0x39
+ 2666 014f F4010000 		.4byte	0x1f4
+ 2667 0153 18       		.byte	0x18
+ 2668 0154 08       		.uleb128 0x8
+ 2669 0155 F6020000 		.4byte	.LASF28
+ 2670 0159 03       		.byte	0x3
+ 2671 015a 3A       		.byte	0x3a
+ 2672 015b FA010000 		.4byte	0x1fa
+ 2673 015f 1C       		.byte	0x1c
+ 2674 0160 06       		.uleb128 0x6
+ 2675 0161 00000000 		.4byte	.LASF29
+ 2676 0165 03       		.byte	0x3
+ 2677 0166 3B       		.byte	0x3b
+ 2678 0167 B0000000 		.4byte	0xb0
+ 2679 016b 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 48
+
+
+ 2680 016c 08       		.byte	0x8
+ 2681 016d 18       		.byte	0x18
+ 2682 016e 20       		.byte	0x20
+ 2683 016f 09       		.uleb128 0x9
+ 2684 0170 62707000 		.ascii	"bpp\000"
+ 2685 0174 03       		.byte	0x3
+ 2686 0175 3C       		.byte	0x3c
+ 2687 0176 B0000000 		.4byte	0xb0
+ 2688 017a 04       		.byte	0x4
+ 2689 017b 04       		.byte	0x4
+ 2690 017c 14       		.byte	0x14
+ 2691 017d 20       		.byte	0x20
+ 2692 017e 06       		.uleb128 0x6
+ 2693 017f 05000000 		.4byte	.LASF30
+ 2694 0183 03       		.byte	0x3
+ 2695 0184 3D       		.byte	0x3d
+ 2696 0185 B0000000 		.4byte	0xb0
+ 2697 0189 04       		.byte	0x4
+ 2698 018a 08       		.byte	0x8
+ 2699 018b 0C       		.byte	0xc
+ 2700 018c 20       		.byte	0x20
+ 2701 018d 08       		.uleb128 0x8
+ 2702 018e 62000000 		.4byte	.LASF31
+ 2703 0192 03       		.byte	0x3
+ 2704 0193 3E       		.byte	0x3e
+ 2705 0194 A5000000 		.4byte	0xa5
+ 2706 0198 24       		.byte	0x24
+ 2707 0199 00       		.byte	0
+ 2708 019a 0A       		.uleb128 0xa
+ 2709 019b 04       		.byte	0x4
+ 2710 019c A0010000 		.4byte	0x1a0
+ 2711 01a0 0B       		.uleb128 0xb
+ 2712 01a1 8F000000 		.4byte	0x8f
+ 2713 01a5 0A       		.uleb128 0xa
+ 2714 01a6 04       		.byte	0x4
+ 2715 01a7 AB010000 		.4byte	0x1ab
+ 2716 01ab 0B       		.uleb128 0xb
+ 2717 01ac E9000000 		.4byte	0xe9
+ 2718 01b0 0A       		.uleb128 0xa
+ 2719 01b1 04       		.byte	0x4
+ 2720 01b2 B6010000 		.4byte	0x1b6
+ 2721 01b6 0B       		.uleb128 0xb
+ 2722 01b7 B0000000 		.4byte	0xb0
+ 2723 01bb 0C       		.uleb128 0xc
+ 2724 01bc 9A010000 		.4byte	0x19a
+ 2725 01c0 CF010000 		.4byte	0x1cf
+ 2726 01c4 0D       		.uleb128 0xd
+ 2727 01c5 CF010000 		.4byte	0x1cf
+ 2728 01c9 0D       		.uleb128 0xd
+ 2729 01ca B0000000 		.4byte	0xb0
+ 2730 01ce 00       		.byte	0
+ 2731 01cf 0A       		.uleb128 0xa
+ 2732 01d0 04       		.byte	0x4
+ 2733 01d1 D5010000 		.4byte	0x1d5
+ 2734 01d5 0B       		.uleb128 0xb
+ 2735 01d6 F4000000 		.4byte	0xf4
+ 2736 01da 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 49
+
+
+ 2737 01db 04       		.byte	0x4
+ 2738 01dc BB010000 		.4byte	0x1bb
+ 2739 01e0 0C       		.uleb128 0xc
+ 2740 01e1 9A000000 		.4byte	0x9a
+ 2741 01e5 F4010000 		.4byte	0x1f4
+ 2742 01e9 0D       		.uleb128 0xd
+ 2743 01ea CF010000 		.4byte	0x1cf
+ 2744 01ee 0D       		.uleb128 0xd
+ 2745 01ef B0000000 		.4byte	0xb0
+ 2746 01f3 00       		.byte	0
+ 2747 01f4 0A       		.uleb128 0xa
+ 2748 01f5 04       		.byte	0x4
+ 2749 01f6 E0010000 		.4byte	0x1e0
+ 2750 01fa 0A       		.uleb128 0xa
+ 2751 01fb 04       		.byte	0x4
+ 2752 01fc F4000000 		.4byte	0xf4
+ 2753 0200 03       		.uleb128 0x3
+ 2754 0201 C8020000 		.4byte	.LASF32
+ 2755 0205 03       		.byte	0x3
+ 2756 0206 3F       		.byte	0x3f
+ 2757 0207 F4000000 		.4byte	0xf4
+ 2758 020b 0E       		.uleb128 0xe
+ 2759 020c A0010000 		.4byte	0x1a0
+ 2760 0210 1C020000 		.4byte	0x21c
+ 2761 0214 0F       		.uleb128 0xf
+ 2762 0215 1C020000 		.4byte	0x21c
+ 2763 0219 0B08     		.2byte	0x80b
+ 2764 021b 00       		.byte	0
+ 2765 021c 02       		.uleb128 0x2
+ 2766 021d 04       		.byte	0x4
+ 2767 021e 07       		.byte	0x7
+ 2768 021f 2E000000 		.4byte	.LASF33
+ 2769 0223 10       		.uleb128 0x10
+ 2770 0224 F1010000 		.4byte	.LASF34
+ 2771 0228 04       		.byte	0x4
+ 2772 0229 0B       		.byte	0xb
+ 2773 022a 34020000 		.4byte	0x234
+ 2774 022e 05       		.uleb128 0x5
+ 2775 022f 03       		.byte	0x3
+ 2776 0230 00000000 		.4byte	lv_font_dejavu_10_glyph_bitmap
+ 2777 0234 0B       		.uleb128 0xb
+ 2778 0235 0B020000 		.4byte	0x20b
+ 2779 0239 0E       		.uleb128 0xe
+ 2780 023a AB010000 		.4byte	0x1ab
+ 2781 023e 49020000 		.4byte	0x249
+ 2782 0242 11       		.uleb128 0x11
+ 2783 0243 1C020000 		.4byte	0x21c
+ 2784 0247 5E       		.byte	0x5e
+ 2785 0248 00       		.byte	0
+ 2786 0249 12       		.uleb128 0x12
+ 2787 024a 85010000 		.4byte	.LASF35
+ 2788 024e 04       		.byte	0x4
+ 2789 024f 6513     		.2byte	0x1365
+ 2790 0251 5B020000 		.4byte	0x25b
+ 2791 0255 05       		.uleb128 0x5
+ 2792 0256 03       		.byte	0x3
+ 2793 0257 0C080000 		.4byte	lv_font_dejavu_10_glyph_dsc
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 50
+
+
+ 2794 025b 0B       		.uleb128 0xb
+ 2795 025c 39020000 		.4byte	0x239
+ 2796 0260 13       		.uleb128 0x13
+ 2797 0261 E4020000 		.4byte	.LASF40
+ 2798 0265 04       		.byte	0x4
+ 2799 0266 ED14     		.2byte	0x14ed
+ 2800 0268 00020000 		.4byte	0x200
+ 2801 026c 05       		.uleb128 0x5
+ 2802 026d 03       		.byte	0x3
+ 2803 026e 00000000 		.4byte	lv_font_dejavu_10
+ 2804 0272 00       		.byte	0
+ 2805              		.section	.debug_abbrev,"",%progbits
+ 2806              	.Ldebug_abbrev0:
+ 2807 0000 01       		.uleb128 0x1
+ 2808 0001 11       		.uleb128 0x11
+ 2809 0002 01       		.byte	0x1
+ 2810 0003 25       		.uleb128 0x25
+ 2811 0004 0E       		.uleb128 0xe
+ 2812 0005 13       		.uleb128 0x13
+ 2813 0006 0B       		.uleb128 0xb
+ 2814 0007 03       		.uleb128 0x3
+ 2815 0008 0E       		.uleb128 0xe
+ 2816 0009 1B       		.uleb128 0x1b
+ 2817 000a 0E       		.uleb128 0xe
+ 2818 000b 10       		.uleb128 0x10
+ 2819 000c 17       		.uleb128 0x17
+ 2820 000d 00       		.byte	0
+ 2821 000e 00       		.byte	0
+ 2822 000f 02       		.uleb128 0x2
+ 2823 0010 24       		.uleb128 0x24
+ 2824 0011 00       		.byte	0
+ 2825 0012 0B       		.uleb128 0xb
+ 2826 0013 0B       		.uleb128 0xb
+ 2827 0014 3E       		.uleb128 0x3e
+ 2828 0015 0B       		.uleb128 0xb
+ 2829 0016 03       		.uleb128 0x3
+ 2830 0017 0E       		.uleb128 0xe
+ 2831 0018 00       		.byte	0
+ 2832 0019 00       		.byte	0
+ 2833 001a 03       		.uleb128 0x3
+ 2834 001b 16       		.uleb128 0x16
+ 2835 001c 00       		.byte	0
+ 2836 001d 03       		.uleb128 0x3
+ 2837 001e 0E       		.uleb128 0xe
+ 2838 001f 3A       		.uleb128 0x3a
+ 2839 0020 0B       		.uleb128 0xb
+ 2840 0021 3B       		.uleb128 0x3b
+ 2841 0022 0B       		.uleb128 0xb
+ 2842 0023 49       		.uleb128 0x49
+ 2843 0024 13       		.uleb128 0x13
+ 2844 0025 00       		.byte	0
+ 2845 0026 00       		.byte	0
+ 2846 0027 04       		.uleb128 0x4
+ 2847 0028 24       		.uleb128 0x24
+ 2848 0029 00       		.byte	0
+ 2849 002a 0B       		.uleb128 0xb
+ 2850 002b 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 51
+
+
+ 2851 002c 3E       		.uleb128 0x3e
+ 2852 002d 0B       		.uleb128 0xb
+ 2853 002e 03       		.uleb128 0x3
+ 2854 002f 08       		.uleb128 0x8
+ 2855 0030 00       		.byte	0
+ 2856 0031 00       		.byte	0
+ 2857 0032 05       		.uleb128 0x5
+ 2858 0033 13       		.uleb128 0x13
+ 2859 0034 01       		.byte	0x1
+ 2860 0035 0B       		.uleb128 0xb
+ 2861 0036 0B       		.uleb128 0xb
+ 2862 0037 3A       		.uleb128 0x3a
+ 2863 0038 0B       		.uleb128 0xb
+ 2864 0039 3B       		.uleb128 0x3b
+ 2865 003a 0B       		.uleb128 0xb
+ 2866 003b 01       		.uleb128 0x1
+ 2867 003c 13       		.uleb128 0x13
+ 2868 003d 00       		.byte	0
+ 2869 003e 00       		.byte	0
+ 2870 003f 06       		.uleb128 0x6
+ 2871 0040 0D       		.uleb128 0xd
+ 2872 0041 00       		.byte	0
+ 2873 0042 03       		.uleb128 0x3
+ 2874 0043 0E       		.uleb128 0xe
+ 2875 0044 3A       		.uleb128 0x3a
+ 2876 0045 0B       		.uleb128 0xb
+ 2877 0046 3B       		.uleb128 0x3b
+ 2878 0047 0B       		.uleb128 0xb
+ 2879 0048 49       		.uleb128 0x49
+ 2880 0049 13       		.uleb128 0x13
+ 2881 004a 0B       		.uleb128 0xb
+ 2882 004b 0B       		.uleb128 0xb
+ 2883 004c 0D       		.uleb128 0xd
+ 2884 004d 0B       		.uleb128 0xb
+ 2885 004e 0C       		.uleb128 0xc
+ 2886 004f 0B       		.uleb128 0xb
+ 2887 0050 38       		.uleb128 0x38
+ 2888 0051 0B       		.uleb128 0xb
+ 2889 0052 00       		.byte	0
+ 2890 0053 00       		.byte	0
+ 2891 0054 07       		.uleb128 0x7
+ 2892 0055 13       		.uleb128 0x13
+ 2893 0056 01       		.byte	0x1
+ 2894 0057 03       		.uleb128 0x3
+ 2895 0058 0E       		.uleb128 0xe
+ 2896 0059 0B       		.uleb128 0xb
+ 2897 005a 0B       		.uleb128 0xb
+ 2898 005b 3A       		.uleb128 0x3a
+ 2899 005c 0B       		.uleb128 0xb
+ 2900 005d 3B       		.uleb128 0x3b
+ 2901 005e 0B       		.uleb128 0xb
+ 2902 005f 01       		.uleb128 0x1
+ 2903 0060 13       		.uleb128 0x13
+ 2904 0061 00       		.byte	0
+ 2905 0062 00       		.byte	0
+ 2906 0063 08       		.uleb128 0x8
+ 2907 0064 0D       		.uleb128 0xd
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 52
+
+
+ 2908 0065 00       		.byte	0
+ 2909 0066 03       		.uleb128 0x3
+ 2910 0067 0E       		.uleb128 0xe
+ 2911 0068 3A       		.uleb128 0x3a
+ 2912 0069 0B       		.uleb128 0xb
+ 2913 006a 3B       		.uleb128 0x3b
+ 2914 006b 0B       		.uleb128 0xb
+ 2915 006c 49       		.uleb128 0x49
+ 2916 006d 13       		.uleb128 0x13
+ 2917 006e 38       		.uleb128 0x38
+ 2918 006f 0B       		.uleb128 0xb
+ 2919 0070 00       		.byte	0
+ 2920 0071 00       		.byte	0
+ 2921 0072 09       		.uleb128 0x9
+ 2922 0073 0D       		.uleb128 0xd
+ 2923 0074 00       		.byte	0
+ 2924 0075 03       		.uleb128 0x3
+ 2925 0076 08       		.uleb128 0x8
+ 2926 0077 3A       		.uleb128 0x3a
+ 2927 0078 0B       		.uleb128 0xb
+ 2928 0079 3B       		.uleb128 0x3b
+ 2929 007a 0B       		.uleb128 0xb
+ 2930 007b 49       		.uleb128 0x49
+ 2931 007c 13       		.uleb128 0x13
+ 2932 007d 0B       		.uleb128 0xb
+ 2933 007e 0B       		.uleb128 0xb
+ 2934 007f 0D       		.uleb128 0xd
+ 2935 0080 0B       		.uleb128 0xb
+ 2936 0081 0C       		.uleb128 0xc
+ 2937 0082 0B       		.uleb128 0xb
+ 2938 0083 38       		.uleb128 0x38
+ 2939 0084 0B       		.uleb128 0xb
+ 2940 0085 00       		.byte	0
+ 2941 0086 00       		.byte	0
+ 2942 0087 0A       		.uleb128 0xa
+ 2943 0088 0F       		.uleb128 0xf
+ 2944 0089 00       		.byte	0
+ 2945 008a 0B       		.uleb128 0xb
+ 2946 008b 0B       		.uleb128 0xb
+ 2947 008c 49       		.uleb128 0x49
+ 2948 008d 13       		.uleb128 0x13
+ 2949 008e 00       		.byte	0
+ 2950 008f 00       		.byte	0
+ 2951 0090 0B       		.uleb128 0xb
+ 2952 0091 26       		.uleb128 0x26
+ 2953 0092 00       		.byte	0
+ 2954 0093 49       		.uleb128 0x49
+ 2955 0094 13       		.uleb128 0x13
+ 2956 0095 00       		.byte	0
+ 2957 0096 00       		.byte	0
+ 2958 0097 0C       		.uleb128 0xc
+ 2959 0098 15       		.uleb128 0x15
+ 2960 0099 01       		.byte	0x1
+ 2961 009a 27       		.uleb128 0x27
+ 2962 009b 19       		.uleb128 0x19
+ 2963 009c 49       		.uleb128 0x49
+ 2964 009d 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 53
+
+
+ 2965 009e 01       		.uleb128 0x1
+ 2966 009f 13       		.uleb128 0x13
+ 2967 00a0 00       		.byte	0
+ 2968 00a1 00       		.byte	0
+ 2969 00a2 0D       		.uleb128 0xd
+ 2970 00a3 05       		.uleb128 0x5
+ 2971 00a4 00       		.byte	0
+ 2972 00a5 49       		.uleb128 0x49
+ 2973 00a6 13       		.uleb128 0x13
+ 2974 00a7 00       		.byte	0
+ 2975 00a8 00       		.byte	0
+ 2976 00a9 0E       		.uleb128 0xe
+ 2977 00aa 01       		.uleb128 0x1
+ 2978 00ab 01       		.byte	0x1
+ 2979 00ac 49       		.uleb128 0x49
+ 2980 00ad 13       		.uleb128 0x13
+ 2981 00ae 01       		.uleb128 0x1
+ 2982 00af 13       		.uleb128 0x13
+ 2983 00b0 00       		.byte	0
+ 2984 00b1 00       		.byte	0
+ 2985 00b2 0F       		.uleb128 0xf
+ 2986 00b3 21       		.uleb128 0x21
+ 2987 00b4 00       		.byte	0
+ 2988 00b5 49       		.uleb128 0x49
+ 2989 00b6 13       		.uleb128 0x13
+ 2990 00b7 2F       		.uleb128 0x2f
+ 2991 00b8 05       		.uleb128 0x5
+ 2992 00b9 00       		.byte	0
+ 2993 00ba 00       		.byte	0
+ 2994 00bb 10       		.uleb128 0x10
+ 2995 00bc 34       		.uleb128 0x34
+ 2996 00bd 00       		.byte	0
+ 2997 00be 03       		.uleb128 0x3
+ 2998 00bf 0E       		.uleb128 0xe
+ 2999 00c0 3A       		.uleb128 0x3a
+ 3000 00c1 0B       		.uleb128 0xb
+ 3001 00c2 3B       		.uleb128 0x3b
+ 3002 00c3 0B       		.uleb128 0xb
+ 3003 00c4 49       		.uleb128 0x49
+ 3004 00c5 13       		.uleb128 0x13
+ 3005 00c6 02       		.uleb128 0x2
+ 3006 00c7 18       		.uleb128 0x18
+ 3007 00c8 00       		.byte	0
+ 3008 00c9 00       		.byte	0
+ 3009 00ca 11       		.uleb128 0x11
+ 3010 00cb 21       		.uleb128 0x21
+ 3011 00cc 00       		.byte	0
+ 3012 00cd 49       		.uleb128 0x49
+ 3013 00ce 13       		.uleb128 0x13
+ 3014 00cf 2F       		.uleb128 0x2f
+ 3015 00d0 0B       		.uleb128 0xb
+ 3016 00d1 00       		.byte	0
+ 3017 00d2 00       		.byte	0
+ 3018 00d3 12       		.uleb128 0x12
+ 3019 00d4 34       		.uleb128 0x34
+ 3020 00d5 00       		.byte	0
+ 3021 00d6 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 54
+
+
+ 3022 00d7 0E       		.uleb128 0xe
+ 3023 00d8 3A       		.uleb128 0x3a
+ 3024 00d9 0B       		.uleb128 0xb
+ 3025 00da 3B       		.uleb128 0x3b
+ 3026 00db 05       		.uleb128 0x5
+ 3027 00dc 49       		.uleb128 0x49
+ 3028 00dd 13       		.uleb128 0x13
+ 3029 00de 02       		.uleb128 0x2
+ 3030 00df 18       		.uleb128 0x18
+ 3031 00e0 00       		.byte	0
+ 3032 00e1 00       		.byte	0
+ 3033 00e2 13       		.uleb128 0x13
+ 3034 00e3 34       		.uleb128 0x34
+ 3035 00e4 00       		.byte	0
+ 3036 00e5 03       		.uleb128 0x3
+ 3037 00e6 0E       		.uleb128 0xe
+ 3038 00e7 3A       		.uleb128 0x3a
+ 3039 00e8 0B       		.uleb128 0xb
+ 3040 00e9 3B       		.uleb128 0x3b
+ 3041 00ea 05       		.uleb128 0x5
+ 3042 00eb 49       		.uleb128 0x49
+ 3043 00ec 13       		.uleb128 0x13
+ 3044 00ed 3F       		.uleb128 0x3f
+ 3045 00ee 19       		.uleb128 0x19
+ 3046 00ef 02       		.uleb128 0x2
+ 3047 00f0 18       		.uleb128 0x18
+ 3048 00f1 00       		.byte	0
+ 3049 00f2 00       		.byte	0
+ 3050 00f3 00       		.byte	0
+ 3051              		.section	.debug_aranges,"",%progbits
+ 3052 0000 14000000 		.4byte	0x14
+ 3053 0004 0200     		.2byte	0x2
+ 3054 0006 00000000 		.4byte	.Ldebug_info0
+ 3055 000a 04       		.byte	0x4
+ 3056 000b 00       		.byte	0
+ 3057 000c 0000     		.2byte	0
+ 3058 000e 0000     		.2byte	0
+ 3059 0010 00000000 		.4byte	0
+ 3060 0014 00000000 		.4byte	0
+ 3061              		.section	.debug_line,"",%progbits
+ 3062              	.Ldebug_line0:
+ 3063 0000 83010000 		.section	.debug_str,"MS",%progbits,1
+ 3063      02007D01 
+ 3063      00000201 
+ 3063      FB0E0D00 
+ 3063      01010101 
+ 3064              	.LASF29:
+ 3065 0000 685F7078 		.ascii	"h_px\000"
+ 3065      00
+ 3066              	.LASF30:
+ 3067 0005 6D6F6E6F 		.ascii	"monospace\000"
+ 3067      73706163 
+ 3067      6500
+ 3068              	.LASF27:
+ 3069 000f 6765745F 		.ascii	"get_width\000"
+ 3069      77696474 
+ 3069      6800
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 55
+
+
+ 3070              	.LASF26:
+ 3071 0019 6765745F 		.ascii	"get_bitmap\000"
+ 3071      6269746D 
+ 3071      617000
+ 3072              	.LASF4:
+ 3073 0024 73686F72 		.ascii	"short int\000"
+ 3073      7420696E 
+ 3073      7400
+ 3074              	.LASF33:
+ 3075 002e 73697A65 		.ascii	"sizetype\000"
+ 3075      74797065 
+ 3075      00
+ 3076              	.LASF8:
+ 3077 0037 5F5F7569 		.ascii	"__uint32_t\000"
+ 3077      6E743332 
+ 3077      5F7400
+ 3078              	.LASF5:
+ 3079 0042 5F5F7569 		.ascii	"__uint16_t\000"
+ 3079      6E743136 
+ 3079      5F7400
+ 3080              	.LASF23:
+ 3081 004d 676C7970 		.ascii	"glyph_bitmap\000"
+ 3081      685F6269 
+ 3081      746D6170 
+ 3081      00
+ 3082              	.LASF13:
+ 3083 005a 75696E74 		.ascii	"uint8_t\000"
+ 3083      385F7400 
+ 3084              	.LASF31:
+ 3085 0062 676C7970 		.ascii	"glyph_cnt\000"
+ 3085      685F636E 
+ 3085      7400
+ 3086              	.LASF10:
+ 3087 006c 6C6F6E67 		.ascii	"long long int\000"
+ 3087      206C6F6E 
+ 3087      6720696E 
+ 3087      7400
+ 3088              	.LASF36:
+ 3089 007a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3089      43313120 
+ 3089      352E342E 
+ 3089      31203230 
+ 3089      31363036 
+ 3090 00ad 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 3090      20726576 
+ 3090      6973696F 
+ 3090      6E203233 
+ 3090      37373135 
+ 3091 00e0 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 3091      70202D6D 
+ 3091      6670753D 
+ 3091      66707634 
+ 3091      2D73702D 
+ 3092 0113 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 3092      6F6E7320 
+ 3092      2D666661 
+ 3092      742D6C74 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 56
+
+
+ 3092      6F2D6F62 
+ 3093              	.LASF37:
+ 3094 012d 2E2E5C2E 		.ascii	"..\\..\\..\\display\\lvgl\\lv_fonts\\lv_font_dejavu"
+ 3094      2E5C2E2E 
+ 3094      5C646973 
+ 3094      706C6179 
+ 3094      5C6C7667 
+ 3095 015a 5F31302E 		.ascii	"_10.c\000"
+ 3095      6300
+ 3096              	.LASF18:
+ 3097 0160 775F7078 		.ascii	"w_px\000"
+ 3097      00
+ 3098              	.LASF2:
+ 3099 0165 5F5F7569 		.ascii	"__uint8_t\000"
+ 3099      6E74385F 
+ 3099      7400
+ 3100              	.LASF24:
+ 3101 016f 676C7970 		.ascii	"glyph_dsc\000"
+ 3101      685F6473 
+ 3101      6300
+ 3102              	.LASF17:
+ 3103 0179 6C6F6E67 		.ascii	"long double\000"
+ 3103      20646F75 
+ 3103      626C6500 
+ 3104              	.LASF35:
+ 3105 0185 6C765F66 		.ascii	"lv_font_dejavu_10_glyph_dsc\000"
+ 3105      6F6E745F 
+ 3105      64656A61 
+ 3105      76755F31 
+ 3105      305F676C 
+ 3106              	.LASF1:
+ 3107 01a1 756E7369 		.ascii	"unsigned char\000"
+ 3107      676E6564 
+ 3107      20636861 
+ 3107      7200
+ 3108              	.LASF0:
+ 3109 01af 7369676E 		.ascii	"signed char\000"
+ 3109      65642063 
+ 3109      68617200 
+ 3110              	.LASF11:
+ 3111 01bb 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3111      206C6F6E 
+ 3111      6720756E 
+ 3111      7369676E 
+ 3111      65642069 
+ 3112              	.LASF16:
+ 3113 01d2 75696E74 		.ascii	"uint32_t\000"
+ 3113      33325F74 
+ 3113      00
+ 3114              	.LASF12:
+ 3115 01db 756E7369 		.ascii	"unsigned int\000"
+ 3115      676E6564 
+ 3115      20696E74 
+ 3115      00
+ 3116              	.LASF15:
+ 3117 01e8 75696E74 		.ascii	"uint16_t\000"
+ 3117      31365F74 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 57
+
+
+ 3117      00
+ 3118              	.LASF34:
+ 3119 01f1 6C765F66 		.ascii	"lv_font_dejavu_10_glyph_bitmap\000"
+ 3119      6F6E745F 
+ 3119      64656A61 
+ 3119      76755F31 
+ 3119      305F676C 
+ 3120              	.LASF6:
+ 3121 0210 73686F72 		.ascii	"short unsigned int\000"
+ 3121      7420756E 
+ 3121      7369676E 
+ 3121      65642069 
+ 3121      6E7400
+ 3122              	.LASF38:
+ 3123 0223 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 3123      73657273 
+ 3123      5C706561 
+ 3123      726C7374 
+ 3123      6C5C446F 
+ 3124 0251 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 3124      6D5F656E 
+ 3124      67696E65 
+ 3124      6572696E 
+ 3124      675C656D 
+ 3125 0280 6F63365F 		.ascii	"oc6_fixed_io\\tcom_displ_test_psoc6.cydsn\000"
+ 3125      66697865 
+ 3125      645F696F 
+ 3125      5C74636F 
+ 3125      6D5F6469 
+ 3126              	.LASF7:
+ 3127 02a9 6C6F6E67 		.ascii	"long int\000"
+ 3127      20696E74 
+ 3127      00
+ 3128              	.LASF14:
+ 3129 02b2 696E7431 		.ascii	"int16_t\000"
+ 3129      365F7400 
+ 3130              	.LASF21:
+ 3131 02ba 756E6963 		.ascii	"unicode_first\000"
+ 3131      6F64655F 
+ 3131      66697273 
+ 3131      7400
+ 3132              	.LASF32:
+ 3133 02c8 6C765F66 		.ascii	"lv_font_t\000"
+ 3133      6F6E745F 
+ 3133      7400
+ 3134              	.LASF9:
+ 3135 02d2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3135      20756E73 
+ 3135      69676E65 
+ 3135      6420696E 
+ 3135      7400
+ 3136              	.LASF40:
+ 3137 02e4 6C765F66 		.ascii	"lv_font_dejavu_10\000"
+ 3137      6F6E745F 
+ 3137      64656A61 
+ 3137      76755F31 
+ 3137      3000
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccTNotC4.s 			page 58
+
+
+ 3138              	.LASF28:
+ 3139 02f6 6E657874 		.ascii	"next_page\000"
+ 3139      5F706167 
+ 3139      6500
+ 3140              	.LASF22:
+ 3141 0300 756E6963 		.ascii	"unicode_last\000"
+ 3141      6F64655F 
+ 3141      6C617374 
+ 3141      00
+ 3142              	.LASF3:
+ 3143 030d 5F5F696E 		.ascii	"__int16_t\000"
+ 3143      7431365F 
+ 3143      7400
+ 3144              	.LASF19:
+ 3145 0317 676C7970 		.ascii	"glyph_index\000"
+ 3145      685F696E 
+ 3145      64657800 
+ 3146              	.LASF39:
+ 3147 0323 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 3147      666F6E74 
+ 3147      5F737472 
+ 3147      75637400 
+ 3148              	.LASF25:
+ 3149 0333 756E6963 		.ascii	"unicode_list\000"
+ 3149      6F64655F 
+ 3149      6C697374 
+ 3149      00
+ 3150              	.LASF20:
+ 3151 0340 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 3151      6F6E745F 
+ 3151      676C7970 
+ 3151      685F6473 
+ 3151      635F7400 
+ 3152              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

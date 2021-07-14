@@ -1,0 +1,352 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Wed Apr 14 15:36:02 2021
+# Process ID: 15496
+# Current directory: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent1420 D:\SeniorProject\Oscilloscope_Senior_Project\Verilog\FullSystem\FullSystem.xpr
+# Log file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/vivado.log
+# Journal file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2020.2/data/ip'.
+WARNING: [IP_Flow 19-2162] IP 'blk_mem_gen_0' is locked:
+* IP definition 'Block Memory Generator (8.4)' for IP 'blk_mem_gen_0' (customized with software release 2019.1) has a different revision in the IP Catalog.
+open_project: Time (s): cpu = 00:00:20 ; elapsed = 00:00:22 . Memory (MB): peak = 1018.656 ; gain = 0.000
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 15:41:42 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 15:41:42 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 15:48:19 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 15:48:19 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+open_hw_manager
+connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2020.2
+  **** Build date : Nov 18 2020 at 10:01:48
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:3042
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2020.2
+  ****** Build date   : Nov 03 2020-16:02:56
+    **** Build number : 2020.2.1604437376
+      ** Copyright 2017-2020 Xilinx, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:14 . Memory (MB): peak = 1018.656 ; gain = 0.000
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+open_hw_target: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 2393.422 ; gain = 1374.766
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1435] Device xc7a100t (JTAG device index = 0) is not programmed (DONE status = 0).
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtools 27-1435] Device xc7a100t (JTAG device index = 0) is not programmed (DONE status = 0).
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+close_hw_manager
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 16:45:20 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 16:45:20 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+open_hw_manager
+connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2020.2
+  **** Build date : Nov 18 2020 at 10:01:48
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:3042
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2020.2
+  ****** Build date   : Nov 03 2020-16:02:56
+    **** Build number : 2020.2.1604437376
+      ** Copyright 2017-2020 Xilinx, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:13 . Memory (MB): peak = 2448.590 ; gain = 0.000
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 16:55:36 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 16:55:36 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 17:46:08 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 17:46:08 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 18:05:28 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 18:05:28 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 18:06:11 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 18:06:11 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+close_project
+open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2020.2/data/ip'.
+WARNING: [IP_Flow 19-2162] IP 'blk_mem_gen_0' is locked:
+* IP definition 'Block Memory Generator (8.4)' for IP 'blk_mem_gen_0' (customized with software release 2019.1) has a different revision in the IP Catalog.
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Wed Apr 14 18:11:29 2021] Launched synth_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/synth_1/runme.log
+[Wed Apr 14 18:11:29 2021] Launched impl_1...
+Run output will be captured here: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/runme.log
+open_hw_manager
+connect_hw_server -allow_non_jtag
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2020.2
+  **** Build date : Nov 18 2020 at 10:01:48
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+
+INFO: [Labtools 27-3415] Connecting to cs_server url TCP:localhost:3042
+INFO: [Labtools 27-3417] Launching cs_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+
+******** Xilinx cs_server v2020.2
+  ****** Build date   : Nov 03 2020-16:02:56
+    **** Build number : 2020.2.1604437376
+      ** Copyright 2017-2020 Xilinx, Inc. All Rights Reserved.
+
+
+
+connect_hw_server: Time (s): cpu = 00:00:00 ; elapsed = 00:00:11 . Memory (MB): peak = 2459.355 ; gain = 0.000
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210292745191A
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+current_hw_device [get_hw_devices xc7a100t_0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.runs/impl_1/Top.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]
+INFO: [Labtools 27-1434] Device xc7a100t (JTAG device index = 0) is programmed with a design that has no supported debug core(s) in it.
+close_hw_manager
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File 'D:/Xilinx/Vivado/2020.2/data/xsim/xsim.ini' copied to run dir:'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-20] The project contains locked or custom IPs. The pre-compiled version of these IPs will not be referenced and the sources from these IP libraries will be compiled locally.
+INFO: [SIM-utils-54] Inspecting design source files for 'testbench' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj testbench_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/ip/blk_mem_gen_0/sim/blk_mem_gen_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module blk_mem_gen_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/ADCInterface.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ADCInterface
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/Buffer_FIFO.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Buffer_FIFO
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/DataSimulation.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module DataSimulation
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/FIFO_RAM.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module FIFO_RAM
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/RAM_ReadEngine.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module RAM_ReadEngine
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/RAM_WriteEngine.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module RAM_WriteEngine
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/Regs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Regs
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/SPI.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SPI
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/TimingGen.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module TimingGen
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/Top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Top
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/TriggerLogic.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module TriggerLogic
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sim_1/new/testbench.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module testbench
+INFO: [VRFC 10-2458] undeclared symbol ADC_SampleClock, assumed default net type wire [D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sim_1/new/testbench.v:410]
+INFO: [USF-XSim-69] 'compile' step finished in '4' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim'
+"xelab -wto 341c3404caa142bba025c86c654bfe13 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L blk_mem_gen_v8_4_3 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_behav xil_defaultlib.testbench xil_defaultlib.glbl -log elaborate.log"
+Vivado Simulator 2020.2
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: D:/Xilinx/Vivado/2020.2/bin/unwrapped/win64.o/xelab.exe -wto 341c3404caa142bba025c86c654bfe13 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L blk_mem_gen_v8_4_3 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot testbench_behav xil_defaultlib.testbench xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-5021] port 'DebugWriteRegister' is not connected on this instance [D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sim_1/new/testbench.v:400]
+WARNING: [VRFC 10-5021] port 'RAMW_WriteAddr' is not connected on this instance [D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.srcs/sources_1/new/Top.v:157]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.DataSimulation
+Compiling module xil_defaultlib.TimingGen
+Compiling module xil_defaultlib.ADCInterface
+Compiling module xil_defaultlib.TriggerLogic
+Compiling module xil_defaultlib.RAM_WriteEngine
+Compiling module xil_defaultlib.RAM_ReadEngine
+Compiling module blk_mem_gen_v8_4_3.blk_mem_gen_v8_4_3_output_stage(...
+Compiling module blk_mem_gen_v8_4_3.blk_mem_gen_v8_4_3_softecc_outpu...
+Compiling module blk_mem_gen_v8_4_3.blk_mem_gen_v8_4_3_mem_module(C_...
+Compiling module blk_mem_gen_v8_4_3.blk_mem_gen_v8_4_3(C_FAMILY="art...
+Compiling module xil_defaultlib.blk_mem_gen_0
+Compiling module xil_defaultlib.SPI
+Compiling module xil_defaultlib.Regs
+Compiling module xil_defaultlib.FIFO_RAM
+Compiling module xil_defaultlib.Buffer_FIFO
+Compiling module xil_defaultlib.Top
+Compiling module xil_defaultlib.testbench
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot testbench_behav
+
+****** Webtalk v2020.2 (64-bit)
+  **** SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+  **** IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+    ** Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+source D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-186] 'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim/xsim.dir/testbench_behav/webtalk/usage_statistics_ext_xsim.xml' has been successfully sent to Xilinx on Thu Apr 15 10:18:18 2021. For additional details about this file, please refer to the WebTalk help file at D:/Xilinx/Vivado/2020.2/doc/webtalk_introduction.html.
+INFO: [Common 17-206] Exiting Webtalk at Thu Apr 15 10:18:18 2021...
+run_program: Time (s): cpu = 00:00:00 ; elapsed = 00:00:19 . Memory (MB): peak = 2469.902 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '19' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "testbench_behav -key {Behavioral:sim_1:Functional:testbench} -tclbatch {testbench.tcl} -view {D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/testbench_behav.wcfg} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2020.2
+Time resolution is 1 ps
+open_wave_config D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/testbench_behav.wcfg
+open_wave_config: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2483.918 ; gain = 0.020
+source testbench.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 10000ns
+Block Memory Generator module testbench.u_Top.u_blk_mem_gen_0.inst.\native_mem_module.blk_mem_gen_v8_4_3_inst  is using a behavioral model for simulation which will not precisely model memory collision behavior.
+blk_mem_gen_v8_4_3 collision detected at time: 5165000, Instance: testbench.u_Top.u_blk_mem_gen_0.inst.\native_mem_module.blk_mem_gen_v8_4_3_inst , A write address: 0, B read address: 0
+xsim: Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 2504.039 ; gain = 33.832
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'testbench_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 10000ns
+launch_simulation: Time (s): cpu = 00:00:13 ; elapsed = 00:00:37 . Memory (MB): peak = 2504.039 ; gain = 34.258
+run .3 s
+blk_mem_gen_v8_4_3 collision detected at time: 31462445000, Instance: testbench.u_Top.u_blk_mem_gen_0.inst.\native_mem_module.blk_mem_gen_v8_4_3_inst , A write address: 0, B read address: 0
+run: Time (s): cpu = 00:00:54 ; elapsed = 00:00:46 . Memory (MB): peak = 2521.426 ; gain = 17.125
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+close_sim: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 2524.355 ; gain = 0.000
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 15 10:25:10 2021...

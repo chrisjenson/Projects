@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr">
+<ExpandedNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Pins</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Analog</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\DMA</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Clocks</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Interrupts</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\System</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Directives</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Header Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\main_cm0p.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Header Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_group.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_indev.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_lang.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_obj.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_refr.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_style.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_vdb.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_arc.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_img.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_label.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_line.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_rbasic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_rect.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_triangle.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_vbasic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_builtin.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_10.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_10_cyrillic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_10_latin_sup.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_20.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_20_cyrillic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_20_latin_sup.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_30.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_30_cyrillic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_30_latin_sup.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_40.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_40_cyrillic.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_dejavu_40_latin_sup.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_monospace_8.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_symbol_10.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_symbol_20.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_symbol_30.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\fonts\lv_font_symbol_40.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\hal</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\hal\lv_hal_disp.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\hal\lv_hal_indev.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\hal\lv_hal_tick.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_anim.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_area.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_circ.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_color.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_font.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_fs.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_gc.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_ll.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_log.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_math.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_mem.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_task.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_templ.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_txt.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\misc\lv_ufs.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_arc.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_bar.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_btn.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_btnm.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_calendar.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_canvas.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_cb.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_chart.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_cont.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_ddlist.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_gauge.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_img.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_imgbtn.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_kb.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_label.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_led.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_line.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_list.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_lmeter.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_mbox.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_objx_templ.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_page.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_preload.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_roller.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_slider.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_spinbox.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_sw.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_ta.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_table.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_tabview.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_tileview.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\objx\lv_win.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_alien.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_default.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_material.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_mono.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_nemo.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_night.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_templ.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\themes\lv_theme_zen.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\main_cm4.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Shared Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Shared Files\cy_ipc_config.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Shared Files\cy_ipc_config.h</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Shared Files\cyapicallbacks.h</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Generated_Source</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Generated_Source\PSoC6</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Pins</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Analog</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\DMA</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Clocks</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Interrupts</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\System</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.cydwr\Directives</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Header Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM0p (Core 0)\Source Files\main_cm0p.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Header Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM IAR Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_group.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_indev.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_lang.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_obj.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_refr.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_style.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\core\lv_vdb.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_arc.c</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CM4 (Core 1)\Source Files\lvgl\draw\lv_draw_img.c</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.elf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.hex</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.map</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.elf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.hex</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.map</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.gpdsc</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.rpt</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.elf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.hex</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM0p\ARM_GCC_541\Debug\tcom_displ_test_psoc6.map</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.elf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.hex</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\CortexM4\ARM_GCC_541\Debug\tcom_displ_test_psoc6.map</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.gpdsc</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6.rpt</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\tcom_displ_test_psoc6_timing.html</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\PSoC 6 Architecture TRM</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\PSoC 63 Family Datasheet</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Peripheral Driver Library</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\System Reference Guides</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GPIO_PDL_v1_0</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GraphicLCDIntf_v1_80.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SCB_I2C_PDL_v2_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SCB_UART_PDL_v2_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysClk_PDL_v1_0</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysInt_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TCPWM_Counter_PDL_v1_0.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\PSoC 6 Architecture TRM</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\PSoC 63 Family Datasheet</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\Peripheral Driver Library</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\System Reference Guides</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GPIO_PDL_v1_0</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\GraphicLCDIntf_v1_80.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SCB_I2C_PDL_v2_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SCB_UART_PDL_v2_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysClk_PDL_v1_0</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\SysInt_PDL_v1_0.pdf</v>
+<v>tcom_displ_test_psoc6\tcom_displ_test_psoc6\TCPWM_Counter_PDL_v1_0.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\tcom_displ_test_psoc6.cydsn\main_cm0p.c" />
+<name v=".\tcom_displ_test_psoc6.cydsn\tcom_displ_test_psoc6.cydwr" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="703, 455" SelectedTabbedMdiWindow="a4df5ac9-208a-4ffb-85e9-479f86672340"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="c075075c-ca65-4f4f-b837-1e69f8181441" /><DocumentWindow Key="E:\Applications\LittlevGL\tcom_engineering\embed_sw\tcom_app\tcom_app_psoc6\tcom_displ_test_psoc6.cydsn\main_cm0p.c" Guid="0b57054e-df9c-43b3-bf0d-99d7cd67beca" /><DocumentWindow Key="E:\Applications\LittlevGL\tcom_engineering\embed_sw\tcom_app\tcom_app_psoc6\tcom_displ_test_psoc6.cydsn\tcom_displ_test_psoc6.cydwr" Guid="a4df5ac9-208a-4ffb-85e9-479f86672340" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

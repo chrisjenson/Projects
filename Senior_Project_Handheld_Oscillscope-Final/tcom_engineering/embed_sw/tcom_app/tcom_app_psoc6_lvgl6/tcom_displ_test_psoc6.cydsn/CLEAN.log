@@ -1,0 +1,5 @@
+--------------- Clean Started: 10/01/2020 12:51:00 Project: tcom_displ_test_psoc6, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+Deleting file ".\tcom_displ_test_psoc6.cycdx"
+Deleting file ".\tcom_displ_test_psoc6.rpt"
+Deleting file ".\tcom_displ_test_psoc6_timing.html"
+--------------- Clean Succeeded: 10/01/2020 12:51:00 ---------------

@@ -1,0 +1,1764 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_math.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.rodata
+  21              		.align	2
+  22              		.type	sin0_90_table, %object
+  23              		.size	sin0_90_table, 182
+  24              	sin0_90_table:
+  25 0000 0000     		.short	0
+  26 0002 3C02     		.short	572
+  27 0004 7804     		.short	1144
+  28 0006 B306     		.short	1715
+  29 0008 EE08     		.short	2286
+  30 000a 280B     		.short	2856
+  31 000c 610D     		.short	3425
+  32 000e 990F     		.short	3993
+  33 0010 D011     		.short	4560
+  34 0012 0614     		.short	5126
+  35 0014 3A16     		.short	5690
+  36 0016 6C18     		.short	6252
+  37 0018 9D1A     		.short	6813
+  38 001a CB1C     		.short	7371
+  39 001c F71E     		.short	7927
+  40 001e 2121     		.short	8481
+  41 0020 4823     		.short	9032
+  42 0022 6C25     		.short	9580
+  43 0024 8E27     		.short	10126
+  44 0026 AC29     		.short	10668
+  45 0028 C72B     		.short	11207
+  46 002a DF2D     		.short	11743
+  47 002c F32F     		.short	12275
+  48 002e 0332     		.short	12803
+  49 0030 1034     		.short	13328
+  50 0032 1836     		.short	13848
+  51 0034 1C38     		.short	14364
+  52 0036 1C3A     		.short	14876
+  53 0038 173C     		.short	15383
+  54 003a 0E3E     		.short	15886
+  55 003c FF3F     		.short	16383
+  56 003e EC41     		.short	16876
+  57 0040 D443     		.short	17364
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 2
+
+
+  58 0042 B645     		.short	17846
+  59 0044 9347     		.short	18323
+  60 0046 6A49     		.short	18794
+  61 0048 3C4B     		.short	19260
+  62 004a 084D     		.short	19720
+  63 004c CD4E     		.short	20173
+  64 004e 8D50     		.short	20621
+  65 0050 4652     		.short	21062
+  66 0052 F953     		.short	21497
+  67 0054 A555     		.short	21925
+  68 0056 4B57     		.short	22347
+  69 0058 EA58     		.short	22762
+  70 005a 825A     		.short	23170
+  71 005c 135C     		.short	23571
+  72 005e 9C5D     		.short	23964
+  73 0060 1F5F     		.short	24351
+  74 0062 9A60     		.short	24730
+  75 0064 0D62     		.short	25101
+  76 0066 7963     		.short	25465
+  77 0068 DD64     		.short	25821
+  78 006a 3966     		.short	26169
+  79 006c 8D67     		.short	26509
+  80 006e D968     		.short	26841
+  81 0070 1D6A     		.short	27165
+  82 0072 596B     		.short	27481
+  83 0074 8C6C     		.short	27788
+  84 0076 B76D     		.short	28087
+  85 0078 D96E     		.short	28377
+  86 007a F36F     		.short	28659
+  87 007c 0471     		.short	28932
+  88 007e 0C72     		.short	29196
+  89 0080 0B73     		.short	29451
+  90 0082 0174     		.short	29697
+  91 0084 EE74     		.short	29934
+  92 0086 D275     		.short	30162
+  93 0088 AD76     		.short	30381
+  94 008a 7F77     		.short	30591
+  95 008c 4778     		.short	30791
+  96 008e 0679     		.short	30982
+  97 0090 BB79     		.short	31163
+  98 0092 677A     		.short	31335
+  99 0094 0A7B     		.short	31498
+ 100 0096 A27B     		.short	31650
+ 101 0098 327C     		.short	31794
+ 102 009a B77C     		.short	31927
+ 103 009c 337D     		.short	32051
+ 104 009e A57D     		.short	32165
+ 105 00a0 0D7E     		.short	32269
+ 106 00a2 6C7E     		.short	32364
+ 107 00a4 C07E     		.short	32448
+ 108 00a6 0B7F     		.short	32523
+ 109 00a8 4B7F     		.short	32587
+ 110 00aa 827F     		.short	32642
+ 111 00ac AF7F     		.short	32687
+ 112 00ae D27F     		.short	32722
+ 113 00b0 EB7F     		.short	32747
+ 114 00b2 FA7F     		.short	32762
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 3
+
+
+ 115 00b4 FF7F     		.short	32767
+ 116              		.section	.text.lv_trigo_sin,"ax",%progbits
+ 117              		.align	2
+ 118              		.global	lv_trigo_sin
+ 119              		.thumb
+ 120              		.thumb_func
+ 121              		.type	lv_trigo_sin, %function
+ 122              	lv_trigo_sin:
+ 123              	.LFB0:
+ 124              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_math.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @file lv_math.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** #include "lv_math.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** #include <stdbool.h>
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** #include <stdlib.h>
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *      DEFINES
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**********************
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *      TYPEDEFS
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  **********************/
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**********************
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *  STATIC PROTOTYPES
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  **********************/
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *  STATIC VARIABLES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  **********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** static const int16_t sin0_90_table[] = {
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     0,     572,   1144,  1715,  2286,  2856,  3425,  3993,  4560,  5126,  5690,  6252,  6813,  7371
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     9032,  9580,  10126, 10668, 11207, 11743, 12275, 12803, 13328, 13848, 14364, 14876, 15383, 1588
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     17364, 17846, 18323, 18794, 19260, 19720, 20173, 20621, 21062, 21497, 21925, 22347, 22762, 2317
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     24351, 24730, 25101, 25465, 25821, 26169, 26509, 26841, 27165, 27481, 27788, 28087, 28377, 2865
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     29451, 29697, 29934, 30162, 30381, 30591, 30791, 30982, 31163, 31335, 31498, 31650, 31794, 3192
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     32269, 32364, 32448, 32523, 32587, 32642, 32687, 32722, 32747, 32762, 32767};
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**********************
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *      MACROS
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  **********************/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**********************
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  *   GLOBAL FUNCTIONS
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  **********************/
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * Return with sinus of an angle
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param angle
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @return sinus of 'angle'. sin(-90) = -32767, sin(90) = 32767
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 4
+
+
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  */
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** int16_t lv_trigo_sin(int16_t angle)
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** {
+ 125              		.loc 1 50 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 16
+ 128              		@ frame_needed = 1, uses_anonymous_args = 0
+ 129              		@ link register save eliminated.
+ 130 0000 80B4     		push	{r7}
+ 131              		.cfi_def_cfa_offset 4
+ 132              		.cfi_offset 7, -4
+ 133 0002 85B0     		sub	sp, sp, #20
+ 134              		.cfi_def_cfa_offset 24
+ 135 0004 00AF     		add	r7, sp, #0
+ 136              		.cfi_def_cfa_register 7
+ 137 0006 0346     		mov	r3, r0
+ 138 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     int16_t ret = 0;
+ 139              		.loc 1 51 0
+ 140 000a 0023     		movs	r3, #0
+ 141 000c FB81     		strh	r3, [r7, #14]	@ movhi
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     angle       = angle % 360;
+ 142              		.loc 1 52 0
+ 143 000e B7F90630 		ldrsh	r3, [r7, #6]
+ 144 0012 314A     		ldr	r2, .L8
+ 145 0014 83FB0212 		smull	r1, r2, r3, r2
+ 146 0018 1A44     		add	r2, r2, r3
+ 147 001a 1112     		asrs	r1, r2, #8
+ 148 001c DA17     		asrs	r2, r3, #31
+ 149 001e 8A1A     		subs	r2, r1, r2
+ 150 0020 4FF4B471 		mov	r1, #360
+ 151 0024 01FB02F2 		mul	r2, r1, r2
+ 152 0028 9B1A     		subs	r3, r3, r2
+ 153 002a FB80     		strh	r3, [r7, #6]	@ movhi
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(angle < 0) angle = 360 + angle;
+ 154              		.loc 1 54 0
+ 155 002c B7F90630 		ldrsh	r3, [r7, #6]
+ 156 0030 002B     		cmp	r3, #0
+ 157 0032 04DA     		bge	.L2
+ 158              		.loc 1 54 0 is_stmt 0 discriminator 1
+ 159 0034 FB88     		ldrh	r3, [r7, #6]
+ 160 0036 03F5B473 		add	r3, r3, #360
+ 161 003a 9BB2     		uxth	r3, r3
+ 162 003c FB80     		strh	r3, [r7, #6]	@ movhi
+ 163              	.L2:
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(angle < 90) {
+ 164              		.loc 1 56 0 is_stmt 1
+ 165 003e B7F90630 		ldrsh	r3, [r7, #6]
+ 166 0042 592B     		cmp	r3, #89
+ 167 0044 06DC     		bgt	.L3
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         ret = sin0_90_table[angle];
+ 168              		.loc 1 57 0
+ 169 0046 B7F90630 		ldrsh	r3, [r7, #6]
+ 170 004a 244A     		ldr	r2, .L8+4
+ 171 004c 32F81330 		ldrh	r3, [r2, r3, lsl #1]	@ movhi
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 5
+
+
+ 172 0050 FB81     		strh	r3, [r7, #14]	@ movhi
+ 173 0052 38E0     		b	.L4
+ 174              	.L3:
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else if(angle >= 90 && angle < 180) {
+ 175              		.loc 1 58 0
+ 176 0054 B7F90630 		ldrsh	r3, [r7, #6]
+ 177 0058 592B     		cmp	r3, #89
+ 178 005a 0FDD     		ble	.L5
+ 179              		.loc 1 58 0 is_stmt 0 discriminator 1
+ 180 005c B7F90630 		ldrsh	r3, [r7, #6]
+ 181 0060 B32B     		cmp	r3, #179
+ 182 0062 0BDC     		bgt	.L5
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         angle = 180 - angle;
+ 183              		.loc 1 59 0 is_stmt 1
+ 184 0064 FB88     		ldrh	r3, [r7, #6]
+ 185 0066 C3F1B403 		rsb	r3, r3, #180
+ 186 006a 9BB2     		uxth	r3, r3
+ 187 006c FB80     		strh	r3, [r7, #6]	@ movhi
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         ret   = sin0_90_table[angle];
+ 188              		.loc 1 60 0
+ 189 006e B7F90630 		ldrsh	r3, [r7, #6]
+ 190 0072 1A4A     		ldr	r2, .L8+4
+ 191 0074 32F81330 		ldrh	r3, [r2, r3, lsl #1]	@ movhi
+ 192 0078 FB81     		strh	r3, [r7, #14]	@ movhi
+ 193 007a 24E0     		b	.L4
+ 194              	.L5:
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else if(angle >= 180 && angle < 270) {
+ 195              		.loc 1 61 0
+ 196 007c B7F90630 		ldrsh	r3, [r7, #6]
+ 197 0080 B32B     		cmp	r3, #179
+ 198 0082 12DD     		ble	.L6
+ 199              		.loc 1 61 0 is_stmt 0 discriminator 1
+ 200 0084 B7F90630 		ldrsh	r3, [r7, #6]
+ 201 0088 B3F5877F 		cmp	r3, #270
+ 202 008c 0DDA     		bge	.L6
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         angle = angle - 180;
+ 203              		.loc 1 62 0 is_stmt 1
+ 204 008e FB88     		ldrh	r3, [r7, #6]
+ 205 0090 B43B     		subs	r3, r3, #180
+ 206 0092 9BB2     		uxth	r3, r3
+ 207 0094 FB80     		strh	r3, [r7, #6]	@ movhi
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         ret   = -sin0_90_table[angle];
+ 208              		.loc 1 63 0
+ 209 0096 B7F90630 		ldrsh	r3, [r7, #6]
+ 210 009a 104A     		ldr	r2, .L8+4
+ 211 009c 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 212 00a0 9BB2     		uxth	r3, r3
+ 213 00a2 5B42     		negs	r3, r3
+ 214 00a4 9BB2     		uxth	r3, r3
+ 215 00a6 FB81     		strh	r3, [r7, #14]	@ movhi
+ 216 00a8 0DE0     		b	.L4
+ 217              	.L6:
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else { /*angle >=270*/
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         angle = 360 - angle;
+ 218              		.loc 1 65 0
+ 219 00aa FB88     		ldrh	r3, [r7, #6]
+ 220 00ac C3F5B473 		rsb	r3, r3, #360
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 6
+
+
+ 221 00b0 9BB2     		uxth	r3, r3
+ 222 00b2 FB80     		strh	r3, [r7, #6]	@ movhi
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         ret   = -sin0_90_table[angle];
+ 223              		.loc 1 66 0
+ 224 00b4 B7F90630 		ldrsh	r3, [r7, #6]
+ 225 00b8 084A     		ldr	r2, .L8+4
+ 226 00ba 32F91330 		ldrsh	r3, [r2, r3, lsl #1]
+ 227 00be 9BB2     		uxth	r3, r3
+ 228 00c0 5B42     		negs	r3, r3
+ 229 00c2 9BB2     		uxth	r3, r3
+ 230 00c4 FB81     		strh	r3, [r7, #14]	@ movhi
+ 231              	.L4:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     return ret;
+ 232              		.loc 1 69 0
+ 233 00c6 B7F90E30 		ldrsh	r3, [r7, #14]
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** }
+ 234              		.loc 1 70 0
+ 235 00ca 1846     		mov	r0, r3
+ 236 00cc 1437     		adds	r7, r7, #20
+ 237              		.cfi_def_cfa_offset 4
+ 238 00ce BD46     		mov	sp, r7
+ 239              		.cfi_def_cfa_register 13
+ 240              		@ sp needed
+ 241 00d0 5DF8047B 		ldr	r7, [sp], #4
+ 242              		.cfi_restore 7
+ 243              		.cfi_def_cfa_offset 0
+ 244 00d4 7047     		bx	lr
+ 245              	.L9:
+ 246 00d6 00BF     		.align	2
+ 247              	.L8:
+ 248 00d8 B7600BB6 		.word	-1240768329
+ 249 00dc 00000000 		.word	sin0_90_table
+ 250              		.cfi_endproc
+ 251              	.LFE0:
+ 252              		.size	lv_trigo_sin, .-lv_trigo_sin
+ 253              		.section	.text.lv_bezier3,"ax",%progbits
+ 254              		.align	2
+ 255              		.global	lv_bezier3
+ 256              		.thumb
+ 257              		.thumb_func
+ 258              		.type	lv_bezier3, %function
+ 259              	lv_bezier3:
+ 260              	.LFB1:
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * Calculate a value of a Cubic Bezier function.
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param t time in range of [0..LV_BEZIER_VAL_MAX]
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param u0 start values in range of [0..LV_BEZIER_VAL_MAX]
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param u1 control value 1 values in range of [0..LV_BEZIER_VAL_MAX]
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param u2 control value 2 in range of [0..LV_BEZIER_VAL_MAX]
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param u3 end values in range of [0..LV_BEZIER_VAL_MAX]
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @return the value calculated from the given parameters in range of [0..LV_BEZIER_VAL_MAX]
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  */
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** int32_t lv_bezier3(uint32_t t, int32_t u0, int32_t u1, int32_t u2, int32_t u3)
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** {
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 7
+
+
+ 261              		.loc 1 82 0
+ 262              		.cfi_startproc
+ 263              		@ args = 4, pretend = 0, frame = 56
+ 264              		@ frame_needed = 1, uses_anonymous_args = 0
+ 265              		@ link register save eliminated.
+ 266 0000 80B4     		push	{r7}
+ 267              		.cfi_def_cfa_offset 4
+ 268              		.cfi_offset 7, -4
+ 269 0002 8FB0     		sub	sp, sp, #60
+ 270              		.cfi_def_cfa_offset 64
+ 271 0004 00AF     		add	r7, sp, #0
+ 272              		.cfi_def_cfa_register 7
+ 273 0006 F860     		str	r0, [r7, #12]
+ 274 0008 B960     		str	r1, [r7, #8]
+ 275 000a 7A60     		str	r2, [r7, #4]
+ 276 000c 3B60     		str	r3, [r7]
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t t_rem  = 1024 - t;
+ 277              		.loc 1 83 0
+ 278 000e FB68     		ldr	r3, [r7, #12]
+ 279 0010 C3F58063 		rsb	r3, r3, #1024
+ 280 0014 7B63     		str	r3, [r7, #52]
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t t_rem2 = (t_rem * t_rem) >> 10;
+ 281              		.loc 1 84 0
+ 282 0016 7B6B     		ldr	r3, [r7, #52]
+ 283 0018 7A6B     		ldr	r2, [r7, #52]
+ 284 001a 02FB03F3 		mul	r3, r2, r3
+ 285 001e 9B0A     		lsrs	r3, r3, #10
+ 286 0020 3B63     		str	r3, [r7, #48]
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t t_rem3 = (t_rem2 * t_rem) >> 10;
+ 287              		.loc 1 85 0
+ 288 0022 3B6B     		ldr	r3, [r7, #48]
+ 289 0024 7A6B     		ldr	r2, [r7, #52]
+ 290 0026 02FB03F3 		mul	r3, r2, r3
+ 291 002a 9B0A     		lsrs	r3, r3, #10
+ 292 002c FB62     		str	r3, [r7, #44]
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t t2     = (t * t) >> 10;
+ 293              		.loc 1 86 0
+ 294 002e FB68     		ldr	r3, [r7, #12]
+ 295 0030 FA68     		ldr	r2, [r7, #12]
+ 296 0032 02FB03F3 		mul	r3, r2, r3
+ 297 0036 9B0A     		lsrs	r3, r3, #10
+ 298 0038 BB62     		str	r3, [r7, #40]
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t t3     = (t2 * t) >> 10;
+ 299              		.loc 1 87 0
+ 300 003a BB6A     		ldr	r3, [r7, #40]
+ 301 003c FA68     		ldr	r2, [r7, #12]
+ 302 003e 02FB03F3 		mul	r3, r2, r3
+ 303 0042 9B0A     		lsrs	r3, r3, #10
+ 304 0044 7B62     		str	r3, [r7, #36]
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t v1 = ((uint32_t)t_rem3 * u0) >> 10;
+ 305              		.loc 1 89 0
+ 306 0046 BB68     		ldr	r3, [r7, #8]
+ 307 0048 FA6A     		ldr	r2, [r7, #44]
+ 308 004a 02FB03F3 		mul	r3, r2, r3
+ 309 004e 9B0A     		lsrs	r3, r3, #10
+ 310 0050 3B62     		str	r3, [r7, #32]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 8
+
+
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t v2 = ((uint32_t)3 * t_rem2 * t * u1) >> 20;
+ 311              		.loc 1 90 0
+ 312 0052 3B6B     		ldr	r3, [r7, #48]
+ 313 0054 FA68     		ldr	r2, [r7, #12]
+ 314 0056 02FB03F3 		mul	r3, r2, r3
+ 315 005a 7A68     		ldr	r2, [r7, #4]
+ 316 005c 02FB03F2 		mul	r2, r2, r3
+ 317 0060 1346     		mov	r3, r2
+ 318 0062 5B00     		lsls	r3, r3, #1
+ 319 0064 1344     		add	r3, r3, r2
+ 320 0066 1B0D     		lsrs	r3, r3, #20
+ 321 0068 FB61     		str	r3, [r7, #28]
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t v3 = ((uint32_t)3 * t_rem * t2 * u2) >> 20;
+ 322              		.loc 1 91 0
+ 323 006a 7B6B     		ldr	r3, [r7, #52]
+ 324 006c BA6A     		ldr	r2, [r7, #40]
+ 325 006e 02FB03F3 		mul	r3, r2, r3
+ 326 0072 3A68     		ldr	r2, [r7]
+ 327 0074 02FB03F2 		mul	r2, r2, r3
+ 328 0078 1346     		mov	r3, r2
+ 329 007a 5B00     		lsls	r3, r3, #1
+ 330 007c 1344     		add	r3, r3, r2
+ 331 007e 1B0D     		lsrs	r3, r3, #20
+ 332 0080 BB61     		str	r3, [r7, #24]
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t v4 = ((uint32_t)t3 * u3) >> 10;
+ 333              		.loc 1 92 0
+ 334 0082 3B6C     		ldr	r3, [r7, #64]
+ 335 0084 7A6A     		ldr	r2, [r7, #36]
+ 336 0086 02FB03F3 		mul	r3, r2, r3
+ 337 008a 9B0A     		lsrs	r3, r3, #10
+ 338 008c 7B61     		str	r3, [r7, #20]
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     return v1 + v2 + v3 + v4;
+ 339              		.loc 1 94 0
+ 340 008e 3A6A     		ldr	r2, [r7, #32]
+ 341 0090 FB69     		ldr	r3, [r7, #28]
+ 342 0092 1A44     		add	r2, r2, r3
+ 343 0094 BB69     		ldr	r3, [r7, #24]
+ 344 0096 1A44     		add	r2, r2, r3
+ 345 0098 7B69     		ldr	r3, [r7, #20]
+ 346 009a 1344     		add	r3, r3, r2
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** }
+ 347              		.loc 1 95 0
+ 348 009c 1846     		mov	r0, r3
+ 349 009e 3C37     		adds	r7, r7, #60
+ 350              		.cfi_def_cfa_offset 4
+ 351 00a0 BD46     		mov	sp, r7
+ 352              		.cfi_def_cfa_register 13
+ 353              		@ sp needed
+ 354 00a2 5DF8047B 		ldr	r7, [sp], #4
+ 355              		.cfi_restore 7
+ 356              		.cfi_def_cfa_offset 0
+ 357 00a6 7047     		bx	lr
+ 358              		.cfi_endproc
+ 359              	.LFE1:
+ 360              		.size	lv_bezier3, .-lv_bezier3
+ 361              		.section	.text.lv_atan2,"ax",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 9
+
+
+ 362              		.align	2
+ 363              		.global	lv_atan2
+ 364              		.thumb
+ 365              		.thumb_func
+ 366              		.type	lv_atan2, %function
+ 367              	lv_atan2:
+ 368              	.LFB2:
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * Calculate the atan2 of a vector.
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param x
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param y
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @return the angle in degree calculated from the given parameters in range of [0..360]
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  */
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** uint16_t lv_atan2(int x, int y)
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** {
+ 369              		.loc 1 104 0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 32
+ 372              		@ frame_needed = 1, uses_anonymous_args = 0
+ 373              		@ link register save eliminated.
+ 374 0000 80B4     		push	{r7}
+ 375              		.cfi_def_cfa_offset 4
+ 376              		.cfi_offset 7, -4
+ 377 0002 89B0     		sub	sp, sp, #36
+ 378              		.cfi_def_cfa_offset 40
+ 379 0004 00AF     		add	r7, sp, #0
+ 380              		.cfi_def_cfa_register 7
+ 381 0006 7860     		str	r0, [r7, #4]
+ 382 0008 3960     		str	r1, [r7]
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // Fast XY vector to integer degree algorithm - Jan 2011 www.RomanBlack.com
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // Converts any XY values including 0 to a degree value that should be
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // within +/- 1 degree of the accurate value without needing
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // large slow trig functions like ArcTan() or ArcCos().
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // NOTE! at least one of the X or Y values must be non-zero!
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // This is the full version, for all 4 quadrants and will generate
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // the angle in integer degrees from 0-360.
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // Any values of X and Y are usable including negative values provided
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // they are between -1456 and 1456 so the 16bit multiply does not overflow.
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned char negflag;
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned char tempdegree;
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned char comp;
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned int degree;     // this will hold the result
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     //signed int x;            // these hold the XY vector at the start
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     //signed int y;            // (and they will be destroyed)
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned int ux;
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     unsigned int uy;
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // Save the sign flags then remove signs and get XY as unsigned ints
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     negflag = 0;
+ 383              		.loc 1 125 0
+ 384 000a 0023     		movs	r3, #0
+ 385 000c FB77     		strb	r3, [r7, #31]
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(x < 0) {
+ 386              		.loc 1 126 0
+ 387 000e 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 10
+
+
+ 388 0010 002B     		cmp	r3, #0
+ 389 0012 05DA     		bge	.L13
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         negflag += 0x01;    // x flag bit
+ 390              		.loc 1 127 0
+ 391 0014 FB7F     		ldrb	r3, [r7, #31]
+ 392 0016 0133     		adds	r3, r3, #1
+ 393 0018 FB77     		strb	r3, [r7, #31]
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         x = (0 - x);        // is now +
+ 394              		.loc 1 128 0
+ 395 001a 7B68     		ldr	r3, [r7, #4]
+ 396 001c 5B42     		negs	r3, r3
+ 397 001e 7B60     		str	r3, [r7, #4]
+ 398              	.L13:
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     ux = x;                // copy to unsigned var before multiply
+ 399              		.loc 1 130 0
+ 400 0020 7B68     		ldr	r3, [r7, #4]
+ 401 0022 7B61     		str	r3, [r7, #20]
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(y < 0) {
+ 402              		.loc 1 131 0
+ 403 0024 3B68     		ldr	r3, [r7]
+ 404 0026 002B     		cmp	r3, #0
+ 405 0028 05DA     		bge	.L14
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         negflag += 0x02;    // y flag bit
+ 406              		.loc 1 132 0
+ 407 002a FB7F     		ldrb	r3, [r7, #31]
+ 408 002c 0233     		adds	r3, r3, #2
+ 409 002e FB77     		strb	r3, [r7, #31]
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         y = (0 - y);        // is now +
+ 410              		.loc 1 133 0
+ 411 0030 3B68     		ldr	r3, [r7]
+ 412 0032 5B42     		negs	r3, r3
+ 413 0034 3B60     		str	r3, [r7]
+ 414              	.L14:
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uy = y;                // copy to unsigned var before multiply
+ 415              		.loc 1 135 0
+ 416 0036 3B68     		ldr	r3, [r7]
+ 417 0038 3B61     		str	r3, [r7, #16]
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // 1. Calc the scaled "degrees"
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(ux > uy) {
+ 418              		.loc 1 138 0
+ 419 003a 7A69     		ldr	r2, [r7, #20]
+ 420 003c 3B69     		ldr	r3, [r7, #16]
+ 421 003e 9A42     		cmp	r2, r3
+ 422 0040 0DD9     		bls	.L15
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         degree = (uy * 45) / ux;   // degree result will be 0-45 range
+ 423              		.loc 1 139 0
+ 424 0042 3A69     		ldr	r2, [r7, #16]
+ 425 0044 1346     		mov	r3, r2
+ 426 0046 5B00     		lsls	r3, r3, #1
+ 427 0048 1344     		add	r3, r3, r2
+ 428 004a 1A01     		lsls	r2, r3, #4
+ 429 004c D21A     		subs	r2, r2, r3
+ 430 004e 7B69     		ldr	r3, [r7, #20]
+ 431 0050 B2FBF3F3 		udiv	r3, r2, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 11
+
+
+ 432 0054 BB61     		str	r3, [r7, #24]
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         negflag += 0x10;    // octant flag bit
+ 433              		.loc 1 140 0
+ 434 0056 FB7F     		ldrb	r3, [r7, #31]
+ 435 0058 1033     		adds	r3, r3, #16
+ 436 005a FB77     		strb	r3, [r7, #31]
+ 437 005c 09E0     		b	.L16
+ 438              	.L15:
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else {
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         degree = (ux * 45) / uy;   // degree result will be 0-45 range
+ 439              		.loc 1 142 0
+ 440 005e 7A69     		ldr	r2, [r7, #20]
+ 441 0060 1346     		mov	r3, r2
+ 442 0062 5B00     		lsls	r3, r3, #1
+ 443 0064 1344     		add	r3, r3, r2
+ 444 0066 1A01     		lsls	r2, r3, #4
+ 445 0068 D21A     		subs	r2, r2, r3
+ 446 006a 3B69     		ldr	r3, [r7, #16]
+ 447 006c B2FBF3F3 		udiv	r3, r2, r3
+ 448 0070 BB61     		str	r3, [r7, #24]
+ 449              	.L16:
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // 2. Compensate for the 4 degree error curve
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     comp = 0;
+ 450              		.loc 1 146 0
+ 451 0072 0023     		movs	r3, #0
+ 452 0074 BB77     		strb	r3, [r7, #30]
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     tempdegree = degree;    // use an unsigned char for speed!
+ 453              		.loc 1 147 0
+ 454 0076 BB69     		ldr	r3, [r7, #24]
+ 455 0078 FB73     		strb	r3, [r7, #15]
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(tempdegree > 22) {    // if top half of range
+ 456              		.loc 1 148 0
+ 457 007a FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 458 007c 162B     		cmp	r3, #22
+ 459 007e 18D9     		bls	.L17
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree <= 44) comp++;
+ 460              		.loc 1 149 0
+ 461 0080 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 462 0082 2C2B     		cmp	r3, #44
+ 463 0084 02D8     		bhi	.L18
+ 464              		.loc 1 149 0 is_stmt 0 discriminator 1
+ 465 0086 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 466 0088 0133     		adds	r3, r3, #1
+ 467 008a BB77     		strb	r3, [r7, #30]
+ 468              	.L18:
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree <= 41) comp++;
+ 469              		.loc 1 150 0 is_stmt 1
+ 470 008c FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 471 008e 292B     		cmp	r3, #41
+ 472 0090 02D8     		bhi	.L19
+ 473              		.loc 1 150 0 is_stmt 0 discriminator 1
+ 474 0092 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 475 0094 0133     		adds	r3, r3, #1
+ 476 0096 BB77     		strb	r3, [r7, #30]
+ 477              	.L19:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 12
+
+
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree <= 37) comp++;
+ 478              		.loc 1 151 0 is_stmt 1
+ 479 0098 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 480 009a 252B     		cmp	r3, #37
+ 481 009c 02D8     		bhi	.L20
+ 482              		.loc 1 151 0 is_stmt 0 discriminator 1
+ 483 009e BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 484 00a0 0133     		adds	r3, r3, #1
+ 485 00a2 BB77     		strb	r3, [r7, #30]
+ 486              	.L20:
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree <= 32) comp++;  // max is 4 degrees compensated
+ 487              		.loc 1 152 0 is_stmt 1
+ 488 00a4 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 489 00a6 202B     		cmp	r3, #32
+ 490 00a8 1BD8     		bhi	.L22
+ 491              		.loc 1 152 0 is_stmt 0 discriminator 1
+ 492 00aa BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 493 00ac 0133     		adds	r3, r3, #1
+ 494 00ae BB77     		strb	r3, [r7, #30]
+ 495 00b0 17E0     		b	.L22
+ 496              	.L17:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else { // else is lower half of range
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree >= 2) comp++;
+ 497              		.loc 1 154 0 is_stmt 1
+ 498 00b2 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 499 00b4 012B     		cmp	r3, #1
+ 500 00b6 02D9     		bls	.L23
+ 501              		.loc 1 154 0 is_stmt 0 discriminator 1
+ 502 00b8 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 503 00ba 0133     		adds	r3, r3, #1
+ 504 00bc BB77     		strb	r3, [r7, #30]
+ 505              	.L23:
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree >= 6) comp++;
+ 506              		.loc 1 155 0 is_stmt 1
+ 507 00be FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 508 00c0 052B     		cmp	r3, #5
+ 509 00c2 02D9     		bls	.L24
+ 510              		.loc 1 155 0 is_stmt 0 discriminator 1
+ 511 00c4 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 512 00c6 0133     		adds	r3, r3, #1
+ 513 00c8 BB77     		strb	r3, [r7, #30]
+ 514              	.L24:
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree >= 10) comp++;
+ 515              		.loc 1 156 0 is_stmt 1
+ 516 00ca FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 517 00cc 092B     		cmp	r3, #9
+ 518 00ce 02D9     		bls	.L25
+ 519              		.loc 1 156 0 is_stmt 0 discriminator 1
+ 520 00d0 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 521 00d2 0133     		adds	r3, r3, #1
+ 522 00d4 BB77     		strb	r3, [r7, #30]
+ 523              	.L25:
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(tempdegree >= 15) comp++;  // max is 4 degrees compensated
+ 524              		.loc 1 157 0 is_stmt 1
+ 525 00d6 FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 526 00d8 0E2B     		cmp	r3, #14
+ 527 00da 02D9     		bls	.L22
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 13
+
+
+ 528              		.loc 1 157 0 is_stmt 0 discriminator 1
+ 529 00dc BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 530 00de 0133     		adds	r3, r3, #1
+ 531 00e0 BB77     		strb	r3, [r7, #30]
+ 532              	.L22:
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     degree += comp;   // degree is now accurate to +/- 1 degree!
+ 533              		.loc 1 159 0 is_stmt 1
+ 534 00e2 BB7F     		ldrb	r3, [r7, #30]	@ zero_extendqisi2
+ 535 00e4 BA69     		ldr	r2, [r7, #24]
+ 536 00e6 1344     		add	r3, r3, r2
+ 537 00e8 BB61     		str	r3, [r7, #24]
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // Invert degree if it was X>Y octant, makes 0-45 into 90-45
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(negflag & 0x10) degree = (90 - degree);
+ 538              		.loc 1 162 0
+ 539 00ea FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 540 00ec 03F01003 		and	r3, r3, #16
+ 541 00f0 002B     		cmp	r3, #0
+ 542 00f2 03D0     		beq	.L26
+ 543              		.loc 1 162 0 is_stmt 0 discriminator 1
+ 544 00f4 BB69     		ldr	r3, [r7, #24]
+ 545 00f6 C3F15A03 		rsb	r3, r3, #90
+ 546 00fa BB61     		str	r3, [r7, #24]
+ 547              	.L26:
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // 3. Degree is now 0-90 range for this quadrant,
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // need to invert it for whichever quadrant it was in
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     if(negflag & 0x02) { // if -Y
+ 548              		.loc 1 166 0 is_stmt 1
+ 549 00fc FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 550 00fe 03F00203 		and	r3, r3, #2
+ 551 0102 002B     		cmp	r3, #0
+ 552 0104 0DD0     		beq	.L27
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(negflag & 0x01)   // if -Y -X
+ 553              		.loc 1 167 0
+ 554 0106 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 555 0108 03F00103 		and	r3, r3, #1
+ 556 010c 002B     		cmp	r3, #0
+ 557 010e 03D0     		beq	.L28
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****             degree = (180 + degree);
+ 558              		.loc 1 168 0
+ 559 0110 BB69     		ldr	r3, [r7, #24]
+ 560 0112 B433     		adds	r3, r3, #180
+ 561 0114 BB61     		str	r3, [r7, #24]
+ 562 0116 0DE0     		b	.L30
+ 563              	.L28:
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         else        // else is -Y +X
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****             degree = (180 - degree);
+ 564              		.loc 1 170 0
+ 565 0118 BB69     		ldr	r3, [r7, #24]
+ 566 011a C3F1B403 		rsb	r3, r3, #180
+ 567 011e BB61     		str	r3, [r7, #24]
+ 568 0120 08E0     		b	.L30
+ 569              	.L27:
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     } else { // else is +Y
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(negflag & 0x01)   // if +Y -X
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 14
+
+
+ 570              		.loc 1 172 0
+ 571 0122 FB7F     		ldrb	r3, [r7, #31]	@ zero_extendqisi2
+ 572 0124 03F00103 		and	r3, r3, #1
+ 573 0128 002B     		cmp	r3, #0
+ 574 012a 03D0     		beq	.L30
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****             degree = (360 - degree);
+ 575              		.loc 1 173 0
+ 576 012c BB69     		ldr	r3, [r7, #24]
+ 577 012e C3F5B473 		rsb	r3, r3, #360
+ 578 0132 BB61     		str	r3, [r7, #24]
+ 579              	.L30:
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     return degree;
+ 580              		.loc 1 175 0
+ 581 0134 BB69     		ldr	r3, [r7, #24]
+ 582 0136 9BB2     		uxth	r3, r3
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** }
+ 583              		.loc 1 176 0
+ 584 0138 1846     		mov	r0, r3
+ 585 013a 2437     		adds	r7, r7, #36
+ 586              		.cfi_def_cfa_offset 4
+ 587 013c BD46     		mov	sp, r7
+ 588              		.cfi_def_cfa_register 13
+ 589              		@ sp needed
+ 590 013e 5DF8047B 		ldr	r7, [sp], #4
+ 591              		.cfi_restore 7
+ 592              		.cfi_def_cfa_offset 0
+ 593 0142 7047     		bx	lr
+ 594              		.cfi_endproc
+ 595              	.LFE2:
+ 596              		.size	lv_atan2, .-lv_atan2
+ 597              		.section	.text.lv_sqrt,"ax",%progbits
+ 598              		.align	2
+ 599              		.global	lv_sqrt
+ 600              		.thumb
+ 601              		.thumb_func
+ 602              		.type	lv_sqrt, %function
+ 603              	lv_sqrt:
+ 604              	.LFB3:
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** /**
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * Calculate the integer square root of a number.
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @param num
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  * @return square root of 'num'
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****  */
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** uint32_t lv_sqrt(uint32_t num)
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** {
+ 605              		.loc 1 184 0
+ 606              		.cfi_startproc
+ 607              		@ args = 0, pretend = 0, frame = 16
+ 608              		@ frame_needed = 1, uses_anonymous_args = 0
+ 609              		@ link register save eliminated.
+ 610 0000 80B4     		push	{r7}
+ 611              		.cfi_def_cfa_offset 4
+ 612              		.cfi_offset 7, -4
+ 613 0002 85B0     		sub	sp, sp, #20
+ 614              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 15
+
+
+ 615 0004 00AF     		add	r7, sp, #0
+ 616              		.cfi_def_cfa_register 7
+ 617 0006 7860     		str	r0, [r7, #4]
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     // http://www.codecodex.com/wiki/Calculate_an_integer_square_root#C
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t root  = 0;
+ 618              		.loc 1 186 0
+ 619 0008 0023     		movs	r3, #0
+ 620 000a FB60     		str	r3, [r7, #12]
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     uint32_t place = 0x40000000;
+ 621              		.loc 1 187 0
+ 622 000c 4FF08043 		mov	r3, #1073741824
+ 623 0010 BB60     		str	r3, [r7, #8]
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** 
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     while(place > num) place >>= 2;
+ 624              		.loc 1 189 0
+ 625 0012 02E0     		b	.L33
+ 626              	.L34:
+ 627              		.loc 1 189 0 is_stmt 0 discriminator 2
+ 628 0014 BB68     		ldr	r3, [r7, #8]
+ 629 0016 9B08     		lsrs	r3, r3, #2
+ 630 0018 BB60     		str	r3, [r7, #8]
+ 631              	.L33:
+ 632              		.loc 1 189 0 discriminator 1
+ 633 001a BA68     		ldr	r2, [r7, #8]
+ 634 001c 7B68     		ldr	r3, [r7, #4]
+ 635 001e 9A42     		cmp	r2, r3
+ 636 0020 F8D8     		bhi	.L34
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     while(place) {
+ 637              		.loc 1 190 0 is_stmt 1
+ 638 0022 16E0     		b	.L35
+ 639              	.L37:
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(num >= root + place) {
+ 640              		.loc 1 191 0
+ 641 0024 FA68     		ldr	r2, [r7, #12]
+ 642 0026 BB68     		ldr	r3, [r7, #8]
+ 643 0028 1A44     		add	r2, r2, r3
+ 644 002a 7B68     		ldr	r3, [r7, #4]
+ 645 002c 9A42     		cmp	r2, r3
+ 646 002e 0AD8     		bhi	.L36
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****             num -= root + place;
+ 647              		.loc 1 192 0
+ 648 0030 FA68     		ldr	r2, [r7, #12]
+ 649 0032 BB68     		ldr	r3, [r7, #8]
+ 650 0034 1344     		add	r3, r3, r2
+ 651 0036 7A68     		ldr	r2, [r7, #4]
+ 652 0038 D31A     		subs	r3, r2, r3
+ 653 003a 7B60     		str	r3, [r7, #4]
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****             root += (place << 1);
+ 654              		.loc 1 193 0
+ 655 003c BB68     		ldr	r3, [r7, #8]
+ 656 003e 5B00     		lsls	r3, r3, #1
+ 657 0040 FA68     		ldr	r2, [r7, #12]
+ 658 0042 1344     		add	r3, r3, r2
+ 659 0044 FB60     		str	r3, [r7, #12]
+ 660              	.L36:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         }
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         root >>= 1;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 16
+
+
+ 661              		.loc 1 195 0
+ 662 0046 FB68     		ldr	r3, [r7, #12]
+ 663 0048 5B08     		lsrs	r3, r3, #1
+ 664 004a FB60     		str	r3, [r7, #12]
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         place >>= 2;
+ 665              		.loc 1 196 0
+ 666 004c BB68     		ldr	r3, [r7, #8]
+ 667 004e 9B08     		lsrs	r3, r3, #2
+ 668 0050 BB60     		str	r3, [r7, #8]
+ 669              	.L35:
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****         if(num >= root + place) {
+ 670              		.loc 1 190 0
+ 671 0052 BB68     		ldr	r3, [r7, #8]
+ 672 0054 002B     		cmp	r3, #0
+ 673 0056 E5D1     		bne	.L37
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     }
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c ****     return root;
+ 674              		.loc 1 198 0
+ 675 0058 FB68     		ldr	r3, [r7, #12]
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_math.c **** }
+ 676              		.loc 1 199 0
+ 677 005a 1846     		mov	r0, r3
+ 678 005c 1437     		adds	r7, r7, #20
+ 679              		.cfi_def_cfa_offset 4
+ 680 005e BD46     		mov	sp, r7
+ 681              		.cfi_def_cfa_register 13
+ 682              		@ sp needed
+ 683 0060 5DF8047B 		ldr	r7, [sp], #4
+ 684              		.cfi_restore 7
+ 685              		.cfi_def_cfa_offset 0
+ 686 0064 7047     		bx	lr
+ 687              		.cfi_endproc
+ 688              	.LFE3:
+ 689              		.size	lv_sqrt, .-lv_sqrt
+ 690 0066 00BF     		.text
+ 691              	.Letext0:
+ 692              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 693              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 694              		.section	.debug_info,"",%progbits
+ 695              	.Ldebug_info0:
+ 696 0000 D0020000 		.4byte	0x2d0
+ 697 0004 0400     		.2byte	0x4
+ 698 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 699 000a 04       		.byte	0x4
+ 700 000b 01       		.uleb128 0x1
+ 701 000c 75000000 		.4byte	.LASF35
+ 702 0010 0C       		.byte	0xc
+ 703 0011 68020000 		.4byte	.LASF36
+ 704 0015 89010000 		.4byte	.LASF37
+ 705 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 706 001d 00000000 		.4byte	0
+ 707 0021 00000000 		.4byte	.Ldebug_line0
+ 708 0025 02       		.uleb128 0x2
+ 709 0026 01       		.byte	0x1
+ 710 0027 06       		.byte	0x6
+ 711 0028 D7020000 		.4byte	.LASF0
+ 712 002c 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 17
+
+
+ 713 002d 01       		.byte	0x1
+ 714 002e 08       		.byte	0x8
+ 715 002f 3B000000 		.4byte	.LASF1
+ 716 0033 03       		.uleb128 0x3
+ 717 0034 00000000 		.4byte	.LASF3
+ 718 0038 02       		.byte	0x2
+ 719 0039 29       		.byte	0x29
+ 720 003a 3E000000 		.4byte	0x3e
+ 721 003e 02       		.uleb128 0x2
+ 722 003f 02       		.byte	0x2
+ 723 0040 05       		.byte	0x5
+ 724 0041 5E020000 		.4byte	.LASF2
+ 725 0045 03       		.uleb128 0x3
+ 726 0046 33010000 		.4byte	.LASF4
+ 727 004a 02       		.byte	0x2
+ 728 004b 2B       		.byte	0x2b
+ 729 004c 50000000 		.4byte	0x50
+ 730 0050 02       		.uleb128 0x2
+ 731 0051 02       		.byte	0x2
+ 732 0052 07       		.byte	0x7
+ 733 0053 28000000 		.4byte	.LASF5
+ 734 0057 03       		.uleb128 0x3
+ 735 0058 0A000000 		.4byte	.LASF6
+ 736 005c 02       		.byte	0x2
+ 737 005d 3F       		.byte	0x3f
+ 738 005e 62000000 		.4byte	0x62
+ 739 0062 02       		.uleb128 0x2
+ 740 0063 04       		.byte	0x4
+ 741 0064 05       		.byte	0x5
+ 742 0065 BC020000 		.4byte	.LASF7
+ 743 0069 03       		.uleb128 0x3
+ 744 006a 44010000 		.4byte	.LASF8
+ 745 006e 02       		.byte	0x2
+ 746 006f 41       		.byte	0x41
+ 747 0070 74000000 		.4byte	0x74
+ 748 0074 02       		.uleb128 0x2
+ 749 0075 04       		.byte	0x4
+ 750 0076 07       		.byte	0x7
+ 751 0077 55000000 		.4byte	.LASF9
+ 752 007b 02       		.uleb128 0x2
+ 753 007c 08       		.byte	0x8
+ 754 007d 05       		.byte	0x5
+ 755 007e 37020000 		.4byte	.LASF10
+ 756 0082 02       		.uleb128 0x2
+ 757 0083 08       		.byte	0x8
+ 758 0084 07       		.byte	0x7
+ 759 0085 6A010000 		.4byte	.LASF11
+ 760 0089 04       		.uleb128 0x4
+ 761 008a 04       		.byte	0x4
+ 762 008b 05       		.byte	0x5
+ 763 008c 696E7400 		.ascii	"int\000"
+ 764 0090 02       		.uleb128 0x2
+ 765 0091 04       		.byte	0x4
+ 766 0092 07       		.byte	0x7
+ 767 0093 5D010000 		.4byte	.LASF12
+ 768 0097 03       		.uleb128 0x3
+ 769 0098 81010000 		.4byte	.LASF13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 18
+
+
+ 770 009c 03       		.byte	0x3
+ 771 009d 20       		.byte	0x20
+ 772 009e 33000000 		.4byte	0x33
+ 773 00a2 03       		.uleb128 0x3
+ 774 00a3 AA020000 		.4byte	.LASF14
+ 775 00a7 03       		.byte	0x3
+ 776 00a8 24       		.byte	0x24
+ 777 00a9 45000000 		.4byte	0x45
+ 778 00ad 03       		.uleb128 0x3
+ 779 00ae 26020000 		.4byte	.LASF15
+ 780 00b2 03       		.byte	0x3
+ 781 00b3 2C       		.byte	0x2c
+ 782 00b4 57000000 		.4byte	0x57
+ 783 00b8 03       		.uleb128 0x3
+ 784 00b9 B3020000 		.4byte	.LASF16
+ 785 00bd 03       		.byte	0x3
+ 786 00be 30       		.byte	0x30
+ 787 00bf 69000000 		.4byte	0x69
+ 788 00c3 02       		.uleb128 0x2
+ 789 00c4 08       		.byte	0x8
+ 790 00c5 04       		.byte	0x4
+ 791 00c6 CB020000 		.4byte	.LASF17
+ 792 00ca 02       		.uleb128 0x2
+ 793 00cb 04       		.byte	0x4
+ 794 00cc 07       		.byte	0x7
+ 795 00cd 2E020000 		.4byte	.LASF18
+ 796 00d1 02       		.uleb128 0x2
+ 797 00d2 01       		.byte	0x1
+ 798 00d3 08       		.byte	0x8
+ 799 00d4 4A020000 		.4byte	.LASF19
+ 800 00d8 05       		.uleb128 0x5
+ 801 00d9 14000000 		.4byte	.LASF20
+ 802 00dd 01       		.byte	0x1
+ 803 00de 31       		.byte	0x31
+ 804 00df 97000000 		.4byte	0x97
+ 805 00e3 00000000 		.4byte	.LFB0
+ 806 00e7 E0000000 		.4byte	.LFE0-.LFB0
+ 807 00eb 01       		.uleb128 0x1
+ 808 00ec 9C       		.byte	0x9c
+ 809 00ed 0E010000 		.4byte	0x10e
+ 810 00f1 06       		.uleb128 0x6
+ 811 00f2 6F000000 		.4byte	.LASF22
+ 812 00f6 01       		.byte	0x1
+ 813 00f7 31       		.byte	0x31
+ 814 00f8 97000000 		.4byte	0x97
+ 815 00fc 02       		.uleb128 0x2
+ 816 00fd 91       		.byte	0x91
+ 817 00fe 6E       		.sleb128 -18
+ 818 00ff 07       		.uleb128 0x7
+ 819 0100 72657400 		.ascii	"ret\000"
+ 820 0104 01       		.byte	0x1
+ 821 0105 33       		.byte	0x33
+ 822 0106 97000000 		.4byte	0x97
+ 823 010a 02       		.uleb128 0x2
+ 824 010b 91       		.byte	0x91
+ 825 010c 76       		.sleb128 -10
+ 826 010d 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 19
+
+
+ 827 010e 05       		.uleb128 0x5
+ 828 010f 9F020000 		.4byte	.LASF21
+ 829 0113 01       		.byte	0x1
+ 830 0114 51       		.byte	0x51
+ 831 0115 AD000000 		.4byte	0xad
+ 832 0119 00000000 		.4byte	.LFB1
+ 833 011d A8000000 		.4byte	.LFE1-.LFB1
+ 834 0121 01       		.uleb128 0x1
+ 835 0122 9C       		.byte	0x9c
+ 836 0123 E0010000 		.4byte	0x1e0
+ 837 0127 08       		.uleb128 0x8
+ 838 0128 7400     		.ascii	"t\000"
+ 839 012a 01       		.byte	0x1
+ 840 012b 51       		.byte	0x51
+ 841 012c B8000000 		.4byte	0xb8
+ 842 0130 02       		.uleb128 0x2
+ 843 0131 91       		.byte	0x91
+ 844 0132 4C       		.sleb128 -52
+ 845 0133 08       		.uleb128 0x8
+ 846 0134 753000   		.ascii	"u0\000"
+ 847 0137 01       		.byte	0x1
+ 848 0138 51       		.byte	0x51
+ 849 0139 AD000000 		.4byte	0xad
+ 850 013d 02       		.uleb128 0x2
+ 851 013e 91       		.byte	0x91
+ 852 013f 48       		.sleb128 -56
+ 853 0140 08       		.uleb128 0x8
+ 854 0141 753100   		.ascii	"u1\000"
+ 855 0144 01       		.byte	0x1
+ 856 0145 51       		.byte	0x51
+ 857 0146 AD000000 		.4byte	0xad
+ 858 014a 02       		.uleb128 0x2
+ 859 014b 91       		.byte	0x91
+ 860 014c 44       		.sleb128 -60
+ 861 014d 08       		.uleb128 0x8
+ 862 014e 753200   		.ascii	"u2\000"
+ 863 0151 01       		.byte	0x1
+ 864 0152 51       		.byte	0x51
+ 865 0153 AD000000 		.4byte	0xad
+ 866 0157 02       		.uleb128 0x2
+ 867 0158 91       		.byte	0x91
+ 868 0159 40       		.sleb128 -64
+ 869 015a 08       		.uleb128 0x8
+ 870 015b 753300   		.ascii	"u3\000"
+ 871 015e 01       		.byte	0x1
+ 872 015f 51       		.byte	0x51
+ 873 0160 AD000000 		.4byte	0xad
+ 874 0164 02       		.uleb128 0x2
+ 875 0165 91       		.byte	0x91
+ 876 0166 00       		.sleb128 0
+ 877 0167 09       		.uleb128 0x9
+ 878 0168 C5020000 		.4byte	.LASF23
+ 879 016c 01       		.byte	0x1
+ 880 016d 53       		.byte	0x53
+ 881 016e B8000000 		.4byte	0xb8
+ 882 0172 02       		.uleb128 0x2
+ 883 0173 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 20
+
+
+ 884 0174 74       		.sleb128 -12
+ 885 0175 09       		.uleb128 0x9
+ 886 0176 57020000 		.4byte	.LASF24
+ 887 017a 01       		.byte	0x1
+ 888 017b 54       		.byte	0x54
+ 889 017c B8000000 		.4byte	0xb8
+ 890 0180 02       		.uleb128 0x2
+ 891 0181 91       		.byte	0x91
+ 892 0182 70       		.sleb128 -16
+ 893 0183 09       		.uleb128 0x9
+ 894 0184 21000000 		.4byte	.LASF25
+ 895 0188 01       		.byte	0x1
+ 896 0189 55       		.byte	0x55
+ 897 018a B8000000 		.4byte	0xb8
+ 898 018e 02       		.uleb128 0x2
+ 899 018f 91       		.byte	0x91
+ 900 0190 6C       		.sleb128 -20
+ 901 0191 07       		.uleb128 0x7
+ 902 0192 743200   		.ascii	"t2\000"
+ 903 0195 01       		.byte	0x1
+ 904 0196 56       		.byte	0x56
+ 905 0197 B8000000 		.4byte	0xb8
+ 906 019b 02       		.uleb128 0x2
+ 907 019c 91       		.byte	0x91
+ 908 019d 68       		.sleb128 -24
+ 909 019e 07       		.uleb128 0x7
+ 910 019f 743300   		.ascii	"t3\000"
+ 911 01a2 01       		.byte	0x1
+ 912 01a3 57       		.byte	0x57
+ 913 01a4 B8000000 		.4byte	0xb8
+ 914 01a8 02       		.uleb128 0x2
+ 915 01a9 91       		.byte	0x91
+ 916 01aa 64       		.sleb128 -28
+ 917 01ab 07       		.uleb128 0x7
+ 918 01ac 763100   		.ascii	"v1\000"
+ 919 01af 01       		.byte	0x1
+ 920 01b0 59       		.byte	0x59
+ 921 01b1 B8000000 		.4byte	0xb8
+ 922 01b5 02       		.uleb128 0x2
+ 923 01b6 91       		.byte	0x91
+ 924 01b7 60       		.sleb128 -32
+ 925 01b8 07       		.uleb128 0x7
+ 926 01b9 763200   		.ascii	"v2\000"
+ 927 01bc 01       		.byte	0x1
+ 928 01bd 5A       		.byte	0x5a
+ 929 01be B8000000 		.4byte	0xb8
+ 930 01c2 02       		.uleb128 0x2
+ 931 01c3 91       		.byte	0x91
+ 932 01c4 5C       		.sleb128 -36
+ 933 01c5 07       		.uleb128 0x7
+ 934 01c6 763300   		.ascii	"v3\000"
+ 935 01c9 01       		.byte	0x1
+ 936 01ca 5B       		.byte	0x5b
+ 937 01cb B8000000 		.4byte	0xb8
+ 938 01cf 02       		.uleb128 0x2
+ 939 01d0 91       		.byte	0x91
+ 940 01d1 58       		.sleb128 -40
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 21
+
+
+ 941 01d2 07       		.uleb128 0x7
+ 942 01d3 763400   		.ascii	"v4\000"
+ 943 01d6 01       		.byte	0x1
+ 944 01d7 5C       		.byte	0x5c
+ 945 01d8 B8000000 		.4byte	0xb8
+ 946 01dc 02       		.uleb128 0x2
+ 947 01dd 91       		.byte	0x91
+ 948 01de 54       		.sleb128 -44
+ 949 01df 00       		.byte	0
+ 950 01e0 05       		.uleb128 0x5
+ 951 01e1 E3020000 		.4byte	.LASF26
+ 952 01e5 01       		.byte	0x1
+ 953 01e6 67       		.byte	0x67
+ 954 01e7 A2000000 		.4byte	0xa2
+ 955 01eb 00000000 		.4byte	.LFB2
+ 956 01ef 44010000 		.4byte	.LFE2-.LFB2
+ 957 01f3 01       		.uleb128 0x1
+ 958 01f4 9C       		.byte	0x9c
+ 959 01f5 64020000 		.4byte	0x264
+ 960 01f9 08       		.uleb128 0x8
+ 961 01fa 7800     		.ascii	"x\000"
+ 962 01fc 01       		.byte	0x1
+ 963 01fd 67       		.byte	0x67
+ 964 01fe 89000000 		.4byte	0x89
+ 965 0202 02       		.uleb128 0x2
+ 966 0203 91       		.byte	0x91
+ 967 0204 5C       		.sleb128 -36
+ 968 0205 08       		.uleb128 0x8
+ 969 0206 7900     		.ascii	"y\000"
+ 970 0208 01       		.byte	0x1
+ 971 0209 67       		.byte	0x67
+ 972 020a 89000000 		.4byte	0x89
+ 973 020e 02       		.uleb128 0x2
+ 974 020f 91       		.byte	0x91
+ 975 0210 58       		.sleb128 -40
+ 976 0211 09       		.uleb128 0x9
+ 977 0212 67000000 		.4byte	.LASF27
+ 978 0216 01       		.byte	0x1
+ 979 0217 73       		.byte	0x73
+ 980 0218 2C000000 		.4byte	0x2c
+ 981 021c 02       		.uleb128 0x2
+ 982 021d 91       		.byte	0x91
+ 983 021e 77       		.sleb128 -9
+ 984 021f 09       		.uleb128 0x9
+ 985 0220 28010000 		.4byte	.LASF28
+ 986 0224 01       		.byte	0x1
+ 987 0225 74       		.byte	0x74
+ 988 0226 2C000000 		.4byte	0x2c
+ 989 022a 02       		.uleb128 0x2
+ 990 022b 91       		.byte	0x91
+ 991 022c 67       		.sleb128 -25
+ 992 022d 09       		.uleb128 0x9
+ 993 022e 50000000 		.4byte	.LASF29
+ 994 0232 01       		.byte	0x1
+ 995 0233 75       		.byte	0x75
+ 996 0234 2C000000 		.4byte	0x2c
+ 997 0238 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 22
+
+
+ 998 0239 91       		.byte	0x91
+ 999 023a 76       		.sleb128 -10
+ 1000 023b 09       		.uleb128 0x9
+ 1001 023c 49000000 		.4byte	.LASF30
+ 1002 0240 01       		.byte	0x1
+ 1003 0241 76       		.byte	0x76
+ 1004 0242 90000000 		.4byte	0x90
+ 1005 0246 02       		.uleb128 0x2
+ 1006 0247 91       		.byte	0x91
+ 1007 0248 70       		.sleb128 -16
+ 1008 0249 07       		.uleb128 0x7
+ 1009 024a 757800   		.ascii	"ux\000"
+ 1010 024d 01       		.byte	0x1
+ 1011 024e 79       		.byte	0x79
+ 1012 024f 90000000 		.4byte	0x90
+ 1013 0253 02       		.uleb128 0x2
+ 1014 0254 91       		.byte	0x91
+ 1015 0255 6C       		.sleb128 -20
+ 1016 0256 07       		.uleb128 0x7
+ 1017 0257 757900   		.ascii	"uy\000"
+ 1018 025a 01       		.byte	0x1
+ 1019 025b 7A       		.byte	0x7a
+ 1020 025c 90000000 		.4byte	0x90
+ 1021 0260 02       		.uleb128 0x2
+ 1022 0261 91       		.byte	0x91
+ 1023 0262 68       		.sleb128 -24
+ 1024 0263 00       		.byte	0
+ 1025 0264 05       		.uleb128 0x5
+ 1026 0265 4F020000 		.4byte	.LASF31
+ 1027 0269 01       		.byte	0x1
+ 1028 026a B7       		.byte	0xb7
+ 1029 026b B8000000 		.4byte	0xb8
+ 1030 026f 00000000 		.4byte	.LFB3
+ 1031 0273 66000000 		.4byte	.LFE3-.LFB3
+ 1032 0277 01       		.uleb128 0x1
+ 1033 0278 9C       		.byte	0x9c
+ 1034 0279 A8020000 		.4byte	0x2a8
+ 1035 027d 08       		.uleb128 0x8
+ 1036 027e 6E756D00 		.ascii	"num\000"
+ 1037 0282 01       		.byte	0x1
+ 1038 0283 B7       		.byte	0xb7
+ 1039 0284 B8000000 		.4byte	0xb8
+ 1040 0288 02       		.uleb128 0x2
+ 1041 0289 91       		.byte	0x91
+ 1042 028a 6C       		.sleb128 -20
+ 1043 028b 09       		.uleb128 0x9
+ 1044 028c 45020000 		.4byte	.LASF32
+ 1045 0290 01       		.byte	0x1
+ 1046 0291 BA       		.byte	0xba
+ 1047 0292 B8000000 		.4byte	0xb8
+ 1048 0296 02       		.uleb128 0x2
+ 1049 0297 91       		.byte	0x91
+ 1050 0298 74       		.sleb128 -12
+ 1051 0299 09       		.uleb128 0x9
+ 1052 029a 3E010000 		.4byte	.LASF33
+ 1053 029e 01       		.byte	0x1
+ 1054 029f BB       		.byte	0xbb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 23
+
+
+ 1055 02a0 B8000000 		.4byte	0xb8
+ 1056 02a4 02       		.uleb128 0x2
+ 1057 02a5 91       		.byte	0x91
+ 1058 02a6 70       		.sleb128 -16
+ 1059 02a7 00       		.byte	0
+ 1060 02a8 0A       		.uleb128 0xa
+ 1061 02a9 B8020000 		.4byte	0x2b8
+ 1062 02ad B8020000 		.4byte	0x2b8
+ 1063 02b1 0B       		.uleb128 0xb
+ 1064 02b2 CA000000 		.4byte	0xca
+ 1065 02b6 5A       		.byte	0x5a
+ 1066 02b7 00       		.byte	0
+ 1067 02b8 0C       		.uleb128 0xc
+ 1068 02b9 97000000 		.4byte	0x97
+ 1069 02bd 09       		.uleb128 0x9
+ 1070 02be 4F010000 		.4byte	.LASF34
+ 1071 02c2 01       		.byte	0x1
+ 1072 02c3 1C       		.byte	0x1c
+ 1073 02c4 CE020000 		.4byte	0x2ce
+ 1074 02c8 05       		.uleb128 0x5
+ 1075 02c9 03       		.byte	0x3
+ 1076 02ca 00000000 		.4byte	sin0_90_table
+ 1077 02ce 0C       		.uleb128 0xc
+ 1078 02cf A8020000 		.4byte	0x2a8
+ 1079 02d3 00       		.byte	0
+ 1080              		.section	.debug_abbrev,"",%progbits
+ 1081              	.Ldebug_abbrev0:
+ 1082 0000 01       		.uleb128 0x1
+ 1083 0001 11       		.uleb128 0x11
+ 1084 0002 01       		.byte	0x1
+ 1085 0003 25       		.uleb128 0x25
+ 1086 0004 0E       		.uleb128 0xe
+ 1087 0005 13       		.uleb128 0x13
+ 1088 0006 0B       		.uleb128 0xb
+ 1089 0007 03       		.uleb128 0x3
+ 1090 0008 0E       		.uleb128 0xe
+ 1091 0009 1B       		.uleb128 0x1b
+ 1092 000a 0E       		.uleb128 0xe
+ 1093 000b 55       		.uleb128 0x55
+ 1094 000c 17       		.uleb128 0x17
+ 1095 000d 11       		.uleb128 0x11
+ 1096 000e 01       		.uleb128 0x1
+ 1097 000f 10       		.uleb128 0x10
+ 1098 0010 17       		.uleb128 0x17
+ 1099 0011 00       		.byte	0
+ 1100 0012 00       		.byte	0
+ 1101 0013 02       		.uleb128 0x2
+ 1102 0014 24       		.uleb128 0x24
+ 1103 0015 00       		.byte	0
+ 1104 0016 0B       		.uleb128 0xb
+ 1105 0017 0B       		.uleb128 0xb
+ 1106 0018 3E       		.uleb128 0x3e
+ 1107 0019 0B       		.uleb128 0xb
+ 1108 001a 03       		.uleb128 0x3
+ 1109 001b 0E       		.uleb128 0xe
+ 1110 001c 00       		.byte	0
+ 1111 001d 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 24
+
+
+ 1112 001e 03       		.uleb128 0x3
+ 1113 001f 16       		.uleb128 0x16
+ 1114 0020 00       		.byte	0
+ 1115 0021 03       		.uleb128 0x3
+ 1116 0022 0E       		.uleb128 0xe
+ 1117 0023 3A       		.uleb128 0x3a
+ 1118 0024 0B       		.uleb128 0xb
+ 1119 0025 3B       		.uleb128 0x3b
+ 1120 0026 0B       		.uleb128 0xb
+ 1121 0027 49       		.uleb128 0x49
+ 1122 0028 13       		.uleb128 0x13
+ 1123 0029 00       		.byte	0
+ 1124 002a 00       		.byte	0
+ 1125 002b 04       		.uleb128 0x4
+ 1126 002c 24       		.uleb128 0x24
+ 1127 002d 00       		.byte	0
+ 1128 002e 0B       		.uleb128 0xb
+ 1129 002f 0B       		.uleb128 0xb
+ 1130 0030 3E       		.uleb128 0x3e
+ 1131 0031 0B       		.uleb128 0xb
+ 1132 0032 03       		.uleb128 0x3
+ 1133 0033 08       		.uleb128 0x8
+ 1134 0034 00       		.byte	0
+ 1135 0035 00       		.byte	0
+ 1136 0036 05       		.uleb128 0x5
+ 1137 0037 2E       		.uleb128 0x2e
+ 1138 0038 01       		.byte	0x1
+ 1139 0039 3F       		.uleb128 0x3f
+ 1140 003a 19       		.uleb128 0x19
+ 1141 003b 03       		.uleb128 0x3
+ 1142 003c 0E       		.uleb128 0xe
+ 1143 003d 3A       		.uleb128 0x3a
+ 1144 003e 0B       		.uleb128 0xb
+ 1145 003f 3B       		.uleb128 0x3b
+ 1146 0040 0B       		.uleb128 0xb
+ 1147 0041 27       		.uleb128 0x27
+ 1148 0042 19       		.uleb128 0x19
+ 1149 0043 49       		.uleb128 0x49
+ 1150 0044 13       		.uleb128 0x13
+ 1151 0045 11       		.uleb128 0x11
+ 1152 0046 01       		.uleb128 0x1
+ 1153 0047 12       		.uleb128 0x12
+ 1154 0048 06       		.uleb128 0x6
+ 1155 0049 40       		.uleb128 0x40
+ 1156 004a 18       		.uleb128 0x18
+ 1157 004b 9742     		.uleb128 0x2117
+ 1158 004d 19       		.uleb128 0x19
+ 1159 004e 01       		.uleb128 0x1
+ 1160 004f 13       		.uleb128 0x13
+ 1161 0050 00       		.byte	0
+ 1162 0051 00       		.byte	0
+ 1163 0052 06       		.uleb128 0x6
+ 1164 0053 05       		.uleb128 0x5
+ 1165 0054 00       		.byte	0
+ 1166 0055 03       		.uleb128 0x3
+ 1167 0056 0E       		.uleb128 0xe
+ 1168 0057 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 25
+
+
+ 1169 0058 0B       		.uleb128 0xb
+ 1170 0059 3B       		.uleb128 0x3b
+ 1171 005a 0B       		.uleb128 0xb
+ 1172 005b 49       		.uleb128 0x49
+ 1173 005c 13       		.uleb128 0x13
+ 1174 005d 02       		.uleb128 0x2
+ 1175 005e 18       		.uleb128 0x18
+ 1176 005f 00       		.byte	0
+ 1177 0060 00       		.byte	0
+ 1178 0061 07       		.uleb128 0x7
+ 1179 0062 34       		.uleb128 0x34
+ 1180 0063 00       		.byte	0
+ 1181 0064 03       		.uleb128 0x3
+ 1182 0065 08       		.uleb128 0x8
+ 1183 0066 3A       		.uleb128 0x3a
+ 1184 0067 0B       		.uleb128 0xb
+ 1185 0068 3B       		.uleb128 0x3b
+ 1186 0069 0B       		.uleb128 0xb
+ 1187 006a 49       		.uleb128 0x49
+ 1188 006b 13       		.uleb128 0x13
+ 1189 006c 02       		.uleb128 0x2
+ 1190 006d 18       		.uleb128 0x18
+ 1191 006e 00       		.byte	0
+ 1192 006f 00       		.byte	0
+ 1193 0070 08       		.uleb128 0x8
+ 1194 0071 05       		.uleb128 0x5
+ 1195 0072 00       		.byte	0
+ 1196 0073 03       		.uleb128 0x3
+ 1197 0074 08       		.uleb128 0x8
+ 1198 0075 3A       		.uleb128 0x3a
+ 1199 0076 0B       		.uleb128 0xb
+ 1200 0077 3B       		.uleb128 0x3b
+ 1201 0078 0B       		.uleb128 0xb
+ 1202 0079 49       		.uleb128 0x49
+ 1203 007a 13       		.uleb128 0x13
+ 1204 007b 02       		.uleb128 0x2
+ 1205 007c 18       		.uleb128 0x18
+ 1206 007d 00       		.byte	0
+ 1207 007e 00       		.byte	0
+ 1208 007f 09       		.uleb128 0x9
+ 1209 0080 34       		.uleb128 0x34
+ 1210 0081 00       		.byte	0
+ 1211 0082 03       		.uleb128 0x3
+ 1212 0083 0E       		.uleb128 0xe
+ 1213 0084 3A       		.uleb128 0x3a
+ 1214 0085 0B       		.uleb128 0xb
+ 1215 0086 3B       		.uleb128 0x3b
+ 1216 0087 0B       		.uleb128 0xb
+ 1217 0088 49       		.uleb128 0x49
+ 1218 0089 13       		.uleb128 0x13
+ 1219 008a 02       		.uleb128 0x2
+ 1220 008b 18       		.uleb128 0x18
+ 1221 008c 00       		.byte	0
+ 1222 008d 00       		.byte	0
+ 1223 008e 0A       		.uleb128 0xa
+ 1224 008f 01       		.uleb128 0x1
+ 1225 0090 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 26
+
+
+ 1226 0091 49       		.uleb128 0x49
+ 1227 0092 13       		.uleb128 0x13
+ 1228 0093 01       		.uleb128 0x1
+ 1229 0094 13       		.uleb128 0x13
+ 1230 0095 00       		.byte	0
+ 1231 0096 00       		.byte	0
+ 1232 0097 0B       		.uleb128 0xb
+ 1233 0098 21       		.uleb128 0x21
+ 1234 0099 00       		.byte	0
+ 1235 009a 49       		.uleb128 0x49
+ 1236 009b 13       		.uleb128 0x13
+ 1237 009c 2F       		.uleb128 0x2f
+ 1238 009d 0B       		.uleb128 0xb
+ 1239 009e 00       		.byte	0
+ 1240 009f 00       		.byte	0
+ 1241 00a0 0C       		.uleb128 0xc
+ 1242 00a1 26       		.uleb128 0x26
+ 1243 00a2 00       		.byte	0
+ 1244 00a3 49       		.uleb128 0x49
+ 1245 00a4 13       		.uleb128 0x13
+ 1246 00a5 00       		.byte	0
+ 1247 00a6 00       		.byte	0
+ 1248 00a7 00       		.byte	0
+ 1249              		.section	.debug_aranges,"",%progbits
+ 1250 0000 34000000 		.4byte	0x34
+ 1251 0004 0200     		.2byte	0x2
+ 1252 0006 00000000 		.4byte	.Ldebug_info0
+ 1253 000a 04       		.byte	0x4
+ 1254 000b 00       		.byte	0
+ 1255 000c 0000     		.2byte	0
+ 1256 000e 0000     		.2byte	0
+ 1257 0010 00000000 		.4byte	.LFB0
+ 1258 0014 E0000000 		.4byte	.LFE0-.LFB0
+ 1259 0018 00000000 		.4byte	.LFB1
+ 1260 001c A8000000 		.4byte	.LFE1-.LFB1
+ 1261 0020 00000000 		.4byte	.LFB2
+ 1262 0024 44010000 		.4byte	.LFE2-.LFB2
+ 1263 0028 00000000 		.4byte	.LFB3
+ 1264 002c 66000000 		.4byte	.LFE3-.LFB3
+ 1265 0030 00000000 		.4byte	0
+ 1266 0034 00000000 		.4byte	0
+ 1267              		.section	.debug_ranges,"",%progbits
+ 1268              	.Ldebug_ranges0:
+ 1269 0000 00000000 		.4byte	.LFB0
+ 1270 0004 E0000000 		.4byte	.LFE0
+ 1271 0008 00000000 		.4byte	.LFB1
+ 1272 000c A8000000 		.4byte	.LFE1
+ 1273 0010 00000000 		.4byte	.LFB2
+ 1274 0014 44010000 		.4byte	.LFE2
+ 1275 0018 00000000 		.4byte	.LFB3
+ 1276 001c 66000000 		.4byte	.LFE3
+ 1277 0020 00000000 		.4byte	0
+ 1278 0024 00000000 		.4byte	0
+ 1279              		.section	.debug_line,"",%progbits
+ 1280              	.Ldebug_line0:
+ 1281 0000 3B020000 		.section	.debug_str,"MS",%progbits,1
+ 1281      02004A01 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 27
+
+
+ 1281      00000201 
+ 1281      FB0E0D00 
+ 1281      01010101 
+ 1282              	.LASF3:
+ 1283 0000 5F5F696E 		.ascii	"__int16_t\000"
+ 1283      7431365F 
+ 1283      7400
+ 1284              	.LASF6:
+ 1285 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 1285      7433325F 
+ 1285      7400
+ 1286              	.LASF20:
+ 1287 0014 6C765F74 		.ascii	"lv_trigo_sin\000"
+ 1287      7269676F 
+ 1287      5F73696E 
+ 1287      00
+ 1288              	.LASF25:
+ 1289 0021 745F7265 		.ascii	"t_rem3\000"
+ 1289      6D3300
+ 1290              	.LASF5:
+ 1291 0028 73686F72 		.ascii	"short unsigned int\000"
+ 1291      7420756E 
+ 1291      7369676E 
+ 1291      65642069 
+ 1291      6E7400
+ 1292              	.LASF1:
+ 1293 003b 756E7369 		.ascii	"unsigned char\000"
+ 1293      676E6564 
+ 1293      20636861 
+ 1293      7200
+ 1294              	.LASF30:
+ 1295 0049 64656772 		.ascii	"degree\000"
+ 1295      656500
+ 1296              	.LASF29:
+ 1297 0050 636F6D70 		.ascii	"comp\000"
+ 1297      00
+ 1298              	.LASF9:
+ 1299 0055 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1299      20756E73 
+ 1299      69676E65 
+ 1299      6420696E 
+ 1299      7400
+ 1300              	.LASF27:
+ 1301 0067 6E656766 		.ascii	"negflag\000"
+ 1301      6C616700 
+ 1302              	.LASF22:
+ 1303 006f 616E676C 		.ascii	"angle\000"
+ 1303      6500
+ 1304              	.LASF35:
+ 1305 0075 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1305      43313120 
+ 1305      352E342E 
+ 1305      31203230 
+ 1305      31363036 
+ 1306 00a8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1306      20726576 
+ 1306      6973696F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 28
+
+
+ 1306      6E203233 
+ 1306      37373135 
+ 1307 00db 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 1307      70202D6D 
+ 1307      6670753D 
+ 1307      66707634 
+ 1307      2D73702D 
+ 1308 010e 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1308      6F6E7320 
+ 1308      2D666661 
+ 1308      742D6C74 
+ 1308      6F2D6F62 
+ 1309              	.LASF28:
+ 1310 0128 74656D70 		.ascii	"tempdegree\000"
+ 1310      64656772 
+ 1310      656500
+ 1311              	.LASF4:
+ 1312 0133 5F5F7569 		.ascii	"__uint16_t\000"
+ 1312      6E743136 
+ 1312      5F7400
+ 1313              	.LASF33:
+ 1314 013e 706C6163 		.ascii	"place\000"
+ 1314      6500
+ 1315              	.LASF8:
+ 1316 0144 5F5F7569 		.ascii	"__uint32_t\000"
+ 1316      6E743332 
+ 1316      5F7400
+ 1317              	.LASF34:
+ 1318 014f 73696E30 		.ascii	"sin0_90_table\000"
+ 1318      5F39305F 
+ 1318      7461626C 
+ 1318      6500
+ 1319              	.LASF12:
+ 1320 015d 756E7369 		.ascii	"unsigned int\000"
+ 1320      676E6564 
+ 1320      20696E74 
+ 1320      00
+ 1321              	.LASF11:
+ 1322 016a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1322      206C6F6E 
+ 1322      6720756E 
+ 1322      7369676E 
+ 1322      65642069 
+ 1323              	.LASF13:
+ 1324 0181 696E7431 		.ascii	"int16_t\000"
+ 1324      365F7400 
+ 1325              	.LASF37:
+ 1326 0189 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 1326      73657273 
+ 1326      5C746D6A 
+ 1326      33325C44 
+ 1326      6F63756D 
+ 1327 01b6 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 1327      6C6C6F73 
+ 1327      636F7065 
+ 1327      5F53656E 
+ 1327      696F725F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 29
+
+
+ 1328 01e7 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 1328      5C74636F 
+ 1328      6D5F6170 
+ 1328      705C7463 
+ 1328      6F6D5F61 
+ 1329 0217 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 1329      736F6336 
+ 1329      2E637964 
+ 1329      736E00
+ 1330              	.LASF15:
+ 1331 0226 696E7433 		.ascii	"int32_t\000"
+ 1331      325F7400 
+ 1332              	.LASF18:
+ 1333 022e 73697A65 		.ascii	"sizetype\000"
+ 1333      74797065 
+ 1333      00
+ 1334              	.LASF10:
+ 1335 0237 6C6F6E67 		.ascii	"long long int\000"
+ 1335      206C6F6E 
+ 1335      6720696E 
+ 1335      7400
+ 1336              	.LASF32:
+ 1337 0245 726F6F74 		.ascii	"root\000"
+ 1337      00
+ 1338              	.LASF19:
+ 1339 024a 63686172 		.ascii	"char\000"
+ 1339      00
+ 1340              	.LASF31:
+ 1341 024f 6C765F73 		.ascii	"lv_sqrt\000"
+ 1341      71727400 
+ 1342              	.LASF24:
+ 1343 0257 745F7265 		.ascii	"t_rem2\000"
+ 1343      6D3200
+ 1344              	.LASF2:
+ 1345 025e 73686F72 		.ascii	"short int\000"
+ 1345      7420696E 
+ 1345      7400
+ 1346              	.LASF36:
+ 1347 0268 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 1347      2E5C2E2E 
+ 1347      5C6C7667 
+ 1347      6C5C7665 
+ 1347      7273696F 
+ 1348 0294 5C6C765F 		.ascii	"\\lv_math.c\000"
+ 1348      6D617468 
+ 1348      2E6300
+ 1349              	.LASF21:
+ 1350 029f 6C765F62 		.ascii	"lv_bezier3\000"
+ 1350      657A6965 
+ 1350      723300
+ 1351              	.LASF14:
+ 1352 02aa 75696E74 		.ascii	"uint16_t\000"
+ 1352      31365F74 
+ 1352      00
+ 1353              	.LASF16:
+ 1354 02b3 75696E74 		.ascii	"uint32_t\000"
+ 1354      33325F74 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccKMzZ2b.s 			page 30
+
+
+ 1354      00
+ 1355              	.LASF7:
+ 1356 02bc 6C6F6E67 		.ascii	"long int\000"
+ 1356      20696E74 
+ 1356      00
+ 1357              	.LASF23:
+ 1358 02c5 745F7265 		.ascii	"t_rem\000"
+ 1358      6D00
+ 1359              	.LASF17:
+ 1360 02cb 6C6F6E67 		.ascii	"long double\000"
+ 1360      20646F75 
+ 1360      626C6500 
+ 1361              	.LASF0:
+ 1362 02d7 7369676E 		.ascii	"signed char\000"
+ 1362      65642063 
+ 1362      68617200 
+ 1363              	.LASF26:
+ 1364 02e3 6C765F61 		.ascii	"lv_atan2\000"
+ 1364      74616E32 
+ 1364      00
+ 1365              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

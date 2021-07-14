@@ -1,0 +1,1396 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_async.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_async_task_cb,"ax",%progbits
+  21              		.align	2
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	lv_async_task_cb, %function
+  25              	lv_async_task_cb:
+  26              	.LFB1:
+  27              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_async.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  * @file lv_async.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** #include "lv_async.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /*********************
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      DEFINES
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *********************/
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      TYPEDEFS
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *  STATIC PROTOTYPES
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** static void lv_async_task_cb(lv_task_t *task);
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *  STATIC VARIABLES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 2
+
+
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      MACROS
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *   GLOBAL FUNCTIONS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** lv_res_t lv_async_call(lv_async_cb_t async_xcb, void * user_data)
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** {
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /*Allocate an info structure */
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_async_info_t *info = lv_mem_alloc(sizeof(lv_async_info_t));
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     if(info == NULL)
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Create a new task */
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Use highest priority so that it will run before a refresh */
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_task_t *task = lv_task_create(lv_async_task_cb, 0, LV_TASK_PRIO_HIGHEST, info);
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     if(task == NULL) {
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         lv_mem_free(info);
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     }
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->cb = async_xcb;
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->user_data = user_data;
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Set the task's user data */
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     task->user_data = info;
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_task_once(task);
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     return LV_RES_OK;
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *   STATIC FUNCTIONS
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** static void lv_async_task_cb(lv_task_t *task)
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** {
+  28              		.loc 1 69 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_async_info_t *info = (lv_async_info_t *)task->user_data;
+  37              		.loc 1 70 0
+  38 0002 C468     		ldr	r4, [r0, #12]
+  39              	.LVL1:
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->cb(info->user_data);
+  40              		.loc 1 72 0
+  41 0004 6068     		ldr	r0, [r4, #4]
+  42              	.LVL2:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 3
+
+
+  43 0006 2368     		ldr	r3, [r4]
+  44 0008 9847     		blx	r3
+  45              	.LVL3:
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_mem_free(info);
+  46              		.loc 1 74 0
+  47 000a 2046     		mov	r0, r4
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+  48              		.loc 1 75 0
+  49 000c BDE81040 		pop	{r4, lr}
+  50              		.cfi_restore 14
+  51              		.cfi_restore 4
+  52              		.cfi_def_cfa_offset 0
+  53              	.LVL4:
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+  54              		.loc 1 74 0
+  55 0010 FFF7FEBF 		b	lv_mem_free
+  56              	.LVL5:
+  57              		.cfi_endproc
+  58              	.LFE1:
+  59              		.size	lv_async_task_cb, .-lv_async_task_cb
+  60              		.section	.text.lv_async_call,"ax",%progbits
+  61              		.align	2
+  62              		.global	lv_async_call
+  63              		.thumb
+  64              		.thumb_func
+  65              		.type	lv_async_call, %function
+  66              	lv_async_call:
+  67              	.LFB0:
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /*Allocate an info structure */
+  68              		.loc 1 39 0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              	.LVL6:
+  73 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  74              		.cfi_def_cfa_offset 24
+  75              		.cfi_offset 3, -24
+  76              		.cfi_offset 4, -20
+  77              		.cfi_offset 5, -16
+  78              		.cfi_offset 6, -12
+  79              		.cfi_offset 7, -8
+  80              		.cfi_offset 14, -4
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /*Allocate an info structure */
+  81              		.loc 1 39 0
+  82 0002 0646     		mov	r6, r0
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  83              		.loc 1 41 0
+  84 0004 0820     		movs	r0, #8
+  85              	.LVL7:
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /*Allocate an info structure */
+  86              		.loc 1 39 0
+  87 0006 0D46     		mov	r5, r1
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  88              		.loc 1 41 0
+  89 0008 FFF7FEFF 		bl	lv_mem_alloc
+  90              	.LVL8:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 4
+
+
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+  91              		.loc 1 43 0
+  92 000c 0446     		mov	r4, r0
+  93 000e 70B1     		cbz	r0, .L6
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  94              		.loc 1 48 0
+  95 0010 0346     		mov	r3, r0
+  96 0012 0522     		movs	r2, #5
+  97 0014 0021     		movs	r1, #0
+  98 0016 0948     		ldr	r0, .L10
+  99              	.LVL9:
+ 100 0018 FFF7FEFF 		bl	lv_task_create
+ 101              	.LVL10:
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         lv_mem_free(info);
+ 102              		.loc 1 50 0
+ 103 001c 0746     		mov	r7, r0
+ 104 001e 38B1     		cbz	r0, .L9
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->user_data = user_data;
+ 105              		.loc 1 55 0
+ 106 0020 2660     		str	r6, [r4]
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+ 107              		.loc 1 56 0
+ 108 0022 6560     		str	r5, [r4, #4]
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_task_once(task);
+ 109              		.loc 1 59 0
+ 110 0024 C460     		str	r4, [r0, #12]
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     return LV_RES_OK;
+ 111              		.loc 1 60 0
+ 112 0026 FFF7FEFF 		bl	lv_task_once
+ 113              	.LVL11:
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+ 114              		.loc 1 61 0
+ 115 002a 0120     		movs	r0, #1
+ 116 002c F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 117              	.LVL12:
+ 118              	.L6:
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+ 119              		.loc 1 62 0
+ 120 002e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 121              	.LVL13:
+ 122              	.L9:
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+ 123              		.loc 1 51 0
+ 124 0030 2046     		mov	r0, r4
+ 125              	.LVL14:
+ 126 0032 FFF7FEFF 		bl	lv_mem_free
+ 127              	.LVL15:
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     }
+ 128              		.loc 1 52 0
+ 129 0036 3846     		mov	r0, r7
+ 130 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 131              	.LVL16:
+ 132              	.L11:
+ 133 003a 00BF     		.align	2
+ 134              	.L10:
+ 135 003c 00000000 		.word	lv_async_task_cb
+ 136              		.cfi_endproc
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 5
+
+
+ 137              	.LFE0:
+ 138              		.size	lv_async_call, .-lv_async_call
+ 139              		.text
+ 140              	.Letext0:
+ 141              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 142              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 143              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_types.h"
+ 144              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_task.h"
+ 145              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_async.h"
+ 146              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_mem.h"
+ 147              		.section	.debug_info,"",%progbits
+ 148              	.Ldebug_info0:
+ 149 0000 F4020000 		.4byte	0x2f4
+ 150 0004 0400     		.2byte	0x4
+ 151 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 152 000a 04       		.byte	0x4
+ 153 000b 01       		.uleb128 0x1
+ 154 000c 44020000 		.4byte	.LASF43
+ 155 0010 0C       		.byte	0xc
+ 156 0011 F1000000 		.4byte	.LASF44
+ 157 0015 00000000 		.4byte	.LASF45
+ 158 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 159 001d 00000000 		.4byte	0
+ 160 0021 00000000 		.4byte	.Ldebug_line0
+ 161 0025 02       		.uleb128 0x2
+ 162 0026 01       		.byte	0x1
+ 163 0027 06       		.byte	0x6
+ 164 0028 C2010000 		.4byte	.LASF0
+ 165 002c 03       		.uleb128 0x3
+ 166 002d 87010000 		.4byte	.LASF5
+ 167 0031 02       		.byte	0x2
+ 168 0032 1D       		.byte	0x1d
+ 169 0033 37000000 		.4byte	0x37
+ 170 0037 02       		.uleb128 0x2
+ 171 0038 01       		.byte	0x1
+ 172 0039 08       		.byte	0x8
+ 173 003a A6010000 		.4byte	.LASF1
+ 174 003e 02       		.uleb128 0x2
+ 175 003f 02       		.byte	0x2
+ 176 0040 05       		.byte	0x5
+ 177 0041 8D000000 		.4byte	.LASF2
+ 178 0045 02       		.uleb128 0x2
+ 179 0046 02       		.byte	0x2
+ 180 0047 07       		.byte	0x7
+ 181 0048 10020000 		.4byte	.LASF3
+ 182 004c 02       		.uleb128 0x2
+ 183 004d 04       		.byte	0x4
+ 184 004e 05       		.byte	0x5
+ 185 004f 77010000 		.4byte	.LASF4
+ 186 0053 03       		.uleb128 0x3
+ 187 0054 AD000000 		.4byte	.LASF6
+ 188 0058 02       		.byte	0x2
+ 189 0059 41       		.byte	0x41
+ 190 005a 5E000000 		.4byte	0x5e
+ 191 005e 02       		.uleb128 0x2
+ 192 005f 04       		.byte	0x4
+ 193 0060 07       		.byte	0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 6
+
+
+ 194 0061 3D030000 		.4byte	.LASF7
+ 195 0065 02       		.uleb128 0x2
+ 196 0066 08       		.byte	0x8
+ 197 0067 05       		.byte	0x5
+ 198 0068 3E010000 		.4byte	.LASF8
+ 199 006c 02       		.uleb128 0x2
+ 200 006d 08       		.byte	0x8
+ 201 006e 07       		.byte	0x7
+ 202 006f CE010000 		.4byte	.LASF9
+ 203 0073 04       		.uleb128 0x4
+ 204 0074 04       		.byte	0x4
+ 205 0075 05       		.byte	0x5
+ 206 0076 696E7400 		.ascii	"int\000"
+ 207 007a 02       		.uleb128 0x2
+ 208 007b 04       		.byte	0x4
+ 209 007c 07       		.byte	0x7
+ 210 007d F3010000 		.4byte	.LASF10
+ 211 0081 03       		.uleb128 0x3
+ 212 0082 E9000000 		.4byte	.LASF11
+ 213 0086 03       		.byte	0x3
+ 214 0087 18       		.byte	0x18
+ 215 0088 2C000000 		.4byte	0x2c
+ 216 008c 03       		.uleb128 0x3
+ 217 008d EA010000 		.4byte	.LASF12
+ 218 0091 03       		.byte	0x3
+ 219 0092 30       		.byte	0x30
+ 220 0093 53000000 		.4byte	0x53
+ 221 0097 05       		.uleb128 0x5
+ 222 0098 04       		.byte	0x4
+ 223 0099 02       		.uleb128 0x2
+ 224 009a 08       		.byte	0x8
+ 225 009b 04       		.byte	0x4
+ 226 009c 9A010000 		.4byte	.LASF13
+ 227 00a0 06       		.uleb128 0x6
+ 228 00a1 01       		.byte	0x1
+ 229 00a2 37000000 		.4byte	0x37
+ 230 00a6 04       		.byte	0x4
+ 231 00a7 27       		.byte	0x27
+ 232 00a8 B9000000 		.4byte	0xb9
+ 233 00ac 07       		.uleb128 0x7
+ 234 00ad 97030000 		.4byte	.LASF14
+ 235 00b1 00       		.byte	0
+ 236 00b2 07       		.uleb128 0x7
+ 237 00b3 FF020000 		.4byte	.LASF15
+ 238 00b7 01       		.byte	0x1
+ 239 00b8 00       		.byte	0
+ 240 00b9 03       		.uleb128 0x3
+ 241 00ba 4C010000 		.4byte	.LASF16
+ 242 00be 04       		.byte	0x4
+ 243 00bf 2C       		.byte	0x2c
+ 244 00c0 81000000 		.4byte	0x81
+ 245 00c4 03       		.uleb128 0x3
+ 246 00c5 54030000 		.4byte	.LASF17
+ 247 00c9 05       		.byte	0x5
+ 248 00ca 2B       		.byte	0x2b
+ 249 00cb CF000000 		.4byte	0xcf
+ 250 00cf 08       		.uleb128 0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 7
+
+
+ 251 00d0 04       		.byte	0x4
+ 252 00d1 D5000000 		.4byte	0xd5
+ 253 00d5 09       		.uleb128 0x9
+ 254 00d6 E0000000 		.4byte	0xe0
+ 255 00da 0A       		.uleb128 0xa
+ 256 00db E0000000 		.4byte	0xe0
+ 257 00df 00       		.byte	0
+ 258 00e0 08       		.uleb128 0x8
+ 259 00e1 04       		.byte	0x4
+ 260 00e2 E6000000 		.4byte	0xe6
+ 261 00e6 0B       		.uleb128 0xb
+ 262 00e7 33010000 		.4byte	.LASF33
+ 263 00eb 14       		.byte	0x14
+ 264 00ec 05       		.byte	0x5
+ 265 00ed 3E       		.byte	0x3e
+ 266 00ee 41010000 		.4byte	0x141
+ 267 00f2 0C       		.uleb128 0xc
+ 268 00f3 80010000 		.4byte	.LASF18
+ 269 00f7 05       		.byte	0x5
+ 270 00f8 40       		.byte	0x40
+ 271 00f9 8C000000 		.4byte	0x8c
+ 272 00fd 00       		.byte	0
+ 273 00fe 0C       		.uleb128 0xc
+ 274 00ff 91010000 		.4byte	.LASF19
+ 275 0103 05       		.byte	0x5
+ 276 0104 41       		.byte	0x41
+ 277 0105 8C000000 		.4byte	0x8c
+ 278 0109 04       		.byte	0x4
+ 279 010a 0C       		.uleb128 0xc
+ 280 010b F7020000 		.4byte	.LASF20
+ 281 010f 05       		.byte	0x5
+ 282 0110 42       		.byte	0x42
+ 283 0111 C4000000 		.4byte	0xc4
+ 284 0115 08       		.byte	0x8
+ 285 0116 0C       		.uleb128 0xc
+ 286 0117 CA000000 		.4byte	.LASF21
+ 287 011b 05       		.byte	0x5
+ 288 011c 44       		.byte	0x44
+ 289 011d 97000000 		.4byte	0x97
+ 290 0121 0C       		.byte	0xc
+ 291 0122 0D       		.uleb128 0xd
+ 292 0123 A2030000 		.4byte	.LASF22
+ 293 0127 05       		.byte	0x5
+ 294 0128 46       		.byte	0x46
+ 295 0129 81000000 		.4byte	0x81
+ 296 012d 01       		.byte	0x1
+ 297 012e 03       		.byte	0x3
+ 298 012f 05       		.byte	0x5
+ 299 0130 10       		.byte	0x10
+ 300 0131 0D       		.uleb128 0xd
+ 301 0132 E5010000 		.4byte	.LASF23
+ 302 0136 05       		.byte	0x5
+ 303 0137 47       		.byte	0x47
+ 304 0138 81000000 		.4byte	0x81
+ 305 013c 01       		.byte	0x1
+ 306 013d 01       		.byte	0x1
+ 307 013e 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 8
+
+
+ 308 013f 10       		.byte	0x10
+ 309 0140 00       		.byte	0
+ 310 0141 06       		.uleb128 0x6
+ 311 0142 01       		.byte	0x1
+ 312 0143 37000000 		.4byte	0x37
+ 313 0147 05       		.byte	0x5
+ 314 0148 30       		.byte	0x30
+ 315 0149 78010000 		.4byte	0x178
+ 316 014d 07       		.uleb128 0x7
+ 317 014e 55010000 		.4byte	.LASF24
+ 318 0152 00       		.byte	0
+ 319 0153 07       		.uleb128 0x7
+ 320 0154 30020000 		.4byte	.LASF25
+ 321 0158 01       		.byte	0x1
+ 322 0159 07       		.uleb128 0x7
+ 323 015a 9C000000 		.4byte	.LASF26
+ 324 015e 02       		.byte	0x2
+ 325 015f 07       		.uleb128 0x7
+ 326 0160 66010000 		.4byte	.LASF27
+ 327 0164 03       		.byte	0x3
+ 328 0165 07       		.uleb128 0x7
+ 329 0166 09030000 		.4byte	.LASF28
+ 330 016a 04       		.byte	0x4
+ 331 016b 07       		.uleb128 0x7
+ 332 016c D4000000 		.4byte	.LASF29
+ 333 0170 05       		.byte	0x5
+ 334 0171 07       		.uleb128 0x7
+ 335 0172 B8000000 		.4byte	.LASF30
+ 336 0176 06       		.byte	0x6
+ 337 0177 00       		.byte	0
+ 338 0178 03       		.uleb128 0x3
+ 339 0179 83000000 		.4byte	.LASF31
+ 340 017d 05       		.byte	0x5
+ 341 017e 48       		.byte	0x48
+ 342 017f E6000000 		.4byte	0xe6
+ 343 0183 03       		.uleb128 0x3
+ 344 0184 7D030000 		.4byte	.LASF32
+ 345 0188 06       		.byte	0x6
+ 346 0189 1F       		.byte	0x1f
+ 347 018a 8E010000 		.4byte	0x18e
+ 348 018e 08       		.uleb128 0x8
+ 349 018f 04       		.byte	0x4
+ 350 0190 94010000 		.4byte	0x194
+ 351 0194 09       		.uleb128 0x9
+ 352 0195 9F010000 		.4byte	0x19f
+ 353 0199 0A       		.uleb128 0xa
+ 354 019a 97000000 		.4byte	0x97
+ 355 019e 00       		.byte	0
+ 356 019f 0B       		.uleb128 0xb
+ 357 01a0 1B030000 		.4byte	.LASF34
+ 358 01a4 08       		.byte	0x8
+ 359 01a5 06       		.byte	0x6
+ 360 01a6 21       		.byte	0x21
+ 361 01a7 C3010000 		.4byte	0x1c3
+ 362 01ab 0E       		.uleb128 0xe
+ 363 01ac 636200   		.ascii	"cb\000"
+ 364 01af 06       		.byte	0x6
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 9
+
+
+ 365 01b0 22       		.byte	0x22
+ 366 01b1 83010000 		.4byte	0x183
+ 367 01b5 00       		.byte	0
+ 368 01b6 0C       		.uleb128 0xc
+ 369 01b7 CA000000 		.4byte	.LASF21
+ 370 01bb 06       		.byte	0x6
+ 371 01bc 23       		.byte	0x23
+ 372 01bd 97000000 		.4byte	0x97
+ 373 01c1 04       		.byte	0x4
+ 374 01c2 00       		.byte	0
+ 375 01c3 03       		.uleb128 0x3
+ 376 01c4 00020000 		.4byte	.LASF35
+ 377 01c8 06       		.byte	0x6
+ 378 01c9 24       		.byte	0x24
+ 379 01ca 9F010000 		.4byte	0x19f
+ 380 01ce 0F       		.uleb128 0xf
+ 381 01cf 2C030000 		.4byte	.LASF46
+ 382 01d3 01       		.byte	0x1
+ 383 01d4 44       		.byte	0x44
+ 384 01d5 00000000 		.4byte	.LFB1
+ 385 01d9 14000000 		.4byte	.LFE1-.LFB1
+ 386 01dd 01       		.uleb128 0x1
+ 387 01de 9C       		.byte	0x9c
+ 388 01df 0B020000 		.4byte	0x20b
+ 389 01e3 10       		.uleb128 0x10
+ 390 01e4 97000000 		.4byte	.LASF36
+ 391 01e8 01       		.byte	0x1
+ 392 01e9 44       		.byte	0x44
+ 393 01ea 0B020000 		.4byte	0x20b
+ 394 01ee 00000000 		.4byte	.LLST0
+ 395 01f2 11       		.uleb128 0x11
+ 396 01f3 4F030000 		.4byte	.LASF38
+ 397 01f7 01       		.byte	0x1
+ 398 01f8 46       		.byte	0x46
+ 399 01f9 11020000 		.4byte	0x211
+ 400 01fd 21000000 		.4byte	.LLST1
+ 401 0201 12       		.uleb128 0x12
+ 402 0202 14000000 		.4byte	.LVL5
+ 403 0206 CB020000 		.4byte	0x2cb
+ 404 020a 00       		.byte	0
+ 405 020b 08       		.uleb128 0x8
+ 406 020c 04       		.byte	0x4
+ 407 020d 78010000 		.4byte	0x178
+ 408 0211 08       		.uleb128 0x8
+ 409 0212 04       		.byte	0x4
+ 410 0213 C3010000 		.4byte	0x1c3
+ 411 0217 13       		.uleb128 0x13
+ 412 0218 B4010000 		.4byte	.LASF47
+ 413 021c 01       		.byte	0x1
+ 414 021d 26       		.byte	0x26
+ 415 021e B9000000 		.4byte	0xb9
+ 416 0222 00000000 		.4byte	.LFB0
+ 417 0226 40000000 		.4byte	.LFE0-.LFB0
+ 418 022a 01       		.uleb128 0x1
+ 419 022b 9C       		.byte	0x9c
+ 420 022c CB020000 		.4byte	0x2cb
+ 421 0230 10       		.uleb128 0x10
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 10
+
+
+ 422 0231 29010000 		.4byte	.LASF37
+ 423 0235 01       		.byte	0x1
+ 424 0236 26       		.byte	0x26
+ 425 0237 83010000 		.4byte	0x183
+ 426 023b 3F000000 		.4byte	.LLST2
+ 427 023f 10       		.uleb128 0x10
+ 428 0240 CA000000 		.4byte	.LASF21
+ 429 0244 01       		.byte	0x1
+ 430 0245 26       		.byte	0x26
+ 431 0246 97000000 		.4byte	0x97
+ 432 024a 6B000000 		.4byte	.LLST3
+ 433 024e 11       		.uleb128 0x11
+ 434 024f 4F030000 		.4byte	.LASF38
+ 435 0253 01       		.byte	0x1
+ 436 0254 29       		.byte	0x29
+ 437 0255 11020000 		.4byte	0x211
+ 438 0259 97000000 		.4byte	.LLST4
+ 439 025d 11       		.uleb128 0x11
+ 440 025e 97000000 		.4byte	.LASF36
+ 441 0262 01       		.byte	0x1
+ 442 0263 30       		.byte	0x30
+ 443 0264 0B020000 		.4byte	0x20b
+ 444 0268 D6000000 		.4byte	.LLST5
+ 445 026c 14       		.uleb128 0x14
+ 446 026d 0C000000 		.4byte	.LVL8
+ 447 0271 D6020000 		.4byte	0x2d6
+ 448 0275 7F020000 		.4byte	0x27f
+ 449 0279 15       		.uleb128 0x15
+ 450 027a 01       		.uleb128 0x1
+ 451 027b 50       		.byte	0x50
+ 452 027c 01       		.uleb128 0x1
+ 453 027d 38       		.byte	0x38
+ 454 027e 00       		.byte	0
+ 455 027f 14       		.uleb128 0x14
+ 456 0280 1C000000 		.4byte	.LVL10
+ 457 0284 E1020000 		.4byte	0x2e1
+ 458 0288 A6020000 		.4byte	0x2a6
+ 459 028c 15       		.uleb128 0x15
+ 460 028d 01       		.uleb128 0x1
+ 461 028e 50       		.byte	0x50
+ 462 028f 05       		.uleb128 0x5
+ 463 0290 03       		.byte	0x3
+ 464 0291 00000000 		.4byte	lv_async_task_cb
+ 465 0295 15       		.uleb128 0x15
+ 466 0296 01       		.uleb128 0x1
+ 467 0297 51       		.byte	0x51
+ 468 0298 01       		.uleb128 0x1
+ 469 0299 30       		.byte	0x30
+ 470 029a 15       		.uleb128 0x15
+ 471 029b 01       		.uleb128 0x1
+ 472 029c 52       		.byte	0x52
+ 473 029d 01       		.uleb128 0x1
+ 474 029e 35       		.byte	0x35
+ 475 029f 15       		.uleb128 0x15
+ 476 02a0 01       		.uleb128 0x1
+ 477 02a1 53       		.byte	0x53
+ 478 02a2 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 11
+
+
+ 479 02a3 74       		.byte	0x74
+ 480 02a4 00       		.sleb128 0
+ 481 02a5 00       		.byte	0
+ 482 02a6 14       		.uleb128 0x14
+ 483 02a7 2A000000 		.4byte	.LVL11
+ 484 02ab EC020000 		.4byte	0x2ec
+ 485 02af BA020000 		.4byte	0x2ba
+ 486 02b3 15       		.uleb128 0x15
+ 487 02b4 01       		.uleb128 0x1
+ 488 02b5 50       		.byte	0x50
+ 489 02b6 02       		.uleb128 0x2
+ 490 02b7 77       		.byte	0x77
+ 491 02b8 00       		.sleb128 0
+ 492 02b9 00       		.byte	0
+ 493 02ba 16       		.uleb128 0x16
+ 494 02bb 36000000 		.4byte	.LVL15
+ 495 02bf CB020000 		.4byte	0x2cb
+ 496 02c3 15       		.uleb128 0x15
+ 497 02c4 01       		.uleb128 0x1
+ 498 02c5 50       		.byte	0x50
+ 499 02c6 02       		.uleb128 0x2
+ 500 02c7 74       		.byte	0x74
+ 501 02c8 00       		.sleb128 0
+ 502 02c9 00       		.byte	0
+ 503 02ca 00       		.byte	0
+ 504 02cb 17       		.uleb128 0x17
+ 505 02cc 8B030000 		.4byte	.LASF39
+ 506 02d0 8B030000 		.4byte	.LASF39
+ 507 02d4 07       		.byte	0x7
+ 508 02d5 4B       		.byte	0x4b
+ 509 02d6 17       		.uleb128 0x17
+ 510 02d7 61030000 		.4byte	.LASF40
+ 511 02db 61030000 		.4byte	.LASF40
+ 512 02df 07       		.byte	0x7
+ 513 02e0 45       		.byte	0x45
+ 514 02e1 17       		.uleb128 0x17
+ 515 02e2 6E030000 		.4byte	.LASF41
+ 516 02e6 6E030000 		.4byte	.LASF41
+ 517 02ea 05       		.byte	0x5
+ 518 02eb 6D       		.byte	0x6d
+ 519 02ec 17       		.uleb128 0x17
+ 520 02ed 23020000 		.4byte	.LASF42
+ 521 02f1 23020000 		.4byte	.LASF42
+ 522 02f5 05       		.byte	0x5
+ 523 02f6 94       		.byte	0x94
+ 524 02f7 00       		.byte	0
+ 525              		.section	.debug_abbrev,"",%progbits
+ 526              	.Ldebug_abbrev0:
+ 527 0000 01       		.uleb128 0x1
+ 528 0001 11       		.uleb128 0x11
+ 529 0002 01       		.byte	0x1
+ 530 0003 25       		.uleb128 0x25
+ 531 0004 0E       		.uleb128 0xe
+ 532 0005 13       		.uleb128 0x13
+ 533 0006 0B       		.uleb128 0xb
+ 534 0007 03       		.uleb128 0x3
+ 535 0008 0E       		.uleb128 0xe
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 12
+
+
+ 536 0009 1B       		.uleb128 0x1b
+ 537 000a 0E       		.uleb128 0xe
+ 538 000b 55       		.uleb128 0x55
+ 539 000c 17       		.uleb128 0x17
+ 540 000d 11       		.uleb128 0x11
+ 541 000e 01       		.uleb128 0x1
+ 542 000f 10       		.uleb128 0x10
+ 543 0010 17       		.uleb128 0x17
+ 544 0011 00       		.byte	0
+ 545 0012 00       		.byte	0
+ 546 0013 02       		.uleb128 0x2
+ 547 0014 24       		.uleb128 0x24
+ 548 0015 00       		.byte	0
+ 549 0016 0B       		.uleb128 0xb
+ 550 0017 0B       		.uleb128 0xb
+ 551 0018 3E       		.uleb128 0x3e
+ 552 0019 0B       		.uleb128 0xb
+ 553 001a 03       		.uleb128 0x3
+ 554 001b 0E       		.uleb128 0xe
+ 555 001c 00       		.byte	0
+ 556 001d 00       		.byte	0
+ 557 001e 03       		.uleb128 0x3
+ 558 001f 16       		.uleb128 0x16
+ 559 0020 00       		.byte	0
+ 560 0021 03       		.uleb128 0x3
+ 561 0022 0E       		.uleb128 0xe
+ 562 0023 3A       		.uleb128 0x3a
+ 563 0024 0B       		.uleb128 0xb
+ 564 0025 3B       		.uleb128 0x3b
+ 565 0026 0B       		.uleb128 0xb
+ 566 0027 49       		.uleb128 0x49
+ 567 0028 13       		.uleb128 0x13
+ 568 0029 00       		.byte	0
+ 569 002a 00       		.byte	0
+ 570 002b 04       		.uleb128 0x4
+ 571 002c 24       		.uleb128 0x24
+ 572 002d 00       		.byte	0
+ 573 002e 0B       		.uleb128 0xb
+ 574 002f 0B       		.uleb128 0xb
+ 575 0030 3E       		.uleb128 0x3e
+ 576 0031 0B       		.uleb128 0xb
+ 577 0032 03       		.uleb128 0x3
+ 578 0033 08       		.uleb128 0x8
+ 579 0034 00       		.byte	0
+ 580 0035 00       		.byte	0
+ 581 0036 05       		.uleb128 0x5
+ 582 0037 0F       		.uleb128 0xf
+ 583 0038 00       		.byte	0
+ 584 0039 0B       		.uleb128 0xb
+ 585 003a 0B       		.uleb128 0xb
+ 586 003b 00       		.byte	0
+ 587 003c 00       		.byte	0
+ 588 003d 06       		.uleb128 0x6
+ 589 003e 04       		.uleb128 0x4
+ 590 003f 01       		.byte	0x1
+ 591 0040 0B       		.uleb128 0xb
+ 592 0041 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 13
+
+
+ 593 0042 49       		.uleb128 0x49
+ 594 0043 13       		.uleb128 0x13
+ 595 0044 3A       		.uleb128 0x3a
+ 596 0045 0B       		.uleb128 0xb
+ 597 0046 3B       		.uleb128 0x3b
+ 598 0047 0B       		.uleb128 0xb
+ 599 0048 01       		.uleb128 0x1
+ 600 0049 13       		.uleb128 0x13
+ 601 004a 00       		.byte	0
+ 602 004b 00       		.byte	0
+ 603 004c 07       		.uleb128 0x7
+ 604 004d 28       		.uleb128 0x28
+ 605 004e 00       		.byte	0
+ 606 004f 03       		.uleb128 0x3
+ 607 0050 0E       		.uleb128 0xe
+ 608 0051 1C       		.uleb128 0x1c
+ 609 0052 0B       		.uleb128 0xb
+ 610 0053 00       		.byte	0
+ 611 0054 00       		.byte	0
+ 612 0055 08       		.uleb128 0x8
+ 613 0056 0F       		.uleb128 0xf
+ 614 0057 00       		.byte	0
+ 615 0058 0B       		.uleb128 0xb
+ 616 0059 0B       		.uleb128 0xb
+ 617 005a 49       		.uleb128 0x49
+ 618 005b 13       		.uleb128 0x13
+ 619 005c 00       		.byte	0
+ 620 005d 00       		.byte	0
+ 621 005e 09       		.uleb128 0x9
+ 622 005f 15       		.uleb128 0x15
+ 623 0060 01       		.byte	0x1
+ 624 0061 27       		.uleb128 0x27
+ 625 0062 19       		.uleb128 0x19
+ 626 0063 01       		.uleb128 0x1
+ 627 0064 13       		.uleb128 0x13
+ 628 0065 00       		.byte	0
+ 629 0066 00       		.byte	0
+ 630 0067 0A       		.uleb128 0xa
+ 631 0068 05       		.uleb128 0x5
+ 632 0069 00       		.byte	0
+ 633 006a 49       		.uleb128 0x49
+ 634 006b 13       		.uleb128 0x13
+ 635 006c 00       		.byte	0
+ 636 006d 00       		.byte	0
+ 637 006e 0B       		.uleb128 0xb
+ 638 006f 13       		.uleb128 0x13
+ 639 0070 01       		.byte	0x1
+ 640 0071 03       		.uleb128 0x3
+ 641 0072 0E       		.uleb128 0xe
+ 642 0073 0B       		.uleb128 0xb
+ 643 0074 0B       		.uleb128 0xb
+ 644 0075 3A       		.uleb128 0x3a
+ 645 0076 0B       		.uleb128 0xb
+ 646 0077 3B       		.uleb128 0x3b
+ 647 0078 0B       		.uleb128 0xb
+ 648 0079 01       		.uleb128 0x1
+ 649 007a 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 14
+
+
+ 650 007b 00       		.byte	0
+ 651 007c 00       		.byte	0
+ 652 007d 0C       		.uleb128 0xc
+ 653 007e 0D       		.uleb128 0xd
+ 654 007f 00       		.byte	0
+ 655 0080 03       		.uleb128 0x3
+ 656 0081 0E       		.uleb128 0xe
+ 657 0082 3A       		.uleb128 0x3a
+ 658 0083 0B       		.uleb128 0xb
+ 659 0084 3B       		.uleb128 0x3b
+ 660 0085 0B       		.uleb128 0xb
+ 661 0086 49       		.uleb128 0x49
+ 662 0087 13       		.uleb128 0x13
+ 663 0088 38       		.uleb128 0x38
+ 664 0089 0B       		.uleb128 0xb
+ 665 008a 00       		.byte	0
+ 666 008b 00       		.byte	0
+ 667 008c 0D       		.uleb128 0xd
+ 668 008d 0D       		.uleb128 0xd
+ 669 008e 00       		.byte	0
+ 670 008f 03       		.uleb128 0x3
+ 671 0090 0E       		.uleb128 0xe
+ 672 0091 3A       		.uleb128 0x3a
+ 673 0092 0B       		.uleb128 0xb
+ 674 0093 3B       		.uleb128 0x3b
+ 675 0094 0B       		.uleb128 0xb
+ 676 0095 49       		.uleb128 0x49
+ 677 0096 13       		.uleb128 0x13
+ 678 0097 0B       		.uleb128 0xb
+ 679 0098 0B       		.uleb128 0xb
+ 680 0099 0D       		.uleb128 0xd
+ 681 009a 0B       		.uleb128 0xb
+ 682 009b 0C       		.uleb128 0xc
+ 683 009c 0B       		.uleb128 0xb
+ 684 009d 38       		.uleb128 0x38
+ 685 009e 0B       		.uleb128 0xb
+ 686 009f 00       		.byte	0
+ 687 00a0 00       		.byte	0
+ 688 00a1 0E       		.uleb128 0xe
+ 689 00a2 0D       		.uleb128 0xd
+ 690 00a3 00       		.byte	0
+ 691 00a4 03       		.uleb128 0x3
+ 692 00a5 08       		.uleb128 0x8
+ 693 00a6 3A       		.uleb128 0x3a
+ 694 00a7 0B       		.uleb128 0xb
+ 695 00a8 3B       		.uleb128 0x3b
+ 696 00a9 0B       		.uleb128 0xb
+ 697 00aa 49       		.uleb128 0x49
+ 698 00ab 13       		.uleb128 0x13
+ 699 00ac 38       		.uleb128 0x38
+ 700 00ad 0B       		.uleb128 0xb
+ 701 00ae 00       		.byte	0
+ 702 00af 00       		.byte	0
+ 703 00b0 0F       		.uleb128 0xf
+ 704 00b1 2E       		.uleb128 0x2e
+ 705 00b2 01       		.byte	0x1
+ 706 00b3 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 15
+
+
+ 707 00b4 0E       		.uleb128 0xe
+ 708 00b5 3A       		.uleb128 0x3a
+ 709 00b6 0B       		.uleb128 0xb
+ 710 00b7 3B       		.uleb128 0x3b
+ 711 00b8 0B       		.uleb128 0xb
+ 712 00b9 27       		.uleb128 0x27
+ 713 00ba 19       		.uleb128 0x19
+ 714 00bb 11       		.uleb128 0x11
+ 715 00bc 01       		.uleb128 0x1
+ 716 00bd 12       		.uleb128 0x12
+ 717 00be 06       		.uleb128 0x6
+ 718 00bf 40       		.uleb128 0x40
+ 719 00c0 18       		.uleb128 0x18
+ 720 00c1 9642     		.uleb128 0x2116
+ 721 00c3 19       		.uleb128 0x19
+ 722 00c4 01       		.uleb128 0x1
+ 723 00c5 13       		.uleb128 0x13
+ 724 00c6 00       		.byte	0
+ 725 00c7 00       		.byte	0
+ 726 00c8 10       		.uleb128 0x10
+ 727 00c9 05       		.uleb128 0x5
+ 728 00ca 00       		.byte	0
+ 729 00cb 03       		.uleb128 0x3
+ 730 00cc 0E       		.uleb128 0xe
+ 731 00cd 3A       		.uleb128 0x3a
+ 732 00ce 0B       		.uleb128 0xb
+ 733 00cf 3B       		.uleb128 0x3b
+ 734 00d0 0B       		.uleb128 0xb
+ 735 00d1 49       		.uleb128 0x49
+ 736 00d2 13       		.uleb128 0x13
+ 737 00d3 02       		.uleb128 0x2
+ 738 00d4 17       		.uleb128 0x17
+ 739 00d5 00       		.byte	0
+ 740 00d6 00       		.byte	0
+ 741 00d7 11       		.uleb128 0x11
+ 742 00d8 34       		.uleb128 0x34
+ 743 00d9 00       		.byte	0
+ 744 00da 03       		.uleb128 0x3
+ 745 00db 0E       		.uleb128 0xe
+ 746 00dc 3A       		.uleb128 0x3a
+ 747 00dd 0B       		.uleb128 0xb
+ 748 00de 3B       		.uleb128 0x3b
+ 749 00df 0B       		.uleb128 0xb
+ 750 00e0 49       		.uleb128 0x49
+ 751 00e1 13       		.uleb128 0x13
+ 752 00e2 02       		.uleb128 0x2
+ 753 00e3 17       		.uleb128 0x17
+ 754 00e4 00       		.byte	0
+ 755 00e5 00       		.byte	0
+ 756 00e6 12       		.uleb128 0x12
+ 757 00e7 898201   		.uleb128 0x4109
+ 758 00ea 00       		.byte	0
+ 759 00eb 11       		.uleb128 0x11
+ 760 00ec 01       		.uleb128 0x1
+ 761 00ed 9542     		.uleb128 0x2115
+ 762 00ef 19       		.uleb128 0x19
+ 763 00f0 31       		.uleb128 0x31
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 16
+
+
+ 764 00f1 13       		.uleb128 0x13
+ 765 00f2 00       		.byte	0
+ 766 00f3 00       		.byte	0
+ 767 00f4 13       		.uleb128 0x13
+ 768 00f5 2E       		.uleb128 0x2e
+ 769 00f6 01       		.byte	0x1
+ 770 00f7 3F       		.uleb128 0x3f
+ 771 00f8 19       		.uleb128 0x19
+ 772 00f9 03       		.uleb128 0x3
+ 773 00fa 0E       		.uleb128 0xe
+ 774 00fb 3A       		.uleb128 0x3a
+ 775 00fc 0B       		.uleb128 0xb
+ 776 00fd 3B       		.uleb128 0x3b
+ 777 00fe 0B       		.uleb128 0xb
+ 778 00ff 27       		.uleb128 0x27
+ 779 0100 19       		.uleb128 0x19
+ 780 0101 49       		.uleb128 0x49
+ 781 0102 13       		.uleb128 0x13
+ 782 0103 11       		.uleb128 0x11
+ 783 0104 01       		.uleb128 0x1
+ 784 0105 12       		.uleb128 0x12
+ 785 0106 06       		.uleb128 0x6
+ 786 0107 40       		.uleb128 0x40
+ 787 0108 18       		.uleb128 0x18
+ 788 0109 9742     		.uleb128 0x2117
+ 789 010b 19       		.uleb128 0x19
+ 790 010c 01       		.uleb128 0x1
+ 791 010d 13       		.uleb128 0x13
+ 792 010e 00       		.byte	0
+ 793 010f 00       		.byte	0
+ 794 0110 14       		.uleb128 0x14
+ 795 0111 898201   		.uleb128 0x4109
+ 796 0114 01       		.byte	0x1
+ 797 0115 11       		.uleb128 0x11
+ 798 0116 01       		.uleb128 0x1
+ 799 0117 31       		.uleb128 0x31
+ 800 0118 13       		.uleb128 0x13
+ 801 0119 01       		.uleb128 0x1
+ 802 011a 13       		.uleb128 0x13
+ 803 011b 00       		.byte	0
+ 804 011c 00       		.byte	0
+ 805 011d 15       		.uleb128 0x15
+ 806 011e 8A8201   		.uleb128 0x410a
+ 807 0121 00       		.byte	0
+ 808 0122 02       		.uleb128 0x2
+ 809 0123 18       		.uleb128 0x18
+ 810 0124 9142     		.uleb128 0x2111
+ 811 0126 18       		.uleb128 0x18
+ 812 0127 00       		.byte	0
+ 813 0128 00       		.byte	0
+ 814 0129 16       		.uleb128 0x16
+ 815 012a 898201   		.uleb128 0x4109
+ 816 012d 01       		.byte	0x1
+ 817 012e 11       		.uleb128 0x11
+ 818 012f 01       		.uleb128 0x1
+ 819 0130 31       		.uleb128 0x31
+ 820 0131 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 17
+
+
+ 821 0132 00       		.byte	0
+ 822 0133 00       		.byte	0
+ 823 0134 17       		.uleb128 0x17
+ 824 0135 2E       		.uleb128 0x2e
+ 825 0136 00       		.byte	0
+ 826 0137 3F       		.uleb128 0x3f
+ 827 0138 19       		.uleb128 0x19
+ 828 0139 3C       		.uleb128 0x3c
+ 829 013a 19       		.uleb128 0x19
+ 830 013b 6E       		.uleb128 0x6e
+ 831 013c 0E       		.uleb128 0xe
+ 832 013d 03       		.uleb128 0x3
+ 833 013e 0E       		.uleb128 0xe
+ 834 013f 3A       		.uleb128 0x3a
+ 835 0140 0B       		.uleb128 0xb
+ 836 0141 3B       		.uleb128 0x3b
+ 837 0142 0B       		.uleb128 0xb
+ 838 0143 00       		.byte	0
+ 839 0144 00       		.byte	0
+ 840 0145 00       		.byte	0
+ 841              		.section	.debug_loc,"",%progbits
+ 842              	.Ldebug_loc0:
+ 843              	.LLST0:
+ 844 0000 00000000 		.4byte	.LVL0
+ 845 0004 06000000 		.4byte	.LVL2
+ 846 0008 0100     		.2byte	0x1
+ 847 000a 50       		.byte	0x50
+ 848 000b 06000000 		.4byte	.LVL2
+ 849 000f 14000000 		.4byte	.LFE1
+ 850 0013 0400     		.2byte	0x4
+ 851 0015 F3       		.byte	0xf3
+ 852 0016 01       		.uleb128 0x1
+ 853 0017 50       		.byte	0x50
+ 854 0018 9F       		.byte	0x9f
+ 855 0019 00000000 		.4byte	0
+ 856 001d 00000000 		.4byte	0
+ 857              	.LLST1:
+ 858 0021 04000000 		.4byte	.LVL1
+ 859 0025 10000000 		.4byte	.LVL4
+ 860 0029 0100     		.2byte	0x1
+ 861 002b 54       		.byte	0x54
+ 862 002c 10000000 		.4byte	.LVL4
+ 863 0030 13000000 		.4byte	.LVL5-1
+ 864 0034 0100     		.2byte	0x1
+ 865 0036 50       		.byte	0x50
+ 866 0037 00000000 		.4byte	0
+ 867 003b 00000000 		.4byte	0
+ 868              	.LLST2:
+ 869 003f 00000000 		.4byte	.LVL6
+ 870 0043 06000000 		.4byte	.LVL7
+ 871 0047 0100     		.2byte	0x1
+ 872 0049 50       		.byte	0x50
+ 873 004a 06000000 		.4byte	.LVL7
+ 874 004e 3A000000 		.4byte	.LVL16
+ 875 0052 0100     		.2byte	0x1
+ 876 0054 56       		.byte	0x56
+ 877 0055 3A000000 		.4byte	.LVL16
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 18
+
+
+ 878 0059 40000000 		.4byte	.LFE0
+ 879 005d 0400     		.2byte	0x4
+ 880 005f F3       		.byte	0xf3
+ 881 0060 01       		.uleb128 0x1
+ 882 0061 50       		.byte	0x50
+ 883 0062 9F       		.byte	0x9f
+ 884 0063 00000000 		.4byte	0
+ 885 0067 00000000 		.4byte	0
+ 886              	.LLST3:
+ 887 006b 00000000 		.4byte	.LVL6
+ 888 006f 0B000000 		.4byte	.LVL8-1
+ 889 0073 0100     		.2byte	0x1
+ 890 0075 51       		.byte	0x51
+ 891 0076 0B000000 		.4byte	.LVL8-1
+ 892 007a 3A000000 		.4byte	.LVL16
+ 893 007e 0100     		.2byte	0x1
+ 894 0080 55       		.byte	0x55
+ 895 0081 3A000000 		.4byte	.LVL16
+ 896 0085 40000000 		.4byte	.LFE0
+ 897 0089 0400     		.2byte	0x4
+ 898 008b F3       		.byte	0xf3
+ 899 008c 01       		.uleb128 0x1
+ 900 008d 51       		.byte	0x51
+ 901 008e 9F       		.byte	0x9f
+ 902 008f 00000000 		.4byte	0
+ 903 0093 00000000 		.4byte	0
+ 904              	.LLST4:
+ 905 0097 0C000000 		.4byte	.LVL8
+ 906 009b 18000000 		.4byte	.LVL9
+ 907 009f 0100     		.2byte	0x1
+ 908 00a1 50       		.byte	0x50
+ 909 00a2 18000000 		.4byte	.LVL9
+ 910 00a6 1B000000 		.4byte	.LVL10-1
+ 911 00aa 0100     		.2byte	0x1
+ 912 00ac 53       		.byte	0x53
+ 913 00ad 1B000000 		.4byte	.LVL10-1
+ 914 00b1 2E000000 		.4byte	.LVL12
+ 915 00b5 0100     		.2byte	0x1
+ 916 00b7 54       		.byte	0x54
+ 917 00b8 2E000000 		.4byte	.LVL12
+ 918 00bc 30000000 		.4byte	.LVL13
+ 919 00c0 0100     		.2byte	0x1
+ 920 00c2 50       		.byte	0x50
+ 921 00c3 30000000 		.4byte	.LVL13
+ 922 00c7 3A000000 		.4byte	.LVL16
+ 923 00cb 0100     		.2byte	0x1
+ 924 00cd 54       		.byte	0x54
+ 925 00ce 00000000 		.4byte	0
+ 926 00d2 00000000 		.4byte	0
+ 927              	.LLST5:
+ 928 00d6 1C000000 		.4byte	.LVL10
+ 929 00da 29000000 		.4byte	.LVL11-1
+ 930 00de 0100     		.2byte	0x1
+ 931 00e0 50       		.byte	0x50
+ 932 00e1 29000000 		.4byte	.LVL11-1
+ 933 00e5 2E000000 		.4byte	.LVL12
+ 934 00e9 0100     		.2byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 19
+
+
+ 935 00eb 57       		.byte	0x57
+ 936 00ec 30000000 		.4byte	.LVL13
+ 937 00f0 32000000 		.4byte	.LVL14
+ 938 00f4 0100     		.2byte	0x1
+ 939 00f6 50       		.byte	0x50
+ 940 00f7 32000000 		.4byte	.LVL14
+ 941 00fb 3A000000 		.4byte	.LVL16
+ 942 00ff 0100     		.2byte	0x1
+ 943 0101 57       		.byte	0x57
+ 944 0102 3A000000 		.4byte	.LVL16
+ 945 0106 40000000 		.4byte	.LFE0
+ 946 010a 0100     		.2byte	0x1
+ 947 010c 50       		.byte	0x50
+ 948 010d 00000000 		.4byte	0
+ 949 0111 00000000 		.4byte	0
+ 950              		.section	.debug_aranges,"",%progbits
+ 951 0000 24000000 		.4byte	0x24
+ 952 0004 0200     		.2byte	0x2
+ 953 0006 00000000 		.4byte	.Ldebug_info0
+ 954 000a 04       		.byte	0x4
+ 955 000b 00       		.byte	0
+ 956 000c 0000     		.2byte	0
+ 957 000e 0000     		.2byte	0
+ 958 0010 00000000 		.4byte	.LFB1
+ 959 0014 14000000 		.4byte	.LFE1-.LFB1
+ 960 0018 00000000 		.4byte	.LFB0
+ 961 001c 40000000 		.4byte	.LFE0-.LFB0
+ 962 0020 00000000 		.4byte	0
+ 963 0024 00000000 		.4byte	0
+ 964              		.section	.debug_ranges,"",%progbits
+ 965              	.Ldebug_ranges0:
+ 966 0000 00000000 		.4byte	.LFB1
+ 967 0004 14000000 		.4byte	.LFE1
+ 968 0008 00000000 		.4byte	.LFB0
+ 969 000c 40000000 		.4byte	.LFE0
+ 970 0010 00000000 		.4byte	0
+ 971 0014 00000000 		.4byte	0
+ 972              		.section	.debug_line,"",%progbits
+ 973              	.Ldebug_line0:
+ 974 0000 BB010000 		.section	.debug_str,"MS",%progbits,1
+ 974      02008001 
+ 974      00000201 
+ 974      FB0E0D00 
+ 974      01010101 
+ 975              	.LASF45:
+ 976 0000 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 976      73657273 
+ 976      5C706561 
+ 976      726C7374 
+ 976      6C5C446F 
+ 977 002e 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 977      6D5F656E 
+ 977      67696E65 
+ 977      6572696E 
+ 977      675C656D 
+ 978 005d 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 978      6C76676C 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 20
+
+
+ 978      365C7463 
+ 978      6F6D5F64 
+ 978      6973706C 
+ 979              	.LASF31:
+ 980 0083 6C765F74 		.ascii	"lv_task_t\000"
+ 980      61736B5F 
+ 980      7400
+ 981              	.LASF2:
+ 982 008d 73686F72 		.ascii	"short int\000"
+ 982      7420696E 
+ 982      7400
+ 983              	.LASF36:
+ 984 0097 7461736B 		.ascii	"task\000"
+ 984      00
+ 985              	.LASF26:
+ 986 009c 4C565F54 		.ascii	"LV_TASK_PRIO_LOW\000"
+ 986      41534B5F 
+ 986      5052494F 
+ 986      5F4C4F57 
+ 986      00
+ 987              	.LASF6:
+ 988 00ad 5F5F7569 		.ascii	"__uint32_t\000"
+ 988      6E743332 
+ 988      5F7400
+ 989              	.LASF30:
+ 990 00b8 5F4C565F 		.ascii	"_LV_TASK_PRIO_NUM\000"
+ 990      5441534B 
+ 990      5F505249 
+ 990      4F5F4E55 
+ 990      4D00
+ 991              	.LASF21:
+ 992 00ca 75736572 		.ascii	"user_data\000"
+ 992      5F646174 
+ 992      6100
+ 993              	.LASF29:
+ 994 00d4 4C565F54 		.ascii	"LV_TASK_PRIO_HIGHEST\000"
+ 994      41534B5F 
+ 994      5052494F 
+ 994      5F484947 
+ 994      48455354 
+ 995              	.LASF11:
+ 996 00e9 75696E74 		.ascii	"uint8_t\000"
+ 996      385F7400 
+ 997              	.LASF44:
+ 998 00f1 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 998      2E5C2E2E 
+ 998      5C6C7667 
+ 998      6C5C7665 
+ 998      7273696F 
+ 999 011d 5C6C765F 		.ascii	"\\lv_async.c\000"
+ 999      6173796E 
+ 999      632E6300 
+ 1000              	.LASF37:
+ 1001 0129 6173796E 		.ascii	"async_xcb\000"
+ 1001      635F7863 
+ 1001      6200
+ 1002              	.LASF33:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 21
+
+
+ 1003 0133 5F6C765F 		.ascii	"_lv_task_t\000"
+ 1003      7461736B 
+ 1003      5F7400
+ 1004              	.LASF8:
+ 1005 013e 6C6F6E67 		.ascii	"long long int\000"
+ 1005      206C6F6E 
+ 1005      6720696E 
+ 1005      7400
+ 1006              	.LASF16:
+ 1007 014c 6C765F72 		.ascii	"lv_res_t\000"
+ 1007      65735F74 
+ 1007      00
+ 1008              	.LASF24:
+ 1009 0155 4C565F54 		.ascii	"LV_TASK_PRIO_OFF\000"
+ 1009      41534B5F 
+ 1009      5052494F 
+ 1009      5F4F4646 
+ 1009      00
+ 1010              	.LASF27:
+ 1011 0166 4C565F54 		.ascii	"LV_TASK_PRIO_MID\000"
+ 1011      41534B5F 
+ 1011      5052494F 
+ 1011      5F4D4944 
+ 1011      00
+ 1012              	.LASF4:
+ 1013 0177 6C6F6E67 		.ascii	"long int\000"
+ 1013      20696E74 
+ 1013      00
+ 1014              	.LASF18:
+ 1015 0180 70657269 		.ascii	"period\000"
+ 1015      6F6400
+ 1016              	.LASF5:
+ 1017 0187 5F5F7569 		.ascii	"__uint8_t\000"
+ 1017      6E74385F 
+ 1017      7400
+ 1018              	.LASF19:
+ 1019 0191 6C617374 		.ascii	"last_run\000"
+ 1019      5F72756E 
+ 1019      00
+ 1020              	.LASF13:
+ 1021 019a 6C6F6E67 		.ascii	"long double\000"
+ 1021      20646F75 
+ 1021      626C6500 
+ 1022              	.LASF1:
+ 1023 01a6 756E7369 		.ascii	"unsigned char\000"
+ 1023      676E6564 
+ 1023      20636861 
+ 1023      7200
+ 1024              	.LASF47:
+ 1025 01b4 6C765F61 		.ascii	"lv_async_call\000"
+ 1025      73796E63 
+ 1025      5F63616C 
+ 1025      6C00
+ 1026              	.LASF0:
+ 1027 01c2 7369676E 		.ascii	"signed char\000"
+ 1027      65642063 
+ 1027      68617200 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 22
+
+
+ 1028              	.LASF9:
+ 1029 01ce 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1029      206C6F6E 
+ 1029      6720756E 
+ 1029      7369676E 
+ 1029      65642069 
+ 1030              	.LASF23:
+ 1031 01e5 6F6E6365 		.ascii	"once\000"
+ 1031      00
+ 1032              	.LASF12:
+ 1033 01ea 75696E74 		.ascii	"uint32_t\000"
+ 1033      33325F74 
+ 1033      00
+ 1034              	.LASF10:
+ 1035 01f3 756E7369 		.ascii	"unsigned int\000"
+ 1035      676E6564 
+ 1035      20696E74 
+ 1035      00
+ 1036              	.LASF35:
+ 1037 0200 6C765F61 		.ascii	"lv_async_info_t\000"
+ 1037      73796E63 
+ 1037      5F696E66 
+ 1037      6F5F7400 
+ 1038              	.LASF3:
+ 1039 0210 73686F72 		.ascii	"short unsigned int\000"
+ 1039      7420756E 
+ 1039      7369676E 
+ 1039      65642069 
+ 1039      6E7400
+ 1040              	.LASF42:
+ 1041 0223 6C765F74 		.ascii	"lv_task_once\000"
+ 1041      61736B5F 
+ 1041      6F6E6365 
+ 1041      00
+ 1042              	.LASF25:
+ 1043 0230 4C565F54 		.ascii	"LV_TASK_PRIO_LOWEST\000"
+ 1043      41534B5F 
+ 1043      5052494F 
+ 1043      5F4C4F57 
+ 1043      45535400 
+ 1044              	.LASF43:
+ 1045 0244 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1045      43313120 
+ 1045      352E342E 
+ 1045      31203230 
+ 1045      31363036 
+ 1046 0277 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1046      20726576 
+ 1046      6973696F 
+ 1046      6E203233 
+ 1046      37373135 
+ 1047 02aa 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 1047      70202D6D 
+ 1047      6670753D 
+ 1047      66707634 
+ 1047      2D73702D 
+ 1048 02dd 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 23
+
+
+ 1048      6F6E7320 
+ 1048      2D666661 
+ 1048      742D6C74 
+ 1048      6F2D6F62 
+ 1049              	.LASF20:
+ 1050 02f7 7461736B 		.ascii	"task_cb\000"
+ 1050      5F636200 
+ 1051              	.LASF15:
+ 1052 02ff 4C565F52 		.ascii	"LV_RES_OK\000"
+ 1052      45535F4F 
+ 1052      4B00
+ 1053              	.LASF28:
+ 1054 0309 4C565F54 		.ascii	"LV_TASK_PRIO_HIGH\000"
+ 1054      41534B5F 
+ 1054      5052494F 
+ 1054      5F484947 
+ 1054      4800
+ 1055              	.LASF34:
+ 1056 031b 5F6C765F 		.ascii	"_lv_async_info_t\000"
+ 1056      6173796E 
+ 1056      635F696E 
+ 1056      666F5F74 
+ 1056      00
+ 1057              	.LASF46:
+ 1058 032c 6C765F61 		.ascii	"lv_async_task_cb\000"
+ 1058      73796E63 
+ 1058      5F746173 
+ 1058      6B5F6362 
+ 1058      00
+ 1059              	.LASF7:
+ 1060 033d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1060      20756E73 
+ 1060      69676E65 
+ 1060      6420696E 
+ 1060      7400
+ 1061              	.LASF38:
+ 1062 034f 696E666F 		.ascii	"info\000"
+ 1062      00
+ 1063              	.LASF17:
+ 1064 0354 6C765F74 		.ascii	"lv_task_cb_t\000"
+ 1064      61736B5F 
+ 1064      63625F74 
+ 1064      00
+ 1065              	.LASF40:
+ 1066 0361 6C765F6D 		.ascii	"lv_mem_alloc\000"
+ 1066      656D5F61 
+ 1066      6C6C6F63 
+ 1066      00
+ 1067              	.LASF41:
+ 1068 036e 6C765F74 		.ascii	"lv_task_create\000"
+ 1068      61736B5F 
+ 1068      63726561 
+ 1068      746500
+ 1069              	.LASF32:
+ 1070 037d 6C765F61 		.ascii	"lv_async_cb_t\000"
+ 1070      73796E63 
+ 1070      5F63625F 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccRrapnb.s 			page 24
+
+
+ 1070      7400
+ 1071              	.LASF39:
+ 1072 038b 6C765F6D 		.ascii	"lv_mem_free\000"
+ 1072      656D5F66 
+ 1072      72656500 
+ 1073              	.LASF14:
+ 1074 0397 4C565F52 		.ascii	"LV_RES_INV\000"
+ 1074      45535F49 
+ 1074      4E5600
+ 1075              	.LASF22:
+ 1076 03a2 7072696F 		.ascii	"prio\000"
+ 1076      00
+ 1077              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

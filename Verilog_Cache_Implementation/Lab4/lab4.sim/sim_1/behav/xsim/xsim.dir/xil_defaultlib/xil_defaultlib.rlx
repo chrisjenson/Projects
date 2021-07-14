@@ -1,0 +1,10 @@
+0.7
+2020.2
+Nov 18 2020
+09:47:47
+D:/CELab2/Lab4/lab4.sim/sim_1/behav/xsim/glbl.v,1605673889,verilog,,,,glbl,,uvm,,,,,,
+D:/CELab2/Lab4/lab4.srcs/sim_1/new/testbench.v,1619981542,systemVerilog,,,,testbench,,uvm,,,,,,
+D:/CELab2/Lab4/lab4.srcs/sources_1/new/Cache.v,1619978352,verilog,,D:/CELab2/Lab4/lab4.srcs/sources_1/new/CacheControl.v,,Cache,,uvm,,,,,,
+D:/CELab2/Lab4/lab4.srcs/sources_1/new/CacheControl.v,1619978464,verilog,,D:/CELab2/Lab4/lab4.srcs/sources_1/new/Memory.v,,CacheControl,,uvm,,,,,,
+D:/CELab2/Lab4/lab4.srcs/sources_1/new/Memory.v,1620003353,verilog,,D:/CELab2/Lab4/lab4.srcs/sim_1/new/testbench.v,,Memory,,uvm,,,,,,
+D:/CELab2/Lab4/lab4.srcs/sources_1/new/Processor.v,1618197321,verilog,,D:/CELab2/Lab4/lab4.srcs/sim_1/new/testbench.v,,Processor,,,,,,,,

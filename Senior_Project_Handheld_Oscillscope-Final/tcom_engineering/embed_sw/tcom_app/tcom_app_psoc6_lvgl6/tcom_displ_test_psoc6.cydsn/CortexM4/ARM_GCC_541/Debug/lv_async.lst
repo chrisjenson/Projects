@@ -1,0 +1,1122 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_async.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_async_call,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_async_call
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_async_call, %function
+  26              	lv_async_call:
+  27              	.LFB0:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_async.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  * @file lv_async.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** #include "lv_async.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /*********************
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      DEFINES
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *********************/
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      TYPEDEFS
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *  STATIC PROTOTYPES
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** static void lv_async_task_cb(lv_task_t *task);
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *  STATIC VARIABLES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *      MACROS
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *   GLOBAL FUNCTIONS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** lv_res_t lv_async_call(lv_async_cb_t async_xcb, void * user_data)
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** {
+  29              		.loc 1 39 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 84B0     		sub	sp, sp, #16
+  38              		.cfi_def_cfa_offset 24
+  39 0004 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  41 0006 7860     		str	r0, [r7, #4]
+  42 0008 3960     		str	r1, [r7]
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /*Allocate an info structure */
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_async_info_t *info = lv_mem_alloc(sizeof(lv_async_info_t));
+  43              		.loc 1 41 0
+  44 000a 0820     		movs	r0, #8
+  45 000c FFF7FEFF 		bl	lv_mem_alloc
+  46 0010 F860     		str	r0, [r7, #12]
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     if(info == NULL)
+  47              		.loc 1 43 0
+  48 0012 FB68     		ldr	r3, [r7, #12]
+  49 0014 002B     		cmp	r3, #0
+  50 0016 01D1     		bne	.L2
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+  51              		.loc 1 44 0
+  52 0018 0023     		movs	r3, #0
+  53 001a 1BE0     		b	.L3
+  54              	.L2:
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Create a new task */
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Use highest priority so that it will run before a refresh */
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_task_t *task = lv_task_create(lv_async_task_cb, 0, LV_TASK_PRIO_HIGHEST, info);
+  55              		.loc 1 48 0
+  56 001c FB68     		ldr	r3, [r7, #12]
+  57 001e 0522     		movs	r2, #5
+  58 0020 0021     		movs	r1, #0
+  59 0022 0E48     		ldr	r0, .L5
+  60 0024 FFF7FEFF 		bl	lv_task_create
+  61 0028 B860     		str	r0, [r7, #8]
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     if(task == NULL) {
+  62              		.loc 1 50 0
+  63 002a BB68     		ldr	r3, [r7, #8]
+  64 002c 002B     		cmp	r3, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 3
+
+
+  65 002e 04D1     		bne	.L4
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         lv_mem_free(info);
+  66              		.loc 1 51 0
+  67 0030 F868     		ldr	r0, [r7, #12]
+  68 0032 FFF7FEFF 		bl	lv_mem_free
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****         return LV_RES_INV;
+  69              		.loc 1 52 0
+  70 0036 0023     		movs	r3, #0
+  71 0038 0CE0     		b	.L3
+  72              	.L4:
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     }
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->cb = async_xcb;
+  73              		.loc 1 55 0
+  74 003a FB68     		ldr	r3, [r7, #12]
+  75 003c 7A68     		ldr	r2, [r7, #4]
+  76 003e 1A60     		str	r2, [r3]
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->user_data = user_data;
+  77              		.loc 1 56 0
+  78 0040 FB68     		ldr	r3, [r7, #12]
+  79 0042 3A68     		ldr	r2, [r7]
+  80 0044 5A60     		str	r2, [r3, #4]
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     /* Set the task's user data */
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     task->user_data = info;
+  81              		.loc 1 59 0
+  82 0046 BB68     		ldr	r3, [r7, #8]
+  83 0048 FA68     		ldr	r2, [r7, #12]
+  84 004a DA60     		str	r2, [r3, #12]
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_task_once(task);
+  85              		.loc 1 60 0
+  86 004c B868     		ldr	r0, [r7, #8]
+  87 004e FFF7FEFF 		bl	lv_task_once
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     return LV_RES_OK;
+  88              		.loc 1 61 0
+  89 0052 0123     		movs	r3, #1
+  90              	.L3:
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+  91              		.loc 1 62 0
+  92 0054 1846     		mov	r0, r3
+  93 0056 1037     		adds	r7, r7, #16
+  94              		.cfi_def_cfa_offset 8
+  95 0058 BD46     		mov	sp, r7
+  96              		.cfi_def_cfa_register 13
+  97              		@ sp needed
+  98 005a 80BD     		pop	{r7, pc}
+  99              	.L6:
+ 100              		.align	2
+ 101              	.L5:
+ 102 005c 00000000 		.word	lv_async_task_cb
+ 103              		.cfi_endproc
+ 104              	.LFE0:
+ 105              		.size	lv_async_call, .-lv_async_call
+ 106              		.section	.text.lv_async_task_cb,"ax",%progbits
+ 107              		.align	2
+ 108              		.thumb
+ 109              		.thumb_func
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 4
+
+
+ 110              		.type	lv_async_task_cb, %function
+ 111              	lv_async_task_cb:
+ 112              	.LFB1:
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** /**********************
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  *   STATIC FUNCTIONS
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****  **********************/
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** static void lv_async_task_cb(lv_task_t *task)
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** {
+ 113              		.loc 1 69 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 16
+ 116              		@ frame_needed = 1, uses_anonymous_args = 0
+ 117 0000 80B5     		push	{r7, lr}
+ 118              		.cfi_def_cfa_offset 8
+ 119              		.cfi_offset 7, -8
+ 120              		.cfi_offset 14, -4
+ 121 0002 84B0     		sub	sp, sp, #16
+ 122              		.cfi_def_cfa_offset 24
+ 123 0004 00AF     		add	r7, sp, #0
+ 124              		.cfi_def_cfa_register 7
+ 125 0006 7860     		str	r0, [r7, #4]
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_async_info_t *info = (lv_async_info_t *)task->user_data;
+ 126              		.loc 1 70 0
+ 127 0008 7B68     		ldr	r3, [r7, #4]
+ 128 000a DB68     		ldr	r3, [r3, #12]
+ 129 000c FB60     		str	r3, [r7, #12]
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     info->cb(info->user_data);
+ 130              		.loc 1 72 0
+ 131 000e FB68     		ldr	r3, [r7, #12]
+ 132 0010 1B68     		ldr	r3, [r3]
+ 133 0012 FA68     		ldr	r2, [r7, #12]
+ 134 0014 5268     		ldr	r2, [r2, #4]
+ 135 0016 1046     		mov	r0, r2
+ 136 0018 9847     		blx	r3
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c ****     lv_mem_free(info);
+ 137              		.loc 1 74 0
+ 138 001a F868     		ldr	r0, [r7, #12]
+ 139 001c FFF7FEFF 		bl	lv_mem_free
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_async.c **** }
+ 140              		.loc 1 75 0
+ 141 0020 00BF     		nop
+ 142 0022 1037     		adds	r7, r7, #16
+ 143              		.cfi_def_cfa_offset 8
+ 144 0024 BD46     		mov	sp, r7
+ 145              		.cfi_def_cfa_register 13
+ 146              		@ sp needed
+ 147 0026 80BD     		pop	{r7, pc}
+ 148              		.cfi_endproc
+ 149              	.LFE1:
+ 150              		.size	lv_async_task_cb, .-lv_async_task_cb
+ 151              		.text
+ 152              	.Letext0:
+ 153              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 5
+
+
+ 154              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 155              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_types.h"
+ 156              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_task.h"
+ 157              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_async.h"
+ 158              		.section	.debug_info,"",%progbits
+ 159              	.Ldebug_info0:
+ 160 0000 57020000 		.4byte	0x257
+ 161 0004 0400     		.2byte	0x4
+ 162 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 163 000a 04       		.byte	0x4
+ 164 000b 01       		.uleb128 0x1
+ 165 000c F4000000 		.4byte	.LASF39
+ 166 0010 0C       		.byte	0xc
+ 167 0011 7F000000 		.4byte	.LASF40
+ 168 0015 BF020000 		.4byte	.LASF41
+ 169 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 170 001d 00000000 		.4byte	0
+ 171 0021 00000000 		.4byte	.Ldebug_line0
+ 172 0025 02       		.uleb128 0x2
+ 173 0026 01       		.byte	0x1
+ 174 0027 06       		.byte	0x6
+ 175 0028 F2010000 		.4byte	.LASF0
+ 176 002c 03       		.uleb128 0x3
+ 177 002d B7010000 		.4byte	.LASF5
+ 178 0031 02       		.byte	0x2
+ 179 0032 1D       		.byte	0x1d
+ 180 0033 37000000 		.4byte	0x37
+ 181 0037 02       		.uleb128 0x2
+ 182 0038 01       		.byte	0x1
+ 183 0039 08       		.byte	0x8
+ 184 003a D6010000 		.4byte	.LASF1
+ 185 003e 02       		.uleb128 0x2
+ 186 003f 02       		.byte	0x2
+ 187 0040 05       		.byte	0x5
+ 188 0041 0A000000 		.4byte	.LASF2
+ 189 0045 02       		.uleb128 0x2
+ 190 0046 02       		.byte	0x2
+ 191 0047 07       		.byte	0x7
+ 192 0048 40020000 		.4byte	.LASF3
+ 193 004c 02       		.uleb128 0x2
+ 194 004d 04       		.byte	0x4
+ 195 004e 05       		.byte	0x5
+ 196 004f A7010000 		.4byte	.LASF4
+ 197 0053 03       		.uleb128 0x3
+ 198 0054 3B000000 		.4byte	.LASF6
+ 199 0058 02       		.byte	0x2
+ 200 0059 41       		.byte	0x41
+ 201 005a 5E000000 		.4byte	0x5e
+ 202 005e 02       		.uleb128 0x2
+ 203 005f 04       		.byte	0x4
+ 204 0060 07       		.byte	0x7
+ 205 0061 AD020000 		.4byte	.LASF7
+ 206 0065 02       		.uleb128 0x2
+ 207 0066 08       		.byte	0x8
+ 208 0067 05       		.byte	0x5
+ 209 0068 CC000000 		.4byte	.LASF8
+ 210 006c 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 6
+
+
+ 211 006d 08       		.byte	0x8
+ 212 006e 07       		.byte	0x7
+ 213 006f FE010000 		.4byte	.LASF9
+ 214 0073 04       		.uleb128 0x4
+ 215 0074 04       		.byte	0x4
+ 216 0075 05       		.byte	0x5
+ 217 0076 696E7400 		.ascii	"int\000"
+ 218 007a 02       		.uleb128 0x2
+ 219 007b 04       		.byte	0x4
+ 220 007c 07       		.byte	0x7
+ 221 007d 23020000 		.4byte	.LASF10
+ 222 0081 03       		.uleb128 0x3
+ 223 0082 77000000 		.4byte	.LASF11
+ 224 0086 03       		.byte	0x3
+ 225 0087 18       		.byte	0x18
+ 226 0088 2C000000 		.4byte	0x2c
+ 227 008c 03       		.uleb128 0x3
+ 228 008d 1A020000 		.4byte	.LASF12
+ 229 0091 03       		.byte	0x3
+ 230 0092 30       		.byte	0x30
+ 231 0093 53000000 		.4byte	0x53
+ 232 0097 05       		.uleb128 0x5
+ 233 0098 04       		.byte	0x4
+ 234 0099 02       		.uleb128 0x2
+ 235 009a 08       		.byte	0x8
+ 236 009b 04       		.byte	0x4
+ 237 009c CA010000 		.4byte	.LASF13
+ 238 00a0 06       		.uleb128 0x6
+ 239 00a1 01       		.byte	0x1
+ 240 00a2 37000000 		.4byte	0x37
+ 241 00a6 04       		.byte	0x4
+ 242 00a7 27       		.byte	0x27
+ 243 00a8 B9000000 		.4byte	0xb9
+ 244 00ac 07       		.uleb128 0x7
+ 245 00ad 7C030000 		.4byte	.LASF14
+ 246 00b1 00       		.byte	0
+ 247 00b2 07       		.uleb128 0x7
+ 248 00b3 6F020000 		.4byte	.LASF15
+ 249 00b7 01       		.byte	0x1
+ 250 00b8 00       		.byte	0
+ 251 00b9 03       		.uleb128 0x3
+ 252 00ba DA000000 		.4byte	.LASF16
+ 253 00be 04       		.byte	0x4
+ 254 00bf 2C       		.byte	0x2c
+ 255 00c0 81000000 		.4byte	0x81
+ 256 00c4 03       		.uleb128 0x3
+ 257 00c5 61030000 		.4byte	.LASF17
+ 258 00c9 05       		.byte	0x5
+ 259 00ca 2B       		.byte	0x2b
+ 260 00cb CF000000 		.4byte	0xcf
+ 261 00cf 08       		.uleb128 0x8
+ 262 00d0 04       		.byte	0x4
+ 263 00d1 D5000000 		.4byte	0xd5
+ 264 00d5 09       		.uleb128 0x9
+ 265 00d6 E0000000 		.4byte	0xe0
+ 266 00da 0A       		.uleb128 0xa
+ 267 00db E0000000 		.4byte	0xe0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 7
+
+
+ 268 00df 00       		.byte	0
+ 269 00e0 08       		.uleb128 0x8
+ 270 00e1 04       		.byte	0x4
+ 271 00e2 E6000000 		.4byte	0xe6
+ 272 00e6 0B       		.uleb128 0xb
+ 273 00e7 C1000000 		.4byte	.LASF33
+ 274 00eb 14       		.byte	0x14
+ 275 00ec 05       		.byte	0x5
+ 276 00ed 3E       		.byte	0x3e
+ 277 00ee 41010000 		.4byte	0x141
+ 278 00f2 0C       		.uleb128 0xc
+ 279 00f3 B0010000 		.4byte	.LASF18
+ 280 00f7 05       		.byte	0x5
+ 281 00f8 40       		.byte	0x40
+ 282 00f9 8C000000 		.4byte	0x8c
+ 283 00fd 00       		.byte	0
+ 284 00fe 0C       		.uleb128 0xc
+ 285 00ff C1010000 		.4byte	.LASF19
+ 286 0103 05       		.byte	0x5
+ 287 0104 41       		.byte	0x41
+ 288 0105 8C000000 		.4byte	0x8c
+ 289 0109 04       		.byte	0x4
+ 290 010a 0C       		.uleb128 0xc
+ 291 010b 67020000 		.4byte	.LASF20
+ 292 010f 05       		.byte	0x5
+ 293 0110 42       		.byte	0x42
+ 294 0111 C4000000 		.4byte	0xc4
+ 295 0115 08       		.byte	0x8
+ 296 0116 0C       		.uleb128 0xc
+ 297 0117 58000000 		.4byte	.LASF21
+ 298 011b 05       		.byte	0x5
+ 299 011c 44       		.byte	0x44
+ 300 011d 97000000 		.4byte	0x97
+ 301 0121 0C       		.byte	0xc
+ 302 0122 0D       		.uleb128 0xd
+ 303 0123 87030000 		.4byte	.LASF22
+ 304 0127 05       		.byte	0x5
+ 305 0128 46       		.byte	0x46
+ 306 0129 81000000 		.4byte	0x81
+ 307 012d 01       		.byte	0x1
+ 308 012e 03       		.byte	0x3
+ 309 012f 05       		.byte	0x5
+ 310 0130 10       		.byte	0x10
+ 311 0131 0D       		.uleb128 0xd
+ 312 0132 15020000 		.4byte	.LASF23
+ 313 0136 05       		.byte	0x5
+ 314 0137 47       		.byte	0x47
+ 315 0138 81000000 		.4byte	0x81
+ 316 013c 01       		.byte	0x1
+ 317 013d 01       		.byte	0x1
+ 318 013e 04       		.byte	0x4
+ 319 013f 10       		.byte	0x10
+ 320 0140 00       		.byte	0
+ 321 0141 06       		.uleb128 0x6
+ 322 0142 01       		.byte	0x1
+ 323 0143 37000000 		.4byte	0x37
+ 324 0147 05       		.byte	0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 8
+
+
+ 325 0148 30       		.byte	0x30
+ 326 0149 78010000 		.4byte	0x178
+ 327 014d 07       		.uleb128 0x7
+ 328 014e E3000000 		.4byte	.LASF24
+ 329 0152 00       		.byte	0
+ 330 0153 07       		.uleb128 0x7
+ 331 0154 53020000 		.4byte	.LASF25
+ 332 0158 01       		.byte	0x1
+ 333 0159 07       		.uleb128 0x7
+ 334 015a 2A000000 		.4byte	.LASF26
+ 335 015e 02       		.byte	0x2
+ 336 015f 07       		.uleb128 0x7
+ 337 0160 14000000 		.4byte	.LASF27
+ 338 0164 03       		.byte	0x3
+ 339 0165 07       		.uleb128 0x7
+ 340 0166 79020000 		.4byte	.LASF28
+ 341 016a 04       		.byte	0x4
+ 342 016b 07       		.uleb128 0x7
+ 343 016c 62000000 		.4byte	.LASF29
+ 344 0170 05       		.byte	0x5
+ 345 0171 07       		.uleb128 0x7
+ 346 0172 46000000 		.4byte	.LASF30
+ 347 0176 06       		.byte	0x6
+ 348 0177 00       		.byte	0
+ 349 0178 03       		.uleb128 0x3
+ 350 0179 00000000 		.4byte	.LASF31
+ 351 017d 05       		.byte	0x5
+ 352 017e 48       		.byte	0x48
+ 353 017f E6000000 		.4byte	0xe6
+ 354 0183 03       		.uleb128 0x3
+ 355 0184 6E030000 		.4byte	.LASF32
+ 356 0188 06       		.byte	0x6
+ 357 0189 1F       		.byte	0x1f
+ 358 018a 8E010000 		.4byte	0x18e
+ 359 018e 08       		.uleb128 0x8
+ 360 018f 04       		.byte	0x4
+ 361 0190 94010000 		.4byte	0x194
+ 362 0194 09       		.uleb128 0x9
+ 363 0195 9F010000 		.4byte	0x19f
+ 364 0199 0A       		.uleb128 0xa
+ 365 019a 97000000 		.4byte	0x97
+ 366 019e 00       		.byte	0
+ 367 019f 0B       		.uleb128 0xb
+ 368 01a0 8B020000 		.4byte	.LASF34
+ 369 01a4 08       		.byte	0x8
+ 370 01a5 06       		.byte	0x6
+ 371 01a6 21       		.byte	0x21
+ 372 01a7 C3010000 		.4byte	0x1c3
+ 373 01ab 0E       		.uleb128 0xe
+ 374 01ac 636200   		.ascii	"cb\000"
+ 375 01af 06       		.byte	0x6
+ 376 01b0 22       		.byte	0x22
+ 377 01b1 83010000 		.4byte	0x183
+ 378 01b5 00       		.byte	0
+ 379 01b6 0C       		.uleb128 0xc
+ 380 01b7 58000000 		.4byte	.LASF21
+ 381 01bb 06       		.byte	0x6
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 9
+
+
+ 382 01bc 23       		.byte	0x23
+ 383 01bd 97000000 		.4byte	0x97
+ 384 01c1 04       		.byte	0x4
+ 385 01c2 00       		.byte	0
+ 386 01c3 03       		.uleb128 0x3
+ 387 01c4 30020000 		.4byte	.LASF35
+ 388 01c8 06       		.byte	0x6
+ 389 01c9 24       		.byte	0x24
+ 390 01ca 9F010000 		.4byte	0x19f
+ 391 01ce 0F       		.uleb128 0xf
+ 392 01cf E4010000 		.4byte	.LASF42
+ 393 01d3 01       		.byte	0x1
+ 394 01d4 26       		.byte	0x26
+ 395 01d5 B9000000 		.4byte	0xb9
+ 396 01d9 00000000 		.4byte	.LFB0
+ 397 01dd 60000000 		.4byte	.LFE0-.LFB0
+ 398 01e1 01       		.uleb128 0x1
+ 399 01e2 9C       		.byte	0x9c
+ 400 01e3 20020000 		.4byte	0x220
+ 401 01e7 10       		.uleb128 0x10
+ 402 01e8 B7000000 		.4byte	.LASF36
+ 403 01ec 01       		.byte	0x1
+ 404 01ed 26       		.byte	0x26
+ 405 01ee 83010000 		.4byte	0x183
+ 406 01f2 02       		.uleb128 0x2
+ 407 01f3 91       		.byte	0x91
+ 408 01f4 6C       		.sleb128 -20
+ 409 01f5 10       		.uleb128 0x10
+ 410 01f6 58000000 		.4byte	.LASF21
+ 411 01fa 01       		.byte	0x1
+ 412 01fb 26       		.byte	0x26
+ 413 01fc 97000000 		.4byte	0x97
+ 414 0200 02       		.uleb128 0x2
+ 415 0201 91       		.byte	0x91
+ 416 0202 68       		.sleb128 -24
+ 417 0203 11       		.uleb128 0x11
+ 418 0204 5C030000 		.4byte	.LASF37
+ 419 0208 01       		.byte	0x1
+ 420 0209 29       		.byte	0x29
+ 421 020a 20020000 		.4byte	0x220
+ 422 020e 02       		.uleb128 0x2
+ 423 020f 91       		.byte	0x91
+ 424 0210 74       		.sleb128 -12
+ 425 0211 11       		.uleb128 0x11
+ 426 0212 25000000 		.4byte	.LASF38
+ 427 0216 01       		.byte	0x1
+ 428 0217 30       		.byte	0x30
+ 429 0218 26020000 		.4byte	0x226
+ 430 021c 02       		.uleb128 0x2
+ 431 021d 91       		.byte	0x91
+ 432 021e 70       		.sleb128 -16
+ 433 021f 00       		.byte	0
+ 434 0220 08       		.uleb128 0x8
+ 435 0221 04       		.byte	0x4
+ 436 0222 C3010000 		.4byte	0x1c3
+ 437 0226 08       		.uleb128 0x8
+ 438 0227 04       		.byte	0x4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 10
+
+
+ 439 0228 78010000 		.4byte	0x178
+ 440 022c 12       		.uleb128 0x12
+ 441 022d 9C020000 		.4byte	.LASF43
+ 442 0231 01       		.byte	0x1
+ 443 0232 44       		.byte	0x44
+ 444 0233 00000000 		.4byte	.LFB1
+ 445 0237 28000000 		.4byte	.LFE1-.LFB1
+ 446 023b 01       		.uleb128 0x1
+ 447 023c 9C       		.byte	0x9c
+ 448 023d 10       		.uleb128 0x10
+ 449 023e 25000000 		.4byte	.LASF38
+ 450 0242 01       		.byte	0x1
+ 451 0243 44       		.byte	0x44
+ 452 0244 26020000 		.4byte	0x226
+ 453 0248 02       		.uleb128 0x2
+ 454 0249 91       		.byte	0x91
+ 455 024a 6C       		.sleb128 -20
+ 456 024b 11       		.uleb128 0x11
+ 457 024c 5C030000 		.4byte	.LASF37
+ 458 0250 01       		.byte	0x1
+ 459 0251 46       		.byte	0x46
+ 460 0252 20020000 		.4byte	0x220
+ 461 0256 02       		.uleb128 0x2
+ 462 0257 91       		.byte	0x91
+ 463 0258 74       		.sleb128 -12
+ 464 0259 00       		.byte	0
+ 465 025a 00       		.byte	0
+ 466              		.section	.debug_abbrev,"",%progbits
+ 467              	.Ldebug_abbrev0:
+ 468 0000 01       		.uleb128 0x1
+ 469 0001 11       		.uleb128 0x11
+ 470 0002 01       		.byte	0x1
+ 471 0003 25       		.uleb128 0x25
+ 472 0004 0E       		.uleb128 0xe
+ 473 0005 13       		.uleb128 0x13
+ 474 0006 0B       		.uleb128 0xb
+ 475 0007 03       		.uleb128 0x3
+ 476 0008 0E       		.uleb128 0xe
+ 477 0009 1B       		.uleb128 0x1b
+ 478 000a 0E       		.uleb128 0xe
+ 479 000b 55       		.uleb128 0x55
+ 480 000c 17       		.uleb128 0x17
+ 481 000d 11       		.uleb128 0x11
+ 482 000e 01       		.uleb128 0x1
+ 483 000f 10       		.uleb128 0x10
+ 484 0010 17       		.uleb128 0x17
+ 485 0011 00       		.byte	0
+ 486 0012 00       		.byte	0
+ 487 0013 02       		.uleb128 0x2
+ 488 0014 24       		.uleb128 0x24
+ 489 0015 00       		.byte	0
+ 490 0016 0B       		.uleb128 0xb
+ 491 0017 0B       		.uleb128 0xb
+ 492 0018 3E       		.uleb128 0x3e
+ 493 0019 0B       		.uleb128 0xb
+ 494 001a 03       		.uleb128 0x3
+ 495 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 11
+
+
+ 496 001c 00       		.byte	0
+ 497 001d 00       		.byte	0
+ 498 001e 03       		.uleb128 0x3
+ 499 001f 16       		.uleb128 0x16
+ 500 0020 00       		.byte	0
+ 501 0021 03       		.uleb128 0x3
+ 502 0022 0E       		.uleb128 0xe
+ 503 0023 3A       		.uleb128 0x3a
+ 504 0024 0B       		.uleb128 0xb
+ 505 0025 3B       		.uleb128 0x3b
+ 506 0026 0B       		.uleb128 0xb
+ 507 0027 49       		.uleb128 0x49
+ 508 0028 13       		.uleb128 0x13
+ 509 0029 00       		.byte	0
+ 510 002a 00       		.byte	0
+ 511 002b 04       		.uleb128 0x4
+ 512 002c 24       		.uleb128 0x24
+ 513 002d 00       		.byte	0
+ 514 002e 0B       		.uleb128 0xb
+ 515 002f 0B       		.uleb128 0xb
+ 516 0030 3E       		.uleb128 0x3e
+ 517 0031 0B       		.uleb128 0xb
+ 518 0032 03       		.uleb128 0x3
+ 519 0033 08       		.uleb128 0x8
+ 520 0034 00       		.byte	0
+ 521 0035 00       		.byte	0
+ 522 0036 05       		.uleb128 0x5
+ 523 0037 0F       		.uleb128 0xf
+ 524 0038 00       		.byte	0
+ 525 0039 0B       		.uleb128 0xb
+ 526 003a 0B       		.uleb128 0xb
+ 527 003b 00       		.byte	0
+ 528 003c 00       		.byte	0
+ 529 003d 06       		.uleb128 0x6
+ 530 003e 04       		.uleb128 0x4
+ 531 003f 01       		.byte	0x1
+ 532 0040 0B       		.uleb128 0xb
+ 533 0041 0B       		.uleb128 0xb
+ 534 0042 49       		.uleb128 0x49
+ 535 0043 13       		.uleb128 0x13
+ 536 0044 3A       		.uleb128 0x3a
+ 537 0045 0B       		.uleb128 0xb
+ 538 0046 3B       		.uleb128 0x3b
+ 539 0047 0B       		.uleb128 0xb
+ 540 0048 01       		.uleb128 0x1
+ 541 0049 13       		.uleb128 0x13
+ 542 004a 00       		.byte	0
+ 543 004b 00       		.byte	0
+ 544 004c 07       		.uleb128 0x7
+ 545 004d 28       		.uleb128 0x28
+ 546 004e 00       		.byte	0
+ 547 004f 03       		.uleb128 0x3
+ 548 0050 0E       		.uleb128 0xe
+ 549 0051 1C       		.uleb128 0x1c
+ 550 0052 0B       		.uleb128 0xb
+ 551 0053 00       		.byte	0
+ 552 0054 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 12
+
+
+ 553 0055 08       		.uleb128 0x8
+ 554 0056 0F       		.uleb128 0xf
+ 555 0057 00       		.byte	0
+ 556 0058 0B       		.uleb128 0xb
+ 557 0059 0B       		.uleb128 0xb
+ 558 005a 49       		.uleb128 0x49
+ 559 005b 13       		.uleb128 0x13
+ 560 005c 00       		.byte	0
+ 561 005d 00       		.byte	0
+ 562 005e 09       		.uleb128 0x9
+ 563 005f 15       		.uleb128 0x15
+ 564 0060 01       		.byte	0x1
+ 565 0061 27       		.uleb128 0x27
+ 566 0062 19       		.uleb128 0x19
+ 567 0063 01       		.uleb128 0x1
+ 568 0064 13       		.uleb128 0x13
+ 569 0065 00       		.byte	0
+ 570 0066 00       		.byte	0
+ 571 0067 0A       		.uleb128 0xa
+ 572 0068 05       		.uleb128 0x5
+ 573 0069 00       		.byte	0
+ 574 006a 49       		.uleb128 0x49
+ 575 006b 13       		.uleb128 0x13
+ 576 006c 00       		.byte	0
+ 577 006d 00       		.byte	0
+ 578 006e 0B       		.uleb128 0xb
+ 579 006f 13       		.uleb128 0x13
+ 580 0070 01       		.byte	0x1
+ 581 0071 03       		.uleb128 0x3
+ 582 0072 0E       		.uleb128 0xe
+ 583 0073 0B       		.uleb128 0xb
+ 584 0074 0B       		.uleb128 0xb
+ 585 0075 3A       		.uleb128 0x3a
+ 586 0076 0B       		.uleb128 0xb
+ 587 0077 3B       		.uleb128 0x3b
+ 588 0078 0B       		.uleb128 0xb
+ 589 0079 01       		.uleb128 0x1
+ 590 007a 13       		.uleb128 0x13
+ 591 007b 00       		.byte	0
+ 592 007c 00       		.byte	0
+ 593 007d 0C       		.uleb128 0xc
+ 594 007e 0D       		.uleb128 0xd
+ 595 007f 00       		.byte	0
+ 596 0080 03       		.uleb128 0x3
+ 597 0081 0E       		.uleb128 0xe
+ 598 0082 3A       		.uleb128 0x3a
+ 599 0083 0B       		.uleb128 0xb
+ 600 0084 3B       		.uleb128 0x3b
+ 601 0085 0B       		.uleb128 0xb
+ 602 0086 49       		.uleb128 0x49
+ 603 0087 13       		.uleb128 0x13
+ 604 0088 38       		.uleb128 0x38
+ 605 0089 0B       		.uleb128 0xb
+ 606 008a 00       		.byte	0
+ 607 008b 00       		.byte	0
+ 608 008c 0D       		.uleb128 0xd
+ 609 008d 0D       		.uleb128 0xd
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 13
+
+
+ 610 008e 00       		.byte	0
+ 611 008f 03       		.uleb128 0x3
+ 612 0090 0E       		.uleb128 0xe
+ 613 0091 3A       		.uleb128 0x3a
+ 614 0092 0B       		.uleb128 0xb
+ 615 0093 3B       		.uleb128 0x3b
+ 616 0094 0B       		.uleb128 0xb
+ 617 0095 49       		.uleb128 0x49
+ 618 0096 13       		.uleb128 0x13
+ 619 0097 0B       		.uleb128 0xb
+ 620 0098 0B       		.uleb128 0xb
+ 621 0099 0D       		.uleb128 0xd
+ 622 009a 0B       		.uleb128 0xb
+ 623 009b 0C       		.uleb128 0xc
+ 624 009c 0B       		.uleb128 0xb
+ 625 009d 38       		.uleb128 0x38
+ 626 009e 0B       		.uleb128 0xb
+ 627 009f 00       		.byte	0
+ 628 00a0 00       		.byte	0
+ 629 00a1 0E       		.uleb128 0xe
+ 630 00a2 0D       		.uleb128 0xd
+ 631 00a3 00       		.byte	0
+ 632 00a4 03       		.uleb128 0x3
+ 633 00a5 08       		.uleb128 0x8
+ 634 00a6 3A       		.uleb128 0x3a
+ 635 00a7 0B       		.uleb128 0xb
+ 636 00a8 3B       		.uleb128 0x3b
+ 637 00a9 0B       		.uleb128 0xb
+ 638 00aa 49       		.uleb128 0x49
+ 639 00ab 13       		.uleb128 0x13
+ 640 00ac 38       		.uleb128 0x38
+ 641 00ad 0B       		.uleb128 0xb
+ 642 00ae 00       		.byte	0
+ 643 00af 00       		.byte	0
+ 644 00b0 0F       		.uleb128 0xf
+ 645 00b1 2E       		.uleb128 0x2e
+ 646 00b2 01       		.byte	0x1
+ 647 00b3 3F       		.uleb128 0x3f
+ 648 00b4 19       		.uleb128 0x19
+ 649 00b5 03       		.uleb128 0x3
+ 650 00b6 0E       		.uleb128 0xe
+ 651 00b7 3A       		.uleb128 0x3a
+ 652 00b8 0B       		.uleb128 0xb
+ 653 00b9 3B       		.uleb128 0x3b
+ 654 00ba 0B       		.uleb128 0xb
+ 655 00bb 27       		.uleb128 0x27
+ 656 00bc 19       		.uleb128 0x19
+ 657 00bd 49       		.uleb128 0x49
+ 658 00be 13       		.uleb128 0x13
+ 659 00bf 11       		.uleb128 0x11
+ 660 00c0 01       		.uleb128 0x1
+ 661 00c1 12       		.uleb128 0x12
+ 662 00c2 06       		.uleb128 0x6
+ 663 00c3 40       		.uleb128 0x40
+ 664 00c4 18       		.uleb128 0x18
+ 665 00c5 9642     		.uleb128 0x2116
+ 666 00c7 19       		.uleb128 0x19
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 14
+
+
+ 667 00c8 01       		.uleb128 0x1
+ 668 00c9 13       		.uleb128 0x13
+ 669 00ca 00       		.byte	0
+ 670 00cb 00       		.byte	0
+ 671 00cc 10       		.uleb128 0x10
+ 672 00cd 05       		.uleb128 0x5
+ 673 00ce 00       		.byte	0
+ 674 00cf 03       		.uleb128 0x3
+ 675 00d0 0E       		.uleb128 0xe
+ 676 00d1 3A       		.uleb128 0x3a
+ 677 00d2 0B       		.uleb128 0xb
+ 678 00d3 3B       		.uleb128 0x3b
+ 679 00d4 0B       		.uleb128 0xb
+ 680 00d5 49       		.uleb128 0x49
+ 681 00d6 13       		.uleb128 0x13
+ 682 00d7 02       		.uleb128 0x2
+ 683 00d8 18       		.uleb128 0x18
+ 684 00d9 00       		.byte	0
+ 685 00da 00       		.byte	0
+ 686 00db 11       		.uleb128 0x11
+ 687 00dc 34       		.uleb128 0x34
+ 688 00dd 00       		.byte	0
+ 689 00de 03       		.uleb128 0x3
+ 690 00df 0E       		.uleb128 0xe
+ 691 00e0 3A       		.uleb128 0x3a
+ 692 00e1 0B       		.uleb128 0xb
+ 693 00e2 3B       		.uleb128 0x3b
+ 694 00e3 0B       		.uleb128 0xb
+ 695 00e4 49       		.uleb128 0x49
+ 696 00e5 13       		.uleb128 0x13
+ 697 00e6 02       		.uleb128 0x2
+ 698 00e7 18       		.uleb128 0x18
+ 699 00e8 00       		.byte	0
+ 700 00e9 00       		.byte	0
+ 701 00ea 12       		.uleb128 0x12
+ 702 00eb 2E       		.uleb128 0x2e
+ 703 00ec 01       		.byte	0x1
+ 704 00ed 03       		.uleb128 0x3
+ 705 00ee 0E       		.uleb128 0xe
+ 706 00ef 3A       		.uleb128 0x3a
+ 707 00f0 0B       		.uleb128 0xb
+ 708 00f1 3B       		.uleb128 0x3b
+ 709 00f2 0B       		.uleb128 0xb
+ 710 00f3 27       		.uleb128 0x27
+ 711 00f4 19       		.uleb128 0x19
+ 712 00f5 11       		.uleb128 0x11
+ 713 00f6 01       		.uleb128 0x1
+ 714 00f7 12       		.uleb128 0x12
+ 715 00f8 06       		.uleb128 0x6
+ 716 00f9 40       		.uleb128 0x40
+ 717 00fa 18       		.uleb128 0x18
+ 718 00fb 9642     		.uleb128 0x2116
+ 719 00fd 19       		.uleb128 0x19
+ 720 00fe 00       		.byte	0
+ 721 00ff 00       		.byte	0
+ 722 0100 00       		.byte	0
+ 723              		.section	.debug_aranges,"",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 15
+
+
+ 724 0000 24000000 		.4byte	0x24
+ 725 0004 0200     		.2byte	0x2
+ 726 0006 00000000 		.4byte	.Ldebug_info0
+ 727 000a 04       		.byte	0x4
+ 728 000b 00       		.byte	0
+ 729 000c 0000     		.2byte	0
+ 730 000e 0000     		.2byte	0
+ 731 0010 00000000 		.4byte	.LFB0
+ 732 0014 60000000 		.4byte	.LFE0-.LFB0
+ 733 0018 00000000 		.4byte	.LFB1
+ 734 001c 28000000 		.4byte	.LFE1-.LFB1
+ 735 0020 00000000 		.4byte	0
+ 736 0024 00000000 		.4byte	0
+ 737              		.section	.debug_ranges,"",%progbits
+ 738              	.Ldebug_ranges0:
+ 739 0000 00000000 		.4byte	.LFB0
+ 740 0004 60000000 		.4byte	.LFE0
+ 741 0008 00000000 		.4byte	.LFB1
+ 742 000c 28000000 		.4byte	.LFE1
+ 743 0010 00000000 		.4byte	0
+ 744 0014 00000000 		.4byte	0
+ 745              		.section	.debug_line,"",%progbits
+ 746              	.Ldebug_line0:
+ 747 0000 AA010000 		.section	.debug_str,"MS",%progbits,1
+ 747      02007401 
+ 747      00000201 
+ 747      FB0E0D00 
+ 747      01010101 
+ 748              	.LASF31:
+ 749 0000 6C765F74 		.ascii	"lv_task_t\000"
+ 749      61736B5F 
+ 749      7400
+ 750              	.LASF2:
+ 751 000a 73686F72 		.ascii	"short int\000"
+ 751      7420696E 
+ 751      7400
+ 752              	.LASF27:
+ 753 0014 4C565F54 		.ascii	"LV_TASK_PRIO_MID\000"
+ 753      41534B5F 
+ 753      5052494F 
+ 753      5F4D4944 
+ 753      00
+ 754              	.LASF38:
+ 755 0025 7461736B 		.ascii	"task\000"
+ 755      00
+ 756              	.LASF26:
+ 757 002a 4C565F54 		.ascii	"LV_TASK_PRIO_LOW\000"
+ 757      41534B5F 
+ 757      5052494F 
+ 757      5F4C4F57 
+ 757      00
+ 758              	.LASF6:
+ 759 003b 5F5F7569 		.ascii	"__uint32_t\000"
+ 759      6E743332 
+ 759      5F7400
+ 760              	.LASF30:
+ 761 0046 5F4C565F 		.ascii	"_LV_TASK_PRIO_NUM\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 16
+
+
+ 761      5441534B 
+ 761      5F505249 
+ 761      4F5F4E55 
+ 761      4D00
+ 762              	.LASF21:
+ 763 0058 75736572 		.ascii	"user_data\000"
+ 763      5F646174 
+ 763      6100
+ 764              	.LASF29:
+ 765 0062 4C565F54 		.ascii	"LV_TASK_PRIO_HIGHEST\000"
+ 765      41534B5F 
+ 765      5052494F 
+ 765      5F484947 
+ 765      48455354 
+ 766              	.LASF11:
+ 767 0077 75696E74 		.ascii	"uint8_t\000"
+ 767      385F7400 
+ 768              	.LASF40:
+ 769 007f 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 769      2E5C2E2E 
+ 769      5C6C7667 
+ 769      6C5C7665 
+ 769      7273696F 
+ 770 00ab 5C6C765F 		.ascii	"\\lv_async.c\000"
+ 770      6173796E 
+ 770      632E6300 
+ 771              	.LASF36:
+ 772 00b7 6173796E 		.ascii	"async_xcb\000"
+ 772      635F7863 
+ 772      6200
+ 773              	.LASF33:
+ 774 00c1 5F6C765F 		.ascii	"_lv_task_t\000"
+ 774      7461736B 
+ 774      5F7400
+ 775              	.LASF8:
+ 776 00cc 6C6F6E67 		.ascii	"long long int\000"
+ 776      206C6F6E 
+ 776      6720696E 
+ 776      7400
+ 777              	.LASF16:
+ 778 00da 6C765F72 		.ascii	"lv_res_t\000"
+ 778      65735F74 
+ 778      00
+ 779              	.LASF24:
+ 780 00e3 4C565F54 		.ascii	"LV_TASK_PRIO_OFF\000"
+ 780      41534B5F 
+ 780      5052494F 
+ 780      5F4F4646 
+ 780      00
+ 781              	.LASF39:
+ 782 00f4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 782      43313120 
+ 782      352E342E 
+ 782      31203230 
+ 782      31363036 
+ 783 0127 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 783      20726576 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 17
+
+
+ 783      6973696F 
+ 783      6E203233 
+ 783      37373135 
+ 784 015a 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 784      70202D6D 
+ 784      6670753D 
+ 784      66707634 
+ 784      2D73702D 
+ 785 018d 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 785      6F6E7320 
+ 785      2D666661 
+ 785      742D6C74 
+ 785      6F2D6F62 
+ 786              	.LASF4:
+ 787 01a7 6C6F6E67 		.ascii	"long int\000"
+ 787      20696E74 
+ 787      00
+ 788              	.LASF18:
+ 789 01b0 70657269 		.ascii	"period\000"
+ 789      6F6400
+ 790              	.LASF5:
+ 791 01b7 5F5F7569 		.ascii	"__uint8_t\000"
+ 791      6E74385F 
+ 791      7400
+ 792              	.LASF19:
+ 793 01c1 6C617374 		.ascii	"last_run\000"
+ 793      5F72756E 
+ 793      00
+ 794              	.LASF13:
+ 795 01ca 6C6F6E67 		.ascii	"long double\000"
+ 795      20646F75 
+ 795      626C6500 
+ 796              	.LASF1:
+ 797 01d6 756E7369 		.ascii	"unsigned char\000"
+ 797      676E6564 
+ 797      20636861 
+ 797      7200
+ 798              	.LASF42:
+ 799 01e4 6C765F61 		.ascii	"lv_async_call\000"
+ 799      73796E63 
+ 799      5F63616C 
+ 799      6C00
+ 800              	.LASF0:
+ 801 01f2 7369676E 		.ascii	"signed char\000"
+ 801      65642063 
+ 801      68617200 
+ 802              	.LASF9:
+ 803 01fe 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 803      206C6F6E 
+ 803      6720756E 
+ 803      7369676E 
+ 803      65642069 
+ 804              	.LASF23:
+ 805 0215 6F6E6365 		.ascii	"once\000"
+ 805      00
+ 806              	.LASF12:
+ 807 021a 75696E74 		.ascii	"uint32_t\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 18
+
+
+ 807      33325F74 
+ 807      00
+ 808              	.LASF10:
+ 809 0223 756E7369 		.ascii	"unsigned int\000"
+ 809      676E6564 
+ 809      20696E74 
+ 809      00
+ 810              	.LASF35:
+ 811 0230 6C765F61 		.ascii	"lv_async_info_t\000"
+ 811      73796E63 
+ 811      5F696E66 
+ 811      6F5F7400 
+ 812              	.LASF3:
+ 813 0240 73686F72 		.ascii	"short unsigned int\000"
+ 813      7420756E 
+ 813      7369676E 
+ 813      65642069 
+ 813      6E7400
+ 814              	.LASF25:
+ 815 0253 4C565F54 		.ascii	"LV_TASK_PRIO_LOWEST\000"
+ 815      41534B5F 
+ 815      5052494F 
+ 815      5F4C4F57 
+ 815      45535400 
+ 816              	.LASF20:
+ 817 0267 7461736B 		.ascii	"task_cb\000"
+ 817      5F636200 
+ 818              	.LASF15:
+ 819 026f 4C565F52 		.ascii	"LV_RES_OK\000"
+ 819      45535F4F 
+ 819      4B00
+ 820              	.LASF28:
+ 821 0279 4C565F54 		.ascii	"LV_TASK_PRIO_HIGH\000"
+ 821      41534B5F 
+ 821      5052494F 
+ 821      5F484947 
+ 821      4800
+ 822              	.LASF34:
+ 823 028b 5F6C765F 		.ascii	"_lv_async_info_t\000"
+ 823      6173796E 
+ 823      635F696E 
+ 823      666F5F74 
+ 823      00
+ 824              	.LASF43:
+ 825 029c 6C765F61 		.ascii	"lv_async_task_cb\000"
+ 825      73796E63 
+ 825      5F746173 
+ 825      6B5F6362 
+ 825      00
+ 826              	.LASF7:
+ 827 02ad 6C6F6E67 		.ascii	"long unsigned int\000"
+ 827      20756E73 
+ 827      69676E65 
+ 827      6420696E 
+ 827      7400
+ 828              	.LASF41:
+ 829 02bf 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccLXReEl.s 			page 19
+
+
+ 829      73657273 
+ 829      5C746D6A 
+ 829      33325C44 
+ 829      6F63756D 
+ 830 02ec 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 830      6C6C6F73 
+ 830      636F7065 
+ 830      5F53656E 
+ 830      696F725F 
+ 831 031d 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 831      5C74636F 
+ 831      6D5F6170 
+ 831      705C7463 
+ 831      6F6D5F61 
+ 832 034d 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 832      736F6336 
+ 832      2E637964 
+ 832      736E00
+ 833              	.LASF37:
+ 834 035c 696E666F 		.ascii	"info\000"
+ 834      00
+ 835              	.LASF17:
+ 836 0361 6C765F74 		.ascii	"lv_task_cb_t\000"
+ 836      61736B5F 
+ 836      63625F74 
+ 836      00
+ 837              	.LASF32:
+ 838 036e 6C765F61 		.ascii	"lv_async_cb_t\000"
+ 838      73796E63 
+ 838      5F63625F 
+ 838      7400
+ 839              	.LASF14:
+ 840 037c 4C565F52 		.ascii	"LV_RES_INV\000"
+ 840      45535F49 
+ 840      4E5600
+ 841              	.LASF22:
+ 842 0387 7072696F 		.ascii	"prio\000"
+ 842      00
+ 843              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

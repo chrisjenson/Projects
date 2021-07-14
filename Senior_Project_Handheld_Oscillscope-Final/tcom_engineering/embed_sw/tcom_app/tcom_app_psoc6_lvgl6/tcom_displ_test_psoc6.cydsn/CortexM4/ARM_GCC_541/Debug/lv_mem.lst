@@ -1,0 +1,3205 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_mem.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.bss
+  21              		.align	2
+  22              	work_mem:
+  23 0000 00000000 		.space	4
+  24              		.align	2
+  25              	zero_mem:
+  26 0004 00000000 		.space	4
+  27              		.section	.text.lv_mem_init,"ax",%progbits
+  28              		.align	2
+  29              		.global	lv_mem_init
+  30              		.thumb
+  31              		.thumb_func
+  32              		.type	lv_mem_init, %function
+  33              	lv_mem_init:
+  34              	.LFB0:
+  35              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_mem.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @file lv_mem.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * General and portable implementation of malloc and free.
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * The dynamic memory monitoring is also supported.
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /*********************
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *      INCLUDES
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *********************/
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #include "lv_mem.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #include "lv_math.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #include <string.h>
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM != 0
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #include LV_MEM_CUSTOM_INCLUDE
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /*********************
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *      DEFINES
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *********************/
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /*Add memory junk on alloc (0xaa) and free(0xbb) (just for testing purposes)*/
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #ifndef LV_MEM_ADD_JUNK
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 2
+
+
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #define LV_MEM_ADD_JUNK 0
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #ifdef LV_ARCH_64
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #define MEM_UNIT uint64_t
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #define MEM_UNIT uint32_t
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *      TYPEDEFS
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 0 /*gc custom allocations must not include header*/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /*The size of this union must be 4 bytes (uint32_t)*/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** typedef union
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     struct
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     {
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         MEM_UNIT used : 1;    /* 1: if the entry is used*/
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         MEM_UNIT d_size : 31; /* Size off the data (1 means 4 bytes)*/
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     } s;
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     MEM_UNIT header; /* The header (used + d_size)*/
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** } lv_mem_header_t;
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** typedef struct
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_header_t header;
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     uint8_t first_data; /*First data byte in the allocated data (Just for easily create a pointer)*
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** } lv_mem_ent_t;
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif /* LV_ENABLE_GC */
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *  STATIC PROTOTYPES
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static lv_mem_ent_t * ent_get_next(lv_mem_ent_t * act_e);
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static void * ent_alloc(lv_mem_ent_t * e, size_t size);
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static void ent_trunc(lv_mem_ent_t * e, size_t size);
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *  STATIC VARIABLES
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static uint8_t * work_mem;
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static uint32_t zero_mem; /*Give the address of this variable if 0 byte should be allocated*/
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *      MACROS
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 3
+
+
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *   GLOBAL FUNCTIONS
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Initiaiize the dyn_mem module (work memory and other variables)
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void lv_mem_init(void)
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+  36              		.loc 1 87 0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 8
+  39              		@ frame_needed = 1, uses_anonymous_args = 0
+  40              		@ link register save eliminated.
+  41 0000 80B4     		push	{r7}
+  42              		.cfi_def_cfa_offset 4
+  43              		.cfi_offset 7, -4
+  44 0002 83B0     		sub	sp, sp, #12
+  45              		.cfi_def_cfa_offset 16
+  46 0004 00AF     		add	r7, sp, #0
+  47              		.cfi_def_cfa_register 7
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_ADR == 0
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Allocate a large array to store the dynamically allocated data*/
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     static LV_MEM_ATTR MEM_UNIT work_mem_int[LV_MEM_SIZE / sizeof(MEM_UNIT)];
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     work_mem = (uint8_t *)work_mem_int;
+  48              		.loc 1 93 0
+  49 0006 0C4B     		ldr	r3, .L2
+  50 0008 0C4A     		ldr	r2, .L2+4
+  51 000a 1A60     		str	r2, [r3]
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     work_mem = (uint8_t *)LV_MEM_ADR;
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * full = (lv_mem_ent_t *)work_mem;
+  52              		.loc 1 98 0
+  53 000c 0A4B     		ldr	r3, .L2
+  54 000e 1B68     		ldr	r3, [r3]
+  55 0010 7B60     		str	r3, [r7, #4]
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     full->header.s.used = 0;
+  56              		.loc 1 99 0
+  57 0012 7A68     		ldr	r2, [r7, #4]
+  58 0014 1378     		ldrb	r3, [r2]
+  59 0016 6FF30003 		bfc	r3, #0, #1
+  60 001a 1370     		strb	r3, [r2]
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*The total mem size id reduced by the first header and the close patterns */
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     full->header.s.d_size = LV_MEM_SIZE - sizeof(lv_mem_header_t);
+  61              		.loc 1 101 0
+  62 001c 7A68     		ldr	r2, [r7, #4]
+  63 001e 1368     		ldr	r3, [r2]
+  64 0020 4FF6FC71 		movw	r1, #65532
+  65 0024 61F35F03 		bfi	r3, r1, #1, #31
+  66 0028 1360     		str	r3, [r2]
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+  67              		.loc 1 103 0
+  68 002a 00BF     		nop
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 4
+
+
+  69 002c 0C37     		adds	r7, r7, #12
+  70              		.cfi_def_cfa_offset 4
+  71 002e BD46     		mov	sp, r7
+  72              		.cfi_def_cfa_register 13
+  73              		@ sp needed
+  74 0030 5DF8047B 		ldr	r7, [sp], #4
+  75              		.cfi_restore 7
+  76              		.cfi_def_cfa_offset 0
+  77 0034 7047     		bx	lr
+  78              	.L3:
+  79 0036 00BF     		.align	2
+  80              	.L2:
+  81 0038 00000000 		.word	work_mem
+  82 003c 08000000 		.word	work_mem_int.4640
+  83              		.cfi_endproc
+  84              	.LFE0:
+  85              		.size	lv_mem_init, .-lv_mem_init
+  86              		.section	.text.lv_mem_deinit,"ax",%progbits
+  87              		.align	2
+  88              		.global	lv_mem_deinit
+  89              		.thumb
+  90              		.thumb_func
+  91              		.type	lv_mem_deinit, %function
+  92              	lv_mem_deinit:
+  93              	.LFB1:
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Clean up the memory buffer which frees all the allocated memories.
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @note It work only if `LV_MEM_CUSTOM == 0`
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void lv_mem_deinit(void)
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+  94              		.loc 1 110 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 8
+  97              		@ frame_needed = 1, uses_anonymous_args = 0
+  98 0000 80B5     		push	{r7, lr}
+  99              		.cfi_def_cfa_offset 8
+ 100              		.cfi_offset 7, -8
+ 101              		.cfi_offset 14, -4
+ 102 0002 82B0     		sub	sp, sp, #8
+ 103              		.cfi_def_cfa_offset 16
+ 104 0004 00AF     		add	r7, sp, #0
+ 105              		.cfi_def_cfa_register 7
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     memset(work_mem, 0x00, (LV_MEM_SIZE / sizeof(MEM_UNIT)) * sizeof(MEM_UNIT));
+ 106              		.loc 1 112 0
+ 107 0006 0D4B     		ldr	r3, .L5
+ 108 0008 1B68     		ldr	r3, [r3]
+ 109 000a 4FF48032 		mov	r2, #65536
+ 110 000e 0021     		movs	r1, #0
+ 111 0010 1846     		mov	r0, r3
+ 112 0012 FFF7FEFF 		bl	memset
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * full = (lv_mem_ent_t *)work_mem;
+ 113              		.loc 1 113 0
+ 114 0016 094B     		ldr	r3, .L5
+ 115 0018 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 5
+
+
+ 116 001a 7B60     		str	r3, [r7, #4]
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     full->header.s.used = 0;
+ 117              		.loc 1 114 0
+ 118 001c 7A68     		ldr	r2, [r7, #4]
+ 119 001e 1378     		ldrb	r3, [r2]
+ 120 0020 6FF30003 		bfc	r3, #0, #1
+ 121 0024 1370     		strb	r3, [r2]
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*The total mem size id reduced by the first header and the close patterns */
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     full->header.s.d_size = LV_MEM_SIZE - sizeof(lv_mem_header_t);
+ 122              		.loc 1 116 0
+ 123 0026 7A68     		ldr	r2, [r7, #4]
+ 124 0028 1368     		ldr	r3, [r2]
+ 125 002a 4FF6FC71 		movw	r1, #65532
+ 126 002e 61F35F03 		bfi	r3, r1, #1, #31
+ 127 0032 1360     		str	r3, [r2]
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 128              		.loc 1 118 0
+ 129 0034 00BF     		nop
+ 130 0036 0837     		adds	r7, r7, #8
+ 131              		.cfi_def_cfa_offset 8
+ 132 0038 BD46     		mov	sp, r7
+ 133              		.cfi_def_cfa_register 13
+ 134              		@ sp needed
+ 135 003a 80BD     		pop	{r7, pc}
+ 136              	.L6:
+ 137              		.align	2
+ 138              	.L5:
+ 139 003c 00000000 		.word	work_mem
+ 140              		.cfi_endproc
+ 141              	.LFE1:
+ 142              		.size	lv_mem_deinit, .-lv_mem_deinit
+ 143              		.section	.text.lv_mem_alloc,"ax",%progbits
+ 144              		.align	2
+ 145              		.global	lv_mem_alloc
+ 146              		.thumb
+ 147              		.thumb_func
+ 148              		.type	lv_mem_alloc, %function
+ 149              	lv_mem_alloc:
+ 150              	.LFB2:
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Allocate a memory dynamically
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param size size of the memory to allocate in bytes
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @return pointer to the allocated memory
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void * lv_mem_alloc(size_t size)
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 151              		.loc 1 126 0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 16
+ 154              		@ frame_needed = 1, uses_anonymous_args = 0
+ 155 0000 80B5     		push	{r7, lr}
+ 156              		.cfi_def_cfa_offset 8
+ 157              		.cfi_offset 7, -8
+ 158              		.cfi_offset 14, -4
+ 159 0002 84B0     		sub	sp, sp, #16
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 6
+
+
+ 160              		.cfi_def_cfa_offset 24
+ 161 0004 00AF     		add	r7, sp, #0
+ 162              		.cfi_def_cfa_register 7
+ 163 0006 7860     		str	r0, [r7, #4]
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(size == 0) {
+ 164              		.loc 1 127 0
+ 165 0008 7B68     		ldr	r3, [r7, #4]
+ 166 000a 002B     		cmp	r3, #0
+ 167 000c 01D1     		bne	.L8
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         return &zero_mem;
+ 168              		.loc 1 128 0
+ 169 000e 144B     		ldr	r3, .L14
+ 170 0010 22E0     		b	.L9
+ 171              	.L8:
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #ifdef LV_ARCH_64
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Round the size up to 8*/
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(size & 0x7) {
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size = size & (~0x7);
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size += 8;
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Round the size up to 4*/
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(size & 0x3) {
+ 172              		.loc 1 139 0
+ 173 0012 7B68     		ldr	r3, [r7, #4]
+ 174 0014 03F00303 		and	r3, r3, #3
+ 175 0018 002B     		cmp	r3, #0
+ 176 001a 06D0     		beq	.L10
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size = size & (~0x3);
+ 177              		.loc 1 140 0
+ 178 001c 7B68     		ldr	r3, [r7, #4]
+ 179 001e 23F00303 		bic	r3, r3, #3
+ 180 0022 7B60     		str	r3, [r7, #4]
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size += 4;
+ 181              		.loc 1 141 0
+ 182 0024 7B68     		ldr	r3, [r7, #4]
+ 183 0026 0433     		adds	r3, r3, #4
+ 184 0028 7B60     		str	r3, [r7, #4]
+ 185              	.L10:
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     void * alloc = NULL;
+ 186              		.loc 1 144 0
+ 187 002a 0023     		movs	r3, #0
+ 188 002c FB60     		str	r3, [r7, #12]
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Use the built-in allocators*/
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e = NULL;
+ 189              		.loc 1 148 0
+ 190 002e 0023     		movs	r3, #0
+ 191 0030 BB60     		str	r3, [r7, #8]
+ 192              	.L13:
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /* Search for a appropriate entry*/
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 7
+
+
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     do {
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /* Get the next entry*/
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         e = ent_get_next(e);
+ 193              		.loc 1 153 0
+ 194 0032 B868     		ldr	r0, [r7, #8]
+ 195 0034 FFF7FEFF 		bl	ent_get_next
+ 196 0038 B860     		str	r0, [r7, #8]
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*If there is next entry then try to allocate there*/
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e != NULL) {
+ 197              		.loc 1 156 0
+ 198 003a BB68     		ldr	r3, [r7, #8]
+ 199 003c 002B     		cmp	r3, #0
+ 200 003e 04D0     		beq	.L11
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             alloc = ent_alloc(e, size);
+ 201              		.loc 1 157 0
+ 202 0040 7968     		ldr	r1, [r7, #4]
+ 203 0042 B868     		ldr	r0, [r7, #8]
+ 204 0044 FFF7FEFF 		bl	ent_alloc
+ 205 0048 F860     		str	r0, [r7, #12]
+ 206              	.L11:
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /* End if there is not next entry OR the alloc. is successful*/
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     } while(e != NULL && alloc == NULL);
+ 207              		.loc 1 160 0
+ 208 004a BB68     		ldr	r3, [r7, #8]
+ 209 004c 002B     		cmp	r3, #0
+ 210 004e 02D0     		beq	.L12
+ 211              		.loc 1 160 0 is_stmt 0 discriminator 1
+ 212 0050 FB68     		ldr	r3, [r7, #12]
+ 213 0052 002B     		cmp	r3, #0
+ 214 0054 EDD0     		beq	.L13
+ 215              	.L12:
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /*Use custom, user defined malloc function*/
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 1 /*gc must not include header*/
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     alloc = LV_MEM_CUSTOM_ALLOC(size);
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else                 /* LV_ENABLE_GC */
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Allocate a header too to store the size*/
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     alloc = LV_MEM_CUSTOM_ALLOC(size + sizeof(lv_mem_header_t));
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(alloc != NULL) {
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         ((lv_mem_ent_t *)alloc)->header.s.d_size = size;
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         ((lv_mem_ent_t *)alloc)->header.s.used   = 1;
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         alloc = &((lv_mem_ent_t *)alloc)->first_data;
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif                /* LV_ENABLE_GC */
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif                /* LV_MEM_CUSTOM */
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_ADD_JUNK
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(alloc != NULL) memset(alloc, 0xaa, size);
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(alloc == NULL) LV_LOG_WARN("Couldn't allocate memory");
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return alloc;
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 8
+
+
+ 216              		.loc 1 184 0 is_stmt 1
+ 217 0056 FB68     		ldr	r3, [r7, #12]
+ 218              	.L9:
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 219              		.loc 1 185 0
+ 220 0058 1846     		mov	r0, r3
+ 221 005a 1037     		adds	r7, r7, #16
+ 222              		.cfi_def_cfa_offset 8
+ 223 005c BD46     		mov	sp, r7
+ 224              		.cfi_def_cfa_register 13
+ 225              		@ sp needed
+ 226 005e 80BD     		pop	{r7, pc}
+ 227              	.L15:
+ 228              		.align	2
+ 229              	.L14:
+ 230 0060 04000000 		.word	zero_mem
+ 231              		.cfi_endproc
+ 232              	.LFE2:
+ 233              		.size	lv_mem_alloc, .-lv_mem_alloc
+ 234              		.section	.text.lv_mem_free,"ax",%progbits
+ 235              		.align	2
+ 236              		.global	lv_mem_free
+ 237              		.thumb
+ 238              		.thumb_func
+ 239              		.type	lv_mem_free, %function
+ 240              	lv_mem_free:
+ 241              	.LFB3:
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Free an allocated data
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param data pointer to an allocated memory
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void lv_mem_free(const void * data)
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 242              		.loc 1 192 0
+ 243              		.cfi_startproc
+ 244              		@ args = 0, pretend = 0, frame = 16
+ 245              		@ frame_needed = 1, uses_anonymous_args = 0
+ 246 0000 80B5     		push	{r7, lr}
+ 247              		.cfi_def_cfa_offset 8
+ 248              		.cfi_offset 7, -8
+ 249              		.cfi_offset 14, -4
+ 250 0002 84B0     		sub	sp, sp, #16
+ 251              		.cfi_def_cfa_offset 24
+ 252 0004 00AF     		add	r7, sp, #0
+ 253              		.cfi_def_cfa_register 7
+ 254 0006 7860     		str	r0, [r7, #4]
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data == &zero_mem) return;
+ 255              		.loc 1 193 0
+ 256 0008 7B68     		ldr	r3, [r7, #4]
+ 257 000a 1E4A     		ldr	r2, .L27
+ 258 000c 9342     		cmp	r3, r2
+ 259 000e 30D0     		beq	.L24
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data == NULL) return;
+ 260              		.loc 1 194 0
+ 261 0010 7B68     		ldr	r3, [r7, #4]
+ 262 0012 002B     		cmp	r3, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 9
+
+
+ 263 0014 2FD0     		beq	.L25
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_ADD_JUNK
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     memset((void *)data, 0xbb, lv_mem_get_size(data));
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 0
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*e points to the header*/
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e = (lv_mem_ent_t *)((uint8_t *)data - sizeof(lv_mem_header_t));
+ 264              		.loc 1 202 0
+ 265 0016 7B68     		ldr	r3, [r7, #4]
+ 266 0018 043B     		subs	r3, r3, #4
+ 267 001a BB60     		str	r3, [r7, #8]
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e->header.s.used = 0;
+ 268              		.loc 1 203 0
+ 269 001c BA68     		ldr	r2, [r7, #8]
+ 270 001e 1378     		ldrb	r3, [r2]
+ 271 0020 6FF30003 		bfc	r3, #0, #1
+ 272 0024 1370     		strb	r3, [r2]
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 207:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_AUTO_DEFRAG
+ 208:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /* Make a simple defrag.
+ 209:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****      * Join the following free entries after this*/
+ 210:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e_next;
+ 211:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e_next = ent_get_next(e);
+ 273              		.loc 1 211 0
+ 274 0026 B868     		ldr	r0, [r7, #8]
+ 275 0028 FFF7FEFF 		bl	ent_get_next
+ 276 002c F860     		str	r0, [r7, #12]
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     while(e_next != NULL) {
+ 277              		.loc 1 212 0
+ 278 002e 1CE0     		b	.L20
+ 279              	.L23:
+ 213:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e_next->header.s.used == 0) {
+ 280              		.loc 1 213 0
+ 281 0030 FB68     		ldr	r3, [r7, #12]
+ 282 0032 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 283 0034 03F00103 		and	r3, r3, #1
+ 284 0038 DBB2     		uxtb	r3, r3
+ 285 003a 002B     		cmp	r3, #0
+ 286 003c 1DD1     		bne	.L26
+ 214:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             e->header.s.d_size += e_next->header.s.d_size + sizeof(e->header);
+ 287              		.loc 1 214 0
+ 288 003e BB68     		ldr	r3, [r7, #8]
+ 289 0040 1B68     		ldr	r3, [r3]
+ 290 0042 C3F35E03 		ubfx	r3, r3, #1, #31
+ 291 0046 1A46     		mov	r2, r3
+ 292 0048 FB68     		ldr	r3, [r7, #12]
+ 293 004a 1B68     		ldr	r3, [r3]
+ 294 004c C3F35E03 		ubfx	r3, r3, #1, #31
+ 295 0050 1344     		add	r3, r3, r2
+ 296 0052 0433     		adds	r3, r3, #4
+ 297 0054 23F00041 		bic	r1, r3, #-2147483648
+ 298 0058 BA68     		ldr	r2, [r7, #8]
+ 299 005a 1368     		ldr	r3, [r2]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 10
+
+
+ 300 005c 61F35F03 		bfi	r3, r1, #1, #31
+ 301 0060 1360     		str	r3, [r2]
+ 215:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         } else {
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             break;
+ 217:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 218:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         e_next = ent_get_next(e_next);
+ 302              		.loc 1 218 0
+ 303 0062 F868     		ldr	r0, [r7, #12]
+ 304 0064 FFF7FEFF 		bl	ent_get_next
+ 305 0068 F860     		str	r0, [r7, #12]
+ 306              	.L20:
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e_next->header.s.used == 0) {
+ 307              		.loc 1 212 0
+ 308 006a FB68     		ldr	r3, [r7, #12]
+ 309 006c 002B     		cmp	r3, #0
+ 310 006e DFD1     		bne	.L23
+ 311 0070 04E0     		b	.L16
+ 312              	.L24:
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data == NULL) return;
+ 313              		.loc 1 193 0
+ 314 0072 00BF     		nop
+ 315 0074 02E0     		b	.L16
+ 316              	.L25:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 317              		.loc 1 194 0
+ 318 0076 00BF     		nop
+ 319 0078 00E0     		b	.L16
+ 320              	.L26:
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 321              		.loc 1 216 0
+ 322 007a 00BF     		nop
+ 323              	.L16:
+ 219:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 220:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 221:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else /*Use custom, user defined free function*/
+ 222:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 0
+ 223:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     LV_MEM_CUSTOM_FREE(e);
+ 224:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+ 225:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     LV_MEM_CUSTOM_FREE((void *)data);
+ 226:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif /*LV_ENABLE_GC*/
+ 227:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 228:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 324              		.loc 1 228 0
+ 325 007c 1037     		adds	r7, r7, #16
+ 326              		.cfi_def_cfa_offset 8
+ 327 007e BD46     		mov	sp, r7
+ 328              		.cfi_def_cfa_register 13
+ 329              		@ sp needed
+ 330 0080 80BD     		pop	{r7, pc}
+ 331              	.L28:
+ 332 0082 00BF     		.align	2
+ 333              	.L27:
+ 334 0084 04000000 		.word	zero_mem
+ 335              		.cfi_endproc
+ 336              	.LFE3:
+ 337              		.size	lv_mem_free, .-lv_mem_free
+ 338              		.section	.text.lv_mem_realloc,"ax",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 11
+
+
+ 339              		.align	2
+ 340              		.global	lv_mem_realloc
+ 341              		.thumb
+ 342              		.thumb_func
+ 343              		.type	lv_mem_realloc, %function
+ 344              	lv_mem_realloc:
+ 345              	.LFB4:
+ 229:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 230:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 231:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Reallocate a memory with a new size. The old content will be kept.
+ 232:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param data pointer to an allocated memory.
+ 233:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Its content will be copied to the new memory block and freed
+ 234:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param new_size the desired new size in byte
+ 235:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @return pointer to the new memory
+ 236:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 237:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 238:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 0
+ 239:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 240:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void * lv_mem_realloc(void * data_p, size_t new_size)
+ 241:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 346              		.loc 1 241 0
+ 347              		.cfi_startproc
+ 348              		@ args = 0, pretend = 0, frame = 24
+ 349              		@ frame_needed = 1, uses_anonymous_args = 0
+ 350 0000 80B5     		push	{r7, lr}
+ 351              		.cfi_def_cfa_offset 8
+ 352              		.cfi_offset 7, -8
+ 353              		.cfi_offset 14, -4
+ 354 0002 86B0     		sub	sp, sp, #24
+ 355              		.cfi_def_cfa_offset 32
+ 356 0004 00AF     		add	r7, sp, #0
+ 357              		.cfi_def_cfa_register 7
+ 358 0006 7860     		str	r0, [r7, #4]
+ 359 0008 3960     		str	r1, [r7]
+ 242:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*data_p could be previously freed pointer (in this case it is invalid)*/
+ 243:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data_p != NULL) {
+ 360              		.loc 1 243 0
+ 361 000a 7B68     		ldr	r3, [r7, #4]
+ 362 000c 002B     		cmp	r3, #0
+ 363 000e 0BD0     		beq	.L30
+ 364              	.LBB2:
+ 244:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         lv_mem_ent_t * e = (lv_mem_ent_t *)((uint8_t *)data_p - sizeof(lv_mem_header_t));
+ 365              		.loc 1 244 0
+ 366 0010 7B68     		ldr	r3, [r7, #4]
+ 367 0012 043B     		subs	r3, r3, #4
+ 368 0014 7B61     		str	r3, [r7, #20]
+ 245:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e->header.s.used == 0) {
+ 369              		.loc 1 245 0
+ 370 0016 7B69     		ldr	r3, [r7, #20]
+ 371 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 372 001a 03F00103 		and	r3, r3, #1
+ 373 001e DBB2     		uxtb	r3, r3
+ 374 0020 002B     		cmp	r3, #0
+ 375 0022 01D1     		bne	.L30
+ 246:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             data_p = NULL;
+ 376              		.loc 1 246 0
+ 377 0024 0023     		movs	r3, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 12
+
+
+ 378 0026 7B60     		str	r3, [r7, #4]
+ 379              	.L30:
+ 380              	.LBE2:
+ 247:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 248:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 249:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     uint32_t old_size = lv_mem_get_size(data_p);
+ 381              		.loc 1 250 0
+ 382 0028 7868     		ldr	r0, [r7, #4]
+ 383 002a FFF7FEFF 		bl	lv_mem_get_size
+ 384 002e 3861     		str	r0, [r7, #16]
+ 251:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(old_size == new_size) return data_p; /*Also avoid reallocating the same memory*/
+ 385              		.loc 1 251 0
+ 386 0030 3A69     		ldr	r2, [r7, #16]
+ 387 0032 3B68     		ldr	r3, [r7]
+ 388 0034 9A42     		cmp	r2, r3
+ 389 0036 01D1     		bne	.L31
+ 390              		.loc 1 251 0 is_stmt 0 discriminator 1
+ 391 0038 7B68     		ldr	r3, [r7, #4]
+ 392 003a 28E0     		b	.L32
+ 393              	.L31:
+ 252:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 253:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 254:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /* Truncate the memory if the new size is smaller. */
+ 255:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(new_size < old_size) {
+ 394              		.loc 1 255 0 is_stmt 1
+ 395 003c 3A68     		ldr	r2, [r7]
+ 396 003e 3B69     		ldr	r3, [r7, #16]
+ 397 0040 9A42     		cmp	r2, r3
+ 398 0042 09D2     		bcs	.L33
+ 399              	.LBB3:
+ 256:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         lv_mem_ent_t * e = (lv_mem_ent_t *)((uint8_t *)data_p - sizeof(lv_mem_header_t));
+ 400              		.loc 1 256 0
+ 401 0044 7B68     		ldr	r3, [r7, #4]
+ 402 0046 043B     		subs	r3, r3, #4
+ 403 0048 FB60     		str	r3, [r7, #12]
+ 257:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         ent_trunc(e, new_size);
+ 404              		.loc 1 257 0
+ 405 004a 3968     		ldr	r1, [r7]
+ 406 004c F868     		ldr	r0, [r7, #12]
+ 407 004e FFF7FEFF 		bl	ent_trunc
+ 258:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         return &e->first_data;
+ 408              		.loc 1 258 0
+ 409 0052 FB68     		ldr	r3, [r7, #12]
+ 410 0054 0433     		adds	r3, r3, #4
+ 411 0056 1AE0     		b	.L32
+ 412              	.L33:
+ 413              	.LBE3:
+ 259:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 260:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 261:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 262:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     void * new_p;
+ 263:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     new_p = lv_mem_alloc(new_size);
+ 414              		.loc 1 263 0
+ 415 0058 3868     		ldr	r0, [r7]
+ 416 005a FFF7FEFF 		bl	lv_mem_alloc
+ 417 005e B860     		str	r0, [r7, #8]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 13
+
+
+ 264:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 265:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(new_p != NULL && data_p != NULL) {
+ 418              		.loc 1 265 0
+ 419 0060 BB68     		ldr	r3, [r7, #8]
+ 420 0062 002B     		cmp	r3, #0
+ 421 0064 12D0     		beq	.L35
+ 422              		.loc 1 265 0 is_stmt 0 discriminator 1
+ 423 0066 7B68     		ldr	r3, [r7, #4]
+ 424 0068 002B     		cmp	r3, #0
+ 425 006a 0FD0     		beq	.L35
+ 266:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Copy the old data to the new. Use the smaller size*/
+ 267:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(old_size != 0) {
+ 426              		.loc 1 267 0 is_stmt 1
+ 427 006c 3B69     		ldr	r3, [r7, #16]
+ 428 006e 002B     		cmp	r3, #0
+ 429 0070 0CD0     		beq	.L35
+ 268:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             memcpy(new_p, data_p, LV_MATH_MIN(new_size, old_size));
+ 430              		.loc 1 268 0
+ 431 0072 3A69     		ldr	r2, [r7, #16]
+ 432 0074 3B68     		ldr	r3, [r7]
+ 433 0076 9342     		cmp	r3, r2
+ 434 0078 28BF     		it	cs
+ 435 007a 1346     		movcs	r3, r2
+ 436 007c 1A46     		mov	r2, r3
+ 437 007e 7968     		ldr	r1, [r7, #4]
+ 438 0080 B868     		ldr	r0, [r7, #8]
+ 439 0082 FFF7FEFF 		bl	memcpy
+ 269:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             lv_mem_free(data_p);
+ 440              		.loc 1 269 0
+ 441 0086 7868     		ldr	r0, [r7, #4]
+ 442 0088 FFF7FEFF 		bl	lv_mem_free
+ 443              	.L35:
+ 270:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 271:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 272:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 273:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(new_p == NULL) LV_LOG_WARN("Couldn't allocate memory");
+ 274:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 275:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return new_p;
+ 444              		.loc 1 275 0
+ 445 008c BB68     		ldr	r3, [r7, #8]
+ 446              	.L32:
+ 276:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 447              		.loc 1 276 0
+ 448 008e 1846     		mov	r0, r3
+ 449 0090 1837     		adds	r7, r7, #24
+ 450              		.cfi_def_cfa_offset 8
+ 451 0092 BD46     		mov	sp, r7
+ 452              		.cfi_def_cfa_register 13
+ 453              		@ sp needed
+ 454 0094 80BD     		pop	{r7, pc}
+ 455              		.cfi_endproc
+ 456              	.LFE4:
+ 457              		.size	lv_mem_realloc, .-lv_mem_realloc
+ 458 0096 00BF     		.section	.text.lv_mem_defrag,"ax",%progbits
+ 459              		.align	2
+ 460              		.global	lv_mem_defrag
+ 461              		.thumb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 14
+
+
+ 462              		.thumb_func
+ 463              		.type	lv_mem_defrag, %function
+ 464              	lv_mem_defrag:
+ 465              	.LFB5:
+ 277:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 278:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else /* LV_ENABLE_GC */
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 280:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void * lv_mem_realloc(void * data_p, size_t new_size)
+ 281:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 282:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     void * new_p = LV_MEM_CUSTOM_REALLOC(data_p, new_size);
+ 283:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(new_p == NULL) LV_LOG_WARN("Couldn't allocate memory");
+ 284:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return new_p;
+ 285:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 286:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 287:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif /* lv_enable_gc */
+ 288:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 289:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 290:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Join the adjacent free memory blocks
+ 291:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 292:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void lv_mem_defrag(void)
+ 293:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 466              		.loc 1 293 0
+ 467              		.cfi_startproc
+ 468              		@ args = 0, pretend = 0, frame = 8
+ 469              		@ frame_needed = 1, uses_anonymous_args = 0
+ 470 0000 80B5     		push	{r7, lr}
+ 471              		.cfi_def_cfa_offset 8
+ 472              		.cfi_offset 7, -8
+ 473              		.cfi_offset 14, -4
+ 474 0002 82B0     		sub	sp, sp, #8
+ 475              		.cfi_def_cfa_offset 16
+ 476 0004 00AF     		add	r7, sp, #0
+ 477              		.cfi_def_cfa_register 7
+ 294:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 295:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e_free;
+ 296:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e_next;
+ 297:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e_free = ent_get_next(NULL);
+ 478              		.loc 1 297 0
+ 479 0006 0020     		movs	r0, #0
+ 480 0008 FFF7FEFF 		bl	ent_get_next
+ 481 000c 7860     		str	r0, [r7, #4]
+ 482              	.L49:
+ 298:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 299:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     while(1) {
+ 300:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Search the next free entry*/
+ 301:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         while(e_free != NULL) {
+ 483              		.loc 1 301 0
+ 484 000e 0AE0     		b	.L37
+ 485              	.L40:
+ 302:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             if(e_free->header.s.used != 0) {
+ 486              		.loc 1 302 0
+ 487 0010 7B68     		ldr	r3, [r7, #4]
+ 488 0012 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 489 0014 03F00103 		and	r3, r3, #1
+ 490 0018 DBB2     		uxtb	r3, r3
+ 491 001a 002B     		cmp	r3, #0
+ 492 001c 07D0     		beq	.L50
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 15
+
+
+ 303:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****                 e_free = ent_get_next(e_free);
+ 493              		.loc 1 303 0
+ 494 001e 7868     		ldr	r0, [r7, #4]
+ 495 0020 FFF7FEFF 		bl	ent_get_next
+ 496 0024 7860     		str	r0, [r7, #4]
+ 497              	.L37:
+ 301:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             if(e_free->header.s.used != 0) {
+ 498              		.loc 1 301 0
+ 499 0026 7B68     		ldr	r3, [r7, #4]
+ 500 0028 002B     		cmp	r3, #0
+ 501 002a F1D1     		bne	.L40
+ 502 002c 00E0     		b	.L39
+ 503              	.L50:
+ 304:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             } else {
+ 305:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****                 break;
+ 504              		.loc 1 305 0
+ 505 002e 00BF     		nop
+ 506              	.L39:
+ 306:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             }
+ 307:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 308:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 309:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e_free == NULL) return;
+ 507              		.loc 1 309 0
+ 508 0030 7B68     		ldr	r3, [r7, #4]
+ 509 0032 002B     		cmp	r3, #0
+ 510 0034 2CD0     		beq	.L51
+ 310:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 311:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Joint the following free entries to the free*/
+ 312:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         e_next = ent_get_next(e_free);
+ 511              		.loc 1 312 0
+ 512 0036 7868     		ldr	r0, [r7, #4]
+ 513 0038 FFF7FEFF 		bl	ent_get_next
+ 514 003c 3860     		str	r0, [r7]
+ 313:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         while(e_next != NULL) {
+ 515              		.loc 1 313 0
+ 516 003e 1CE0     		b	.L43
+ 517              	.L47:
+ 314:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             if(e_next->header.s.used == 0) {
+ 518              		.loc 1 314 0
+ 519 0040 3B68     		ldr	r3, [r7]
+ 520 0042 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 521 0044 03F00103 		and	r3, r3, #1
+ 522 0048 DBB2     		uxtb	r3, r3
+ 523 004a 002B     		cmp	r3, #0
+ 524 004c 19D1     		bne	.L52
+ 315:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****                 e_free->header.s.d_size += e_next->header.s.d_size + sizeof(e_next->header);
+ 525              		.loc 1 315 0
+ 526 004e 7B68     		ldr	r3, [r7, #4]
+ 527 0050 1B68     		ldr	r3, [r3]
+ 528 0052 C3F35E03 		ubfx	r3, r3, #1, #31
+ 529 0056 1A46     		mov	r2, r3
+ 530 0058 3B68     		ldr	r3, [r7]
+ 531 005a 1B68     		ldr	r3, [r3]
+ 532 005c C3F35E03 		ubfx	r3, r3, #1, #31
+ 533 0060 1344     		add	r3, r3, r2
+ 534 0062 0433     		adds	r3, r3, #4
+ 535 0064 23F00041 		bic	r1, r3, #-2147483648
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 16
+
+
+ 536 0068 7A68     		ldr	r2, [r7, #4]
+ 537 006a 1368     		ldr	r3, [r2]
+ 538 006c 61F35F03 		bfi	r3, r1, #1, #31
+ 539 0070 1360     		str	r3, [r2]
+ 316:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             } else {
+ 317:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****                 break;
+ 318:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             }
+ 319:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 320:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             e_next = ent_get_next(e_next);
+ 540              		.loc 1 320 0
+ 541 0072 3868     		ldr	r0, [r7]
+ 542 0074 FFF7FEFF 		bl	ent_get_next
+ 543 0078 3860     		str	r0, [r7]
+ 544              	.L43:
+ 313:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             if(e_next->header.s.used == 0) {
+ 545              		.loc 1 313 0
+ 546 007a 3B68     		ldr	r3, [r7]
+ 547 007c 002B     		cmp	r3, #0
+ 548 007e DFD1     		bne	.L47
+ 549 0080 00E0     		b	.L46
+ 550              	.L52:
+ 317:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             }
+ 551              		.loc 1 317 0
+ 552 0082 00BF     		nop
+ 553              	.L46:
+ 321:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 322:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 323:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e_next == NULL) return;
+ 554              		.loc 1 323 0
+ 555 0084 3B68     		ldr	r3, [r7]
+ 556 0086 002B     		cmp	r3, #0
+ 557 0088 04D0     		beq	.L53
+ 324:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 325:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Continue from the lastly checked entry*/
+ 326:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         e_free = e_next;
+ 558              		.loc 1 326 0
+ 559 008a 3B68     		ldr	r3, [r7]
+ 560 008c 7B60     		str	r3, [r7, #4]
+ 327:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 561              		.loc 1 327 0
+ 562 008e BEE7     		b	.L49
+ 563              	.L51:
+ 309:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 564              		.loc 1 309 0
+ 565 0090 00BF     		nop
+ 566 0092 00E0     		b	.L36
+ 567              	.L53:
+ 323:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 568              		.loc 1 323 0
+ 569 0094 00BF     		nop
+ 570              	.L36:
+ 328:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 329:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 571              		.loc 1 329 0
+ 572 0096 0837     		adds	r7, r7, #8
+ 573              		.cfi_def_cfa_offset 8
+ 574 0098 BD46     		mov	sp, r7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 17
+
+
+ 575              		.cfi_def_cfa_register 13
+ 576              		@ sp needed
+ 577 009a 80BD     		pop	{r7, pc}
+ 578              		.cfi_endproc
+ 579              	.LFE5:
+ 580              		.size	lv_mem_defrag, .-lv_mem_defrag
+ 581              		.section	.text.lv_mem_monitor,"ax",%progbits
+ 582              		.align	2
+ 583              		.global	lv_mem_monitor
+ 584              		.thumb
+ 585              		.thumb_func
+ 586              		.type	lv_mem_monitor, %function
+ 587              	lv_mem_monitor:
+ 588              	.LFB6:
+ 330:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 331:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 332:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Give information about the work memory of dynamic allocation
+ 333:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param mon_p pointer to a dm_mon_p variable,
+ 334:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *              the result of the analysis will be stored here
+ 335:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 336:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** void lv_mem_monitor(lv_mem_monitor_t * mon_p)
+ 337:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 589              		.loc 1 337 0
+ 590              		.cfi_startproc
+ 591              		@ args = 0, pretend = 0, frame = 16
+ 592              		@ frame_needed = 1, uses_anonymous_args = 0
+ 593 0000 80B5     		push	{r7, lr}
+ 594              		.cfi_def_cfa_offset 8
+ 595              		.cfi_offset 7, -8
+ 596              		.cfi_offset 14, -4
+ 597 0002 84B0     		sub	sp, sp, #16
+ 598              		.cfi_def_cfa_offset 24
+ 599 0004 00AF     		add	r7, sp, #0
+ 600              		.cfi_def_cfa_register 7
+ 601 0006 7860     		str	r0, [r7, #4]
+ 338:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Init the data*/
+ 339:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     memset(mon_p, 0, sizeof(lv_mem_monitor_t));
+ 602              		.loc 1 339 0
+ 603 0008 1822     		movs	r2, #24
+ 604 000a 0021     		movs	r1, #0
+ 605 000c 7868     		ldr	r0, [r7, #4]
+ 606 000e FFF7FEFF 		bl	memset
+ 340:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ 341:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e;
+ 342:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e = NULL;
+ 607              		.loc 1 342 0
+ 608 0012 0023     		movs	r3, #0
+ 609 0014 FB60     		str	r3, [r7, #12]
+ 343:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 344:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e = ent_get_next(e);
+ 610              		.loc 1 344 0
+ 611 0016 F868     		ldr	r0, [r7, #12]
+ 612 0018 FFF7FEFF 		bl	ent_get_next
+ 613 001c F860     		str	r0, [r7, #12]
+ 345:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 346:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     while(e != NULL) {
+ 614              		.loc 1 346 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 18
+
+
+ 615 001e 2EE0     		b	.L55
+ 616              	.L59:
+ 347:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e->header.s.used == 0) {
+ 617              		.loc 1 347 0
+ 618 0020 FB68     		ldr	r3, [r7, #12]
+ 619 0022 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 620 0024 03F00103 		and	r3, r3, #1
+ 621 0028 DBB2     		uxtb	r3, r3
+ 622 002a 002B     		cmp	r3, #0
+ 623 002c 1ED1     		bne	.L56
+ 348:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             mon_p->free_cnt++;
+ 624              		.loc 1 348 0
+ 625 002e 7B68     		ldr	r3, [r7, #4]
+ 626 0030 5B68     		ldr	r3, [r3, #4]
+ 627 0032 5A1C     		adds	r2, r3, #1
+ 628 0034 7B68     		ldr	r3, [r7, #4]
+ 629 0036 5A60     		str	r2, [r3, #4]
+ 349:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             mon_p->free_size += e->header.s.d_size;
+ 630              		.loc 1 349 0
+ 631 0038 7B68     		ldr	r3, [r7, #4]
+ 632 003a 9B68     		ldr	r3, [r3, #8]
+ 633 003c FA68     		ldr	r2, [r7, #12]
+ 634 003e 1268     		ldr	r2, [r2]
+ 635 0040 C2F35E02 		ubfx	r2, r2, #1, #31
+ 636 0044 1A44     		add	r2, r2, r3
+ 637 0046 7B68     		ldr	r3, [r7, #4]
+ 638 0048 9A60     		str	r2, [r3, #8]
+ 350:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             if(e->header.s.d_size > mon_p->free_biggest_size) {
+ 639              		.loc 1 350 0
+ 640 004a FB68     		ldr	r3, [r7, #12]
+ 641 004c 1B68     		ldr	r3, [r3]
+ 642 004e C3F35E03 		ubfx	r3, r3, #1, #31
+ 643 0052 1A46     		mov	r2, r3
+ 644 0054 7B68     		ldr	r3, [r7, #4]
+ 645 0056 DB68     		ldr	r3, [r3, #12]
+ 646 0058 9A42     		cmp	r2, r3
+ 647 005a 0CD9     		bls	.L58
+ 351:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****                 mon_p->free_biggest_size = e->header.s.d_size;
+ 648              		.loc 1 351 0
+ 649 005c FB68     		ldr	r3, [r7, #12]
+ 650 005e 1B68     		ldr	r3, [r3]
+ 651 0060 C3F35E03 		ubfx	r3, r3, #1, #31
+ 652 0064 1A46     		mov	r2, r3
+ 653 0066 7B68     		ldr	r3, [r7, #4]
+ 654 0068 DA60     		str	r2, [r3, #12]
+ 655 006a 04E0     		b	.L58
+ 656              	.L56:
+ 352:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             }
+ 353:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         } else {
+ 354:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             mon_p->used_cnt++;
+ 657              		.loc 1 354 0
+ 658 006c 7B68     		ldr	r3, [r7, #4]
+ 659 006e 1B69     		ldr	r3, [r3, #16]
+ 660 0070 5A1C     		adds	r2, r3, #1
+ 661 0072 7B68     		ldr	r3, [r7, #4]
+ 662 0074 1A61     		str	r2, [r3, #16]
+ 663              	.L58:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 19
+
+
+ 355:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         }
+ 356:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 357:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         e = ent_get_next(e);
+ 664              		.loc 1 357 0
+ 665 0076 F868     		ldr	r0, [r7, #12]
+ 666 0078 FFF7FEFF 		bl	ent_get_next
+ 667 007c F860     		str	r0, [r7, #12]
+ 668              	.L55:
+ 346:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(e->header.s.used == 0) {
+ 669              		.loc 1 346 0
+ 670 007e FB68     		ldr	r3, [r7, #12]
+ 671 0080 002B     		cmp	r3, #0
+ 672 0082 CDD1     		bne	.L59
+ 358:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 359:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     mon_p->total_size = LV_MEM_SIZE;
+ 673              		.loc 1 359 0
+ 674 0084 7B68     		ldr	r3, [r7, #4]
+ 675 0086 4FF48032 		mov	r2, #65536
+ 676 008a 1A60     		str	r2, [r3]
+ 360:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     mon_p->used_pct   = 100 - (100U * mon_p->free_size) / mon_p->total_size;
+ 677              		.loc 1 360 0
+ 678 008c 7B68     		ldr	r3, [r7, #4]
+ 679 008e 9B68     		ldr	r3, [r3, #8]
+ 680 0090 6422     		movs	r2, #100
+ 681 0092 02FB03F2 		mul	r2, r2, r3
+ 682 0096 7B68     		ldr	r3, [r7, #4]
+ 683 0098 1B68     		ldr	r3, [r3]
+ 684 009a B2FBF3F3 		udiv	r3, r2, r3
+ 685 009e DBB2     		uxtb	r3, r3
+ 686 00a0 C3F16403 		rsb	r3, r3, #100
+ 687 00a4 DAB2     		uxtb	r2, r3
+ 688 00a6 7B68     		ldr	r3, [r7, #4]
+ 689 00a8 1A75     		strb	r2, [r3, #20]
+ 361:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     mon_p->frag_pct   = (uint32_t)mon_p->free_biggest_size * 100U / mon_p->free_size;
+ 690              		.loc 1 361 0
+ 691 00aa 7B68     		ldr	r3, [r7, #4]
+ 692 00ac DB68     		ldr	r3, [r3, #12]
+ 693 00ae 6422     		movs	r2, #100
+ 694 00b0 02FB03F2 		mul	r2, r2, r3
+ 695 00b4 7B68     		ldr	r3, [r7, #4]
+ 696 00b6 9B68     		ldr	r3, [r3, #8]
+ 697 00b8 B2FBF3F3 		udiv	r3, r2, r3
+ 698 00bc DAB2     		uxtb	r2, r3
+ 699 00be 7B68     		ldr	r3, [r7, #4]
+ 700 00c0 5A75     		strb	r2, [r3, #21]
+ 362:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     mon_p->frag_pct   = 100 - mon_p->frag_pct;
+ 701              		.loc 1 362 0
+ 702 00c2 7B68     		ldr	r3, [r7, #4]
+ 703 00c4 5B7D     		ldrb	r3, [r3, #21]	@ zero_extendqisi2
+ 704 00c6 C3F16403 		rsb	r3, r3, #100
+ 705 00ca DAB2     		uxtb	r2, r3
+ 706 00cc 7B68     		ldr	r3, [r7, #4]
+ 707 00ce 5A75     		strb	r2, [r3, #21]
+ 363:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 364:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 708              		.loc 1 364 0
+ 709 00d0 00BF     		nop
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 20
+
+
+ 710 00d2 1037     		adds	r7, r7, #16
+ 711              		.cfi_def_cfa_offset 8
+ 712 00d4 BD46     		mov	sp, r7
+ 713              		.cfi_def_cfa_register 13
+ 714              		@ sp needed
+ 715 00d6 80BD     		pop	{r7, pc}
+ 716              		.cfi_endproc
+ 717              	.LFE6:
+ 718              		.size	lv_mem_monitor, .-lv_mem_monitor
+ 719              		.section	.text.lv_mem_get_size,"ax",%progbits
+ 720              		.align	2
+ 721              		.global	lv_mem_get_size
+ 722              		.thumb
+ 723              		.thumb_func
+ 724              		.type	lv_mem_get_size, %function
+ 725              	lv_mem_get_size:
+ 726              	.LFB7:
+ 365:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 366:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 367:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Give the size of an allocated memory
+ 368:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param data pointer to an allocated memory
+ 369:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @return the size of data memory in bytes
+ 370:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 371:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 372:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_ENABLE_GC == 0
+ 373:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 374:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** uint32_t lv_mem_get_size(const void * data)
+ 375:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 727              		.loc 1 375 0
+ 728              		.cfi_startproc
+ 729              		@ args = 0, pretend = 0, frame = 16
+ 730              		@ frame_needed = 1, uses_anonymous_args = 0
+ 731              		@ link register save eliminated.
+ 732 0000 80B4     		push	{r7}
+ 733              		.cfi_def_cfa_offset 4
+ 734              		.cfi_offset 7, -4
+ 735 0002 85B0     		sub	sp, sp, #20
+ 736              		.cfi_def_cfa_offset 24
+ 737 0004 00AF     		add	r7, sp, #0
+ 738              		.cfi_def_cfa_register 7
+ 739 0006 7860     		str	r0, [r7, #4]
+ 376:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data == NULL) return 0;
+ 740              		.loc 1 376 0
+ 741 0008 7B68     		ldr	r3, [r7, #4]
+ 742 000a 002B     		cmp	r3, #0
+ 743 000c 01D1     		bne	.L61
+ 744              		.loc 1 376 0 is_stmt 0 discriminator 1
+ 745 000e 0023     		movs	r3, #0
+ 746 0010 0CE0     		b	.L62
+ 747              	.L61:
+ 377:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(data == &zero_mem) return 0;
+ 748              		.loc 1 377 0 is_stmt 1
+ 749 0012 7B68     		ldr	r3, [r7, #4]
+ 750 0014 084A     		ldr	r2, .L64
+ 751 0016 9342     		cmp	r3, r2
+ 752 0018 01D1     		bne	.L63
+ 753              		.loc 1 377 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 21
+
+
+ 754 001a 0023     		movs	r3, #0
+ 755 001c 06E0     		b	.L62
+ 756              	.L63:
+ 378:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 379:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * e = (lv_mem_ent_t *)((uint8_t *)data - sizeof(lv_mem_header_t));
+ 757              		.loc 1 379 0 is_stmt 1
+ 758 001e 7B68     		ldr	r3, [r7, #4]
+ 759 0020 043B     		subs	r3, r3, #4
+ 760 0022 FB60     		str	r3, [r7, #12]
+ 380:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 381:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return e->header.s.d_size;
+ 761              		.loc 1 381 0
+ 762 0024 FB68     		ldr	r3, [r7, #12]
+ 763 0026 1B68     		ldr	r3, [r3]
+ 764 0028 C3F35E03 		ubfx	r3, r3, #1, #31
+ 765              	.L62:
+ 382:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 766              		.loc 1 382 0
+ 767 002c 1846     		mov	r0, r3
+ 768 002e 1437     		adds	r7, r7, #20
+ 769              		.cfi_def_cfa_offset 4
+ 770 0030 BD46     		mov	sp, r7
+ 771              		.cfi_def_cfa_register 13
+ 772              		@ sp needed
+ 773 0032 5DF8047B 		ldr	r7, [sp], #4
+ 774              		.cfi_restore 7
+ 775              		.cfi_def_cfa_offset 0
+ 776 0036 7047     		bx	lr
+ 777              	.L65:
+ 778              		.align	2
+ 779              	.L64:
+ 780 0038 04000000 		.word	zero_mem
+ 781              		.cfi_endproc
+ 782              	.LFE7:
+ 783              		.size	lv_mem_get_size, .-lv_mem_get_size
+ 784              		.section	.text.ent_get_next,"ax",%progbits
+ 785              		.align	2
+ 786              		.thumb
+ 787              		.thumb_func
+ 788              		.type	ent_get_next, %function
+ 789              	ent_get_next:
+ 790              	.LFB8:
+ 383:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 384:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else /* LV_ENABLE_GC */
+ 385:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 386:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** uint32_t lv_mem_get_size(const void * data)
+ 387:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 388:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return LV_MEM_CUSTOM_GET_SIZE(data);
+ 389:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 390:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 391:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif /*LV_ENABLE_GC*/
+ 392:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 393:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**********************
+ 394:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  *   STATIC FUNCTIONS
+ 395:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  **********************/
+ 396:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 397:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #if LV_MEM_CUSTOM == 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 22
+
+
+ 398:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 399:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Give the next entry after 'act_e'
+ 400:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param act_e pointer to an entry
+ 401:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @return pointer to an entry after 'act_e'
+ 402:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 403:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static lv_mem_ent_t * ent_get_next(lv_mem_ent_t * act_e)
+ 404:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 791              		.loc 1 404 0
+ 792              		.cfi_startproc
+ 793              		@ args = 0, pretend = 0, frame = 16
+ 794              		@ frame_needed = 1, uses_anonymous_args = 0
+ 795              		@ link register save eliminated.
+ 796 0000 80B4     		push	{r7}
+ 797              		.cfi_def_cfa_offset 4
+ 798              		.cfi_offset 7, -4
+ 799 0002 85B0     		sub	sp, sp, #20
+ 800              		.cfi_def_cfa_offset 24
+ 801 0004 00AF     		add	r7, sp, #0
+ 802              		.cfi_def_cfa_register 7
+ 803 0006 7860     		str	r0, [r7, #4]
+ 405:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     lv_mem_ent_t * next_e = NULL;
+ 804              		.loc 1 405 0
+ 805 0008 0023     		movs	r3, #0
+ 806 000a FB60     		str	r3, [r7, #12]
+ 406:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 407:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(act_e == NULL) { /*NULL means: get the first entry*/
+ 807              		.loc 1 407 0
+ 808 000c 7B68     		ldr	r3, [r7, #4]
+ 809 000e 002B     		cmp	r3, #0
+ 810 0010 03D1     		bne	.L67
+ 408:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         next_e = (lv_mem_ent_t *)work_mem;
+ 811              		.loc 1 408 0
+ 812 0012 104B     		ldr	r3, .L70
+ 813 0014 1B68     		ldr	r3, [r3]
+ 814 0016 FB60     		str	r3, [r7, #12]
+ 815 0018 14E0     		b	.L68
+ 816              	.L67:
+ 817              	.LBB4:
+ 409:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     } else { /*Get the next entry */
+ 410:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         uint8_t * data = &act_e->first_data;
+ 818              		.loc 1 410 0
+ 819 001a 7B68     		ldr	r3, [r7, #4]
+ 820 001c 0433     		adds	r3, r3, #4
+ 821 001e BB60     		str	r3, [r7, #8]
+ 411:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         next_e         = (lv_mem_ent_t *)&data[act_e->header.s.d_size];
+ 822              		.loc 1 411 0
+ 823 0020 7B68     		ldr	r3, [r7, #4]
+ 824 0022 1B68     		ldr	r3, [r3]
+ 825 0024 C3F35E03 		ubfx	r3, r3, #1, #31
+ 826 0028 1A46     		mov	r2, r3
+ 827 002a BB68     		ldr	r3, [r7, #8]
+ 828 002c 1344     		add	r3, r3, r2
+ 829 002e FB60     		str	r3, [r7, #12]
+ 412:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 413:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         if(&next_e->first_data >= &work_mem[LV_MEM_SIZE]) next_e = NULL;
+ 830              		.loc 1 413 0
+ 831 0030 FB68     		ldr	r3, [r7, #12]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 23
+
+
+ 832 0032 1A1D     		adds	r2, r3, #4
+ 833 0034 074B     		ldr	r3, .L70
+ 834 0036 1B68     		ldr	r3, [r3]
+ 835 0038 03F58033 		add	r3, r3, #65536
+ 836 003c 9A42     		cmp	r2, r3
+ 837 003e 01D3     		bcc	.L68
+ 838              		.loc 1 413 0 is_stmt 0 discriminator 1
+ 839 0040 0023     		movs	r3, #0
+ 840 0042 FB60     		str	r3, [r7, #12]
+ 841              	.L68:
+ 842              	.LBE4:
+ 414:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 415:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 416:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return next_e;
+ 843              		.loc 1 416 0 is_stmt 1
+ 844 0044 FB68     		ldr	r3, [r7, #12]
+ 417:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 845              		.loc 1 417 0
+ 846 0046 1846     		mov	r0, r3
+ 847 0048 1437     		adds	r7, r7, #20
+ 848              		.cfi_def_cfa_offset 4
+ 849 004a BD46     		mov	sp, r7
+ 850              		.cfi_def_cfa_register 13
+ 851              		@ sp needed
+ 852 004c 5DF8047B 		ldr	r7, [sp], #4
+ 853              		.cfi_restore 7
+ 854              		.cfi_def_cfa_offset 0
+ 855 0050 7047     		bx	lr
+ 856              	.L71:
+ 857 0052 00BF     		.align	2
+ 858              	.L70:
+ 859 0054 00000000 		.word	work_mem
+ 860              		.cfi_endproc
+ 861              	.LFE8:
+ 862              		.size	ent_get_next, .-ent_get_next
+ 863              		.section	.text.ent_alloc,"ax",%progbits
+ 864              		.align	2
+ 865              		.thumb
+ 866              		.thumb_func
+ 867              		.type	ent_alloc, %function
+ 868              	ent_alloc:
+ 869              	.LFB9:
+ 418:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 419:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 420:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Try to do the real allocation with a given size
+ 421:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param e try to allocate to this entry
+ 422:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param size size of the new memory in bytes
+ 423:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @return pointer to the allocated memory or NULL if not enough memory in the entry
+ 424:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 425:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static void * ent_alloc(lv_mem_ent_t * e, size_t size)
+ 426:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 870              		.loc 1 426 0
+ 871              		.cfi_startproc
+ 872              		@ args = 0, pretend = 0, frame = 16
+ 873              		@ frame_needed = 1, uses_anonymous_args = 0
+ 874 0000 80B5     		push	{r7, lr}
+ 875              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 24
+
+
+ 876              		.cfi_offset 7, -8
+ 877              		.cfi_offset 14, -4
+ 878 0002 84B0     		sub	sp, sp, #16
+ 879              		.cfi_def_cfa_offset 24
+ 880 0004 00AF     		add	r7, sp, #0
+ 881              		.cfi_def_cfa_register 7
+ 882 0006 7860     		str	r0, [r7, #4]
+ 883 0008 3960     		str	r1, [r7]
+ 427:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     void * alloc = NULL;
+ 884              		.loc 1 427 0
+ 885 000a 0023     		movs	r3, #0
+ 886 000c FB60     		str	r3, [r7, #12]
+ 428:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 429:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*If the memory is free and big enough then use it */
+ 430:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(e->header.s.used == 0 && e->header.s.d_size >= size) {
+ 887              		.loc 1 430 0
+ 888 000e 7B68     		ldr	r3, [r7, #4]
+ 889 0010 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 890 0012 03F00103 		and	r3, r3, #1
+ 891 0016 DBB2     		uxtb	r3, r3
+ 892 0018 002B     		cmp	r3, #0
+ 893 001a 13D1     		bne	.L73
+ 894              		.loc 1 430 0 is_stmt 0 discriminator 1
+ 895 001c 7B68     		ldr	r3, [r7, #4]
+ 896 001e 1B68     		ldr	r3, [r3]
+ 897 0020 C3F35E03 		ubfx	r3, r3, #1, #31
+ 898 0024 1A46     		mov	r2, r3
+ 899 0026 3B68     		ldr	r3, [r7]
+ 900 0028 9A42     		cmp	r2, r3
+ 901 002a 0BD3     		bcc	.L73
+ 431:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Truncate the entry to the desired size */
+ 432:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         ent_trunc(e, size),
+ 902              		.loc 1 432 0 is_stmt 1
+ 903 002c 3968     		ldr	r1, [r7]
+ 904 002e 7868     		ldr	r0, [r7, #4]
+ 905 0030 FFF7FEFF 		bl	ent_trunc
+ 433:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 434:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****             e->header.s.used = 1;
+ 906              		.loc 1 434 0
+ 907 0034 7A68     		ldr	r2, [r7, #4]
+ 908 0036 1378     		ldrb	r3, [r2]
+ 909 0038 43F00103 		orr	r3, r3, #1
+ 910 003c 1370     		strb	r3, [r2]
+ 435:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 436:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         /*Save the allocated data*/
+ 437:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         alloc = &e->first_data;
+ 911              		.loc 1 437 0
+ 912 003e 7B68     		ldr	r3, [r7, #4]
+ 913 0040 0433     		adds	r3, r3, #4
+ 914 0042 FB60     		str	r3, [r7, #12]
+ 915              	.L73:
+ 438:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 439:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 440:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     return alloc;
+ 916              		.loc 1 440 0
+ 917 0044 FB68     		ldr	r3, [r7, #12]
+ 441:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 25
+
+
+ 918              		.loc 1 441 0
+ 919 0046 1846     		mov	r0, r3
+ 920 0048 1037     		adds	r7, r7, #16
+ 921              		.cfi_def_cfa_offset 8
+ 922 004a BD46     		mov	sp, r7
+ 923              		.cfi_def_cfa_register 13
+ 924              		@ sp needed
+ 925 004c 80BD     		pop	{r7, pc}
+ 926              		.cfi_endproc
+ 927              	.LFE9:
+ 928              		.size	ent_alloc, .-ent_alloc
+ 929 004e 00BF     		.section	.text.ent_trunc,"ax",%progbits
+ 930              		.align	2
+ 931              		.thumb
+ 932              		.thumb_func
+ 933              		.type	ent_trunc, %function
+ 934              	ent_trunc:
+ 935              	.LFB10:
+ 442:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 443:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** /**
+ 444:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * Truncate the data of entry to the given size
+ 445:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param e Pointer to an entry
+ 446:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  * @param size new size in bytes
+ 447:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****  */
+ 448:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** static void ent_trunc(lv_mem_ent_t * e, size_t size)
+ 449:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** {
+ 936              		.loc 1 449 0
+ 937              		.cfi_startproc
+ 938              		@ args = 0, pretend = 0, frame = 16
+ 939              		@ frame_needed = 1, uses_anonymous_args = 0
+ 940              		@ link register save eliminated.
+ 941 0000 80B4     		push	{r7}
+ 942              		.cfi_def_cfa_offset 4
+ 943              		.cfi_offset 7, -4
+ 944 0002 85B0     		sub	sp, sp, #20
+ 945              		.cfi_def_cfa_offset 24
+ 946 0004 00AF     		add	r7, sp, #0
+ 947              		.cfi_def_cfa_register 7
+ 948 0006 7860     		str	r0, [r7, #4]
+ 949 0008 3960     		str	r1, [r7]
+ 450:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #ifdef LV_ARCH_64
+ 451:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Round the size up to 8*/
+ 452:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(size & 0x7) {
+ 453:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size = size & (~0x7);
+ 454:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size += 8;
+ 455:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 456:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #else
+ 457:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Round the size up to 4*/
+ 458:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(size & 0x3) {
+ 950              		.loc 1 458 0
+ 951 000a 3B68     		ldr	r3, [r7]
+ 952 000c 03F00303 		and	r3, r3, #3
+ 953 0010 002B     		cmp	r3, #0
+ 954 0012 06D0     		beq	.L76
+ 459:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size = size & (~0x3);
+ 955              		.loc 1 459 0
+ 956 0014 3B68     		ldr	r3, [r7]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 26
+
+
+ 957 0016 23F00303 		bic	r3, r3, #3
+ 958 001a 3B60     		str	r3, [r7]
+ 460:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size += 4;
+ 959              		.loc 1 460 0
+ 960 001c 3B68     		ldr	r3, [r7]
+ 961 001e 0433     		adds	r3, r3, #4
+ 962 0020 3B60     		str	r3, [r7]
+ 963              	.L76:
+ 461:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 462:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** #endif
+ 463:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 464:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /*Don't let empty space only for a header without data*/
+ 465:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(e->header.s.d_size == size + sizeof(lv_mem_header_t)) {
+ 964              		.loc 1 465 0
+ 965 0022 7B68     		ldr	r3, [r7, #4]
+ 966 0024 1B68     		ldr	r3, [r3]
+ 967 0026 C3F35E03 		ubfx	r3, r3, #1, #31
+ 968 002a 1A46     		mov	r2, r3
+ 969 002c 3B68     		ldr	r3, [r7]
+ 970 002e 0433     		adds	r3, r3, #4
+ 971 0030 9A42     		cmp	r2, r3
+ 972 0032 04D1     		bne	.L77
+ 466:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         size = e->header.s.d_size;
+ 973              		.loc 1 466 0
+ 974 0034 7B68     		ldr	r3, [r7, #4]
+ 975 0036 1B68     		ldr	r3, [r3]
+ 976 0038 C3F35E03 		ubfx	r3, r3, #1, #31
+ 977 003c 3B60     		str	r3, [r7]
+ 978              	.L77:
+ 467:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 468:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 469:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /* Create the new entry after the current if there is space for it */
+ 470:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     if(e->header.s.d_size != size) {
+ 979              		.loc 1 470 0
+ 980 003e 7B68     		ldr	r3, [r7, #4]
+ 981 0040 1B68     		ldr	r3, [r3]
+ 982 0042 C3F35E03 		ubfx	r3, r3, #1, #31
+ 983 0046 1A46     		mov	r2, r3
+ 984 0048 3B68     		ldr	r3, [r7]
+ 985 004a 9A42     		cmp	r2, r3
+ 986 004c 1AD0     		beq	.L78
+ 987              	.LBB5:
+ 471:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         uint8_t * e_data             = &e->first_data;
+ 988              		.loc 1 471 0
+ 989 004e 7B68     		ldr	r3, [r7, #4]
+ 990 0050 0433     		adds	r3, r3, #4
+ 991 0052 FB60     		str	r3, [r7, #12]
+ 472:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         lv_mem_ent_t * after_new_e   = (lv_mem_ent_t *)&e_data[size];
+ 992              		.loc 1 472 0
+ 993 0054 FA68     		ldr	r2, [r7, #12]
+ 994 0056 3B68     		ldr	r3, [r7]
+ 995 0058 1344     		add	r3, r3, r2
+ 996 005a BB60     		str	r3, [r7, #8]
+ 473:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         after_new_e->header.s.used   = 0;
+ 997              		.loc 1 473 0
+ 998 005c BA68     		ldr	r2, [r7, #8]
+ 999 005e 1378     		ldrb	r3, [r2]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 27
+
+
+ 1000 0060 6FF30003 		bfc	r3, #0, #1
+ 1001 0064 1370     		strb	r3, [r2]
+ 474:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****         after_new_e->header.s.d_size = (uint32_t)e->header.s.d_size - size - sizeof(lv_mem_header_t
+ 1002              		.loc 1 474 0
+ 1003 0066 7B68     		ldr	r3, [r7, #4]
+ 1004 0068 1B68     		ldr	r3, [r3]
+ 1005 006a C3F35E03 		ubfx	r3, r3, #1, #31
+ 1006 006e 1A46     		mov	r2, r3
+ 1007 0070 3B68     		ldr	r3, [r7]
+ 1008 0072 D31A     		subs	r3, r2, r3
+ 1009 0074 043B     		subs	r3, r3, #4
+ 1010 0076 23F00041 		bic	r1, r3, #-2147483648
+ 1011 007a BA68     		ldr	r2, [r7, #8]
+ 1012 007c 1368     		ldr	r3, [r2]
+ 1013 007e 61F35F03 		bfi	r3, r1, #1, #31
+ 1014 0082 1360     		str	r3, [r2]
+ 1015              	.L78:
+ 1016              	.LBE5:
+ 475:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     }
+ 476:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** 
+ 477:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     /* Set the new size for the original entry */
+ 478:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c ****     e->header.s.d_size = (uint32_t)size;
+ 1017              		.loc 1 478 0
+ 1018 0084 3B68     		ldr	r3, [r7]
+ 1019 0086 23F00041 		bic	r1, r3, #-2147483648
+ 1020 008a 7A68     		ldr	r2, [r7, #4]
+ 1021 008c 1368     		ldr	r3, [r2]
+ 1022 008e 61F35F03 		bfi	r3, r1, #1, #31
+ 1023 0092 1360     		str	r3, [r2]
+ 479:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_mem.c **** }
+ 1024              		.loc 1 479 0
+ 1025 0094 00BF     		nop
+ 1026 0096 1437     		adds	r7, r7, #20
+ 1027              		.cfi_def_cfa_offset 4
+ 1028 0098 BD46     		mov	sp, r7
+ 1029              		.cfi_def_cfa_register 13
+ 1030              		@ sp needed
+ 1031 009a 5DF8047B 		ldr	r7, [sp], #4
+ 1032              		.cfi_restore 7
+ 1033              		.cfi_def_cfa_offset 0
+ 1034 009e 7047     		bx	lr
+ 1035              		.cfi_endproc
+ 1036              	.LFE10:
+ 1037              		.size	ent_trunc, .-ent_trunc
+ 1038              		.bss
+ 1039              		.align	2
+ 1040              	work_mem_int.4640:
+ 1041 0008 00000000 		.space	65536
+ 1041      00000000 
+ 1041      00000000 
+ 1041      00000000 
+ 1041      00000000 
+ 1042              		.text
+ 1043              	.Letext0:
+ 1044              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1045              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1046              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 28
+
+
+ 1047              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_mem.h"
+ 1048              		.section	.debug_info,"",%progbits
+ 1049              	.Ldebug_info0:
+ 1050 0000 D4040000 		.4byte	0x4d4
+ 1051 0004 0400     		.2byte	0x4
+ 1052 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1053 000a 04       		.byte	0x4
+ 1054 000b 01       		.uleb128 0x1
+ 1055 000c 3B030000 		.4byte	.LASF59
+ 1056 0010 0C       		.byte	0xc
+ 1057 0011 CA020000 		.4byte	.LASF60
+ 1058 0015 88010000 		.4byte	.LASF61
+ 1059 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1060 001d 00000000 		.4byte	0
+ 1061 0021 00000000 		.4byte	.Ldebug_line0
+ 1062 0025 02       		.uleb128 0x2
+ 1063 0026 01       		.byte	0x1
+ 1064 0027 06       		.byte	0x6
+ 1065 0028 A3000000 		.4byte	.LASF0
+ 1066 002c 03       		.uleb128 0x3
+ 1067 002d 35000000 		.4byte	.LASF5
+ 1068 0031 02       		.byte	0x2
+ 1069 0032 1D       		.byte	0x1d
+ 1070 0033 37000000 		.4byte	0x37
+ 1071 0037 02       		.uleb128 0x2
+ 1072 0038 01       		.byte	0x1
+ 1073 0039 08       		.byte	0x8
+ 1074 003a 78020000 		.4byte	.LASF1
+ 1075 003e 02       		.uleb128 0x2
+ 1076 003f 02       		.byte	0x2
+ 1077 0040 05       		.byte	0x5
+ 1078 0041 86020000 		.4byte	.LASF2
+ 1079 0045 02       		.uleb128 0x2
+ 1080 0046 02       		.byte	0x2
+ 1081 0047 07       		.byte	0x7
+ 1082 0048 6E010000 		.4byte	.LASF3
+ 1083 004c 02       		.uleb128 0x2
+ 1084 004d 04       		.byte	0x4
+ 1085 004e 05       		.byte	0x5
+ 1086 004f BB000000 		.4byte	.LASF4
+ 1087 0053 03       		.uleb128 0x3
+ 1088 0054 01010000 		.4byte	.LASF6
+ 1089 0058 02       		.byte	0x2
+ 1090 0059 41       		.byte	0x41
+ 1091 005a 5E000000 		.4byte	0x5e
+ 1092 005e 02       		.uleb128 0x2
+ 1093 005f 04       		.byte	0x4
+ 1094 0060 07       		.byte	0x7
+ 1095 0061 33010000 		.4byte	.LASF7
+ 1096 0065 02       		.uleb128 0x2
+ 1097 0066 08       		.byte	0x8
+ 1098 0067 05       		.byte	0x5
+ 1099 0068 95000000 		.4byte	.LASF8
+ 1100 006c 02       		.uleb128 0x2
+ 1101 006d 08       		.byte	0x8
+ 1102 006e 07       		.byte	0x7
+ 1103 006f 56000000 		.4byte	.LASF9
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 29
+
+
+ 1104 0073 04       		.uleb128 0x4
+ 1105 0074 04       		.byte	0x4
+ 1106 0075 05       		.byte	0x5
+ 1107 0076 696E7400 		.ascii	"int\000"
+ 1108 007a 02       		.uleb128 0x2
+ 1109 007b 04       		.byte	0x4
+ 1110 007c 07       		.byte	0x7
+ 1111 007d 26010000 		.4byte	.LASF10
+ 1112 0081 03       		.uleb128 0x3
+ 1113 0082 1D030000 		.4byte	.LASF11
+ 1114 0086 03       		.byte	0x3
+ 1115 0087 18       		.byte	0x18
+ 1116 0088 2C000000 		.4byte	0x2c
+ 1117 008c 03       		.uleb128 0x3
+ 1118 008d A5020000 		.4byte	.LASF12
+ 1119 0091 03       		.byte	0x3
+ 1120 0092 30       		.byte	0x30
+ 1121 0093 53000000 		.4byte	0x53
+ 1122 0097 05       		.uleb128 0x5
+ 1123 0098 04       		.byte	0x4
+ 1124 0099 03       		.uleb128 0x3
+ 1125 009a 27000000 		.4byte	.LASF13
+ 1126 009e 04       		.byte	0x4
+ 1127 009f D8       		.byte	0xd8
+ 1128 00a0 7A000000 		.4byte	0x7a
+ 1129 00a4 02       		.uleb128 0x2
+ 1130 00a5 08       		.byte	0x8
+ 1131 00a6 04       		.byte	0x4
+ 1132 00a7 37020000 		.4byte	.LASF14
+ 1133 00ab 06       		.uleb128 0x6
+ 1134 00ac 18       		.byte	0x18
+ 1135 00ad 05       		.byte	0x5
+ 1136 00ae 26       		.byte	0x26
+ 1137 00af 08010000 		.4byte	0x108
+ 1138 00b3 07       		.uleb128 0x7
+ 1139 00b4 7D000000 		.4byte	.LASF15
+ 1140 00b8 05       		.byte	0x5
+ 1141 00b9 28       		.byte	0x28
+ 1142 00ba 8C000000 		.4byte	0x8c
+ 1143 00be 00       		.byte	0
+ 1144 00bf 07       		.uleb128 0x7
+ 1145 00c0 14030000 		.4byte	.LASF16
+ 1146 00c4 05       		.byte	0x5
+ 1147 00c5 29       		.byte	0x29
+ 1148 00c6 8C000000 		.4byte	0x8c
+ 1149 00ca 04       		.byte	0x4
+ 1150 00cb 07       		.uleb128 0x7
+ 1151 00cc EE030000 		.4byte	.LASF17
+ 1152 00d0 05       		.byte	0x5
+ 1153 00d1 2A       		.byte	0x2a
+ 1154 00d2 8C000000 		.4byte	0x8c
+ 1155 00d6 08       		.byte	0x8
+ 1156 00d7 07       		.uleb128 0x7
+ 1157 00d8 25020000 		.4byte	.LASF18
+ 1158 00dc 05       		.byte	0x5
+ 1159 00dd 2B       		.byte	0x2b
+ 1160 00de 8C000000 		.4byte	0x8c
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 30
+
+
+ 1161 00e2 0C       		.byte	0xc
+ 1162 00e3 07       		.uleb128 0x7
+ 1163 00e4 6D000000 		.4byte	.LASF19
+ 1164 00e8 05       		.byte	0x5
+ 1165 00e9 2C       		.byte	0x2c
+ 1166 00ea 8C000000 		.4byte	0x8c
+ 1167 00ee 10       		.byte	0x10
+ 1168 00ef 07       		.uleb128 0x7
+ 1169 00f0 1D010000 		.4byte	.LASF20
+ 1170 00f4 05       		.byte	0x5
+ 1171 00f5 2D       		.byte	0x2d
+ 1172 00f6 81000000 		.4byte	0x81
+ 1173 00fa 14       		.byte	0x14
+ 1174 00fb 07       		.uleb128 0x7
+ 1175 00fc 00030000 		.4byte	.LASF21
+ 1176 0100 05       		.byte	0x5
+ 1177 0101 2E       		.byte	0x2e
+ 1178 0102 81000000 		.4byte	0x81
+ 1179 0106 15       		.byte	0x15
+ 1180 0107 00       		.byte	0
+ 1181 0108 03       		.uleb128 0x3
+ 1182 0109 00000000 		.4byte	.LASF22
+ 1183 010d 05       		.byte	0x5
+ 1184 010e 2F       		.byte	0x2f
+ 1185 010f AB000000 		.4byte	0xab
+ 1186 0113 02       		.uleb128 0x2
+ 1187 0114 04       		.byte	0x4
+ 1188 0115 07       		.byte	0x7
+ 1189 0116 25030000 		.4byte	.LASF23
+ 1190 011a 02       		.uleb128 0x2
+ 1191 011b 01       		.byte	0x1
+ 1192 011c 08       		.byte	0x8
+ 1193 011d B8020000 		.4byte	.LASF24
+ 1194 0121 06       		.uleb128 0x6
+ 1195 0122 04       		.byte	0x4
+ 1196 0123 01       		.byte	0x1
+ 1197 0124 29       		.byte	0x29
+ 1198 0125 48010000 		.4byte	0x148
+ 1199 0129 08       		.uleb128 0x8
+ 1200 012a 6A020000 		.4byte	.LASF25
+ 1201 012e 01       		.byte	0x1
+ 1202 012f 2B       		.byte	0x2b
+ 1203 0130 8C000000 		.4byte	0x8c
+ 1204 0134 04       		.byte	0x4
+ 1205 0135 01       		.byte	0x1
+ 1206 0136 1F       		.byte	0x1f
+ 1207 0137 00       		.byte	0
+ 1208 0138 08       		.uleb128 0x8
+ 1209 0139 16010000 		.4byte	.LASF26
+ 1210 013d 01       		.byte	0x1
+ 1211 013e 2C       		.byte	0x2c
+ 1212 013f 8C000000 		.4byte	0x8c
+ 1213 0143 04       		.byte	0x4
+ 1214 0144 1F       		.byte	0x1f
+ 1215 0145 00       		.byte	0
+ 1216 0146 00       		.byte	0
+ 1217 0147 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 31
+
+
+ 1218 0148 09       		.uleb128 0x9
+ 1219 0149 04       		.byte	0x4
+ 1220 014a 01       		.byte	0x1
+ 1221 014b 27       		.byte	0x27
+ 1222 014c 65010000 		.4byte	0x165
+ 1223 0150 0A       		.uleb128 0xa
+ 1224 0151 7300     		.ascii	"s\000"
+ 1225 0153 01       		.byte	0x1
+ 1226 0154 2D       		.byte	0x2d
+ 1227 0155 21010000 		.4byte	0x121
+ 1228 0159 0B       		.uleb128 0xb
+ 1229 015a F8030000 		.4byte	.LASF27
+ 1230 015e 01       		.byte	0x1
+ 1231 015f 2E       		.byte	0x2e
+ 1232 0160 8C000000 		.4byte	0x8c
+ 1233 0164 00       		.byte	0
+ 1234 0165 03       		.uleb128 0x3
+ 1235 0166 C4000000 		.4byte	.LASF28
+ 1236 016a 01       		.byte	0x1
+ 1237 016b 2F       		.byte	0x2f
+ 1238 016c 48010000 		.4byte	0x148
+ 1239 0170 06       		.uleb128 0x6
+ 1240 0171 08       		.byte	0x8
+ 1241 0172 01       		.byte	0x1
+ 1242 0173 31       		.byte	0x31
+ 1243 0174 91010000 		.4byte	0x191
+ 1244 0178 07       		.uleb128 0x7
+ 1245 0179 F8030000 		.4byte	.LASF27
+ 1246 017d 01       		.byte	0x1
+ 1247 017e 33       		.byte	0x33
+ 1248 017f 65010000 		.4byte	0x165
+ 1249 0183 00       		.byte	0
+ 1250 0184 07       		.uleb128 0x7
+ 1251 0185 09030000 		.4byte	.LASF29
+ 1252 0189 01       		.byte	0x1
+ 1253 018a 34       		.byte	0x34
+ 1254 018b 81000000 		.4byte	0x81
+ 1255 018f 04       		.byte	0x4
+ 1256 0190 00       		.byte	0
+ 1257 0191 03       		.uleb128 0x3
+ 1258 0192 BD020000 		.4byte	.LASF30
+ 1259 0196 01       		.byte	0x1
+ 1260 0197 35       		.byte	0x35
+ 1261 0198 70010000 		.4byte	0x170
+ 1262 019c 0C       		.uleb128 0xc
+ 1263 019d AF000000 		.4byte	.LASF33
+ 1264 01a1 01       		.byte	0x1
+ 1265 01a2 56       		.byte	0x56
+ 1266 01a3 00000000 		.4byte	.LFB0
+ 1267 01a7 40000000 		.4byte	.LFE0-.LFB0
+ 1268 01ab 01       		.uleb128 0x1
+ 1269 01ac 9C       		.byte	0x9c
+ 1270 01ad D1010000 		.4byte	0x1d1
+ 1271 01b1 0D       		.uleb128 0xd
+ 1272 01b2 88000000 		.4byte	.LASF31
+ 1273 01b6 01       		.byte	0x1
+ 1274 01b7 5C       		.byte	0x5c
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 32
+
+
+ 1275 01b8 D1010000 		.4byte	0x1d1
+ 1276 01bc 05       		.uleb128 0x5
+ 1277 01bd 03       		.byte	0x3
+ 1278 01be 08000000 		.4byte	work_mem_int.4640
+ 1279 01c2 0D       		.uleb128 0xd
+ 1280 01c3 43020000 		.4byte	.LASF32
+ 1281 01c7 01       		.byte	0x1
+ 1282 01c8 62       		.byte	0x62
+ 1283 01c9 E2010000 		.4byte	0x1e2
+ 1284 01cd 02       		.uleb128 0x2
+ 1285 01ce 91       		.byte	0x91
+ 1286 01cf 74       		.sleb128 -12
+ 1287 01d0 00       		.byte	0
+ 1288 01d1 0E       		.uleb128 0xe
+ 1289 01d2 8C000000 		.4byte	0x8c
+ 1290 01d6 E2010000 		.4byte	0x1e2
+ 1291 01da 0F       		.uleb128 0xf
+ 1292 01db 13010000 		.4byte	0x113
+ 1293 01df FF3F     		.2byte	0x3fff
+ 1294 01e1 00       		.byte	0
+ 1295 01e2 10       		.uleb128 0x10
+ 1296 01e3 04       		.byte	0x4
+ 1297 01e4 91010000 		.4byte	0x191
+ 1298 01e8 11       		.uleb128 0x11
+ 1299 01e9 90020000 		.4byte	.LASF34
+ 1300 01ed 01       		.byte	0x1
+ 1301 01ee 6D       		.byte	0x6d
+ 1302 01ef 00000000 		.4byte	.LFB1
+ 1303 01f3 40000000 		.4byte	.LFE1-.LFB1
+ 1304 01f7 01       		.uleb128 0x1
+ 1305 01f8 9C       		.byte	0x9c
+ 1306 01f9 0C020000 		.4byte	0x20c
+ 1307 01fd 0D       		.uleb128 0xd
+ 1308 01fe 43020000 		.4byte	.LASF32
+ 1309 0202 01       		.byte	0x1
+ 1310 0203 71       		.byte	0x71
+ 1311 0204 E2010000 		.4byte	0x1e2
+ 1312 0208 02       		.uleb128 0x2
+ 1313 0209 91       		.byte	0x91
+ 1314 020a 74       		.sleb128 -12
+ 1315 020b 00       		.byte	0
+ 1316 020c 12       		.uleb128 0x12
+ 1317 020d 1A000000 		.4byte	.LASF40
+ 1318 0211 01       		.byte	0x1
+ 1319 0212 7D       		.byte	0x7d
+ 1320 0213 97000000 		.4byte	0x97
+ 1321 0217 00000000 		.4byte	.LFB2
+ 1322 021b 64000000 		.4byte	.LFE2-.LFB2
+ 1323 021f 01       		.uleb128 0x1
+ 1324 0220 9C       		.byte	0x9c
+ 1325 0221 4E020000 		.4byte	0x24e
+ 1326 0225 13       		.uleb128 0x13
+ 1327 0226 69010000 		.4byte	.LASF37
+ 1328 022a 01       		.byte	0x1
+ 1329 022b 7D       		.byte	0x7d
+ 1330 022c 99000000 		.4byte	0x99
+ 1331 0230 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 33
+
+
+ 1332 0231 91       		.byte	0x91
+ 1333 0232 6C       		.sleb128 -20
+ 1334 0233 0D       		.uleb128 0xd
+ 1335 0234 D4000000 		.4byte	.LASF35
+ 1336 0238 01       		.byte	0x1
+ 1337 0239 90       		.byte	0x90
+ 1338 023a 97000000 		.4byte	0x97
+ 1339 023e 02       		.uleb128 0x2
+ 1340 023f 91       		.byte	0x91
+ 1341 0240 74       		.sleb128 -12
+ 1342 0241 14       		.uleb128 0x14
+ 1343 0242 6500     		.ascii	"e\000"
+ 1344 0244 01       		.byte	0x1
+ 1345 0245 94       		.byte	0x94
+ 1346 0246 E2010000 		.4byte	0x1e2
+ 1347 024a 02       		.uleb128 0x2
+ 1348 024b 91       		.byte	0x91
+ 1349 024c 70       		.sleb128 -16
+ 1350 024d 00       		.byte	0
+ 1351 024e 11       		.uleb128 0x11
+ 1352 024f E9000000 		.4byte	.LASF36
+ 1353 0253 01       		.byte	0x1
+ 1354 0254 BF       		.byte	0xbf
+ 1355 0255 00000000 		.4byte	.LFB3
+ 1356 0259 88000000 		.4byte	.LFE3-.LFB3
+ 1357 025d 01       		.uleb128 0x1
+ 1358 025e 9C       		.byte	0x9c
+ 1359 025f 8C020000 		.4byte	0x28c
+ 1360 0263 13       		.uleb128 0x13
+ 1361 0264 64010000 		.4byte	.LASF38
+ 1362 0268 01       		.byte	0x1
+ 1363 0269 BF       		.byte	0xbf
+ 1364 026a 8C020000 		.4byte	0x28c
+ 1365 026e 02       		.uleb128 0x2
+ 1366 026f 91       		.byte	0x91
+ 1367 0270 6C       		.sleb128 -20
+ 1368 0271 14       		.uleb128 0x14
+ 1369 0272 6500     		.ascii	"e\000"
+ 1370 0274 01       		.byte	0x1
+ 1371 0275 CA       		.byte	0xca
+ 1372 0276 E2010000 		.4byte	0x1e2
+ 1373 027a 02       		.uleb128 0x2
+ 1374 027b 91       		.byte	0x91
+ 1375 027c 70       		.sleb128 -16
+ 1376 027d 0D       		.uleb128 0xd
+ 1377 027e 81010000 		.4byte	.LASF39
+ 1378 0282 01       		.byte	0x1
+ 1379 0283 D2       		.byte	0xd2
+ 1380 0284 E2010000 		.4byte	0x1e2
+ 1381 0288 02       		.uleb128 0x2
+ 1382 0289 91       		.byte	0x91
+ 1383 028a 74       		.sleb128 -12
+ 1384 028b 00       		.byte	0
+ 1385 028c 10       		.uleb128 0x10
+ 1386 028d 04       		.byte	0x4
+ 1387 028e 92020000 		.4byte	0x292
+ 1388 0292 15       		.uleb128 0x15
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 34
+
+
+ 1389 0293 12       		.uleb128 0x12
+ 1390 0294 45010000 		.4byte	.LASF41
+ 1391 0298 01       		.byte	0x1
+ 1392 0299 F0       		.byte	0xf0
+ 1393 029a 97000000 		.4byte	0x97
+ 1394 029e 00000000 		.4byte	.LFB4
+ 1395 02a2 96000000 		.4byte	.LFE4-.LFB4
+ 1396 02a6 01       		.uleb128 0x1
+ 1397 02a7 9C       		.byte	0x9c
+ 1398 02a8 17030000 		.4byte	0x317
+ 1399 02ac 13       		.uleb128 0x13
+ 1400 02ad 2E000000 		.4byte	.LASF42
+ 1401 02b1 01       		.byte	0x1
+ 1402 02b2 F0       		.byte	0xf0
+ 1403 02b3 97000000 		.4byte	0x97
+ 1404 02b7 02       		.uleb128 0x2
+ 1405 02b8 91       		.byte	0x91
+ 1406 02b9 64       		.sleb128 -28
+ 1407 02ba 13       		.uleb128 0x13
+ 1408 02bb 48020000 		.4byte	.LASF43
+ 1409 02bf 01       		.byte	0x1
+ 1410 02c0 F0       		.byte	0xf0
+ 1411 02c1 99000000 		.4byte	0x99
+ 1412 02c5 02       		.uleb128 0x2
+ 1413 02c6 91       		.byte	0x91
+ 1414 02c7 60       		.sleb128 -32
+ 1415 02c8 0D       		.uleb128 0xd
+ 1416 02c9 11000000 		.4byte	.LASF44
+ 1417 02cd 01       		.byte	0x1
+ 1418 02ce FA       		.byte	0xfa
+ 1419 02cf 8C000000 		.4byte	0x8c
+ 1420 02d3 02       		.uleb128 0x2
+ 1421 02d4 91       		.byte	0x91
+ 1422 02d5 70       		.sleb128 -16
+ 1423 02d6 16       		.uleb128 0x16
+ 1424 02d7 FB000000 		.4byte	.LASF45
+ 1425 02db 01       		.byte	0x1
+ 1426 02dc 0601     		.2byte	0x106
+ 1427 02de 97000000 		.4byte	0x97
+ 1428 02e2 02       		.uleb128 0x2
+ 1429 02e3 91       		.byte	0x91
+ 1430 02e4 68       		.sleb128 -24
+ 1431 02e5 17       		.uleb128 0x17
+ 1432 02e6 10000000 		.4byte	.LBB2
+ 1433 02ea 18000000 		.4byte	.LBE2-.LBB2
+ 1434 02ee FF020000 		.4byte	0x2ff
+ 1435 02f2 14       		.uleb128 0x14
+ 1436 02f3 6500     		.ascii	"e\000"
+ 1437 02f5 01       		.byte	0x1
+ 1438 02f6 F4       		.byte	0xf4
+ 1439 02f7 E2010000 		.4byte	0x1e2
+ 1440 02fb 02       		.uleb128 0x2
+ 1441 02fc 91       		.byte	0x91
+ 1442 02fd 74       		.sleb128 -12
+ 1443 02fe 00       		.byte	0
+ 1444 02ff 18       		.uleb128 0x18
+ 1445 0300 44000000 		.4byte	.LBB3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 35
+
+
+ 1446 0304 14000000 		.4byte	.LBE3-.LBB3
+ 1447 0308 19       		.uleb128 0x19
+ 1448 0309 6500     		.ascii	"e\000"
+ 1449 030b 01       		.byte	0x1
+ 1450 030c 0001     		.2byte	0x100
+ 1451 030e E2010000 		.4byte	0x1e2
+ 1452 0312 02       		.uleb128 0x2
+ 1453 0313 91       		.byte	0x91
+ 1454 0314 6C       		.sleb128 -20
+ 1455 0315 00       		.byte	0
+ 1456 0316 00       		.byte	0
+ 1457 0317 1A       		.uleb128 0x1a
+ 1458 0318 48000000 		.4byte	.LASF46
+ 1459 031c 01       		.byte	0x1
+ 1460 031d 2401     		.2byte	0x124
+ 1461 031f 00000000 		.4byte	.LFB5
+ 1462 0323 9C000000 		.4byte	.LFE5-.LFB5
+ 1463 0327 01       		.uleb128 0x1
+ 1464 0328 9C       		.byte	0x9c
+ 1465 0329 4C030000 		.4byte	0x34c
+ 1466 032d 16       		.uleb128 0x16
+ 1467 032e 5D020000 		.4byte	.LASF47
+ 1468 0332 01       		.byte	0x1
+ 1469 0333 2701     		.2byte	0x127
+ 1470 0335 E2010000 		.4byte	0x1e2
+ 1471 0339 02       		.uleb128 0x2
+ 1472 033a 91       		.byte	0x91
+ 1473 033b 74       		.sleb128 -12
+ 1474 033c 16       		.uleb128 0x16
+ 1475 033d 81010000 		.4byte	.LASF39
+ 1476 0341 01       		.byte	0x1
+ 1477 0342 2801     		.2byte	0x128
+ 1478 0344 E2010000 		.4byte	0x1e2
+ 1479 0348 02       		.uleb128 0x2
+ 1480 0349 91       		.byte	0x91
+ 1481 034a 70       		.sleb128 -16
+ 1482 034b 00       		.byte	0
+ 1483 034c 1A       		.uleb128 0x1a
+ 1484 034d DA000000 		.4byte	.LASF48
+ 1485 0351 01       		.byte	0x1
+ 1486 0352 5001     		.2byte	0x150
+ 1487 0354 00000000 		.4byte	.LFB6
+ 1488 0358 D8000000 		.4byte	.LFE6-.LFB6
+ 1489 035c 01       		.uleb128 0x1
+ 1490 035d 9C       		.byte	0x9c
+ 1491 035e 7F030000 		.4byte	0x37f
+ 1492 0362 1B       		.uleb128 0x1b
+ 1493 0363 64020000 		.4byte	.LASF49
+ 1494 0367 01       		.byte	0x1
+ 1495 0368 5001     		.2byte	0x150
+ 1496 036a 7F030000 		.4byte	0x37f
+ 1497 036e 02       		.uleb128 0x2
+ 1498 036f 91       		.byte	0x91
+ 1499 0370 6C       		.sleb128 -20
+ 1500 0371 19       		.uleb128 0x19
+ 1501 0372 6500     		.ascii	"e\000"
+ 1502 0374 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 36
+
+
+ 1503 0375 5501     		.2byte	0x155
+ 1504 0377 E2010000 		.4byte	0x1e2
+ 1505 037b 02       		.uleb128 0x2
+ 1506 037c 91       		.byte	0x91
+ 1507 037d 74       		.sleb128 -12
+ 1508 037e 00       		.byte	0
+ 1509 037f 10       		.uleb128 0x10
+ 1510 0380 04       		.byte	0x4
+ 1511 0381 08010000 		.4byte	0x108
+ 1512 0385 1C       		.uleb128 0x1c
+ 1513 0386 54010000 		.4byte	.LASF50
+ 1514 038a 01       		.byte	0x1
+ 1515 038b 7601     		.2byte	0x176
+ 1516 038d 8C000000 		.4byte	0x8c
+ 1517 0391 00000000 		.4byte	.LFB7
+ 1518 0395 3C000000 		.4byte	.LFE7-.LFB7
+ 1519 0399 01       		.uleb128 0x1
+ 1520 039a 9C       		.byte	0x9c
+ 1521 039b BC030000 		.4byte	0x3bc
+ 1522 039f 1B       		.uleb128 0x1b
+ 1523 03a0 64010000 		.4byte	.LASF38
+ 1524 03a4 01       		.byte	0x1
+ 1525 03a5 7601     		.2byte	0x176
+ 1526 03a7 8C020000 		.4byte	0x28c
+ 1527 03ab 02       		.uleb128 0x2
+ 1528 03ac 91       		.byte	0x91
+ 1529 03ad 6C       		.sleb128 -20
+ 1530 03ae 19       		.uleb128 0x19
+ 1531 03af 6500     		.ascii	"e\000"
+ 1532 03b1 01       		.byte	0x1
+ 1533 03b2 7B01     		.2byte	0x17b
+ 1534 03b4 E2010000 		.4byte	0x1e2
+ 1535 03b8 02       		.uleb128 0x2
+ 1536 03b9 91       		.byte	0x91
+ 1537 03ba 74       		.sleb128 -12
+ 1538 03bb 00       		.byte	0
+ 1539 03bc 1D       		.uleb128 0x1d
+ 1540 03bd 2E030000 		.4byte	.LASF53
+ 1541 03c1 01       		.byte	0x1
+ 1542 03c2 9301     		.2byte	0x193
+ 1543 03c4 E2010000 		.4byte	0x1e2
+ 1544 03c8 00000000 		.4byte	.LFB8
+ 1545 03cc 58000000 		.4byte	.LFE8-.LFB8
+ 1546 03d0 01       		.uleb128 0x1
+ 1547 03d1 9C       		.byte	0x9c
+ 1548 03d2 0E040000 		.4byte	0x40e
+ 1549 03d6 1B       		.uleb128 0x1b
+ 1550 03d7 F5000000 		.4byte	.LASF51
+ 1551 03db 01       		.byte	0x1
+ 1552 03dc 9301     		.2byte	0x193
+ 1553 03de E2010000 		.4byte	0x1e2
+ 1554 03e2 02       		.uleb128 0x2
+ 1555 03e3 91       		.byte	0x91
+ 1556 03e4 6C       		.sleb128 -20
+ 1557 03e5 16       		.uleb128 0x16
+ 1558 03e6 76000000 		.4byte	.LASF52
+ 1559 03ea 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 37
+
+
+ 1560 03eb 9501     		.2byte	0x195
+ 1561 03ed E2010000 		.4byte	0x1e2
+ 1562 03f1 02       		.uleb128 0x2
+ 1563 03f2 91       		.byte	0x91
+ 1564 03f3 74       		.sleb128 -12
+ 1565 03f4 18       		.uleb128 0x18
+ 1566 03f5 1A000000 		.4byte	.LBB4
+ 1567 03f9 2A000000 		.4byte	.LBE4-.LBB4
+ 1568 03fd 16       		.uleb128 0x16
+ 1569 03fe 64010000 		.4byte	.LASF38
+ 1570 0402 01       		.byte	0x1
+ 1571 0403 9A01     		.2byte	0x19a
+ 1572 0405 0E040000 		.4byte	0x40e
+ 1573 0409 02       		.uleb128 0x2
+ 1574 040a 91       		.byte	0x91
+ 1575 040b 70       		.sleb128 -16
+ 1576 040c 00       		.byte	0
+ 1577 040d 00       		.byte	0
+ 1578 040e 10       		.uleb128 0x10
+ 1579 040f 04       		.byte	0x4
+ 1580 0410 81000000 		.4byte	0x81
+ 1581 0414 1E       		.uleb128 0x1e
+ 1582 0415 AE020000 		.4byte	.LASF54
+ 1583 0419 01       		.byte	0x1
+ 1584 041a A901     		.2byte	0x1a9
+ 1585 041c 97000000 		.4byte	0x97
+ 1586 0420 00000000 		.4byte	.LFB9
+ 1587 0424 4E000000 		.4byte	.LFE9-.LFB9
+ 1588 0428 01       		.uleb128 0x1
+ 1589 0429 9C       		.byte	0x9c
+ 1590 042a 5A040000 		.4byte	0x45a
+ 1591 042e 1F       		.uleb128 0x1f
+ 1592 042f 6500     		.ascii	"e\000"
+ 1593 0431 01       		.byte	0x1
+ 1594 0432 A901     		.2byte	0x1a9
+ 1595 0434 E2010000 		.4byte	0x1e2
+ 1596 0438 02       		.uleb128 0x2
+ 1597 0439 91       		.byte	0x91
+ 1598 043a 6C       		.sleb128 -20
+ 1599 043b 1B       		.uleb128 0x1b
+ 1600 043c 69010000 		.4byte	.LASF37
+ 1601 0440 01       		.byte	0x1
+ 1602 0441 A901     		.2byte	0x1a9
+ 1603 0443 99000000 		.4byte	0x99
+ 1604 0447 02       		.uleb128 0x2
+ 1605 0448 91       		.byte	0x91
+ 1606 0449 68       		.sleb128 -24
+ 1607 044a 16       		.uleb128 0x16
+ 1608 044b D4000000 		.4byte	.LASF35
+ 1609 044f 01       		.byte	0x1
+ 1610 0450 AB01     		.2byte	0x1ab
+ 1611 0452 97000000 		.4byte	0x97
+ 1612 0456 02       		.uleb128 0x2
+ 1613 0457 91       		.byte	0x91
+ 1614 0458 74       		.sleb128 -12
+ 1615 0459 00       		.byte	0
+ 1616 045a 20       		.uleb128 0x20
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 38
+
+
+ 1617 045b 0C010000 		.4byte	.LASF62
+ 1618 045f 01       		.byte	0x1
+ 1619 0460 C001     		.2byte	0x1c0
+ 1620 0462 00000000 		.4byte	.LFB10
+ 1621 0466 A0000000 		.4byte	.LFE10-.LFB10
+ 1622 046a 01       		.uleb128 0x1
+ 1623 046b 9C       		.byte	0x9c
+ 1624 046c B5040000 		.4byte	0x4b5
+ 1625 0470 1F       		.uleb128 0x1f
+ 1626 0471 6500     		.ascii	"e\000"
+ 1627 0473 01       		.byte	0x1
+ 1628 0474 C001     		.2byte	0x1c0
+ 1629 0476 E2010000 		.4byte	0x1e2
+ 1630 047a 02       		.uleb128 0x2
+ 1631 047b 91       		.byte	0x91
+ 1632 047c 6C       		.sleb128 -20
+ 1633 047d 1B       		.uleb128 0x1b
+ 1634 047e 69010000 		.4byte	.LASF37
+ 1635 0482 01       		.byte	0x1
+ 1636 0483 C001     		.2byte	0x1c0
+ 1637 0485 99000000 		.4byte	0x99
+ 1638 0489 02       		.uleb128 0x2
+ 1639 048a 91       		.byte	0x91
+ 1640 048b 68       		.sleb128 -24
+ 1641 048c 18       		.uleb128 0x18
+ 1642 048d 4E000000 		.4byte	.LBB5
+ 1643 0491 36000000 		.4byte	.LBE5-.LBB5
+ 1644 0495 16       		.uleb128 0x16
+ 1645 0496 9E020000 		.4byte	.LASF55
+ 1646 049a 01       		.byte	0x1
+ 1647 049b D701     		.2byte	0x1d7
+ 1648 049d 0E040000 		.4byte	0x40e
+ 1649 04a1 02       		.uleb128 0x2
+ 1650 04a2 91       		.byte	0x91
+ 1651 04a3 74       		.sleb128 -12
+ 1652 04a4 16       		.uleb128 0x16
+ 1653 04a5 51020000 		.4byte	.LASF56
+ 1654 04a9 01       		.byte	0x1
+ 1655 04aa D801     		.2byte	0x1d8
+ 1656 04ac E2010000 		.4byte	0x1e2
+ 1657 04b0 02       		.uleb128 0x2
+ 1658 04b1 91       		.byte	0x91
+ 1659 04b2 70       		.sleb128 -16
+ 1660 04b3 00       		.byte	0
+ 1661 04b4 00       		.byte	0
+ 1662 04b5 0D       		.uleb128 0xd
+ 1663 04b6 6F020000 		.4byte	.LASF57
+ 1664 04ba 01       		.byte	0x1
+ 1665 04bb 46       		.byte	0x46
+ 1666 04bc 0E040000 		.4byte	0x40e
+ 1667 04c0 05       		.uleb128 0x5
+ 1668 04c1 03       		.byte	0x3
+ 1669 04c2 00000000 		.4byte	work_mem
+ 1670 04c6 0D       		.uleb128 0xd
+ 1671 04c7 3F000000 		.4byte	.LASF58
+ 1672 04cb 01       		.byte	0x1
+ 1673 04cc 49       		.byte	0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 39
+
+
+ 1674 04cd 8C000000 		.4byte	0x8c
+ 1675 04d1 05       		.uleb128 0x5
+ 1676 04d2 03       		.byte	0x3
+ 1677 04d3 04000000 		.4byte	zero_mem
+ 1678 04d7 00       		.byte	0
+ 1679              		.section	.debug_abbrev,"",%progbits
+ 1680              	.Ldebug_abbrev0:
+ 1681 0000 01       		.uleb128 0x1
+ 1682 0001 11       		.uleb128 0x11
+ 1683 0002 01       		.byte	0x1
+ 1684 0003 25       		.uleb128 0x25
+ 1685 0004 0E       		.uleb128 0xe
+ 1686 0005 13       		.uleb128 0x13
+ 1687 0006 0B       		.uleb128 0xb
+ 1688 0007 03       		.uleb128 0x3
+ 1689 0008 0E       		.uleb128 0xe
+ 1690 0009 1B       		.uleb128 0x1b
+ 1691 000a 0E       		.uleb128 0xe
+ 1692 000b 55       		.uleb128 0x55
+ 1693 000c 17       		.uleb128 0x17
+ 1694 000d 11       		.uleb128 0x11
+ 1695 000e 01       		.uleb128 0x1
+ 1696 000f 10       		.uleb128 0x10
+ 1697 0010 17       		.uleb128 0x17
+ 1698 0011 00       		.byte	0
+ 1699 0012 00       		.byte	0
+ 1700 0013 02       		.uleb128 0x2
+ 1701 0014 24       		.uleb128 0x24
+ 1702 0015 00       		.byte	0
+ 1703 0016 0B       		.uleb128 0xb
+ 1704 0017 0B       		.uleb128 0xb
+ 1705 0018 3E       		.uleb128 0x3e
+ 1706 0019 0B       		.uleb128 0xb
+ 1707 001a 03       		.uleb128 0x3
+ 1708 001b 0E       		.uleb128 0xe
+ 1709 001c 00       		.byte	0
+ 1710 001d 00       		.byte	0
+ 1711 001e 03       		.uleb128 0x3
+ 1712 001f 16       		.uleb128 0x16
+ 1713 0020 00       		.byte	0
+ 1714 0021 03       		.uleb128 0x3
+ 1715 0022 0E       		.uleb128 0xe
+ 1716 0023 3A       		.uleb128 0x3a
+ 1717 0024 0B       		.uleb128 0xb
+ 1718 0025 3B       		.uleb128 0x3b
+ 1719 0026 0B       		.uleb128 0xb
+ 1720 0027 49       		.uleb128 0x49
+ 1721 0028 13       		.uleb128 0x13
+ 1722 0029 00       		.byte	0
+ 1723 002a 00       		.byte	0
+ 1724 002b 04       		.uleb128 0x4
+ 1725 002c 24       		.uleb128 0x24
+ 1726 002d 00       		.byte	0
+ 1727 002e 0B       		.uleb128 0xb
+ 1728 002f 0B       		.uleb128 0xb
+ 1729 0030 3E       		.uleb128 0x3e
+ 1730 0031 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 40
+
+
+ 1731 0032 03       		.uleb128 0x3
+ 1732 0033 08       		.uleb128 0x8
+ 1733 0034 00       		.byte	0
+ 1734 0035 00       		.byte	0
+ 1735 0036 05       		.uleb128 0x5
+ 1736 0037 0F       		.uleb128 0xf
+ 1737 0038 00       		.byte	0
+ 1738 0039 0B       		.uleb128 0xb
+ 1739 003a 0B       		.uleb128 0xb
+ 1740 003b 00       		.byte	0
+ 1741 003c 00       		.byte	0
+ 1742 003d 06       		.uleb128 0x6
+ 1743 003e 13       		.uleb128 0x13
+ 1744 003f 01       		.byte	0x1
+ 1745 0040 0B       		.uleb128 0xb
+ 1746 0041 0B       		.uleb128 0xb
+ 1747 0042 3A       		.uleb128 0x3a
+ 1748 0043 0B       		.uleb128 0xb
+ 1749 0044 3B       		.uleb128 0x3b
+ 1750 0045 0B       		.uleb128 0xb
+ 1751 0046 01       		.uleb128 0x1
+ 1752 0047 13       		.uleb128 0x13
+ 1753 0048 00       		.byte	0
+ 1754 0049 00       		.byte	0
+ 1755 004a 07       		.uleb128 0x7
+ 1756 004b 0D       		.uleb128 0xd
+ 1757 004c 00       		.byte	0
+ 1758 004d 03       		.uleb128 0x3
+ 1759 004e 0E       		.uleb128 0xe
+ 1760 004f 3A       		.uleb128 0x3a
+ 1761 0050 0B       		.uleb128 0xb
+ 1762 0051 3B       		.uleb128 0x3b
+ 1763 0052 0B       		.uleb128 0xb
+ 1764 0053 49       		.uleb128 0x49
+ 1765 0054 13       		.uleb128 0x13
+ 1766 0055 38       		.uleb128 0x38
+ 1767 0056 0B       		.uleb128 0xb
+ 1768 0057 00       		.byte	0
+ 1769 0058 00       		.byte	0
+ 1770 0059 08       		.uleb128 0x8
+ 1771 005a 0D       		.uleb128 0xd
+ 1772 005b 00       		.byte	0
+ 1773 005c 03       		.uleb128 0x3
+ 1774 005d 0E       		.uleb128 0xe
+ 1775 005e 3A       		.uleb128 0x3a
+ 1776 005f 0B       		.uleb128 0xb
+ 1777 0060 3B       		.uleb128 0x3b
+ 1778 0061 0B       		.uleb128 0xb
+ 1779 0062 49       		.uleb128 0x49
+ 1780 0063 13       		.uleb128 0x13
+ 1781 0064 0B       		.uleb128 0xb
+ 1782 0065 0B       		.uleb128 0xb
+ 1783 0066 0D       		.uleb128 0xd
+ 1784 0067 0B       		.uleb128 0xb
+ 1785 0068 0C       		.uleb128 0xc
+ 1786 0069 0B       		.uleb128 0xb
+ 1787 006a 38       		.uleb128 0x38
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 41
+
+
+ 1788 006b 0B       		.uleb128 0xb
+ 1789 006c 00       		.byte	0
+ 1790 006d 00       		.byte	0
+ 1791 006e 09       		.uleb128 0x9
+ 1792 006f 17       		.uleb128 0x17
+ 1793 0070 01       		.byte	0x1
+ 1794 0071 0B       		.uleb128 0xb
+ 1795 0072 0B       		.uleb128 0xb
+ 1796 0073 3A       		.uleb128 0x3a
+ 1797 0074 0B       		.uleb128 0xb
+ 1798 0075 3B       		.uleb128 0x3b
+ 1799 0076 0B       		.uleb128 0xb
+ 1800 0077 01       		.uleb128 0x1
+ 1801 0078 13       		.uleb128 0x13
+ 1802 0079 00       		.byte	0
+ 1803 007a 00       		.byte	0
+ 1804 007b 0A       		.uleb128 0xa
+ 1805 007c 0D       		.uleb128 0xd
+ 1806 007d 00       		.byte	0
+ 1807 007e 03       		.uleb128 0x3
+ 1808 007f 08       		.uleb128 0x8
+ 1809 0080 3A       		.uleb128 0x3a
+ 1810 0081 0B       		.uleb128 0xb
+ 1811 0082 3B       		.uleb128 0x3b
+ 1812 0083 0B       		.uleb128 0xb
+ 1813 0084 49       		.uleb128 0x49
+ 1814 0085 13       		.uleb128 0x13
+ 1815 0086 00       		.byte	0
+ 1816 0087 00       		.byte	0
+ 1817 0088 0B       		.uleb128 0xb
+ 1818 0089 0D       		.uleb128 0xd
+ 1819 008a 00       		.byte	0
+ 1820 008b 03       		.uleb128 0x3
+ 1821 008c 0E       		.uleb128 0xe
+ 1822 008d 3A       		.uleb128 0x3a
+ 1823 008e 0B       		.uleb128 0xb
+ 1824 008f 3B       		.uleb128 0x3b
+ 1825 0090 0B       		.uleb128 0xb
+ 1826 0091 49       		.uleb128 0x49
+ 1827 0092 13       		.uleb128 0x13
+ 1828 0093 00       		.byte	0
+ 1829 0094 00       		.byte	0
+ 1830 0095 0C       		.uleb128 0xc
+ 1831 0096 2E       		.uleb128 0x2e
+ 1832 0097 01       		.byte	0x1
+ 1833 0098 3F       		.uleb128 0x3f
+ 1834 0099 19       		.uleb128 0x19
+ 1835 009a 03       		.uleb128 0x3
+ 1836 009b 0E       		.uleb128 0xe
+ 1837 009c 3A       		.uleb128 0x3a
+ 1838 009d 0B       		.uleb128 0xb
+ 1839 009e 3B       		.uleb128 0x3b
+ 1840 009f 0B       		.uleb128 0xb
+ 1841 00a0 27       		.uleb128 0x27
+ 1842 00a1 19       		.uleb128 0x19
+ 1843 00a2 11       		.uleb128 0x11
+ 1844 00a3 01       		.uleb128 0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 42
+
+
+ 1845 00a4 12       		.uleb128 0x12
+ 1846 00a5 06       		.uleb128 0x6
+ 1847 00a6 40       		.uleb128 0x40
+ 1848 00a7 18       		.uleb128 0x18
+ 1849 00a8 9742     		.uleb128 0x2117
+ 1850 00aa 19       		.uleb128 0x19
+ 1851 00ab 01       		.uleb128 0x1
+ 1852 00ac 13       		.uleb128 0x13
+ 1853 00ad 00       		.byte	0
+ 1854 00ae 00       		.byte	0
+ 1855 00af 0D       		.uleb128 0xd
+ 1856 00b0 34       		.uleb128 0x34
+ 1857 00b1 00       		.byte	0
+ 1858 00b2 03       		.uleb128 0x3
+ 1859 00b3 0E       		.uleb128 0xe
+ 1860 00b4 3A       		.uleb128 0x3a
+ 1861 00b5 0B       		.uleb128 0xb
+ 1862 00b6 3B       		.uleb128 0x3b
+ 1863 00b7 0B       		.uleb128 0xb
+ 1864 00b8 49       		.uleb128 0x49
+ 1865 00b9 13       		.uleb128 0x13
+ 1866 00ba 02       		.uleb128 0x2
+ 1867 00bb 18       		.uleb128 0x18
+ 1868 00bc 00       		.byte	0
+ 1869 00bd 00       		.byte	0
+ 1870 00be 0E       		.uleb128 0xe
+ 1871 00bf 01       		.uleb128 0x1
+ 1872 00c0 01       		.byte	0x1
+ 1873 00c1 49       		.uleb128 0x49
+ 1874 00c2 13       		.uleb128 0x13
+ 1875 00c3 01       		.uleb128 0x1
+ 1876 00c4 13       		.uleb128 0x13
+ 1877 00c5 00       		.byte	0
+ 1878 00c6 00       		.byte	0
+ 1879 00c7 0F       		.uleb128 0xf
+ 1880 00c8 21       		.uleb128 0x21
+ 1881 00c9 00       		.byte	0
+ 1882 00ca 49       		.uleb128 0x49
+ 1883 00cb 13       		.uleb128 0x13
+ 1884 00cc 2F       		.uleb128 0x2f
+ 1885 00cd 05       		.uleb128 0x5
+ 1886 00ce 00       		.byte	0
+ 1887 00cf 00       		.byte	0
+ 1888 00d0 10       		.uleb128 0x10
+ 1889 00d1 0F       		.uleb128 0xf
+ 1890 00d2 00       		.byte	0
+ 1891 00d3 0B       		.uleb128 0xb
+ 1892 00d4 0B       		.uleb128 0xb
+ 1893 00d5 49       		.uleb128 0x49
+ 1894 00d6 13       		.uleb128 0x13
+ 1895 00d7 00       		.byte	0
+ 1896 00d8 00       		.byte	0
+ 1897 00d9 11       		.uleb128 0x11
+ 1898 00da 2E       		.uleb128 0x2e
+ 1899 00db 01       		.byte	0x1
+ 1900 00dc 3F       		.uleb128 0x3f
+ 1901 00dd 19       		.uleb128 0x19
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 43
+
+
+ 1902 00de 03       		.uleb128 0x3
+ 1903 00df 0E       		.uleb128 0xe
+ 1904 00e0 3A       		.uleb128 0x3a
+ 1905 00e1 0B       		.uleb128 0xb
+ 1906 00e2 3B       		.uleb128 0x3b
+ 1907 00e3 0B       		.uleb128 0xb
+ 1908 00e4 27       		.uleb128 0x27
+ 1909 00e5 19       		.uleb128 0x19
+ 1910 00e6 11       		.uleb128 0x11
+ 1911 00e7 01       		.uleb128 0x1
+ 1912 00e8 12       		.uleb128 0x12
+ 1913 00e9 06       		.uleb128 0x6
+ 1914 00ea 40       		.uleb128 0x40
+ 1915 00eb 18       		.uleb128 0x18
+ 1916 00ec 9642     		.uleb128 0x2116
+ 1917 00ee 19       		.uleb128 0x19
+ 1918 00ef 01       		.uleb128 0x1
+ 1919 00f0 13       		.uleb128 0x13
+ 1920 00f1 00       		.byte	0
+ 1921 00f2 00       		.byte	0
+ 1922 00f3 12       		.uleb128 0x12
+ 1923 00f4 2E       		.uleb128 0x2e
+ 1924 00f5 01       		.byte	0x1
+ 1925 00f6 3F       		.uleb128 0x3f
+ 1926 00f7 19       		.uleb128 0x19
+ 1927 00f8 03       		.uleb128 0x3
+ 1928 00f9 0E       		.uleb128 0xe
+ 1929 00fa 3A       		.uleb128 0x3a
+ 1930 00fb 0B       		.uleb128 0xb
+ 1931 00fc 3B       		.uleb128 0x3b
+ 1932 00fd 0B       		.uleb128 0xb
+ 1933 00fe 27       		.uleb128 0x27
+ 1934 00ff 19       		.uleb128 0x19
+ 1935 0100 49       		.uleb128 0x49
+ 1936 0101 13       		.uleb128 0x13
+ 1937 0102 11       		.uleb128 0x11
+ 1938 0103 01       		.uleb128 0x1
+ 1939 0104 12       		.uleb128 0x12
+ 1940 0105 06       		.uleb128 0x6
+ 1941 0106 40       		.uleb128 0x40
+ 1942 0107 18       		.uleb128 0x18
+ 1943 0108 9642     		.uleb128 0x2116
+ 1944 010a 19       		.uleb128 0x19
+ 1945 010b 01       		.uleb128 0x1
+ 1946 010c 13       		.uleb128 0x13
+ 1947 010d 00       		.byte	0
+ 1948 010e 00       		.byte	0
+ 1949 010f 13       		.uleb128 0x13
+ 1950 0110 05       		.uleb128 0x5
+ 1951 0111 00       		.byte	0
+ 1952 0112 03       		.uleb128 0x3
+ 1953 0113 0E       		.uleb128 0xe
+ 1954 0114 3A       		.uleb128 0x3a
+ 1955 0115 0B       		.uleb128 0xb
+ 1956 0116 3B       		.uleb128 0x3b
+ 1957 0117 0B       		.uleb128 0xb
+ 1958 0118 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 44
+
+
+ 1959 0119 13       		.uleb128 0x13
+ 1960 011a 02       		.uleb128 0x2
+ 1961 011b 18       		.uleb128 0x18
+ 1962 011c 00       		.byte	0
+ 1963 011d 00       		.byte	0
+ 1964 011e 14       		.uleb128 0x14
+ 1965 011f 34       		.uleb128 0x34
+ 1966 0120 00       		.byte	0
+ 1967 0121 03       		.uleb128 0x3
+ 1968 0122 08       		.uleb128 0x8
+ 1969 0123 3A       		.uleb128 0x3a
+ 1970 0124 0B       		.uleb128 0xb
+ 1971 0125 3B       		.uleb128 0x3b
+ 1972 0126 0B       		.uleb128 0xb
+ 1973 0127 49       		.uleb128 0x49
+ 1974 0128 13       		.uleb128 0x13
+ 1975 0129 02       		.uleb128 0x2
+ 1976 012a 18       		.uleb128 0x18
+ 1977 012b 00       		.byte	0
+ 1978 012c 00       		.byte	0
+ 1979 012d 15       		.uleb128 0x15
+ 1980 012e 26       		.uleb128 0x26
+ 1981 012f 00       		.byte	0
+ 1982 0130 00       		.byte	0
+ 1983 0131 00       		.byte	0
+ 1984 0132 16       		.uleb128 0x16
+ 1985 0133 34       		.uleb128 0x34
+ 1986 0134 00       		.byte	0
+ 1987 0135 03       		.uleb128 0x3
+ 1988 0136 0E       		.uleb128 0xe
+ 1989 0137 3A       		.uleb128 0x3a
+ 1990 0138 0B       		.uleb128 0xb
+ 1991 0139 3B       		.uleb128 0x3b
+ 1992 013a 05       		.uleb128 0x5
+ 1993 013b 49       		.uleb128 0x49
+ 1994 013c 13       		.uleb128 0x13
+ 1995 013d 02       		.uleb128 0x2
+ 1996 013e 18       		.uleb128 0x18
+ 1997 013f 00       		.byte	0
+ 1998 0140 00       		.byte	0
+ 1999 0141 17       		.uleb128 0x17
+ 2000 0142 0B       		.uleb128 0xb
+ 2001 0143 01       		.byte	0x1
+ 2002 0144 11       		.uleb128 0x11
+ 2003 0145 01       		.uleb128 0x1
+ 2004 0146 12       		.uleb128 0x12
+ 2005 0147 06       		.uleb128 0x6
+ 2006 0148 01       		.uleb128 0x1
+ 2007 0149 13       		.uleb128 0x13
+ 2008 014a 00       		.byte	0
+ 2009 014b 00       		.byte	0
+ 2010 014c 18       		.uleb128 0x18
+ 2011 014d 0B       		.uleb128 0xb
+ 2012 014e 01       		.byte	0x1
+ 2013 014f 11       		.uleb128 0x11
+ 2014 0150 01       		.uleb128 0x1
+ 2015 0151 12       		.uleb128 0x12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 45
+
+
+ 2016 0152 06       		.uleb128 0x6
+ 2017 0153 00       		.byte	0
+ 2018 0154 00       		.byte	0
+ 2019 0155 19       		.uleb128 0x19
+ 2020 0156 34       		.uleb128 0x34
+ 2021 0157 00       		.byte	0
+ 2022 0158 03       		.uleb128 0x3
+ 2023 0159 08       		.uleb128 0x8
+ 2024 015a 3A       		.uleb128 0x3a
+ 2025 015b 0B       		.uleb128 0xb
+ 2026 015c 3B       		.uleb128 0x3b
+ 2027 015d 05       		.uleb128 0x5
+ 2028 015e 49       		.uleb128 0x49
+ 2029 015f 13       		.uleb128 0x13
+ 2030 0160 02       		.uleb128 0x2
+ 2031 0161 18       		.uleb128 0x18
+ 2032 0162 00       		.byte	0
+ 2033 0163 00       		.byte	0
+ 2034 0164 1A       		.uleb128 0x1a
+ 2035 0165 2E       		.uleb128 0x2e
+ 2036 0166 01       		.byte	0x1
+ 2037 0167 3F       		.uleb128 0x3f
+ 2038 0168 19       		.uleb128 0x19
+ 2039 0169 03       		.uleb128 0x3
+ 2040 016a 0E       		.uleb128 0xe
+ 2041 016b 3A       		.uleb128 0x3a
+ 2042 016c 0B       		.uleb128 0xb
+ 2043 016d 3B       		.uleb128 0x3b
+ 2044 016e 05       		.uleb128 0x5
+ 2045 016f 27       		.uleb128 0x27
+ 2046 0170 19       		.uleb128 0x19
+ 2047 0171 11       		.uleb128 0x11
+ 2048 0172 01       		.uleb128 0x1
+ 2049 0173 12       		.uleb128 0x12
+ 2050 0174 06       		.uleb128 0x6
+ 2051 0175 40       		.uleb128 0x40
+ 2052 0176 18       		.uleb128 0x18
+ 2053 0177 9642     		.uleb128 0x2116
+ 2054 0179 19       		.uleb128 0x19
+ 2055 017a 01       		.uleb128 0x1
+ 2056 017b 13       		.uleb128 0x13
+ 2057 017c 00       		.byte	0
+ 2058 017d 00       		.byte	0
+ 2059 017e 1B       		.uleb128 0x1b
+ 2060 017f 05       		.uleb128 0x5
+ 2061 0180 00       		.byte	0
+ 2062 0181 03       		.uleb128 0x3
+ 2063 0182 0E       		.uleb128 0xe
+ 2064 0183 3A       		.uleb128 0x3a
+ 2065 0184 0B       		.uleb128 0xb
+ 2066 0185 3B       		.uleb128 0x3b
+ 2067 0186 05       		.uleb128 0x5
+ 2068 0187 49       		.uleb128 0x49
+ 2069 0188 13       		.uleb128 0x13
+ 2070 0189 02       		.uleb128 0x2
+ 2071 018a 18       		.uleb128 0x18
+ 2072 018b 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 46
+
+
+ 2073 018c 00       		.byte	0
+ 2074 018d 1C       		.uleb128 0x1c
+ 2075 018e 2E       		.uleb128 0x2e
+ 2076 018f 01       		.byte	0x1
+ 2077 0190 3F       		.uleb128 0x3f
+ 2078 0191 19       		.uleb128 0x19
+ 2079 0192 03       		.uleb128 0x3
+ 2080 0193 0E       		.uleb128 0xe
+ 2081 0194 3A       		.uleb128 0x3a
+ 2082 0195 0B       		.uleb128 0xb
+ 2083 0196 3B       		.uleb128 0x3b
+ 2084 0197 05       		.uleb128 0x5
+ 2085 0198 27       		.uleb128 0x27
+ 2086 0199 19       		.uleb128 0x19
+ 2087 019a 49       		.uleb128 0x49
+ 2088 019b 13       		.uleb128 0x13
+ 2089 019c 11       		.uleb128 0x11
+ 2090 019d 01       		.uleb128 0x1
+ 2091 019e 12       		.uleb128 0x12
+ 2092 019f 06       		.uleb128 0x6
+ 2093 01a0 40       		.uleb128 0x40
+ 2094 01a1 18       		.uleb128 0x18
+ 2095 01a2 9742     		.uleb128 0x2117
+ 2096 01a4 19       		.uleb128 0x19
+ 2097 01a5 01       		.uleb128 0x1
+ 2098 01a6 13       		.uleb128 0x13
+ 2099 01a7 00       		.byte	0
+ 2100 01a8 00       		.byte	0
+ 2101 01a9 1D       		.uleb128 0x1d
+ 2102 01aa 2E       		.uleb128 0x2e
+ 2103 01ab 01       		.byte	0x1
+ 2104 01ac 03       		.uleb128 0x3
+ 2105 01ad 0E       		.uleb128 0xe
+ 2106 01ae 3A       		.uleb128 0x3a
+ 2107 01af 0B       		.uleb128 0xb
+ 2108 01b0 3B       		.uleb128 0x3b
+ 2109 01b1 05       		.uleb128 0x5
+ 2110 01b2 27       		.uleb128 0x27
+ 2111 01b3 19       		.uleb128 0x19
+ 2112 01b4 49       		.uleb128 0x49
+ 2113 01b5 13       		.uleb128 0x13
+ 2114 01b6 11       		.uleb128 0x11
+ 2115 01b7 01       		.uleb128 0x1
+ 2116 01b8 12       		.uleb128 0x12
+ 2117 01b9 06       		.uleb128 0x6
+ 2118 01ba 40       		.uleb128 0x40
+ 2119 01bb 18       		.uleb128 0x18
+ 2120 01bc 9742     		.uleb128 0x2117
+ 2121 01be 19       		.uleb128 0x19
+ 2122 01bf 01       		.uleb128 0x1
+ 2123 01c0 13       		.uleb128 0x13
+ 2124 01c1 00       		.byte	0
+ 2125 01c2 00       		.byte	0
+ 2126 01c3 1E       		.uleb128 0x1e
+ 2127 01c4 2E       		.uleb128 0x2e
+ 2128 01c5 01       		.byte	0x1
+ 2129 01c6 03       		.uleb128 0x3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 47
+
+
+ 2130 01c7 0E       		.uleb128 0xe
+ 2131 01c8 3A       		.uleb128 0x3a
+ 2132 01c9 0B       		.uleb128 0xb
+ 2133 01ca 3B       		.uleb128 0x3b
+ 2134 01cb 05       		.uleb128 0x5
+ 2135 01cc 27       		.uleb128 0x27
+ 2136 01cd 19       		.uleb128 0x19
+ 2137 01ce 49       		.uleb128 0x49
+ 2138 01cf 13       		.uleb128 0x13
+ 2139 01d0 11       		.uleb128 0x11
+ 2140 01d1 01       		.uleb128 0x1
+ 2141 01d2 12       		.uleb128 0x12
+ 2142 01d3 06       		.uleb128 0x6
+ 2143 01d4 40       		.uleb128 0x40
+ 2144 01d5 18       		.uleb128 0x18
+ 2145 01d6 9642     		.uleb128 0x2116
+ 2146 01d8 19       		.uleb128 0x19
+ 2147 01d9 01       		.uleb128 0x1
+ 2148 01da 13       		.uleb128 0x13
+ 2149 01db 00       		.byte	0
+ 2150 01dc 00       		.byte	0
+ 2151 01dd 1F       		.uleb128 0x1f
+ 2152 01de 05       		.uleb128 0x5
+ 2153 01df 00       		.byte	0
+ 2154 01e0 03       		.uleb128 0x3
+ 2155 01e1 08       		.uleb128 0x8
+ 2156 01e2 3A       		.uleb128 0x3a
+ 2157 01e3 0B       		.uleb128 0xb
+ 2158 01e4 3B       		.uleb128 0x3b
+ 2159 01e5 05       		.uleb128 0x5
+ 2160 01e6 49       		.uleb128 0x49
+ 2161 01e7 13       		.uleb128 0x13
+ 2162 01e8 02       		.uleb128 0x2
+ 2163 01e9 18       		.uleb128 0x18
+ 2164 01ea 00       		.byte	0
+ 2165 01eb 00       		.byte	0
+ 2166 01ec 20       		.uleb128 0x20
+ 2167 01ed 2E       		.uleb128 0x2e
+ 2168 01ee 01       		.byte	0x1
+ 2169 01ef 03       		.uleb128 0x3
+ 2170 01f0 0E       		.uleb128 0xe
+ 2171 01f1 3A       		.uleb128 0x3a
+ 2172 01f2 0B       		.uleb128 0xb
+ 2173 01f3 3B       		.uleb128 0x3b
+ 2174 01f4 05       		.uleb128 0x5
+ 2175 01f5 27       		.uleb128 0x27
+ 2176 01f6 19       		.uleb128 0x19
+ 2177 01f7 11       		.uleb128 0x11
+ 2178 01f8 01       		.uleb128 0x1
+ 2179 01f9 12       		.uleb128 0x12
+ 2180 01fa 06       		.uleb128 0x6
+ 2181 01fb 40       		.uleb128 0x40
+ 2182 01fc 18       		.uleb128 0x18
+ 2183 01fd 9742     		.uleb128 0x2117
+ 2184 01ff 19       		.uleb128 0x19
+ 2185 0200 01       		.uleb128 0x1
+ 2186 0201 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 48
+
+
+ 2187 0202 00       		.byte	0
+ 2188 0203 00       		.byte	0
+ 2189 0204 00       		.byte	0
+ 2190              		.section	.debug_aranges,"",%progbits
+ 2191 0000 6C000000 		.4byte	0x6c
+ 2192 0004 0200     		.2byte	0x2
+ 2193 0006 00000000 		.4byte	.Ldebug_info0
+ 2194 000a 04       		.byte	0x4
+ 2195 000b 00       		.byte	0
+ 2196 000c 0000     		.2byte	0
+ 2197 000e 0000     		.2byte	0
+ 2198 0010 00000000 		.4byte	.LFB0
+ 2199 0014 40000000 		.4byte	.LFE0-.LFB0
+ 2200 0018 00000000 		.4byte	.LFB1
+ 2201 001c 40000000 		.4byte	.LFE1-.LFB1
+ 2202 0020 00000000 		.4byte	.LFB2
+ 2203 0024 64000000 		.4byte	.LFE2-.LFB2
+ 2204 0028 00000000 		.4byte	.LFB3
+ 2205 002c 88000000 		.4byte	.LFE3-.LFB3
+ 2206 0030 00000000 		.4byte	.LFB4
+ 2207 0034 96000000 		.4byte	.LFE4-.LFB4
+ 2208 0038 00000000 		.4byte	.LFB5
+ 2209 003c 9C000000 		.4byte	.LFE5-.LFB5
+ 2210 0040 00000000 		.4byte	.LFB6
+ 2211 0044 D8000000 		.4byte	.LFE6-.LFB6
+ 2212 0048 00000000 		.4byte	.LFB7
+ 2213 004c 3C000000 		.4byte	.LFE7-.LFB7
+ 2214 0050 00000000 		.4byte	.LFB8
+ 2215 0054 58000000 		.4byte	.LFE8-.LFB8
+ 2216 0058 00000000 		.4byte	.LFB9
+ 2217 005c 4E000000 		.4byte	.LFE9-.LFB9
+ 2218 0060 00000000 		.4byte	.LFB10
+ 2219 0064 A0000000 		.4byte	.LFE10-.LFB10
+ 2220 0068 00000000 		.4byte	0
+ 2221 006c 00000000 		.4byte	0
+ 2222              		.section	.debug_ranges,"",%progbits
+ 2223              	.Ldebug_ranges0:
+ 2224 0000 00000000 		.4byte	.LFB0
+ 2225 0004 40000000 		.4byte	.LFE0
+ 2226 0008 00000000 		.4byte	.LFB1
+ 2227 000c 40000000 		.4byte	.LFE1
+ 2228 0010 00000000 		.4byte	.LFB2
+ 2229 0014 64000000 		.4byte	.LFE2
+ 2230 0018 00000000 		.4byte	.LFB3
+ 2231 001c 88000000 		.4byte	.LFE3
+ 2232 0020 00000000 		.4byte	.LFB4
+ 2233 0024 96000000 		.4byte	.LFE4
+ 2234 0028 00000000 		.4byte	.LFB5
+ 2235 002c 9C000000 		.4byte	.LFE5
+ 2236 0030 00000000 		.4byte	.LFB6
+ 2237 0034 D8000000 		.4byte	.LFE6
+ 2238 0038 00000000 		.4byte	.LFB7
+ 2239 003c 3C000000 		.4byte	.LFE7
+ 2240 0040 00000000 		.4byte	.LFB8
+ 2241 0044 58000000 		.4byte	.LFE8
+ 2242 0048 00000000 		.4byte	.LFB9
+ 2243 004c 4E000000 		.4byte	.LFE9
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 49
+
+
+ 2244 0050 00000000 		.4byte	.LFB10
+ 2245 0054 A0000000 		.4byte	.LFE10
+ 2246 0058 00000000 		.4byte	0
+ 2247 005c 00000000 		.4byte	0
+ 2248              		.section	.debug_line,"",%progbits
+ 2249              	.Ldebug_line0:
+ 2250 0000 53030000 		.section	.debug_str,"MS",%progbits,1
+ 2250      0200D701 
+ 2250      00000201 
+ 2250      FB0E0D00 
+ 2250      01010101 
+ 2251              	.LASF22:
+ 2252 0000 6C765F6D 		.ascii	"lv_mem_monitor_t\000"
+ 2252      656D5F6D 
+ 2252      6F6E6974 
+ 2252      6F725F74 
+ 2252      00
+ 2253              	.LASF44:
+ 2254 0011 6F6C645F 		.ascii	"old_size\000"
+ 2254      73697A65 
+ 2254      00
+ 2255              	.LASF40:
+ 2256 001a 6C765F6D 		.ascii	"lv_mem_alloc\000"
+ 2256      656D5F61 
+ 2256      6C6C6F63 
+ 2256      00
+ 2257              	.LASF13:
+ 2258 0027 73697A65 		.ascii	"size_t\000"
+ 2258      5F7400
+ 2259              	.LASF42:
+ 2260 002e 64617461 		.ascii	"data_p\000"
+ 2260      5F7000
+ 2261              	.LASF5:
+ 2262 0035 5F5F7569 		.ascii	"__uint8_t\000"
+ 2262      6E74385F 
+ 2262      7400
+ 2263              	.LASF58:
+ 2264 003f 7A65726F 		.ascii	"zero_mem\000"
+ 2264      5F6D656D 
+ 2264      00
+ 2265              	.LASF46:
+ 2266 0048 6C765F6D 		.ascii	"lv_mem_defrag\000"
+ 2266      656D5F64 
+ 2266      65667261 
+ 2266      6700
+ 2267              	.LASF9:
+ 2268 0056 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2268      206C6F6E 
+ 2268      6720756E 
+ 2268      7369676E 
+ 2268      65642069 
+ 2269              	.LASF19:
+ 2270 006d 75736564 		.ascii	"used_cnt\000"
+ 2270      5F636E74 
+ 2270      00
+ 2271              	.LASF52:
+ 2272 0076 6E657874 		.ascii	"next_e\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 50
+
+
+ 2272      5F6500
+ 2273              	.LASF15:
+ 2274 007d 746F7461 		.ascii	"total_size\000"
+ 2274      6C5F7369 
+ 2274      7A6500
+ 2275              	.LASF31:
+ 2276 0088 776F726B 		.ascii	"work_mem_int\000"
+ 2276      5F6D656D 
+ 2276      5F696E74 
+ 2276      00
+ 2277              	.LASF8:
+ 2278 0095 6C6F6E67 		.ascii	"long long int\000"
+ 2278      206C6F6E 
+ 2278      6720696E 
+ 2278      7400
+ 2279              	.LASF0:
+ 2280 00a3 7369676E 		.ascii	"signed char\000"
+ 2280      65642063 
+ 2280      68617200 
+ 2281              	.LASF33:
+ 2282 00af 6C765F6D 		.ascii	"lv_mem_init\000"
+ 2282      656D5F69 
+ 2282      6E697400 
+ 2283              	.LASF4:
+ 2284 00bb 6C6F6E67 		.ascii	"long int\000"
+ 2284      20696E74 
+ 2284      00
+ 2285              	.LASF28:
+ 2286 00c4 6C765F6D 		.ascii	"lv_mem_header_t\000"
+ 2286      656D5F68 
+ 2286      65616465 
+ 2286      725F7400 
+ 2287              	.LASF35:
+ 2288 00d4 616C6C6F 		.ascii	"alloc\000"
+ 2288      6300
+ 2289              	.LASF48:
+ 2290 00da 6C765F6D 		.ascii	"lv_mem_monitor\000"
+ 2290      656D5F6D 
+ 2290      6F6E6974 
+ 2290      6F7200
+ 2291              	.LASF36:
+ 2292 00e9 6C765F6D 		.ascii	"lv_mem_free\000"
+ 2292      656D5F66 
+ 2292      72656500 
+ 2293              	.LASF51:
+ 2294 00f5 6163745F 		.ascii	"act_e\000"
+ 2294      6500
+ 2295              	.LASF45:
+ 2296 00fb 6E65775F 		.ascii	"new_p\000"
+ 2296      7000
+ 2297              	.LASF6:
+ 2298 0101 5F5F7569 		.ascii	"__uint32_t\000"
+ 2298      6E743332 
+ 2298      5F7400
+ 2299              	.LASF62:
+ 2300 010c 656E745F 		.ascii	"ent_trunc\000"
+ 2300      7472756E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 51
+
+
+ 2300      6300
+ 2301              	.LASF26:
+ 2302 0116 645F7369 		.ascii	"d_size\000"
+ 2302      7A6500
+ 2303              	.LASF20:
+ 2304 011d 75736564 		.ascii	"used_pct\000"
+ 2304      5F706374 
+ 2304      00
+ 2305              	.LASF10:
+ 2306 0126 756E7369 		.ascii	"unsigned int\000"
+ 2306      676E6564 
+ 2306      20696E74 
+ 2306      00
+ 2307              	.LASF7:
+ 2308 0133 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2308      20756E73 
+ 2308      69676E65 
+ 2308      6420696E 
+ 2308      7400
+ 2309              	.LASF41:
+ 2310 0145 6C765F6D 		.ascii	"lv_mem_realloc\000"
+ 2310      656D5F72 
+ 2310      65616C6C 
+ 2310      6F6300
+ 2311              	.LASF50:
+ 2312 0154 6C765F6D 		.ascii	"lv_mem_get_size\000"
+ 2312      656D5F67 
+ 2312      65745F73 
+ 2312      697A6500 
+ 2313              	.LASF38:
+ 2314 0164 64617461 		.ascii	"data\000"
+ 2314      00
+ 2315              	.LASF37:
+ 2316 0169 73697A65 		.ascii	"size\000"
+ 2316      00
+ 2317              	.LASF3:
+ 2318 016e 73686F72 		.ascii	"short unsigned int\000"
+ 2318      7420756E 
+ 2318      7369676E 
+ 2318      65642069 
+ 2318      6E7400
+ 2319              	.LASF39:
+ 2320 0181 655F6E65 		.ascii	"e_next\000"
+ 2320      787400
+ 2321              	.LASF61:
+ 2322 0188 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 2322      73657273 
+ 2322      5C746D6A 
+ 2322      33325C44 
+ 2322      6F63756D 
+ 2323 01b5 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 2323      6C6C6F73 
+ 2323      636F7065 
+ 2323      5F53656E 
+ 2323      696F725F 
+ 2324 01e6 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 2324      5C74636F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 52
+
+
+ 2324      6D5F6170 
+ 2324      705C7463 
+ 2324      6F6D5F61 
+ 2325 0216 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 2325      736F6336 
+ 2325      2E637964 
+ 2325      736E00
+ 2326              	.LASF18:
+ 2327 0225 66726565 		.ascii	"free_biggest_size\000"
+ 2327      5F626967 
+ 2327      67657374 
+ 2327      5F73697A 
+ 2327      6500
+ 2328              	.LASF14:
+ 2329 0237 6C6F6E67 		.ascii	"long double\000"
+ 2329      20646F75 
+ 2329      626C6500 
+ 2330              	.LASF32:
+ 2331 0243 66756C6C 		.ascii	"full\000"
+ 2331      00
+ 2332              	.LASF43:
+ 2333 0248 6E65775F 		.ascii	"new_size\000"
+ 2333      73697A65 
+ 2333      00
+ 2334              	.LASF56:
+ 2335 0251 61667465 		.ascii	"after_new_e\000"
+ 2335      725F6E65 
+ 2335      775F6500 
+ 2336              	.LASF47:
+ 2337 025d 655F6672 		.ascii	"e_free\000"
+ 2337      656500
+ 2338              	.LASF49:
+ 2339 0264 6D6F6E5F 		.ascii	"mon_p\000"
+ 2339      7000
+ 2340              	.LASF25:
+ 2341 026a 75736564 		.ascii	"used\000"
+ 2341      00
+ 2342              	.LASF57:
+ 2343 026f 776F726B 		.ascii	"work_mem\000"
+ 2343      5F6D656D 
+ 2343      00
+ 2344              	.LASF1:
+ 2345 0278 756E7369 		.ascii	"unsigned char\000"
+ 2345      676E6564 
+ 2345      20636861 
+ 2345      7200
+ 2346              	.LASF2:
+ 2347 0286 73686F72 		.ascii	"short int\000"
+ 2347      7420696E 
+ 2347      7400
+ 2348              	.LASF34:
+ 2349 0290 6C765F6D 		.ascii	"lv_mem_deinit\000"
+ 2349      656D5F64 
+ 2349      65696E69 
+ 2349      7400
+ 2350              	.LASF55:
+ 2351 029e 655F6461 		.ascii	"e_data\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 53
+
+
+ 2351      746100
+ 2352              	.LASF12:
+ 2353 02a5 75696E74 		.ascii	"uint32_t\000"
+ 2353      33325F74 
+ 2353      00
+ 2354              	.LASF54:
+ 2355 02ae 656E745F 		.ascii	"ent_alloc\000"
+ 2355      616C6C6F 
+ 2355      6300
+ 2356              	.LASF24:
+ 2357 02b8 63686172 		.ascii	"char\000"
+ 2357      00
+ 2358              	.LASF30:
+ 2359 02bd 6C765F6D 		.ascii	"lv_mem_ent_t\000"
+ 2359      656D5F65 
+ 2359      6E745F74 
+ 2359      00
+ 2360              	.LASF60:
+ 2361 02ca 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 2361      2E5C2E2E 
+ 2361      5C6C7667 
+ 2361      6C5C7665 
+ 2361      7273696F 
+ 2362 02f6 5C6C765F 		.ascii	"\\lv_mem.c\000"
+ 2362      6D656D2E 
+ 2362      6300
+ 2363              	.LASF21:
+ 2364 0300 66726167 		.ascii	"frag_pct\000"
+ 2364      5F706374 
+ 2364      00
+ 2365              	.LASF29:
+ 2366 0309 66697273 		.ascii	"first_data\000"
+ 2366      745F6461 
+ 2366      746100
+ 2367              	.LASF16:
+ 2368 0314 66726565 		.ascii	"free_cnt\000"
+ 2368      5F636E74 
+ 2368      00
+ 2369              	.LASF11:
+ 2370 031d 75696E74 		.ascii	"uint8_t\000"
+ 2370      385F7400 
+ 2371              	.LASF23:
+ 2372 0325 73697A65 		.ascii	"sizetype\000"
+ 2372      74797065 
+ 2372      00
+ 2373              	.LASF53:
+ 2374 032e 656E745F 		.ascii	"ent_get_next\000"
+ 2374      6765745F 
+ 2374      6E657874 
+ 2374      00
+ 2375              	.LASF59:
+ 2376 033b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2376      43313120 
+ 2376      352E342E 
+ 2376      31203230 
+ 2376      31363036 
+ 2377 036e 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccN7X7Jd.s 			page 54
+
+
+ 2377      20726576 
+ 2377      6973696F 
+ 2377      6E203233 
+ 2377      37373135 
+ 2378 03a1 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 2378      70202D6D 
+ 2378      6670753D 
+ 2378      66707634 
+ 2378      2D73702D 
+ 2379 03d4 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2379      6F6E7320 
+ 2379      2D666661 
+ 2379      742D6C74 
+ 2379      6F2D6F62 
+ 2380              	.LASF17:
+ 2381 03ee 66726565 		.ascii	"free_size\000"
+ 2381      5F73697A 
+ 2381      6500
+ 2382              	.LASF27:
+ 2383 03f8 68656164 		.ascii	"header\000"
+ 2383      657200
+ 2384              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

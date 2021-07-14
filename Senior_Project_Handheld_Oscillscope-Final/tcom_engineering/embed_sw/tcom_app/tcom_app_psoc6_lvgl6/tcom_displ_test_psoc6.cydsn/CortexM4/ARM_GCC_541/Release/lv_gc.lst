@@ -1,0 +1,2196 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_gc.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_gc_clear_roots,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_gc_clear_roots
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_gc_clear_roots, %function
+  26              	lv_gc_clear_roots:
+  27              	.LFB31:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_gc.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  * @file lv_gc.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #include "lv_gc.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #include "string.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #if defined(LV_GC_INCLUDE)
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #include LV_GC_INCLUDE
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #endif /* LV_ENABLE_GC */
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /*********************
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *      DEFINES
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *********************/
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**********************
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *      TYPEDEFS
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  **********************/
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *  STATIC PROTOTYPES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  **********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**********************
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *  STATIC VARIABLES
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  **********************/
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #if(!defined(LV_ENABLE_GC)) || LV_ENABLE_GC == 0
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** LV_ROOTS
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #endif /* LV_ENABLE_GC */
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**********************
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *      MACROS
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  **********************/
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** /**********************
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  *   GLOBAL FUNCTIONS
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****  **********************/
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** 
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** void lv_gc_clear_roots(void)
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** {
+  29              		.loc 1 44 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  34              		.cfi_def_cfa_offset 20
+  35              		.cfi_offset 4, -20
+  36              		.cfi_offset 5, -16
+  37              		.cfi_offset 6, -12
+  38              		.cfi_offset 7, -8
+  39              		.cfi_offset 14, -4
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c **** #define LV_CLEAR_ROOT(root_type, root_name) memset(&LV_GC_ROOT(root_name), 0, sizeof(LV_GC_ROOT(roo
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_gc.c ****     LV_ITERATE_ROOTS(LV_CLEAR_ROOT)
+  40              		.loc 1 46 0
+  41 0002 164A     		ldr	r2, .L3
+  42 0004 1649     		ldr	r1, .L3+4
+  43 0006 174F     		ldr	r7, .L3+8
+  44 0008 174E     		ldr	r6, .L3+12
+  45 000a 184D     		ldr	r5, .L3+16
+  46 000c 184C     		ldr	r4, .L3+20
+  47 000e 1948     		ldr	r0, .L3+24
+  48 0010 DFF86CC0 		ldr	ip, .L3+36
+  49 0014 DFF86CE0 		ldr	lr, .L3+40
+  50 0018 0023     		movs	r3, #0
+  51 001a 1360     		str	r3, [r2]
+  52 001c 5360     		str	r3, [r2, #4]
+  53 001e 9360     		str	r3, [r2, #8]
+  54 0020 0B60     		str	r3, [r1]
+  55 0022 154A     		ldr	r2, .L3+28
+  56 0024 1549     		ldr	r1, .L3+32
+  57 0026 3B60     		str	r3, [r7]
+  58 0028 7B60     		str	r3, [r7, #4]
+  59 002a BB60     		str	r3, [r7, #8]
+  60 002c 3360     		str	r3, [r6]
+  61 002e 7360     		str	r3, [r6, #4]
+  62 0030 B360     		str	r3, [r6, #8]
+  63 0032 2B60     		str	r3, [r5]
+  64 0034 6B60     		str	r3, [r5, #4]
+  65 0036 AB60     		str	r3, [r5, #8]
+  66 0038 2360     		str	r3, [r4]
+  67 003a 6360     		str	r3, [r4, #4]
+  68 003c A360     		str	r3, [r4, #8]
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 3
+
+
+  69 003e 0360     		str	r3, [r0]
+  70 0040 4360     		str	r3, [r0, #4]
+  71 0042 8360     		str	r3, [r0, #8]
+  72 0044 0B60     		str	r3, [r1]
+  73 0046 4B60     		str	r3, [r1, #4]
+  74 0048 8B60     		str	r3, [r1, #8]
+  75 004a 1360     		str	r3, [r2]
+  76 004c 5360     		str	r3, [r2, #4]
+  77 004e 9360     		str	r3, [r2, #8]
+  78 0050 CCF80030 		str	r3, [ip]
+  79 0054 CEF80030 		str	r3, [lr]
+  80 0058 F0BD     		pop	{r4, r5, r6, r7, pc}
+  81              	.L4:
+  82 005a 00BF     		.align	2
+  83              	.L3:
+  84 005c 00000000 		.word	_lv_task_ll
+  85 0060 00000000 		.word	_lv_task_act
+  86 0064 00000000 		.word	_lv_disp_ll
+  87 0068 00000000 		.word	_lv_indev_ll
+  88 006c 00000000 		.word	_lv_drv_ll
+  89 0070 00000000 		.word	_lv_file_ll
+  90 0074 00000000 		.word	_lv_anim_ll
+  91 0078 00000000 		.word	_lv_img_defoder_ll
+  92 007c 00000000 		.word	_lv_group_ll
+  93 0080 00000000 		.word	_lv_img_cache_array
+  94 0084 00000000 		.word	_lv_draw_buf
+  95              		.cfi_endproc
+  96              	.LFE31:
+  97              		.size	lv_gc_clear_roots, .-lv_gc_clear_roots
+  98              		.comm	_lv_draw_buf,4,4
+  99              		.comm	_lv_task_act,4,4
+ 100              		.comm	_lv_img_cache_array,4,4
+ 101              		.comm	_lv_img_defoder_ll,12,4
+ 102              		.comm	_lv_group_ll,12,4
+ 103              		.comm	_lv_anim_ll,12,4
+ 104              		.comm	_lv_file_ll,12,4
+ 105              		.comm	_lv_drv_ll,12,4
+ 106              		.comm	_lv_indev_ll,12,4
+ 107              		.comm	_lv_disp_ll,12,4
+ 108              		.comm	_lv_task_ll,12,4
+ 109              		.text
+ 110              	.Letext0:
+ 111              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 112              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 113              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 114              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_types.h"
+ 115              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_ll.h"
+ 116              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_draw/../lv_core/../lv_font/lv_
+ 117              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_draw/../lv_core/../lv_misc/lv_
+ 118              		.file 9 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_draw/../lv_core/lv_style.h"
+ 119              		.file 10 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_draw/lv_img_decoder.h"
+ 120              		.file 11 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_draw/lv_img_cache.h"
+ 121              		.section	.debug_info,"",%progbits
+ 122              	.Ldebug_info0:
+ 123 0000 45080000 		.4byte	0x845
+ 124 0004 0400     		.2byte	0x4
+ 125 0006 00000000 		.4byte	.Ldebug_abbrev0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 4
+
+
+ 126 000a 04       		.byte	0x4
+ 127 000b 01       		.uleb128 0x1
+ 128 000c 3F000000 		.4byte	.LASF118
+ 129 0010 0C       		.byte	0xc
+ 130 0011 E1010000 		.4byte	.LASF119
+ 131 0015 B0050000 		.4byte	.LASF120
+ 132 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 133 001d 00000000 		.4byte	0
+ 134 0021 00000000 		.4byte	.Ldebug_line0
+ 135 0025 02       		.uleb128 0x2
+ 136 0026 D2030000 		.4byte	.LASF0
+ 137 002a 02       		.byte	0x2
+ 138 002b 1B       		.byte	0x1b
+ 139 002c 30000000 		.4byte	0x30
+ 140 0030 03       		.uleb128 0x3
+ 141 0031 01       		.byte	0x1
+ 142 0032 06       		.byte	0x6
+ 143 0033 62050000 		.4byte	.LASF2
+ 144 0037 02       		.uleb128 0x2
+ 145 0038 64040000 		.4byte	.LASF1
+ 146 003c 02       		.byte	0x2
+ 147 003d 1D       		.byte	0x1d
+ 148 003e 42000000 		.4byte	0x42
+ 149 0042 03       		.uleb128 0x3
+ 150 0043 01       		.byte	0x1
+ 151 0044 08       		.byte	0x8
+ 152 0045 E1040000 		.4byte	.LASF3
+ 153 0049 02       		.uleb128 0x2
+ 154 004a 8D030000 		.4byte	.LASF4
+ 155 004e 02       		.byte	0x2
+ 156 004f 29       		.byte	0x29
+ 157 0050 54000000 		.4byte	0x54
+ 158 0054 03       		.uleb128 0x3
+ 159 0055 02       		.byte	0x2
+ 160 0056 05       		.byte	0x5
+ 161 0057 23040000 		.4byte	.LASF5
+ 162 005b 02       		.uleb128 0x2
+ 163 005c 3A020000 		.4byte	.LASF6
+ 164 0060 02       		.byte	0x2
+ 165 0061 2B       		.byte	0x2b
+ 166 0062 66000000 		.4byte	0x66
+ 167 0066 03       		.uleb128 0x3
+ 168 0067 02       		.byte	0x2
+ 169 0068 07       		.byte	0x7
+ 170 0069 6E050000 		.4byte	.LASF7
+ 171 006d 02       		.uleb128 0x2
+ 172 006e 1D010000 		.4byte	.LASF8
+ 173 0072 02       		.byte	0x2
+ 174 0073 3F       		.byte	0x3f
+ 175 0074 78000000 		.4byte	0x78
+ 176 0078 03       		.uleb128 0x3
+ 177 0079 04       		.byte	0x4
+ 178 007a 05       		.byte	0x5
+ 179 007b 36040000 		.4byte	.LASF9
+ 180 007f 02       		.uleb128 0x2
+ 181 0080 EF040000 		.4byte	.LASF10
+ 182 0084 02       		.byte	0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 5
+
+
+ 183 0085 41       		.byte	0x41
+ 184 0086 8A000000 		.4byte	0x8a
+ 185 008a 03       		.uleb128 0x3
+ 186 008b 04       		.byte	0x4
+ 187 008c 07       		.byte	0x7
+ 188 008d A0040000 		.4byte	.LASF11
+ 189 0091 03       		.uleb128 0x3
+ 190 0092 08       		.byte	0x8
+ 191 0093 05       		.byte	0x5
+ 192 0094 3A030000 		.4byte	.LASF12
+ 193 0098 03       		.uleb128 0x3
+ 194 0099 08       		.byte	0x8
+ 195 009a 07       		.byte	0x7
+ 196 009b 1E020000 		.4byte	.LASF13
+ 197 009f 04       		.uleb128 0x4
+ 198 00a0 04       		.byte	0x4
+ 199 00a1 05       		.byte	0x5
+ 200 00a2 696E7400 		.ascii	"int\000"
+ 201 00a6 03       		.uleb128 0x3
+ 202 00a7 04       		.byte	0x4
+ 203 00a8 07       		.byte	0x7
+ 204 00a9 26000000 		.4byte	.LASF14
+ 205 00ad 02       		.uleb128 0x2
+ 206 00ae B7010000 		.4byte	.LASF15
+ 207 00b2 03       		.byte	0x3
+ 208 00b3 14       		.byte	0x14
+ 209 00b4 25000000 		.4byte	0x25
+ 210 00b8 02       		.uleb128 0x2
+ 211 00b9 04030000 		.4byte	.LASF16
+ 212 00bd 03       		.byte	0x3
+ 213 00be 18       		.byte	0x18
+ 214 00bf 37000000 		.4byte	0x37
+ 215 00c3 02       		.uleb128 0x2
+ 216 00c4 16020000 		.4byte	.LASF17
+ 217 00c8 03       		.byte	0x3
+ 218 00c9 20       		.byte	0x20
+ 219 00ca 49000000 		.4byte	0x49
+ 220 00ce 02       		.uleb128 0x2
+ 221 00cf ED030000 		.4byte	.LASF18
+ 222 00d3 03       		.byte	0x3
+ 223 00d4 24       		.byte	0x24
+ 224 00d5 5B000000 		.4byte	0x5b
+ 225 00d9 02       		.uleb128 0x2
+ 226 00da BE040000 		.4byte	.LASF19
+ 227 00de 03       		.byte	0x3
+ 228 00df 2C       		.byte	0x2c
+ 229 00e0 6D000000 		.4byte	0x6d
+ 230 00e4 02       		.uleb128 0x2
+ 231 00e5 AE010000 		.4byte	.LASF20
+ 232 00e9 03       		.byte	0x3
+ 233 00ea 30       		.byte	0x30
+ 234 00eb 7F000000 		.4byte	0x7f
+ 235 00ef 02       		.uleb128 0x2
+ 236 00f0 4C040000 		.4byte	.LASF21
+ 237 00f4 04       		.byte	0x4
+ 238 00f5 3A       		.byte	0x3a
+ 239 00f6 C3000000 		.4byte	0xc3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 6
+
+
+ 240 00fa 05       		.uleb128 0x5
+ 241 00fb 04       		.byte	0x4
+ 242 00fc 03       		.uleb128 0x3
+ 243 00fd 08       		.byte	0x8
+ 244 00fe 04       		.byte	0x4
+ 245 00ff E1030000 		.4byte	.LASF22
+ 246 0103 02       		.uleb128 0x2
+ 247 0104 E0020000 		.4byte	.LASF23
+ 248 0108 05       		.byte	0x5
+ 249 0109 2C       		.byte	0x2c
+ 250 010a B8000000 		.4byte	0xb8
+ 251 010e 02       		.uleb128 0x2
+ 252 010f 8E020000 		.4byte	.LASF24
+ 253 0113 06       		.byte	0x6
+ 254 0114 1E       		.byte	0x1e
+ 255 0115 B8000000 		.4byte	0xb8
+ 256 0119 06       		.uleb128 0x6
+ 257 011a 0C       		.byte	0xc
+ 258 011b 06       		.byte	0x6
+ 259 011c 21       		.byte	0x21
+ 260 011d 46010000 		.4byte	0x146
+ 261 0121 07       		.uleb128 0x7
+ 262 0122 5D010000 		.4byte	.LASF25
+ 263 0126 06       		.byte	0x6
+ 264 0127 23       		.byte	0x23
+ 265 0128 E4000000 		.4byte	0xe4
+ 266 012c 00       		.byte	0
+ 267 012d 07       		.uleb128 0x7
+ 268 012e 0B010000 		.4byte	.LASF26
+ 269 0132 06       		.byte	0x6
+ 270 0133 24       		.byte	0x24
+ 271 0134 46010000 		.4byte	0x146
+ 272 0138 04       		.byte	0x4
+ 273 0139 07       		.uleb128 0x7
+ 274 013a 3A050000 		.4byte	.LASF27
+ 275 013e 06       		.byte	0x6
+ 276 013f 25       		.byte	0x25
+ 277 0140 46010000 		.4byte	0x146
+ 278 0144 08       		.byte	0x8
+ 279 0145 00       		.byte	0
+ 280 0146 08       		.uleb128 0x8
+ 281 0147 04       		.byte	0x4
+ 282 0148 0E010000 		.4byte	0x10e
+ 283 014c 02       		.uleb128 0x2
+ 284 014d 4E030000 		.4byte	.LASF28
+ 285 0151 06       		.byte	0x6
+ 286 0152 26       		.byte	0x26
+ 287 0153 19010000 		.4byte	0x119
+ 288 0157 03       		.uleb128 0x3
+ 289 0158 04       		.byte	0x4
+ 290 0159 07       		.byte	0x7
+ 291 015a 97040000 		.4byte	.LASF29
+ 292 015e 03       		.uleb128 0x3
+ 293 015f 01       		.byte	0x1
+ 294 0160 08       		.byte	0x8
+ 295 0161 DB020000 		.4byte	.LASF30
+ 296 0165 08       		.uleb128 0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 7
+
+
+ 297 0166 04       		.byte	0x4
+ 298 0167 6B010000 		.4byte	0x16b
+ 299 016b 09       		.uleb128 0x9
+ 300 016c 5E010000 		.4byte	0x15e
+ 301 0170 06       		.uleb128 0x6
+ 302 0171 08       		.byte	0x8
+ 303 0172 07       		.byte	0x7
+ 304 0173 2E       		.byte	0x2e
+ 305 0174 C1010000 		.4byte	0x1c1
+ 306 0178 07       		.uleb128 0x7
+ 307 0179 5C060000 		.4byte	.LASF31
+ 308 017d 07       		.byte	0x7
+ 309 017e 30       		.byte	0x30
+ 310 017f CE000000 		.4byte	0xce
+ 311 0183 00       		.byte	0
+ 312 0184 07       		.uleb128 0x7
+ 313 0185 B2040000 		.4byte	.LASF32
+ 314 0189 07       		.byte	0x7
+ 315 018a 31       		.byte	0x31
+ 316 018b B8000000 		.4byte	0xb8
+ 317 018f 02       		.byte	0x2
+ 318 0190 07       		.uleb128 0x7
+ 319 0191 7F040000 		.4byte	.LASF33
+ 320 0195 07       		.byte	0x7
+ 321 0196 32       		.byte	0x32
+ 322 0197 B8000000 		.4byte	0xb8
+ 323 019b 03       		.byte	0x3
+ 324 019c 07       		.uleb128 0x7
+ 325 019d 33000000 		.4byte	.LASF34
+ 326 01a1 07       		.byte	0x7
+ 327 01a2 33       		.byte	0x33
+ 328 01a3 AD000000 		.4byte	0xad
+ 329 01a7 04       		.byte	0x4
+ 330 01a8 07       		.uleb128 0x7
+ 331 01a9 39000000 		.4byte	.LASF35
+ 332 01ad 07       		.byte	0x7
+ 333 01ae 34       		.byte	0x34
+ 334 01af AD000000 		.4byte	0xad
+ 335 01b3 05       		.byte	0x5
+ 336 01b4 0A       		.uleb128 0xa
+ 337 01b5 62707000 		.ascii	"bpp\000"
+ 338 01b9 07       		.byte	0x7
+ 339 01ba 35       		.byte	0x35
+ 340 01bb B8000000 		.4byte	0xb8
+ 341 01bf 06       		.byte	0x6
+ 342 01c0 00       		.byte	0
+ 343 01c1 02       		.uleb128 0x2
+ 344 01c2 F0020000 		.4byte	.LASF36
+ 345 01c6 07       		.byte	0x7
+ 346 01c7 36       		.byte	0x36
+ 347 01c8 70010000 		.4byte	0x170
+ 348 01cc 0B       		.uleb128 0xb
+ 349 01cd A1020000 		.4byte	.LASF84
+ 350 01d1 10       		.byte	0x10
+ 351 01d2 07       		.byte	0x7
+ 352 01d3 44       		.byte	0x44
+ 353 01d4 24020000 		.4byte	0x224
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 8
+
+
+ 354 01d8 07       		.uleb128 0x7
+ 355 01d9 F2000000 		.4byte	.LASF37
+ 356 01dd 07       		.byte	0x7
+ 357 01de 47       		.byte	0x47
+ 358 01df 5A020000 		.4byte	0x25a
+ 359 01e3 00       		.byte	0
+ 360 01e4 07       		.uleb128 0x7
+ 361 01e5 29050000 		.4byte	.LASF38
+ 362 01e9 07       		.byte	0x7
+ 363 01ea 4A       		.byte	0x4a
+ 364 01eb 7F020000 		.4byte	0x27f
+ 365 01ef 04       		.byte	0x4
+ 366 01f0 07       		.uleb128 0x7
+ 367 01f1 BC020000 		.4byte	.LASF39
+ 368 01f5 07       		.byte	0x7
+ 369 01f6 4D       		.byte	0x4d
+ 370 01f7 B8000000 		.4byte	0xb8
+ 371 01fb 08       		.byte	0x8
+ 372 01fc 07       		.uleb128 0x7
+ 373 01fd C6040000 		.4byte	.LASF40
+ 374 0201 07       		.byte	0x7
+ 375 0202 4E       		.byte	0x4e
+ 376 0203 AD000000 		.4byte	0xad
+ 377 0207 09       		.byte	0x9
+ 378 0208 0C       		.uleb128 0xc
+ 379 0209 C1030000 		.4byte	.LASF71
+ 380 020d 07       		.byte	0x7
+ 381 020e 4F       		.byte	0x4f
+ 382 020f B8000000 		.4byte	0xb8
+ 383 0213 01       		.byte	0x1
+ 384 0214 02       		.byte	0x2
+ 385 0215 06       		.byte	0x6
+ 386 0216 0A       		.byte	0xa
+ 387 0217 0A       		.uleb128 0xa
+ 388 0218 64736300 		.ascii	"dsc\000"
+ 389 021c 07       		.byte	0x7
+ 390 021d 50       		.byte	0x50
+ 391 021e FA000000 		.4byte	0xfa
+ 392 0222 0C       		.byte	0xc
+ 393 0223 00       		.byte	0
+ 394 0224 0D       		.uleb128 0xd
+ 395 0225 42020000 		.4byte	0x242
+ 396 0229 42020000 		.4byte	0x242
+ 397 022d 0E       		.uleb128 0xe
+ 398 022e 49020000 		.4byte	0x249
+ 399 0232 0E       		.uleb128 0xe
+ 400 0233 54020000 		.4byte	0x254
+ 401 0237 0E       		.uleb128 0xe
+ 402 0238 E4000000 		.4byte	0xe4
+ 403 023c 0E       		.uleb128 0xe
+ 404 023d E4000000 		.4byte	0xe4
+ 405 0241 00       		.byte	0
+ 406 0242 03       		.uleb128 0x3
+ 407 0243 01       		.byte	0x1
+ 408 0244 02       		.byte	0x2
+ 409 0245 9B020000 		.4byte	.LASF41
+ 410 0249 08       		.uleb128 0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 9
+
+
+ 411 024a 04       		.byte	0x4
+ 412 024b 4F020000 		.4byte	0x24f
+ 413 024f 09       		.uleb128 0x9
+ 414 0250 CC010000 		.4byte	0x1cc
+ 415 0254 08       		.uleb128 0x8
+ 416 0255 04       		.byte	0x4
+ 417 0256 C1010000 		.4byte	0x1c1
+ 418 025a 08       		.uleb128 0x8
+ 419 025b 04       		.byte	0x4
+ 420 025c 24020000 		.4byte	0x224
+ 421 0260 0D       		.uleb128 0xd
+ 422 0261 74020000 		.4byte	0x274
+ 423 0265 74020000 		.4byte	0x274
+ 424 0269 0E       		.uleb128 0xe
+ 425 026a 49020000 		.4byte	0x249
+ 426 026e 0E       		.uleb128 0xe
+ 427 026f E4000000 		.4byte	0xe4
+ 428 0273 00       		.byte	0
+ 429 0274 08       		.uleb128 0x8
+ 430 0275 04       		.byte	0x4
+ 431 0276 7A020000 		.4byte	0x27a
+ 432 027a 09       		.uleb128 0x9
+ 433 027b B8000000 		.4byte	0xb8
+ 434 027f 08       		.uleb128 0x8
+ 435 0280 04       		.byte	0x4
+ 436 0281 60020000 		.4byte	0x260
+ 437 0285 02       		.uleb128 0x2
+ 438 0286 01040000 		.4byte	.LASF42
+ 439 028a 07       		.byte	0x7
+ 440 028b 56       		.byte	0x56
+ 441 028c CC010000 		.4byte	0x1cc
+ 442 0290 06       		.uleb128 0x6
+ 443 0291 04       		.byte	0x4
+ 444 0292 08       		.byte	0x8
+ 445 0293 F3       		.byte	0xf3
+ 446 0294 C9020000 		.4byte	0x2c9
+ 447 0298 07       		.uleb128 0x7
+ 448 0299 47040000 		.4byte	.LASF43
+ 449 029d 08       		.byte	0x8
+ 450 029e F5       		.byte	0xf5
+ 451 029f B8000000 		.4byte	0xb8
+ 452 02a3 00       		.byte	0
+ 453 02a4 07       		.uleb128 0x7
+ 454 02a5 DB030000 		.4byte	.LASF44
+ 455 02a9 08       		.byte	0x8
+ 456 02aa F6       		.byte	0xf6
+ 457 02ab B8000000 		.4byte	0xb8
+ 458 02af 01       		.byte	0x1
+ 459 02b0 0A       		.uleb128 0xa
+ 460 02b1 72656400 		.ascii	"red\000"
+ 461 02b5 08       		.byte	0x8
+ 462 02b6 F7       		.byte	0xf7
+ 463 02b7 B8000000 		.4byte	0xb8
+ 464 02bb 02       		.byte	0x2
+ 465 02bc 07       		.uleb128 0x7
+ 466 02bd B8040000 		.4byte	.LASF45
+ 467 02c1 08       		.byte	0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 10
+
+
+ 468 02c2 F8       		.byte	0xf8
+ 469 02c3 B8000000 		.4byte	0xb8
+ 470 02c7 03       		.byte	0x3
+ 471 02c8 00       		.byte	0
+ 472 02c9 0F       		.uleb128 0xf
+ 473 02ca 04       		.byte	0x4
+ 474 02cb 08       		.byte	0x8
+ 475 02cc F1       		.byte	0xf1
+ 476 02cd E7020000 		.4byte	0x2e7
+ 477 02d1 10       		.uleb128 0x10
+ 478 02d2 636800   		.ascii	"ch\000"
+ 479 02d5 08       		.byte	0x8
+ 480 02d6 F9       		.byte	0xf9
+ 481 02d7 90020000 		.4byte	0x290
+ 482 02db 11       		.uleb128 0x11
+ 483 02dc 00000000 		.4byte	.LASF46
+ 484 02e0 08       		.byte	0x8
+ 485 02e1 FA       		.byte	0xfa
+ 486 02e2 E4000000 		.4byte	0xe4
+ 487 02e6 00       		.byte	0
+ 488 02e7 02       		.uleb128 0x2
+ 489 02e8 BE010000 		.4byte	.LASF47
+ 490 02ec 08       		.byte	0x8
+ 491 02ed FB       		.byte	0xfb
+ 492 02ee C9020000 		.4byte	0x2c9
+ 493 02f2 12       		.uleb128 0x12
+ 494 02f3 C7030000 		.4byte	.LASF48
+ 495 02f7 08       		.byte	0x8
+ 496 02f8 0801     		.2byte	0x108
+ 497 02fa E7020000 		.4byte	0x2e7
+ 498 02fe 12       		.uleb128 0x12
+ 499 02ff 2D040000 		.4byte	.LASF49
+ 500 0303 08       		.byte	0x8
+ 501 0304 0D01     		.2byte	0x10d
+ 502 0306 B8000000 		.4byte	0xb8
+ 503 030a 02       		.uleb128 0x2
+ 504 030b 33060000 		.4byte	.LASF50
+ 505 030f 09       		.byte	0x9
+ 506 0310 2C       		.byte	0x2c
+ 507 0311 B8000000 		.4byte	0xb8
+ 508 0315 02       		.uleb128 0x2
+ 509 0316 19030000 		.4byte	.LASF51
+ 510 031a 09       		.byte	0x9
+ 511 031b 33       		.byte	0x33
+ 512 031c B8000000 		.4byte	0xb8
+ 513 0320 06       		.uleb128 0x6
+ 514 0321 08       		.byte	0x8
+ 515 0322 09       		.byte	0x9
+ 516 0323 48       		.byte	0x48
+ 517 0324 59030000 		.4byte	0x359
+ 518 0328 07       		.uleb128 0x7
+ 519 0329 61020000 		.4byte	.LASF52
+ 520 032d 09       		.byte	0x9
+ 521 032e 4A       		.byte	0x4a
+ 522 032f F2020000 		.4byte	0x2f2
+ 523 0333 00       		.byte	0
+ 524 0334 07       		.uleb128 0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 11
+
+
+ 525 0335 88020000 		.4byte	.LASF53
+ 526 0339 09       		.byte	0x9
+ 527 033a 4B       		.byte	0x4b
+ 528 033b EF000000 		.4byte	0xef
+ 529 033f 04       		.byte	0x4
+ 530 0340 07       		.uleb128 0x7
+ 531 0341 35020000 		.4byte	.LASF54
+ 532 0345 09       		.byte	0x9
+ 533 0346 4C       		.byte	0x4c
+ 534 0347 0A030000 		.4byte	0x30a
+ 535 034b 06       		.byte	0x6
+ 536 034c 0A       		.uleb128 0xa
+ 537 034d 6F706100 		.ascii	"opa\000"
+ 538 0351 09       		.byte	0x9
+ 539 0352 4D       		.byte	0x4d
+ 540 0353 FE020000 		.4byte	0x2fe
+ 541 0357 07       		.byte	0x7
+ 542 0358 00       		.byte	0
+ 543 0359 06       		.uleb128 0x6
+ 544 035a 08       		.byte	0x8
+ 545 035b 09       		.byte	0x9
+ 546 035c 51       		.byte	0x51
+ 547 035d 86030000 		.4byte	0x386
+ 548 0361 07       		.uleb128 0x7
+ 549 0362 61020000 		.4byte	.LASF52
+ 550 0366 09       		.byte	0x9
+ 551 0367 53       		.byte	0x53
+ 552 0368 F2020000 		.4byte	0x2f2
+ 553 036c 00       		.byte	0
+ 554 036d 07       		.uleb128 0x7
+ 555 036e 88020000 		.4byte	.LASF53
+ 556 0372 09       		.byte	0x9
+ 557 0373 54       		.byte	0x54
+ 558 0374 EF000000 		.4byte	0xef
+ 559 0378 04       		.byte	0x4
+ 560 0379 07       		.uleb128 0x7
+ 561 037a DC040000 		.4byte	.LASF55
+ 562 037e 09       		.byte	0x9
+ 563 037f 55       		.byte	0x55
+ 564 0380 15030000 		.4byte	0x315
+ 565 0384 06       		.byte	0x6
+ 566 0385 00       		.byte	0
+ 567 0386 06       		.uleb128 0x6
+ 568 0387 0A       		.byte	0xa
+ 569 0388 09       		.byte	0x9
+ 570 0389 58       		.byte	0x58
+ 571 038a CB030000 		.4byte	0x3cb
+ 572 038e 0A       		.uleb128 0xa
+ 573 038f 746F7000 		.ascii	"top\000"
+ 574 0393 09       		.byte	0x9
+ 575 0394 5A       		.byte	0x5a
+ 576 0395 EF000000 		.4byte	0xef
+ 577 0399 00       		.byte	0
+ 578 039a 07       		.uleb128 0x7
+ 579 039b E9020000 		.4byte	.LASF56
+ 580 039f 09       		.byte	0x9
+ 581 03a0 5B       		.byte	0x5b
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 12
+
+
+ 582 03a1 EF000000 		.4byte	0xef
+ 583 03a5 02       		.byte	0x2
+ 584 03a6 07       		.uleb128 0x7
+ 585 03a7 57040000 		.4byte	.LASF57
+ 586 03ab 09       		.byte	0x9
+ 587 03ac 5C       		.byte	0x5c
+ 588 03ad EF000000 		.4byte	0xef
+ 589 03b1 04       		.byte	0x4
+ 590 03b2 07       		.uleb128 0x7
+ 591 03b3 2A030000 		.4byte	.LASF58
+ 592 03b7 09       		.byte	0x9
+ 593 03b8 5D       		.byte	0x5d
+ 594 03b9 EF000000 		.4byte	0xef
+ 595 03bd 06       		.byte	0x6
+ 596 03be 07       		.uleb128 0x7
+ 597 03bf A8010000 		.4byte	.LASF59
+ 598 03c3 09       		.byte	0x9
+ 599 03c4 5E       		.byte	0x5e
+ 600 03c5 EF000000 		.4byte	0xef
+ 601 03c9 08       		.byte	0x8
+ 602 03ca 00       		.byte	0
+ 603 03cb 06       		.uleb128 0x6
+ 604 03cc 28       		.byte	0x28
+ 605 03cd 09       		.byte	0x9
+ 606 03ce 41       		.byte	0x41
+ 607 03cf 28040000 		.4byte	0x428
+ 608 03d3 07       		.uleb128 0x7
+ 609 03d4 18040000 		.4byte	.LASF60
+ 610 03d8 09       		.byte	0x9
+ 611 03d9 43       		.byte	0x43
+ 612 03da F2020000 		.4byte	0x2f2
+ 613 03de 00       		.byte	0
+ 614 03df 07       		.uleb128 0x7
+ 615 03e0 F6030000 		.4byte	.LASF61
+ 616 03e4 09       		.byte	0x9
+ 617 03e5 44       		.byte	0x44
+ 618 03e6 F2020000 		.4byte	0x2f2
+ 619 03ea 04       		.byte	0x4
+ 620 03eb 07       		.uleb128 0x7
+ 621 03ec D0040000 		.4byte	.LASF62
+ 622 03f0 09       		.byte	0x9
+ 623 03f1 45       		.byte	0x45
+ 624 03f2 EF000000 		.4byte	0xef
+ 625 03f6 08       		.byte	0x8
+ 626 03f7 0A       		.uleb128 0xa
+ 627 03f8 6F706100 		.ascii	"opa\000"
+ 628 03fc 09       		.byte	0x9
+ 629 03fd 46       		.byte	0x46
+ 630 03fe FE020000 		.4byte	0x2fe
+ 631 0402 0A       		.byte	0xa
+ 632 0403 07       		.uleb128 0x7
+ 633 0404 4E020000 		.4byte	.LASF63
+ 634 0408 09       		.byte	0x9
+ 635 0409 4E       		.byte	0x4e
+ 636 040a 20030000 		.4byte	0x320
+ 637 040e 0C       		.byte	0xc
+ 638 040f 07       		.uleb128 0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 13
+
+
+ 639 0410 5B050000 		.4byte	.LASF64
+ 640 0414 09       		.byte	0x9
+ 641 0415 56       		.byte	0x56
+ 642 0416 59030000 		.4byte	0x359
+ 643 041a 14       		.byte	0x14
+ 644 041b 07       		.uleb128 0x7
+ 645 041c 5B030000 		.4byte	.LASF65
+ 646 0420 09       		.byte	0x9
+ 647 0421 5F       		.byte	0x5f
+ 648 0422 86030000 		.4byte	0x386
+ 649 0426 1C       		.byte	0x1c
+ 650 0427 00       		.byte	0
+ 651 0428 06       		.uleb128 0x6
+ 652 0429 14       		.byte	0x14
+ 653 042a 09       		.byte	0x9
+ 654 042b 63       		.byte	0x63
+ 655 042c 79040000 		.4byte	0x479
+ 656 0430 07       		.uleb128 0x7
+ 657 0431 61020000 		.4byte	.LASF52
+ 658 0435 09       		.byte	0x9
+ 659 0436 65       		.byte	0x65
+ 660 0437 F2020000 		.4byte	0x2f2
+ 661 043b 00       		.byte	0
+ 662 043c 07       		.uleb128 0x7
+ 663 043d D7010000 		.4byte	.LASF66
+ 664 0441 09       		.byte	0x9
+ 665 0442 66       		.byte	0x66
+ 666 0443 F2020000 		.4byte	0x2f2
+ 667 0447 04       		.byte	0x4
+ 668 0448 07       		.uleb128 0x7
+ 669 0449 85040000 		.4byte	.LASF67
+ 670 044d 09       		.byte	0x9
+ 671 044e 67       		.byte	0x67
+ 672 044f 79040000 		.4byte	0x479
+ 673 0453 08       		.byte	0x8
+ 674 0454 07       		.uleb128 0x7
+ 675 0455 0B040000 		.4byte	.LASF68
+ 676 0459 09       		.byte	0x9
+ 677 045a 68       		.byte	0x68
+ 678 045b EF000000 		.4byte	0xef
+ 679 045f 0C       		.byte	0xc
+ 680 0460 07       		.uleb128 0x7
+ 681 0461 B1020000 		.4byte	.LASF69
+ 682 0465 09       		.byte	0x9
+ 683 0466 69       		.byte	0x69
+ 684 0467 EF000000 		.4byte	0xef
+ 685 046b 0E       		.byte	0xe
+ 686 046c 0A       		.uleb128 0xa
+ 687 046d 6F706100 		.ascii	"opa\000"
+ 688 0471 09       		.byte	0x9
+ 689 0472 6A       		.byte	0x6a
+ 690 0473 FE020000 		.4byte	0x2fe
+ 691 0477 10       		.byte	0x10
+ 692 0478 00       		.byte	0
+ 693 0479 08       		.uleb128 0x8
+ 694 047a 04       		.byte	0x4
+ 695 047b 7F040000 		.4byte	0x47f
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 14
+
+
+ 696 047f 09       		.uleb128 0x9
+ 697 0480 85020000 		.4byte	0x285
+ 698 0484 06       		.uleb128 0x6
+ 699 0485 08       		.byte	0x8
+ 700 0486 09       		.byte	0x9
+ 701 0487 6E       		.byte	0x6e
+ 702 0488 B1040000 		.4byte	0x4b1
+ 703 048c 07       		.uleb128 0x7
+ 704 048d 61020000 		.4byte	.LASF52
+ 705 0491 09       		.byte	0x9
+ 706 0492 70       		.byte	0x70
+ 707 0493 F2020000 		.4byte	0x2f2
+ 708 0497 00       		.byte	0
+ 709 0498 07       		.uleb128 0x7
+ 710 0499 5C040000 		.4byte	.LASF70
+ 711 049d 09       		.byte	0x9
+ 712 049e 71       		.byte	0x71
+ 713 049f FE020000 		.4byte	0x2fe
+ 714 04a3 04       		.byte	0x4
+ 715 04a4 0A       		.uleb128 0xa
+ 716 04a5 6F706100 		.ascii	"opa\000"
+ 717 04a9 09       		.byte	0x9
+ 718 04aa 72       		.byte	0x72
+ 719 04ab FE020000 		.4byte	0x2fe
+ 720 04af 05       		.byte	0x5
+ 721 04b0 00       		.byte	0
+ 722 04b1 06       		.uleb128 0x6
+ 723 04b2 08       		.byte	0x8
+ 724 04b3 09       		.byte	0x9
+ 725 04b4 76       		.byte	0x76
+ 726 04b5 ED040000 		.4byte	0x4ed
+ 727 04b9 07       		.uleb128 0x7
+ 728 04ba 61020000 		.4byte	.LASF52
+ 729 04be 09       		.byte	0x9
+ 730 04bf 78       		.byte	0x78
+ 731 04c0 F2020000 		.4byte	0x2f2
+ 732 04c4 00       		.byte	0
+ 733 04c5 07       		.uleb128 0x7
+ 734 04c6 88020000 		.4byte	.LASF53
+ 735 04ca 09       		.byte	0x9
+ 736 04cb 79       		.byte	0x79
+ 737 04cc EF000000 		.4byte	0xef
+ 738 04d0 04       		.byte	0x4
+ 739 04d1 0A       		.uleb128 0xa
+ 740 04d2 6F706100 		.ascii	"opa\000"
+ 741 04d6 09       		.byte	0x9
+ 742 04d7 7A       		.byte	0x7a
+ 743 04d8 FE020000 		.4byte	0x2fe
+ 744 04dc 06       		.byte	0x6
+ 745 04dd 0C       		.uleb128 0xc
+ 746 04de 73020000 		.4byte	.LASF72
+ 747 04e2 09       		.byte	0x9
+ 748 04e3 7B       		.byte	0x7b
+ 749 04e4 B8000000 		.4byte	0xb8
+ 750 04e8 01       		.byte	0x1
+ 751 04e9 01       		.byte	0x1
+ 752 04ea 07       		.byte	0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 15
+
+
+ 753 04eb 07       		.byte	0x7
+ 754 04ec 00       		.byte	0
+ 755 04ed 06       		.uleb128 0x6
+ 756 04ee 50       		.byte	0x50
+ 757 04ef 09       		.byte	0x9
+ 758 04f0 3C       		.byte	0x3c
+ 759 04f1 35050000 		.4byte	0x535
+ 760 04f5 0C       		.uleb128 0xc
+ 761 04f6 48030000 		.4byte	.LASF73
+ 762 04fa 09       		.byte	0x9
+ 763 04fb 3E       		.byte	0x3e
+ 764 04fc B8000000 		.4byte	0xb8
+ 765 0500 01       		.byte	0x1
+ 766 0501 01       		.byte	0x1
+ 767 0502 07       		.byte	0x7
+ 768 0503 00       		.byte	0
+ 769 0504 07       		.uleb128 0x7
+ 770 0505 D7040000 		.4byte	.LASF74
+ 771 0509 09       		.byte	0x9
+ 772 050a 60       		.byte	0x60
+ 773 050b CB030000 		.4byte	0x3cb
+ 774 050f 04       		.byte	0x4
+ 775 0510 07       		.uleb128 0x7
+ 776 0511 56030000 		.4byte	.LASF75
+ 777 0515 09       		.byte	0x9
+ 778 0516 6B       		.byte	0x6b
+ 779 0517 28040000 		.4byte	0x428
+ 780 051b 2C       		.byte	0x2c
+ 781 051c 07       		.uleb128 0x7
+ 782 051d 97030000 		.4byte	.LASF76
+ 783 0521 09       		.byte	0x9
+ 784 0522 73       		.byte	0x73
+ 785 0523 84040000 		.4byte	0x484
+ 786 0527 40       		.byte	0x40
+ 787 0528 07       		.uleb128 0x7
+ 788 0529 FA040000 		.4byte	.LASF77
+ 789 052d 09       		.byte	0x9
+ 790 052e 7C       		.byte	0x7c
+ 791 052f B1040000 		.4byte	0x4b1
+ 792 0533 48       		.byte	0x48
+ 793 0534 00       		.byte	0
+ 794 0535 02       		.uleb128 0x2
+ 795 0536 00010000 		.4byte	.LASF78
+ 796 053a 09       		.byte	0x9
+ 797 053b 84       		.byte	0x84
+ 798 053c ED040000 		.4byte	0x4ed
+ 799 0540 02       		.uleb128 0x2
+ 800 0541 10010000 		.4byte	.LASF79
+ 801 0545 0A       		.byte	0xa
+ 802 0546 35       		.byte	0x35
+ 803 0547 B8000000 		.4byte	0xb8
+ 804 054b 06       		.uleb128 0x6
+ 805 054c 04       		.byte	0x4
+ 806 054d 0A       		.byte	0xa
+ 807 054e 39       		.byte	0x39
+ 808 054f 9A050000 		.4byte	0x59a
+ 809 0553 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 16
+
+
+ 810 0554 636600   		.ascii	"cf\000"
+ 811 0557 0A       		.byte	0xa
+ 812 0558 3E       		.byte	0x3e
+ 813 0559 E4000000 		.4byte	0xe4
+ 814 055d 04       		.byte	0x4
+ 815 055e 05       		.byte	0x5
+ 816 055f 1B       		.byte	0x1b
+ 817 0560 00       		.byte	0
+ 818 0561 0C       		.uleb128 0xc
+ 819 0562 05000000 		.4byte	.LASF80
+ 820 0566 0A       		.byte	0xa
+ 821 0567 3F       		.byte	0x3f
+ 822 0568 E4000000 		.4byte	0xe4
+ 823 056c 04       		.byte	0x4
+ 824 056d 03       		.byte	0x3
+ 825 056e 18       		.byte	0x18
+ 826 056f 00       		.byte	0
+ 827 0570 0C       		.uleb128 0xc
+ 828 0571 9A050000 		.4byte	.LASF81
+ 829 0575 0A       		.byte	0xa
+ 830 0576 42       		.byte	0x42
+ 831 0577 E4000000 		.4byte	0xe4
+ 832 057b 04       		.byte	0x4
+ 833 057c 02       		.byte	0x2
+ 834 057d 16       		.byte	0x16
+ 835 057e 00       		.byte	0
+ 836 057f 13       		.uleb128 0x13
+ 837 0580 7700     		.ascii	"w\000"
+ 838 0582 0A       		.byte	0xa
+ 839 0583 44       		.byte	0x44
+ 840 0584 E4000000 		.4byte	0xe4
+ 841 0588 04       		.byte	0x4
+ 842 0589 0B       		.byte	0xb
+ 843 058a 0B       		.byte	0xb
+ 844 058b 00       		.byte	0
+ 845 058c 13       		.uleb128 0x13
+ 846 058d 6800     		.ascii	"h\000"
+ 847 058f 0A       		.byte	0xa
+ 848 0590 45       		.byte	0x45
+ 849 0591 E4000000 		.4byte	0xe4
+ 850 0595 04       		.byte	0x4
+ 851 0596 0B       		.byte	0xb
+ 852 0597 00       		.byte	0
+ 853 0598 00       		.byte	0
+ 854 0599 00       		.byte	0
+ 855 059a 02       		.uleb128 0x2
+ 856 059b 4C060000 		.4byte	.LASF82
+ 857 059f 0A       		.byte	0xa
+ 858 05a0 46       		.byte	0x46
+ 859 05a1 4B050000 		.4byte	0x54b
+ 860 05a5 02       		.uleb128 0x2
+ 861 05a6 45010000 		.4byte	.LASF83
+ 862 05aa 0A       		.byte	0xa
+ 863 05ab 8B       		.byte	0x8b
+ 864 05ac B0050000 		.4byte	0x5b0
+ 865 05b0 08       		.uleb128 0x8
+ 866 05b1 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 17
+
+
+ 867 05b2 B6050000 		.4byte	0x5b6
+ 868 05b6 0D       		.uleb128 0xd
+ 869 05b7 03010000 		.4byte	0x103
+ 870 05bb CF050000 		.4byte	0x5cf
+ 871 05bf 0E       		.uleb128 0xe
+ 872 05c0 CF050000 		.4byte	0x5cf
+ 873 05c4 0E       		.uleb128 0xe
+ 874 05c5 12060000 		.4byte	0x612
+ 875 05c9 0E       		.uleb128 0xe
+ 876 05ca 19060000 		.4byte	0x619
+ 877 05ce 00       		.byte	0
+ 878 05cf 08       		.uleb128 0x8
+ 879 05d0 04       		.byte	0x4
+ 880 05d1 D5050000 		.4byte	0x5d5
+ 881 05d5 0B       		.uleb128 0xb
+ 882 05d6 B1030000 		.4byte	.LASF85
+ 883 05da 10       		.byte	0x10
+ 884 05db 0A       		.byte	0xa
+ 885 05dc AA       		.byte	0xaa
+ 886 05dd 12060000 		.4byte	0x612
+ 887 05e1 07       		.uleb128 0x7
+ 888 05e2 D3020000 		.4byte	.LASF86
+ 889 05e6 0A       		.byte	0xa
+ 890 05e7 AC       		.byte	0xac
+ 891 05e8 A5050000 		.4byte	0x5a5
+ 892 05ec 00       		.byte	0
+ 893 05ed 07       		.uleb128 0x7
+ 894 05ee 3F040000 		.4byte	.LASF87
+ 895 05f2 0A       		.byte	0xa
+ 896 05f3 AD       		.byte	0xad
+ 897 05f4 1F060000 		.4byte	0x61f
+ 898 05f8 04       		.byte	0x4
+ 899 05f9 07       		.uleb128 0x7
+ 900 05fa 45050000 		.4byte	.LASF88
+ 901 05fe 0A       		.byte	0xa
+ 902 05ff AE       		.byte	0xae
+ 903 0600 C3060000 		.4byte	0x6c3
+ 904 0604 08       		.byte	0x8
+ 905 0605 07       		.uleb128 0x7
+ 906 0606 45020000 		.4byte	.LASF89
+ 907 060a 0A       		.byte	0xa
+ 908 060b AF       		.byte	0xaf
+ 909 060c 02070000 		.4byte	0x702
+ 910 0610 0C       		.byte	0xc
+ 911 0611 00       		.byte	0
+ 912 0612 08       		.uleb128 0x8
+ 913 0613 04       		.byte	0x4
+ 914 0614 18060000 		.4byte	0x618
+ 915 0618 14       		.uleb128 0x14
+ 916 0619 08       		.uleb128 0x8
+ 917 061a 04       		.byte	0x4
+ 918 061b 9A050000 		.4byte	0x59a
+ 919 061f 02       		.uleb128 0x2
+ 920 0620 75030000 		.4byte	.LASF90
+ 921 0624 0A       		.byte	0xa
+ 922 0625 93       		.byte	0x93
+ 923 0626 2A060000 		.4byte	0x62a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 18
+
+
+ 924 062a 08       		.uleb128 0x8
+ 925 062b 04       		.byte	0x4
+ 926 062c 30060000 		.4byte	0x630
+ 927 0630 0D       		.uleb128 0xd
+ 928 0631 03010000 		.4byte	0x103
+ 929 0635 44060000 		.4byte	0x644
+ 930 0639 0E       		.uleb128 0xe
+ 931 063a CF050000 		.4byte	0x5cf
+ 932 063e 0E       		.uleb128 0xe
+ 933 063f 44060000 		.4byte	0x644
+ 934 0643 00       		.byte	0
+ 935 0644 08       		.uleb128 0x8
+ 936 0645 04       		.byte	0x4
+ 937 0646 4A060000 		.4byte	0x64a
+ 938 064a 0B       		.uleb128 0xb
+ 939 064b 94010000 		.4byte	.LASF91
+ 940 064f 24       		.byte	0x24
+ 941 0650 0A       		.byte	0xa
+ 942 0651 B7       		.byte	0xb7
+ 943 0652 C3060000 		.4byte	0x6c3
+ 944 0656 07       		.uleb128 0x7
+ 945 0657 80020000 		.4byte	.LASF92
+ 946 065b 0A       		.byte	0xa
+ 947 065c BA       		.byte	0xba
+ 948 065d 2E070000 		.4byte	0x72e
+ 949 0661 00       		.byte	0
+ 950 0662 0A       		.uleb128 0xa
+ 951 0663 73726300 		.ascii	"src\000"
+ 952 0667 0A       		.byte	0xa
+ 953 0668 BD       		.byte	0xbd
+ 954 0669 12060000 		.4byte	0x612
+ 955 066d 04       		.byte	0x4
+ 956 066e 07       		.uleb128 0x7
+ 957 066f 3F050000 		.4byte	.LASF93
+ 958 0673 0A       		.byte	0xa
+ 959 0674 C0       		.byte	0xc0
+ 960 0675 34070000 		.4byte	0x734
+ 961 0679 08       		.byte	0x8
+ 962 067a 07       		.uleb128 0x7
+ 963 067b 52050000 		.4byte	.LASF94
+ 964 067f 0A       		.byte	0xa
+ 965 0680 C3       		.byte	0xc3
+ 966 0681 40050000 		.4byte	0x540
+ 967 0685 0C       		.byte	0xc
+ 968 0686 07       		.uleb128 0x7
+ 969 0687 AA030000 		.4byte	.LASF95
+ 970 068b 0A       		.byte	0xa
+ 971 068c C6       		.byte	0xc6
+ 972 068d 9A050000 		.4byte	0x59a
+ 973 0691 10       		.byte	0x10
+ 974 0692 07       		.uleb128 0x7
+ 975 0693 11000000 		.4byte	.LASF96
+ 976 0697 0A       		.byte	0xa
+ 977 0698 CA       		.byte	0xca
+ 978 0699 74020000 		.4byte	0x274
+ 979 069d 14       		.byte	0x14
+ 980 069e 07       		.uleb128 0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 19
+
+
+ 981 069f 62060000 		.4byte	.LASF97
+ 982 06a3 0A       		.byte	0xa
+ 983 06a4 CE       		.byte	0xce
+ 984 06a5 E4000000 		.4byte	0xe4
+ 985 06a9 18       		.byte	0x18
+ 986 06aa 07       		.uleb128 0x7
+ 987 06ab 3B010000 		.4byte	.LASF98
+ 988 06af 0A       		.byte	0xa
+ 989 06b0 D2       		.byte	0xd2
+ 990 06b1 65010000 		.4byte	0x165
+ 991 06b5 1C       		.byte	0x1c
+ 992 06b6 07       		.uleb128 0x7
+ 993 06b7 30030000 		.4byte	.LASF99
+ 994 06bb 0A       		.byte	0xa
+ 995 06bc D5       		.byte	0xd5
+ 996 06bd FA000000 		.4byte	0xfa
+ 997 06c1 20       		.byte	0x20
+ 998 06c2 00       		.byte	0
+ 999 06c3 02       		.uleb128 0x2
+ 1000 06c4 64010000 		.4byte	.LASF100
+ 1001 06c8 0A       		.byte	0xa
+ 1002 06c9 A0       		.byte	0xa0
+ 1003 06ca CE060000 		.4byte	0x6ce
+ 1004 06ce 08       		.uleb128 0x8
+ 1005 06cf 04       		.byte	0x4
+ 1006 06d0 D4060000 		.4byte	0x6d4
+ 1007 06d4 0D       		.uleb128 0xd
+ 1008 06d5 03010000 		.4byte	0x103
+ 1009 06d9 FC060000 		.4byte	0x6fc
+ 1010 06dd 0E       		.uleb128 0xe
+ 1011 06de CF050000 		.4byte	0x5cf
+ 1012 06e2 0E       		.uleb128 0xe
+ 1013 06e3 44060000 		.4byte	0x644
+ 1014 06e7 0E       		.uleb128 0xe
+ 1015 06e8 EF000000 		.4byte	0xef
+ 1016 06ec 0E       		.uleb128 0xe
+ 1017 06ed EF000000 		.4byte	0xef
+ 1018 06f1 0E       		.uleb128 0xe
+ 1019 06f2 EF000000 		.4byte	0xef
+ 1020 06f6 0E       		.uleb128 0xe
+ 1021 06f7 FC060000 		.4byte	0x6fc
+ 1022 06fb 00       		.byte	0
+ 1023 06fc 08       		.uleb128 0x8
+ 1024 06fd 04       		.byte	0x4
+ 1025 06fe B8000000 		.4byte	0xb8
+ 1026 0702 02       		.uleb128 0x2
+ 1027 0703 81050000 		.4byte	.LASF101
+ 1028 0707 0A       		.byte	0xa
+ 1029 0708 A8       		.byte	0xa8
+ 1030 0709 0D070000 		.4byte	0x70d
+ 1031 070d 08       		.uleb128 0x8
+ 1032 070e 04       		.byte	0x4
+ 1033 070f 13070000 		.4byte	0x713
+ 1034 0713 15       		.uleb128 0x15
+ 1035 0714 23070000 		.4byte	0x723
+ 1036 0718 0E       		.uleb128 0xe
+ 1037 0719 CF050000 		.4byte	0x5cf
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 20
+
+
+ 1038 071d 0E       		.uleb128 0xe
+ 1039 071e 44060000 		.4byte	0x644
+ 1040 0722 00       		.byte	0
+ 1041 0723 02       		.uleb128 0x2
+ 1042 0724 6E040000 		.4byte	.LASF102
+ 1043 0728 0A       		.byte	0xa
+ 1044 0729 B4       		.byte	0xb4
+ 1045 072a D5050000 		.4byte	0x5d5
+ 1046 072e 08       		.uleb128 0x8
+ 1047 072f 04       		.byte	0x4
+ 1048 0730 23070000 		.4byte	0x723
+ 1049 0734 08       		.uleb128 0x8
+ 1050 0735 04       		.byte	0x4
+ 1051 0736 3A070000 		.4byte	0x73a
+ 1052 073a 09       		.uleb128 0x9
+ 1053 073b 35050000 		.4byte	0x535
+ 1054 073f 02       		.uleb128 0x2
+ 1055 0740 14050000 		.4byte	.LASF103
+ 1056 0744 0A       		.byte	0xa
+ 1057 0745 D6       		.byte	0xd6
+ 1058 0746 4A060000 		.4byte	0x64a
+ 1059 074a 06       		.uleb128 0x6
+ 1060 074b 28       		.byte	0x28
+ 1061 074c 0B       		.byte	0xb
+ 1062 074d 1F       		.byte	0x1f
+ 1063 074e 6B070000 		.4byte	0x76b
+ 1064 0752 07       		.uleb128 0x7
+ 1065 0753 44060000 		.4byte	.LASF104
+ 1066 0757 0B       		.byte	0xb
+ 1067 0758 21       		.byte	0x21
+ 1068 0759 3F070000 		.4byte	0x73f
+ 1069 075d 00       		.byte	0
+ 1070 075e 07       		.uleb128 0x7
+ 1071 075f 7B020000 		.4byte	.LASF105
+ 1072 0763 0B       		.byte	0xb
+ 1073 0764 26       		.byte	0x26
+ 1074 0765 D9000000 		.4byte	0xd9
+ 1075 0769 24       		.byte	0x24
+ 1076 076a 00       		.byte	0
+ 1077 076b 02       		.uleb128 0x2
+ 1078 076c FF040000 		.4byte	.LASF106
+ 1079 0770 0B       		.byte	0xb
+ 1080 0771 27       		.byte	0x27
+ 1081 0772 4A070000 		.4byte	0x74a
+ 1082 0776 16       		.uleb128 0x16
+ 1083 0777 63030000 		.4byte	.LASF121
+ 1084 077b 01       		.byte	0x1
+ 1085 077c 2B       		.byte	0x2b
+ 1086 077d 00000000 		.4byte	.LFB31
+ 1087 0781 88000000 		.4byte	.LFE31-.LFB31
+ 1088 0785 01       		.uleb128 0x1
+ 1089 0786 9C       		.byte	0x9c
+ 1090 0787 17       		.uleb128 0x17
+ 1091 0788 67020000 		.4byte	.LASF107
+ 1092 078c 01       		.byte	0x1
+ 1093 078d 21       		.byte	0x21
+ 1094 078e 4C010000 		.4byte	0x14c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 21
+
+
+ 1095 0792 05       		.uleb128 0x5
+ 1096 0793 03       		.byte	0x3
+ 1097 0794 00000000 		.4byte	_lv_task_ll
+ 1098 0798 17       		.uleb128 0x17
+ 1099 0799 1A000000 		.4byte	.LASF108
+ 1100 079d 01       		.byte	0x1
+ 1101 079e 21       		.byte	0x21
+ 1102 079f 4C010000 		.4byte	0x14c
+ 1103 07a3 05       		.uleb128 0x5
+ 1104 07a4 03       		.byte	0x3
+ 1105 07a5 00000000 		.4byte	_lv_disp_ll
+ 1106 07a9 17       		.uleb128 0x17
+ 1107 07aa 8A040000 		.4byte	.LASF109
+ 1108 07ae 01       		.byte	0x1
+ 1109 07af 21       		.byte	0x21
+ 1110 07b0 4C010000 		.4byte	0x14c
+ 1111 07b4 05       		.uleb128 0x5
+ 1112 07b5 03       		.byte	0x3
+ 1113 07b6 00000000 		.4byte	_lv_indev_ll
+ 1114 07ba 17       		.uleb128 0x17
+ 1115 07bb C8020000 		.4byte	.LASF110
+ 1116 07bf 01       		.byte	0x1
+ 1117 07c0 21       		.byte	0x21
+ 1118 07c1 4C010000 		.4byte	0x14c
+ 1119 07c5 05       		.uleb128 0x5
+ 1120 07c6 03       		.byte	0x3
+ 1121 07c7 00000000 		.4byte	_lv_drv_ll
+ 1122 07cb 17       		.uleb128 0x17
+ 1123 07cc 55020000 		.4byte	.LASF111
+ 1124 07d0 01       		.byte	0x1
+ 1125 07d1 21       		.byte	0x21
+ 1126 07d2 4C010000 		.4byte	0x14c
+ 1127 07d6 05       		.uleb128 0x5
+ 1128 07d7 03       		.byte	0x3
+ 1129 07d8 00000000 		.4byte	_lv_file_ll
+ 1130 07dc 17       		.uleb128 0x17
+ 1131 07dd CB010000 		.4byte	.LASF112
+ 1132 07e1 01       		.byte	0x1
+ 1133 07e2 21       		.byte	0x21
+ 1134 07e3 4C010000 		.4byte	0x14c
+ 1135 07e7 05       		.uleb128 0x5
+ 1136 07e8 03       		.byte	0x3
+ 1137 07e9 00000000 		.4byte	_lv_anim_ll
+ 1138 07ed 17       		.uleb128 0x17
+ 1139 07ee A3050000 		.4byte	.LASF113
+ 1140 07f2 01       		.byte	0x1
+ 1141 07f3 21       		.byte	0x21
+ 1142 07f4 4C010000 		.4byte	0x14c
+ 1143 07f8 05       		.uleb128 0x5
+ 1144 07f9 03       		.byte	0x3
+ 1145 07fa 00000000 		.4byte	_lv_group_ll
+ 1146 07fe 17       		.uleb128 0x17
+ 1147 07ff 81010000 		.4byte	.LASF114
+ 1148 0803 01       		.byte	0x1
+ 1149 0804 21       		.byte	0x21
+ 1150 0805 4C010000 		.4byte	0x14c
+ 1151 0809 05       		.uleb128 0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 22
+
+
+ 1152 080a 03       		.byte	0x3
+ 1153 080b 00000000 		.4byte	_lv_img_defoder_ll
+ 1154 080f 17       		.uleb128 0x17
+ 1155 0810 27010000 		.4byte	.LASF115
+ 1156 0814 01       		.byte	0x1
+ 1157 0815 21       		.byte	0x21
+ 1158 0816 20080000 		.4byte	0x820
+ 1159 081a 05       		.uleb128 0x5
+ 1160 081b 03       		.byte	0x3
+ 1161 081c 00000000 		.4byte	_lv_img_cache_array
+ 1162 0820 08       		.uleb128 0x8
+ 1163 0821 04       		.byte	0x4
+ 1164 0822 6B070000 		.4byte	0x76b
+ 1165 0826 17       		.uleb128 0x17
+ 1166 0827 0C030000 		.4byte	.LASF116
+ 1167 082b 01       		.byte	0x1
+ 1168 082c 21       		.byte	0x21
+ 1169 082d FA000000 		.4byte	0xfa
+ 1170 0831 05       		.uleb128 0x5
+ 1171 0832 03       		.byte	0x3
+ 1172 0833 00000000 		.4byte	_lv_task_act
+ 1173 0837 17       		.uleb128 0x17
+ 1174 0838 9D030000 		.4byte	.LASF117
+ 1175 083c 01       		.byte	0x1
+ 1176 083d 21       		.byte	0x21
+ 1177 083e FA000000 		.4byte	0xfa
+ 1178 0842 05       		.uleb128 0x5
+ 1179 0843 03       		.byte	0x3
+ 1180 0844 00000000 		.4byte	_lv_draw_buf
+ 1181 0848 00       		.byte	0
+ 1182              		.section	.debug_abbrev,"",%progbits
+ 1183              	.Ldebug_abbrev0:
+ 1184 0000 01       		.uleb128 0x1
+ 1185 0001 11       		.uleb128 0x11
+ 1186 0002 01       		.byte	0x1
+ 1187 0003 25       		.uleb128 0x25
+ 1188 0004 0E       		.uleb128 0xe
+ 1189 0005 13       		.uleb128 0x13
+ 1190 0006 0B       		.uleb128 0xb
+ 1191 0007 03       		.uleb128 0x3
+ 1192 0008 0E       		.uleb128 0xe
+ 1193 0009 1B       		.uleb128 0x1b
+ 1194 000a 0E       		.uleb128 0xe
+ 1195 000b 55       		.uleb128 0x55
+ 1196 000c 17       		.uleb128 0x17
+ 1197 000d 11       		.uleb128 0x11
+ 1198 000e 01       		.uleb128 0x1
+ 1199 000f 10       		.uleb128 0x10
+ 1200 0010 17       		.uleb128 0x17
+ 1201 0011 00       		.byte	0
+ 1202 0012 00       		.byte	0
+ 1203 0013 02       		.uleb128 0x2
+ 1204 0014 16       		.uleb128 0x16
+ 1205 0015 00       		.byte	0
+ 1206 0016 03       		.uleb128 0x3
+ 1207 0017 0E       		.uleb128 0xe
+ 1208 0018 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 23
+
+
+ 1209 0019 0B       		.uleb128 0xb
+ 1210 001a 3B       		.uleb128 0x3b
+ 1211 001b 0B       		.uleb128 0xb
+ 1212 001c 49       		.uleb128 0x49
+ 1213 001d 13       		.uleb128 0x13
+ 1214 001e 00       		.byte	0
+ 1215 001f 00       		.byte	0
+ 1216 0020 03       		.uleb128 0x3
+ 1217 0021 24       		.uleb128 0x24
+ 1218 0022 00       		.byte	0
+ 1219 0023 0B       		.uleb128 0xb
+ 1220 0024 0B       		.uleb128 0xb
+ 1221 0025 3E       		.uleb128 0x3e
+ 1222 0026 0B       		.uleb128 0xb
+ 1223 0027 03       		.uleb128 0x3
+ 1224 0028 0E       		.uleb128 0xe
+ 1225 0029 00       		.byte	0
+ 1226 002a 00       		.byte	0
+ 1227 002b 04       		.uleb128 0x4
+ 1228 002c 24       		.uleb128 0x24
+ 1229 002d 00       		.byte	0
+ 1230 002e 0B       		.uleb128 0xb
+ 1231 002f 0B       		.uleb128 0xb
+ 1232 0030 3E       		.uleb128 0x3e
+ 1233 0031 0B       		.uleb128 0xb
+ 1234 0032 03       		.uleb128 0x3
+ 1235 0033 08       		.uleb128 0x8
+ 1236 0034 00       		.byte	0
+ 1237 0035 00       		.byte	0
+ 1238 0036 05       		.uleb128 0x5
+ 1239 0037 0F       		.uleb128 0xf
+ 1240 0038 00       		.byte	0
+ 1241 0039 0B       		.uleb128 0xb
+ 1242 003a 0B       		.uleb128 0xb
+ 1243 003b 00       		.byte	0
+ 1244 003c 00       		.byte	0
+ 1245 003d 06       		.uleb128 0x6
+ 1246 003e 13       		.uleb128 0x13
+ 1247 003f 01       		.byte	0x1
+ 1248 0040 0B       		.uleb128 0xb
+ 1249 0041 0B       		.uleb128 0xb
+ 1250 0042 3A       		.uleb128 0x3a
+ 1251 0043 0B       		.uleb128 0xb
+ 1252 0044 3B       		.uleb128 0x3b
+ 1253 0045 0B       		.uleb128 0xb
+ 1254 0046 01       		.uleb128 0x1
+ 1255 0047 13       		.uleb128 0x13
+ 1256 0048 00       		.byte	0
+ 1257 0049 00       		.byte	0
+ 1258 004a 07       		.uleb128 0x7
+ 1259 004b 0D       		.uleb128 0xd
+ 1260 004c 00       		.byte	0
+ 1261 004d 03       		.uleb128 0x3
+ 1262 004e 0E       		.uleb128 0xe
+ 1263 004f 3A       		.uleb128 0x3a
+ 1264 0050 0B       		.uleb128 0xb
+ 1265 0051 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 24
+
+
+ 1266 0052 0B       		.uleb128 0xb
+ 1267 0053 49       		.uleb128 0x49
+ 1268 0054 13       		.uleb128 0x13
+ 1269 0055 38       		.uleb128 0x38
+ 1270 0056 0B       		.uleb128 0xb
+ 1271 0057 00       		.byte	0
+ 1272 0058 00       		.byte	0
+ 1273 0059 08       		.uleb128 0x8
+ 1274 005a 0F       		.uleb128 0xf
+ 1275 005b 00       		.byte	0
+ 1276 005c 0B       		.uleb128 0xb
+ 1277 005d 0B       		.uleb128 0xb
+ 1278 005e 49       		.uleb128 0x49
+ 1279 005f 13       		.uleb128 0x13
+ 1280 0060 00       		.byte	0
+ 1281 0061 00       		.byte	0
+ 1282 0062 09       		.uleb128 0x9
+ 1283 0063 26       		.uleb128 0x26
+ 1284 0064 00       		.byte	0
+ 1285 0065 49       		.uleb128 0x49
+ 1286 0066 13       		.uleb128 0x13
+ 1287 0067 00       		.byte	0
+ 1288 0068 00       		.byte	0
+ 1289 0069 0A       		.uleb128 0xa
+ 1290 006a 0D       		.uleb128 0xd
+ 1291 006b 00       		.byte	0
+ 1292 006c 03       		.uleb128 0x3
+ 1293 006d 08       		.uleb128 0x8
+ 1294 006e 3A       		.uleb128 0x3a
+ 1295 006f 0B       		.uleb128 0xb
+ 1296 0070 3B       		.uleb128 0x3b
+ 1297 0071 0B       		.uleb128 0xb
+ 1298 0072 49       		.uleb128 0x49
+ 1299 0073 13       		.uleb128 0x13
+ 1300 0074 38       		.uleb128 0x38
+ 1301 0075 0B       		.uleb128 0xb
+ 1302 0076 00       		.byte	0
+ 1303 0077 00       		.byte	0
+ 1304 0078 0B       		.uleb128 0xb
+ 1305 0079 13       		.uleb128 0x13
+ 1306 007a 01       		.byte	0x1
+ 1307 007b 03       		.uleb128 0x3
+ 1308 007c 0E       		.uleb128 0xe
+ 1309 007d 0B       		.uleb128 0xb
+ 1310 007e 0B       		.uleb128 0xb
+ 1311 007f 3A       		.uleb128 0x3a
+ 1312 0080 0B       		.uleb128 0xb
+ 1313 0081 3B       		.uleb128 0x3b
+ 1314 0082 0B       		.uleb128 0xb
+ 1315 0083 01       		.uleb128 0x1
+ 1316 0084 13       		.uleb128 0x13
+ 1317 0085 00       		.byte	0
+ 1318 0086 00       		.byte	0
+ 1319 0087 0C       		.uleb128 0xc
+ 1320 0088 0D       		.uleb128 0xd
+ 1321 0089 00       		.byte	0
+ 1322 008a 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 25
+
+
+ 1323 008b 0E       		.uleb128 0xe
+ 1324 008c 3A       		.uleb128 0x3a
+ 1325 008d 0B       		.uleb128 0xb
+ 1326 008e 3B       		.uleb128 0x3b
+ 1327 008f 0B       		.uleb128 0xb
+ 1328 0090 49       		.uleb128 0x49
+ 1329 0091 13       		.uleb128 0x13
+ 1330 0092 0B       		.uleb128 0xb
+ 1331 0093 0B       		.uleb128 0xb
+ 1332 0094 0D       		.uleb128 0xd
+ 1333 0095 0B       		.uleb128 0xb
+ 1334 0096 0C       		.uleb128 0xc
+ 1335 0097 0B       		.uleb128 0xb
+ 1336 0098 38       		.uleb128 0x38
+ 1337 0099 0B       		.uleb128 0xb
+ 1338 009a 00       		.byte	0
+ 1339 009b 00       		.byte	0
+ 1340 009c 0D       		.uleb128 0xd
+ 1341 009d 15       		.uleb128 0x15
+ 1342 009e 01       		.byte	0x1
+ 1343 009f 27       		.uleb128 0x27
+ 1344 00a0 19       		.uleb128 0x19
+ 1345 00a1 49       		.uleb128 0x49
+ 1346 00a2 13       		.uleb128 0x13
+ 1347 00a3 01       		.uleb128 0x1
+ 1348 00a4 13       		.uleb128 0x13
+ 1349 00a5 00       		.byte	0
+ 1350 00a6 00       		.byte	0
+ 1351 00a7 0E       		.uleb128 0xe
+ 1352 00a8 05       		.uleb128 0x5
+ 1353 00a9 00       		.byte	0
+ 1354 00aa 49       		.uleb128 0x49
+ 1355 00ab 13       		.uleb128 0x13
+ 1356 00ac 00       		.byte	0
+ 1357 00ad 00       		.byte	0
+ 1358 00ae 0F       		.uleb128 0xf
+ 1359 00af 17       		.uleb128 0x17
+ 1360 00b0 01       		.byte	0x1
+ 1361 00b1 0B       		.uleb128 0xb
+ 1362 00b2 0B       		.uleb128 0xb
+ 1363 00b3 3A       		.uleb128 0x3a
+ 1364 00b4 0B       		.uleb128 0xb
+ 1365 00b5 3B       		.uleb128 0x3b
+ 1366 00b6 0B       		.uleb128 0xb
+ 1367 00b7 01       		.uleb128 0x1
+ 1368 00b8 13       		.uleb128 0x13
+ 1369 00b9 00       		.byte	0
+ 1370 00ba 00       		.byte	0
+ 1371 00bb 10       		.uleb128 0x10
+ 1372 00bc 0D       		.uleb128 0xd
+ 1373 00bd 00       		.byte	0
+ 1374 00be 03       		.uleb128 0x3
+ 1375 00bf 08       		.uleb128 0x8
+ 1376 00c0 3A       		.uleb128 0x3a
+ 1377 00c1 0B       		.uleb128 0xb
+ 1378 00c2 3B       		.uleb128 0x3b
+ 1379 00c3 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 26
+
+
+ 1380 00c4 49       		.uleb128 0x49
+ 1381 00c5 13       		.uleb128 0x13
+ 1382 00c6 00       		.byte	0
+ 1383 00c7 00       		.byte	0
+ 1384 00c8 11       		.uleb128 0x11
+ 1385 00c9 0D       		.uleb128 0xd
+ 1386 00ca 00       		.byte	0
+ 1387 00cb 03       		.uleb128 0x3
+ 1388 00cc 0E       		.uleb128 0xe
+ 1389 00cd 3A       		.uleb128 0x3a
+ 1390 00ce 0B       		.uleb128 0xb
+ 1391 00cf 3B       		.uleb128 0x3b
+ 1392 00d0 0B       		.uleb128 0xb
+ 1393 00d1 49       		.uleb128 0x49
+ 1394 00d2 13       		.uleb128 0x13
+ 1395 00d3 00       		.byte	0
+ 1396 00d4 00       		.byte	0
+ 1397 00d5 12       		.uleb128 0x12
+ 1398 00d6 16       		.uleb128 0x16
+ 1399 00d7 00       		.byte	0
+ 1400 00d8 03       		.uleb128 0x3
+ 1401 00d9 0E       		.uleb128 0xe
+ 1402 00da 3A       		.uleb128 0x3a
+ 1403 00db 0B       		.uleb128 0xb
+ 1404 00dc 3B       		.uleb128 0x3b
+ 1405 00dd 05       		.uleb128 0x5
+ 1406 00de 49       		.uleb128 0x49
+ 1407 00df 13       		.uleb128 0x13
+ 1408 00e0 00       		.byte	0
+ 1409 00e1 00       		.byte	0
+ 1410 00e2 13       		.uleb128 0x13
+ 1411 00e3 0D       		.uleb128 0xd
+ 1412 00e4 00       		.byte	0
+ 1413 00e5 03       		.uleb128 0x3
+ 1414 00e6 08       		.uleb128 0x8
+ 1415 00e7 3A       		.uleb128 0x3a
+ 1416 00e8 0B       		.uleb128 0xb
+ 1417 00e9 3B       		.uleb128 0x3b
+ 1418 00ea 0B       		.uleb128 0xb
+ 1419 00eb 49       		.uleb128 0x49
+ 1420 00ec 13       		.uleb128 0x13
+ 1421 00ed 0B       		.uleb128 0xb
+ 1422 00ee 0B       		.uleb128 0xb
+ 1423 00ef 0D       		.uleb128 0xd
+ 1424 00f0 0B       		.uleb128 0xb
+ 1425 00f1 0C       		.uleb128 0xc
+ 1426 00f2 0B       		.uleb128 0xb
+ 1427 00f3 38       		.uleb128 0x38
+ 1428 00f4 0B       		.uleb128 0xb
+ 1429 00f5 00       		.byte	0
+ 1430 00f6 00       		.byte	0
+ 1431 00f7 14       		.uleb128 0x14
+ 1432 00f8 26       		.uleb128 0x26
+ 1433 00f9 00       		.byte	0
+ 1434 00fa 00       		.byte	0
+ 1435 00fb 00       		.byte	0
+ 1436 00fc 15       		.uleb128 0x15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 27
+
+
+ 1437 00fd 15       		.uleb128 0x15
+ 1438 00fe 01       		.byte	0x1
+ 1439 00ff 27       		.uleb128 0x27
+ 1440 0100 19       		.uleb128 0x19
+ 1441 0101 01       		.uleb128 0x1
+ 1442 0102 13       		.uleb128 0x13
+ 1443 0103 00       		.byte	0
+ 1444 0104 00       		.byte	0
+ 1445 0105 16       		.uleb128 0x16
+ 1446 0106 2E       		.uleb128 0x2e
+ 1447 0107 00       		.byte	0
+ 1448 0108 3F       		.uleb128 0x3f
+ 1449 0109 19       		.uleb128 0x19
+ 1450 010a 03       		.uleb128 0x3
+ 1451 010b 0E       		.uleb128 0xe
+ 1452 010c 3A       		.uleb128 0x3a
+ 1453 010d 0B       		.uleb128 0xb
+ 1454 010e 3B       		.uleb128 0x3b
+ 1455 010f 0B       		.uleb128 0xb
+ 1456 0110 27       		.uleb128 0x27
+ 1457 0111 19       		.uleb128 0x19
+ 1458 0112 11       		.uleb128 0x11
+ 1459 0113 01       		.uleb128 0x1
+ 1460 0114 12       		.uleb128 0x12
+ 1461 0115 06       		.uleb128 0x6
+ 1462 0116 40       		.uleb128 0x40
+ 1463 0117 18       		.uleb128 0x18
+ 1464 0118 9742     		.uleb128 0x2117
+ 1465 011a 19       		.uleb128 0x19
+ 1466 011b 00       		.byte	0
+ 1467 011c 00       		.byte	0
+ 1468 011d 17       		.uleb128 0x17
+ 1469 011e 34       		.uleb128 0x34
+ 1470 011f 00       		.byte	0
+ 1471 0120 03       		.uleb128 0x3
+ 1472 0121 0E       		.uleb128 0xe
+ 1473 0122 3A       		.uleb128 0x3a
+ 1474 0123 0B       		.uleb128 0xb
+ 1475 0124 3B       		.uleb128 0x3b
+ 1476 0125 0B       		.uleb128 0xb
+ 1477 0126 49       		.uleb128 0x49
+ 1478 0127 13       		.uleb128 0x13
+ 1479 0128 3F       		.uleb128 0x3f
+ 1480 0129 19       		.uleb128 0x19
+ 1481 012a 02       		.uleb128 0x2
+ 1482 012b 18       		.uleb128 0x18
+ 1483 012c 00       		.byte	0
+ 1484 012d 00       		.byte	0
+ 1485 012e 00       		.byte	0
+ 1486              		.section	.debug_aranges,"",%progbits
+ 1487 0000 1C000000 		.4byte	0x1c
+ 1488 0004 0200     		.2byte	0x2
+ 1489 0006 00000000 		.4byte	.Ldebug_info0
+ 1490 000a 04       		.byte	0x4
+ 1491 000b 00       		.byte	0
+ 1492 000c 0000     		.2byte	0
+ 1493 000e 0000     		.2byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 28
+
+
+ 1494 0010 00000000 		.4byte	.LFB31
+ 1495 0014 88000000 		.4byte	.LFE31-.LFB31
+ 1496 0018 00000000 		.4byte	0
+ 1497 001c 00000000 		.4byte	0
+ 1498              		.section	.debug_ranges,"",%progbits
+ 1499              	.Ldebug_ranges0:
+ 1500 0000 00000000 		.4byte	.LFB31
+ 1501 0004 88000000 		.4byte	.LFE31
+ 1502 0008 00000000 		.4byte	0
+ 1503 000c 00000000 		.4byte	0
+ 1504              		.section	.debug_line,"",%progbits
+ 1505              	.Ldebug_line0:
+ 1506 0000 20030000 		.section	.debug_str,"MS",%progbits,1
+ 1506      02000A03 
+ 1506      00000201 
+ 1506      FB0E0D00 
+ 1506      01010101 
+ 1507              	.LASF46:
+ 1508 0000 66756C6C 		.ascii	"full\000"
+ 1508      00
+ 1509              	.LASF80:
+ 1510 0005 616C7761 		.ascii	"always_zero\000"
+ 1510      79735F7A 
+ 1510      65726F00 
+ 1511              	.LASF96:
+ 1512 0011 696D675F 		.ascii	"img_data\000"
+ 1512      64617461 
+ 1512      00
+ 1513              	.LASF108:
+ 1514 001a 5F6C765F 		.ascii	"_lv_disp_ll\000"
+ 1514      64697370 
+ 1514      5F6C6C00 
+ 1515              	.LASF14:
+ 1516 0026 756E7369 		.ascii	"unsigned int\000"
+ 1516      676E6564 
+ 1516      20696E74 
+ 1516      00
+ 1517              	.LASF34:
+ 1518 0033 6F66735F 		.ascii	"ofs_x\000"
+ 1518      7800
+ 1519              	.LASF35:
+ 1520 0039 6F66735F 		.ascii	"ofs_y\000"
+ 1520      7900
+ 1521              	.LASF118:
+ 1522 003f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1522      43313120 
+ 1522      352E342E 
+ 1522      31203230 
+ 1522      31363036 
+ 1523 0072 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1523      20726576 
+ 1523      6973696F 
+ 1523      6E203233 
+ 1523      37373135 
+ 1524 00a5 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 1524      70202D6D 
+ 1524      6670753D 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 29
+
+
+ 1524      66707634 
+ 1524      2D73702D 
+ 1525 00d8 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1525      6F6E7320 
+ 1525      2D666661 
+ 1525      742D6C74 
+ 1525      6F2D6F62 
+ 1526              	.LASF37:
+ 1527 00f2 6765745F 		.ascii	"get_glyph_dsc\000"
+ 1527      676C7970 
+ 1527      685F6473 
+ 1527      6300
+ 1528              	.LASF78:
+ 1529 0100 6C765F73 		.ascii	"lv_style_t\000"
+ 1529      74796C65 
+ 1529      5F7400
+ 1530              	.LASF26:
+ 1531 010b 68656164 		.ascii	"head\000"
+ 1531      00
+ 1532              	.LASF79:
+ 1533 0110 6C765F69 		.ascii	"lv_img_src_t\000"
+ 1533      6D675F73 
+ 1533      72635F74 
+ 1533      00
+ 1534              	.LASF8:
+ 1535 011d 5F5F696E 		.ascii	"__int32_t\000"
+ 1535      7433325F 
+ 1535      7400
+ 1536              	.LASF115:
+ 1537 0127 5F6C765F 		.ascii	"_lv_img_cache_array\000"
+ 1537      696D675F 
+ 1537      63616368 
+ 1537      655F6172 
+ 1537      72617900 
+ 1538              	.LASF98:
+ 1539 013b 6572726F 		.ascii	"error_msg\000"
+ 1539      725F6D73 
+ 1539      6700
+ 1540              	.LASF83:
+ 1541 0145 6C765F69 		.ascii	"lv_img_decoder_info_f_t\000"
+ 1541      6D675F64 
+ 1541      65636F64 
+ 1541      65725F69 
+ 1541      6E666F5F 
+ 1542              	.LASF25:
+ 1543 015d 6E5F7369 		.ascii	"n_size\000"
+ 1543      7A6500
+ 1544              	.LASF100:
+ 1545 0164 6C765F69 		.ascii	"lv_img_decoder_read_line_f_t\000"
+ 1545      6D675F64 
+ 1545      65636F64 
+ 1545      65725F72 
+ 1545      6561645F 
+ 1546              	.LASF114:
+ 1547 0181 5F6C765F 		.ascii	"_lv_img_defoder_ll\000"
+ 1547      696D675F 
+ 1547      6465666F 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 30
+
+
+ 1547      6465725F 
+ 1547      6C6C00
+ 1548              	.LASF91:
+ 1549 0194 5F6C765F 		.ascii	"_lv_img_decoder_dsc\000"
+ 1549      696D675F 
+ 1549      6465636F 
+ 1549      6465725F 
+ 1549      64736300 
+ 1550              	.LASF59:
+ 1551 01a8 696E6E65 		.ascii	"inner\000"
+ 1551      7200
+ 1552              	.LASF20:
+ 1553 01ae 75696E74 		.ascii	"uint32_t\000"
+ 1553      33325F74 
+ 1553      00
+ 1554              	.LASF15:
+ 1555 01b7 696E7438 		.ascii	"int8_t\000"
+ 1555      5F7400
+ 1556              	.LASF47:
+ 1557 01be 6C765F63 		.ascii	"lv_color32_t\000"
+ 1557      6F6C6F72 
+ 1557      33325F74 
+ 1557      00
+ 1558              	.LASF112:
+ 1559 01cb 5F6C765F 		.ascii	"_lv_anim_ll\000"
+ 1559      616E696D 
+ 1559      5F6C6C00 
+ 1560              	.LASF66:
+ 1561 01d7 73656C5F 		.ascii	"sel_color\000"
+ 1561      636F6C6F 
+ 1561      7200
+ 1562              	.LASF119:
+ 1563 01e1 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 1563      2E5C2E2E 
+ 1563      5C6C7667 
+ 1563      6C5C7665 
+ 1563      7273696F 
+ 1564 020d 5C6C765F 		.ascii	"\\lv_gc.c\000"
+ 1564      67632E63 
+ 1564      00
+ 1565              	.LASF17:
+ 1566 0216 696E7431 		.ascii	"int16_t\000"
+ 1566      365F7400 
+ 1567              	.LASF13:
+ 1568 021e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1568      206C6F6E 
+ 1568      6720756E 
+ 1568      7369676E 
+ 1568      65642069 
+ 1569              	.LASF54:
+ 1570 0235 70617274 		.ascii	"part\000"
+ 1570      00
+ 1571              	.LASF6:
+ 1572 023a 5F5F7569 		.ascii	"__uint16_t\000"
+ 1572      6E743136 
+ 1572      5F7400
+ 1573              	.LASF89:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 31
+
+
+ 1574 0245 636C6F73 		.ascii	"close_cb\000"
+ 1574      655F6362 
+ 1574      00
+ 1575              	.LASF63:
+ 1576 024e 626F7264 		.ascii	"border\000"
+ 1576      657200
+ 1577              	.LASF111:
+ 1578 0255 5F6C765F 		.ascii	"_lv_file_ll\000"
+ 1578      66696C65 
+ 1578      5F6C6C00 
+ 1579              	.LASF52:
+ 1580 0261 636F6C6F 		.ascii	"color\000"
+ 1580      7200
+ 1581              	.LASF107:
+ 1582 0267 5F6C765F 		.ascii	"_lv_task_ll\000"
+ 1582      7461736B 
+ 1582      5F6C6C00 
+ 1583              	.LASF72:
+ 1584 0273 726F756E 		.ascii	"rounded\000"
+ 1584      64656400 
+ 1585              	.LASF105:
+ 1586 027b 6C696665 		.ascii	"life\000"
+ 1586      00
+ 1587              	.LASF92:
+ 1588 0280 6465636F 		.ascii	"decoder\000"
+ 1588      64657200 
+ 1589              	.LASF53:
+ 1590 0288 77696474 		.ascii	"width\000"
+ 1590      6800
+ 1591              	.LASF24:
+ 1592 028e 6C765F6C 		.ascii	"lv_ll_node_t\000"
+ 1592      6C5F6E6F 
+ 1592      64655F74 
+ 1592      00
+ 1593              	.LASF41:
+ 1594 029b 5F426F6F 		.ascii	"_Bool\000"
+ 1594      6C00
+ 1595              	.LASF84:
+ 1596 02a1 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 1596      666F6E74 
+ 1596      5F737472 
+ 1596      75637400 
+ 1597              	.LASF69:
+ 1598 02b1 6C696E65 		.ascii	"line_space\000"
+ 1598      5F737061 
+ 1598      636500
+ 1599              	.LASF39:
+ 1600 02bc 6C696E65 		.ascii	"line_height\000"
+ 1600      5F686569 
+ 1600      67687400 
+ 1601              	.LASF110:
+ 1602 02c8 5F6C765F 		.ascii	"_lv_drv_ll\000"
+ 1602      6472765F 
+ 1602      6C6C00
+ 1603              	.LASF86:
+ 1604 02d3 696E666F 		.ascii	"info_cb\000"
+ 1604      5F636200 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 32
+
+
+ 1605              	.LASF30:
+ 1606 02db 63686172 		.ascii	"char\000"
+ 1606      00
+ 1607              	.LASF23:
+ 1608 02e0 6C765F72 		.ascii	"lv_res_t\000"
+ 1608      65735F74 
+ 1608      00
+ 1609              	.LASF56:
+ 1610 02e9 626F7474 		.ascii	"bottom\000"
+ 1610      6F6D00
+ 1611              	.LASF36:
+ 1612 02f0 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 1612      6F6E745F 
+ 1612      676C7970 
+ 1612      685F6473 
+ 1612      635F7400 
+ 1613              	.LASF16:
+ 1614 0304 75696E74 		.ascii	"uint8_t\000"
+ 1614      385F7400 
+ 1615              	.LASF116:
+ 1616 030c 5F6C765F 		.ascii	"_lv_task_act\000"
+ 1616      7461736B 
+ 1616      5F616374 
+ 1616      00
+ 1617              	.LASF51:
+ 1618 0319 6C765F73 		.ascii	"lv_shadow_type_t\000"
+ 1618      6861646F 
+ 1618      775F7479 
+ 1618      70655F74 
+ 1618      00
+ 1619              	.LASF58:
+ 1620 032a 72696768 		.ascii	"right\000"
+ 1620      7400
+ 1621              	.LASF99:
+ 1622 0330 75736572 		.ascii	"user_data\000"
+ 1622      5F646174 
+ 1622      6100
+ 1623              	.LASF12:
+ 1624 033a 6C6F6E67 		.ascii	"long long int\000"
+ 1624      206C6F6E 
+ 1624      6720696E 
+ 1624      7400
+ 1625              	.LASF73:
+ 1626 0348 676C6173 		.ascii	"glass\000"
+ 1626      7300
+ 1627              	.LASF28:
+ 1628 034e 6C765F6C 		.ascii	"lv_ll_t\000"
+ 1628      6C5F7400 
+ 1629              	.LASF75:
+ 1630 0356 74657874 		.ascii	"text\000"
+ 1630      00
+ 1631              	.LASF65:
+ 1632 035b 70616464 		.ascii	"padding\000"
+ 1632      696E6700 
+ 1633              	.LASF121:
+ 1634 0363 6C765F67 		.ascii	"lv_gc_clear_roots\000"
+ 1634      635F636C 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 33
+
+
+ 1634      6561725F 
+ 1634      726F6F74 
+ 1634      7300
+ 1635              	.LASF90:
+ 1636 0375 6C765F69 		.ascii	"lv_img_decoder_open_f_t\000"
+ 1636      6D675F64 
+ 1636      65636F64 
+ 1636      65725F6F 
+ 1636      70656E5F 
+ 1637              	.LASF4:
+ 1638 038d 5F5F696E 		.ascii	"__int16_t\000"
+ 1638      7431365F 
+ 1638      7400
+ 1639              	.LASF76:
+ 1640 0397 696D6167 		.ascii	"image\000"
+ 1640      6500
+ 1641              	.LASF117:
+ 1642 039d 5F6C765F 		.ascii	"_lv_draw_buf\000"
+ 1642      64726177 
+ 1642      5F627566 
+ 1642      00
+ 1643              	.LASF95:
+ 1644 03aa 68656164 		.ascii	"header\000"
+ 1644      657200
+ 1645              	.LASF85:
+ 1646 03b1 5F6C765F 		.ascii	"_lv_img_decoder\000"
+ 1646      696D675F 
+ 1646      6465636F 
+ 1646      64657200 
+ 1647              	.LASF71:
+ 1648 03c1 73756270 		.ascii	"subpx\000"
+ 1648      7800
+ 1649              	.LASF48:
+ 1650 03c7 6C765F63 		.ascii	"lv_color_t\000"
+ 1650      6F6C6F72 
+ 1650      5F7400
+ 1651              	.LASF0:
+ 1652 03d2 5F5F696E 		.ascii	"__int8_t\000"
+ 1652      74385F74 
+ 1652      00
+ 1653              	.LASF44:
+ 1654 03db 67726565 		.ascii	"green\000"
+ 1654      6E00
+ 1655              	.LASF22:
+ 1656 03e1 6C6F6E67 		.ascii	"long double\000"
+ 1656      20646F75 
+ 1656      626C6500 
+ 1657              	.LASF18:
+ 1658 03ed 75696E74 		.ascii	"uint16_t\000"
+ 1658      31365F74 
+ 1658      00
+ 1659              	.LASF61:
+ 1660 03f6 67726164 		.ascii	"grad_color\000"
+ 1660      5F636F6C 
+ 1660      6F7200
+ 1661              	.LASF42:
+ 1662 0401 6C765F66 		.ascii	"lv_font_t\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 34
+
+
+ 1662      6F6E745F 
+ 1662      7400
+ 1663              	.LASF68:
+ 1664 040b 6C657474 		.ascii	"letter_space\000"
+ 1664      65725F73 
+ 1664      70616365 
+ 1664      00
+ 1665              	.LASF60:
+ 1666 0418 6D61696E 		.ascii	"main_color\000"
+ 1666      5F636F6C 
+ 1666      6F7200
+ 1667              	.LASF5:
+ 1668 0423 73686F72 		.ascii	"short int\000"
+ 1668      7420696E 
+ 1668      7400
+ 1669              	.LASF49:
+ 1670 042d 6C765F6F 		.ascii	"lv_opa_t\000"
+ 1670      70615F74 
+ 1670      00
+ 1671              	.LASF9:
+ 1672 0436 6C6F6E67 		.ascii	"long int\000"
+ 1672      20696E74 
+ 1672      00
+ 1673              	.LASF87:
+ 1674 043f 6F70656E 		.ascii	"open_cb\000"
+ 1674      5F636200 
+ 1675              	.LASF43:
+ 1676 0447 626C7565 		.ascii	"blue\000"
+ 1676      00
+ 1677              	.LASF21:
+ 1678 044c 6C765F63 		.ascii	"lv_coord_t\000"
+ 1678      6F6F7264 
+ 1678      5F7400
+ 1679              	.LASF57:
+ 1680 0457 6C656674 		.ascii	"left\000"
+ 1680      00
+ 1681              	.LASF70:
+ 1682 045c 696E7465 		.ascii	"intense\000"
+ 1682      6E736500 
+ 1683              	.LASF1:
+ 1684 0464 5F5F7569 		.ascii	"__uint8_t\000"
+ 1684      6E74385F 
+ 1684      7400
+ 1685              	.LASF102:
+ 1686 046e 6C765F69 		.ascii	"lv_img_decoder_t\000"
+ 1686      6D675F64 
+ 1686      65636F64 
+ 1686      65725F74 
+ 1686      00
+ 1687              	.LASF33:
+ 1688 047f 626F785F 		.ascii	"box_h\000"
+ 1688      6800
+ 1689              	.LASF67:
+ 1690 0485 666F6E74 		.ascii	"font\000"
+ 1690      00
+ 1691              	.LASF109:
+ 1692 048a 5F6C765F 		.ascii	"_lv_indev_ll\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 35
+
+
+ 1692      696E6465 
+ 1692      765F6C6C 
+ 1692      00
+ 1693              	.LASF29:
+ 1694 0497 73697A65 		.ascii	"sizetype\000"
+ 1694      74797065 
+ 1694      00
+ 1695              	.LASF11:
+ 1696 04a0 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1696      20756E73 
+ 1696      69676E65 
+ 1696      6420696E 
+ 1696      7400
+ 1697              	.LASF32:
+ 1698 04b2 626F785F 		.ascii	"box_w\000"
+ 1698      7700
+ 1699              	.LASF45:
+ 1700 04b8 616C7068 		.ascii	"alpha\000"
+ 1700      6100
+ 1701              	.LASF19:
+ 1702 04be 696E7433 		.ascii	"int32_t\000"
+ 1702      325F7400 
+ 1703              	.LASF40:
+ 1704 04c6 62617365 		.ascii	"base_line\000"
+ 1704      5F6C696E 
+ 1704      6500
+ 1705              	.LASF62:
+ 1706 04d0 72616469 		.ascii	"radius\000"
+ 1706      757300
+ 1707              	.LASF74:
+ 1708 04d7 626F6479 		.ascii	"body\000"
+ 1708      00
+ 1709              	.LASF55:
+ 1710 04dc 74797065 		.ascii	"type\000"
+ 1710      00
+ 1711              	.LASF3:
+ 1712 04e1 756E7369 		.ascii	"unsigned char\000"
+ 1712      676E6564 
+ 1712      20636861 
+ 1712      7200
+ 1713              	.LASF10:
+ 1714 04ef 5F5F7569 		.ascii	"__uint32_t\000"
+ 1714      6E743332 
+ 1714      5F7400
+ 1715              	.LASF77:
+ 1716 04fa 6C696E65 		.ascii	"line\000"
+ 1716      00
+ 1717              	.LASF106:
+ 1718 04ff 6C765F69 		.ascii	"lv_img_cache_entry_t\000"
+ 1718      6D675F63 
+ 1718      61636865 
+ 1718      5F656E74 
+ 1718      72795F74 
+ 1719              	.LASF103:
+ 1720 0514 6C765F69 		.ascii	"lv_img_decoder_dsc_t\000"
+ 1720      6D675F64 
+ 1720      65636F64 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 36
+
+
+ 1720      65725F64 
+ 1720      73635F74 
+ 1721              	.LASF38:
+ 1722 0529 6765745F 		.ascii	"get_glyph_bitmap\000"
+ 1722      676C7970 
+ 1722      685F6269 
+ 1722      746D6170 
+ 1722      00
+ 1723              	.LASF27:
+ 1724 053a 7461696C 		.ascii	"tail\000"
+ 1724      00
+ 1725              	.LASF93:
+ 1726 053f 7374796C 		.ascii	"style\000"
+ 1726      6500
+ 1727              	.LASF88:
+ 1728 0545 72656164 		.ascii	"read_line_cb\000"
+ 1728      5F6C696E 
+ 1728      655F6362 
+ 1728      00
+ 1729              	.LASF94:
+ 1730 0552 7372635F 		.ascii	"src_type\000"
+ 1730      74797065 
+ 1730      00
+ 1731              	.LASF64:
+ 1732 055b 73686164 		.ascii	"shadow\000"
+ 1732      6F7700
+ 1733              	.LASF2:
+ 1734 0562 7369676E 		.ascii	"signed char\000"
+ 1734      65642063 
+ 1734      68617200 
+ 1735              	.LASF7:
+ 1736 056e 73686F72 		.ascii	"short unsigned int\000"
+ 1736      7420756E 
+ 1736      7369676E 
+ 1736      65642069 
+ 1736      6E7400
+ 1737              	.LASF101:
+ 1738 0581 6C765F69 		.ascii	"lv_img_decoder_close_f_t\000"
+ 1738      6D675F64 
+ 1738      65636F64 
+ 1738      65725F63 
+ 1738      6C6F7365 
+ 1739              	.LASF81:
+ 1740 059a 72657365 		.ascii	"reserved\000"
+ 1740      72766564 
+ 1740      00
+ 1741              	.LASF113:
+ 1742 05a3 5F6C765F 		.ascii	"_lv_group_ll\000"
+ 1742      67726F75 
+ 1742      705F6C6C 
+ 1742      00
+ 1743              	.LASF120:
+ 1744 05b0 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 1744      73657273 
+ 1744      5C706561 
+ 1744      726C7374 
+ 1744      6C5C446F 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccvQY5Tc.s 			page 37
+
+
+ 1745 05de 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 1745      6D5F656E 
+ 1745      67696E65 
+ 1745      6572696E 
+ 1745      675C656D 
+ 1746 060d 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 1746      6C76676C 
+ 1746      365C7463 
+ 1746      6F6D5F64 
+ 1746      6973706C 
+ 1747              	.LASF50:
+ 1748 0633 6C765F62 		.ascii	"lv_border_part_t\000"
+ 1748      6F726465 
+ 1748      725F7061 
+ 1748      72745F74 
+ 1748      00
+ 1749              	.LASF104:
+ 1750 0644 6465635F 		.ascii	"dec_dsc\000"
+ 1750      64736300 
+ 1751              	.LASF82:
+ 1752 064c 6C765F69 		.ascii	"lv_img_header_t\000"
+ 1752      6D675F68 
+ 1752      65616465 
+ 1752      725F7400 
+ 1753              	.LASF31:
+ 1754 065c 6164765F 		.ascii	"adv_w\000"
+ 1754      7700
+ 1755              	.LASF97:
+ 1756 0662 74696D65 		.ascii	"time_to_open\000"
+ 1756      5F746F5F 
+ 1756      6F70656E 
+ 1756      00
+ 1757              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

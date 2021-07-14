@@ -1,0 +1,2731 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_area.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_area_set,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_area_set
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_area_set, %function
+  26              	lv_area_set:
+  27              	.LFB3:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @file lv_area.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_conf.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #else
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "../../../lv_conf.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #endif
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_area.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** #include "lv_math.h"
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /*********************
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      DEFINES
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *********************/
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      TYPEDEFS
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *  STATIC PROTOTYPES
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *  STATIC VARIABLES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *      MACROS
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**********************
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  *   GLOBAL FUNCTIONS
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  **********************/
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Initialize an area
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x1 left coordinate of the area
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y1 top coordinate of the area
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x2 right coordinate of the area
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y2 bottom coordinate of the area
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set(lv_area_t * area_p, lv_coord_t x1, lv_coord_t y1, lv_coord_t x2, lv_coord_t y2)
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+  29              		.loc 1 51 0
+  30              		.cfi_startproc
+  31              		@ args = 4, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  35 0000 10B4     		push	{r4}
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 4, -4
+  38              		.loc 1 51 0
+  39 0002 BDF90440 		ldrsh	r4, [sp, #4]
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x1 = x1;
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y1 = y1;
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x2 = x2;
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y2 = y2;
+  40              		.loc 1 55 0
+  41 0006 C480     		strh	r4, [r0, #6]	@ movhi
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x1 = x1;
+  42              		.loc 1 52 0
+  43 0008 0180     		strh	r1, [r0]	@ movhi
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x2 = x2;
+  44              		.loc 1 53 0
+  45 000a 4280     		strh	r2, [r0, #2]	@ movhi
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y2 = y2;
+  46              		.loc 1 54 0
+  47 000c 8380     		strh	r3, [r0, #4]	@ movhi
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+  48              		.loc 1 56 0
+  49 000e 5DF8044B 		ldr	r4, [sp], #4
+  50              		.cfi_restore 4
+  51              		.cfi_def_cfa_offset 0
+  52              	.LVL1:
+  53 0012 7047     		bx	lr
+  54              		.cfi_endproc
+  55              	.LFE3:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 3
+
+
+  56              		.size	lv_area_set, .-lv_area_set
+  57              		.section	.text.lv_area_set_width,"ax",%progbits
+  58              		.align	2
+  59              		.global	lv_area_set_width
+  60              		.thumb
+  61              		.thumb_func
+  62              		.type	lv_area_set_width, %function
+  63              	lv_area_set_width:
+  64              	.LFB4:
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the width of an area
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param w the new width of the area (w == 1 makes x1 == x2)
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_width(lv_area_t * area_p, lv_coord_t w)
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+  65              		.loc 1 64 0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  69              		@ link register save eliminated.
+  70              	.LVL2:
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x2 = area_p->x1 + w - 1;
+  71              		.loc 1 65 0
+  72 0000 0388     		ldrh	r3, [r0]
+  73 0002 013B     		subs	r3, r3, #1
+  74 0004 1944     		add	r1, r1, r3
+  75              	.LVL3:
+  76 0006 8180     		strh	r1, [r0, #4]	@ movhi
+  77 0008 7047     		bx	lr
+  78              		.cfi_endproc
+  79              	.LFE4:
+  80              		.size	lv_area_set_width, .-lv_area_set_width
+  81 000a 00BF     		.section	.text.lv_area_set_height,"ax",%progbits
+  82              		.align	2
+  83              		.global	lv_area_set_height
+  84              		.thumb
+  85              		.thumb_func
+  86              		.type	lv_area_set_height, %function
+  87              	lv_area_set_height:
+  88              	.LFB5:
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the height of an area
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param h the new height of the area (h == 1 makes y1 == y2)
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_height(lv_area_t * area_p, lv_coord_t h)
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+  89              		.loc 1 74 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93              		@ link register save eliminated.
+  94              	.LVL4:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 4
+
+
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y2 = area_p->y1 + h - 1;
+  95              		.loc 1 75 0
+  96 0000 4388     		ldrh	r3, [r0, #2]
+  97 0002 013B     		subs	r3, r3, #1
+  98 0004 1944     		add	r1, r1, r3
+  99              	.LVL5:
+ 100 0006 C180     		strh	r1, [r0, #6]	@ movhi
+ 101 0008 7047     		bx	lr
+ 102              		.cfi_endproc
+ 103              	.LFE5:
+ 104              		.size	lv_area_set_height, .-lv_area_set_height
+ 105 000a 00BF     		.section	.text.lv_area_set_pos,"ax",%progbits
+ 106              		.align	2
+ 107              		.global	lv_area_set_pos
+ 108              		.thumb
+ 109              		.thumb_func
+ 110              		.type	lv_area_set_pos, %function
+ 111              	lv_area_set_pos:
+ 112              	.LFB6:
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Set the position of an area (width and height will be kept)
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param x the new x coordinate of the area
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param y the new y coordinate of the area
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_set_pos(lv_area_t * area_p, lv_coord_t x, lv_coord_t y)
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 113              		.loc 1 85 0
+ 114              		.cfi_startproc
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              		@ link register save eliminated.
+ 118              	.LVL6:
+ 119 0000 70B4     		push	{r4, r5, r6}
+ 120              		.cfi_def_cfa_offset 12
+ 121              		.cfi_offset 4, -12
+ 122              		.cfi_offset 5, -8
+ 123              		.cfi_offset 6, -4
+ 124              	.LBB10:
+ 125              	.LBB11:
+ 126              		.file 2 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.h"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @file lv_area.h
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifndef LV_AREA_H
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_AREA_H
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifdef __cplusplus
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** extern "C" {
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #endif
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      INCLUDES
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 5
+
+
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <string.h>
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <stdbool.h>
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include <stdint.h>
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #ifdef LV_CONF_INCLUDE_SIMPLE
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include "lv_conf.h"
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #else
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #include "../../../lv_conf.h"
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #endif
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      DEFINES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /*To avoid overflow don't let the max ranges (reduce with 1000) */
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_COORD_MAX ((lv_coord_t)((uint32_t)((uint32_t)1 << (8 * sizeof(lv_coord_t) - 1)) - 1000))
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** #define LV_COORD_MIN (-LV_COORD_MAX)
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** LV_EXPORT_CONST_INT(LV_COORD_MAX);
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** LV_EXPORT_CONST_INT(LV_COORD_MIN);
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**********************
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  *      TYPEDEFS
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  **********************/
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Represents a point on the screen.
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** typedef struct
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x;
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y;
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** } lv_point_t;
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /** Represents an area of the screen. */
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** typedef struct
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x1;
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y1;
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t x2;
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     lv_coord_t y2;
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** } lv_area_t;
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**********************
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * GLOBAL PROTOTYPES
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  **********************/
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Initialize an area
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param x1 left coordinate of the area
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param y1 top coordinate of the area
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param x2 right coordinate of the area
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param y2 bottom coordinate of the area
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** void lv_area_set(lv_area_t * area_p, lv_coord_t x1, lv_coord_t y1, lv_coord_t x2, lv_coord_t y2);
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 6
+
+
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Copy an area
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param dest pointer to the destination area
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param src pointer to the source area
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** inline static void lv_area_copy(lv_area_t * dest, const lv_area_t * src)
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     memcpy(dest, src, sizeof(lv_area_t));
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Get the width of an area
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @return the width of the area (if x1 == x2 -> width = 1)
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** static inline lv_coord_t lv_area_get_width(const lv_area_t * area_p)
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     return (lv_coord_t)(area_p->x2 - area_p->x1 + 1);
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** 
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** /**
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * Get the height of an area
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @param area_p pointer to an area
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  * @return the height of the area (if y1 == y2 -> height = 1)
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****  */
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** static inline lv_coord_t lv_area_get_height(const lv_area_t * area_p)
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** {
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h ****     return (lv_coord_t)(area_p->y2 - area_p->y1 + 1);
+ 127              		.loc 2 98 0
+ 128 0002 C388     		ldrh	r3, [r0, #6]
+ 129              	.LBE11:
+ 130              	.LBE10:
+ 131              	.LBB13:
+ 132              	.LBB14:
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.h **** }
+ 133              		.loc 2 88 0
+ 134 0004 8688     		ldrh	r6, [r0, #4]
+ 135 0006 0588     		ldrh	r5, [r0]
+ 136              	.LVL7:
+ 137              	.LBE14:
+ 138              	.LBE13:
+ 139              	.LBB15:
+ 140              	.LBB12:
+ 141              		.loc 2 98 0
+ 142 0008 4488     		ldrh	r4, [r0, #2]
+ 143              	.LBE12:
+ 144              	.LBE15:
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_coord_t w = lv_area_get_width(area_p);
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_coord_t h = lv_area_get_height(area_p);
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->x1   = x;
+ 145              		.loc 1 88 0
+ 146 000a 0180     		strh	r1, [r0]	@ movhi
+ 147              	.LBB16:
+ 148              	.LBB17:
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 149              		.loc 1 75 0
+ 150 000c 1344     		add	r3, r3, r2
+ 151              	.LBE17:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 7
+
+
+ 152              	.LBE16:
+ 153              	.LBB20:
+ 154              	.LBB21:
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 155              		.loc 1 65 0
+ 156 000e 3144     		add	r1, r1, r6
+ 157              	.LVL8:
+ 158 0010 491B     		subs	r1, r1, r5
+ 159              	.LBE21:
+ 160              	.LBE20:
+ 161              	.LBB23:
+ 162              	.LBB18:
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 163              		.loc 1 75 0
+ 164 0012 1B1B     		subs	r3, r3, r4
+ 165              	.LBE18:
+ 166              	.LBE23:
+ 167              	.LBB24:
+ 168              	.LBB22:
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 169              		.loc 1 65 0
+ 170 0014 8180     		strh	r1, [r0, #4]	@ movhi
+ 171              	.LBE22:
+ 172              	.LBE24:
+ 173              	.LBB25:
+ 174              	.LBB19:
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 175              		.loc 1 75 0
+ 176 0016 C380     		strh	r3, [r0, #6]	@ movhi
+ 177              	.LBE19:
+ 178              	.LBE25:
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     area_p->y1   = y;
+ 179              		.loc 1 89 0
+ 180 0018 4280     		strh	r2, [r0, #2]	@ movhi
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_area_set_width(area_p, w);
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     lv_area_set_height(area_p, h);
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 181              		.loc 1 92 0
+ 182 001a 70BC     		pop	{r4, r5, r6}
+ 183              		.cfi_restore 6
+ 184              		.cfi_restore 5
+ 185              		.cfi_restore 4
+ 186              		.cfi_def_cfa_offset 0
+ 187 001c 7047     		bx	lr
+ 188              		.cfi_endproc
+ 189              	.LFE6:
+ 190              		.size	lv_area_set_pos, .-lv_area_set_pos
+ 191 001e 00BF     		.section	.text.lv_area_get_size,"ax",%progbits
+ 192              		.align	2
+ 193              		.global	lv_area_get_size
+ 194              		.thumb
+ 195              		.thumb_func
+ 196              		.type	lv_area_get_size, %function
+ 197              	lv_area_get_size:
+ 198              	.LFB7:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 8
+
+
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Return with area of an area (x * y)
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param area_p pointer to an area
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return size of area
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** uint32_t lv_area_get_size(const lv_area_t * area_p)
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 199              		.loc 1 100 0
+ 200              		.cfi_startproc
+ 201              		@ args = 0, pretend = 0, frame = 0
+ 202              		@ frame_needed = 0, uses_anonymous_args = 0
+ 203              		@ link register save eliminated.
+ 204              	.LVL9:
+ 205 0000 10B4     		push	{r4}
+ 206              		.cfi_def_cfa_offset 4
+ 207              		.cfi_offset 4, -4
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     uint32_t size;
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     size = (uint32_t)(area_p->x2 - area_p->x1 + 1) * (area_p->y2 - area_p->y1 + 1);
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return size;
+ 208              		.loc 1 105 0
+ 209 0002 B0F90630 		ldrsh	r3, [r0, #6]
+ 210 0006 B0F90240 		ldrsh	r4, [r0, #2]
+ 211 000a B0F90420 		ldrsh	r2, [r0, #4]
+ 212 000e B0F90010 		ldrsh	r1, [r0]
+ 213 0012 181B     		subs	r0, r3, r4
+ 214              	.LVL10:
+ 215 0014 0130     		adds	r0, r0, #1
+ 216 0016 531A     		subs	r3, r2, r1
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 217              		.loc 1 106 0
+ 218 0018 03FB0000 		mla	r0, r3, r0, r0
+ 219 001c 5DF8044B 		ldr	r4, [sp], #4
+ 220              		.cfi_restore 4
+ 221              		.cfi_def_cfa_offset 0
+ 222 0020 7047     		bx	lr
+ 223              		.cfi_endproc
+ 224              	.LFE7:
+ 225              		.size	lv_area_get_size, .-lv_area_get_size
+ 226 0022 00BF     		.section	.text.lv_area_intersect,"ax",%progbits
+ 227              		.align	2
+ 228              		.global	lv_area_intersect
+ 229              		.thumb
+ 230              		.thumb_func
+ 231              		.type	lv_area_intersect, %function
+ 232              	lv_area_intersect:
+ 233              	.LFB8:
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Get the common parts of two areas
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param res_p pointer to an area, the result will be stored here
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to the first area
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to the second area
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false: the two area has NO common parts, res_p is invalid
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_intersect(lv_area_t * res_p, const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 9
+
+
+ 234              		.loc 1 116 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238              	.LVL11:
+ 239 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 240              		.cfi_def_cfa_offset 20
+ 241              		.cfi_offset 4, -20
+ 242              		.cfi_offset 5, -16
+ 243              		.cfi_offset 6, -12
+ 244              		.cfi_offset 7, -8
+ 245              		.cfi_offset 14, -4
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     /* Get the smaller area from 'a1_p' and 'a2_p' */
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x1 = LV_MATH_MAX(a1_p->x1, a2_p->x1);
+ 246              		.loc 1 118 0
+ 247 0002 B2F900C0 		ldrsh	ip, [r2]
+ 248 0006 B1F90050 		ldrsh	r5, [r1]
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y1 = LV_MATH_MAX(a1_p->y1, a2_p->y1);
+ 249              		.loc 1 119 0
+ 250 000a B1F90240 		ldrsh	r4, [r1, #2]
+ 251 000e B2F90230 		ldrsh	r3, [r2, #2]
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x2 = LV_MATH_MIN(a1_p->x2, a2_p->x2);
+ 252              		.loc 1 120 0
+ 253 0012 B2F904E0 		ldrsh	lr, [r2, #4]
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y2 = LV_MATH_MIN(a1_p->y2, a2_p->y2);
+ 254              		.loc 1 121 0
+ 255 0016 B2F90670 		ldrsh	r7, [r2, #6]
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x2 = LV_MATH_MIN(a1_p->x2, a2_p->x2);
+ 256              		.loc 1 120 0
+ 257 001a B1F90420 		ldrsh	r2, [r1, #4]
+ 258              	.LVL12:
+ 259              		.loc 1 121 0
+ 260 001e B1F90660 		ldrsh	r6, [r1, #6]
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y1 = LV_MATH_MAX(a1_p->y1, a2_p->y1);
+ 261              		.loc 1 118 0
+ 262 0022 AC45     		cmp	ip, r5
+ 263 0024 6146     		mov	r1, ip
+ 264              	.LVL13:
+ 265 0026 B8BF     		it	lt
+ 266 0028 2946     		movlt	r1, r5
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x2 = LV_MATH_MIN(a1_p->x2, a2_p->x2);
+ 267              		.loc 1 119 0
+ 268 002a A342     		cmp	r3, r4
+ 269 002c B8BF     		it	lt
+ 270 002e 2346     		movlt	r3, r4
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y2 = LV_MATH_MIN(a1_p->y2, a2_p->y2);
+ 271              		.loc 1 120 0
+ 272 0030 7245     		cmp	r2, lr
+ 273 0032 A8BF     		it	ge
+ 274 0034 7246     		movge	r2, lr
+ 275              		.loc 1 121 0
+ 276 0036 B742     		cmp	r7, r6
+ 277 0038 3C46     		mov	r4, r7
+ 278 003a A8BF     		it	ge
+ 279 003c 3446     		movge	r4, r6
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     /*If x1 or y1 greater then x2 or y2 then the areas union is empty*/
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 10
+
+
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool union_ok = true;
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((res_p->x1 > res_p->x2) || (res_p->y1 > res_p->y2)) {
+ 280              		.loc 1 125 0
+ 281 003e 9142     		cmp	r1, r2
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y1 = LV_MATH_MAX(a1_p->y1, a2_p->y1);
+ 282              		.loc 1 118 0
+ 283 0040 0180     		strh	r1, [r0]	@ movhi
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->x2 = LV_MATH_MIN(a1_p->x2, a2_p->x2);
+ 284              		.loc 1 119 0
+ 285 0042 4380     		strh	r3, [r0, #2]	@ movhi
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     res_p->y2 = LV_MATH_MIN(a1_p->y2, a2_p->y2);
+ 286              		.loc 1 120 0
+ 287 0044 8280     		strh	r2, [r0, #4]	@ movhi
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 288              		.loc 1 121 0
+ 289 0046 C480     		strh	r4, [r0, #6]	@ movhi
+ 290              	.LVL14:
+ 291              		.loc 1 125 0
+ 292 0048 04DC     		bgt	.L11
+ 293              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 294 004a A342     		cmp	r3, r4
+ 295 004c CCBF     		ite	gt
+ 296 004e 0020     		movgt	r0, #0
+ 297              	.LVL15:
+ 298 0050 0120     		movle	r0, #1
+ 299 0052 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 300              	.LVL16:
+ 301              	.L11:
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         union_ok = false;
+ 302              		.loc 1 126 0 is_stmt 1
+ 303 0054 0020     		movs	r0, #0
+ 304              	.LVL17:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return union_ok;
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 305              		.loc 1 130 0
+ 306 0056 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 307              		.cfi_endproc
+ 308              	.LFE8:
+ 309              		.size	lv_area_intersect, .-lv_area_intersect
+ 310              		.section	.text.lv_area_join,"ax",%progbits
+ 311              		.align	2
+ 312              		.global	lv_area_join
+ 313              		.thumb
+ 314              		.thumb_func
+ 315              		.type	lv_area_join, %function
+ 316              	lv_area_join:
+ 317              	.LFB9:
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Join two areas into a third which involves the other two
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param res_p pointer to an area, the result will be stored here
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to the first area
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to the second area
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_join(lv_area_t * a_res_p, const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 11
+
+
+ 318              		.loc 1 138 0
+ 319              		.cfi_startproc
+ 320              		@ args = 0, pretend = 0, frame = 0
+ 321              		@ frame_needed = 0, uses_anonymous_args = 0
+ 322              	.LVL18:
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x1 = LV_MATH_MIN(a1_p->x1, a2_p->x1);
+ 323              		.loc 1 139 0
+ 324 0000 B2F900C0 		ldrsh	ip, [r2]
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y1 = LV_MATH_MIN(a1_p->y1, a2_p->y1);
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x2 = LV_MATH_MAX(a1_p->x2, a2_p->x2);
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 325              		.loc 1 142 0
+ 326 0004 B1F90630 		ldrsh	r3, [r1, #6]
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x1 = LV_MATH_MIN(a1_p->x1, a2_p->x1);
+ 327              		.loc 1 138 0
+ 328 0008 F0B5     		push	{r4, r5, r6, r7, lr}
+ 329              		.cfi_def_cfa_offset 20
+ 330              		.cfi_offset 4, -20
+ 331              		.cfi_offset 5, -16
+ 332              		.cfi_offset 6, -12
+ 333              		.cfi_offset 7, -8
+ 334              		.cfi_offset 14, -4
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x1 = LV_MATH_MIN(a1_p->x1, a2_p->x1);
+ 335              		.loc 1 139 0
+ 336 000a B1F90050 		ldrsh	r5, [r1]
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y1 = LV_MATH_MIN(a1_p->y1, a2_p->y1);
+ 337              		.loc 1 140 0
+ 338 000e B2F902E0 		ldrsh	lr, [r2, #2]
+ 339 0012 B1F90240 		ldrsh	r4, [r1, #2]
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 340              		.loc 1 141 0
+ 341 0016 B2F90470 		ldrsh	r7, [r2, #4]
+ 342              		.loc 1 142 0
+ 343 001a B2F90660 		ldrsh	r6, [r2, #6]
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 344              		.loc 1 141 0
+ 345 001e B1F90420 		ldrsh	r2, [r1, #4]
+ 346              	.LVL19:
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y1 = LV_MATH_MIN(a1_p->y1, a2_p->y1);
+ 347              		.loc 1 139 0
+ 348 0022 6545     		cmp	r5, ip
+ 349 0024 A8BF     		it	ge
+ 350 0026 6546     		movge	r5, ip
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x2 = LV_MATH_MAX(a1_p->x2, a2_p->x2);
+ 351              		.loc 1 140 0
+ 352 0028 7445     		cmp	r4, lr
+ 353 002a A8BF     		it	ge
+ 354 002c 7446     		movge	r4, lr
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 355              		.loc 1 141 0
+ 356 002e BA42     		cmp	r2, r7
+ 357 0030 B8BF     		it	lt
+ 358 0032 3A46     		movlt	r2, r7
+ 359              		.loc 1 142 0
+ 360 0034 B342     		cmp	r3, r6
+ 361 0036 B8BF     		it	lt
+ 362 0038 3346     		movlt	r3, r6
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 12
+
+
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y1 = LV_MATH_MIN(a1_p->y1, a2_p->y1);
+ 363              		.loc 1 139 0
+ 364 003a 0580     		strh	r5, [r0]	@ movhi
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->x2 = LV_MATH_MAX(a1_p->x2, a2_p->x2);
+ 365              		.loc 1 140 0
+ 366 003c 4480     		strh	r4, [r0, #2]	@ movhi
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_res_p->y2 = LV_MATH_MAX(a1_p->y2, a2_p->y2);
+ 367              		.loc 1 141 0
+ 368 003e 8280     		strh	r2, [r0, #4]	@ movhi
+ 369              		.loc 1 142 0
+ 370 0040 C380     		strh	r3, [r0, #6]	@ movhi
+ 371 0042 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 372              		.cfi_endproc
+ 373              	.LFE9:
+ 374              		.size	lv_area_join, .-lv_area_join
+ 375              		.section	.text.lv_area_is_point_on,"ax",%progbits
+ 376              		.align	2
+ 377              		.global	lv_area_is_point_on
+ 378              		.thumb
+ 379              		.thumb_func
+ 380              		.type	lv_area_is_point_on, %function
+ 381              	lv_area_is_point_on:
+ 382              	.LFB10:
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if a point is on an area
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a_p pointer to an area
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param p_p pointer to a point
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false:the point is out of the area
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_point_on(const lv_area_t * a_p, const lv_point_t * p_p)
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 383              		.loc 1 152 0
+ 384              		.cfi_startproc
+ 385              		@ args = 0, pretend = 0, frame = 0
+ 386              		@ frame_needed = 0, uses_anonymous_args = 0
+ 387              		@ link register save eliminated.
+ 388              	.LVL20:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_on = false;
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((p_p->x >= a_p->x1 && p_p->x <= a_p->x2) && ((p_p->y >= a_p->y1 && p_p->y <= a_p->y2))) {
+ 389              		.loc 1 155 0
+ 390 0000 B0F90020 		ldrsh	r2, [r0]
+ 391 0004 B1F90030 		ldrsh	r3, [r1]
+ 392 0008 9A42     		cmp	r2, r3
+ 393 000a 10DC     		bgt	.L20
+ 394              		.loc 1 155 0 is_stmt 0 discriminator 1
+ 395 000c B0F90420 		ldrsh	r2, [r0, #4]
+ 396 0010 9A42     		cmp	r2, r3
+ 397 0012 0CDB     		blt	.L20
+ 398              		.loc 1 155 0 discriminator 2
+ 399 0014 B1F90220 		ldrsh	r2, [r1, #2]
+ 400 0018 B0F90230 		ldrsh	r3, [r0, #2]
+ 401 001c 9342     		cmp	r3, r2
+ 402 001e 06DC     		bgt	.L20
+ 403              		.loc 1 155 0 discriminator 3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 13
+
+
+ 404 0020 B0F90630 		ldrsh	r3, [r0, #6]
+ 405 0024 9342     		cmp	r3, r2
+ 406 0026 B4BF     		ite	lt
+ 407 0028 0020     		movlt	r0, #0
+ 408              	.LVL21:
+ 409 002a 0120     		movge	r0, #1
+ 410 002c 7047     		bx	lr
+ 411              	.LVL22:
+ 412              	.L20:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_on = false;
+ 413              		.loc 1 153 0 is_stmt 1
+ 414 002e 0020     		movs	r0, #0
+ 415              	.LVL23:
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         is_on = true;
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return is_on;
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 416              		.loc 1 160 0
+ 417 0030 7047     		bx	lr
+ 418              		.cfi_endproc
+ 419              	.LFE10:
+ 420              		.size	lv_area_is_point_on, .-lv_area_is_point_on
+ 421 0032 00BF     		.section	.text.lv_area_is_on,"ax",%progbits
+ 422              		.align	2
+ 423              		.global	lv_area_is_on
+ 424              		.thumb
+ 425              		.thumb_func
+ 426              		.type	lv_area_is_on, %function
+ 427              	lv_area_is_on:
+ 428              	.LFB11:
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if two area has common parts
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a1_p pointer to an area.
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a2_p pointer to an other area
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return false: a1_p and a2_p has no common parts
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_on(const lv_area_t * a1_p, const lv_area_t * a2_p)
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 429              		.loc 1 169 0
+ 430              		.cfi_startproc
+ 431              		@ args = 0, pretend = 0, frame = 0
+ 432              		@ frame_needed = 0, uses_anonymous_args = 0
+ 433              		@ link register save eliminated.
+ 434              	.LVL24:
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if((a1_p->x1 <= a2_p->x2) && (a1_p->x2 >= a2_p->x1) && (a1_p->y1 <= a2_p->y2) && (a1_p->y2 >= a
+ 435              		.loc 1 170 0
+ 436 0000 B0F90020 		ldrsh	r2, [r0]
+ 437 0004 B1F90430 		ldrsh	r3, [r1, #4]
+ 438 0008 9A42     		cmp	r2, r3
+ 439 000a 14DC     		bgt	.L25
+ 440              		.loc 1 170 0 is_stmt 0 discriminator 1
+ 441 000c B0F90420 		ldrsh	r2, [r0, #4]
+ 442 0010 B1F90030 		ldrsh	r3, [r1]
+ 443 0014 9A42     		cmp	r2, r3
+ 444 0016 0EDB     		blt	.L25
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 14
+
+
+ 445              		.loc 1 170 0 discriminator 2
+ 446 0018 B0F90220 		ldrsh	r2, [r0, #2]
+ 447 001c B1F90630 		ldrsh	r3, [r1, #6]
+ 448 0020 9A42     		cmp	r2, r3
+ 449 0022 08DC     		bgt	.L25
+ 450              		.loc 1 170 0 discriminator 3
+ 451 0024 B0F90630 		ldrsh	r3, [r0, #6]
+ 452 0028 B1F90200 		ldrsh	r0, [r1, #2]
+ 453              	.LVL25:
+ 454 002c 8342     		cmp	r3, r0
+ 455 002e B4BF     		ite	lt
+ 456 0030 0020     		movlt	r0, #0
+ 457 0032 0120     		movge	r0, #1
+ 458 0034 7047     		bx	lr
+ 459              	.LVL26:
+ 460              	.L25:
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         return true;
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     } else {
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         return false;
+ 461              		.loc 1 173 0 is_stmt 1
+ 462 0036 0020     		movs	r0, #0
+ 463              	.LVL27:
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 464              		.loc 1 175 0
+ 465 0038 7047     		bx	lr
+ 466              		.cfi_endproc
+ 467              	.LFE11:
+ 468              		.size	lv_area_is_on, .-lv_area_is_on
+ 469 003a 00BF     		.section	.text.lv_area_is_in,"ax",%progbits
+ 470              		.align	2
+ 471              		.global	lv_area_is_in
+ 472              		.thumb
+ 473              		.thumb_func
+ 474              		.type	lv_area_is_in, %function
+ 475              	lv_area_is_in:
+ 476              	.LFB12:
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Check if an area is fully on an other
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param ain_p pointer to an area which could be in 'aholder_p'
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param aholder pointer to an area which could involve 'ain_p'
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @return
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** bool lv_area_is_in(const lv_area_t * ain_p, const lv_area_t * aholder_p)
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 477              		.loc 1 184 0
+ 478              		.cfi_startproc
+ 479              		@ args = 0, pretend = 0, frame = 0
+ 480              		@ frame_needed = 0, uses_anonymous_args = 0
+ 481              		@ link register save eliminated.
+ 482              	.LVL28:
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_in = false;
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     if(ain_p->x1 >= aholder_p->x1 && ain_p->y1 >= aholder_p->y1 && ain_p->x2 <= aholder_p->x2 &&
+ 483              		.loc 1 187 0
+ 484 0000 B0F90020 		ldrsh	r2, [r0]
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 15
+
+
+ 485 0004 B1F90030 		ldrsh	r3, [r1]
+ 486 0008 9A42     		cmp	r2, r3
+ 487 000a 14DB     		blt	.L30
+ 488              		.loc 1 187 0 is_stmt 0 discriminator 1
+ 489 000c B0F90220 		ldrsh	r2, [r0, #2]
+ 490 0010 B1F90230 		ldrsh	r3, [r1, #2]
+ 491 0014 9A42     		cmp	r2, r3
+ 492 0016 0EDB     		blt	.L30
+ 493              		.loc 1 187 0 discriminator 2
+ 494 0018 B0F90420 		ldrsh	r2, [r0, #4]
+ 495 001c B1F90430 		ldrsh	r3, [r1, #4]
+ 496 0020 9A42     		cmp	r2, r3
+ 497 0022 08DC     		bgt	.L30
+ 498              		.loc 1 187 0 discriminator 3
+ 499 0024 B0F90630 		ldrsh	r3, [r0, #6]
+ 500 0028 B1F90600 		ldrsh	r0, [r1, #6]
+ 501              	.LVL29:
+ 502 002c 8342     		cmp	r3, r0
+ 503 002e CCBF     		ite	gt
+ 504 0030 0020     		movgt	r0, #0
+ 505 0032 0120     		movle	r0, #1
+ 506 0034 7047     		bx	lr
+ 507              	.LVL30:
+ 508              	.L30:
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     bool is_in = false;
+ 509              		.loc 1 185 0 is_stmt 1
+ 510 0036 0020     		movs	r0, #0
+ 511              	.LVL31:
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****        ain_p->y2 <= aholder_p->y2) {
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****         is_in = true;
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     }
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     return is_in;
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 512              		.loc 1 193 0
+ 513 0038 7047     		bx	lr
+ 514              		.cfi_endproc
+ 515              	.LFE12:
+ 516              		.size	lv_area_is_in, .-lv_area_is_in
+ 517 003a 00BF     		.section	.text.lv_area_increment,"ax",%progbits
+ 518              		.align	2
+ 519              		.global	lv_area_increment
+ 520              		.thumb
+ 521              		.thumb_func
+ 522              		.type	lv_area_increment, %function
+ 523              	lv_area_increment:
+ 524              	.LFB13:
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** 
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** /**
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * Increment or decrement an area's size by a single amount
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param a_p pointer to an area to grow
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  * @param amount amount to increment the area, or negative to decrement
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****  */
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** void lv_area_increment(lv_area_t * a_p, const lv_coord_t amount)
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** {
+ 525              		.loc 1 201 0
+ 526              		.cfi_startproc
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 16
+
+
+ 527              		@ args = 0, pretend = 0, frame = 0
+ 528              		@ frame_needed = 0, uses_anonymous_args = 0
+ 529              		@ link register save eliminated.
+ 530              	.LVL32:
+ 531 0000 30B4     		push	{r4, r5}
+ 532              		.cfi_def_cfa_offset 8
+ 533              		.cfi_offset 4, -8
+ 534              		.cfi_offset 5, -4
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x1 -= amount;
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y1 -= amount;
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x2 += amount;
+ 535              		.loc 1 204 0
+ 536 0002 8288     		ldrh	r2, [r0, #4]
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x1 -= amount;
+ 537              		.loc 1 202 0
+ 538 0004 0588     		ldrh	r5, [r0]
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x2 += amount;
+ 539              		.loc 1 203 0
+ 540 0006 4488     		ldrh	r4, [r0, #2]
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y2 += amount;
+ 541              		.loc 1 205 0
+ 542 0008 C388     		ldrh	r3, [r0, #6]
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x1 -= amount;
+ 543              		.loc 1 202 0
+ 544 000a 89B2     		uxth	r1, r1
+ 545 000c 6D1A     		subs	r5, r5, r1
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x2 += amount;
+ 546              		.loc 1 203 0
+ 547 000e 641A     		subs	r4, r4, r1
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y2 += amount;
+ 548              		.loc 1 204 0
+ 549 0010 0A44     		add	r2, r2, r1
+ 550              		.loc 1 205 0
+ 551 0012 1944     		add	r1, r1, r3
+ 552              	.LVL33:
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y1 -= amount;
+ 553              		.loc 1 202 0
+ 554 0014 0580     		strh	r5, [r0]	@ movhi
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->x2 += amount;
+ 555              		.loc 1 203 0
+ 556 0016 4480     		strh	r4, [r0, #2]	@ movhi
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c ****     a_p->y2 += amount;
+ 557              		.loc 1 204 0
+ 558 0018 8280     		strh	r2, [r0, #4]	@ movhi
+ 559              		.loc 1 205 0
+ 560 001a C180     		strh	r1, [r0, #6]	@ movhi
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_area.c **** }
+ 561              		.loc 1 206 0
+ 562 001c 30BC     		pop	{r4, r5}
+ 563              		.cfi_restore 5
+ 564              		.cfi_restore 4
+ 565              		.cfi_def_cfa_offset 0
+ 566 001e 7047     		bx	lr
+ 567              		.cfi_endproc
+ 568              	.LFE13:
+ 569              		.size	lv_area_increment, .-lv_area_increment
+ 570              		.text
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 17
+
+
+ 571              	.Letext0:
+ 572              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 573              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 574              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 575              		.section	.debug_info,"",%progbits
+ 576              	.Ldebug_info0:
+ 577 0000 E3040000 		.4byte	0x4e3
+ 578 0004 0400     		.2byte	0x4
+ 579 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 580 000a 04       		.byte	0x4
+ 581 000b 01       		.uleb128 0x1
+ 582 000c 23010000 		.4byte	.LASF45
+ 583 0010 0C       		.byte	0xc
+ 584 0011 2F020000 		.4byte	.LASF46
+ 585 0015 7D020000 		.4byte	.LASF47
+ 586 0019 50000000 		.4byte	.Ldebug_ranges0+0x50
+ 587 001d 00000000 		.4byte	0
+ 588 0021 00000000 		.4byte	.Ldebug_line0
+ 589 0025 02       		.uleb128 0x2
+ 590 0026 01       		.byte	0x1
+ 591 0027 06       		.byte	0x6
+ 592 0028 5B030000 		.4byte	.LASF0
+ 593 002c 02       		.uleb128 0x2
+ 594 002d 01       		.byte	0x1
+ 595 002e 08       		.byte	0x8
+ 596 002f F5010000 		.4byte	.LASF1
+ 597 0033 03       		.uleb128 0x3
+ 598 0034 1B000000 		.4byte	.LASF5
+ 599 0038 03       		.byte	0x3
+ 600 0039 29       		.byte	0x29
+ 601 003a 3E000000 		.4byte	0x3e
+ 602 003e 02       		.uleb128 0x2
+ 603 003f 02       		.byte	0x2
+ 604 0040 05       		.byte	0x5
+ 605 0041 7E000000 		.4byte	.LASF2
+ 606 0045 02       		.uleb128 0x2
+ 607 0046 02       		.byte	0x2
+ 608 0047 07       		.byte	0x7
+ 609 0048 E7000000 		.4byte	.LASF3
+ 610 004c 02       		.uleb128 0x2
+ 611 004d 04       		.byte	0x4
+ 612 004e 05       		.byte	0x5
+ 613 004f 40030000 		.4byte	.LASF4
+ 614 0053 03       		.uleb128 0x3
+ 615 0054 D6010000 		.4byte	.LASF6
+ 616 0058 03       		.byte	0x3
+ 617 0059 41       		.byte	0x41
+ 618 005a 5E000000 		.4byte	0x5e
+ 619 005e 02       		.uleb128 0x2
+ 620 005f 04       		.byte	0x4
+ 621 0060 07       		.byte	0x7
+ 622 0061 D5000000 		.4byte	.LASF7
+ 623 0065 02       		.uleb128 0x2
+ 624 0066 08       		.byte	0x8
+ 625 0067 05       		.byte	0x5
+ 626 0068 6F020000 		.4byte	.LASF8
+ 627 006c 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 18
+
+
+ 628 006d 08       		.byte	0x8
+ 629 006e 07       		.byte	0x7
+ 630 006f 10020000 		.4byte	.LASF9
+ 631 0073 04       		.uleb128 0x4
+ 632 0074 04       		.byte	0x4
+ 633 0075 05       		.byte	0x5
+ 634 0076 696E7400 		.ascii	"int\000"
+ 635 007a 02       		.uleb128 0x2
+ 636 007b 04       		.byte	0x4
+ 637 007c 07       		.byte	0x7
+ 638 007d 03020000 		.4byte	.LASF10
+ 639 0081 03       		.uleb128 0x3
+ 640 0082 27020000 		.4byte	.LASF11
+ 641 0086 04       		.byte	0x4
+ 642 0087 20       		.byte	0x20
+ 643 0088 33000000 		.4byte	0x33
+ 644 008c 03       		.uleb128 0x3
+ 645 008d 37030000 		.4byte	.LASF12
+ 646 0091 04       		.byte	0x4
+ 647 0092 30       		.byte	0x30
+ 648 0093 53000000 		.4byte	0x53
+ 649 0097 03       		.uleb128 0x3
+ 650 0098 10000000 		.4byte	.LASF13
+ 651 009c 05       		.byte	0x5
+ 652 009d 3A       		.byte	0x3a
+ 653 009e 81000000 		.4byte	0x81
+ 654 00a2 02       		.uleb128 0x2
+ 655 00a3 08       		.byte	0x8
+ 656 00a4 04       		.byte	0x4
+ 657 00a5 4F030000 		.4byte	.LASF14
+ 658 00a9 02       		.uleb128 0x2
+ 659 00aa 04       		.byte	0x4
+ 660 00ab 07       		.byte	0x7
+ 661 00ac 66020000 		.4byte	.LASF15
+ 662 00b0 02       		.uleb128 0x2
+ 663 00b1 01       		.byte	0x1
+ 664 00b2 08       		.byte	0x8
+ 665 00b3 07030000 		.4byte	.LASF16
+ 666 00b7 05       		.uleb128 0x5
+ 667 00b8 04       		.byte	0x4
+ 668 00b9 02       		.byte	0x2
+ 669 00ba 2A       		.byte	0x2a
+ 670 00bb D4000000 		.4byte	0xd4
+ 671 00bf 06       		.uleb128 0x6
+ 672 00c0 7800     		.ascii	"x\000"
+ 673 00c2 02       		.byte	0x2
+ 674 00c3 2C       		.byte	0x2c
+ 675 00c4 97000000 		.4byte	0x97
+ 676 00c8 00       		.byte	0
+ 677 00c9 06       		.uleb128 0x6
+ 678 00ca 7900     		.ascii	"y\000"
+ 679 00cc 02       		.byte	0x2
+ 680 00cd 2D       		.byte	0x2d
+ 681 00ce 97000000 		.4byte	0x97
+ 682 00d2 02       		.byte	0x2
+ 683 00d3 00       		.byte	0
+ 684 00d4 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 19
+
+
+ 685 00d5 CA000000 		.4byte	.LASF17
+ 686 00d9 02       		.byte	0x2
+ 687 00da 2E       		.byte	0x2e
+ 688 00db B7000000 		.4byte	0xb7
+ 689 00df 05       		.uleb128 0x5
+ 690 00e0 08       		.byte	0x8
+ 691 00e1 02       		.byte	0x2
+ 692 00e2 31       		.byte	0x31
+ 693 00e3 14010000 		.4byte	0x114
+ 694 00e7 06       		.uleb128 0x6
+ 695 00e8 783100   		.ascii	"x1\000"
+ 696 00eb 02       		.byte	0x2
+ 697 00ec 33       		.byte	0x33
+ 698 00ed 97000000 		.4byte	0x97
+ 699 00f1 00       		.byte	0
+ 700 00f2 06       		.uleb128 0x6
+ 701 00f3 793100   		.ascii	"y1\000"
+ 702 00f6 02       		.byte	0x2
+ 703 00f7 34       		.byte	0x34
+ 704 00f8 97000000 		.4byte	0x97
+ 705 00fc 02       		.byte	0x2
+ 706 00fd 06       		.uleb128 0x6
+ 707 00fe 783200   		.ascii	"x2\000"
+ 708 0101 02       		.byte	0x2
+ 709 0102 35       		.byte	0x35
+ 710 0103 97000000 		.4byte	0x97
+ 711 0107 04       		.byte	0x4
+ 712 0108 06       		.uleb128 0x6
+ 713 0109 793200   		.ascii	"y2\000"
+ 714 010c 02       		.byte	0x2
+ 715 010d 36       		.byte	0x36
+ 716 010e 97000000 		.4byte	0x97
+ 717 0112 06       		.byte	0x6
+ 718 0113 00       		.byte	0
+ 719 0114 03       		.uleb128 0x3
+ 720 0115 B5000000 		.4byte	.LASF18
+ 721 0119 02       		.byte	0x2
+ 722 011a 37       		.byte	0x37
+ 723 011b DF000000 		.4byte	0xdf
+ 724 011f 07       		.uleb128 0x7
+ 725 0120 11030000 		.4byte	.LASF19
+ 726 0124 02       		.byte	0x2
+ 727 0125 56       		.byte	0x56
+ 728 0126 97000000 		.4byte	0x97
+ 729 012a 03       		.byte	0x3
+ 730 012b 3B010000 		.4byte	0x13b
+ 731 012f 08       		.uleb128 0x8
+ 732 0130 00030000 		.4byte	.LASF21
+ 733 0134 02       		.byte	0x2
+ 734 0135 56       		.byte	0x56
+ 735 0136 3B010000 		.4byte	0x13b
+ 736 013a 00       		.byte	0
+ 737 013b 09       		.uleb128 0x9
+ 738 013c 04       		.byte	0x4
+ 739 013d 41010000 		.4byte	0x141
+ 740 0141 0A       		.uleb128 0xa
+ 741 0142 14010000 		.4byte	0x114
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 20
+
+
+ 742 0146 07       		.uleb128 0x7
+ 743 0147 94000000 		.4byte	.LASF20
+ 744 014b 02       		.byte	0x2
+ 745 014c 60       		.byte	0x60
+ 746 014d 97000000 		.4byte	0x97
+ 747 0151 03       		.byte	0x3
+ 748 0152 62010000 		.4byte	0x162
+ 749 0156 08       		.uleb128 0x8
+ 750 0157 00030000 		.4byte	.LASF21
+ 751 015b 02       		.byte	0x2
+ 752 015c 60       		.byte	0x60
+ 753 015d 3B010000 		.4byte	0x13b
+ 754 0161 00       		.byte	0
+ 755 0162 0B       		.uleb128 0xb
+ 756 0163 FF000000 		.4byte	.LASF22
+ 757 0167 01       		.byte	0x1
+ 758 0168 49       		.byte	0x49
+ 759 0169 01       		.byte	0x1
+ 760 016a 83010000 		.4byte	0x183
+ 761 016e 08       		.uleb128 0x8
+ 762 016f 00030000 		.4byte	.LASF21
+ 763 0173 01       		.byte	0x1
+ 764 0174 49       		.byte	0x49
+ 765 0175 83010000 		.4byte	0x183
+ 766 0179 0C       		.uleb128 0xc
+ 767 017a 6800     		.ascii	"h\000"
+ 768 017c 01       		.byte	0x1
+ 769 017d 49       		.byte	0x49
+ 770 017e 97000000 		.4byte	0x97
+ 771 0182 00       		.byte	0
+ 772 0183 09       		.uleb128 0x9
+ 773 0184 04       		.byte	0x4
+ 774 0185 14010000 		.4byte	0x114
+ 775 0189 0B       		.uleb128 0xb
+ 776 018a 4E000000 		.4byte	.LASF23
+ 777 018e 01       		.byte	0x1
+ 778 018f 3F       		.byte	0x3f
+ 779 0190 01       		.byte	0x1
+ 780 0191 AA010000 		.4byte	0x1aa
+ 781 0195 08       		.uleb128 0x8
+ 782 0196 00030000 		.4byte	.LASF21
+ 783 019a 01       		.byte	0x1
+ 784 019b 3F       		.byte	0x3f
+ 785 019c 83010000 		.4byte	0x183
+ 786 01a0 0C       		.uleb128 0xc
+ 787 01a1 7700     		.ascii	"w\000"
+ 788 01a3 01       		.byte	0x1
+ 789 01a4 3F       		.byte	0x3f
+ 790 01a5 97000000 		.4byte	0x97
+ 791 01a9 00       		.byte	0
+ 792 01aa 0D       		.uleb128 0xd
+ 793 01ab 72000000 		.4byte	.LASF24
+ 794 01af 01       		.byte	0x1
+ 795 01b0 32       		.byte	0x32
+ 796 01b1 00000000 		.4byte	.LFB3
+ 797 01b5 14000000 		.4byte	.LFE3-.LFB3
+ 798 01b9 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 21
+
+
+ 799 01ba 9C       		.byte	0x9c
+ 800 01bb FF010000 		.4byte	0x1ff
+ 801 01bf 0E       		.uleb128 0xe
+ 802 01c0 00030000 		.4byte	.LASF21
+ 803 01c4 01       		.byte	0x1
+ 804 01c5 32       		.byte	0x32
+ 805 01c6 83010000 		.4byte	0x183
+ 806 01ca 01       		.uleb128 0x1
+ 807 01cb 50       		.byte	0x50
+ 808 01cc 0F       		.uleb128 0xf
+ 809 01cd 783100   		.ascii	"x1\000"
+ 810 01d0 01       		.byte	0x1
+ 811 01d1 32       		.byte	0x32
+ 812 01d2 97000000 		.4byte	0x97
+ 813 01d6 01       		.uleb128 0x1
+ 814 01d7 51       		.byte	0x51
+ 815 01d8 0F       		.uleb128 0xf
+ 816 01d9 793100   		.ascii	"y1\000"
+ 817 01dc 01       		.byte	0x1
+ 818 01dd 32       		.byte	0x32
+ 819 01de 97000000 		.4byte	0x97
+ 820 01e2 01       		.uleb128 0x1
+ 821 01e3 52       		.byte	0x52
+ 822 01e4 0F       		.uleb128 0xf
+ 823 01e5 783200   		.ascii	"x2\000"
+ 824 01e8 01       		.byte	0x1
+ 825 01e9 32       		.byte	0x32
+ 826 01ea 97000000 		.4byte	0x97
+ 827 01ee 01       		.uleb128 0x1
+ 828 01ef 53       		.byte	0x53
+ 829 01f0 10       		.uleb128 0x10
+ 830 01f1 793200   		.ascii	"y2\000"
+ 831 01f4 01       		.byte	0x1
+ 832 01f5 32       		.byte	0x32
+ 833 01f6 97000000 		.4byte	0x97
+ 834 01fa 00000000 		.4byte	.LLST0
+ 835 01fe 00       		.byte	0
+ 836 01ff 11       		.uleb128 0x11
+ 837 0200 89010000 		.4byte	0x189
+ 838 0204 00000000 		.4byte	.LFB4
+ 839 0208 0A000000 		.4byte	.LFE4-.LFB4
+ 840 020c 01       		.uleb128 0x1
+ 841 020d 9C       		.byte	0x9c
+ 842 020e 23020000 		.4byte	0x223
+ 843 0212 12       		.uleb128 0x12
+ 844 0213 95010000 		.4byte	0x195
+ 845 0217 01       		.uleb128 0x1
+ 846 0218 50       		.byte	0x50
+ 847 0219 13       		.uleb128 0x13
+ 848 021a A0010000 		.4byte	0x1a0
+ 849 021e 20000000 		.4byte	.LLST1
+ 850 0222 00       		.byte	0
+ 851 0223 11       		.uleb128 0x11
+ 852 0224 62010000 		.4byte	0x162
+ 853 0228 00000000 		.4byte	.LFB5
+ 854 022c 0A000000 		.4byte	.LFE5-.LFB5
+ 855 0230 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 22
+
+
+ 856 0231 9C       		.byte	0x9c
+ 857 0232 47020000 		.4byte	0x247
+ 858 0236 12       		.uleb128 0x12
+ 859 0237 6E010000 		.4byte	0x16e
+ 860 023b 01       		.uleb128 0x1
+ 861 023c 50       		.byte	0x50
+ 862 023d 13       		.uleb128 0x13
+ 863 023e 79010000 		.4byte	0x179
+ 864 0242 41000000 		.4byte	.LLST2
+ 865 0246 00       		.byte	0
+ 866 0247 0D       		.uleb128 0xd
+ 867 0248 00000000 		.4byte	.LASF25
+ 868 024c 01       		.byte	0x1
+ 869 024d 54       		.byte	0x54
+ 870 024e 00000000 		.4byte	.LFB6
+ 871 0252 1E000000 		.4byte	.LFE6-.LFB6
+ 872 0256 01       		.uleb128 0x1
+ 873 0257 9C       		.byte	0x9c
+ 874 0258 10030000 		.4byte	0x310
+ 875 025c 0E       		.uleb128 0xe
+ 876 025d 00030000 		.4byte	.LASF21
+ 877 0261 01       		.byte	0x1
+ 878 0262 54       		.byte	0x54
+ 879 0263 83010000 		.4byte	0x183
+ 880 0267 01       		.uleb128 0x1
+ 881 0268 50       		.byte	0x50
+ 882 0269 10       		.uleb128 0x10
+ 883 026a 7800     		.ascii	"x\000"
+ 884 026c 01       		.byte	0x1
+ 885 026d 54       		.byte	0x54
+ 886 026e 97000000 		.4byte	0x97
+ 887 0272 62000000 		.4byte	.LLST3
+ 888 0276 0F       		.uleb128 0xf
+ 889 0277 7900     		.ascii	"y\000"
+ 890 0279 01       		.byte	0x1
+ 891 027a 54       		.byte	0x54
+ 892 027b 97000000 		.4byte	0x97
+ 893 027f 01       		.uleb128 0x1
+ 894 0280 52       		.byte	0x52
+ 895 0281 14       		.uleb128 0x14
+ 896 0282 7700     		.ascii	"w\000"
+ 897 0284 01       		.byte	0x1
+ 898 0285 56       		.byte	0x56
+ 899 0286 97000000 		.4byte	0x97
+ 900 028a 14       		.uleb128 0x14
+ 901 028b 6800     		.ascii	"h\000"
+ 902 028d 01       		.byte	0x1
+ 903 028e 57       		.byte	0x57
+ 904 028f 97000000 		.4byte	0x97
+ 905 0293 15       		.uleb128 0x15
+ 906 0294 46010000 		.4byte	0x146
+ 907 0298 02000000 		.4byte	.LBB10
+ 908 029c 00000000 		.4byte	.Ldebug_ranges0+0
+ 909 02a0 01       		.byte	0x1
+ 910 02a1 57       		.byte	0x57
+ 911 02a2 B5020000 		.4byte	0x2b5
+ 912 02a6 12       		.uleb128 0x12
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 23
+
+
+ 913 02a7 56010000 		.4byte	0x156
+ 914 02ab 01       		.uleb128 0x1
+ 915 02ac 50       		.byte	0x50
+ 916 02ad 12       		.uleb128 0x12
+ 917 02ae 56010000 		.4byte	0x156
+ 918 02b2 01       		.uleb128 0x1
+ 919 02b3 50       		.byte	0x50
+ 920 02b4 00       		.byte	0
+ 921 02b5 16       		.uleb128 0x16
+ 922 02b6 1F010000 		.4byte	0x11f
+ 923 02ba 04000000 		.4byte	.LBB13
+ 924 02be 04000000 		.4byte	.LBE13-.LBB13
+ 925 02c2 01       		.byte	0x1
+ 926 02c3 56       		.byte	0x56
+ 927 02c4 D7020000 		.4byte	0x2d7
+ 928 02c8 12       		.uleb128 0x12
+ 929 02c9 2F010000 		.4byte	0x12f
+ 930 02cd 01       		.uleb128 0x1
+ 931 02ce 50       		.byte	0x50
+ 932 02cf 12       		.uleb128 0x12
+ 933 02d0 2F010000 		.4byte	0x12f
+ 934 02d4 01       		.uleb128 0x1
+ 935 02d5 50       		.byte	0x50
+ 936 02d6 00       		.byte	0
+ 937 02d7 15       		.uleb128 0x15
+ 938 02d8 62010000 		.4byte	0x162
+ 939 02dc 0C000000 		.4byte	.LBB16
+ 940 02e0 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 941 02e4 01       		.byte	0x1
+ 942 02e5 5B       		.byte	0x5b
+ 943 02e6 F5020000 		.4byte	0x2f5
+ 944 02ea 17       		.uleb128 0x17
+ 945 02eb 79010000 		.4byte	0x179
+ 946 02ef 17       		.uleb128 0x17
+ 947 02f0 6E010000 		.4byte	0x16e
+ 948 02f4 00       		.byte	0
+ 949 02f5 18       		.uleb128 0x18
+ 950 02f6 89010000 		.4byte	0x189
+ 951 02fa 0E000000 		.4byte	.LBB20
+ 952 02fe 38000000 		.4byte	.Ldebug_ranges0+0x38
+ 953 0302 01       		.byte	0x1
+ 954 0303 5A       		.byte	0x5a
+ 955 0304 17       		.uleb128 0x17
+ 956 0305 A0010000 		.4byte	0x1a0
+ 957 0309 17       		.uleb128 0x17
+ 958 030a 95010000 		.4byte	0x195
+ 959 030e 00       		.byte	0
+ 960 030f 00       		.byte	0
+ 961 0310 19       		.uleb128 0x19
+ 962 0311 12010000 		.4byte	.LASF26
+ 963 0315 01       		.byte	0x1
+ 964 0316 63       		.byte	0x63
+ 965 0317 8C000000 		.4byte	0x8c
+ 966 031b 00000000 		.4byte	.LFB7
+ 967 031f 22000000 		.4byte	.LFE7-.LFB7
+ 968 0323 01       		.uleb128 0x1
+ 969 0324 9C       		.byte	0x9c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 24
+
+
+ 970 0325 48030000 		.4byte	0x348
+ 971 0329 1A       		.uleb128 0x1a
+ 972 032a 00030000 		.4byte	.LASF21
+ 973 032e 01       		.byte	0x1
+ 974 032f 63       		.byte	0x63
+ 975 0330 3B010000 		.4byte	0x13b
+ 976 0334 81000000 		.4byte	.LLST4
+ 977 0338 1B       		.uleb128 0x1b
+ 978 0339 C5000000 		.4byte	.LASF31
+ 979 033d 01       		.byte	0x1
+ 980 033e 65       		.byte	0x65
+ 981 033f 8C000000 		.4byte	0x8c
+ 982 0343 A2000000 		.4byte	.LLST5
+ 983 0347 00       		.byte	0
+ 984 0348 19       		.uleb128 0x19
+ 985 0349 60000000 		.4byte	.LASF27
+ 986 034d 01       		.byte	0x1
+ 987 034e 73       		.byte	0x73
+ 988 034f 9E030000 		.4byte	0x39e
+ 989 0353 00000000 		.4byte	.LFB8
+ 990 0357 58000000 		.4byte	.LFE8-.LFB8
+ 991 035b 01       		.uleb128 0x1
+ 992 035c 9C       		.byte	0x9c
+ 993 035d 9E030000 		.4byte	0x39e
+ 994 0361 1A       		.uleb128 0x1a
+ 995 0362 49030000 		.4byte	.LASF28
+ 996 0366 01       		.byte	0x1
+ 997 0367 73       		.byte	0x73
+ 998 0368 83010000 		.4byte	0x183
+ 999 036c 18010000 		.4byte	.LLST6
+ 1000 0370 1A       		.uleb128 0x1a
+ 1001 0371 0C030000 		.4byte	.LASF29
+ 1002 0375 01       		.byte	0x1
+ 1003 0376 73       		.byte	0x73
+ 1004 0377 3B010000 		.4byte	0x13b
+ 1005 037b 52010000 		.4byte	.LLST7
+ 1006 037f 1A       		.uleb128 0x1a
+ 1007 0380 FA000000 		.4byte	.LASF30
+ 1008 0384 01       		.byte	0x1
+ 1009 0385 73       		.byte	0x73
+ 1010 0386 3B010000 		.4byte	0x13b
+ 1011 038a 73010000 		.4byte	.LLST8
+ 1012 038e 1B       		.uleb128 0x1b
+ 1013 038f 25000000 		.4byte	.LASF32
+ 1014 0393 01       		.byte	0x1
+ 1015 0394 7C       		.byte	0x7c
+ 1016 0395 9E030000 		.4byte	0x39e
+ 1017 0399 94010000 		.4byte	.LLST9
+ 1018 039d 00       		.byte	0
+ 1019 039e 02       		.uleb128 0x2
+ 1020 039f 01       		.byte	0x1
+ 1021 03a0 02       		.byte	0x2
+ 1022 03a1 88000000 		.4byte	.LASF33
+ 1023 03a5 0D       		.uleb128 0xd
+ 1024 03a6 E8010000 		.4byte	.LASF34
+ 1025 03aa 01       		.byte	0x1
+ 1026 03ab 89       		.byte	0x89
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 25
+
+
+ 1027 03ac 00000000 		.4byte	.LFB9
+ 1028 03b0 44000000 		.4byte	.LFE9-.LFB9
+ 1029 03b4 01       		.uleb128 0x1
+ 1030 03b5 9C       		.byte	0x9c
+ 1031 03b6 E4030000 		.4byte	0x3e4
+ 1032 03ba 0E       		.uleb128 0xe
+ 1033 03bb 71030000 		.4byte	.LASF35
+ 1034 03bf 01       		.byte	0x1
+ 1035 03c0 89       		.byte	0x89
+ 1036 03c1 83010000 		.4byte	0x183
+ 1037 03c5 01       		.uleb128 0x1
+ 1038 03c6 50       		.byte	0x50
+ 1039 03c7 0E       		.uleb128 0xe
+ 1040 03c8 0C030000 		.4byte	.LASF29
+ 1041 03cc 01       		.byte	0x1
+ 1042 03cd 89       		.byte	0x89
+ 1043 03ce 3B010000 		.4byte	0x13b
+ 1044 03d2 01       		.uleb128 0x1
+ 1045 03d3 51       		.byte	0x51
+ 1046 03d4 1A       		.uleb128 0x1a
+ 1047 03d5 FA000000 		.4byte	.LASF30
+ 1048 03d9 01       		.byte	0x1
+ 1049 03da 89       		.byte	0x89
+ 1050 03db 3B010000 		.4byte	0x13b
+ 1051 03df B3010000 		.4byte	.LLST10
+ 1052 03e3 00       		.byte	0
+ 1053 03e4 19       		.uleb128 0x19
+ 1054 03e5 23030000 		.4byte	.LASF36
+ 1055 03e9 01       		.byte	0x1
+ 1056 03ea 97       		.byte	0x97
+ 1057 03eb 9E030000 		.4byte	0x39e
+ 1058 03ef 00000000 		.4byte	.LFB10
+ 1059 03f3 32000000 		.4byte	.LFE10-.LFB10
+ 1060 03f7 01       		.uleb128 0x1
+ 1061 03f8 9C       		.byte	0x9c
+ 1062 03f9 29040000 		.4byte	0x429
+ 1063 03fd 10       		.uleb128 0x10
+ 1064 03fe 615F7000 		.ascii	"a_p\000"
+ 1065 0402 01       		.byte	0x1
+ 1066 0403 97       		.byte	0x97
+ 1067 0404 3B010000 		.4byte	0x13b
+ 1068 0408 D4010000 		.4byte	.LLST11
+ 1069 040c 0F       		.uleb128 0xf
+ 1070 040d 705F7000 		.ascii	"p_p\000"
+ 1071 0411 01       		.byte	0x1
+ 1072 0412 97       		.byte	0x97
+ 1073 0413 29040000 		.4byte	0x429
+ 1074 0417 01       		.uleb128 0x1
+ 1075 0418 51       		.byte	0x51
+ 1076 0419 1B       		.uleb128 0x1b
+ 1077 041a BF000000 		.4byte	.LASF37
+ 1078 041e 01       		.byte	0x1
+ 1079 041f 99       		.byte	0x99
+ 1080 0420 9E030000 		.4byte	0x39e
+ 1081 0424 0E020000 		.4byte	.LLST12
+ 1082 0428 00       		.byte	0
+ 1083 0429 09       		.uleb128 0x9
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 26
+
+
+ 1084 042a 04       		.byte	0x4
+ 1085 042b 2F040000 		.4byte	0x42f
+ 1086 042f 0A       		.uleb128 0xa
+ 1087 0430 D4000000 		.4byte	0xd4
+ 1088 0434 19       		.uleb128 0x19
+ 1089 0435 2E000000 		.4byte	.LASF38
+ 1090 0439 01       		.byte	0x1
+ 1091 043a A8       		.byte	0xa8
+ 1092 043b 9E030000 		.4byte	0x39e
+ 1093 043f 00000000 		.4byte	.LFB11
+ 1094 0443 3A000000 		.4byte	.LFE11-.LFB11
+ 1095 0447 01       		.uleb128 0x1
+ 1096 0448 9C       		.byte	0x9c
+ 1097 0449 6A040000 		.4byte	0x46a
+ 1098 044d 1A       		.uleb128 0x1a
+ 1099 044e 0C030000 		.4byte	.LASF29
+ 1100 0452 01       		.byte	0x1
+ 1101 0453 A8       		.byte	0xa8
+ 1102 0454 3B010000 		.4byte	0x13b
+ 1103 0458 2D020000 		.4byte	.LLST13
+ 1104 045c 0E       		.uleb128 0xe
+ 1105 045d FA000000 		.4byte	.LASF30
+ 1106 0461 01       		.byte	0x1
+ 1107 0462 A8       		.byte	0xa8
+ 1108 0463 3B010000 		.4byte	0x13b
+ 1109 0467 01       		.uleb128 0x1
+ 1110 0468 51       		.byte	0x51
+ 1111 0469 00       		.byte	0
+ 1112 046a 19       		.uleb128 0x19
+ 1113 046b A7000000 		.4byte	.LASF39
+ 1114 046f 01       		.byte	0x1
+ 1115 0470 B7       		.byte	0xb7
+ 1116 0471 9E030000 		.4byte	0x39e
+ 1117 0475 00000000 		.4byte	.LFB12
+ 1118 0479 3A000000 		.4byte	.LFE12-.LFB12
+ 1119 047d 01       		.uleb128 0x1
+ 1120 047e 9C       		.byte	0x9c
+ 1121 047f AF040000 		.4byte	0x4af
+ 1122 0483 1A       		.uleb128 0x1a
+ 1123 0484 79030000 		.4byte	.LASF40
+ 1124 0488 01       		.byte	0x1
+ 1125 0489 B7       		.byte	0xb7
+ 1126 048a 3B010000 		.4byte	0x13b
+ 1127 048e 67020000 		.4byte	.LLST14
+ 1128 0492 0E       		.uleb128 0xe
+ 1129 0493 67030000 		.4byte	.LASF41
+ 1130 0497 01       		.byte	0x1
+ 1131 0498 B7       		.byte	0xb7
+ 1132 0499 3B010000 		.4byte	0x13b
+ 1133 049d 01       		.uleb128 0x1
+ 1134 049e 51       		.byte	0x51
+ 1135 049f 1B       		.uleb128 0x1b
+ 1136 04a0 8E000000 		.4byte	.LASF42
+ 1137 04a4 01       		.byte	0x1
+ 1138 04a5 B9       		.byte	0xb9
+ 1139 04a6 9E030000 		.4byte	0x39e
+ 1140 04aa A1020000 		.4byte	.LLST15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 27
+
+
+ 1141 04ae 00       		.byte	0
+ 1142 04af 0D       		.uleb128 0xd
+ 1143 04b0 3C000000 		.4byte	.LASF43
+ 1144 04b4 01       		.byte	0x1
+ 1145 04b5 C8       		.byte	0xc8
+ 1146 04b6 00000000 		.4byte	.LFB13
+ 1147 04ba 20000000 		.4byte	.LFE13-.LFB13
+ 1148 04be 01       		.uleb128 0x1
+ 1149 04bf 9C       		.byte	0x9c
+ 1150 04c0 E1040000 		.4byte	0x4e1
+ 1151 04c4 0F       		.uleb128 0xf
+ 1152 04c5 615F7000 		.ascii	"a_p\000"
+ 1153 04c9 01       		.byte	0x1
+ 1154 04ca C8       		.byte	0xc8
+ 1155 04cb 83010000 		.4byte	0x183
+ 1156 04cf 01       		.uleb128 0x1
+ 1157 04d0 50       		.byte	0x50
+ 1158 04d1 1A       		.uleb128 0x1a
+ 1159 04d2 E1010000 		.4byte	.LASF44
+ 1160 04d6 01       		.byte	0x1
+ 1161 04d7 C8       		.byte	0xc8
+ 1162 04d8 E1040000 		.4byte	0x4e1
+ 1163 04dc C0020000 		.4byte	.LLST16
+ 1164 04e0 00       		.byte	0
+ 1165 04e1 0A       		.uleb128 0xa
+ 1166 04e2 97000000 		.4byte	0x97
+ 1167 04e6 00       		.byte	0
+ 1168              		.section	.debug_abbrev,"",%progbits
+ 1169              	.Ldebug_abbrev0:
+ 1170 0000 01       		.uleb128 0x1
+ 1171 0001 11       		.uleb128 0x11
+ 1172 0002 01       		.byte	0x1
+ 1173 0003 25       		.uleb128 0x25
+ 1174 0004 0E       		.uleb128 0xe
+ 1175 0005 13       		.uleb128 0x13
+ 1176 0006 0B       		.uleb128 0xb
+ 1177 0007 03       		.uleb128 0x3
+ 1178 0008 0E       		.uleb128 0xe
+ 1179 0009 1B       		.uleb128 0x1b
+ 1180 000a 0E       		.uleb128 0xe
+ 1181 000b 55       		.uleb128 0x55
+ 1182 000c 17       		.uleb128 0x17
+ 1183 000d 11       		.uleb128 0x11
+ 1184 000e 01       		.uleb128 0x1
+ 1185 000f 10       		.uleb128 0x10
+ 1186 0010 17       		.uleb128 0x17
+ 1187 0011 00       		.byte	0
+ 1188 0012 00       		.byte	0
+ 1189 0013 02       		.uleb128 0x2
+ 1190 0014 24       		.uleb128 0x24
+ 1191 0015 00       		.byte	0
+ 1192 0016 0B       		.uleb128 0xb
+ 1193 0017 0B       		.uleb128 0xb
+ 1194 0018 3E       		.uleb128 0x3e
+ 1195 0019 0B       		.uleb128 0xb
+ 1196 001a 03       		.uleb128 0x3
+ 1197 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 28
+
+
+ 1198 001c 00       		.byte	0
+ 1199 001d 00       		.byte	0
+ 1200 001e 03       		.uleb128 0x3
+ 1201 001f 16       		.uleb128 0x16
+ 1202 0020 00       		.byte	0
+ 1203 0021 03       		.uleb128 0x3
+ 1204 0022 0E       		.uleb128 0xe
+ 1205 0023 3A       		.uleb128 0x3a
+ 1206 0024 0B       		.uleb128 0xb
+ 1207 0025 3B       		.uleb128 0x3b
+ 1208 0026 0B       		.uleb128 0xb
+ 1209 0027 49       		.uleb128 0x49
+ 1210 0028 13       		.uleb128 0x13
+ 1211 0029 00       		.byte	0
+ 1212 002a 00       		.byte	0
+ 1213 002b 04       		.uleb128 0x4
+ 1214 002c 24       		.uleb128 0x24
+ 1215 002d 00       		.byte	0
+ 1216 002e 0B       		.uleb128 0xb
+ 1217 002f 0B       		.uleb128 0xb
+ 1218 0030 3E       		.uleb128 0x3e
+ 1219 0031 0B       		.uleb128 0xb
+ 1220 0032 03       		.uleb128 0x3
+ 1221 0033 08       		.uleb128 0x8
+ 1222 0034 00       		.byte	0
+ 1223 0035 00       		.byte	0
+ 1224 0036 05       		.uleb128 0x5
+ 1225 0037 13       		.uleb128 0x13
+ 1226 0038 01       		.byte	0x1
+ 1227 0039 0B       		.uleb128 0xb
+ 1228 003a 0B       		.uleb128 0xb
+ 1229 003b 3A       		.uleb128 0x3a
+ 1230 003c 0B       		.uleb128 0xb
+ 1231 003d 3B       		.uleb128 0x3b
+ 1232 003e 0B       		.uleb128 0xb
+ 1233 003f 01       		.uleb128 0x1
+ 1234 0040 13       		.uleb128 0x13
+ 1235 0041 00       		.byte	0
+ 1236 0042 00       		.byte	0
+ 1237 0043 06       		.uleb128 0x6
+ 1238 0044 0D       		.uleb128 0xd
+ 1239 0045 00       		.byte	0
+ 1240 0046 03       		.uleb128 0x3
+ 1241 0047 08       		.uleb128 0x8
+ 1242 0048 3A       		.uleb128 0x3a
+ 1243 0049 0B       		.uleb128 0xb
+ 1244 004a 3B       		.uleb128 0x3b
+ 1245 004b 0B       		.uleb128 0xb
+ 1246 004c 49       		.uleb128 0x49
+ 1247 004d 13       		.uleb128 0x13
+ 1248 004e 38       		.uleb128 0x38
+ 1249 004f 0B       		.uleb128 0xb
+ 1250 0050 00       		.byte	0
+ 1251 0051 00       		.byte	0
+ 1252 0052 07       		.uleb128 0x7
+ 1253 0053 2E       		.uleb128 0x2e
+ 1254 0054 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 29
+
+
+ 1255 0055 03       		.uleb128 0x3
+ 1256 0056 0E       		.uleb128 0xe
+ 1257 0057 3A       		.uleb128 0x3a
+ 1258 0058 0B       		.uleb128 0xb
+ 1259 0059 3B       		.uleb128 0x3b
+ 1260 005a 0B       		.uleb128 0xb
+ 1261 005b 27       		.uleb128 0x27
+ 1262 005c 19       		.uleb128 0x19
+ 1263 005d 49       		.uleb128 0x49
+ 1264 005e 13       		.uleb128 0x13
+ 1265 005f 20       		.uleb128 0x20
+ 1266 0060 0B       		.uleb128 0xb
+ 1267 0061 01       		.uleb128 0x1
+ 1268 0062 13       		.uleb128 0x13
+ 1269 0063 00       		.byte	0
+ 1270 0064 00       		.byte	0
+ 1271 0065 08       		.uleb128 0x8
+ 1272 0066 05       		.uleb128 0x5
+ 1273 0067 00       		.byte	0
+ 1274 0068 03       		.uleb128 0x3
+ 1275 0069 0E       		.uleb128 0xe
+ 1276 006a 3A       		.uleb128 0x3a
+ 1277 006b 0B       		.uleb128 0xb
+ 1278 006c 3B       		.uleb128 0x3b
+ 1279 006d 0B       		.uleb128 0xb
+ 1280 006e 49       		.uleb128 0x49
+ 1281 006f 13       		.uleb128 0x13
+ 1282 0070 00       		.byte	0
+ 1283 0071 00       		.byte	0
+ 1284 0072 09       		.uleb128 0x9
+ 1285 0073 0F       		.uleb128 0xf
+ 1286 0074 00       		.byte	0
+ 1287 0075 0B       		.uleb128 0xb
+ 1288 0076 0B       		.uleb128 0xb
+ 1289 0077 49       		.uleb128 0x49
+ 1290 0078 13       		.uleb128 0x13
+ 1291 0079 00       		.byte	0
+ 1292 007a 00       		.byte	0
+ 1293 007b 0A       		.uleb128 0xa
+ 1294 007c 26       		.uleb128 0x26
+ 1295 007d 00       		.byte	0
+ 1296 007e 49       		.uleb128 0x49
+ 1297 007f 13       		.uleb128 0x13
+ 1298 0080 00       		.byte	0
+ 1299 0081 00       		.byte	0
+ 1300 0082 0B       		.uleb128 0xb
+ 1301 0083 2E       		.uleb128 0x2e
+ 1302 0084 01       		.byte	0x1
+ 1303 0085 3F       		.uleb128 0x3f
+ 1304 0086 19       		.uleb128 0x19
+ 1305 0087 03       		.uleb128 0x3
+ 1306 0088 0E       		.uleb128 0xe
+ 1307 0089 3A       		.uleb128 0x3a
+ 1308 008a 0B       		.uleb128 0xb
+ 1309 008b 3B       		.uleb128 0x3b
+ 1310 008c 0B       		.uleb128 0xb
+ 1311 008d 27       		.uleb128 0x27
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 30
+
+
+ 1312 008e 19       		.uleb128 0x19
+ 1313 008f 20       		.uleb128 0x20
+ 1314 0090 0B       		.uleb128 0xb
+ 1315 0091 01       		.uleb128 0x1
+ 1316 0092 13       		.uleb128 0x13
+ 1317 0093 00       		.byte	0
+ 1318 0094 00       		.byte	0
+ 1319 0095 0C       		.uleb128 0xc
+ 1320 0096 05       		.uleb128 0x5
+ 1321 0097 00       		.byte	0
+ 1322 0098 03       		.uleb128 0x3
+ 1323 0099 08       		.uleb128 0x8
+ 1324 009a 3A       		.uleb128 0x3a
+ 1325 009b 0B       		.uleb128 0xb
+ 1326 009c 3B       		.uleb128 0x3b
+ 1327 009d 0B       		.uleb128 0xb
+ 1328 009e 49       		.uleb128 0x49
+ 1329 009f 13       		.uleb128 0x13
+ 1330 00a0 00       		.byte	0
+ 1331 00a1 00       		.byte	0
+ 1332 00a2 0D       		.uleb128 0xd
+ 1333 00a3 2E       		.uleb128 0x2e
+ 1334 00a4 01       		.byte	0x1
+ 1335 00a5 3F       		.uleb128 0x3f
+ 1336 00a6 19       		.uleb128 0x19
+ 1337 00a7 03       		.uleb128 0x3
+ 1338 00a8 0E       		.uleb128 0xe
+ 1339 00a9 3A       		.uleb128 0x3a
+ 1340 00aa 0B       		.uleb128 0xb
+ 1341 00ab 3B       		.uleb128 0x3b
+ 1342 00ac 0B       		.uleb128 0xb
+ 1343 00ad 27       		.uleb128 0x27
+ 1344 00ae 19       		.uleb128 0x19
+ 1345 00af 11       		.uleb128 0x11
+ 1346 00b0 01       		.uleb128 0x1
+ 1347 00b1 12       		.uleb128 0x12
+ 1348 00b2 06       		.uleb128 0x6
+ 1349 00b3 40       		.uleb128 0x40
+ 1350 00b4 18       		.uleb128 0x18
+ 1351 00b5 9742     		.uleb128 0x2117
+ 1352 00b7 19       		.uleb128 0x19
+ 1353 00b8 01       		.uleb128 0x1
+ 1354 00b9 13       		.uleb128 0x13
+ 1355 00ba 00       		.byte	0
+ 1356 00bb 00       		.byte	0
+ 1357 00bc 0E       		.uleb128 0xe
+ 1358 00bd 05       		.uleb128 0x5
+ 1359 00be 00       		.byte	0
+ 1360 00bf 03       		.uleb128 0x3
+ 1361 00c0 0E       		.uleb128 0xe
+ 1362 00c1 3A       		.uleb128 0x3a
+ 1363 00c2 0B       		.uleb128 0xb
+ 1364 00c3 3B       		.uleb128 0x3b
+ 1365 00c4 0B       		.uleb128 0xb
+ 1366 00c5 49       		.uleb128 0x49
+ 1367 00c6 13       		.uleb128 0x13
+ 1368 00c7 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 31
+
+
+ 1369 00c8 18       		.uleb128 0x18
+ 1370 00c9 00       		.byte	0
+ 1371 00ca 00       		.byte	0
+ 1372 00cb 0F       		.uleb128 0xf
+ 1373 00cc 05       		.uleb128 0x5
+ 1374 00cd 00       		.byte	0
+ 1375 00ce 03       		.uleb128 0x3
+ 1376 00cf 08       		.uleb128 0x8
+ 1377 00d0 3A       		.uleb128 0x3a
+ 1378 00d1 0B       		.uleb128 0xb
+ 1379 00d2 3B       		.uleb128 0x3b
+ 1380 00d3 0B       		.uleb128 0xb
+ 1381 00d4 49       		.uleb128 0x49
+ 1382 00d5 13       		.uleb128 0x13
+ 1383 00d6 02       		.uleb128 0x2
+ 1384 00d7 18       		.uleb128 0x18
+ 1385 00d8 00       		.byte	0
+ 1386 00d9 00       		.byte	0
+ 1387 00da 10       		.uleb128 0x10
+ 1388 00db 05       		.uleb128 0x5
+ 1389 00dc 00       		.byte	0
+ 1390 00dd 03       		.uleb128 0x3
+ 1391 00de 08       		.uleb128 0x8
+ 1392 00df 3A       		.uleb128 0x3a
+ 1393 00e0 0B       		.uleb128 0xb
+ 1394 00e1 3B       		.uleb128 0x3b
+ 1395 00e2 0B       		.uleb128 0xb
+ 1396 00e3 49       		.uleb128 0x49
+ 1397 00e4 13       		.uleb128 0x13
+ 1398 00e5 02       		.uleb128 0x2
+ 1399 00e6 17       		.uleb128 0x17
+ 1400 00e7 00       		.byte	0
+ 1401 00e8 00       		.byte	0
+ 1402 00e9 11       		.uleb128 0x11
+ 1403 00ea 2E       		.uleb128 0x2e
+ 1404 00eb 01       		.byte	0x1
+ 1405 00ec 31       		.uleb128 0x31
+ 1406 00ed 13       		.uleb128 0x13
+ 1407 00ee 11       		.uleb128 0x11
+ 1408 00ef 01       		.uleb128 0x1
+ 1409 00f0 12       		.uleb128 0x12
+ 1410 00f1 06       		.uleb128 0x6
+ 1411 00f2 40       		.uleb128 0x40
+ 1412 00f3 18       		.uleb128 0x18
+ 1413 00f4 9742     		.uleb128 0x2117
+ 1414 00f6 19       		.uleb128 0x19
+ 1415 00f7 01       		.uleb128 0x1
+ 1416 00f8 13       		.uleb128 0x13
+ 1417 00f9 00       		.byte	0
+ 1418 00fa 00       		.byte	0
+ 1419 00fb 12       		.uleb128 0x12
+ 1420 00fc 05       		.uleb128 0x5
+ 1421 00fd 00       		.byte	0
+ 1422 00fe 31       		.uleb128 0x31
+ 1423 00ff 13       		.uleb128 0x13
+ 1424 0100 02       		.uleb128 0x2
+ 1425 0101 18       		.uleb128 0x18
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 32
+
+
+ 1426 0102 00       		.byte	0
+ 1427 0103 00       		.byte	0
+ 1428 0104 13       		.uleb128 0x13
+ 1429 0105 05       		.uleb128 0x5
+ 1430 0106 00       		.byte	0
+ 1431 0107 31       		.uleb128 0x31
+ 1432 0108 13       		.uleb128 0x13
+ 1433 0109 02       		.uleb128 0x2
+ 1434 010a 17       		.uleb128 0x17
+ 1435 010b 00       		.byte	0
+ 1436 010c 00       		.byte	0
+ 1437 010d 14       		.uleb128 0x14
+ 1438 010e 34       		.uleb128 0x34
+ 1439 010f 00       		.byte	0
+ 1440 0110 03       		.uleb128 0x3
+ 1441 0111 08       		.uleb128 0x8
+ 1442 0112 3A       		.uleb128 0x3a
+ 1443 0113 0B       		.uleb128 0xb
+ 1444 0114 3B       		.uleb128 0x3b
+ 1445 0115 0B       		.uleb128 0xb
+ 1446 0116 49       		.uleb128 0x49
+ 1447 0117 13       		.uleb128 0x13
+ 1448 0118 00       		.byte	0
+ 1449 0119 00       		.byte	0
+ 1450 011a 15       		.uleb128 0x15
+ 1451 011b 1D       		.uleb128 0x1d
+ 1452 011c 01       		.byte	0x1
+ 1453 011d 31       		.uleb128 0x31
+ 1454 011e 13       		.uleb128 0x13
+ 1455 011f 52       		.uleb128 0x52
+ 1456 0120 01       		.uleb128 0x1
+ 1457 0121 55       		.uleb128 0x55
+ 1458 0122 17       		.uleb128 0x17
+ 1459 0123 58       		.uleb128 0x58
+ 1460 0124 0B       		.uleb128 0xb
+ 1461 0125 59       		.uleb128 0x59
+ 1462 0126 0B       		.uleb128 0xb
+ 1463 0127 01       		.uleb128 0x1
+ 1464 0128 13       		.uleb128 0x13
+ 1465 0129 00       		.byte	0
+ 1466 012a 00       		.byte	0
+ 1467 012b 16       		.uleb128 0x16
+ 1468 012c 1D       		.uleb128 0x1d
+ 1469 012d 01       		.byte	0x1
+ 1470 012e 31       		.uleb128 0x31
+ 1471 012f 13       		.uleb128 0x13
+ 1472 0130 11       		.uleb128 0x11
+ 1473 0131 01       		.uleb128 0x1
+ 1474 0132 12       		.uleb128 0x12
+ 1475 0133 06       		.uleb128 0x6
+ 1476 0134 58       		.uleb128 0x58
+ 1477 0135 0B       		.uleb128 0xb
+ 1478 0136 59       		.uleb128 0x59
+ 1479 0137 0B       		.uleb128 0xb
+ 1480 0138 01       		.uleb128 0x1
+ 1481 0139 13       		.uleb128 0x13
+ 1482 013a 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 33
+
+
+ 1483 013b 00       		.byte	0
+ 1484 013c 17       		.uleb128 0x17
+ 1485 013d 05       		.uleb128 0x5
+ 1486 013e 00       		.byte	0
+ 1487 013f 31       		.uleb128 0x31
+ 1488 0140 13       		.uleb128 0x13
+ 1489 0141 00       		.byte	0
+ 1490 0142 00       		.byte	0
+ 1491 0143 18       		.uleb128 0x18
+ 1492 0144 1D       		.uleb128 0x1d
+ 1493 0145 01       		.byte	0x1
+ 1494 0146 31       		.uleb128 0x31
+ 1495 0147 13       		.uleb128 0x13
+ 1496 0148 52       		.uleb128 0x52
+ 1497 0149 01       		.uleb128 0x1
+ 1498 014a 55       		.uleb128 0x55
+ 1499 014b 17       		.uleb128 0x17
+ 1500 014c 58       		.uleb128 0x58
+ 1501 014d 0B       		.uleb128 0xb
+ 1502 014e 59       		.uleb128 0x59
+ 1503 014f 0B       		.uleb128 0xb
+ 1504 0150 00       		.byte	0
+ 1505 0151 00       		.byte	0
+ 1506 0152 19       		.uleb128 0x19
+ 1507 0153 2E       		.uleb128 0x2e
+ 1508 0154 01       		.byte	0x1
+ 1509 0155 3F       		.uleb128 0x3f
+ 1510 0156 19       		.uleb128 0x19
+ 1511 0157 03       		.uleb128 0x3
+ 1512 0158 0E       		.uleb128 0xe
+ 1513 0159 3A       		.uleb128 0x3a
+ 1514 015a 0B       		.uleb128 0xb
+ 1515 015b 3B       		.uleb128 0x3b
+ 1516 015c 0B       		.uleb128 0xb
+ 1517 015d 27       		.uleb128 0x27
+ 1518 015e 19       		.uleb128 0x19
+ 1519 015f 49       		.uleb128 0x49
+ 1520 0160 13       		.uleb128 0x13
+ 1521 0161 11       		.uleb128 0x11
+ 1522 0162 01       		.uleb128 0x1
+ 1523 0163 12       		.uleb128 0x12
+ 1524 0164 06       		.uleb128 0x6
+ 1525 0165 40       		.uleb128 0x40
+ 1526 0166 18       		.uleb128 0x18
+ 1527 0167 9742     		.uleb128 0x2117
+ 1528 0169 19       		.uleb128 0x19
+ 1529 016a 01       		.uleb128 0x1
+ 1530 016b 13       		.uleb128 0x13
+ 1531 016c 00       		.byte	0
+ 1532 016d 00       		.byte	0
+ 1533 016e 1A       		.uleb128 0x1a
+ 1534 016f 05       		.uleb128 0x5
+ 1535 0170 00       		.byte	0
+ 1536 0171 03       		.uleb128 0x3
+ 1537 0172 0E       		.uleb128 0xe
+ 1538 0173 3A       		.uleb128 0x3a
+ 1539 0174 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 34
+
+
+ 1540 0175 3B       		.uleb128 0x3b
+ 1541 0176 0B       		.uleb128 0xb
+ 1542 0177 49       		.uleb128 0x49
+ 1543 0178 13       		.uleb128 0x13
+ 1544 0179 02       		.uleb128 0x2
+ 1545 017a 17       		.uleb128 0x17
+ 1546 017b 00       		.byte	0
+ 1547 017c 00       		.byte	0
+ 1548 017d 1B       		.uleb128 0x1b
+ 1549 017e 34       		.uleb128 0x34
+ 1550 017f 00       		.byte	0
+ 1551 0180 03       		.uleb128 0x3
+ 1552 0181 0E       		.uleb128 0xe
+ 1553 0182 3A       		.uleb128 0x3a
+ 1554 0183 0B       		.uleb128 0xb
+ 1555 0184 3B       		.uleb128 0x3b
+ 1556 0185 0B       		.uleb128 0xb
+ 1557 0186 49       		.uleb128 0x49
+ 1558 0187 13       		.uleb128 0x13
+ 1559 0188 02       		.uleb128 0x2
+ 1560 0189 17       		.uleb128 0x17
+ 1561 018a 00       		.byte	0
+ 1562 018b 00       		.byte	0
+ 1563 018c 00       		.byte	0
+ 1564              		.section	.debug_loc,"",%progbits
+ 1565              	.Ldebug_loc0:
+ 1566              	.LLST0:
+ 1567 0000 00000000 		.4byte	.LVL0
+ 1568 0004 12000000 		.4byte	.LVL1
+ 1569 0008 0200     		.2byte	0x2
+ 1570 000a 91       		.byte	0x91
+ 1571 000b 00       		.sleb128 0
+ 1572 000c 12000000 		.4byte	.LVL1
+ 1573 0010 14000000 		.4byte	.LFE3
+ 1574 0014 0200     		.2byte	0x2
+ 1575 0016 7D       		.byte	0x7d
+ 1576 0017 00       		.sleb128 0
+ 1577 0018 00000000 		.4byte	0
+ 1578 001c 00000000 		.4byte	0
+ 1579              	.LLST1:
+ 1580 0020 00000000 		.4byte	.LVL2
+ 1581 0024 06000000 		.4byte	.LVL3
+ 1582 0028 0100     		.2byte	0x1
+ 1583 002a 51       		.byte	0x51
+ 1584 002b 06000000 		.4byte	.LVL3
+ 1585 002f 0A000000 		.4byte	.LFE4
+ 1586 0033 0400     		.2byte	0x4
+ 1587 0035 F3       		.byte	0xf3
+ 1588 0036 01       		.uleb128 0x1
+ 1589 0037 51       		.byte	0x51
+ 1590 0038 9F       		.byte	0x9f
+ 1591 0039 00000000 		.4byte	0
+ 1592 003d 00000000 		.4byte	0
+ 1593              	.LLST2:
+ 1594 0041 00000000 		.4byte	.LVL4
+ 1595 0045 06000000 		.4byte	.LVL5
+ 1596 0049 0100     		.2byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 35
+
+
+ 1597 004b 51       		.byte	0x51
+ 1598 004c 06000000 		.4byte	.LVL5
+ 1599 0050 0A000000 		.4byte	.LFE5
+ 1600 0054 0400     		.2byte	0x4
+ 1601 0056 F3       		.byte	0xf3
+ 1602 0057 01       		.uleb128 0x1
+ 1603 0058 51       		.byte	0x51
+ 1604 0059 9F       		.byte	0x9f
+ 1605 005a 00000000 		.4byte	0
+ 1606 005e 00000000 		.4byte	0
+ 1607              	.LLST3:
+ 1608 0062 00000000 		.4byte	.LVL6
+ 1609 0066 10000000 		.4byte	.LVL8
+ 1610 006a 0100     		.2byte	0x1
+ 1611 006c 51       		.byte	0x51
+ 1612 006d 10000000 		.4byte	.LVL8
+ 1613 0071 1E000000 		.4byte	.LFE6
+ 1614 0075 0200     		.2byte	0x2
+ 1615 0077 70       		.byte	0x70
+ 1616 0078 00       		.sleb128 0
+ 1617 0079 00000000 		.4byte	0
+ 1618 007d 00000000 		.4byte	0
+ 1619              	.LLST4:
+ 1620 0081 00000000 		.4byte	.LVL9
+ 1621 0085 14000000 		.4byte	.LVL10
+ 1622 0089 0100     		.2byte	0x1
+ 1623 008b 50       		.byte	0x50
+ 1624 008c 14000000 		.4byte	.LVL10
+ 1625 0090 22000000 		.4byte	.LFE7
+ 1626 0094 0400     		.2byte	0x4
+ 1627 0096 F3       		.byte	0xf3
+ 1628 0097 01       		.uleb128 0x1
+ 1629 0098 50       		.byte	0x50
+ 1630 0099 9F       		.byte	0x9f
+ 1631 009a 00000000 		.4byte	0
+ 1632 009e 00000000 		.4byte	0
+ 1633              	.LLST5:
+ 1634 00a2 00000000 		.4byte	.LVL9
+ 1635 00a6 14000000 		.4byte	.LVL10
+ 1636 00aa 2800     		.2byte	0x28
+ 1637 00ac 70       		.byte	0x70
+ 1638 00ad 04       		.sleb128 4
+ 1639 00ae 94       		.byte	0x94
+ 1640 00af 02       		.byte	0x2
+ 1641 00b0 40       		.byte	0x40
+ 1642 00b1 24       		.byte	0x24
+ 1643 00b2 40       		.byte	0x40
+ 1644 00b3 26       		.byte	0x26
+ 1645 00b4 70       		.byte	0x70
+ 1646 00b5 00       		.sleb128 0
+ 1647 00b6 94       		.byte	0x94
+ 1648 00b7 02       		.byte	0x2
+ 1649 00b8 40       		.byte	0x40
+ 1650 00b9 24       		.byte	0x24
+ 1651 00ba 40       		.byte	0x40
+ 1652 00bb 26       		.byte	0x26
+ 1653 00bc 1C       		.byte	0x1c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 36
+
+
+ 1654 00bd 23       		.byte	0x23
+ 1655 00be 01       		.uleb128 0x1
+ 1656 00bf 70       		.byte	0x70
+ 1657 00c0 06       		.sleb128 6
+ 1658 00c1 94       		.byte	0x94
+ 1659 00c2 02       		.byte	0x2
+ 1660 00c3 40       		.byte	0x40
+ 1661 00c4 24       		.byte	0x24
+ 1662 00c5 40       		.byte	0x40
+ 1663 00c6 26       		.byte	0x26
+ 1664 00c7 70       		.byte	0x70
+ 1665 00c8 02       		.sleb128 2
+ 1666 00c9 94       		.byte	0x94
+ 1667 00ca 02       		.byte	0x2
+ 1668 00cb 40       		.byte	0x40
+ 1669 00cc 24       		.byte	0x24
+ 1670 00cd 40       		.byte	0x40
+ 1671 00ce 26       		.byte	0x26
+ 1672 00cf 1C       		.byte	0x1c
+ 1673 00d0 23       		.byte	0x23
+ 1674 00d1 01       		.uleb128 0x1
+ 1675 00d2 1E       		.byte	0x1e
+ 1676 00d3 9F       		.byte	0x9f
+ 1677 00d4 14000000 		.4byte	.LVL10
+ 1678 00d8 22000000 		.4byte	.LFE7
+ 1679 00dc 3200     		.2byte	0x32
+ 1680 00de F3       		.byte	0xf3
+ 1681 00df 01       		.uleb128 0x1
+ 1682 00e0 50       		.byte	0x50
+ 1683 00e1 23       		.byte	0x23
+ 1684 00e2 04       		.uleb128 0x4
+ 1685 00e3 94       		.byte	0x94
+ 1686 00e4 02       		.byte	0x2
+ 1687 00e5 40       		.byte	0x40
+ 1688 00e6 24       		.byte	0x24
+ 1689 00e7 40       		.byte	0x40
+ 1690 00e8 26       		.byte	0x26
+ 1691 00e9 F3       		.byte	0xf3
+ 1692 00ea 01       		.uleb128 0x1
+ 1693 00eb 50       		.byte	0x50
+ 1694 00ec 94       		.byte	0x94
+ 1695 00ed 02       		.byte	0x2
+ 1696 00ee 40       		.byte	0x40
+ 1697 00ef 24       		.byte	0x24
+ 1698 00f0 40       		.byte	0x40
+ 1699 00f1 26       		.byte	0x26
+ 1700 00f2 1C       		.byte	0x1c
+ 1701 00f3 23       		.byte	0x23
+ 1702 00f4 01       		.uleb128 0x1
+ 1703 00f5 F3       		.byte	0xf3
+ 1704 00f6 01       		.uleb128 0x1
+ 1705 00f7 50       		.byte	0x50
+ 1706 00f8 23       		.byte	0x23
+ 1707 00f9 06       		.uleb128 0x6
+ 1708 00fa 94       		.byte	0x94
+ 1709 00fb 02       		.byte	0x2
+ 1710 00fc 40       		.byte	0x40
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 37
+
+
+ 1711 00fd 24       		.byte	0x24
+ 1712 00fe 40       		.byte	0x40
+ 1713 00ff 26       		.byte	0x26
+ 1714 0100 F3       		.byte	0xf3
+ 1715 0101 01       		.uleb128 0x1
+ 1716 0102 50       		.byte	0x50
+ 1717 0103 23       		.byte	0x23
+ 1718 0104 02       		.uleb128 0x2
+ 1719 0105 94       		.byte	0x94
+ 1720 0106 02       		.byte	0x2
+ 1721 0107 40       		.byte	0x40
+ 1722 0108 24       		.byte	0x24
+ 1723 0109 40       		.byte	0x40
+ 1724 010a 26       		.byte	0x26
+ 1725 010b 1C       		.byte	0x1c
+ 1726 010c 23       		.byte	0x23
+ 1727 010d 01       		.uleb128 0x1
+ 1728 010e 1E       		.byte	0x1e
+ 1729 010f 9F       		.byte	0x9f
+ 1730 0110 00000000 		.4byte	0
+ 1731 0114 00000000 		.4byte	0
+ 1732              	.LLST6:
+ 1733 0118 00000000 		.4byte	.LVL11
+ 1734 011c 50000000 		.4byte	.LVL15
+ 1735 0120 0100     		.2byte	0x1
+ 1736 0122 50       		.byte	0x50
+ 1737 0123 50000000 		.4byte	.LVL15
+ 1738 0127 54000000 		.4byte	.LVL16
+ 1739 012b 0400     		.2byte	0x4
+ 1740 012d F3       		.byte	0xf3
+ 1741 012e 01       		.uleb128 0x1
+ 1742 012f 50       		.byte	0x50
+ 1743 0130 9F       		.byte	0x9f
+ 1744 0131 54000000 		.4byte	.LVL16
+ 1745 0135 56000000 		.4byte	.LVL17
+ 1746 0139 0100     		.2byte	0x1
+ 1747 013b 50       		.byte	0x50
+ 1748 013c 56000000 		.4byte	.LVL17
+ 1749 0140 58000000 		.4byte	.LFE8
+ 1750 0144 0400     		.2byte	0x4
+ 1751 0146 F3       		.byte	0xf3
+ 1752 0147 01       		.uleb128 0x1
+ 1753 0148 50       		.byte	0x50
+ 1754 0149 9F       		.byte	0x9f
+ 1755 014a 00000000 		.4byte	0
+ 1756 014e 00000000 		.4byte	0
+ 1757              	.LLST7:
+ 1758 0152 00000000 		.4byte	.LVL11
+ 1759 0156 26000000 		.4byte	.LVL13
+ 1760 015a 0100     		.2byte	0x1
+ 1761 015c 51       		.byte	0x51
+ 1762 015d 26000000 		.4byte	.LVL13
+ 1763 0161 58000000 		.4byte	.LFE8
+ 1764 0165 0400     		.2byte	0x4
+ 1765 0167 F3       		.byte	0xf3
+ 1766 0168 01       		.uleb128 0x1
+ 1767 0169 51       		.byte	0x51
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 38
+
+
+ 1768 016a 9F       		.byte	0x9f
+ 1769 016b 00000000 		.4byte	0
+ 1770 016f 00000000 		.4byte	0
+ 1771              	.LLST8:
+ 1772 0173 00000000 		.4byte	.LVL11
+ 1773 0177 1E000000 		.4byte	.LVL12
+ 1774 017b 0100     		.2byte	0x1
+ 1775 017d 52       		.byte	0x52
+ 1776 017e 1E000000 		.4byte	.LVL12
+ 1777 0182 58000000 		.4byte	.LFE8
+ 1778 0186 0400     		.2byte	0x4
+ 1779 0188 F3       		.byte	0xf3
+ 1780 0189 01       		.uleb128 0x1
+ 1781 018a 52       		.byte	0x52
+ 1782 018b 9F       		.byte	0x9f
+ 1783 018c 00000000 		.4byte	0
+ 1784 0190 00000000 		.4byte	0
+ 1785              	.LLST9:
+ 1786 0194 48000000 		.4byte	.LVL14
+ 1787 0198 56000000 		.4byte	.LVL17
+ 1788 019c 0200     		.2byte	0x2
+ 1789 019e 31       		.byte	0x31
+ 1790 019f 9F       		.byte	0x9f
+ 1791 01a0 56000000 		.4byte	.LVL17
+ 1792 01a4 58000000 		.4byte	.LFE8
+ 1793 01a8 0100     		.2byte	0x1
+ 1794 01aa 50       		.byte	0x50
+ 1795 01ab 00000000 		.4byte	0
+ 1796 01af 00000000 		.4byte	0
+ 1797              	.LLST10:
+ 1798 01b3 00000000 		.4byte	.LVL18
+ 1799 01b7 22000000 		.4byte	.LVL19
+ 1800 01bb 0100     		.2byte	0x1
+ 1801 01bd 52       		.byte	0x52
+ 1802 01be 22000000 		.4byte	.LVL19
+ 1803 01c2 44000000 		.4byte	.LFE9
+ 1804 01c6 0400     		.2byte	0x4
+ 1805 01c8 F3       		.byte	0xf3
+ 1806 01c9 01       		.uleb128 0x1
+ 1807 01ca 52       		.byte	0x52
+ 1808 01cb 9F       		.byte	0x9f
+ 1809 01cc 00000000 		.4byte	0
+ 1810 01d0 00000000 		.4byte	0
+ 1811              	.LLST11:
+ 1812 01d4 00000000 		.4byte	.LVL20
+ 1813 01d8 2A000000 		.4byte	.LVL21
+ 1814 01dc 0100     		.2byte	0x1
+ 1815 01de 50       		.byte	0x50
+ 1816 01df 2A000000 		.4byte	.LVL21
+ 1817 01e3 2E000000 		.4byte	.LVL22
+ 1818 01e7 0400     		.2byte	0x4
+ 1819 01e9 F3       		.byte	0xf3
+ 1820 01ea 01       		.uleb128 0x1
+ 1821 01eb 50       		.byte	0x50
+ 1822 01ec 9F       		.byte	0x9f
+ 1823 01ed 2E000000 		.4byte	.LVL22
+ 1824 01f1 30000000 		.4byte	.LVL23
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 39
+
+
+ 1825 01f5 0100     		.2byte	0x1
+ 1826 01f7 50       		.byte	0x50
+ 1827 01f8 30000000 		.4byte	.LVL23
+ 1828 01fc 32000000 		.4byte	.LFE10
+ 1829 0200 0400     		.2byte	0x4
+ 1830 0202 F3       		.byte	0xf3
+ 1831 0203 01       		.uleb128 0x1
+ 1832 0204 50       		.byte	0x50
+ 1833 0205 9F       		.byte	0x9f
+ 1834 0206 00000000 		.4byte	0
+ 1835 020a 00000000 		.4byte	0
+ 1836              	.LLST12:
+ 1837 020e 00000000 		.4byte	.LVL20
+ 1838 0212 30000000 		.4byte	.LVL23
+ 1839 0216 0200     		.2byte	0x2
+ 1840 0218 30       		.byte	0x30
+ 1841 0219 9F       		.byte	0x9f
+ 1842 021a 30000000 		.4byte	.LVL23
+ 1843 021e 32000000 		.4byte	.LFE10
+ 1844 0222 0100     		.2byte	0x1
+ 1845 0224 50       		.byte	0x50
+ 1846 0225 00000000 		.4byte	0
+ 1847 0229 00000000 		.4byte	0
+ 1848              	.LLST13:
+ 1849 022d 00000000 		.4byte	.LVL24
+ 1850 0231 2C000000 		.4byte	.LVL25
+ 1851 0235 0100     		.2byte	0x1
+ 1852 0237 50       		.byte	0x50
+ 1853 0238 2C000000 		.4byte	.LVL25
+ 1854 023c 36000000 		.4byte	.LVL26
+ 1855 0240 0400     		.2byte	0x4
+ 1856 0242 F3       		.byte	0xf3
+ 1857 0243 01       		.uleb128 0x1
+ 1858 0244 50       		.byte	0x50
+ 1859 0245 9F       		.byte	0x9f
+ 1860 0246 36000000 		.4byte	.LVL26
+ 1861 024a 38000000 		.4byte	.LVL27
+ 1862 024e 0100     		.2byte	0x1
+ 1863 0250 50       		.byte	0x50
+ 1864 0251 38000000 		.4byte	.LVL27
+ 1865 0255 3A000000 		.4byte	.LFE11
+ 1866 0259 0400     		.2byte	0x4
+ 1867 025b F3       		.byte	0xf3
+ 1868 025c 01       		.uleb128 0x1
+ 1869 025d 50       		.byte	0x50
+ 1870 025e 9F       		.byte	0x9f
+ 1871 025f 00000000 		.4byte	0
+ 1872 0263 00000000 		.4byte	0
+ 1873              	.LLST14:
+ 1874 0267 00000000 		.4byte	.LVL28
+ 1875 026b 2C000000 		.4byte	.LVL29
+ 1876 026f 0100     		.2byte	0x1
+ 1877 0271 50       		.byte	0x50
+ 1878 0272 2C000000 		.4byte	.LVL29
+ 1879 0276 36000000 		.4byte	.LVL30
+ 1880 027a 0400     		.2byte	0x4
+ 1881 027c F3       		.byte	0xf3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 40
+
+
+ 1882 027d 01       		.uleb128 0x1
+ 1883 027e 50       		.byte	0x50
+ 1884 027f 9F       		.byte	0x9f
+ 1885 0280 36000000 		.4byte	.LVL30
+ 1886 0284 38000000 		.4byte	.LVL31
+ 1887 0288 0100     		.2byte	0x1
+ 1888 028a 50       		.byte	0x50
+ 1889 028b 38000000 		.4byte	.LVL31
+ 1890 028f 3A000000 		.4byte	.LFE12
+ 1891 0293 0400     		.2byte	0x4
+ 1892 0295 F3       		.byte	0xf3
+ 1893 0296 01       		.uleb128 0x1
+ 1894 0297 50       		.byte	0x50
+ 1895 0298 9F       		.byte	0x9f
+ 1896 0299 00000000 		.4byte	0
+ 1897 029d 00000000 		.4byte	0
+ 1898              	.LLST15:
+ 1899 02a1 00000000 		.4byte	.LVL28
+ 1900 02a5 38000000 		.4byte	.LVL31
+ 1901 02a9 0200     		.2byte	0x2
+ 1902 02ab 30       		.byte	0x30
+ 1903 02ac 9F       		.byte	0x9f
+ 1904 02ad 38000000 		.4byte	.LVL31
+ 1905 02b1 3A000000 		.4byte	.LFE12
+ 1906 02b5 0100     		.2byte	0x1
+ 1907 02b7 50       		.byte	0x50
+ 1908 02b8 00000000 		.4byte	0
+ 1909 02bc 00000000 		.4byte	0
+ 1910              	.LLST16:
+ 1911 02c0 00000000 		.4byte	.LVL32
+ 1912 02c4 14000000 		.4byte	.LVL33
+ 1913 02c8 0100     		.2byte	0x1
+ 1914 02ca 51       		.byte	0x51
+ 1915 02cb 14000000 		.4byte	.LVL33
+ 1916 02cf 20000000 		.4byte	.LFE13
+ 1917 02d3 0400     		.2byte	0x4
+ 1918 02d5 F3       		.byte	0xf3
+ 1919 02d6 01       		.uleb128 0x1
+ 1920 02d7 51       		.byte	0x51
+ 1921 02d8 9F       		.byte	0x9f
+ 1922 02d9 00000000 		.4byte	0
+ 1923 02dd 00000000 		.4byte	0
+ 1924              		.section	.debug_aranges,"",%progbits
+ 1925 0000 6C000000 		.4byte	0x6c
+ 1926 0004 0200     		.2byte	0x2
+ 1927 0006 00000000 		.4byte	.Ldebug_info0
+ 1928 000a 04       		.byte	0x4
+ 1929 000b 00       		.byte	0
+ 1930 000c 0000     		.2byte	0
+ 1931 000e 0000     		.2byte	0
+ 1932 0010 00000000 		.4byte	.LFB3
+ 1933 0014 14000000 		.4byte	.LFE3-.LFB3
+ 1934 0018 00000000 		.4byte	.LFB4
+ 1935 001c 0A000000 		.4byte	.LFE4-.LFB4
+ 1936 0020 00000000 		.4byte	.LFB5
+ 1937 0024 0A000000 		.4byte	.LFE5-.LFB5
+ 1938 0028 00000000 		.4byte	.LFB6
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 41
+
+
+ 1939 002c 1E000000 		.4byte	.LFE6-.LFB6
+ 1940 0030 00000000 		.4byte	.LFB7
+ 1941 0034 22000000 		.4byte	.LFE7-.LFB7
+ 1942 0038 00000000 		.4byte	.LFB8
+ 1943 003c 58000000 		.4byte	.LFE8-.LFB8
+ 1944 0040 00000000 		.4byte	.LFB9
+ 1945 0044 44000000 		.4byte	.LFE9-.LFB9
+ 1946 0048 00000000 		.4byte	.LFB10
+ 1947 004c 32000000 		.4byte	.LFE10-.LFB10
+ 1948 0050 00000000 		.4byte	.LFB11
+ 1949 0054 3A000000 		.4byte	.LFE11-.LFB11
+ 1950 0058 00000000 		.4byte	.LFB12
+ 1951 005c 3A000000 		.4byte	.LFE12-.LFB12
+ 1952 0060 00000000 		.4byte	.LFB13
+ 1953 0064 20000000 		.4byte	.LFE13-.LFB13
+ 1954 0068 00000000 		.4byte	0
+ 1955 006c 00000000 		.4byte	0
+ 1956              		.section	.debug_ranges,"",%progbits
+ 1957              	.Ldebug_ranges0:
+ 1958 0000 02000000 		.4byte	.LBB10
+ 1959 0004 04000000 		.4byte	.LBE10
+ 1960 0008 08000000 		.4byte	.LBB15
+ 1961 000c 0A000000 		.4byte	.LBE15
+ 1962 0010 00000000 		.4byte	0
+ 1963 0014 00000000 		.4byte	0
+ 1964 0018 0C000000 		.4byte	.LBB16
+ 1965 001c 0E000000 		.4byte	.LBE16
+ 1966 0020 12000000 		.4byte	.LBB23
+ 1967 0024 14000000 		.4byte	.LBE23
+ 1968 0028 16000000 		.4byte	.LBB25
+ 1969 002c 18000000 		.4byte	.LBE25
+ 1970 0030 00000000 		.4byte	0
+ 1971 0034 00000000 		.4byte	0
+ 1972 0038 0E000000 		.4byte	.LBB20
+ 1973 003c 12000000 		.4byte	.LBE20
+ 1974 0040 14000000 		.4byte	.LBB24
+ 1975 0044 16000000 		.4byte	.LBE24
+ 1976 0048 00000000 		.4byte	0
+ 1977 004c 00000000 		.4byte	0
+ 1978 0050 00000000 		.4byte	.LFB3
+ 1979 0054 14000000 		.4byte	.LFE3
+ 1980 0058 00000000 		.4byte	.LFB4
+ 1981 005c 0A000000 		.4byte	.LFE4
+ 1982 0060 00000000 		.4byte	.LFB5
+ 1983 0064 0A000000 		.4byte	.LFE5
+ 1984 0068 00000000 		.4byte	.LFB6
+ 1985 006c 1E000000 		.4byte	.LFE6
+ 1986 0070 00000000 		.4byte	.LFB7
+ 1987 0074 22000000 		.4byte	.LFE7
+ 1988 0078 00000000 		.4byte	.LFB8
+ 1989 007c 58000000 		.4byte	.LFE8
+ 1990 0080 00000000 		.4byte	.LFB9
+ 1991 0084 44000000 		.4byte	.LFE9
+ 1992 0088 00000000 		.4byte	.LFB10
+ 1993 008c 32000000 		.4byte	.LFE10
+ 1994 0090 00000000 		.4byte	.LFB11
+ 1995 0094 3A000000 		.4byte	.LFE11
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 42
+
+
+ 1996 0098 00000000 		.4byte	.LFB12
+ 1997 009c 3A000000 		.4byte	.LFE12
+ 1998 00a0 00000000 		.4byte	.LFB13
+ 1999 00a4 20000000 		.4byte	.LFE13
+ 2000 00a8 00000000 		.4byte	0
+ 2001 00ac 00000000 		.4byte	0
+ 2002              		.section	.debug_line,"",%progbits
+ 2003              	.Ldebug_line0:
+ 2004 0000 EF020000 		.section	.debug_str,"MS",%progbits,1
+ 2004      02009A01 
+ 2004      00000201 
+ 2004      FB0E0D00 
+ 2004      01010101 
+ 2005              	.LASF25:
+ 2006 0000 6C765F61 		.ascii	"lv_area_set_pos\000"
+ 2006      7265615F 
+ 2006      7365745F 
+ 2006      706F7300 
+ 2007              	.LASF13:
+ 2008 0010 6C765F63 		.ascii	"lv_coord_t\000"
+ 2008      6F6F7264 
+ 2008      5F7400
+ 2009              	.LASF5:
+ 2010 001b 5F5F696E 		.ascii	"__int16_t\000"
+ 2010      7431365F 
+ 2010      7400
+ 2011              	.LASF32:
+ 2012 0025 756E696F 		.ascii	"union_ok\000"
+ 2012      6E5F6F6B 
+ 2012      00
+ 2013              	.LASF38:
+ 2014 002e 6C765F61 		.ascii	"lv_area_is_on\000"
+ 2014      7265615F 
+ 2014      69735F6F 
+ 2014      6E00
+ 2015              	.LASF43:
+ 2016 003c 6C765F61 		.ascii	"lv_area_increment\000"
+ 2016      7265615F 
+ 2016      696E6372 
+ 2016      656D656E 
+ 2016      7400
+ 2017              	.LASF23:
+ 2018 004e 6C765F61 		.ascii	"lv_area_set_width\000"
+ 2018      7265615F 
+ 2018      7365745F 
+ 2018      77696474 
+ 2018      6800
+ 2019              	.LASF27:
+ 2020 0060 6C765F61 		.ascii	"lv_area_intersect\000"
+ 2020      7265615F 
+ 2020      696E7465 
+ 2020      72736563 
+ 2020      7400
+ 2021              	.LASF24:
+ 2022 0072 6C765F61 		.ascii	"lv_area_set\000"
+ 2022      7265615F 
+ 2022      73657400 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 43
+
+
+ 2023              	.LASF2:
+ 2024 007e 73686F72 		.ascii	"short int\000"
+ 2024      7420696E 
+ 2024      7400
+ 2025              	.LASF33:
+ 2026 0088 5F426F6F 		.ascii	"_Bool\000"
+ 2026      6C00
+ 2027              	.LASF42:
+ 2028 008e 69735F69 		.ascii	"is_in\000"
+ 2028      6E00
+ 2029              	.LASF20:
+ 2030 0094 6C765F61 		.ascii	"lv_area_get_height\000"
+ 2030      7265615F 
+ 2030      6765745F 
+ 2030      68656967 
+ 2030      687400
+ 2031              	.LASF39:
+ 2032 00a7 6C765F61 		.ascii	"lv_area_is_in\000"
+ 2032      7265615F 
+ 2032      69735F69 
+ 2032      6E00
+ 2033              	.LASF18:
+ 2034 00b5 6C765F61 		.ascii	"lv_area_t\000"
+ 2034      7265615F 
+ 2034      7400
+ 2035              	.LASF37:
+ 2036 00bf 69735F6F 		.ascii	"is_on\000"
+ 2036      6E00
+ 2037              	.LASF31:
+ 2038 00c5 73697A65 		.ascii	"size\000"
+ 2038      00
+ 2039              	.LASF17:
+ 2040 00ca 6C765F70 		.ascii	"lv_point_t\000"
+ 2040      6F696E74 
+ 2040      5F7400
+ 2041              	.LASF7:
+ 2042 00d5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2042      20756E73 
+ 2042      69676E65 
+ 2042      6420696E 
+ 2042      7400
+ 2043              	.LASF3:
+ 2044 00e7 73686F72 		.ascii	"short unsigned int\000"
+ 2044      7420756E 
+ 2044      7369676E 
+ 2044      65642069 
+ 2044      6E7400
+ 2045              	.LASF30:
+ 2046 00fa 61325F70 		.ascii	"a2_p\000"
+ 2046      00
+ 2047              	.LASF22:
+ 2048 00ff 6C765F61 		.ascii	"lv_area_set_height\000"
+ 2048      7265615F 
+ 2048      7365745F 
+ 2048      68656967 
+ 2048      687400
+ 2049              	.LASF26:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 44
+
+
+ 2050 0112 6C765F61 		.ascii	"lv_area_get_size\000"
+ 2050      7265615F 
+ 2050      6765745F 
+ 2050      73697A65 
+ 2050      00
+ 2051              	.LASF45:
+ 2052 0123 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2052      43313120 
+ 2052      352E342E 
+ 2052      31203230 
+ 2052      31363036 
+ 2053 0156 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2053      20726576 
+ 2053      6973696F 
+ 2053      6E203233 
+ 2053      37373135 
+ 2054 0189 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 2054      70202D6D 
+ 2054      6670753D 
+ 2054      66707634 
+ 2054      2D73702D 
+ 2055 01bc 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2055      6F6E7320 
+ 2055      2D666661 
+ 2055      742D6C74 
+ 2055      6F2D6F62 
+ 2056              	.LASF6:
+ 2057 01d6 5F5F7569 		.ascii	"__uint32_t\000"
+ 2057      6E743332 
+ 2057      5F7400
+ 2058              	.LASF44:
+ 2059 01e1 616D6F75 		.ascii	"amount\000"
+ 2059      6E7400
+ 2060              	.LASF34:
+ 2061 01e8 6C765F61 		.ascii	"lv_area_join\000"
+ 2061      7265615F 
+ 2061      6A6F696E 
+ 2061      00
+ 2062              	.LASF1:
+ 2063 01f5 756E7369 		.ascii	"unsigned char\000"
+ 2063      676E6564 
+ 2063      20636861 
+ 2063      7200
+ 2064              	.LASF10:
+ 2065 0203 756E7369 		.ascii	"unsigned int\000"
+ 2065      676E6564 
+ 2065      20696E74 
+ 2065      00
+ 2066              	.LASF9:
+ 2067 0210 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2067      206C6F6E 
+ 2067      6720756E 
+ 2067      7369676E 
+ 2067      65642069 
+ 2068              	.LASF11:
+ 2069 0227 696E7431 		.ascii	"int16_t\000"
+ 2069      365F7400 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 45
+
+
+ 2070              	.LASF46:
+ 2071 022f 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 2071      2E5C2E2E 
+ 2071      5C6C7667 
+ 2071      6C5C7665 
+ 2071      7273696F 
+ 2072 025b 5C6C765F 		.ascii	"\\lv_area.c\000"
+ 2072      61726561 
+ 2072      2E6300
+ 2073              	.LASF15:
+ 2074 0266 73697A65 		.ascii	"sizetype\000"
+ 2074      74797065 
+ 2074      00
+ 2075              	.LASF8:
+ 2076 026f 6C6F6E67 		.ascii	"long long int\000"
+ 2076      206C6F6E 
+ 2076      6720696E 
+ 2076      7400
+ 2077              	.LASF47:
+ 2078 027d 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 2078      73657273 
+ 2078      5C706561 
+ 2078      726C7374 
+ 2078      6C5C446F 
+ 2079 02ab 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 2079      6D5F656E 
+ 2079      67696E65 
+ 2079      6572696E 
+ 2079      675C656D 
+ 2080 02da 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 2080      6C76676C 
+ 2080      365C7463 
+ 2080      6F6D5F64 
+ 2080      6973706C 
+ 2081              	.LASF21:
+ 2082 0300 61726561 		.ascii	"area_p\000"
+ 2082      5F7000
+ 2083              	.LASF16:
+ 2084 0307 63686172 		.ascii	"char\000"
+ 2084      00
+ 2085              	.LASF29:
+ 2086 030c 61315F70 		.ascii	"a1_p\000"
+ 2086      00
+ 2087              	.LASF19:
+ 2088 0311 6C765F61 		.ascii	"lv_area_get_width\000"
+ 2088      7265615F 
+ 2088      6765745F 
+ 2088      77696474 
+ 2088      6800
+ 2089              	.LASF36:
+ 2090 0323 6C765F61 		.ascii	"lv_area_is_point_on\000"
+ 2090      7265615F 
+ 2090      69735F70 
+ 2090      6F696E74 
+ 2090      5F6F6E00 
+ 2091              	.LASF12:
+ 2092 0337 75696E74 		.ascii	"uint32_t\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccotkl75.s 			page 46
+
+
+ 2092      33325F74 
+ 2092      00
+ 2093              	.LASF4:
+ 2094 0340 6C6F6E67 		.ascii	"long int\000"
+ 2094      20696E74 
+ 2094      00
+ 2095              	.LASF28:
+ 2096 0349 7265735F 		.ascii	"res_p\000"
+ 2096      7000
+ 2097              	.LASF14:
+ 2098 034f 6C6F6E67 		.ascii	"long double\000"
+ 2098      20646F75 
+ 2098      626C6500 
+ 2099              	.LASF0:
+ 2100 035b 7369676E 		.ascii	"signed char\000"
+ 2100      65642063 
+ 2100      68617200 
+ 2101              	.LASF41:
+ 2102 0367 61686F6C 		.ascii	"aholder_p\000"
+ 2102      6465725F 
+ 2102      7000
+ 2103              	.LASF35:
+ 2104 0371 615F7265 		.ascii	"a_res_p\000"
+ 2104      735F7000 
+ 2105              	.LASF40:
+ 2106 0379 61696E5F 		.ascii	"ain_p\000"
+ 2106      7000
+ 2107              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,488 @@
+##################################################################### 
+                    Table of Contents
+===================================================================== 
+	1::Clock Frequency Summary
+	2::Clock Relationship Summary
+	3::Datasheet Report
+		3.1::Setup to Clock
+		3.2::Clock to Out
+		3.3::Pad to Pad
+	4::Path Details for Clock Frequency Summary
+		4.1::Critical Path Report for CyClk_Peri
+	5::Path Details for Clock Relationship Summary
+		5.1::Critical Path Report for (CyClk_Peri:R vs. CyClk_Peri:R)
+===================================================================== 
+                    End of Table of Contents
+##################################################################### 
+
+##################################################################### 
+                    1::Clock Frequency Summary
+===================================================================== 
+Number of clocks: 12
+Clock: CLOCK_2                  | N/A                    | Target: 1.00 MHz    | 
+Clock: CyClk_Fast               | N/A                    | Target: 100.00 MHz  | 
+Clock: CyClk_HF0                | N/A                    | Target: 100.00 MHz  | 
+Clock: CyClk_LF                 | N/A                    | Target: 0.03 MHz    | 
+Clock: CyClk_Peri               | Frequency: 469.48 MHz  | Target: 50.00 MHz   | 
+Clock: CyClk_Slow               | N/A                    | Target: 50.00 MHz   | 
+Clock: CyFLL                    | N/A                    | Target: 100.00 MHz  | 
+Clock: CyILO                    | N/A                    | Target: 0.03 MHz    | 
+Clock: CyIMO                    | N/A                    | Target: 8.00 MHz    | 
+Clock: CyPeriClk_App            | N/A                    | Target: 50.00 MHz   | 
+Clock: I2C_MASTER_SCBCLK        | N/A                    | Target: 1.56 MHz    | 
+Clock: UART_KITPROG_USB_SCBCLK  | N/A                    | Target: 0.12 MHz    | 
+
+ =====================================================================
+                    End of Clock Frequency Summary
+ #####################################################################
+
+
+ #####################################################################
+                    2::Clock Relationship Summary
+ =====================================================================
+
+Launch Clock  Capture Clock  Constraint(R-R)  Slack(R-R)  Constraint(R-F)  Slack(R-F)  Constraint(F-F)  Slack(F-F)  Constraint(F-R)  Slack(F-R)  
+------------  -------------  ---------------  ----------  ---------------  ----------  ---------------  ----------  ---------------  ----------  
+CyClk_Peri    CyClk_Peri     20000            17870       N/A              N/A         N/A              N/A         N/A              N/A         
+
+ =====================================================================
+                    End of Clock Relationship Summary
+ #####################################################################
+
+
+ #####################################################################
+                    3::Datasheet Report
+
+All values are in Picoseconds
+ =====================================================================
+
+3.1::Setup to Clock                     
+-------------------                     
+
+Port Name    Setup to Clk  Clock Name:Phase  
+-----------  ------------  ----------------  
+d(0)_PAD:in  2027          CyClk_Peri:R      
+d(1)_PAD:in  2137          CyClk_Peri:R      
+d(2)_PAD:in  2117          CyClk_Peri:R      
+d(3)_PAD:in  2227          CyClk_Peri:R      
+d(4)_PAD:in  2017          CyClk_Peri:R      
+d(5)_PAD:in  2347          CyClk_Peri:R      
+d(6)_PAD:in  1997          CyClk_Peri:R      
+d(7)_PAD:in  2047          CyClk_Peri:R      
+
+
+                       3.2::Clock to Out
+                       -----------------
+
+Port Name   Clock to Out  Clock Name:Phase  
+----------  ------------  ----------------  
+d_c(0)_PAD  3397          CyClk_Peri:R      
+ncs(0)_PAD  3147          CyClk_Peri:R      
+nrd(0)_PAD  3157          CyClk_Peri:R      
+nwr(0)_PAD  3157          CyClk_Peri:R      
+
+
+                         3.3::Pad to Pad
+                         ---------------
+
+Port Name (Source)  Port Name (Destination)  Delay  
+------------------  -----------------------  -----  
+
+===================================================================== 
+                    End of Datasheet Report
+##################################################################### 
+##################################################################### 
+                    4::Path Details for Clock Frequency Summary
+===================================================================== 
+4.1::Critical Path Report for CyClk_Peri
+****************************************
+Clock: CyClk_Peri
+Frequency: 469.48 MHz | Target: 50.00 MHz
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_2\/q
+Path End       : \LCD_INTERFACE:state_0\/main_2
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17870p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       420
+-------------------------------------   --- 
+End-of-path arrival time (ps)           420
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_2\/clock_0                         macrocell4       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_2\/q       macrocell4     420    420  17870  RISE       1
+\LCD_INTERFACE:state_0\/main_2  macrocell6       0    420  17870  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+===================================================================== 
+                    End of Path Details for Clock Frequency Summary
+##################################################################### 
+
+
+##################################################################### 
+                    5::Path Details for Clock Relationship Summary
+===================================================================== 
+
+5.1::Critical Path Report for (CyClk_Peri:R vs. CyClk_Peri:R)
+*************************************************************
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_2\/q
+Path End       : \LCD_INTERFACE:state_0\/main_2
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17870p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       420
+-------------------------------------   --- 
+End-of-path arrival time (ps)           420
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_2\/clock_0                         macrocell4       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_2\/q       macrocell4     420    420  17870  RISE       1
+\LCD_INTERFACE:state_0\/main_2  macrocell6       0    420  17870  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+===================================================================== 
+                    End of Path Details for Clock Relationship Summary
+##################################################################### 
+
+##################################################################### 
+                    Detailed Report for all timing paths 
+===================================================================== 
+
+++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_2\/q
+Path End       : \LCD_INTERFACE:state_0\/main_2
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17870p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       420
+-------------------------------------   --- 
+End-of-path arrival time (ps)           420
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_2\/clock_0                         macrocell4       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_2\/q       macrocell4     420    420  17870  RISE       1
+\LCD_INTERFACE:state_0\/main_2  macrocell6       0    420  17870  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 2 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_0\/q
+Path End       : \LCD_INTERFACE:state_0\/main_4
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17910p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       380
+-------------------------------------   --- 
+End-of-path arrival time (ps)           380
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_0\/q       macrocell6     380    380  17910  RISE       1
+\LCD_INTERFACE:state_0\/main_4  macrocell6       0    380  17910  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 3 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:GraphLcd8:Lsb\/z0_comb
+Path End       : \LCD_INTERFACE:state_0\/main_5
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17940p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       350
+-------------------------------------   --- 
+End-of-path arrival time (ps)           350
+ 
+Launch Clock Path
+pin name                                                model name     delay     AT  edge  Fanout
+------------------------------------------------------  -------------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock              0      0  RISE       1
+\LCD_INTERFACE:GraphLcd8:Lsb\/clock                     datapathcell1      0      0  RISE       1
+
+Data path
+pin name                               model name     delay     AT  slack  edge  Fanout
+-------------------------------------  -------------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:GraphLcd8:Lsb\/z0_comb  datapathcell1    350    350  17940  RISE       1
+\LCD_INTERFACE:state_0\/main_5         macrocell6         0    350  17940  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 4 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:GraphLcd8:Lsb\/z1_comb
+Path End       : \LCD_INTERFACE:state_0\/main_6
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17940p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       350
+-------------------------------------   --- 
+End-of-path arrival time (ps)           350
+ 
+Launch Clock Path
+pin name                                                model name     delay     AT  edge  Fanout
+------------------------------------------------------  -------------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock              0      0  RISE       1
+\LCD_INTERFACE:GraphLcd8:Lsb\/clock                     datapathcell1      0      0  RISE       1
+
+Data path
+pin name                               model name     delay     AT  slack  edge  Fanout
+-------------------------------------  -------------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:GraphLcd8:Lsb\/z1_comb  datapathcell1    350    350  17940  RISE       1
+\LCD_INTERFACE:state_0\/main_6         macrocell6         0    350  17940  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 5 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:GraphLcd8:Lsb\/f0_blk_stat_comb
+Path End       : \LCD_INTERFACE:state_0\/main_0
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17940p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       350
+-------------------------------------   --- 
+End-of-path arrival time (ps)           350
+ 
+Launch Clock Path
+pin name                                                model name     delay     AT  edge  Fanout
+------------------------------------------------------  -------------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock              0      0  RISE       1
+\LCD_INTERFACE:GraphLcd8:Lsb\/clock                     datapathcell1      0      0  RISE       1
+
+Data path
+pin name                                        model name     delay     AT  slack  edge  Fanout
+----------------------------------------------  -------------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:GraphLcd8:Lsb\/f0_blk_stat_comb  datapathcell1    350    350  17940  RISE       1
+\LCD_INTERFACE:state_0\/main_0                  macrocell6         0    350  17940  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 6 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_1\/q
+Path End       : \LCD_INTERFACE:state_0\/main_3
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17950p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       340
+-------------------------------------   --- 
+End-of-path arrival time (ps)           340
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_1\/clock_0                         macrocell5       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_1\/q       macrocell5     340    340  17950  RISE       1
+\LCD_INTERFACE:state_0\/main_3  macrocell6       0    340  17950  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+
+++++ Path 7 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+Path Begin     : \LCD_INTERFACE:state_3\/q
+Path End       : \LCD_INTERFACE:state_0\/main_1
+Capture Clock  : \LCD_INTERFACE:state_0\/clock_0
+Path slack     : 17960p
+
+Capture Clock Arrival Time                               0
++ Clock path delay                                       0
++ Cycle adjust (CyClk_Peri:R#1 vs. CyClk_Peri:R#2)   20000
+- Setup time                                         -1710
+--------------------------------------------------   ----- 
+End-of-path required time (ps)                       18290
+
+Launch Clock Arrival Time                     0
++ Clock path delay                        0
++ Data path delay                       330
+-------------------------------------   --- 
+End-of-path arrival time (ps)           330
+ 
+Launch Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_3\/clock_0                         macrocell3       0      0  RISE       1
+
+Data path
+pin name                        model name   delay     AT  slack  edge  Fanout
+------------------------------  -----------  -----  -----  -----  ----  ------
+\LCD_INTERFACE:state_3\/q       macrocell3     330    330  17960  RISE       1
+\LCD_INTERFACE:state_0\/main_1  macrocell6       0    330  17960  RISE       1
+
+Capture Clock Path
+pin name                                                model name   delay     AT  edge  Fanout
+------------------------------------------------------  -----------  -----  -----  ----  ------
+ClockBlock/periclk                                      Clock            0      0  RISE       1
+\LCD_INTERFACE:state_0\/clock_0                         macrocell6       0      0  RISE       1
+
+
+===================================================================== 
+                    End of Detailed Report for all timing paths 
+##################################################################### 
+
+##################################################################### 
+                    End of Timing Report 
+##################################################################### 
+

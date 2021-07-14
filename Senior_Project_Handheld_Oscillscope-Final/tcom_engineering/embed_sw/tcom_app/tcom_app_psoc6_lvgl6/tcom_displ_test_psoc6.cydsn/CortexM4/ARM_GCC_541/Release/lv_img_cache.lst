@@ -1,0 +1,4039 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_img_cache.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_img_cache_open,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_img_cache_open
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_img_cache_open, %function
+  26              	lv_img_cache_open:
+  27              	.LFB31:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_img_cache.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @file lv_img_cache.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "../lv_core/lv_debug.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "lv_img_cache.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "lv_img_decoder.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "lv_draw_img.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "../lv_hal/lv_hal_tick.h"
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include "../lv_misc/lv_gc.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #if defined(LV_GC_INCLUDE)
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #include LV_GC_INCLUDE
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #endif /* LV_ENABLE_GC */
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /*********************
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *      DEFINES
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *********************/
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /*Decrement life with this value in every open*/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #define LV_IMG_CACHE_AGING 1
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /*Boost life by this factor (multiply time_to_open with this value)*/
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #define LV_IMG_CACHE_LIFE_GAIN 1
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /*Don't let life to be greater than this limit because it would require a lot of time to
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * "die" from very high values */
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #define LV_IMG_CACHE_LIFE_LIMIT 1000
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #if LV_IMG_CACHE_DEF_SIZE < 1
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #error "LV_IMG_CACHE_DEF_SIZE must be >= 1. See lv_conf.h"
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** #endif
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**********************
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *      TYPEDEFS
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  **********************/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**********************
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *  STATIC PROTOTYPES
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  **********************/
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**********************
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *  STATIC VARIABLES
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  **********************/
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** static uint16_t entry_cnt;
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**********************
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *      MACROS
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  **********************/
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**********************
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  *   GLOBAL FUNCTIONS
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  **********************/
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * Open an image using the image decoder interface and cache it.
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * The image will be left open meaning if the image decoder open callback allocated memory then it 
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * The image is closed if a new image is opened and the new image takes its place in the cache.
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @param src source of the image. Path to file or pointer to an `lv_img_dsc_t` variable
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @param style style of the image
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @return pointer to the cache entry or NULL if can open the image
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  */
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** lv_img_cache_entry_t * lv_img_cache_open(const void * src, const lv_style_t * style)
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** {
+  29              		.loc 1 66 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              	.LVL0:
+  34 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  35              		.cfi_def_cfa_offset 32
+  36              		.cfi_offset 3, -32
+  37              		.cfi_offset 4, -28
+  38              		.cfi_offset 5, -24
+  39              		.cfi_offset 6, -20
+  40              		.cfi_offset 7, -16
+  41              		.cfi_offset 8, -12
+  42              		.cfi_offset 9, -8
+  43              		.cfi_offset 14, -4
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(entry_cnt == 0) {
+  44              		.loc 1 67 0
+  45 0004 4A4D     		ldr	r5, .L41
+  46 0006 2C88     		ldrh	r4, [r5]
+  47 0008 002C     		cmp	r4, #0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 3
+
+
+  48 000a 3CD0     		beq	.L8
+  49 000c 631E     		subs	r3, r4, #1
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         LV_LOG_WARN("lv_img_cache_open: the cache size is 0");
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         return NULL;
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     lv_img_cache_entry_t * cache = LV_GC_ROOT(_lv_img_cache_array);
+  50              		.loc 1 72 0
+  51 000e 494C     		ldr	r4, .L41+4
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     /*Decrement all lifes. Make the entries older*/
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     uint16_t i;
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     for(i = 0; i < entry_cnt; i++) {
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].life > INT32_MIN + LV_IMG_CACHE_AGING) {
+  52              		.loc 1 77 0
+  53 0010 494A     		ldr	r2, .L41+8
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  54              		.loc 1 72 0
+  55 0012 2668     		ldr	r6, [r4]
+  56              	.LVL1:
+  57 0014 9BB2     		uxth	r3, r3
+  58 0016 0133     		adds	r3, r3, #1
+  59 0018 03EB8303 		add	r3, r3, r3, lsl #2
+  60 001c 06EBC303 		add	r3, r6, r3, lsl #3
+  61 0020 3446     		mov	r4, r6
+  62              	.LVL2:
+  63              	.L4:
+  64              		.loc 1 77 0
+  65 0022 676A     		ldr	r7, [r4, #36]
+  66 0024 9742     		cmp	r7, r2
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cache[i].life -= LV_IMG_CACHE_AGING;
+  67              		.loc 1 78 0
+  68 0026 A4BF     		itt	ge
+  69 0028 07F1FF37 		addge	r7, r7, #-1
+  70 002c 6762     		strge	r7, [r4, #36]
+  71 002e 2834     		adds	r4, r4, #40
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].life > INT32_MIN + LV_IMG_CACHE_AGING) {
+  72              		.loc 1 76 0
+  73 0030 A342     		cmp	r3, r4
+  74 0032 F6D1     		bne	.L4
+  75 0034 8846     		mov	r8, r1
+  76 0036 0746     		mov	r7, r0
+  77 0038 4FF00009 		mov	r9, #0
+  78 003c 09E0     		b	.L17
+  79              	.LVL3:
+  80              	.L36:
+  81              	.LBB2:
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     /*Is the image cached?*/
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     lv_img_cache_entry_t * cached_src = NULL;
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     for(i = 0; i < entry_cnt; i++) {
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         bool match = false;
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_img_src_t src_type = lv_img_src_get_type(cache[i].dec_dsc.src);
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(src_type == LV_IMG_SRC_VARIABLE) {
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src == src && cache[i].dec_dsc.style == style) match = true;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 4
+
+
+  82              		.loc 1 88 0
+  83 003e 6368     		ldr	r3, [r4, #4]
+  84 0040 BB42     		cmp	r3, r7
+  85 0042 51D0     		beq	.L34
+  86              	.LVL4:
+  87              	.L6:
+  88              	.LBE2:
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         bool match = false;
+  89              		.loc 1 84 0
+  90 0044 09F10109 		add	r9, r9, #1
+  91              	.LVL5:
+  92 0048 2B88     		ldrh	r3, [r5]
+  93 004a 1FFA89F9 		uxth	r9, r9
+  94              	.LVL6:
+  95 004e 4B45     		cmp	r3, r9
+  96 0050 1CD9     		bls	.L35
+  97              	.LVL7:
+  98              	.L17:
+  99              	.LBB3:
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(src_type == LV_IMG_SRC_VARIABLE) {
+ 100              		.loc 1 86 0
+ 101 0052 09EB8904 		add	r4, r9, r9, lsl #2
+ 102 0056 06EBC404 		add	r4, r6, r4, lsl #3
+ 103 005a 6068     		ldr	r0, [r4, #4]
+ 104 005c FFF7FEFF 		bl	lv_img_src_get_type
+ 105              	.LVL8:
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src == src && cache[i].dec_dsc.style == style) match = true;
+ 106              		.loc 1 87 0
+ 107 0060 0028     		cmp	r0, #0
+ 108 0062 ECD0     		beq	.L36
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         } else if(src_type == LV_IMG_SRC_FILE) {
+ 109              		.loc 1 89 0
+ 110 0064 0128     		cmp	r0, #1
+ 111 0066 EDD1     		bne	.L6
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(strcmp(cache[i].dec_dsc.src, src) == 0) match = true;
+ 112              		.loc 1 90 0
+ 113 0068 3946     		mov	r1, r7
+ 114 006a 6068     		ldr	r0, [r4, #4]
+ 115              	.LVL9:
+ 116 006c FFF7FEFF 		bl	strcmp
+ 117              	.LVL10:
+ 118 0070 0028     		cmp	r0, #0
+ 119 0072 E7D1     		bne	.L6
+ 120              	.L7:
+ 121              	.LVL11:
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(match) {
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             /* If opened increment its life.
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****              * Image difficult to open should live longer to keep avoid frequent their recaching.
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****              * Therefore increase `life` with `time_to_open`*/
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src = &cache[i];
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->life += cached_src->dec_dsc.time_to_open * LV_IMG_CACHE_LIFE_GAIN;
+ 122              		.loc 1 98 0
+ 123 0074 626A     		ldr	r2, [r4, #36]
+ 124 0076 A369     		ldr	r3, [r4, #24]
+ 125 0078 1344     		add	r3, r3, r2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 5
+
+
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cached_src->life > LV_IMG_CACHE_LIFE_LIMIT) cached_src->life = LV_IMG_CACHE_LIFE_LIM
+ 126              		.loc 1 99 0
+ 127 007a B3F57A7F 		cmp	r3, #1000
+ 128 007e 37DD     		ble	.L37
+ 129              		.loc 1 99 0 is_stmt 0 discriminator 1
+ 130 0080 4FF47A73 		mov	r3, #1000
+ 131 0084 6362     		str	r3, [r4, #36]
+ 132              	.LVL12:
+ 133              	.L8:
+ 134              	.LBE3:
+ 135              	.LBB4:
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_TRACE("image draw: image found in the cache");
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             break;
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     /*The image is not cached then cache it now*/
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(cached_src == NULL) {
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         /*Find an entry to reuse. Select the entry with the least life*/
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         cached_src = &cache[0];
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         for(i = 1; i < entry_cnt; i++) {
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].life < cached_src->life) {
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****                 cached_src = &cache[i];
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             }
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         /*Close the decoder to reuse if it was opened (has a valid source)*/
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cached_src->dec_dsc.src) {
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             lv_img_decoder_close(&cached_src->dec_dsc);
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_INFO("image draw: cache miss, close and reuse an entry");
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         } else {
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_INFO("image draw: cache miss, cached to an empty entry");
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         /*Open the image and measure the time to open*/
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         uint32_t t_start;
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         t_start                          = lv_tick_get();
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         cached_src->dec_dsc.time_to_open = 0;
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_res_t open_res                = lv_img_decoder_open(&cached_src->dec_dsc, src, style);
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(open_res == LV_RES_INV) {
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_WARN("Image draw cannot open the image resource");
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             lv_img_decoder_close(&cached_src->dec_dsc);
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             memset(&cached_src->dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             memset(cached_src, 0, sizeof(lv_img_cache_entry_t));
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->life = INT32_MIN; /*Make the empty entry very "weak" to force its use  */
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             return NULL;
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         cached_src->life = 0;
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         /*If `time_to_open` was not set in the open function set it here*/
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cached_src->dec_dsc.time_to_open == 0) {
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->dec_dsc.time_to_open = lv_tick_elaps(t_start);
+ 136              		.loc 1 141 0 is_stmt 1
+ 137 0086 2046     		mov	r0, r4
+ 138              	.LBE4:
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 6
+
+
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cached_src->dec_dsc.time_to_open == 0) cached_src->dec_dsc.time_to_open = 1;
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     return cached_src;
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** }
+ 139              		.loc 1 148 0
+ 140 0088 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 141              	.LVL13:
+ 142              	.L35:
+ 143              	.LBB5:
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].life < cached_src->life) {
+ 144              		.loc 1 109 0 discriminator 1
+ 145 008c 012B     		cmp	r3, #1
+ 146 008e 14D9     		bls	.L9
+ 147 0090 023B     		subs	r3, r3, #2
+ 148 0092 9BB2     		uxth	r3, r3
+ 149 0094 03EB8303 		add	r3, r3, r3, lsl #2
+ 150 0098 06EBC303 		add	r3, r6, r3, lsl #3
+ 151 009c 716A     		ldr	r1, [r6, #36]
+ 152 009e 5033     		adds	r3, r3, #80
+ 153 00a0 06F12802 		add	r2, r6, #40
+ 154              	.LVL14:
+ 155              	.L10:
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****                 cached_src = &cache[i];
+ 156              		.loc 1 110 0
+ 157 00a4 506A     		ldr	r0, [r2, #36]
+ 158 00a6 8842     		cmp	r0, r1
+ 159 00a8 B8BF     		it	lt
+ 160 00aa 1646     		movlt	r6, r2
+ 161 00ac 8142     		cmp	r1, r0
+ 162 00ae 02F12802 		add	r2, r2, #40
+ 163 00b2 A8BF     		it	ge
+ 164 00b4 0146     		movge	r1, r0
+ 165              	.LVL15:
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].life < cached_src->life) {
+ 166              		.loc 1 109 0
+ 167 00b6 9342     		cmp	r3, r2
+ 168 00b8 F4D1     		bne	.L10
+ 169              	.L9:
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             lv_img_decoder_close(&cached_src->dec_dsc);
+ 170              		.loc 1 116 0
+ 171 00ba 7368     		ldr	r3, [r6, #4]
+ 172 00bc 13B1     		cbz	r3, .L12
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_INFO("image draw: cache miss, close and reuse an entry");
+ 173              		.loc 1 117 0
+ 174 00be 3046     		mov	r0, r6
+ 175 00c0 FFF7FEFF 		bl	lv_img_decoder_close
+ 176              	.LVL16:
+ 177              	.L12:
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         cached_src->dec_dsc.time_to_open = 0;
+ 178              		.loc 1 125 0
+ 179 00c4 FFF7FEFF 		bl	lv_tick_get
+ 180              	.LVL17:
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_res_t open_res                = lv_img_decoder_open(&cached_src->dec_dsc, src, style);
+ 181              		.loc 1 126 0
+ 182 00c8 0025     		movs	r5, #0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 7
+
+
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         cached_src->dec_dsc.time_to_open = 0;
+ 183              		.loc 1 125 0
+ 184 00ca 8146     		mov	r9, r0
+ 185              	.LVL18:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(open_res == LV_RES_INV) {
+ 186              		.loc 1 127 0
+ 187 00cc 4246     		mov	r2, r8
+ 188 00ce 3946     		mov	r1, r7
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_res_t open_res                = lv_img_decoder_open(&cached_src->dec_dsc, src, style);
+ 189              		.loc 1 126 0
+ 190 00d0 B561     		str	r5, [r6, #24]
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(open_res == LV_RES_INV) {
+ 191              		.loc 1 127 0
+ 192 00d2 3046     		mov	r0, r6
+ 193              	.LVL19:
+ 194 00d4 FFF7FEFF 		bl	lv_img_decoder_open
+ 195              	.LVL20:
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             LV_LOG_WARN("Image draw cannot open the image resource");
+ 196              		.loc 1 128 0
+ 197 00d8 0446     		mov	r4, r0
+ 198 00da B0B1     		cbz	r0, .L38
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->dec_dsc.time_to_open = lv_tick_elaps(t_start);
+ 199              		.loc 1 140 0
+ 200 00dc B369     		ldr	r3, [r6, #24]
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 201              		.loc 1 137 0
+ 202 00de 7562     		str	r5, [r6, #36]
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->dec_dsc.time_to_open = lv_tick_elaps(t_start);
+ 203              		.loc 1 140 0
+ 204 00e0 53B1     		cbz	r3, .L39
+ 205 00e2 3046     		mov	r0, r6
+ 206              	.LVL21:
+ 207 00e4 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 208              	.LVL22:
+ 209              	.L34:
+ 210              	.LBE5:
+ 211              	.LBB6:
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         } else if(src_type == LV_IMG_SRC_FILE) {
+ 212              		.loc 1 88 0 discriminator 1
+ 213 00e8 A368     		ldr	r3, [r4, #8]
+ 214 00ea 4345     		cmp	r3, r8
+ 215 00ec AAD1     		bne	.L6
+ 216 00ee C1E7     		b	.L7
+ 217              	.LVL23:
+ 218              	.L37:
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cached_src->life > LV_IMG_CACHE_LIFE_LIMIT) cached_src->life = LV_IMG_CACHE_LIFE_LIM
+ 219              		.loc 1 98 0
+ 220 00f0 6362     		str	r3, [r4, #36]
+ 221              	.LBE6:
+ 222              	.LBB7:
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 223              		.loc 1 141 0
+ 224 00f2 2046     		mov	r0, r4
+ 225              	.LBE7:
+ 226              		.loc 1 148 0
+ 227 00f4 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 228              	.LVL24:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 8
+
+
+ 229              	.L39:
+ 230              	.LBB8:
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 231              		.loc 1 141 0
+ 232 00f8 4846     		mov	r0, r9
+ 233              	.LVL25:
+ 234 00fa FFF7FEFF 		bl	lv_tick_elaps
+ 235              	.LVL26:
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 236              		.loc 1 144 0
+ 237 00fe 90B9     		cbnz	r0, .L40
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 238              		.loc 1 144 0 is_stmt 0 discriminator 1
+ 239 0100 0123     		movs	r3, #1
+ 240 0102 B361     		str	r3, [r6, #24]
+ 241 0104 3046     		mov	r0, r6
+ 242 0106 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 243              	.LVL27:
+ 244              	.L38:
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             memset(&cached_src->dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 245              		.loc 1 130 0 is_stmt 1
+ 246 010a 3046     		mov	r0, r6
+ 247              	.LVL28:
+ 248 010c FFF7FEFF 		bl	lv_img_decoder_close
+ 249              	.LVL29:
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             cached_src->life = INT32_MIN; /*Make the empty entry very "weak" to force its use  */
+ 250              		.loc 1 132 0
+ 251 0110 2822     		movs	r2, #40
+ 252 0112 2146     		mov	r1, r4
+ 253 0114 3046     		mov	r0, r6
+ 254 0116 FFF7FEFF 		bl	memset
+ 255              	.LVL30:
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             return NULL;
+ 256              		.loc 1 133 0
+ 257 011a 4FF00043 		mov	r3, #-2147483648
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 258              		.loc 1 134 0
+ 259 011e 2046     		mov	r0, r4
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             return NULL;
+ 260              		.loc 1 133 0
+ 261 0120 7362     		str	r3, [r6, #36]
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 262              		.loc 1 134 0
+ 263 0122 BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 264              	.LVL31:
+ 265              	.L40:
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         }
+ 266              		.loc 1 141 0
+ 267 0126 B061     		str	r0, [r6, #24]
+ 268 0128 3046     		mov	r0, r6
+ 269 012a BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 270              	.LVL32:
+ 271              	.L42:
+ 272 012e 00BF     		.align	2
+ 273              	.L41:
+ 274 0130 00000000 		.word	.LANCHOR0
+ 275 0134 00000000 		.word	_lv_img_cache_array
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 9
+
+
+ 276 0138 02000080 		.word	-2147483646
+ 277              	.LBE8:
+ 278              		.cfi_endproc
+ 279              	.LFE31:
+ 280              		.size	lv_img_cache_open, .-lv_img_cache_open
+ 281              		.section	.text.lv_img_cache_set_size,"ax",%progbits
+ 282              		.align	2
+ 283              		.global	lv_img_cache_set_size
+ 284              		.thumb
+ 285              		.thumb_func
+ 286              		.type	lv_img_cache_set_size, %function
+ 287              	lv_img_cache_set_size:
+ 288              	.LFB32:
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * Set the number of images to be cached.
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * More cached images mean more opened image at same time which might mean more memory usage.
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * E.g. if 20 PNG or JPG images are open in the RAM they consume memory while opened in the cache.
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @param new_entry_cnt number of image to cache
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  */
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** void lv_img_cache_set_size(uint16_t new_entry_cnt)
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** {
+ 289              		.loc 1 157 0
+ 290              		.cfi_startproc
+ 291              		@ args = 0, pretend = 0, frame = 0
+ 292              		@ frame_needed = 0, uses_anonymous_args = 0
+ 293              	.LVL33:
+ 294 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 295              		.cfi_def_cfa_offset 32
+ 296              		.cfi_offset 4, -32
+ 297              		.cfi_offset 5, -28
+ 298              		.cfi_offset 6, -24
+ 299              		.cfi_offset 7, -20
+ 300              		.cfi_offset 8, -16
+ 301              		.cfi_offset 9, -12
+ 302              		.cfi_offset 10, -8
+ 303              		.cfi_offset 14, -4
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(LV_GC_ROOT(_lv_img_cache_array) != NULL) {
+ 304              		.loc 1 158 0
+ 305 0004 DFF89C80 		ldr	r8, .L68
+ 306              	.LBB11:
+ 307              	.LBB12:
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         /*Clean the cache before free it*/
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_img_cache_invalidate_src(NULL);
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         lv_mem_free(LV_GC_ROOT(_lv_img_cache_array));
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     /*Reallocate the cache*/
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     LV_GC_ROOT(_lv_img_cache_array) = lv_mem_alloc(sizeof(lv_img_cache_entry_t) * new_entry_cnt);
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     LV_ASSERT_MEM(LV_GC_ROOT(_lv_img_cache_array));
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(LV_GC_ROOT(_lv_img_cache_array) == NULL) {
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         entry_cnt = 0;
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         return;
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     entry_cnt = new_entry_cnt;
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     /*Clean the cache*/
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 10
+
+
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     uint16_t i;
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     for(i = 0; i < entry_cnt; i++) {
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i].dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i], 0, sizeof(lv_img_cache_entry_t));
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** }
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** /**
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * Invalidate an image source in the cache.
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * Useful if the image source is updated therefore it needs to be cached again.
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  * @param src an image source path to a file or pointer to an `lv_img_dsc_t` variable.
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****  */
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** void lv_img_cache_invalidate_src(const void * src)
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** {
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     lv_img_cache_entry_t * cache = LV_GC_ROOT(_lv_img_cache_array);
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     uint16_t i;
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     for(i = 0; i < entry_cnt; i++) {
+ 308              		.loc 1 192 0
+ 309 0008 DFF89CA0 		ldr	r10, .L68+4
+ 310              	.LBE12:
+ 311              	.LBE11:
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(LV_GC_ROOT(_lv_img_cache_array) != NULL) {
+ 312              		.loc 1 158 0
+ 313 000c D8F80090 		ldr	r9, [r8]
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(LV_GC_ROOT(_lv_img_cache_array) != NULL) {
+ 314              		.loc 1 157 0
+ 315 0010 0646     		mov	r6, r0
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     if(LV_GC_ROOT(_lv_img_cache_array) != NULL) {
+ 316              		.loc 1 158 0
+ 317 0012 B9F1000F 		cmp	r9, #0
+ 318 0016 1CD0     		beq	.L44
+ 319              	.LVL34:
+ 320              	.LBB14:
+ 321              	.LBB13:
+ 322              		.loc 1 192 0
+ 323 0018 BAF80070 		ldrh	r7, [r10]
+ 324 001c B7B1     		cbz	r7, .L45
+ 325 001e 0024     		movs	r4, #0
+ 326              	.LVL35:
+ 327              	.L47:
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 328              		.loc 1 193 0
+ 329 0020 04EB8405 		add	r5, r4, r4, lsl #2
+ 330 0024 09EBC505 		add	r5, r9, r5, lsl #3
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src != NULL) {
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****                 lv_img_decoder_close(&cache[i].dec_dsc);
+ 331              		.loc 1 195 0
+ 332 0028 2846     		mov	r0, r5
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src != NULL) {
+ 333              		.loc 1 194 0
+ 334 002a 6B68     		ldr	r3, [r5, #4]
+ 335 002c 1BB1     		cbz	r3, .L46
+ 336              		.loc 1 195 0
+ 337 002e FFF7FEFF 		bl	lv_img_decoder_close
+ 338              	.LVL36:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 11
+
+
+ 339 0032 BAF80070 		ldrh	r7, [r10]
+ 340              	.L46:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 341              		.loc 1 192 0
+ 342 0036 0134     		adds	r4, r4, #1
+ 343              	.LVL37:
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             }
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             memset(&cache[i].dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             memset(&cache[i], 0, sizeof(lv_img_cache_entry_t));
+ 344              		.loc 1 199 0
+ 345 0038 2846     		mov	r0, r5
+ 346 003a 2822     		movs	r2, #40
+ 347 003c 0021     		movs	r1, #0
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 348              		.loc 1 192 0
+ 349 003e A4B2     		uxth	r4, r4
+ 350              		.loc 1 199 0
+ 351 0040 FFF7FEFF 		bl	memset
+ 352              	.LVL38:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 353              		.loc 1 192 0
+ 354 0044 BC42     		cmp	r4, r7
+ 355 0046 EBD3     		bcc	.L47
+ 356 0048 D8F80090 		ldr	r9, [r8]
+ 357              	.LVL39:
+ 358              	.L45:
+ 359              	.LBE13:
+ 360              	.LBE14:
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 361              		.loc 1 161 0
+ 362 004c 4846     		mov	r0, r9
+ 363 004e FFF7FEFF 		bl	lv_mem_free
+ 364              	.LVL40:
+ 365              	.L44:
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     LV_ASSERT_MEM(LV_GC_ROOT(_lv_img_cache_array));
+ 366              		.loc 1 165 0
+ 367 0052 06EB8600 		add	r0, r6, r6, lsl #2
+ 368 0056 C000     		lsls	r0, r0, #3
+ 369 0058 FFF7FEFF 		bl	lv_mem_alloc
+ 370              	.LVL41:
+ 371 005c C8F80000 		str	r0, [r8]
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         entry_cnt = 0;
+ 372              		.loc 1 167 0
+ 373 0060 E0B1     		cbz	r0, .L66
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 374              		.loc 1 171 0
+ 375 0062 AAF80060 		strh	r6, [r10]	@ movhi
+ 376              	.LVL42:
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i].dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 377              		.loc 1 175 0
+ 378 0066 BEB1     		cbz	r6, .L43
+ 379 0068 751E     		subs	r5, r6, #1
+ 380 006a ADB2     		uxth	r5, r5
+ 381 006c 05EB8505 		add	r5, r5, r5, lsl #2
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 382              		.loc 1 177 0 discriminator 3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 12
+
+
+ 383 0070 0C4E     		ldr	r6, .L68
+ 384 0072 ED00     		lsls	r5, r5, #3
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i].dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 385              		.loc 1 175 0 discriminator 3
+ 386 0074 0024     		movs	r4, #0
+ 387 0076 01E0     		b	.L51
+ 388              	.LVL43:
+ 389              	.L67:
+ 390 0078 3068     		ldr	r0, [r6]
+ 391 007a 2834     		adds	r4, r4, #40
+ 392              	.L51:
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i], 0, sizeof(lv_img_cache_entry_t));
+ 393              		.loc 1 176 0 discriminator 3
+ 394 007c 2422     		movs	r2, #36
+ 395 007e 0021     		movs	r1, #0
+ 396 0080 2044     		add	r0, r0, r4
+ 397 0082 FFF7FEFF 		bl	memset
+ 398              	.LVL44:
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 399              		.loc 1 177 0 discriminator 3
+ 400 0086 D8F80000 		ldr	r0, [r8]
+ 401 008a 2822     		movs	r2, #40
+ 402 008c 2044     		add	r0, r0, r4
+ 403 008e 0021     		movs	r1, #0
+ 404 0090 FFF7FEFF 		bl	memset
+ 405              	.LVL45:
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         memset(&LV_GC_ROOT(_lv_img_cache_array)[i].dec_dsc, 0, sizeof(lv_img_decoder_dsc_t));
+ 406              		.loc 1 175 0 discriminator 3
+ 407 0094 AC42     		cmp	r4, r5
+ 408 0096 EFD1     		bne	.L67
+ 409              	.L43:
+ 410 0098 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 411              	.L66:
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         return;
+ 412              		.loc 1 168 0
+ 413 009c AAF80000 		strh	r0, [r10]	@ movhi
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****     }
+ 414              		.loc 1 169 0
+ 415 00a0 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 416              	.L69:
+ 417              		.align	2
+ 418              	.L68:
+ 419 00a4 00000000 		.word	_lv_img_cache_array
+ 420 00a8 00000000 		.word	.LANCHOR0
+ 421              		.cfi_endproc
+ 422              	.LFE32:
+ 423              		.size	lv_img_cache_set_size, .-lv_img_cache_set_size
+ 424              		.section	.text.lv_img_cache_invalidate_src,"ax",%progbits
+ 425              		.align	2
+ 426              		.global	lv_img_cache_invalidate_src
+ 427              		.thumb
+ 428              		.thumb_func
+ 429              		.type	lv_img_cache_invalidate_src, %function
+ 430              	lv_img_cache_invalidate_src:
+ 431              	.LFB33:
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 432              		.loc 1 187 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 13
+
+
+ 433              		.cfi_startproc
+ 434              		@ args = 0, pretend = 0, frame = 0
+ 435              		@ frame_needed = 0, uses_anonymous_args = 0
+ 436              	.LVL46:
+ 437 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 438              		.cfi_def_cfa_offset 32
+ 439              		.cfi_offset 3, -32
+ 440              		.cfi_offset 4, -28
+ 441              		.cfi_offset 5, -24
+ 442              		.cfi_offset 6, -20
+ 443              		.cfi_offset 7, -16
+ 444              		.cfi_offset 8, -12
+ 445              		.cfi_offset 9, -8
+ 446              		.cfi_offset 14, -4
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 447              		.loc 1 192 0
+ 448 0004 DFF88080 		ldr	r8, .L85+4
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 449              		.loc 1 189 0
+ 450 0008 1E4B     		ldr	r3, .L85
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 451              		.loc 1 192 0
+ 452 000a B8F80070 		ldrh	r7, [r8]
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c **** 
+ 453              		.loc 1 189 0
+ 454 000e D3F80090 		ldr	r9, [r3]
+ 455              	.LVL47:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 456              		.loc 1 192 0
+ 457 0012 A7B3     		cbz	r7, .L70
+ 458 0014 0646     		mov	r6, r0
+ 459 0016 28B3     		cbz	r0, .L77
+ 460 0018 0024     		movs	r4, #0
+ 461 001a 03E0     		b	.L74
+ 462              	.LVL48:
+ 463              	.L73:
+ 464 001c 0134     		adds	r4, r4, #1
+ 465              	.LVL49:
+ 466 001e A4B2     		uxth	r4, r4
+ 467              	.LVL50:
+ 468 0020 A742     		cmp	r7, r4
+ 469 0022 14D9     		bls	.L84
+ 470              	.LVL51:
+ 471              	.L74:
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src != NULL) {
+ 472              		.loc 1 193 0
+ 473 0024 04EB8405 		add	r5, r4, r4, lsl #2
+ 474 0028 09EBC505 		add	r5, r9, r5, lsl #3
+ 475 002c 6B68     		ldr	r3, [r5, #4]
+ 476 002e 9E42     		cmp	r6, r3
+ 477 0030 F4D1     		bne	.L73
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             }
+ 478              		.loc 1 195 0
+ 479 0032 2846     		mov	r0, r5
+ 480 0034 FFF7FEFF 		bl	lv_img_decoder_close
+ 481              	.LVL52:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 14
+
+
+ 482              		.loc 1 192 0
+ 483 0038 0134     		adds	r4, r4, #1
+ 484              	.LVL53:
+ 485 003a B8F80070 		ldrh	r7, [r8]
+ 486              		.loc 1 199 0
+ 487 003e 2846     		mov	r0, r5
+ 488 0040 2822     		movs	r2, #40
+ 489 0042 0021     		movs	r1, #0
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 490              		.loc 1 192 0
+ 491 0044 A4B2     		uxth	r4, r4
+ 492              		.loc 1 199 0
+ 493 0046 FFF7FEFF 		bl	memset
+ 494              	.LVL54:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 495              		.loc 1 192 0
+ 496 004a A742     		cmp	r7, r4
+ 497 004c EAD8     		bhi	.L74
+ 498              	.L84:
+ 499 004e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 500              	.LVL55:
+ 501              	.L76:
+ 502 0052 0136     		adds	r6, r6, #1
+ 503              	.LVL56:
+ 504              		.loc 1 199 0
+ 505 0054 2046     		mov	r0, r4
+ 506 0056 2822     		movs	r2, #40
+ 507 0058 0021     		movs	r1, #0
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 508              		.loc 1 192 0
+ 509 005a B6B2     		uxth	r6, r6
+ 510              		.loc 1 199 0
+ 511 005c FFF7FEFF 		bl	memset
+ 512              	.LVL57:
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****         if(cache[i].dec_dsc.src == src || src == NULL) {
+ 513              		.loc 1 192 0
+ 514 0060 BE42     		cmp	r6, r7
+ 515 0062 0CD2     		bcs	.L70
+ 516              	.LVL58:
+ 517              	.L77:
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             if(cache[i].dec_dsc.src != NULL) {
+ 518              		.loc 1 193 0
+ 519 0064 06EB8604 		add	r4, r6, r6, lsl #2
+ 520 0068 09EBC404 		add	r4, r9, r4, lsl #3
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             }
+ 521              		.loc 1 195 0
+ 522 006c 2046     		mov	r0, r4
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****                 lv_img_decoder_close(&cache[i].dec_dsc);
+ 523              		.loc 1 194 0
+ 524 006e 6368     		ldr	r3, [r4, #4]
+ 525 0070 002B     		cmp	r3, #0
+ 526 0072 EED0     		beq	.L76
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_img_cache.c ****             }
+ 527              		.loc 1 195 0
+ 528 0074 FFF7FEFF 		bl	lv_img_decoder_close
+ 529              	.LVL59:
+ 530 0078 B8F80070 		ldrh	r7, [r8]
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 15
+
+
+ 531 007c E9E7     		b	.L76
+ 532              	.LVL60:
+ 533              	.L70:
+ 534 007e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+ 535              	.LVL61:
+ 536              	.L86:
+ 537 0082 00BF     		.align	2
+ 538              	.L85:
+ 539 0084 00000000 		.word	_lv_img_cache_array
+ 540 0088 00000000 		.word	.LANCHOR0
+ 541              		.cfi_endproc
+ 542              	.LFE33:
+ 543              		.size	lv_img_cache_invalidate_src, .-lv_img_cache_invalidate_src
+ 544              		.bss
+ 545              		.align	1
+ 546              		.set	.LANCHOR0,. + 0
+ 547              		.type	entry_cnt, %object
+ 548              		.size	entry_cnt, 2
+ 549              	entry_cnt:
+ 550 0000 0000     		.space	2
+ 551              		.text
+ 552              	.Letext0:
+ 553              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 554              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 555              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../../../lv_conf.h"
+ 556              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_font/lv_font.h"
+ 557              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_misc/lv_color.h"
+ 558              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/lv_style.h"
+ 559              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_misc/lv_types.h"
+ 560              		.file 9 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_img_decoder.h"
+ 561              		.file 10 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_img_cache.h"
+ 562              		.file 11 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_draw_img.h"
+ 563              		.file 12 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4
+ 564              		.file 13 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_hal/lv_hal_tick.h"
+ 565              		.file 14 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_core/../lv_misc/lv_mem.h"
+ 566              		.file 15 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_misc/lv_gc.h"
+ 567              		.section	.debug_info,"",%progbits
+ 568              	.Ldebug_info0:
+ 569 0000 DD0A0000 		.4byte	0xadd
+ 570 0004 0400     		.2byte	0x4
+ 571 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 572 000a 04       		.byte	0x4
+ 573 000b 01       		.uleb128 0x1
+ 574 000c 66000000 		.4byte	.LASF123
+ 575 0010 0C       		.byte	0xc
+ 576 0011 98040000 		.4byte	.LASF124
+ 577 0015 42060000 		.4byte	.LASF125
+ 578 0019 60000000 		.4byte	.Ldebug_ranges0+0x60
+ 579 001d 00000000 		.4byte	0
+ 580 0021 00000000 		.4byte	.Ldebug_line0
+ 581 0025 02       		.uleb128 0x2
+ 582 0026 DF030000 		.4byte	.LASF0
+ 583 002a 02       		.byte	0x2
+ 584 002b 1B       		.byte	0x1b
+ 585 002c 30000000 		.4byte	0x30
+ 586 0030 03       		.uleb128 0x3
+ 587 0031 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 16
+
+
+ 588 0032 06       		.byte	0x6
+ 589 0033 DD050000 		.4byte	.LASF2
+ 590 0037 02       		.uleb128 0x2
+ 591 0038 8E040000 		.4byte	.LASF1
+ 592 003c 02       		.byte	0x2
+ 593 003d 1D       		.byte	0x1d
+ 594 003e 42000000 		.4byte	0x42
+ 595 0042 03       		.uleb128 0x3
+ 596 0043 01       		.byte	0x1
+ 597 0044 08       		.byte	0x8
+ 598 0045 45050000 		.4byte	.LASF3
+ 599 0049 02       		.uleb128 0x2
+ 600 004a 92030000 		.4byte	.LASF4
+ 601 004e 02       		.byte	0x2
+ 602 004f 29       		.byte	0x29
+ 603 0050 54000000 		.4byte	0x54
+ 604 0054 03       		.uleb128 0x3
+ 605 0055 02       		.byte	0x2
+ 606 0056 05       		.byte	0x5
+ 607 0057 4D040000 		.4byte	.LASF5
+ 608 005b 02       		.uleb128 0x2
+ 609 005c 33020000 		.4byte	.LASF6
+ 610 0060 02       		.byte	0x2
+ 611 0061 2B       		.byte	0x2b
+ 612 0062 66000000 		.4byte	0x66
+ 613 0066 03       		.uleb128 0x3
+ 614 0067 02       		.byte	0x2
+ 615 0068 07       		.byte	0x7
+ 616 0069 E9050000 		.4byte	.LASF7
+ 617 006d 02       		.uleb128 0x2
+ 618 006e 3F010000 		.4byte	.LASF8
+ 619 0072 02       		.byte	0x2
+ 620 0073 3F       		.byte	0x3f
+ 621 0074 78000000 		.4byte	0x78
+ 622 0078 03       		.uleb128 0x3
+ 623 0079 04       		.byte	0x4
+ 624 007a 05       		.byte	0x5
+ 625 007b 60040000 		.4byte	.LASF9
+ 626 007f 02       		.uleb128 0x2
+ 627 0080 53050000 		.4byte	.LASF10
+ 628 0084 02       		.byte	0x2
+ 629 0085 41       		.byte	0x41
+ 630 0086 8A000000 		.4byte	0x8a
+ 631 008a 03       		.uleb128 0x3
+ 632 008b 04       		.byte	0x4
+ 633 008c 07       		.byte	0x7
+ 634 008d 01050000 		.4byte	.LASF11
+ 635 0091 03       		.uleb128 0x3
+ 636 0092 08       		.byte	0x8
+ 637 0093 05       		.byte	0x5
+ 638 0094 46030000 		.4byte	.LASF12
+ 639 0098 03       		.uleb128 0x3
+ 640 0099 08       		.byte	0x8
+ 641 009a 07       		.byte	0x7
+ 642 009b 17020000 		.4byte	.LASF13
+ 643 009f 04       		.uleb128 0x4
+ 644 00a0 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 17
+
+
+ 645 00a1 05       		.byte	0x5
+ 646 00a2 696E7400 		.ascii	"int\000"
+ 647 00a6 03       		.uleb128 0x3
+ 648 00a7 04       		.byte	0x4
+ 649 00a8 07       		.byte	0x7
+ 650 00a9 4D000000 		.4byte	.LASF14
+ 651 00ad 02       		.uleb128 0x2
+ 652 00ae DE010000 		.4byte	.LASF15
+ 653 00b2 03       		.byte	0x3
+ 654 00b3 14       		.byte	0x14
+ 655 00b4 25000000 		.4byte	0x25
+ 656 00b8 02       		.uleb128 0x2
+ 657 00b9 FB020000 		.4byte	.LASF16
+ 658 00bd 03       		.byte	0x3
+ 659 00be 18       		.byte	0x18
+ 660 00bf 37000000 		.4byte	0x37
+ 661 00c3 02       		.uleb128 0x2
+ 662 00c4 0F020000 		.4byte	.LASF17
+ 663 00c8 03       		.byte	0x3
+ 664 00c9 20       		.byte	0x20
+ 665 00ca 49000000 		.4byte	0x49
+ 666 00ce 02       		.uleb128 0x2
+ 667 00cf 0E040000 		.4byte	.LASF18
+ 668 00d3 03       		.byte	0x3
+ 669 00d4 24       		.byte	0x24
+ 670 00d5 5B000000 		.4byte	0x5b
+ 671 00d9 02       		.uleb128 0x2
+ 672 00da 19050000 		.4byte	.LASF19
+ 673 00de 03       		.byte	0x3
+ 674 00df 2C       		.byte	0x2c
+ 675 00e0 6D000000 		.4byte	0x6d
+ 676 00e4 02       		.uleb128 0x2
+ 677 00e5 D5010000 		.4byte	.LASF20
+ 678 00e9 03       		.byte	0x3
+ 679 00ea 30       		.byte	0x30
+ 680 00eb 7F000000 		.4byte	0x7f
+ 681 00ef 02       		.uleb128 0x2
+ 682 00f0 76040000 		.4byte	.LASF21
+ 683 00f4 04       		.byte	0x4
+ 684 00f5 3A       		.byte	0x3a
+ 685 00f6 C3000000 		.4byte	0xc3
+ 686 00fa 05       		.uleb128 0x5
+ 687 00fb 04       		.byte	0x4
+ 688 00fc 03       		.uleb128 0x3
+ 689 00fd 08       		.byte	0x8
+ 690 00fe 04       		.byte	0x4
+ 691 00ff 02040000 		.4byte	.LASF22
+ 692 0103 06       		.uleb128 0x6
+ 693 0104 08       		.byte	0x8
+ 694 0105 05       		.byte	0x5
+ 695 0106 2E       		.byte	0x2e
+ 696 0107 54010000 		.4byte	0x154
+ 697 010b 07       		.uleb128 0x7
+ 698 010c 09070000 		.4byte	.LASF23
+ 699 0110 05       		.byte	0x5
+ 700 0111 30       		.byte	0x30
+ 701 0112 CE000000 		.4byte	0xce
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 18
+
+
+ 702 0116 00       		.byte	0
+ 703 0117 07       		.uleb128 0x7
+ 704 0118 FB040000 		.4byte	.LASF24
+ 705 011c 05       		.byte	0x5
+ 706 011d 31       		.byte	0x31
+ 707 011e B8000000 		.4byte	0xb8
+ 708 0122 02       		.byte	0x2
+ 709 0123 07       		.uleb128 0x7
+ 710 0124 F0040000 		.4byte	.LASF25
+ 711 0128 05       		.byte	0x5
+ 712 0129 32       		.byte	0x32
+ 713 012a B8000000 		.4byte	0xb8
+ 714 012e 03       		.byte	0x3
+ 715 012f 07       		.uleb128 0x7
+ 716 0130 5A000000 		.4byte	.LASF26
+ 717 0134 05       		.byte	0x5
+ 718 0135 33       		.byte	0x33
+ 719 0136 AD000000 		.4byte	0xad
+ 720 013a 04       		.byte	0x4
+ 721 013b 07       		.uleb128 0x7
+ 722 013c 60000000 		.4byte	.LASF27
+ 723 0140 05       		.byte	0x5
+ 724 0141 34       		.byte	0x34
+ 725 0142 AD000000 		.4byte	0xad
+ 726 0146 05       		.byte	0x5
+ 727 0147 08       		.uleb128 0x8
+ 728 0148 62707000 		.ascii	"bpp\000"
+ 729 014c 05       		.byte	0x5
+ 730 014d 35       		.byte	0x35
+ 731 014e B8000000 		.4byte	0xb8
+ 732 0152 06       		.byte	0x6
+ 733 0153 00       		.byte	0
+ 734 0154 02       		.uleb128 0x2
+ 735 0155 E0020000 		.4byte	.LASF28
+ 736 0159 05       		.byte	0x5
+ 737 015a 36       		.byte	0x36
+ 738 015b 03010000 		.4byte	0x103
+ 739 015f 09       		.uleb128 0x9
+ 740 0160 87020000 		.4byte	.LASF85
+ 741 0164 10       		.byte	0x10
+ 742 0165 05       		.byte	0x5
+ 743 0166 44       		.byte	0x44
+ 744 0167 B7010000 		.4byte	0x1b7
+ 745 016b 07       		.uleb128 0x7
+ 746 016c 19010000 		.4byte	.LASF29
+ 747 0170 05       		.byte	0x5
+ 748 0171 47       		.byte	0x47
+ 749 0172 ED010000 		.4byte	0x1ed
+ 750 0176 00       		.byte	0
+ 751 0177 07       		.uleb128 0x7
+ 752 0178 8D050000 		.4byte	.LASF30
+ 753 017c 05       		.byte	0x5
+ 754 017d 4A       		.byte	0x4a
+ 755 017e 12020000 		.4byte	0x212
+ 756 0182 04       		.byte	0x4
+ 757 0183 07       		.uleb128 0x7
+ 758 0184 A2020000 		.4byte	.LASF31
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 19
+
+
+ 759 0188 05       		.byte	0x5
+ 760 0189 4D       		.byte	0x4d
+ 761 018a B8000000 		.4byte	0xb8
+ 762 018e 08       		.byte	0x8
+ 763 018f 07       		.uleb128 0x7
+ 764 0190 21050000 		.4byte	.LASF32
+ 765 0194 05       		.byte	0x5
+ 766 0195 4E       		.byte	0x4e
+ 767 0196 AD000000 		.4byte	0xad
+ 768 019a 09       		.byte	0x9
+ 769 019b 0A       		.uleb128 0xa
+ 770 019c CE030000 		.4byte	.LASF65
+ 771 01a0 05       		.byte	0x5
+ 772 01a1 4F       		.byte	0x4f
+ 773 01a2 B8000000 		.4byte	0xb8
+ 774 01a6 01       		.byte	0x1
+ 775 01a7 02       		.byte	0x2
+ 776 01a8 06       		.byte	0x6
+ 777 01a9 0A       		.byte	0xa
+ 778 01aa 08       		.uleb128 0x8
+ 779 01ab 64736300 		.ascii	"dsc\000"
+ 780 01af 05       		.byte	0x5
+ 781 01b0 50       		.byte	0x50
+ 782 01b1 FA000000 		.4byte	0xfa
+ 783 01b5 0C       		.byte	0xc
+ 784 01b6 00       		.byte	0
+ 785 01b7 0B       		.uleb128 0xb
+ 786 01b8 D5010000 		.4byte	0x1d5
+ 787 01bc D5010000 		.4byte	0x1d5
+ 788 01c0 0C       		.uleb128 0xc
+ 789 01c1 DC010000 		.4byte	0x1dc
+ 790 01c5 0C       		.uleb128 0xc
+ 791 01c6 E7010000 		.4byte	0x1e7
+ 792 01ca 0C       		.uleb128 0xc
+ 793 01cb E4000000 		.4byte	0xe4
+ 794 01cf 0C       		.uleb128 0xc
+ 795 01d0 E4000000 		.4byte	0xe4
+ 796 01d4 00       		.byte	0
+ 797 01d5 03       		.uleb128 0x3
+ 798 01d6 01       		.byte	0x1
+ 799 01d7 02       		.byte	0x2
+ 800 01d8 6F020000 		.4byte	.LASF33
+ 801 01dc 0D       		.uleb128 0xd
+ 802 01dd 04       		.byte	0x4
+ 803 01de E2010000 		.4byte	0x1e2
+ 804 01e2 0E       		.uleb128 0xe
+ 805 01e3 5F010000 		.4byte	0x15f
+ 806 01e7 0D       		.uleb128 0xd
+ 807 01e8 04       		.byte	0x4
+ 808 01e9 54010000 		.4byte	0x154
+ 809 01ed 0D       		.uleb128 0xd
+ 810 01ee 04       		.byte	0x4
+ 811 01ef B7010000 		.4byte	0x1b7
+ 812 01f3 0B       		.uleb128 0xb
+ 813 01f4 07020000 		.4byte	0x207
+ 814 01f8 07020000 		.4byte	0x207
+ 815 01fc 0C       		.uleb128 0xc
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 20
+
+
+ 816 01fd DC010000 		.4byte	0x1dc
+ 817 0201 0C       		.uleb128 0xc
+ 818 0202 E4000000 		.4byte	0xe4
+ 819 0206 00       		.byte	0
+ 820 0207 0D       		.uleb128 0xd
+ 821 0208 04       		.byte	0x4
+ 822 0209 0D020000 		.4byte	0x20d
+ 823 020d 0E       		.uleb128 0xe
+ 824 020e B8000000 		.4byte	0xb8
+ 825 0212 0D       		.uleb128 0xd
+ 826 0213 04       		.byte	0x4
+ 827 0214 F3010000 		.4byte	0x1f3
+ 828 0218 02       		.uleb128 0x2
+ 829 0219 2B040000 		.4byte	.LASF34
+ 830 021d 05       		.byte	0x5
+ 831 021e 56       		.byte	0x56
+ 832 021f 5F010000 		.4byte	0x15f
+ 833 0223 06       		.uleb128 0x6
+ 834 0224 04       		.byte	0x4
+ 835 0225 06       		.byte	0x6
+ 836 0226 F3       		.byte	0xf3
+ 837 0227 5C020000 		.4byte	0x25c
+ 838 022b 07       		.uleb128 0x7
+ 839 022c 71040000 		.4byte	.LASF35
+ 840 0230 06       		.byte	0x6
+ 841 0231 F5       		.byte	0xf5
+ 842 0232 B8000000 		.4byte	0xb8
+ 843 0236 00       		.byte	0
+ 844 0237 07       		.uleb128 0x7
+ 845 0238 E8030000 		.4byte	.LASF36
+ 846 023c 06       		.byte	0x6
+ 847 023d F6       		.byte	0xf6
+ 848 023e B8000000 		.4byte	0xb8
+ 849 0242 01       		.byte	0x1
+ 850 0243 08       		.uleb128 0x8
+ 851 0244 72656400 		.ascii	"red\000"
+ 852 0248 06       		.byte	0x6
+ 853 0249 F7       		.byte	0xf7
+ 854 024a B8000000 		.4byte	0xb8
+ 855 024e 02       		.byte	0x2
+ 856 024f 07       		.uleb128 0x7
+ 857 0250 13050000 		.4byte	.LASF37
+ 858 0254 06       		.byte	0x6
+ 859 0255 F8       		.byte	0xf8
+ 860 0256 B8000000 		.4byte	0xb8
+ 861 025a 03       		.byte	0x3
+ 862 025b 00       		.byte	0
+ 863 025c 0F       		.uleb128 0xf
+ 864 025d 04       		.byte	0x4
+ 865 025e 06       		.byte	0x6
+ 866 025f F1       		.byte	0xf1
+ 867 0260 7A020000 		.4byte	0x27a
+ 868 0264 10       		.uleb128 0x10
+ 869 0265 636800   		.ascii	"ch\000"
+ 870 0268 06       		.byte	0x6
+ 871 0269 F9       		.byte	0xf9
+ 872 026a 23020000 		.4byte	0x223
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 21
+
+
+ 873 026e 11       		.uleb128 0x11
+ 874 026f 30000000 		.4byte	.LASF38
+ 875 0273 06       		.byte	0x6
+ 876 0274 FA       		.byte	0xfa
+ 877 0275 E4000000 		.4byte	0xe4
+ 878 0279 00       		.byte	0
+ 879 027a 02       		.uleb128 0x2
+ 880 027b E5010000 		.4byte	.LASF39
+ 881 027f 06       		.byte	0x6
+ 882 0280 FB       		.byte	0xfb
+ 883 0281 5C020000 		.4byte	0x25c
+ 884 0285 12       		.uleb128 0x12
+ 885 0286 D4030000 		.4byte	.LASF40
+ 886 028a 06       		.byte	0x6
+ 887 028b 0801     		.2byte	0x108
+ 888 028d 7A020000 		.4byte	0x27a
+ 889 0291 12       		.uleb128 0x12
+ 890 0292 57040000 		.4byte	.LASF41
+ 891 0296 06       		.byte	0x6
+ 892 0297 0D01     		.2byte	0x10d
+ 893 0299 B8000000 		.4byte	0xb8
+ 894 029d 03       		.uleb128 0x3
+ 895 029e 04       		.byte	0x4
+ 896 029f 07       		.byte	0x7
+ 897 02a0 22040000 		.4byte	.LASF42
+ 898 02a4 03       		.uleb128 0x3
+ 899 02a5 01       		.byte	0x1
+ 900 02a6 08       		.byte	0x8
+ 901 02a7 CB020000 		.4byte	.LASF43
+ 902 02ab 0D       		.uleb128 0xd
+ 903 02ac 04       		.byte	0x4
+ 904 02ad B1020000 		.4byte	0x2b1
+ 905 02b1 0E       		.uleb128 0xe
+ 906 02b2 A4020000 		.4byte	0x2a4
+ 907 02b6 02       		.uleb128 0x2
+ 908 02b7 D5060000 		.4byte	.LASF44
+ 909 02bb 07       		.byte	0x7
+ 910 02bc 2C       		.byte	0x2c
+ 911 02bd B8000000 		.4byte	0xb8
+ 912 02c1 02       		.uleb128 0x2
+ 913 02c2 03030000 		.4byte	.LASF45
+ 914 02c6 07       		.byte	0x7
+ 915 02c7 33       		.byte	0x33
+ 916 02c8 B8000000 		.4byte	0xb8
+ 917 02cc 06       		.uleb128 0x6
+ 918 02cd 08       		.byte	0x8
+ 919 02ce 07       		.byte	0x7
+ 920 02cf 48       		.byte	0x48
+ 921 02d0 05030000 		.4byte	0x305
+ 922 02d4 07       		.uleb128 0x7
+ 923 02d5 4E020000 		.4byte	.LASF46
+ 924 02d9 07       		.byte	0x7
+ 925 02da 4A       		.byte	0x4a
+ 926 02db 85020000 		.4byte	0x285
+ 927 02df 00       		.byte	0
+ 928 02e0 07       		.uleb128 0x7
+ 929 02e1 69020000 		.4byte	.LASF47
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 22
+
+
+ 930 02e5 07       		.byte	0x7
+ 931 02e6 4B       		.byte	0x4b
+ 932 02e7 EF000000 		.4byte	0xef
+ 933 02eb 04       		.byte	0x4
+ 934 02ec 07       		.uleb128 0x7
+ 935 02ed 2E020000 		.4byte	.LASF48
+ 936 02f1 07       		.byte	0x7
+ 937 02f2 4C       		.byte	0x4c
+ 938 02f3 B6020000 		.4byte	0x2b6
+ 939 02f7 06       		.byte	0x6
+ 940 02f8 08       		.uleb128 0x8
+ 941 02f9 6F706100 		.ascii	"opa\000"
+ 942 02fd 07       		.byte	0x7
+ 943 02fe 4D       		.byte	0x4d
+ 944 02ff 91020000 		.4byte	0x291
+ 945 0303 07       		.byte	0x7
+ 946 0304 00       		.byte	0
+ 947 0305 06       		.uleb128 0x6
+ 948 0306 08       		.byte	0x8
+ 949 0307 07       		.byte	0x7
+ 950 0308 51       		.byte	0x51
+ 951 0309 32030000 		.4byte	0x332
+ 952 030d 07       		.uleb128 0x7
+ 953 030e 4E020000 		.4byte	.LASF46
+ 954 0312 07       		.byte	0x7
+ 955 0313 53       		.byte	0x53
+ 956 0314 85020000 		.4byte	0x285
+ 957 0318 00       		.byte	0
+ 958 0319 07       		.uleb128 0x7
+ 959 031a 69020000 		.4byte	.LASF47
+ 960 031e 07       		.byte	0x7
+ 961 031f 54       		.byte	0x54
+ 962 0320 EF000000 		.4byte	0xef
+ 963 0324 04       		.byte	0x4
+ 964 0325 07       		.uleb128 0x7
+ 965 0326 40050000 		.4byte	.LASF49
+ 966 032a 07       		.byte	0x7
+ 967 032b 55       		.byte	0x55
+ 968 032c C1020000 		.4byte	0x2c1
+ 969 0330 06       		.byte	0x6
+ 970 0331 00       		.byte	0
+ 971 0332 06       		.uleb128 0x6
+ 972 0333 0A       		.byte	0xa
+ 973 0334 07       		.byte	0x7
+ 974 0335 58       		.byte	0x58
+ 975 0336 77030000 		.4byte	0x377
+ 976 033a 08       		.uleb128 0x8
+ 977 033b 746F7000 		.ascii	"top\000"
+ 978 033f 07       		.byte	0x7
+ 979 0340 5A       		.byte	0x5a
+ 980 0341 EF000000 		.4byte	0xef
+ 981 0345 00       		.byte	0
+ 982 0346 07       		.uleb128 0x7
+ 983 0347 D9020000 		.4byte	.LASF50
+ 984 034b 07       		.byte	0x7
+ 985 034c 5B       		.byte	0x5b
+ 986 034d EF000000 		.4byte	0xef
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 23
+
+
+ 987 0351 02       		.byte	0x2
+ 988 0352 07       		.uleb128 0x7
+ 989 0353 81040000 		.4byte	.LASF51
+ 990 0357 07       		.byte	0x7
+ 991 0358 5C       		.byte	0x5c
+ 992 0359 EF000000 		.4byte	0xef
+ 993 035d 04       		.byte	0x4
+ 994 035e 07       		.uleb128 0x7
+ 995 035f 22030000 		.4byte	.LASF52
+ 996 0363 07       		.byte	0x7
+ 997 0364 5D       		.byte	0x5d
+ 998 0365 EF000000 		.4byte	0xef
+ 999 0369 06       		.byte	0x6
+ 1000 036a 07       		.uleb128 0x7
+ 1001 036b CF010000 		.4byte	.LASF53
+ 1002 036f 07       		.byte	0x7
+ 1003 0370 5E       		.byte	0x5e
+ 1004 0371 EF000000 		.4byte	0xef
+ 1005 0375 08       		.byte	0x8
+ 1006 0376 00       		.byte	0
+ 1007 0377 06       		.uleb128 0x6
+ 1008 0378 28       		.byte	0x28
+ 1009 0379 07       		.byte	0x7
+ 1010 037a 41       		.byte	0x41
+ 1011 037b D4030000 		.4byte	0x3d4
+ 1012 037f 07       		.uleb128 0x7
+ 1013 0380 42040000 		.4byte	.LASF54
+ 1014 0384 07       		.byte	0x7
+ 1015 0385 43       		.byte	0x43
+ 1016 0386 85020000 		.4byte	0x285
+ 1017 038a 00       		.byte	0
+ 1018 038b 07       		.uleb128 0x7
+ 1019 038c 17040000 		.4byte	.LASF55
+ 1020 0390 07       		.byte	0x7
+ 1021 0391 44       		.byte	0x44
+ 1022 0392 85020000 		.4byte	0x285
+ 1023 0396 04       		.byte	0x4
+ 1024 0397 07       		.uleb128 0x7
+ 1025 0398 2B050000 		.4byte	.LASF56
+ 1026 039c 07       		.byte	0x7
+ 1027 039d 45       		.byte	0x45
+ 1028 039e EF000000 		.4byte	0xef
+ 1029 03a2 08       		.byte	0x8
+ 1030 03a3 08       		.uleb128 0x8
+ 1031 03a4 6F706100 		.ascii	"opa\000"
+ 1032 03a8 07       		.byte	0x7
+ 1033 03a9 46       		.byte	0x46
+ 1034 03aa 91020000 		.4byte	0x291
+ 1035 03ae 0A       		.byte	0xa
+ 1036 03af 07       		.uleb128 0x7
+ 1037 03b0 47020000 		.4byte	.LASF57
+ 1038 03b4 07       		.byte	0x7
+ 1039 03b5 4E       		.byte	0x4e
+ 1040 03b6 CC020000 		.4byte	0x2cc
+ 1041 03ba 0C       		.byte	0xc
+ 1042 03bb 07       		.uleb128 0x7
+ 1043 03bc CA050000 		.4byte	.LASF58
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 24
+
+
+ 1044 03c0 07       		.byte	0x7
+ 1045 03c1 56       		.byte	0x56
+ 1046 03c2 05030000 		.4byte	0x305
+ 1047 03c6 14       		.byte	0x14
+ 1048 03c7 07       		.uleb128 0x7
+ 1049 03c8 68030000 		.4byte	.LASF59
+ 1050 03cc 07       		.byte	0x7
+ 1051 03cd 5F       		.byte	0x5f
+ 1052 03ce 32030000 		.4byte	0x332
+ 1053 03d2 1C       		.byte	0x1c
+ 1054 03d3 00       		.byte	0
+ 1055 03d4 06       		.uleb128 0x6
+ 1056 03d5 14       		.byte	0x14
+ 1057 03d6 07       		.byte	0x7
+ 1058 03d7 63       		.byte	0x63
+ 1059 03d8 25040000 		.4byte	0x425
+ 1060 03dc 07       		.uleb128 0x7
+ 1061 03dd 4E020000 		.4byte	.LASF46
+ 1062 03e1 07       		.byte	0x7
+ 1063 03e2 65       		.byte	0x65
+ 1064 03e3 85020000 		.4byte	0x285
+ 1065 03e7 00       		.byte	0
+ 1066 03e8 07       		.uleb128 0x7
+ 1067 03e9 F2010000 		.4byte	.LASF60
+ 1068 03ed 07       		.byte	0x7
+ 1069 03ee 66       		.byte	0x66
+ 1070 03ef 85020000 		.4byte	0x285
+ 1071 03f3 04       		.byte	0x4
+ 1072 03f4 07       		.uleb128 0x7
+ 1073 03f5 F6040000 		.4byte	.LASF61
+ 1074 03f9 07       		.byte	0x7
+ 1075 03fa 67       		.byte	0x67
+ 1076 03fb 25040000 		.4byte	0x425
+ 1077 03ff 08       		.byte	0x8
+ 1078 0400 07       		.uleb128 0x7
+ 1079 0401 35040000 		.4byte	.LASF62
+ 1080 0405 07       		.byte	0x7
+ 1081 0406 68       		.byte	0x68
+ 1082 0407 EF000000 		.4byte	0xef
+ 1083 040b 0C       		.byte	0xc
+ 1084 040c 07       		.uleb128 0x7
+ 1085 040d 97020000 		.4byte	.LASF63
+ 1086 0411 07       		.byte	0x7
+ 1087 0412 69       		.byte	0x69
+ 1088 0413 EF000000 		.4byte	0xef
+ 1089 0417 0E       		.byte	0xe
+ 1090 0418 08       		.uleb128 0x8
+ 1091 0419 6F706100 		.ascii	"opa\000"
+ 1092 041d 07       		.byte	0x7
+ 1093 041e 6A       		.byte	0x6a
+ 1094 041f 91020000 		.4byte	0x291
+ 1095 0423 10       		.byte	0x10
+ 1096 0424 00       		.byte	0
+ 1097 0425 0D       		.uleb128 0xd
+ 1098 0426 04       		.byte	0x4
+ 1099 0427 2B040000 		.4byte	0x42b
+ 1100 042b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 25
+
+
+ 1101 042c 18020000 		.4byte	0x218
+ 1102 0430 06       		.uleb128 0x6
+ 1103 0431 08       		.byte	0x8
+ 1104 0432 07       		.byte	0x7
+ 1105 0433 6E       		.byte	0x6e
+ 1106 0434 5D040000 		.4byte	0x45d
+ 1107 0438 07       		.uleb128 0x7
+ 1108 0439 4E020000 		.4byte	.LASF46
+ 1109 043d 07       		.byte	0x7
+ 1110 043e 70       		.byte	0x70
+ 1111 043f 85020000 		.4byte	0x285
+ 1112 0443 00       		.byte	0
+ 1113 0444 07       		.uleb128 0x7
+ 1114 0445 86040000 		.4byte	.LASF64
+ 1115 0449 07       		.byte	0x7
+ 1116 044a 71       		.byte	0x71
+ 1117 044b 91020000 		.4byte	0x291
+ 1118 044f 04       		.byte	0x4
+ 1119 0450 08       		.uleb128 0x8
+ 1120 0451 6F706100 		.ascii	"opa\000"
+ 1121 0455 07       		.byte	0x7
+ 1122 0456 72       		.byte	0x72
+ 1123 0457 91020000 		.4byte	0x291
+ 1124 045b 05       		.byte	0x5
+ 1125 045c 00       		.byte	0
+ 1126 045d 06       		.uleb128 0x6
+ 1127 045e 08       		.byte	0x8
+ 1128 045f 07       		.byte	0x7
+ 1129 0460 76       		.byte	0x76
+ 1130 0461 99040000 		.4byte	0x499
+ 1131 0465 07       		.uleb128 0x7
+ 1132 0466 4E020000 		.4byte	.LASF46
+ 1133 046a 07       		.byte	0x7
+ 1134 046b 78       		.byte	0x78
+ 1135 046c 85020000 		.4byte	0x285
+ 1136 0470 00       		.byte	0
+ 1137 0471 07       		.uleb128 0x7
+ 1138 0472 69020000 		.4byte	.LASF47
+ 1139 0476 07       		.byte	0x7
+ 1140 0477 79       		.byte	0x79
+ 1141 0478 EF000000 		.4byte	0xef
+ 1142 047c 04       		.byte	0x4
+ 1143 047d 08       		.uleb128 0x8
+ 1144 047e 6F706100 		.ascii	"opa\000"
+ 1145 0482 07       		.byte	0x7
+ 1146 0483 7A       		.byte	0x7a
+ 1147 0484 91020000 		.4byte	0x291
+ 1148 0488 06       		.byte	0x6
+ 1149 0489 0A       		.uleb128 0xa
+ 1150 048a 54020000 		.4byte	.LASF66
+ 1151 048e 07       		.byte	0x7
+ 1152 048f 7B       		.byte	0x7b
+ 1153 0490 B8000000 		.4byte	0xb8
+ 1154 0494 01       		.byte	0x1
+ 1155 0495 01       		.byte	0x1
+ 1156 0496 07       		.byte	0x7
+ 1157 0497 07       		.byte	0x7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 26
+
+
+ 1158 0498 00       		.byte	0
+ 1159 0499 06       		.uleb128 0x6
+ 1160 049a 50       		.byte	0x50
+ 1161 049b 07       		.byte	0x7
+ 1162 049c 3C       		.byte	0x3c
+ 1163 049d E1040000 		.4byte	0x4e1
+ 1164 04a1 0A       		.uleb128 0xa
+ 1165 04a2 54030000 		.4byte	.LASF67
+ 1166 04a6 07       		.byte	0x7
+ 1167 04a7 3E       		.byte	0x3e
+ 1168 04a8 B8000000 		.4byte	0xb8
+ 1169 04ac 01       		.byte	0x1
+ 1170 04ad 01       		.byte	0x1
+ 1171 04ae 07       		.byte	0x7
+ 1172 04af 00       		.byte	0
+ 1173 04b0 07       		.uleb128 0x7
+ 1174 04b1 32050000 		.4byte	.LASF68
+ 1175 04b5 07       		.byte	0x7
+ 1176 04b6 60       		.byte	0x60
+ 1177 04b7 77030000 		.4byte	0x377
+ 1178 04bb 04       		.byte	0x4
+ 1179 04bc 07       		.uleb128 0x7
+ 1180 04bd 63030000 		.4byte	.LASF69
+ 1181 04c1 07       		.byte	0x7
+ 1182 04c2 6B       		.byte	0x6b
+ 1183 04c3 D4030000 		.4byte	0x3d4
+ 1184 04c7 2C       		.byte	0x2c
+ 1185 04c8 07       		.uleb128 0x7
+ 1186 04c9 A9030000 		.4byte	.LASF70
+ 1187 04cd 07       		.byte	0x7
+ 1188 04ce 73       		.byte	0x73
+ 1189 04cf 30040000 		.4byte	0x430
+ 1190 04d3 40       		.byte	0x40
+ 1191 04d4 07       		.uleb128 0x7
+ 1192 04d5 5E050000 		.4byte	.LASF71
+ 1193 04d9 07       		.byte	0x7
+ 1194 04da 7C       		.byte	0x7c
+ 1195 04db 5D040000 		.4byte	0x45d
+ 1196 04df 48       		.byte	0x48
+ 1197 04e0 00       		.byte	0
+ 1198 04e1 02       		.uleb128 0x2
+ 1199 04e2 27010000 		.4byte	.LASF72
+ 1200 04e6 07       		.byte	0x7
+ 1201 04e7 84       		.byte	0x84
+ 1202 04e8 99040000 		.4byte	0x499
+ 1203 04ec 13       		.uleb128 0x13
+ 1204 04ed 01       		.byte	0x1
+ 1205 04ee 42000000 		.4byte	0x42
+ 1206 04f2 08       		.byte	0x8
+ 1207 04f3 27       		.byte	0x27
+ 1208 04f4 05050000 		.4byte	0x505
+ 1209 04f8 14       		.uleb128 0x14
+ 1210 04f9 E6060000 		.4byte	.LASF73
+ 1211 04fd 00       		.byte	0
+ 1212 04fe 14       		.uleb128 0x14
+ 1213 04ff 88030000 		.4byte	.LASF74
+ 1214 0503 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 27
+
+
+ 1215 0504 00       		.byte	0
+ 1216 0505 02       		.uleb128 0x2
+ 1217 0506 D0020000 		.4byte	.LASF75
+ 1218 050a 08       		.byte	0x8
+ 1219 050b 2C       		.byte	0x2c
+ 1220 050c B8000000 		.4byte	0xb8
+ 1221 0510 0D       		.uleb128 0xd
+ 1222 0511 04       		.byte	0x4
+ 1223 0512 B8000000 		.4byte	0xb8
+ 1224 0516 0D       		.uleb128 0xd
+ 1225 0517 04       		.byte	0x4
+ 1226 0518 1C050000 		.4byte	0x51c
+ 1227 051c 0E       		.uleb128 0xe
+ 1228 051d E1040000 		.4byte	0x4e1
+ 1229 0521 13       		.uleb128 0x13
+ 1230 0522 01       		.byte	0x1
+ 1231 0523 42000000 		.4byte	0x42
+ 1232 0527 09       		.byte	0x9
+ 1233 0528 2E       		.byte	0x2e
+ 1234 0529 46050000 		.4byte	0x546
+ 1235 052d 14       		.uleb128 0x14
+ 1236 052e 00000000 		.4byte	.LASF76
+ 1237 0532 00       		.byte	0
+ 1238 0533 14       		.uleb128 0x14
+ 1239 0534 C5060000 		.4byte	.LASF77
+ 1240 0538 01       		.byte	0x1
+ 1241 0539 14       		.uleb128 0x14
+ 1242 053a 75020000 		.4byte	.LASF78
+ 1243 053e 02       		.byte	0x2
+ 1244 053f 14       		.uleb128 0x14
+ 1245 0540 FC010000 		.4byte	.LASF79
+ 1246 0544 03       		.byte	0x3
+ 1247 0545 00       		.byte	0
+ 1248 0546 02       		.uleb128 0x2
+ 1249 0547 32010000 		.4byte	.LASF80
+ 1250 054b 09       		.byte	0x9
+ 1251 054c 35       		.byte	0x35
+ 1252 054d B8000000 		.4byte	0xb8
+ 1253 0551 06       		.uleb128 0x6
+ 1254 0552 04       		.byte	0x4
+ 1255 0553 09       		.byte	0x9
+ 1256 0554 39       		.byte	0x39
+ 1257 0555 A0050000 		.4byte	0x5a0
+ 1258 0559 15       		.uleb128 0x15
+ 1259 055a 636600   		.ascii	"cf\000"
+ 1260 055d 09       		.byte	0x9
+ 1261 055e 3E       		.byte	0x3e
+ 1262 055f E4000000 		.4byte	0xe4
+ 1263 0563 04       		.byte	0x4
+ 1264 0564 05       		.byte	0x5
+ 1265 0565 1B       		.byte	0x1b
+ 1266 0566 00       		.byte	0
+ 1267 0567 0A       		.uleb128 0xa
+ 1268 0568 35000000 		.4byte	.LASF81
+ 1269 056c 09       		.byte	0x9
+ 1270 056d 3F       		.byte	0x3f
+ 1271 056e E4000000 		.4byte	0xe4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 28
+
+
+ 1272 0572 04       		.byte	0x4
+ 1273 0573 03       		.byte	0x3
+ 1274 0574 18       		.byte	0x18
+ 1275 0575 00       		.byte	0
+ 1276 0576 0A       		.uleb128 0xa
+ 1277 0577 15060000 		.4byte	.LASF82
+ 1278 057b 09       		.byte	0x9
+ 1279 057c 42       		.byte	0x42
+ 1280 057d E4000000 		.4byte	0xe4
+ 1281 0581 04       		.byte	0x4
+ 1282 0582 02       		.byte	0x2
+ 1283 0583 16       		.byte	0x16
+ 1284 0584 00       		.byte	0
+ 1285 0585 15       		.uleb128 0x15
+ 1286 0586 7700     		.ascii	"w\000"
+ 1287 0588 09       		.byte	0x9
+ 1288 0589 44       		.byte	0x44
+ 1289 058a E4000000 		.4byte	0xe4
+ 1290 058e 04       		.byte	0x4
+ 1291 058f 0B       		.byte	0xb
+ 1292 0590 0B       		.byte	0xb
+ 1293 0591 00       		.byte	0
+ 1294 0592 15       		.uleb128 0x15
+ 1295 0593 6800     		.ascii	"h\000"
+ 1296 0595 09       		.byte	0x9
+ 1297 0596 45       		.byte	0x45
+ 1298 0597 E4000000 		.4byte	0xe4
+ 1299 059b 04       		.byte	0x4
+ 1300 059c 0B       		.byte	0xb
+ 1301 059d 00       		.byte	0
+ 1302 059e 00       		.byte	0
+ 1303 059f 00       		.byte	0
+ 1304 05a0 02       		.uleb128 0x2
+ 1305 05a1 F9060000 		.4byte	.LASF83
+ 1306 05a5 09       		.byte	0x9
+ 1307 05a6 46       		.byte	0x46
+ 1308 05a7 51050000 		.4byte	0x551
+ 1309 05ab 02       		.uleb128 0x2
+ 1310 05ac 79010000 		.4byte	.LASF84
+ 1311 05b0 09       		.byte	0x9
+ 1312 05b1 8B       		.byte	0x8b
+ 1313 05b2 B6050000 		.4byte	0x5b6
+ 1314 05b6 0D       		.uleb128 0xd
+ 1315 05b7 04       		.byte	0x4
+ 1316 05b8 BC050000 		.4byte	0x5bc
+ 1317 05bc 0B       		.uleb128 0xb
+ 1318 05bd 05050000 		.4byte	0x505
+ 1319 05c1 D5050000 		.4byte	0x5d5
+ 1320 05c5 0C       		.uleb128 0xc
+ 1321 05c6 D5050000 		.4byte	0x5d5
+ 1322 05ca 0C       		.uleb128 0xc
+ 1323 05cb 18060000 		.4byte	0x618
+ 1324 05cf 0C       		.uleb128 0xc
+ 1325 05d0 1F060000 		.4byte	0x61f
+ 1326 05d4 00       		.byte	0
+ 1327 05d5 0D       		.uleb128 0xd
+ 1328 05d6 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 29
+
+
+ 1329 05d7 DB050000 		.4byte	0x5db
+ 1330 05db 09       		.uleb128 0x9
+ 1331 05dc B6030000 		.4byte	.LASF86
+ 1332 05e0 10       		.byte	0x10
+ 1333 05e1 09       		.byte	0x9
+ 1334 05e2 AA       		.byte	0xaa
+ 1335 05e3 18060000 		.4byte	0x618
+ 1336 05e7 07       		.uleb128 0x7
+ 1337 05e8 AE020000 		.4byte	.LASF87
+ 1338 05ec 09       		.byte	0x9
+ 1339 05ed AC       		.byte	0xac
+ 1340 05ee AB050000 		.4byte	0x5ab
+ 1341 05f2 00       		.byte	0
+ 1342 05f3 07       		.uleb128 0x7
+ 1343 05f4 69040000 		.4byte	.LASF88
+ 1344 05f8 09       		.byte	0x9
+ 1345 05f9 AD       		.byte	0xad
+ 1346 05fa 25060000 		.4byte	0x625
+ 1347 05fe 04       		.byte	0x4
+ 1348 05ff 07       		.uleb128 0x7
+ 1349 0600 A4050000 		.4byte	.LASF89
+ 1350 0604 09       		.byte	0x9
+ 1351 0605 AE       		.byte	0xae
+ 1352 0606 C9060000 		.4byte	0x6c9
+ 1353 060a 08       		.byte	0x8
+ 1354 060b 07       		.uleb128 0x7
+ 1355 060c 3E020000 		.4byte	.LASF90
+ 1356 0610 09       		.byte	0x9
+ 1357 0611 AF       		.byte	0xaf
+ 1358 0612 02070000 		.4byte	0x702
+ 1359 0616 0C       		.byte	0xc
+ 1360 0617 00       		.byte	0
+ 1361 0618 0D       		.uleb128 0xd
+ 1362 0619 04       		.byte	0x4
+ 1363 061a 1E060000 		.4byte	0x61e
+ 1364 061e 16       		.uleb128 0x16
+ 1365 061f 0D       		.uleb128 0xd
+ 1366 0620 04       		.byte	0x4
+ 1367 0621 A0050000 		.4byte	0x5a0
+ 1368 0625 02       		.uleb128 0x2
+ 1369 0626 70030000 		.4byte	.LASF91
+ 1370 062a 09       		.byte	0x9
+ 1371 062b 93       		.byte	0x93
+ 1372 062c 30060000 		.4byte	0x630
+ 1373 0630 0D       		.uleb128 0xd
+ 1374 0631 04       		.byte	0x4
+ 1375 0632 36060000 		.4byte	0x636
+ 1376 0636 0B       		.uleb128 0xb
+ 1377 0637 05050000 		.4byte	0x505
+ 1378 063b 4A060000 		.4byte	0x64a
+ 1379 063f 0C       		.uleb128 0xc
+ 1380 0640 D5050000 		.4byte	0x5d5
+ 1381 0644 0C       		.uleb128 0xc
+ 1382 0645 4A060000 		.4byte	0x64a
+ 1383 0649 00       		.byte	0
+ 1384 064a 0D       		.uleb128 0xd
+ 1385 064b 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 30
+
+
+ 1386 064c 50060000 		.4byte	0x650
+ 1387 0650 09       		.uleb128 0x9
+ 1388 0651 BB010000 		.4byte	.LASF92
+ 1389 0655 24       		.byte	0x24
+ 1390 0656 09       		.byte	0x9
+ 1391 0657 B7       		.byte	0xb7
+ 1392 0658 C9060000 		.4byte	0x6c9
+ 1393 065c 07       		.uleb128 0x7
+ 1394 065d 61020000 		.4byte	.LASF93
+ 1395 0661 09       		.byte	0x9
+ 1396 0662 BA       		.byte	0xba
+ 1397 0663 2E070000 		.4byte	0x72e
+ 1398 0667 00       		.byte	0
+ 1399 0668 08       		.uleb128 0x8
+ 1400 0669 73726300 		.ascii	"src\000"
+ 1401 066d 09       		.byte	0x9
+ 1402 066e BD       		.byte	0xbd
+ 1403 066f 18060000 		.4byte	0x618
+ 1404 0673 04       		.byte	0x4
+ 1405 0674 07       		.uleb128 0x7
+ 1406 0675 9E050000 		.4byte	.LASF94
+ 1407 0679 09       		.byte	0x9
+ 1408 067a C0       		.byte	0xc0
+ 1409 067b 16050000 		.4byte	0x516
+ 1410 067f 08       		.byte	0x8
+ 1411 0680 07       		.uleb128 0x7
+ 1412 0681 BB050000 		.4byte	.LASF95
+ 1413 0685 09       		.byte	0x9
+ 1414 0686 C3       		.byte	0xc3
+ 1415 0687 46050000 		.4byte	0x546
+ 1416 068b 0C       		.byte	0xc
+ 1417 068c 07       		.uleb128 0x7
+ 1418 068d AF030000 		.4byte	.LASF96
+ 1419 0691 09       		.byte	0x9
+ 1420 0692 C6       		.byte	0xc6
+ 1421 0693 A0050000 		.4byte	0x5a0
+ 1422 0697 10       		.byte	0x10
+ 1423 0698 07       		.uleb128 0x7
+ 1424 0699 5A030000 		.4byte	.LASF97
+ 1425 069d 09       		.byte	0x9
+ 1426 069e CA       		.byte	0xca
+ 1427 069f 07020000 		.4byte	0x207
+ 1428 06a3 14       		.byte	0x14
+ 1429 06a4 07       		.uleb128 0x7
+ 1430 06a5 0F070000 		.4byte	.LASF98
+ 1431 06a9 09       		.byte	0x9
+ 1432 06aa CE       		.byte	0xce
+ 1433 06ab E4000000 		.4byte	0xe4
+ 1434 06af 18       		.byte	0x18
+ 1435 06b0 07       		.uleb128 0x7
+ 1436 06b1 6F010000 		.4byte	.LASF99
+ 1437 06b5 09       		.byte	0x9
+ 1438 06b6 D2       		.byte	0xd2
+ 1439 06b7 AB020000 		.4byte	0x2ab
+ 1440 06bb 1C       		.byte	0x1c
+ 1441 06bc 07       		.uleb128 0x7
+ 1442 06bd 28030000 		.4byte	.LASF100
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 31
+
+
+ 1443 06c1 09       		.byte	0x9
+ 1444 06c2 D5       		.byte	0xd5
+ 1445 06c3 FA000000 		.4byte	0xfa
+ 1446 06c7 20       		.byte	0x20
+ 1447 06c8 00       		.byte	0
+ 1448 06c9 02       		.uleb128 0x2
+ 1449 06ca 91010000 		.4byte	.LASF101
+ 1450 06ce 09       		.byte	0x9
+ 1451 06cf A0       		.byte	0xa0
+ 1452 06d0 D4060000 		.4byte	0x6d4
+ 1453 06d4 0D       		.uleb128 0xd
+ 1454 06d5 04       		.byte	0x4
+ 1455 06d6 DA060000 		.4byte	0x6da
+ 1456 06da 0B       		.uleb128 0xb
+ 1457 06db 05050000 		.4byte	0x505
+ 1458 06df 02070000 		.4byte	0x702
+ 1459 06e3 0C       		.uleb128 0xc
+ 1460 06e4 D5050000 		.4byte	0x5d5
+ 1461 06e8 0C       		.uleb128 0xc
+ 1462 06e9 4A060000 		.4byte	0x64a
+ 1463 06ed 0C       		.uleb128 0xc
+ 1464 06ee EF000000 		.4byte	0xef
+ 1465 06f2 0C       		.uleb128 0xc
+ 1466 06f3 EF000000 		.4byte	0xef
+ 1467 06f7 0C       		.uleb128 0xc
+ 1468 06f8 EF000000 		.4byte	0xef
+ 1469 06fc 0C       		.uleb128 0xc
+ 1470 06fd 10050000 		.4byte	0x510
+ 1471 0701 00       		.byte	0
+ 1472 0702 02       		.uleb128 0x2
+ 1473 0703 FC050000 		.4byte	.LASF102
+ 1474 0707 09       		.byte	0x9
+ 1475 0708 A8       		.byte	0xa8
+ 1476 0709 0D070000 		.4byte	0x70d
+ 1477 070d 0D       		.uleb128 0xd
+ 1478 070e 04       		.byte	0x4
+ 1479 070f 13070000 		.4byte	0x713
+ 1480 0713 17       		.uleb128 0x17
+ 1481 0714 23070000 		.4byte	0x723
+ 1482 0718 0C       		.uleb128 0xc
+ 1483 0719 D5050000 		.4byte	0x5d5
+ 1484 071d 0C       		.uleb128 0xc
+ 1485 071e 4A060000 		.4byte	0x64a
+ 1486 0722 00       		.byte	0
+ 1487 0723 02       		.uleb128 0x2
+ 1488 0724 DF040000 		.4byte	.LASF103
+ 1489 0728 09       		.byte	0x9
+ 1490 0729 B4       		.byte	0xb4
+ 1491 072a DB050000 		.4byte	0x5db
+ 1492 072e 0D       		.uleb128 0xd
+ 1493 072f 04       		.byte	0x4
+ 1494 0730 23070000 		.4byte	0x723
+ 1495 0734 02       		.uleb128 0x2
+ 1496 0735 78050000 		.4byte	.LASF104
+ 1497 0739 09       		.byte	0x9
+ 1498 073a D6       		.byte	0xd6
+ 1499 073b 50060000 		.4byte	0x650
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 32
+
+
+ 1500 073f 06       		.uleb128 0x6
+ 1501 0740 28       		.byte	0x28
+ 1502 0741 0A       		.byte	0xa
+ 1503 0742 1F       		.byte	0x1f
+ 1504 0743 60070000 		.4byte	0x760
+ 1505 0747 07       		.uleb128 0x7
+ 1506 0748 F1060000 		.4byte	.LASF105
+ 1507 074c 0A       		.byte	0xa
+ 1508 074d 21       		.byte	0x21
+ 1509 074e 34070000 		.4byte	0x734
+ 1510 0752 00       		.byte	0
+ 1511 0753 07       		.uleb128 0x7
+ 1512 0754 5C020000 		.4byte	.LASF106
+ 1513 0758 0A       		.byte	0xa
+ 1514 0759 26       		.byte	0x26
+ 1515 075a D9000000 		.4byte	0xd9
+ 1516 075e 24       		.byte	0x24
+ 1517 075f 00       		.byte	0
+ 1518 0760 02       		.uleb128 0x2
+ 1519 0761 63050000 		.4byte	.LASF107
+ 1520 0765 0A       		.byte	0xa
+ 1521 0766 27       		.byte	0x27
+ 1522 0767 3F070000 		.4byte	0x73f
+ 1523 076b 18       		.uleb128 0x18
+ 1524 076c 14000000 		.4byte	.LASF126
+ 1525 0770 01       		.byte	0x1
+ 1526 0771 BA       		.byte	0xba
+ 1527 0772 01       		.byte	0x1
+ 1528 0773 97070000 		.4byte	0x797
+ 1529 0777 19       		.uleb128 0x19
+ 1530 0778 73726300 		.ascii	"src\000"
+ 1531 077c 01       		.byte	0x1
+ 1532 077d BA       		.byte	0xba
+ 1533 077e 18060000 		.4byte	0x618
+ 1534 0782 1A       		.uleb128 0x1a
+ 1535 0783 C4050000 		.4byte	.LASF108
+ 1536 0787 01       		.byte	0x1
+ 1537 0788 BD       		.byte	0xbd
+ 1538 0789 97070000 		.4byte	0x797
+ 1539 078d 1B       		.uleb128 0x1b
+ 1540 078e 6900     		.ascii	"i\000"
+ 1541 0790 01       		.byte	0x1
+ 1542 0791 BF       		.byte	0xbf
+ 1543 0792 CE000000 		.4byte	0xce
+ 1544 0796 00       		.byte	0
+ 1545 0797 0D       		.uleb128 0xd
+ 1546 0798 04       		.byte	0x4
+ 1547 0799 60070000 		.4byte	0x760
+ 1548 079d 1C       		.uleb128 0x1c
+ 1549 079e 49010000 		.4byte	.LASF127
+ 1550 07a2 01       		.byte	0x1
+ 1551 07a3 41       		.byte	0x41
+ 1552 07a4 97070000 		.4byte	0x797
+ 1553 07a8 00000000 		.4byte	.LFB31
+ 1554 07ac 3C010000 		.4byte	.LFE31-.LFB31
+ 1555 07b0 01       		.uleb128 0x1
+ 1556 07b1 9C       		.byte	0x9c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 33
+
+
+ 1557 07b2 E6080000 		.4byte	0x8e6
+ 1558 07b6 1D       		.uleb128 0x1d
+ 1559 07b7 73726300 		.ascii	"src\000"
+ 1560 07bb 01       		.byte	0x1
+ 1561 07bc 41       		.byte	0x41
+ 1562 07bd 18060000 		.4byte	0x618
+ 1563 07c1 00000000 		.4byte	.LLST0
+ 1564 07c5 1E       		.uleb128 0x1e
+ 1565 07c6 9E050000 		.4byte	.LASF94
+ 1566 07ca 01       		.byte	0x1
+ 1567 07cb 41       		.byte	0x41
+ 1568 07cc 16050000 		.4byte	0x516
+ 1569 07d0 45000000 		.4byte	.LLST1
+ 1570 07d4 1F       		.uleb128 0x1f
+ 1571 07d5 C4050000 		.4byte	.LASF108
+ 1572 07d9 01       		.byte	0x1
+ 1573 07da 48       		.byte	0x48
+ 1574 07db 97070000 		.4byte	0x797
+ 1575 07df 8A000000 		.4byte	.LLST2
+ 1576 07e3 20       		.uleb128 0x20
+ 1577 07e4 6900     		.ascii	"i\000"
+ 1578 07e6 01       		.byte	0x1
+ 1579 07e7 4B       		.byte	0x4b
+ 1580 07e8 CE000000 		.4byte	0xce
+ 1581 07ec B3000000 		.4byte	.LLST3
+ 1582 07f0 1F       		.uleb128 0x1f
+ 1583 07f1 D4040000 		.4byte	.LASF109
+ 1584 07f5 01       		.byte	0x1
+ 1585 07f6 53       		.byte	0x53
+ 1586 07f7 97070000 		.4byte	0x797
+ 1587 07fb F4000000 		.4byte	.LLST4
+ 1588 07ff 21       		.uleb128 0x21
+ 1589 0800 00000000 		.4byte	.Ldebug_ranges0+0
+ 1590 0804 40080000 		.4byte	0x840
+ 1591 0808 1F       		.uleb128 0x1f
+ 1592 0809 9C030000 		.4byte	.LASF110
+ 1593 080d 01       		.byte	0x1
+ 1594 080e 55       		.byte	0x55
+ 1595 080f D5010000 		.4byte	0x1d5
+ 1596 0813 3E010000 		.4byte	.LLST5
+ 1597 0817 1F       		.uleb128 0x1f
+ 1598 0818 BB050000 		.4byte	.LASF95
+ 1599 081c 01       		.byte	0x1
+ 1600 081d 56       		.byte	0x56
+ 1601 081e 46050000 		.4byte	0x546
+ 1602 0822 82010000 		.4byte	.LLST6
+ 1603 0826 22       		.uleb128 0x22
+ 1604 0827 60000000 		.4byte	.LVL8
+ 1605 082b 7E0A0000 		.4byte	0xa7e
+ 1606 082f 23       		.uleb128 0x23
+ 1607 0830 70000000 		.4byte	.LVL10
+ 1608 0834 890A0000 		.4byte	0xa89
+ 1609 0838 24       		.uleb128 0x24
+ 1610 0839 01       		.uleb128 0x1
+ 1611 083a 51       		.byte	0x51
+ 1612 083b 02       		.uleb128 0x2
+ 1613 083c 77       		.byte	0x77
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 34
+
+
+ 1614 083d 00       		.sleb128 0
+ 1615 083e 00       		.byte	0
+ 1616 083f 00       		.byte	0
+ 1617 0840 25       		.uleb128 0x25
+ 1618 0841 20000000 		.4byte	.Ldebug_ranges0+0x20
+ 1619 0845 1F       		.uleb128 0x1f
+ 1620 0846 C6030000 		.4byte	.LASF111
+ 1621 084a 01       		.byte	0x1
+ 1622 084b 7C       		.byte	0x7c
+ 1623 084c E4000000 		.4byte	0xe4
+ 1624 0850 AB010000 		.4byte	.LLST7
+ 1625 0854 1F       		.uleb128 0x1f
+ 1626 0855 37050000 		.4byte	.LASF112
+ 1627 0859 01       		.byte	0x1
+ 1628 085a 7F       		.byte	0x7f
+ 1629 085b 05050000 		.4byte	0x505
+ 1630 085f D4010000 		.4byte	.LLST8
+ 1631 0863 26       		.uleb128 0x26
+ 1632 0864 C4000000 		.4byte	.LVL16
+ 1633 0868 940A0000 		.4byte	0xa94
+ 1634 086c 77080000 		.4byte	0x877
+ 1635 0870 24       		.uleb128 0x24
+ 1636 0871 01       		.uleb128 0x1
+ 1637 0872 50       		.byte	0x50
+ 1638 0873 02       		.uleb128 0x2
+ 1639 0874 76       		.byte	0x76
+ 1640 0875 00       		.sleb128 0
+ 1641 0876 00       		.byte	0
+ 1642 0877 22       		.uleb128 0x22
+ 1643 0878 C8000000 		.4byte	.LVL17
+ 1644 087c A00A0000 		.4byte	0xaa0
+ 1645 0880 26       		.uleb128 0x26
+ 1646 0881 D8000000 		.4byte	.LVL20
+ 1647 0885 AB0A0000 		.4byte	0xaab
+ 1648 0889 A0080000 		.4byte	0x8a0
+ 1649 088d 24       		.uleb128 0x24
+ 1650 088e 01       		.uleb128 0x1
+ 1651 088f 50       		.byte	0x50
+ 1652 0890 02       		.uleb128 0x2
+ 1653 0891 76       		.byte	0x76
+ 1654 0892 00       		.sleb128 0
+ 1655 0893 24       		.uleb128 0x24
+ 1656 0894 01       		.uleb128 0x1
+ 1657 0895 51       		.byte	0x51
+ 1658 0896 02       		.uleb128 0x2
+ 1659 0897 77       		.byte	0x77
+ 1660 0898 00       		.sleb128 0
+ 1661 0899 24       		.uleb128 0x24
+ 1662 089a 01       		.uleb128 0x1
+ 1663 089b 52       		.byte	0x52
+ 1664 089c 02       		.uleb128 0x2
+ 1665 089d 78       		.byte	0x78
+ 1666 089e 00       		.sleb128 0
+ 1667 089f 00       		.byte	0
+ 1668 08a0 26       		.uleb128 0x26
+ 1669 08a1 FE000000 		.4byte	.LVL26
+ 1670 08a5 B60A0000 		.4byte	0xab6
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 35
+
+
+ 1671 08a9 B4080000 		.4byte	0x8b4
+ 1672 08ad 24       		.uleb128 0x24
+ 1673 08ae 01       		.uleb128 0x1
+ 1674 08af 50       		.byte	0x50
+ 1675 08b0 02       		.uleb128 0x2
+ 1676 08b1 79       		.byte	0x79
+ 1677 08b2 00       		.sleb128 0
+ 1678 08b3 00       		.byte	0
+ 1679 08b4 26       		.uleb128 0x26
+ 1680 08b5 10010000 		.4byte	.LVL29
+ 1681 08b9 940A0000 		.4byte	0xa94
+ 1682 08bd C8080000 		.4byte	0x8c8
+ 1683 08c1 24       		.uleb128 0x24
+ 1684 08c2 01       		.uleb128 0x1
+ 1685 08c3 50       		.byte	0x50
+ 1686 08c4 02       		.uleb128 0x2
+ 1687 08c5 76       		.byte	0x76
+ 1688 08c6 00       		.sleb128 0
+ 1689 08c7 00       		.byte	0
+ 1690 08c8 23       		.uleb128 0x23
+ 1691 08c9 1A010000 		.4byte	.LVL30
+ 1692 08cd C10A0000 		.4byte	0xac1
+ 1693 08d1 24       		.uleb128 0x24
+ 1694 08d2 01       		.uleb128 0x1
+ 1695 08d3 50       		.byte	0x50
+ 1696 08d4 02       		.uleb128 0x2
+ 1697 08d5 76       		.byte	0x76
+ 1698 08d6 00       		.sleb128 0
+ 1699 08d7 24       		.uleb128 0x24
+ 1700 08d8 01       		.uleb128 0x1
+ 1701 08d9 51       		.byte	0x51
+ 1702 08da 02       		.uleb128 0x2
+ 1703 08db 74       		.byte	0x74
+ 1704 08dc 00       		.sleb128 0
+ 1705 08dd 24       		.uleb128 0x24
+ 1706 08de 01       		.uleb128 0x1
+ 1707 08df 52       		.byte	0x52
+ 1708 08e0 02       		.uleb128 0x2
+ 1709 08e1 08       		.byte	0x8
+ 1710 08e2 28       		.byte	0x28
+ 1711 08e3 00       		.byte	0
+ 1712 08e4 00       		.byte	0
+ 1713 08e5 00       		.byte	0
+ 1714 08e6 27       		.uleb128 0x27
+ 1715 08e7 2C060000 		.4byte	.LASF128
+ 1716 08eb 01       		.byte	0x1
+ 1717 08ec 9C       		.byte	0x9c
+ 1718 08ed 00000000 		.4byte	.LFB32
+ 1719 08f1 AC000000 		.4byte	.LFE32-.LFB32
+ 1720 08f5 01       		.uleb128 0x1
+ 1721 08f6 9C       		.byte	0x9c
+ 1722 08f7 D1090000 		.4byte	0x9d1
+ 1723 08fb 1E       		.uleb128 0x1e
+ 1724 08fc 1E060000 		.4byte	.LASF113
+ 1725 0900 01       		.byte	0x1
+ 1726 0901 9C       		.byte	0x9c
+ 1727 0902 CE000000 		.4byte	0xce
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 36
+
+
+ 1728 0906 FD010000 		.4byte	.LLST9
+ 1729 090a 20       		.uleb128 0x20
+ 1730 090b 6900     		.ascii	"i\000"
+ 1731 090d 01       		.byte	0x1
+ 1732 090e AE       		.byte	0xae
+ 1733 090f CE000000 		.4byte	0xce
+ 1734 0913 1E020000 		.4byte	.LLST10
+ 1735 0917 28       		.uleb128 0x28
+ 1736 0918 6B070000 		.4byte	0x76b
+ 1737 091c 08000000 		.4byte	.LBB11
+ 1738 0920 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 1739 0924 01       		.byte	0x1
+ 1740 0925 A0       		.byte	0xa0
+ 1741 0926 73090000 		.4byte	0x973
+ 1742 092a 29       		.uleb128 0x29
+ 1743 092b 77070000 		.4byte	0x777
+ 1744 092f 25       		.uleb128 0x25
+ 1745 0930 48000000 		.4byte	.Ldebug_ranges0+0x48
+ 1746 0934 2A       		.uleb128 0x2a
+ 1747 0935 82070000 		.4byte	0x782
+ 1748 0939 2B       		.uleb128 0x2b
+ 1749 093a 8D070000 		.4byte	0x78d
+ 1750 093e 32020000 		.4byte	.LLST11
+ 1751 0942 26       		.uleb128 0x26
+ 1752 0943 32000000 		.4byte	.LVL36
+ 1753 0947 940A0000 		.4byte	0xa94
+ 1754 094b 56090000 		.4byte	0x956
+ 1755 094f 24       		.uleb128 0x24
+ 1756 0950 01       		.uleb128 0x1
+ 1757 0951 50       		.byte	0x50
+ 1758 0952 02       		.uleb128 0x2
+ 1759 0953 75       		.byte	0x75
+ 1760 0954 00       		.sleb128 0
+ 1761 0955 00       		.byte	0
+ 1762 0956 23       		.uleb128 0x23
+ 1763 0957 44000000 		.4byte	.LVL38
+ 1764 095b C10A0000 		.4byte	0xac1
+ 1765 095f 24       		.uleb128 0x24
+ 1766 0960 01       		.uleb128 0x1
+ 1767 0961 50       		.byte	0x50
+ 1768 0962 02       		.uleb128 0x2
+ 1769 0963 75       		.byte	0x75
+ 1770 0964 00       		.sleb128 0
+ 1771 0965 24       		.uleb128 0x24
+ 1772 0966 01       		.uleb128 0x1
+ 1773 0967 51       		.byte	0x51
+ 1774 0968 01       		.uleb128 0x1
+ 1775 0969 30       		.byte	0x30
+ 1776 096a 24       		.uleb128 0x24
+ 1777 096b 01       		.uleb128 0x1
+ 1778 096c 52       		.byte	0x52
+ 1779 096d 02       		.uleb128 0x2
+ 1780 096e 08       		.byte	0x8
+ 1781 096f 28       		.byte	0x28
+ 1782 0970 00       		.byte	0
+ 1783 0971 00       		.byte	0
+ 1784 0972 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 37
+
+
+ 1785 0973 26       		.uleb128 0x26
+ 1786 0974 52000000 		.4byte	.LVL40
+ 1787 0978 CA0A0000 		.4byte	0xaca
+ 1788 097c 87090000 		.4byte	0x987
+ 1789 0980 24       		.uleb128 0x24
+ 1790 0981 01       		.uleb128 0x1
+ 1791 0982 50       		.byte	0x50
+ 1792 0983 02       		.uleb128 0x2
+ 1793 0984 79       		.byte	0x79
+ 1794 0985 00       		.sleb128 0
+ 1795 0986 00       		.byte	0
+ 1796 0987 26       		.uleb128 0x26
+ 1797 0988 5C000000 		.4byte	.LVL41
+ 1798 098c D50A0000 		.4byte	0xad5
+ 1799 0990 A2090000 		.4byte	0x9a2
+ 1800 0994 24       		.uleb128 0x24
+ 1801 0995 01       		.uleb128 0x1
+ 1802 0996 50       		.byte	0x50
+ 1803 0997 09       		.uleb128 0x9
+ 1804 0998 76       		.byte	0x76
+ 1805 0999 00       		.sleb128 0
+ 1806 099a 32       		.byte	0x32
+ 1807 099b 24       		.byte	0x24
+ 1808 099c 76       		.byte	0x76
+ 1809 099d 00       		.sleb128 0
+ 1810 099e 22       		.byte	0x22
+ 1811 099f 33       		.byte	0x33
+ 1812 09a0 24       		.byte	0x24
+ 1813 09a1 00       		.byte	0
+ 1814 09a2 26       		.uleb128 0x26
+ 1815 09a3 86000000 		.4byte	.LVL44
+ 1816 09a7 C10A0000 		.4byte	0xac1
+ 1817 09ab BB090000 		.4byte	0x9bb
+ 1818 09af 24       		.uleb128 0x24
+ 1819 09b0 01       		.uleb128 0x1
+ 1820 09b1 51       		.byte	0x51
+ 1821 09b2 01       		.uleb128 0x1
+ 1822 09b3 30       		.byte	0x30
+ 1823 09b4 24       		.uleb128 0x24
+ 1824 09b5 01       		.uleb128 0x1
+ 1825 09b6 52       		.byte	0x52
+ 1826 09b7 02       		.uleb128 0x2
+ 1827 09b8 08       		.byte	0x8
+ 1828 09b9 24       		.byte	0x24
+ 1829 09ba 00       		.byte	0
+ 1830 09bb 23       		.uleb128 0x23
+ 1831 09bc 94000000 		.4byte	.LVL45
+ 1832 09c0 C10A0000 		.4byte	0xac1
+ 1833 09c4 24       		.uleb128 0x24
+ 1834 09c5 01       		.uleb128 0x1
+ 1835 09c6 51       		.byte	0x51
+ 1836 09c7 01       		.uleb128 0x1
+ 1837 09c8 30       		.byte	0x30
+ 1838 09c9 24       		.uleb128 0x24
+ 1839 09ca 01       		.uleb128 0x1
+ 1840 09cb 52       		.byte	0x52
+ 1841 09cc 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 38
+
+
+ 1842 09cd 08       		.byte	0x8
+ 1843 09ce 28       		.byte	0x28
+ 1844 09cf 00       		.byte	0
+ 1845 09d0 00       		.byte	0
+ 1846 09d1 2C       		.uleb128 0x2c
+ 1847 09d2 6B070000 		.4byte	0x76b
+ 1848 09d6 00000000 		.4byte	.LFB33
+ 1849 09da 8C000000 		.4byte	.LFE33-.LFB33
+ 1850 09de 01       		.uleb128 0x1
+ 1851 09df 9C       		.byte	0x9c
+ 1852 09e0 620A0000 		.4byte	0xa62
+ 1853 09e4 2D       		.uleb128 0x2d
+ 1854 09e5 77070000 		.4byte	0x777
+ 1855 09e9 5C020000 		.4byte	.LLST12
+ 1856 09ed 2B       		.uleb128 0x2b
+ 1857 09ee 82070000 		.4byte	0x782
+ 1858 09f2 88020000 		.4byte	.LLST13
+ 1859 09f6 2B       		.uleb128 0x2b
+ 1860 09f7 8D070000 		.4byte	0x78d
+ 1861 09fb 9B020000 		.4byte	.LLST14
+ 1862 09ff 26       		.uleb128 0x26
+ 1863 0a00 38000000 		.4byte	.LVL52
+ 1864 0a04 940A0000 		.4byte	0xa94
+ 1865 0a08 130A0000 		.4byte	0xa13
+ 1866 0a0c 24       		.uleb128 0x24
+ 1867 0a0d 01       		.uleb128 0x1
+ 1868 0a0e 50       		.byte	0x50
+ 1869 0a0f 02       		.uleb128 0x2
+ 1870 0a10 75       		.byte	0x75
+ 1871 0a11 00       		.sleb128 0
+ 1872 0a12 00       		.byte	0
+ 1873 0a13 26       		.uleb128 0x26
+ 1874 0a14 4A000000 		.4byte	.LVL54
+ 1875 0a18 C10A0000 		.4byte	0xac1
+ 1876 0a1c 320A0000 		.4byte	0xa32
+ 1877 0a20 24       		.uleb128 0x24
+ 1878 0a21 01       		.uleb128 0x1
+ 1879 0a22 50       		.byte	0x50
+ 1880 0a23 02       		.uleb128 0x2
+ 1881 0a24 75       		.byte	0x75
+ 1882 0a25 00       		.sleb128 0
+ 1883 0a26 24       		.uleb128 0x24
+ 1884 0a27 01       		.uleb128 0x1
+ 1885 0a28 51       		.byte	0x51
+ 1886 0a29 01       		.uleb128 0x1
+ 1887 0a2a 30       		.byte	0x30
+ 1888 0a2b 24       		.uleb128 0x24
+ 1889 0a2c 01       		.uleb128 0x1
+ 1890 0a2d 52       		.byte	0x52
+ 1891 0a2e 02       		.uleb128 0x2
+ 1892 0a2f 08       		.byte	0x8
+ 1893 0a30 28       		.byte	0x28
+ 1894 0a31 00       		.byte	0
+ 1895 0a32 26       		.uleb128 0x26
+ 1896 0a33 60000000 		.4byte	.LVL57
+ 1897 0a37 C10A0000 		.4byte	0xac1
+ 1898 0a3b 510A0000 		.4byte	0xa51
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 39
+
+
+ 1899 0a3f 24       		.uleb128 0x24
+ 1900 0a40 01       		.uleb128 0x1
+ 1901 0a41 50       		.byte	0x50
+ 1902 0a42 02       		.uleb128 0x2
+ 1903 0a43 74       		.byte	0x74
+ 1904 0a44 00       		.sleb128 0
+ 1905 0a45 24       		.uleb128 0x24
+ 1906 0a46 01       		.uleb128 0x1
+ 1907 0a47 51       		.byte	0x51
+ 1908 0a48 01       		.uleb128 0x1
+ 1909 0a49 30       		.byte	0x30
+ 1910 0a4a 24       		.uleb128 0x24
+ 1911 0a4b 01       		.uleb128 0x1
+ 1912 0a4c 52       		.byte	0x52
+ 1913 0a4d 02       		.uleb128 0x2
+ 1914 0a4e 08       		.byte	0x8
+ 1915 0a4f 28       		.byte	0x28
+ 1916 0a50 00       		.byte	0
+ 1917 0a51 23       		.uleb128 0x23
+ 1918 0a52 78000000 		.4byte	.LVL59
+ 1919 0a56 940A0000 		.4byte	0xa94
+ 1920 0a5a 24       		.uleb128 0x24
+ 1921 0a5b 01       		.uleb128 0x1
+ 1922 0a5c 50       		.byte	0x50
+ 1923 0a5d 02       		.uleb128 0x2
+ 1924 0a5e 74       		.byte	0x74
+ 1925 0a5f 00       		.sleb128 0
+ 1926 0a60 00       		.byte	0
+ 1927 0a61 00       		.byte	0
+ 1928 0a62 2E       		.uleb128 0x2e
+ 1929 0a63 B1050000 		.4byte	.LASF114
+ 1930 0a67 01       		.byte	0x1
+ 1931 0a68 2F       		.byte	0x2f
+ 1932 0a69 CE000000 		.4byte	0xce
+ 1933 0a6d 05       		.uleb128 0x5
+ 1934 0a6e 03       		.byte	0x3
+ 1935 0a6f 00000000 		.4byte	entry_cnt
+ 1936 0a73 2F       		.uleb128 0x2f
+ 1937 0a74 5B010000 		.4byte	.LASF129
+ 1938 0a78 0F       		.byte	0xf
+ 1939 0a79 38       		.byte	0x38
+ 1940 0a7a 97070000 		.4byte	0x797
+ 1941 0a7e 30       		.uleb128 0x30
+ 1942 0a7f 32030000 		.4byte	.LASF115
+ 1943 0a83 32030000 		.4byte	.LASF115
+ 1944 0a87 0B       		.byte	0xb
+ 1945 0a88 46       		.byte	0x46
+ 1946 0a89 30       		.uleb128 0x30
+ 1947 0a8a F4020000 		.4byte	.LASF116
+ 1948 0a8e F4020000 		.4byte	.LASF116
+ 1949 0a92 0C       		.byte	0xc
+ 1950 0a93 1C       		.byte	0x1c
+ 1951 0a94 31       		.uleb128 0x31
+ 1952 0a95 B6020000 		.4byte	.LASF117
+ 1953 0a99 B6020000 		.4byte	.LASF117
+ 1954 0a9d 09       		.byte	0x9
+ 1955 0a9e 0B01     		.2byte	0x10b
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 40
+
+
+ 1956 0aa0 30       		.uleb128 0x30
+ 1957 0aa1 41000000 		.4byte	.LASF118
+ 1958 0aa5 41000000 		.4byte	.LASF118
+ 1959 0aa9 0D       		.byte	0xd
+ 1960 0aaa 35       		.byte	0x35
+ 1961 0aab 30       		.uleb128 0x30
+ 1962 0aac EE030000 		.4byte	.LASF119
+ 1963 0ab0 EE030000 		.4byte	.LASF119
+ 1964 0ab4 09       		.byte	0x9
+ 1965 0ab5 F9       		.byte	0xf9
+ 1966 0ab6 30       		.uleb128 0x30
+ 1967 0ab7 14030000 		.4byte	.LASF120
+ 1968 0abb 14030000 		.4byte	.LASF120
+ 1969 0abf 0D       		.byte	0xd
+ 1970 0ac0 3C       		.byte	0x3c
+ 1971 0ac1 32       		.uleb128 0x32
+ 1972 0ac2 A2030000 		.4byte	.LASF130
+ 1973 0ac6 A2030000 		.4byte	.LASF130
+ 1974 0aca 30       		.uleb128 0x30
+ 1975 0acb D1050000 		.4byte	.LASF121
+ 1976 0acf D1050000 		.4byte	.LASF121
+ 1977 0ad3 0E       		.byte	0xe
+ 1978 0ad4 4B       		.byte	0x4b
+ 1979 0ad5 30       		.uleb128 0x30
+ 1980 0ad6 AE010000 		.4byte	.LASF122
+ 1981 0ada AE010000 		.4byte	.LASF122
+ 1982 0ade 0E       		.byte	0xe
+ 1983 0adf 45       		.byte	0x45
+ 1984 0ae0 00       		.byte	0
+ 1985              		.section	.debug_abbrev,"",%progbits
+ 1986              	.Ldebug_abbrev0:
+ 1987 0000 01       		.uleb128 0x1
+ 1988 0001 11       		.uleb128 0x11
+ 1989 0002 01       		.byte	0x1
+ 1990 0003 25       		.uleb128 0x25
+ 1991 0004 0E       		.uleb128 0xe
+ 1992 0005 13       		.uleb128 0x13
+ 1993 0006 0B       		.uleb128 0xb
+ 1994 0007 03       		.uleb128 0x3
+ 1995 0008 0E       		.uleb128 0xe
+ 1996 0009 1B       		.uleb128 0x1b
+ 1997 000a 0E       		.uleb128 0xe
+ 1998 000b 55       		.uleb128 0x55
+ 1999 000c 17       		.uleb128 0x17
+ 2000 000d 11       		.uleb128 0x11
+ 2001 000e 01       		.uleb128 0x1
+ 2002 000f 10       		.uleb128 0x10
+ 2003 0010 17       		.uleb128 0x17
+ 2004 0011 00       		.byte	0
+ 2005 0012 00       		.byte	0
+ 2006 0013 02       		.uleb128 0x2
+ 2007 0014 16       		.uleb128 0x16
+ 2008 0015 00       		.byte	0
+ 2009 0016 03       		.uleb128 0x3
+ 2010 0017 0E       		.uleb128 0xe
+ 2011 0018 3A       		.uleb128 0x3a
+ 2012 0019 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 41
+
+
+ 2013 001a 3B       		.uleb128 0x3b
+ 2014 001b 0B       		.uleb128 0xb
+ 2015 001c 49       		.uleb128 0x49
+ 2016 001d 13       		.uleb128 0x13
+ 2017 001e 00       		.byte	0
+ 2018 001f 00       		.byte	0
+ 2019 0020 03       		.uleb128 0x3
+ 2020 0021 24       		.uleb128 0x24
+ 2021 0022 00       		.byte	0
+ 2022 0023 0B       		.uleb128 0xb
+ 2023 0024 0B       		.uleb128 0xb
+ 2024 0025 3E       		.uleb128 0x3e
+ 2025 0026 0B       		.uleb128 0xb
+ 2026 0027 03       		.uleb128 0x3
+ 2027 0028 0E       		.uleb128 0xe
+ 2028 0029 00       		.byte	0
+ 2029 002a 00       		.byte	0
+ 2030 002b 04       		.uleb128 0x4
+ 2031 002c 24       		.uleb128 0x24
+ 2032 002d 00       		.byte	0
+ 2033 002e 0B       		.uleb128 0xb
+ 2034 002f 0B       		.uleb128 0xb
+ 2035 0030 3E       		.uleb128 0x3e
+ 2036 0031 0B       		.uleb128 0xb
+ 2037 0032 03       		.uleb128 0x3
+ 2038 0033 08       		.uleb128 0x8
+ 2039 0034 00       		.byte	0
+ 2040 0035 00       		.byte	0
+ 2041 0036 05       		.uleb128 0x5
+ 2042 0037 0F       		.uleb128 0xf
+ 2043 0038 00       		.byte	0
+ 2044 0039 0B       		.uleb128 0xb
+ 2045 003a 0B       		.uleb128 0xb
+ 2046 003b 00       		.byte	0
+ 2047 003c 00       		.byte	0
+ 2048 003d 06       		.uleb128 0x6
+ 2049 003e 13       		.uleb128 0x13
+ 2050 003f 01       		.byte	0x1
+ 2051 0040 0B       		.uleb128 0xb
+ 2052 0041 0B       		.uleb128 0xb
+ 2053 0042 3A       		.uleb128 0x3a
+ 2054 0043 0B       		.uleb128 0xb
+ 2055 0044 3B       		.uleb128 0x3b
+ 2056 0045 0B       		.uleb128 0xb
+ 2057 0046 01       		.uleb128 0x1
+ 2058 0047 13       		.uleb128 0x13
+ 2059 0048 00       		.byte	0
+ 2060 0049 00       		.byte	0
+ 2061 004a 07       		.uleb128 0x7
+ 2062 004b 0D       		.uleb128 0xd
+ 2063 004c 00       		.byte	0
+ 2064 004d 03       		.uleb128 0x3
+ 2065 004e 0E       		.uleb128 0xe
+ 2066 004f 3A       		.uleb128 0x3a
+ 2067 0050 0B       		.uleb128 0xb
+ 2068 0051 3B       		.uleb128 0x3b
+ 2069 0052 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 42
+
+
+ 2070 0053 49       		.uleb128 0x49
+ 2071 0054 13       		.uleb128 0x13
+ 2072 0055 38       		.uleb128 0x38
+ 2073 0056 0B       		.uleb128 0xb
+ 2074 0057 00       		.byte	0
+ 2075 0058 00       		.byte	0
+ 2076 0059 08       		.uleb128 0x8
+ 2077 005a 0D       		.uleb128 0xd
+ 2078 005b 00       		.byte	0
+ 2079 005c 03       		.uleb128 0x3
+ 2080 005d 08       		.uleb128 0x8
+ 2081 005e 3A       		.uleb128 0x3a
+ 2082 005f 0B       		.uleb128 0xb
+ 2083 0060 3B       		.uleb128 0x3b
+ 2084 0061 0B       		.uleb128 0xb
+ 2085 0062 49       		.uleb128 0x49
+ 2086 0063 13       		.uleb128 0x13
+ 2087 0064 38       		.uleb128 0x38
+ 2088 0065 0B       		.uleb128 0xb
+ 2089 0066 00       		.byte	0
+ 2090 0067 00       		.byte	0
+ 2091 0068 09       		.uleb128 0x9
+ 2092 0069 13       		.uleb128 0x13
+ 2093 006a 01       		.byte	0x1
+ 2094 006b 03       		.uleb128 0x3
+ 2095 006c 0E       		.uleb128 0xe
+ 2096 006d 0B       		.uleb128 0xb
+ 2097 006e 0B       		.uleb128 0xb
+ 2098 006f 3A       		.uleb128 0x3a
+ 2099 0070 0B       		.uleb128 0xb
+ 2100 0071 3B       		.uleb128 0x3b
+ 2101 0072 0B       		.uleb128 0xb
+ 2102 0073 01       		.uleb128 0x1
+ 2103 0074 13       		.uleb128 0x13
+ 2104 0075 00       		.byte	0
+ 2105 0076 00       		.byte	0
+ 2106 0077 0A       		.uleb128 0xa
+ 2107 0078 0D       		.uleb128 0xd
+ 2108 0079 00       		.byte	0
+ 2109 007a 03       		.uleb128 0x3
+ 2110 007b 0E       		.uleb128 0xe
+ 2111 007c 3A       		.uleb128 0x3a
+ 2112 007d 0B       		.uleb128 0xb
+ 2113 007e 3B       		.uleb128 0x3b
+ 2114 007f 0B       		.uleb128 0xb
+ 2115 0080 49       		.uleb128 0x49
+ 2116 0081 13       		.uleb128 0x13
+ 2117 0082 0B       		.uleb128 0xb
+ 2118 0083 0B       		.uleb128 0xb
+ 2119 0084 0D       		.uleb128 0xd
+ 2120 0085 0B       		.uleb128 0xb
+ 2121 0086 0C       		.uleb128 0xc
+ 2122 0087 0B       		.uleb128 0xb
+ 2123 0088 38       		.uleb128 0x38
+ 2124 0089 0B       		.uleb128 0xb
+ 2125 008a 00       		.byte	0
+ 2126 008b 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 43
+
+
+ 2127 008c 0B       		.uleb128 0xb
+ 2128 008d 15       		.uleb128 0x15
+ 2129 008e 01       		.byte	0x1
+ 2130 008f 27       		.uleb128 0x27
+ 2131 0090 19       		.uleb128 0x19
+ 2132 0091 49       		.uleb128 0x49
+ 2133 0092 13       		.uleb128 0x13
+ 2134 0093 01       		.uleb128 0x1
+ 2135 0094 13       		.uleb128 0x13
+ 2136 0095 00       		.byte	0
+ 2137 0096 00       		.byte	0
+ 2138 0097 0C       		.uleb128 0xc
+ 2139 0098 05       		.uleb128 0x5
+ 2140 0099 00       		.byte	0
+ 2141 009a 49       		.uleb128 0x49
+ 2142 009b 13       		.uleb128 0x13
+ 2143 009c 00       		.byte	0
+ 2144 009d 00       		.byte	0
+ 2145 009e 0D       		.uleb128 0xd
+ 2146 009f 0F       		.uleb128 0xf
+ 2147 00a0 00       		.byte	0
+ 2148 00a1 0B       		.uleb128 0xb
+ 2149 00a2 0B       		.uleb128 0xb
+ 2150 00a3 49       		.uleb128 0x49
+ 2151 00a4 13       		.uleb128 0x13
+ 2152 00a5 00       		.byte	0
+ 2153 00a6 00       		.byte	0
+ 2154 00a7 0E       		.uleb128 0xe
+ 2155 00a8 26       		.uleb128 0x26
+ 2156 00a9 00       		.byte	0
+ 2157 00aa 49       		.uleb128 0x49
+ 2158 00ab 13       		.uleb128 0x13
+ 2159 00ac 00       		.byte	0
+ 2160 00ad 00       		.byte	0
+ 2161 00ae 0F       		.uleb128 0xf
+ 2162 00af 17       		.uleb128 0x17
+ 2163 00b0 01       		.byte	0x1
+ 2164 00b1 0B       		.uleb128 0xb
+ 2165 00b2 0B       		.uleb128 0xb
+ 2166 00b3 3A       		.uleb128 0x3a
+ 2167 00b4 0B       		.uleb128 0xb
+ 2168 00b5 3B       		.uleb128 0x3b
+ 2169 00b6 0B       		.uleb128 0xb
+ 2170 00b7 01       		.uleb128 0x1
+ 2171 00b8 13       		.uleb128 0x13
+ 2172 00b9 00       		.byte	0
+ 2173 00ba 00       		.byte	0
+ 2174 00bb 10       		.uleb128 0x10
+ 2175 00bc 0D       		.uleb128 0xd
+ 2176 00bd 00       		.byte	0
+ 2177 00be 03       		.uleb128 0x3
+ 2178 00bf 08       		.uleb128 0x8
+ 2179 00c0 3A       		.uleb128 0x3a
+ 2180 00c1 0B       		.uleb128 0xb
+ 2181 00c2 3B       		.uleb128 0x3b
+ 2182 00c3 0B       		.uleb128 0xb
+ 2183 00c4 49       		.uleb128 0x49
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 44
+
+
+ 2184 00c5 13       		.uleb128 0x13
+ 2185 00c6 00       		.byte	0
+ 2186 00c7 00       		.byte	0
+ 2187 00c8 11       		.uleb128 0x11
+ 2188 00c9 0D       		.uleb128 0xd
+ 2189 00ca 00       		.byte	0
+ 2190 00cb 03       		.uleb128 0x3
+ 2191 00cc 0E       		.uleb128 0xe
+ 2192 00cd 3A       		.uleb128 0x3a
+ 2193 00ce 0B       		.uleb128 0xb
+ 2194 00cf 3B       		.uleb128 0x3b
+ 2195 00d0 0B       		.uleb128 0xb
+ 2196 00d1 49       		.uleb128 0x49
+ 2197 00d2 13       		.uleb128 0x13
+ 2198 00d3 00       		.byte	0
+ 2199 00d4 00       		.byte	0
+ 2200 00d5 12       		.uleb128 0x12
+ 2201 00d6 16       		.uleb128 0x16
+ 2202 00d7 00       		.byte	0
+ 2203 00d8 03       		.uleb128 0x3
+ 2204 00d9 0E       		.uleb128 0xe
+ 2205 00da 3A       		.uleb128 0x3a
+ 2206 00db 0B       		.uleb128 0xb
+ 2207 00dc 3B       		.uleb128 0x3b
+ 2208 00dd 05       		.uleb128 0x5
+ 2209 00de 49       		.uleb128 0x49
+ 2210 00df 13       		.uleb128 0x13
+ 2211 00e0 00       		.byte	0
+ 2212 00e1 00       		.byte	0
+ 2213 00e2 13       		.uleb128 0x13
+ 2214 00e3 04       		.uleb128 0x4
+ 2215 00e4 01       		.byte	0x1
+ 2216 00e5 0B       		.uleb128 0xb
+ 2217 00e6 0B       		.uleb128 0xb
+ 2218 00e7 49       		.uleb128 0x49
+ 2219 00e8 13       		.uleb128 0x13
+ 2220 00e9 3A       		.uleb128 0x3a
+ 2221 00ea 0B       		.uleb128 0xb
+ 2222 00eb 3B       		.uleb128 0x3b
+ 2223 00ec 0B       		.uleb128 0xb
+ 2224 00ed 01       		.uleb128 0x1
+ 2225 00ee 13       		.uleb128 0x13
+ 2226 00ef 00       		.byte	0
+ 2227 00f0 00       		.byte	0
+ 2228 00f1 14       		.uleb128 0x14
+ 2229 00f2 28       		.uleb128 0x28
+ 2230 00f3 00       		.byte	0
+ 2231 00f4 03       		.uleb128 0x3
+ 2232 00f5 0E       		.uleb128 0xe
+ 2233 00f6 1C       		.uleb128 0x1c
+ 2234 00f7 0B       		.uleb128 0xb
+ 2235 00f8 00       		.byte	0
+ 2236 00f9 00       		.byte	0
+ 2237 00fa 15       		.uleb128 0x15
+ 2238 00fb 0D       		.uleb128 0xd
+ 2239 00fc 00       		.byte	0
+ 2240 00fd 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 45
+
+
+ 2241 00fe 08       		.uleb128 0x8
+ 2242 00ff 3A       		.uleb128 0x3a
+ 2243 0100 0B       		.uleb128 0xb
+ 2244 0101 3B       		.uleb128 0x3b
+ 2245 0102 0B       		.uleb128 0xb
+ 2246 0103 49       		.uleb128 0x49
+ 2247 0104 13       		.uleb128 0x13
+ 2248 0105 0B       		.uleb128 0xb
+ 2249 0106 0B       		.uleb128 0xb
+ 2250 0107 0D       		.uleb128 0xd
+ 2251 0108 0B       		.uleb128 0xb
+ 2252 0109 0C       		.uleb128 0xc
+ 2253 010a 0B       		.uleb128 0xb
+ 2254 010b 38       		.uleb128 0x38
+ 2255 010c 0B       		.uleb128 0xb
+ 2256 010d 00       		.byte	0
+ 2257 010e 00       		.byte	0
+ 2258 010f 16       		.uleb128 0x16
+ 2259 0110 26       		.uleb128 0x26
+ 2260 0111 00       		.byte	0
+ 2261 0112 00       		.byte	0
+ 2262 0113 00       		.byte	0
+ 2263 0114 17       		.uleb128 0x17
+ 2264 0115 15       		.uleb128 0x15
+ 2265 0116 01       		.byte	0x1
+ 2266 0117 27       		.uleb128 0x27
+ 2267 0118 19       		.uleb128 0x19
+ 2268 0119 01       		.uleb128 0x1
+ 2269 011a 13       		.uleb128 0x13
+ 2270 011b 00       		.byte	0
+ 2271 011c 00       		.byte	0
+ 2272 011d 18       		.uleb128 0x18
+ 2273 011e 2E       		.uleb128 0x2e
+ 2274 011f 01       		.byte	0x1
+ 2275 0120 3F       		.uleb128 0x3f
+ 2276 0121 19       		.uleb128 0x19
+ 2277 0122 03       		.uleb128 0x3
+ 2278 0123 0E       		.uleb128 0xe
+ 2279 0124 3A       		.uleb128 0x3a
+ 2280 0125 0B       		.uleb128 0xb
+ 2281 0126 3B       		.uleb128 0x3b
+ 2282 0127 0B       		.uleb128 0xb
+ 2283 0128 27       		.uleb128 0x27
+ 2284 0129 19       		.uleb128 0x19
+ 2285 012a 20       		.uleb128 0x20
+ 2286 012b 0B       		.uleb128 0xb
+ 2287 012c 01       		.uleb128 0x1
+ 2288 012d 13       		.uleb128 0x13
+ 2289 012e 00       		.byte	0
+ 2290 012f 00       		.byte	0
+ 2291 0130 19       		.uleb128 0x19
+ 2292 0131 05       		.uleb128 0x5
+ 2293 0132 00       		.byte	0
+ 2294 0133 03       		.uleb128 0x3
+ 2295 0134 08       		.uleb128 0x8
+ 2296 0135 3A       		.uleb128 0x3a
+ 2297 0136 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 46
+
+
+ 2298 0137 3B       		.uleb128 0x3b
+ 2299 0138 0B       		.uleb128 0xb
+ 2300 0139 49       		.uleb128 0x49
+ 2301 013a 13       		.uleb128 0x13
+ 2302 013b 00       		.byte	0
+ 2303 013c 00       		.byte	0
+ 2304 013d 1A       		.uleb128 0x1a
+ 2305 013e 34       		.uleb128 0x34
+ 2306 013f 00       		.byte	0
+ 2307 0140 03       		.uleb128 0x3
+ 2308 0141 0E       		.uleb128 0xe
+ 2309 0142 3A       		.uleb128 0x3a
+ 2310 0143 0B       		.uleb128 0xb
+ 2311 0144 3B       		.uleb128 0x3b
+ 2312 0145 0B       		.uleb128 0xb
+ 2313 0146 49       		.uleb128 0x49
+ 2314 0147 13       		.uleb128 0x13
+ 2315 0148 00       		.byte	0
+ 2316 0149 00       		.byte	0
+ 2317 014a 1B       		.uleb128 0x1b
+ 2318 014b 34       		.uleb128 0x34
+ 2319 014c 00       		.byte	0
+ 2320 014d 03       		.uleb128 0x3
+ 2321 014e 08       		.uleb128 0x8
+ 2322 014f 3A       		.uleb128 0x3a
+ 2323 0150 0B       		.uleb128 0xb
+ 2324 0151 3B       		.uleb128 0x3b
+ 2325 0152 0B       		.uleb128 0xb
+ 2326 0153 49       		.uleb128 0x49
+ 2327 0154 13       		.uleb128 0x13
+ 2328 0155 00       		.byte	0
+ 2329 0156 00       		.byte	0
+ 2330 0157 1C       		.uleb128 0x1c
+ 2331 0158 2E       		.uleb128 0x2e
+ 2332 0159 01       		.byte	0x1
+ 2333 015a 3F       		.uleb128 0x3f
+ 2334 015b 19       		.uleb128 0x19
+ 2335 015c 03       		.uleb128 0x3
+ 2336 015d 0E       		.uleb128 0xe
+ 2337 015e 3A       		.uleb128 0x3a
+ 2338 015f 0B       		.uleb128 0xb
+ 2339 0160 3B       		.uleb128 0x3b
+ 2340 0161 0B       		.uleb128 0xb
+ 2341 0162 27       		.uleb128 0x27
+ 2342 0163 19       		.uleb128 0x19
+ 2343 0164 49       		.uleb128 0x49
+ 2344 0165 13       		.uleb128 0x13
+ 2345 0166 11       		.uleb128 0x11
+ 2346 0167 01       		.uleb128 0x1
+ 2347 0168 12       		.uleb128 0x12
+ 2348 0169 06       		.uleb128 0x6
+ 2349 016a 40       		.uleb128 0x40
+ 2350 016b 18       		.uleb128 0x18
+ 2351 016c 9742     		.uleb128 0x2117
+ 2352 016e 19       		.uleb128 0x19
+ 2353 016f 01       		.uleb128 0x1
+ 2354 0170 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 47
+
+
+ 2355 0171 00       		.byte	0
+ 2356 0172 00       		.byte	0
+ 2357 0173 1D       		.uleb128 0x1d
+ 2358 0174 05       		.uleb128 0x5
+ 2359 0175 00       		.byte	0
+ 2360 0176 03       		.uleb128 0x3
+ 2361 0177 08       		.uleb128 0x8
+ 2362 0178 3A       		.uleb128 0x3a
+ 2363 0179 0B       		.uleb128 0xb
+ 2364 017a 3B       		.uleb128 0x3b
+ 2365 017b 0B       		.uleb128 0xb
+ 2366 017c 49       		.uleb128 0x49
+ 2367 017d 13       		.uleb128 0x13
+ 2368 017e 02       		.uleb128 0x2
+ 2369 017f 17       		.uleb128 0x17
+ 2370 0180 00       		.byte	0
+ 2371 0181 00       		.byte	0
+ 2372 0182 1E       		.uleb128 0x1e
+ 2373 0183 05       		.uleb128 0x5
+ 2374 0184 00       		.byte	0
+ 2375 0185 03       		.uleb128 0x3
+ 2376 0186 0E       		.uleb128 0xe
+ 2377 0187 3A       		.uleb128 0x3a
+ 2378 0188 0B       		.uleb128 0xb
+ 2379 0189 3B       		.uleb128 0x3b
+ 2380 018a 0B       		.uleb128 0xb
+ 2381 018b 49       		.uleb128 0x49
+ 2382 018c 13       		.uleb128 0x13
+ 2383 018d 02       		.uleb128 0x2
+ 2384 018e 17       		.uleb128 0x17
+ 2385 018f 00       		.byte	0
+ 2386 0190 00       		.byte	0
+ 2387 0191 1F       		.uleb128 0x1f
+ 2388 0192 34       		.uleb128 0x34
+ 2389 0193 00       		.byte	0
+ 2390 0194 03       		.uleb128 0x3
+ 2391 0195 0E       		.uleb128 0xe
+ 2392 0196 3A       		.uleb128 0x3a
+ 2393 0197 0B       		.uleb128 0xb
+ 2394 0198 3B       		.uleb128 0x3b
+ 2395 0199 0B       		.uleb128 0xb
+ 2396 019a 49       		.uleb128 0x49
+ 2397 019b 13       		.uleb128 0x13
+ 2398 019c 02       		.uleb128 0x2
+ 2399 019d 17       		.uleb128 0x17
+ 2400 019e 00       		.byte	0
+ 2401 019f 00       		.byte	0
+ 2402 01a0 20       		.uleb128 0x20
+ 2403 01a1 34       		.uleb128 0x34
+ 2404 01a2 00       		.byte	0
+ 2405 01a3 03       		.uleb128 0x3
+ 2406 01a4 08       		.uleb128 0x8
+ 2407 01a5 3A       		.uleb128 0x3a
+ 2408 01a6 0B       		.uleb128 0xb
+ 2409 01a7 3B       		.uleb128 0x3b
+ 2410 01a8 0B       		.uleb128 0xb
+ 2411 01a9 49       		.uleb128 0x49
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 48
+
+
+ 2412 01aa 13       		.uleb128 0x13
+ 2413 01ab 02       		.uleb128 0x2
+ 2414 01ac 17       		.uleb128 0x17
+ 2415 01ad 00       		.byte	0
+ 2416 01ae 00       		.byte	0
+ 2417 01af 21       		.uleb128 0x21
+ 2418 01b0 0B       		.uleb128 0xb
+ 2419 01b1 01       		.byte	0x1
+ 2420 01b2 55       		.uleb128 0x55
+ 2421 01b3 17       		.uleb128 0x17
+ 2422 01b4 01       		.uleb128 0x1
+ 2423 01b5 13       		.uleb128 0x13
+ 2424 01b6 00       		.byte	0
+ 2425 01b7 00       		.byte	0
+ 2426 01b8 22       		.uleb128 0x22
+ 2427 01b9 898201   		.uleb128 0x4109
+ 2428 01bc 00       		.byte	0
+ 2429 01bd 11       		.uleb128 0x11
+ 2430 01be 01       		.uleb128 0x1
+ 2431 01bf 31       		.uleb128 0x31
+ 2432 01c0 13       		.uleb128 0x13
+ 2433 01c1 00       		.byte	0
+ 2434 01c2 00       		.byte	0
+ 2435 01c3 23       		.uleb128 0x23
+ 2436 01c4 898201   		.uleb128 0x4109
+ 2437 01c7 01       		.byte	0x1
+ 2438 01c8 11       		.uleb128 0x11
+ 2439 01c9 01       		.uleb128 0x1
+ 2440 01ca 31       		.uleb128 0x31
+ 2441 01cb 13       		.uleb128 0x13
+ 2442 01cc 00       		.byte	0
+ 2443 01cd 00       		.byte	0
+ 2444 01ce 24       		.uleb128 0x24
+ 2445 01cf 8A8201   		.uleb128 0x410a
+ 2446 01d2 00       		.byte	0
+ 2447 01d3 02       		.uleb128 0x2
+ 2448 01d4 18       		.uleb128 0x18
+ 2449 01d5 9142     		.uleb128 0x2111
+ 2450 01d7 18       		.uleb128 0x18
+ 2451 01d8 00       		.byte	0
+ 2452 01d9 00       		.byte	0
+ 2453 01da 25       		.uleb128 0x25
+ 2454 01db 0B       		.uleb128 0xb
+ 2455 01dc 01       		.byte	0x1
+ 2456 01dd 55       		.uleb128 0x55
+ 2457 01de 17       		.uleb128 0x17
+ 2458 01df 00       		.byte	0
+ 2459 01e0 00       		.byte	0
+ 2460 01e1 26       		.uleb128 0x26
+ 2461 01e2 898201   		.uleb128 0x4109
+ 2462 01e5 01       		.byte	0x1
+ 2463 01e6 11       		.uleb128 0x11
+ 2464 01e7 01       		.uleb128 0x1
+ 2465 01e8 31       		.uleb128 0x31
+ 2466 01e9 13       		.uleb128 0x13
+ 2467 01ea 01       		.uleb128 0x1
+ 2468 01eb 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 49
+
+
+ 2469 01ec 00       		.byte	0
+ 2470 01ed 00       		.byte	0
+ 2471 01ee 27       		.uleb128 0x27
+ 2472 01ef 2E       		.uleb128 0x2e
+ 2473 01f0 01       		.byte	0x1
+ 2474 01f1 3F       		.uleb128 0x3f
+ 2475 01f2 19       		.uleb128 0x19
+ 2476 01f3 03       		.uleb128 0x3
+ 2477 01f4 0E       		.uleb128 0xe
+ 2478 01f5 3A       		.uleb128 0x3a
+ 2479 01f6 0B       		.uleb128 0xb
+ 2480 01f7 3B       		.uleb128 0x3b
+ 2481 01f8 0B       		.uleb128 0xb
+ 2482 01f9 27       		.uleb128 0x27
+ 2483 01fa 19       		.uleb128 0x19
+ 2484 01fb 11       		.uleb128 0x11
+ 2485 01fc 01       		.uleb128 0x1
+ 2486 01fd 12       		.uleb128 0x12
+ 2487 01fe 06       		.uleb128 0x6
+ 2488 01ff 40       		.uleb128 0x40
+ 2489 0200 18       		.uleb128 0x18
+ 2490 0201 9742     		.uleb128 0x2117
+ 2491 0203 19       		.uleb128 0x19
+ 2492 0204 01       		.uleb128 0x1
+ 2493 0205 13       		.uleb128 0x13
+ 2494 0206 00       		.byte	0
+ 2495 0207 00       		.byte	0
+ 2496 0208 28       		.uleb128 0x28
+ 2497 0209 1D       		.uleb128 0x1d
+ 2498 020a 01       		.byte	0x1
+ 2499 020b 31       		.uleb128 0x31
+ 2500 020c 13       		.uleb128 0x13
+ 2501 020d 52       		.uleb128 0x52
+ 2502 020e 01       		.uleb128 0x1
+ 2503 020f 55       		.uleb128 0x55
+ 2504 0210 17       		.uleb128 0x17
+ 2505 0211 58       		.uleb128 0x58
+ 2506 0212 0B       		.uleb128 0xb
+ 2507 0213 59       		.uleb128 0x59
+ 2508 0214 0B       		.uleb128 0xb
+ 2509 0215 01       		.uleb128 0x1
+ 2510 0216 13       		.uleb128 0x13
+ 2511 0217 00       		.byte	0
+ 2512 0218 00       		.byte	0
+ 2513 0219 29       		.uleb128 0x29
+ 2514 021a 05       		.uleb128 0x5
+ 2515 021b 00       		.byte	0
+ 2516 021c 31       		.uleb128 0x31
+ 2517 021d 13       		.uleb128 0x13
+ 2518 021e 00       		.byte	0
+ 2519 021f 00       		.byte	0
+ 2520 0220 2A       		.uleb128 0x2a
+ 2521 0221 34       		.uleb128 0x34
+ 2522 0222 00       		.byte	0
+ 2523 0223 31       		.uleb128 0x31
+ 2524 0224 13       		.uleb128 0x13
+ 2525 0225 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 50
+
+
+ 2526 0226 00       		.byte	0
+ 2527 0227 2B       		.uleb128 0x2b
+ 2528 0228 34       		.uleb128 0x34
+ 2529 0229 00       		.byte	0
+ 2530 022a 31       		.uleb128 0x31
+ 2531 022b 13       		.uleb128 0x13
+ 2532 022c 02       		.uleb128 0x2
+ 2533 022d 17       		.uleb128 0x17
+ 2534 022e 00       		.byte	0
+ 2535 022f 00       		.byte	0
+ 2536 0230 2C       		.uleb128 0x2c
+ 2537 0231 2E       		.uleb128 0x2e
+ 2538 0232 01       		.byte	0x1
+ 2539 0233 31       		.uleb128 0x31
+ 2540 0234 13       		.uleb128 0x13
+ 2541 0235 11       		.uleb128 0x11
+ 2542 0236 01       		.uleb128 0x1
+ 2543 0237 12       		.uleb128 0x12
+ 2544 0238 06       		.uleb128 0x6
+ 2545 0239 40       		.uleb128 0x40
+ 2546 023a 18       		.uleb128 0x18
+ 2547 023b 9742     		.uleb128 0x2117
+ 2548 023d 19       		.uleb128 0x19
+ 2549 023e 01       		.uleb128 0x1
+ 2550 023f 13       		.uleb128 0x13
+ 2551 0240 00       		.byte	0
+ 2552 0241 00       		.byte	0
+ 2553 0242 2D       		.uleb128 0x2d
+ 2554 0243 05       		.uleb128 0x5
+ 2555 0244 00       		.byte	0
+ 2556 0245 31       		.uleb128 0x31
+ 2557 0246 13       		.uleb128 0x13
+ 2558 0247 02       		.uleb128 0x2
+ 2559 0248 17       		.uleb128 0x17
+ 2560 0249 00       		.byte	0
+ 2561 024a 00       		.byte	0
+ 2562 024b 2E       		.uleb128 0x2e
+ 2563 024c 34       		.uleb128 0x34
+ 2564 024d 00       		.byte	0
+ 2565 024e 03       		.uleb128 0x3
+ 2566 024f 0E       		.uleb128 0xe
+ 2567 0250 3A       		.uleb128 0x3a
+ 2568 0251 0B       		.uleb128 0xb
+ 2569 0252 3B       		.uleb128 0x3b
+ 2570 0253 0B       		.uleb128 0xb
+ 2571 0254 49       		.uleb128 0x49
+ 2572 0255 13       		.uleb128 0x13
+ 2573 0256 02       		.uleb128 0x2
+ 2574 0257 18       		.uleb128 0x18
+ 2575 0258 00       		.byte	0
+ 2576 0259 00       		.byte	0
+ 2577 025a 2F       		.uleb128 0x2f
+ 2578 025b 34       		.uleb128 0x34
+ 2579 025c 00       		.byte	0
+ 2580 025d 03       		.uleb128 0x3
+ 2581 025e 0E       		.uleb128 0xe
+ 2582 025f 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 51
+
+
+ 2583 0260 0B       		.uleb128 0xb
+ 2584 0261 3B       		.uleb128 0x3b
+ 2585 0262 0B       		.uleb128 0xb
+ 2586 0263 49       		.uleb128 0x49
+ 2587 0264 13       		.uleb128 0x13
+ 2588 0265 3F       		.uleb128 0x3f
+ 2589 0266 19       		.uleb128 0x19
+ 2590 0267 3C       		.uleb128 0x3c
+ 2591 0268 19       		.uleb128 0x19
+ 2592 0269 00       		.byte	0
+ 2593 026a 00       		.byte	0
+ 2594 026b 30       		.uleb128 0x30
+ 2595 026c 2E       		.uleb128 0x2e
+ 2596 026d 00       		.byte	0
+ 2597 026e 3F       		.uleb128 0x3f
+ 2598 026f 19       		.uleb128 0x19
+ 2599 0270 3C       		.uleb128 0x3c
+ 2600 0271 19       		.uleb128 0x19
+ 2601 0272 6E       		.uleb128 0x6e
+ 2602 0273 0E       		.uleb128 0xe
+ 2603 0274 03       		.uleb128 0x3
+ 2604 0275 0E       		.uleb128 0xe
+ 2605 0276 3A       		.uleb128 0x3a
+ 2606 0277 0B       		.uleb128 0xb
+ 2607 0278 3B       		.uleb128 0x3b
+ 2608 0279 0B       		.uleb128 0xb
+ 2609 027a 00       		.byte	0
+ 2610 027b 00       		.byte	0
+ 2611 027c 31       		.uleb128 0x31
+ 2612 027d 2E       		.uleb128 0x2e
+ 2613 027e 00       		.byte	0
+ 2614 027f 3F       		.uleb128 0x3f
+ 2615 0280 19       		.uleb128 0x19
+ 2616 0281 3C       		.uleb128 0x3c
+ 2617 0282 19       		.uleb128 0x19
+ 2618 0283 6E       		.uleb128 0x6e
+ 2619 0284 0E       		.uleb128 0xe
+ 2620 0285 03       		.uleb128 0x3
+ 2621 0286 0E       		.uleb128 0xe
+ 2622 0287 3A       		.uleb128 0x3a
+ 2623 0288 0B       		.uleb128 0xb
+ 2624 0289 3B       		.uleb128 0x3b
+ 2625 028a 05       		.uleb128 0x5
+ 2626 028b 00       		.byte	0
+ 2627 028c 00       		.byte	0
+ 2628 028d 32       		.uleb128 0x32
+ 2629 028e 2E       		.uleb128 0x2e
+ 2630 028f 00       		.byte	0
+ 2631 0290 3F       		.uleb128 0x3f
+ 2632 0291 19       		.uleb128 0x19
+ 2633 0292 3C       		.uleb128 0x3c
+ 2634 0293 19       		.uleb128 0x19
+ 2635 0294 6E       		.uleb128 0x6e
+ 2636 0295 0E       		.uleb128 0xe
+ 2637 0296 03       		.uleb128 0x3
+ 2638 0297 0E       		.uleb128 0xe
+ 2639 0298 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 52
+
+
+ 2640 0299 00       		.byte	0
+ 2641 029a 00       		.byte	0
+ 2642              		.section	.debug_loc,"",%progbits
+ 2643              	.Ldebug_loc0:
+ 2644              	.LLST0:
+ 2645 0000 00000000 		.4byte	.LVL0
+ 2646 0004 3E000000 		.4byte	.LVL3
+ 2647 0008 0100     		.2byte	0x1
+ 2648 000a 50       		.byte	0x50
+ 2649 000b 3E000000 		.4byte	.LVL3
+ 2650 000f 86000000 		.4byte	.LVL12
+ 2651 0013 0100     		.2byte	0x1
+ 2652 0015 57       		.byte	0x57
+ 2653 0016 86000000 		.4byte	.LVL12
+ 2654 001a 8C000000 		.4byte	.LVL13
+ 2655 001e 0400     		.2byte	0x4
+ 2656 0020 F3       		.byte	0xf3
+ 2657 0021 01       		.uleb128 0x1
+ 2658 0022 50       		.byte	0x50
+ 2659 0023 9F       		.byte	0x9f
+ 2660 0024 8C000000 		.4byte	.LVL13
+ 2661 0028 2E010000 		.4byte	.LVL32
+ 2662 002c 0100     		.2byte	0x1
+ 2663 002e 57       		.byte	0x57
+ 2664 002f 2E010000 		.4byte	.LVL32
+ 2665 0033 3C010000 		.4byte	.LFE31
+ 2666 0037 0400     		.2byte	0x4
+ 2667 0039 F3       		.byte	0xf3
+ 2668 003a 01       		.uleb128 0x1
+ 2669 003b 50       		.byte	0x50
+ 2670 003c 9F       		.byte	0x9f
+ 2671 003d 00000000 		.4byte	0
+ 2672 0041 00000000 		.4byte	0
+ 2673              	.LLST1:
+ 2674 0045 00000000 		.4byte	.LVL0
+ 2675 0049 3E000000 		.4byte	.LVL3
+ 2676 004d 0100     		.2byte	0x1
+ 2677 004f 51       		.byte	0x51
+ 2678 0050 3E000000 		.4byte	.LVL3
+ 2679 0054 86000000 		.4byte	.LVL12
+ 2680 0058 0100     		.2byte	0x1
+ 2681 005a 58       		.byte	0x58
+ 2682 005b 86000000 		.4byte	.LVL12
+ 2683 005f 8C000000 		.4byte	.LVL13
+ 2684 0063 0400     		.2byte	0x4
+ 2685 0065 F3       		.byte	0xf3
+ 2686 0066 01       		.uleb128 0x1
+ 2687 0067 51       		.byte	0x51
+ 2688 0068 9F       		.byte	0x9f
+ 2689 0069 8C000000 		.4byte	.LVL13
+ 2690 006d 2E010000 		.4byte	.LVL32
+ 2691 0071 0100     		.2byte	0x1
+ 2692 0073 58       		.byte	0x58
+ 2693 0074 2E010000 		.4byte	.LVL32
+ 2694 0078 3C010000 		.4byte	.LFE31
+ 2695 007c 0400     		.2byte	0x4
+ 2696 007e F3       		.byte	0xf3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 53
+
+
+ 2697 007f 01       		.uleb128 0x1
+ 2698 0080 51       		.byte	0x51
+ 2699 0081 9F       		.byte	0x9f
+ 2700 0082 00000000 		.4byte	0
+ 2701 0086 00000000 		.4byte	0
+ 2702              	.LLST2:
+ 2703 008a 14000000 		.4byte	.LVL1
+ 2704 008e 86000000 		.4byte	.LVL12
+ 2705 0092 0100     		.2byte	0x1
+ 2706 0094 56       		.byte	0x56
+ 2707 0095 8C000000 		.4byte	.LVL13
+ 2708 0099 A4000000 		.4byte	.LVL14
+ 2709 009d 0100     		.2byte	0x1
+ 2710 009f 56       		.byte	0x56
+ 2711 00a0 E8000000 		.4byte	.LVL22
+ 2712 00a4 F8000000 		.4byte	.LVL24
+ 2713 00a8 0100     		.2byte	0x1
+ 2714 00aa 56       		.byte	0x56
+ 2715 00ab 00000000 		.4byte	0
+ 2716 00af 00000000 		.4byte	0
+ 2717              	.LLST3:
+ 2718 00b3 14000000 		.4byte	.LVL1
+ 2719 00b7 22000000 		.4byte	.LVL2
+ 2720 00bb 0200     		.2byte	0x2
+ 2721 00bd 30       		.byte	0x30
+ 2722 00be 9F       		.byte	0x9f
+ 2723 00bf 3E000000 		.4byte	.LVL3
+ 2724 00c3 48000000 		.4byte	.LVL5
+ 2725 00c7 0100     		.2byte	0x1
+ 2726 00c9 59       		.byte	0x59
+ 2727 00ca 4E000000 		.4byte	.LVL6
+ 2728 00ce 86000000 		.4byte	.LVL12
+ 2729 00d2 0100     		.2byte	0x1
+ 2730 00d4 59       		.byte	0x59
+ 2731 00d5 8C000000 		.4byte	.LVL13
+ 2732 00d9 A4000000 		.4byte	.LVL14
+ 2733 00dd 0200     		.2byte	0x2
+ 2734 00df 31       		.byte	0x31
+ 2735 00e0 9F       		.byte	0x9f
+ 2736 00e1 E8000000 		.4byte	.LVL22
+ 2737 00e5 F8000000 		.4byte	.LVL24
+ 2738 00e9 0100     		.2byte	0x1
+ 2739 00eb 59       		.byte	0x59
+ 2740 00ec 00000000 		.4byte	0
+ 2741 00f0 00000000 		.4byte	0
+ 2742              	.LLST4:
+ 2743 00f4 74000000 		.4byte	.LVL11
+ 2744 00f8 8C000000 		.4byte	.LVL13
+ 2745 00fc 0100     		.2byte	0x1
+ 2746 00fe 54       		.byte	0x54
+ 2747 00ff 8C000000 		.4byte	.LVL13
+ 2748 0103 A4000000 		.4byte	.LVL14
+ 2749 0107 0100     		.2byte	0x1
+ 2750 0109 56       		.byte	0x56
+ 2751 010a B6000000 		.4byte	.LVL15
+ 2752 010e E8000000 		.4byte	.LVL22
+ 2753 0112 0100     		.2byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 54
+
+
+ 2754 0114 56       		.byte	0x56
+ 2755 0115 F0000000 		.4byte	.LVL23
+ 2756 0119 F8000000 		.4byte	.LVL24
+ 2757 011d 0100     		.2byte	0x1
+ 2758 011f 54       		.byte	0x54
+ 2759 0120 F8000000 		.4byte	.LVL24
+ 2760 0124 2E010000 		.4byte	.LVL32
+ 2761 0128 0100     		.2byte	0x1
+ 2762 012a 56       		.byte	0x56
+ 2763 012b 2E010000 		.4byte	.LVL32
+ 2764 012f 3C010000 		.4byte	.LFE31
+ 2765 0133 0100     		.2byte	0x1
+ 2766 0135 50       		.byte	0x50
+ 2767 0136 00000000 		.4byte	0
+ 2768 013a 00000000 		.4byte	0
+ 2769              	.LLST5:
+ 2770 013e 3E000000 		.4byte	.LVL3
+ 2771 0142 74000000 		.4byte	.LVL11
+ 2772 0146 0200     		.2byte	0x2
+ 2773 0148 30       		.byte	0x30
+ 2774 0149 9F       		.byte	0x9f
+ 2775 014a 74000000 		.4byte	.LVL11
+ 2776 014e 86000000 		.4byte	.LVL12
+ 2777 0152 0200     		.2byte	0x2
+ 2778 0154 31       		.byte	0x31
+ 2779 0155 9F       		.byte	0x9f
+ 2780 0156 8C000000 		.4byte	.LVL13
+ 2781 015a F0000000 		.4byte	.LVL23
+ 2782 015e 0200     		.2byte	0x2
+ 2783 0160 30       		.byte	0x30
+ 2784 0161 9F       		.byte	0x9f
+ 2785 0162 F0000000 		.4byte	.LVL23
+ 2786 0166 F8000000 		.4byte	.LVL24
+ 2787 016a 0200     		.2byte	0x2
+ 2788 016c 31       		.byte	0x31
+ 2789 016d 9F       		.byte	0x9f
+ 2790 016e F8000000 		.4byte	.LVL24
+ 2791 0172 3C010000 		.4byte	.LFE31
+ 2792 0176 0200     		.2byte	0x2
+ 2793 0178 30       		.byte	0x30
+ 2794 0179 9F       		.byte	0x9f
+ 2795 017a 00000000 		.4byte	0
+ 2796 017e 00000000 		.4byte	0
+ 2797              	.LLST6:
+ 2798 0182 3E000000 		.4byte	.LVL3
+ 2799 0186 44000000 		.4byte	.LVL4
+ 2800 018a 0100     		.2byte	0x1
+ 2801 018c 50       		.byte	0x50
+ 2802 018d 60000000 		.4byte	.LVL8
+ 2803 0191 6C000000 		.4byte	.LVL9
+ 2804 0195 0100     		.2byte	0x1
+ 2805 0197 50       		.byte	0x50
+ 2806 0198 E8000000 		.4byte	.LVL22
+ 2807 019c F0000000 		.4byte	.LVL23
+ 2808 01a0 0100     		.2byte	0x1
+ 2809 01a2 50       		.byte	0x50
+ 2810 01a3 00000000 		.4byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 55
+
+
+ 2811 01a7 00000000 		.4byte	0
+ 2812              	.LLST7:
+ 2813 01ab CC000000 		.4byte	.LVL18
+ 2814 01af D4000000 		.4byte	.LVL19
+ 2815 01b3 0100     		.2byte	0x1
+ 2816 01b5 50       		.byte	0x50
+ 2817 01b6 D4000000 		.4byte	.LVL19
+ 2818 01ba E8000000 		.4byte	.LVL22
+ 2819 01be 0100     		.2byte	0x1
+ 2820 01c0 59       		.byte	0x59
+ 2821 01c1 F8000000 		.4byte	.LVL24
+ 2822 01c5 2E010000 		.4byte	.LVL32
+ 2823 01c9 0100     		.2byte	0x1
+ 2824 01cb 59       		.byte	0x59
+ 2825 01cc 00000000 		.4byte	0
+ 2826 01d0 00000000 		.4byte	0
+ 2827              	.LLST8:
+ 2828 01d4 D8000000 		.4byte	.LVL20
+ 2829 01d8 E4000000 		.4byte	.LVL21
+ 2830 01dc 0100     		.2byte	0x1
+ 2831 01de 50       		.byte	0x50
+ 2832 01df F8000000 		.4byte	.LVL24
+ 2833 01e3 FA000000 		.4byte	.LVL25
+ 2834 01e7 0100     		.2byte	0x1
+ 2835 01e9 50       		.byte	0x50
+ 2836 01ea 0A010000 		.4byte	.LVL27
+ 2837 01ee 0C010000 		.4byte	.LVL28
+ 2838 01f2 0100     		.2byte	0x1
+ 2839 01f4 50       		.byte	0x50
+ 2840 01f5 00000000 		.4byte	0
+ 2841 01f9 00000000 		.4byte	0
+ 2842              	.LLST9:
+ 2843 01fd 00000000 		.4byte	.LVL33
+ 2844 0201 20000000 		.4byte	.LVL35
+ 2845 0205 0100     		.2byte	0x1
+ 2846 0207 50       		.byte	0x50
+ 2847 0208 20000000 		.4byte	.LVL35
+ 2848 020c AC000000 		.4byte	.LFE32
+ 2849 0210 0400     		.2byte	0x4
+ 2850 0212 F3       		.byte	0xf3
+ 2851 0213 01       		.uleb128 0x1
+ 2852 0214 50       		.byte	0x50
+ 2853 0215 9F       		.byte	0x9f
+ 2854 0216 00000000 		.4byte	0
+ 2855 021a 00000000 		.4byte	0
+ 2856              	.LLST10:
+ 2857 021e 66000000 		.4byte	.LVL42
+ 2858 0222 78000000 		.4byte	.LVL43
+ 2859 0226 0200     		.2byte	0x2
+ 2860 0228 30       		.byte	0x30
+ 2861 0229 9F       		.byte	0x9f
+ 2862 022a 00000000 		.4byte	0
+ 2863 022e 00000000 		.4byte	0
+ 2864              	.LLST11:
+ 2865 0232 18000000 		.4byte	.LVL34
+ 2866 0236 20000000 		.4byte	.LVL35
+ 2867 023a 0200     		.2byte	0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 56
+
+
+ 2868 023c 30       		.byte	0x30
+ 2869 023d 9F       		.byte	0x9f
+ 2870 023e 20000000 		.4byte	.LVL35
+ 2871 0242 38000000 		.4byte	.LVL37
+ 2872 0246 0100     		.2byte	0x1
+ 2873 0248 54       		.byte	0x54
+ 2874 0249 44000000 		.4byte	.LVL38
+ 2875 024d 4C000000 		.4byte	.LVL39
+ 2876 0251 0100     		.2byte	0x1
+ 2877 0253 54       		.byte	0x54
+ 2878 0254 00000000 		.4byte	0
+ 2879 0258 00000000 		.4byte	0
+ 2880              	.LLST12:
+ 2881 025c 00000000 		.4byte	.LVL46
+ 2882 0260 1C000000 		.4byte	.LVL48
+ 2883 0264 0100     		.2byte	0x1
+ 2884 0266 50       		.byte	0x50
+ 2885 0267 1C000000 		.4byte	.LVL48
+ 2886 026b 52000000 		.4byte	.LVL55
+ 2887 026f 0100     		.2byte	0x1
+ 2888 0271 56       		.byte	0x56
+ 2889 0272 52000000 		.4byte	.LVL55
+ 2890 0276 8C000000 		.4byte	.LFE33
+ 2891 027a 0400     		.2byte	0x4
+ 2892 027c F3       		.byte	0xf3
+ 2893 027d 01       		.uleb128 0x1
+ 2894 027e 50       		.byte	0x50
+ 2895 027f 9F       		.byte	0x9f
+ 2896 0280 00000000 		.4byte	0
+ 2897 0284 00000000 		.4byte	0
+ 2898              	.LLST13:
+ 2899 0288 12000000 		.4byte	.LVL47
+ 2900 028c 82000000 		.4byte	.LVL61
+ 2901 0290 0100     		.2byte	0x1
+ 2902 0292 59       		.byte	0x59
+ 2903 0293 00000000 		.4byte	0
+ 2904 0297 00000000 		.4byte	0
+ 2905              	.LLST14:
+ 2906 029b 12000000 		.4byte	.LVL47
+ 2907 029f 1C000000 		.4byte	.LVL48
+ 2908 02a3 0200     		.2byte	0x2
+ 2909 02a5 30       		.byte	0x30
+ 2910 02a6 9F       		.byte	0x9f
+ 2911 02a7 1C000000 		.4byte	.LVL48
+ 2912 02ab 1E000000 		.4byte	.LVL49
+ 2913 02af 0100     		.2byte	0x1
+ 2914 02b1 54       		.byte	0x54
+ 2915 02b2 20000000 		.4byte	.LVL50
+ 2916 02b6 3A000000 		.4byte	.LVL53
+ 2917 02ba 0100     		.2byte	0x1
+ 2918 02bc 54       		.byte	0x54
+ 2919 02bd 4A000000 		.4byte	.LVL54
+ 2920 02c1 52000000 		.4byte	.LVL55
+ 2921 02c5 0100     		.2byte	0x1
+ 2922 02c7 54       		.byte	0x54
+ 2923 02c8 52000000 		.4byte	.LVL55
+ 2924 02cc 54000000 		.4byte	.LVL56
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 57
+
+
+ 2925 02d0 0100     		.2byte	0x1
+ 2926 02d2 56       		.byte	0x56
+ 2927 02d3 60000000 		.4byte	.LVL57
+ 2928 02d7 7E000000 		.4byte	.LVL60
+ 2929 02db 0100     		.2byte	0x1
+ 2930 02dd 56       		.byte	0x56
+ 2931 02de 00000000 		.4byte	0
+ 2932 02e2 00000000 		.4byte	0
+ 2933              		.section	.debug_aranges,"",%progbits
+ 2934 0000 2C000000 		.4byte	0x2c
+ 2935 0004 0200     		.2byte	0x2
+ 2936 0006 00000000 		.4byte	.Ldebug_info0
+ 2937 000a 04       		.byte	0x4
+ 2938 000b 00       		.byte	0
+ 2939 000c 0000     		.2byte	0
+ 2940 000e 0000     		.2byte	0
+ 2941 0010 00000000 		.4byte	.LFB31
+ 2942 0014 3C010000 		.4byte	.LFE31-.LFB31
+ 2943 0018 00000000 		.4byte	.LFB32
+ 2944 001c AC000000 		.4byte	.LFE32-.LFB32
+ 2945 0020 00000000 		.4byte	.LFB33
+ 2946 0024 8C000000 		.4byte	.LFE33-.LFB33
+ 2947 0028 00000000 		.4byte	0
+ 2948 002c 00000000 		.4byte	0
+ 2949              		.section	.debug_ranges,"",%progbits
+ 2950              	.Ldebug_ranges0:
+ 2951 0000 3E000000 		.4byte	.LBB2
+ 2952 0004 44000000 		.4byte	.LBE2
+ 2953 0008 52000000 		.4byte	.LBB3
+ 2954 000c 86000000 		.4byte	.LBE3
+ 2955 0010 E8000000 		.4byte	.LBB6
+ 2956 0014 F2000000 		.4byte	.LBE6
+ 2957 0018 00000000 		.4byte	0
+ 2958 001c 00000000 		.4byte	0
+ 2959 0020 86000000 		.4byte	.LBB4
+ 2960 0024 88000000 		.4byte	.LBE4
+ 2961 0028 8C000000 		.4byte	.LBB5
+ 2962 002c E8000000 		.4byte	.LBE5
+ 2963 0030 F2000000 		.4byte	.LBB7
+ 2964 0034 F4000000 		.4byte	.LBE7
+ 2965 0038 F8000000 		.4byte	.LBB8
+ 2966 003c 3C010000 		.4byte	.LBE8
+ 2967 0040 00000000 		.4byte	0
+ 2968 0044 00000000 		.4byte	0
+ 2969 0048 08000000 		.4byte	.LBB11
+ 2970 004c 0C000000 		.4byte	.LBE11
+ 2971 0050 18000000 		.4byte	.LBB14
+ 2972 0054 4C000000 		.4byte	.LBE14
+ 2973 0058 00000000 		.4byte	0
+ 2974 005c 00000000 		.4byte	0
+ 2975 0060 00000000 		.4byte	.LFB31
+ 2976 0064 3C010000 		.4byte	.LFE31
+ 2977 0068 00000000 		.4byte	.LFB32
+ 2978 006c AC000000 		.4byte	.LFE32
+ 2979 0070 00000000 		.4byte	.LFB33
+ 2980 0074 8C000000 		.4byte	.LFE33
+ 2981 0078 00000000 		.4byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 58
+
+
+ 2982 007c 00000000 		.4byte	0
+ 2983              		.section	.debug_line,"",%progbits
+ 2984              	.Ldebug_line0:
+ 2985 0000 C3040000 		.section	.debug_str,"MS",%progbits,1
+ 2985      0200DF03 
+ 2985      00000201 
+ 2985      FB0E0D00 
+ 2985      01010101 
+ 2986              	.LASF76:
+ 2987 0000 4C565F49 		.ascii	"LV_IMG_SRC_VARIABLE\000"
+ 2987      4D475F53 
+ 2987      52435F56 
+ 2987      41524941 
+ 2987      424C4500 
+ 2988              	.LASF126:
+ 2989 0014 6C765F69 		.ascii	"lv_img_cache_invalidate_src\000"
+ 2989      6D675F63 
+ 2989      61636865 
+ 2989      5F696E76 
+ 2989      616C6964 
+ 2990              	.LASF38:
+ 2991 0030 66756C6C 		.ascii	"full\000"
+ 2991      00
+ 2992              	.LASF81:
+ 2993 0035 616C7761 		.ascii	"always_zero\000"
+ 2993      79735F7A 
+ 2993      65726F00 
+ 2994              	.LASF118:
+ 2995 0041 6C765F74 		.ascii	"lv_tick_get\000"
+ 2995      69636B5F 
+ 2995      67657400 
+ 2996              	.LASF14:
+ 2997 004d 756E7369 		.ascii	"unsigned int\000"
+ 2997      676E6564 
+ 2997      20696E74 
+ 2997      00
+ 2998              	.LASF26:
+ 2999 005a 6F66735F 		.ascii	"ofs_x\000"
+ 2999      7800
+ 3000              	.LASF27:
+ 3001 0060 6F66735F 		.ascii	"ofs_y\000"
+ 3001      7900
+ 3002              	.LASF123:
+ 3003 0066 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3003      43313120 
+ 3003      352E342E 
+ 3003      31203230 
+ 3003      31363036 
+ 3004 0099 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 3004      20726576 
+ 3004      6973696F 
+ 3004      6E203233 
+ 3004      37373135 
+ 3005 00cc 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 3005      70202D6D 
+ 3005      6670753D 
+ 3005      66707634 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 59
+
+
+ 3005      2D73702D 
+ 3006 00ff 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 3006      6F6E7320 
+ 3006      2D666661 
+ 3006      742D6C74 
+ 3006      6F2D6F62 
+ 3007              	.LASF29:
+ 3008 0119 6765745F 		.ascii	"get_glyph_dsc\000"
+ 3008      676C7970 
+ 3008      685F6473 
+ 3008      6300
+ 3009              	.LASF72:
+ 3010 0127 6C765F73 		.ascii	"lv_style_t\000"
+ 3010      74796C65 
+ 3010      5F7400
+ 3011              	.LASF80:
+ 3012 0132 6C765F69 		.ascii	"lv_img_src_t\000"
+ 3012      6D675F73 
+ 3012      72635F74 
+ 3012      00
+ 3013              	.LASF8:
+ 3014 013f 5F5F696E 		.ascii	"__int32_t\000"
+ 3014      7433325F 
+ 3014      7400
+ 3015              	.LASF127:
+ 3016 0149 6C765F69 		.ascii	"lv_img_cache_open\000"
+ 3016      6D675F63 
+ 3016      61636865 
+ 3016      5F6F7065 
+ 3016      6E00
+ 3017              	.LASF129:
+ 3018 015b 5F6C765F 		.ascii	"_lv_img_cache_array\000"
+ 3018      696D675F 
+ 3018      63616368 
+ 3018      655F6172 
+ 3018      72617900 
+ 3019              	.LASF99:
+ 3020 016f 6572726F 		.ascii	"error_msg\000"
+ 3020      725F6D73 
+ 3020      6700
+ 3021              	.LASF84:
+ 3022 0179 6C765F69 		.ascii	"lv_img_decoder_info_f_t\000"
+ 3022      6D675F64 
+ 3022      65636F64 
+ 3022      65725F69 
+ 3022      6E666F5F 
+ 3023              	.LASF101:
+ 3024 0191 6C765F69 		.ascii	"lv_img_decoder_read_line_f_t\000"
+ 3024      6D675F64 
+ 3024      65636F64 
+ 3024      65725F72 
+ 3024      6561645F 
+ 3025              	.LASF122:
+ 3026 01ae 6C765F6D 		.ascii	"lv_mem_alloc\000"
+ 3026      656D5F61 
+ 3026      6C6C6F63 
+ 3026      00
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 60
+
+
+ 3027              	.LASF92:
+ 3028 01bb 5F6C765F 		.ascii	"_lv_img_decoder_dsc\000"
+ 3028      696D675F 
+ 3028      6465636F 
+ 3028      6465725F 
+ 3028      64736300 
+ 3029              	.LASF53:
+ 3030 01cf 696E6E65 		.ascii	"inner\000"
+ 3030      7200
+ 3031              	.LASF20:
+ 3032 01d5 75696E74 		.ascii	"uint32_t\000"
+ 3032      33325F74 
+ 3032      00
+ 3033              	.LASF15:
+ 3034 01de 696E7438 		.ascii	"int8_t\000"
+ 3034      5F7400
+ 3035              	.LASF39:
+ 3036 01e5 6C765F63 		.ascii	"lv_color32_t\000"
+ 3036      6F6C6F72 
+ 3036      33325F74 
+ 3036      00
+ 3037              	.LASF60:
+ 3038 01f2 73656C5F 		.ascii	"sel_color\000"
+ 3038      636F6C6F 
+ 3038      7200
+ 3039              	.LASF79:
+ 3040 01fc 4C565F49 		.ascii	"LV_IMG_SRC_UNKNOWN\000"
+ 3040      4D475F53 
+ 3040      52435F55 
+ 3040      4E4B4E4F 
+ 3040      574E00
+ 3041              	.LASF17:
+ 3042 020f 696E7431 		.ascii	"int16_t\000"
+ 3042      365F7400 
+ 3043              	.LASF13:
+ 3044 0217 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3044      206C6F6E 
+ 3044      6720756E 
+ 3044      7369676E 
+ 3044      65642069 
+ 3045              	.LASF48:
+ 3046 022e 70617274 		.ascii	"part\000"
+ 3046      00
+ 3047              	.LASF6:
+ 3048 0233 5F5F7569 		.ascii	"__uint16_t\000"
+ 3048      6E743136 
+ 3048      5F7400
+ 3049              	.LASF90:
+ 3050 023e 636C6F73 		.ascii	"close_cb\000"
+ 3050      655F6362 
+ 3050      00
+ 3051              	.LASF57:
+ 3052 0247 626F7264 		.ascii	"border\000"
+ 3052      657200
+ 3053              	.LASF46:
+ 3054 024e 636F6C6F 		.ascii	"color\000"
+ 3054      7200
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 61
+
+
+ 3055              	.LASF66:
+ 3056 0254 726F756E 		.ascii	"rounded\000"
+ 3056      64656400 
+ 3057              	.LASF106:
+ 3058 025c 6C696665 		.ascii	"life\000"
+ 3058      00
+ 3059              	.LASF93:
+ 3060 0261 6465636F 		.ascii	"decoder\000"
+ 3060      64657200 
+ 3061              	.LASF47:
+ 3062 0269 77696474 		.ascii	"width\000"
+ 3062      6800
+ 3063              	.LASF33:
+ 3064 026f 5F426F6F 		.ascii	"_Bool\000"
+ 3064      6C00
+ 3065              	.LASF78:
+ 3066 0275 4C565F49 		.ascii	"LV_IMG_SRC_SYMBOL\000"
+ 3066      4D475F53 
+ 3066      52435F53 
+ 3066      594D424F 
+ 3066      4C00
+ 3067              	.LASF85:
+ 3068 0287 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 3068      666F6E74 
+ 3068      5F737472 
+ 3068      75637400 
+ 3069              	.LASF63:
+ 3070 0297 6C696E65 		.ascii	"line_space\000"
+ 3070      5F737061 
+ 3070      636500
+ 3071              	.LASF31:
+ 3072 02a2 6C696E65 		.ascii	"line_height\000"
+ 3072      5F686569 
+ 3072      67687400 
+ 3073              	.LASF87:
+ 3074 02ae 696E666F 		.ascii	"info_cb\000"
+ 3074      5F636200 
+ 3075              	.LASF117:
+ 3076 02b6 6C765F69 		.ascii	"lv_img_decoder_close\000"
+ 3076      6D675F64 
+ 3076      65636F64 
+ 3076      65725F63 
+ 3076      6C6F7365 
+ 3077              	.LASF43:
+ 3078 02cb 63686172 		.ascii	"char\000"
+ 3078      00
+ 3079              	.LASF75:
+ 3080 02d0 6C765F72 		.ascii	"lv_res_t\000"
+ 3080      65735F74 
+ 3080      00
+ 3081              	.LASF50:
+ 3082 02d9 626F7474 		.ascii	"bottom\000"
+ 3082      6F6D00
+ 3083              	.LASF28:
+ 3084 02e0 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 3084      6F6E745F 
+ 3084      676C7970 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 62
+
+
+ 3084      685F6473 
+ 3084      635F7400 
+ 3085              	.LASF116:
+ 3086 02f4 73747263 		.ascii	"strcmp\000"
+ 3086      6D7000
+ 3087              	.LASF16:
+ 3088 02fb 75696E74 		.ascii	"uint8_t\000"
+ 3088      385F7400 
+ 3089              	.LASF45:
+ 3090 0303 6C765F73 		.ascii	"lv_shadow_type_t\000"
+ 3090      6861646F 
+ 3090      775F7479 
+ 3090      70655F74 
+ 3090      00
+ 3091              	.LASF120:
+ 3092 0314 6C765F74 		.ascii	"lv_tick_elaps\000"
+ 3092      69636B5F 
+ 3092      656C6170 
+ 3092      7300
+ 3093              	.LASF52:
+ 3094 0322 72696768 		.ascii	"right\000"
+ 3094      7400
+ 3095              	.LASF100:
+ 3096 0328 75736572 		.ascii	"user_data\000"
+ 3096      5F646174 
+ 3096      6100
+ 3097              	.LASF115:
+ 3098 0332 6C765F69 		.ascii	"lv_img_src_get_type\000"
+ 3098      6D675F73 
+ 3098      72635F67 
+ 3098      65745F74 
+ 3098      79706500 
+ 3099              	.LASF12:
+ 3100 0346 6C6F6E67 		.ascii	"long long int\000"
+ 3100      206C6F6E 
+ 3100      6720696E 
+ 3100      7400
+ 3101              	.LASF67:
+ 3102 0354 676C6173 		.ascii	"glass\000"
+ 3102      7300
+ 3103              	.LASF97:
+ 3104 035a 696D675F 		.ascii	"img_data\000"
+ 3104      64617461 
+ 3104      00
+ 3105              	.LASF69:
+ 3106 0363 74657874 		.ascii	"text\000"
+ 3106      00
+ 3107              	.LASF59:
+ 3108 0368 70616464 		.ascii	"padding\000"
+ 3108      696E6700 
+ 3109              	.LASF91:
+ 3110 0370 6C765F69 		.ascii	"lv_img_decoder_open_f_t\000"
+ 3110      6D675F64 
+ 3110      65636F64 
+ 3110      65725F6F 
+ 3110      70656E5F 
+ 3111              	.LASF74:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 63
+
+
+ 3112 0388 4C565F52 		.ascii	"LV_RES_OK\000"
+ 3112      45535F4F 
+ 3112      4B00
+ 3113              	.LASF4:
+ 3114 0392 5F5F696E 		.ascii	"__int16_t\000"
+ 3114      7431365F 
+ 3114      7400
+ 3115              	.LASF110:
+ 3116 039c 6D617463 		.ascii	"match\000"
+ 3116      6800
+ 3117              	.LASF130:
+ 3118 03a2 6D656D73 		.ascii	"memset\000"
+ 3118      657400
+ 3119              	.LASF70:
+ 3120 03a9 696D6167 		.ascii	"image\000"
+ 3120      6500
+ 3121              	.LASF96:
+ 3122 03af 68656164 		.ascii	"header\000"
+ 3122      657200
+ 3123              	.LASF86:
+ 3124 03b6 5F6C765F 		.ascii	"_lv_img_decoder\000"
+ 3124      696D675F 
+ 3124      6465636F 
+ 3124      64657200 
+ 3125              	.LASF111:
+ 3126 03c6 745F7374 		.ascii	"t_start\000"
+ 3126      61727400 
+ 3127              	.LASF65:
+ 3128 03ce 73756270 		.ascii	"subpx\000"
+ 3128      7800
+ 3129              	.LASF40:
+ 3130 03d4 6C765F63 		.ascii	"lv_color_t\000"
+ 3130      6F6C6F72 
+ 3130      5F7400
+ 3131              	.LASF0:
+ 3132 03df 5F5F696E 		.ascii	"__int8_t\000"
+ 3132      74385F74 
+ 3132      00
+ 3133              	.LASF36:
+ 3134 03e8 67726565 		.ascii	"green\000"
+ 3134      6E00
+ 3135              	.LASF119:
+ 3136 03ee 6C765F69 		.ascii	"lv_img_decoder_open\000"
+ 3136      6D675F64 
+ 3136      65636F64 
+ 3136      65725F6F 
+ 3136      70656E00 
+ 3137              	.LASF22:
+ 3138 0402 6C6F6E67 		.ascii	"long double\000"
+ 3138      20646F75 
+ 3138      626C6500 
+ 3139              	.LASF18:
+ 3140 040e 75696E74 		.ascii	"uint16_t\000"
+ 3140      31365F74 
+ 3140      00
+ 3141              	.LASF55:
+ 3142 0417 67726164 		.ascii	"grad_color\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 64
+
+
+ 3142      5F636F6C 
+ 3142      6F7200
+ 3143              	.LASF42:
+ 3144 0422 73697A65 		.ascii	"sizetype\000"
+ 3144      74797065 
+ 3144      00
+ 3145              	.LASF34:
+ 3146 042b 6C765F66 		.ascii	"lv_font_t\000"
+ 3146      6F6E745F 
+ 3146      7400
+ 3147              	.LASF62:
+ 3148 0435 6C657474 		.ascii	"letter_space\000"
+ 3148      65725F73 
+ 3148      70616365 
+ 3148      00
+ 3149              	.LASF54:
+ 3150 0442 6D61696E 		.ascii	"main_color\000"
+ 3150      5F636F6C 
+ 3150      6F7200
+ 3151              	.LASF5:
+ 3152 044d 73686F72 		.ascii	"short int\000"
+ 3152      7420696E 
+ 3152      7400
+ 3153              	.LASF41:
+ 3154 0457 6C765F6F 		.ascii	"lv_opa_t\000"
+ 3154      70615F74 
+ 3154      00
+ 3155              	.LASF9:
+ 3156 0460 6C6F6E67 		.ascii	"long int\000"
+ 3156      20696E74 
+ 3156      00
+ 3157              	.LASF88:
+ 3158 0469 6F70656E 		.ascii	"open_cb\000"
+ 3158      5F636200 
+ 3159              	.LASF35:
+ 3160 0471 626C7565 		.ascii	"blue\000"
+ 3160      00
+ 3161              	.LASF21:
+ 3162 0476 6C765F63 		.ascii	"lv_coord_t\000"
+ 3162      6F6F7264 
+ 3162      5F7400
+ 3163              	.LASF51:
+ 3164 0481 6C656674 		.ascii	"left\000"
+ 3164      00
+ 3165              	.LASF64:
+ 3166 0486 696E7465 		.ascii	"intense\000"
+ 3166      6E736500 
+ 3167              	.LASF1:
+ 3168 048e 5F5F7569 		.ascii	"__uint8_t\000"
+ 3168      6E74385F 
+ 3168      7400
+ 3169              	.LASF124:
+ 3170 0498 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw"
+ 3170      2E5C2E2E 
+ 3170      5C6C7667 
+ 3170      6C5C7665 
+ 3170      7273696F 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 65
+
+
+ 3171 04c4 5C6C765F 		.ascii	"\\lv_img_cache.c\000"
+ 3171      696D675F 
+ 3171      63616368 
+ 3171      652E6300 
+ 3172              	.LASF109:
+ 3173 04d4 63616368 		.ascii	"cached_src\000"
+ 3173      65645F73 
+ 3173      726300
+ 3174              	.LASF103:
+ 3175 04df 6C765F69 		.ascii	"lv_img_decoder_t\000"
+ 3175      6D675F64 
+ 3175      65636F64 
+ 3175      65725F74 
+ 3175      00
+ 3176              	.LASF25:
+ 3177 04f0 626F785F 		.ascii	"box_h\000"
+ 3177      6800
+ 3178              	.LASF61:
+ 3179 04f6 666F6E74 		.ascii	"font\000"
+ 3179      00
+ 3180              	.LASF24:
+ 3181 04fb 626F785F 		.ascii	"box_w\000"
+ 3181      7700
+ 3182              	.LASF11:
+ 3183 0501 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3183      20756E73 
+ 3183      69676E65 
+ 3183      6420696E 
+ 3183      7400
+ 3184              	.LASF37:
+ 3185 0513 616C7068 		.ascii	"alpha\000"
+ 3185      6100
+ 3186              	.LASF19:
+ 3187 0519 696E7433 		.ascii	"int32_t\000"
+ 3187      325F7400 
+ 3188              	.LASF32:
+ 3189 0521 62617365 		.ascii	"base_line\000"
+ 3189      5F6C696E 
+ 3189      6500
+ 3190              	.LASF56:
+ 3191 052b 72616469 		.ascii	"radius\000"
+ 3191      757300
+ 3192              	.LASF68:
+ 3193 0532 626F6479 		.ascii	"body\000"
+ 3193      00
+ 3194              	.LASF112:
+ 3195 0537 6F70656E 		.ascii	"open_res\000"
+ 3195      5F726573 
+ 3195      00
+ 3196              	.LASF49:
+ 3197 0540 74797065 		.ascii	"type\000"
+ 3197      00
+ 3198              	.LASF3:
+ 3199 0545 756E7369 		.ascii	"unsigned char\000"
+ 3199      676E6564 
+ 3199      20636861 
+ 3199      7200
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 66
+
+
+ 3200              	.LASF10:
+ 3201 0553 5F5F7569 		.ascii	"__uint32_t\000"
+ 3201      6E743332 
+ 3201      5F7400
+ 3202              	.LASF71:
+ 3203 055e 6C696E65 		.ascii	"line\000"
+ 3203      00
+ 3204              	.LASF107:
+ 3205 0563 6C765F69 		.ascii	"lv_img_cache_entry_t\000"
+ 3205      6D675F63 
+ 3205      61636865 
+ 3205      5F656E74 
+ 3205      72795F74 
+ 3206              	.LASF104:
+ 3207 0578 6C765F69 		.ascii	"lv_img_decoder_dsc_t\000"
+ 3207      6D675F64 
+ 3207      65636F64 
+ 3207      65725F64 
+ 3207      73635F74 
+ 3208              	.LASF30:
+ 3209 058d 6765745F 		.ascii	"get_glyph_bitmap\000"
+ 3209      676C7970 
+ 3209      685F6269 
+ 3209      746D6170 
+ 3209      00
+ 3210              	.LASF94:
+ 3211 059e 7374796C 		.ascii	"style\000"
+ 3211      6500
+ 3212              	.LASF89:
+ 3213 05a4 72656164 		.ascii	"read_line_cb\000"
+ 3213      5F6C696E 
+ 3213      655F6362 
+ 3213      00
+ 3214              	.LASF114:
+ 3215 05b1 656E7472 		.ascii	"entry_cnt\000"
+ 3215      795F636E 
+ 3215      7400
+ 3216              	.LASF95:
+ 3217 05bb 7372635F 		.ascii	"src_type\000"
+ 3217      74797065 
+ 3217      00
+ 3218              	.LASF108:
+ 3219 05c4 63616368 		.ascii	"cache\000"
+ 3219      6500
+ 3220              	.LASF58:
+ 3221 05ca 73686164 		.ascii	"shadow\000"
+ 3221      6F7700
+ 3222              	.LASF121:
+ 3223 05d1 6C765F6D 		.ascii	"lv_mem_free\000"
+ 3223      656D5F66 
+ 3223      72656500 
+ 3224              	.LASF2:
+ 3225 05dd 7369676E 		.ascii	"signed char\000"
+ 3225      65642063 
+ 3225      68617200 
+ 3226              	.LASF7:
+ 3227 05e9 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 67
+
+
+ 3227      7420756E 
+ 3227      7369676E 
+ 3227      65642069 
+ 3227      6E7400
+ 3228              	.LASF102:
+ 3229 05fc 6C765F69 		.ascii	"lv_img_decoder_close_f_t\000"
+ 3229      6D675F64 
+ 3229      65636F64 
+ 3229      65725F63 
+ 3229      6C6F7365 
+ 3230              	.LASF82:
+ 3231 0615 72657365 		.ascii	"reserved\000"
+ 3231      72766564 
+ 3231      00
+ 3232              	.LASF113:
+ 3233 061e 6E65775F 		.ascii	"new_entry_cnt\000"
+ 3233      656E7472 
+ 3233      795F636E 
+ 3233      7400
+ 3234              	.LASF128:
+ 3235 062c 6C765F69 		.ascii	"lv_img_cache_set_size\000"
+ 3235      6D675F63 
+ 3235      61636865 
+ 3235      5F736574 
+ 3235      5F73697A 
+ 3236              	.LASF125:
+ 3237 0642 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 3237      73657273 
+ 3237      5C706561 
+ 3237      726C7374 
+ 3237      6C5C446F 
+ 3238 0670 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 3238      6D5F656E 
+ 3238      67696E65 
+ 3238      6572696E 
+ 3238      675C656D 
+ 3239 069f 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 3239      6C76676C 
+ 3239      365C7463 
+ 3239      6F6D5F64 
+ 3239      6973706C 
+ 3240              	.LASF77:
+ 3241 06c5 4C565F49 		.ascii	"LV_IMG_SRC_FILE\000"
+ 3241      4D475F53 
+ 3241      52435F46 
+ 3241      494C4500 
+ 3242              	.LASF44:
+ 3243 06d5 6C765F62 		.ascii	"lv_border_part_t\000"
+ 3243      6F726465 
+ 3243      725F7061 
+ 3243      72745F74 
+ 3243      00
+ 3244              	.LASF73:
+ 3245 06e6 4C565F52 		.ascii	"LV_RES_INV\000"
+ 3245      45535F49 
+ 3245      4E5600
+ 3246              	.LASF105:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccKQfvhr.s 			page 68
+
+
+ 3247 06f1 6465635F 		.ascii	"dec_dsc\000"
+ 3247      64736300 
+ 3248              	.LASF83:
+ 3249 06f9 6C765F69 		.ascii	"lv_img_header_t\000"
+ 3249      6D675F68 
+ 3249      65616465 
+ 3249      725F7400 
+ 3250              	.LASF23:
+ 3251 0709 6164765F 		.ascii	"adv_w\000"
+ 3251      7700
+ 3252              	.LASF98:
+ 3253 070f 74696D65 		.ascii	"time_to_open\000"
+ 3253      5F746F5F 
+ 3253      6F70656E 
+ 3253      00
+ 3254              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

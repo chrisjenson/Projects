@@ -1,0 +1,2964 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_color.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_color_hsv_to_rgb,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_color_hsv_to_rgb
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_color_hsv_to_rgb, %function
+  26              	lv_color_hsv_to_rgb:
+  27              	.LFB9:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_color.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @file lv_color.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** #include "lv_color.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** #include "lv_math.h"
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /*********************
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *      DEFINES
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *********************/
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *      TYPEDEFS
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *  STATIC PROTOTYPES
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *  STATIC VARIABLES
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *      MACROS
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *   GLOBAL FUNCTIONS
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**********************
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  *   STATIC FUNCTIONS
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  **********************/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * Convert a HSV color to RGB
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param h hue [0..359]
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param s saturation [0..100]
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param v value [0..100]
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @return the given RGB color in RGB (with LV_COLOR_DEPTH depth)
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  */
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** lv_color_t lv_color_hsv_to_rgb(uint16_t h, uint8_t s, uint8_t v)
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** {
+  29              		.loc 1 48 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h = (uint32_t)((uint32_t)h * 255) / 360;
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     s = (uint16_t)((uint16_t)s * 255) / 100;
+  35              		.loc 1 50 0
+  36 0000 384B     		ldr	r3, .L14
+  37 0002 C1EB0121 		rsb	r1, r1, r1, lsl #8
+  38              	.LVL1:
+  39 0006 89B2     		uxth	r1, r1
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     v = (uint16_t)((uint16_t)v * 255) / 100;
+  40              		.loc 1 51 0
+  41 0008 C2EB0222 		rsb	r2, r2, r2, lsl #8
+  42              	.LVL2:
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h = (uint32_t)((uint32_t)h * 255) / 360;
+  43              		.loc 1 48 0
+  44 000c 30B4     		push	{r4, r5}
+  45              		.cfi_def_cfa_offset 8
+  46              		.cfi_offset 4, -8
+  47              		.cfi_offset 5, -4
+  48              		.loc 1 51 0
+  49 000e 92B2     		uxth	r2, r2
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     v = (uint16_t)((uint16_t)v * 255) / 100;
+  50              		.loc 1 50 0
+  51 0010 A3FB0141 		umull	r4, r1, r3, r1
+  52 0014 C1F34711 		ubfx	r1, r1, #5, #8
+  53              		.loc 1 51 0
+  54 0018 A3FB0232 		umull	r3, r2, r3, r2
+  55              	.LVL3:
+  56 001c C2F34712 		ubfx	r2, r2, #5, #8
+  57              	.LVL4:
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint8_t r, g, b;
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint8_t region, remainder, p, q, t;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 3
+
+
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if(s == 0) {
+  58              		.loc 1 57 0
+  59 0020 0029     		cmp	r1, #0
+  60 0022 42D0     		beq	.L13
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     s = (uint16_t)((uint16_t)s * 255) / 100;
+  61              		.loc 1 49 0
+  62 0024 C0EB0020 		rsb	r0, r0, r0, lsl #8
+  63              	.LVL5:
+  64 0028 2F4B     		ldr	r3, .L14+4
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         r = v;
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         g = v;
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         b = v;
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         return lv_color_make(v, v, v);
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     region    = h / 43;
+  65              		.loc 1 64 0
+  66 002a 304D     		ldr	r5, .L14+8
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     s = (uint16_t)((uint16_t)s * 255) / 100;
+  67              		.loc 1 49 0
+  68 002c C008     		lsrs	r0, r0, #3
+  69 002e A3FB0003 		umull	r0, r3, r3, r0
+  70 0032 9C08     		lsrs	r4, r3, #2
+  71              		.loc 1 64 0
+  72 0034 A3B2     		uxth	r3, r4
+  73 0036 A5FB0330 		umull	r3, r0, r5, r3
+  74 003a C0F3C700 		ubfx	r0, r0, #3, #8
+  75              	.LVL6:
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     remainder = (h - (region * 43)) * 6;
+  76              		.loc 1 65 0
+  77 003e 6FF02A03 		mvn	r3, #42
+  78 0042 03FB0043 		mla	r3, r3, r0, r4
+  79 0046 03EB4303 		add	r3, r3, r3, lsl #1
+  80 004a 5B00     		lsls	r3, r3, #1
+  81 004c DBB2     		uxtb	r3, r3
+  82              	.LVL7:
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     p = (v * (255 - s)) >> 8;
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+  83              		.loc 1 69 0
+  84 004e C3F1FF04 		rsb	r4, r3, #255
+  85 0052 01FB04F4 		mul	r4, r1, r4
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+  86              		.loc 1 68 0
+  87 0056 11FB03F3 		smulbb	r3, r1, r3
+  88              	.LVL8:
+  89              		.loc 1 69 0
+  90 005a 2412     		asrs	r4, r4, #8
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+  91              		.loc 1 68 0
+  92 005c 1B12     		asrs	r3, r3, #8
+  93              		.loc 1 69 0
+  94 005e C4F1FF04 		rsb	r4, r4, #255
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+  95              		.loc 1 68 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 4
+
+
+  96 0062 C3F1FF03 		rsb	r3, r3, #255
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+  97              		.loc 1 67 0
+  98 0066 C1F1FF01 		rsb	r1, r1, #255
+  99              	.LVL9:
+ 100              		.loc 1 69 0
+ 101 006a 02FB04F4 		mul	r4, r2, r4
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+ 102              		.loc 1 68 0
+ 103 006e 02FB03F3 		mul	r3, r2, r3
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+ 104              		.loc 1 67 0
+ 105 0072 02FB01F1 		mul	r1, r2, r1
+ 106              		.loc 1 69 0
+ 107 0076 C4F30724 		ubfx	r4, r4, #8, #8
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+ 108              		.loc 1 68 0
+ 109 007a C3F30723 		ubfx	r3, r3, #8, #8
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+ 110              		.loc 1 67 0
+ 111 007e C1F30721 		ubfx	r1, r1, #8, #8
+ 112              	.LVL10:
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     switch(region) {
+ 113              		.loc 1 71 0
+ 114 0082 0428     		cmp	r0, #4
+ 115 0084 04D8     		bhi	.L4
+ 116 0086 DFE800F0 		tbb	[pc, r0]
+ 117              	.L6:
+ 118 008a 05       		.byte	(.L5-.L6)/2
+ 119 008b 20       		.byte	(.L7-.L6)/2
+ 120 008c 23       		.byte	(.L8-.L6)/2
+ 121 008d 28       		.byte	(.L9-.L6)/2
+ 122 008e 1B       		.byte	(.L10-.L6)/2
+ 123 008f 00       		.p2align 1
+ 124              	.L4:
+ 125              	.LVL11:
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 0:
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = v;
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = t;
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = p;
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 1:
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = q;
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = v;
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = p;
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 2:
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = p;
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = v;
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = t;
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 3:
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = p;
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = q;
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = v;
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 5
+
+
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 4:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = t;
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = p;
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = v;
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         default:
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             r = v;
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = p;
+ 126              		.loc 1 99 0
+ 127 0090 0C46     		mov	r4, r1
+ 128              	.LVL12:
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = q;
+ 129              		.loc 1 100 0
+ 130 0092 1946     		mov	r1, r3
+ 131              	.LVL13:
+ 132              	.L5:
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     lv_color_t result = lv_color_make(r, g, b);
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     return result;
+ 133              		.loc 1 105 0
+ 134 0094 0020     		movs	r0, #0
+ 135 0096 61F30700 		bfi	r0, r1, #0, #8
+ 136 009a 64F30F20 		bfi	r0, r4, #8, #8
+ 137 009e 62F31740 		bfi	r0, r2, #16, #8
+ 138 00a2 40F07F40 		orr	r0, r0, #-16777216
+ 139              	.LVL14:
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** }
+ 140              		.loc 1 106 0
+ 141 00a6 30BC     		pop	{r4, r5}
+ 142              		.cfi_remember_state
+ 143              		.cfi_restore 5
+ 144              		.cfi_restore 4
+ 145              		.cfi_def_cfa_offset 0
+ 146              	.LVL15:
+ 147 00a8 7047     		bx	lr
+ 148              	.LVL16:
+ 149              	.L13:
+ 150              		.cfi_restore_state
+ 151 00aa 0020     		movs	r0, #0
+ 152              	.LVL17:
+ 153 00ac 62F30700 		bfi	r0, r2, #0, #8
+ 154 00b0 62F30F20 		bfi	r0, r2, #8, #8
+ 155 00b4 62F31740 		bfi	r0, r2, #16, #8
+ 156 00b8 40F07F40 		orr	r0, r0, #-16777216
+ 157 00bc 30BC     		pop	{r4, r5}
+ 158              		.cfi_remember_state
+ 159              		.cfi_restore 4
+ 160              		.cfi_restore 5
+ 161              		.cfi_def_cfa_offset 0
+ 162 00be 7047     		bx	lr
+ 163              	.LVL18:
+ 164              	.L10:
+ 165              		.cfi_restore_state
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         default:
+ 166              		.loc 1 96 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 6
+
+
+ 167 00c0 1346     		mov	r3, r2
+ 168              	.LVL19:
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = p;
+ 169              		.loc 1 93 0
+ 170 00c2 2246     		mov	r2, r4
+ 171              	.LVL20:
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = v;
+ 172              		.loc 1 94 0
+ 173 00c4 0C46     		mov	r4, r1
+ 174              	.LVL21:
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+ 175              		.loc 1 95 0
+ 176 00c6 1946     		mov	r1, r3
+ 177              	.LVL22:
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         default:
+ 178              		.loc 1 96 0
+ 179 00c8 E4E7     		b	.L5
+ 180              	.LVL23:
+ 181              	.L7:
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = p;
+ 182              		.loc 1 79 0
+ 183 00ca 1446     		mov	r4, r2
+ 184              	.LVL24:
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = v;
+ 185              		.loc 1 78 0
+ 186 00cc 1A46     		mov	r2, r3
+ 187              	.LVL25:
+ 188 00ce E1E7     		b	.L5
+ 189              	.LVL26:
+ 190              	.L8:
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 3:
+ 191              		.loc 1 86 0
+ 192 00d0 1346     		mov	r3, r2
+ 193              	.LVL27:
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = v;
+ 194              		.loc 1 83 0
+ 195 00d2 0A46     		mov	r2, r1
+ 196              	.LVL28:
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+ 197              		.loc 1 85 0
+ 198 00d4 2146     		mov	r1, r4
+ 199              	.LVL29:
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = t;
+ 200              		.loc 1 84 0
+ 201 00d6 1C46     		mov	r4, r3
+ 202              	.LVL30:
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 3:
+ 203              		.loc 1 86 0
+ 204 00d8 DCE7     		b	.L5
+ 205              	.LVL31:
+ 206              	.L9:
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 4:
+ 207              		.loc 1 91 0
+ 208 00da 1046     		mov	r0, r2
+ 209              	.LVL32:
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             b = v;
+ 210              		.loc 1 89 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 7
+
+
+ 211 00dc 1C46     		mov	r4, r3
+ 212              	.LVL33:
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             g = q;
+ 213              		.loc 1 88 0
+ 214 00de 0A46     		mov	r2, r1
+ 215              	.LVL34:
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****             break;
+ 216              		.loc 1 90 0
+ 217 00e0 0146     		mov	r1, r0
+ 218              	.LVL35:
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         case 4:
+ 219              		.loc 1 91 0
+ 220 00e2 D7E7     		b	.L5
+ 221              	.L15:
+ 222              		.align	2
+ 223              	.L14:
+ 224 00e4 1F85EB51 		.word	1374389535
+ 225 00e8 176CC116 		.word	381774871
+ 226 00ec 83BEA02F 		.word	799063683
+ 227              		.cfi_endproc
+ 228              	.LFE9:
+ 229              		.size	lv_color_hsv_to_rgb, .-lv_color_hsv_to_rgb
+ 230              		.section	.text.lv_color_rgb_to_hsv,"ax",%progbits
+ 231              		.align	2
+ 232              		.global	lv_color_rgb_to_hsv
+ 233              		.thumb
+ 234              		.thumb_func
+ 235              		.type	lv_color_rgb_to_hsv, %function
+ 236              	lv_color_rgb_to_hsv:
+ 237              	.LFB10:
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * Convert a 32-bit RGB color to HSV
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param r8 8-bit red
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param g8 8-bit green
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param b8 8-bit blue
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @return the given RGB color in HSV
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  */
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** lv_color_hsv_t lv_color_rgb_to_hsv(uint8_t r8, uint8_t g8, uint8_t b8)
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** {
+ 238              		.loc 1 116 0
+ 239              		.cfi_startproc
+ 240              		@ args = 0, pretend = 0, frame = 8
+ 241              		@ frame_needed = 0, uses_anonymous_args = 0
+ 242              	.LVL36:
+ 243 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 244              		.cfi_def_cfa_offset 24
+ 245              		.cfi_offset 4, -24
+ 246              		.cfi_offset 5, -20
+ 247              		.cfi_offset 6, -16
+ 248              		.cfi_offset 7, -12
+ 249              		.cfi_offset 8, -8
+ 250              		.cfi_offset 14, -4
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 251              		.loc 1 117 0
+ 252 0004 404C     		ldr	r4, .L39
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 8
+
+
+ 253              		.loc 1 118 0
+ 254 0006 8902     		lsls	r1, r1, #10
+ 255              	.LVL37:
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 256              		.loc 1 117 0
+ 257 0008 8002     		lsls	r0, r0, #10
+ 258              	.LVL38:
+ 259              		.loc 1 118 0
+ 260 000a A4FB0135 		umull	r3, r5, r4, r1
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 261              		.loc 1 117 0
+ 262 000e A4FB0030 		umull	r3, r0, r4, r0
+ 263              		.loc 1 118 0
+ 264 0012 E909     		lsrs	r1, r5, #7
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 265              		.loc 1 119 0
+ 266 0014 9202     		lsls	r2, r2, #10
+ 267              	.LVL39:
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 268              		.loc 1 117 0
+ 269 0016 C009     		lsrs	r0, r0, #7
+ 270              		.loc 1 119 0
+ 271 0018 A4FB0232 		umull	r3, r2, r4, r2
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 272              		.loc 1 117 0
+ 273 001c 87B2     		uxth	r7, r0
+ 274              	.LVL40:
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 275              		.loc 1 118 0
+ 276 001e 1FFA81FE 		uxth	lr, r1
+ 277              	.LVL41:
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t rgbMin = r < g ? (r < b ? r : b) : (g < b ? g : b);
+ 278              		.loc 1 121 0
+ 279 0022 7745     		cmp	r7, lr
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 280              		.loc 1 119 0
+ 281 0024 4FEAD212 		lsr	r2, r2, #7
+ 282 0028 1FFA82FC 		uxth	ip, r2
+ 283              	.LVL42:
+ 284              		.loc 1 121 0
+ 285 002c 2CBF     		ite	cs
+ 286 002e 7346     		movcs	r3, lr
+ 287 0030 3B46     		movcc	r3, r7
+ 288 0032 6345     		cmp	r3, ip
+ 289 0034 28BF     		it	cs
+ 290 0036 6346     		movcs	r3, ip
+ 291              	.LVL43:
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t rgbMax = r > g ? (r > b ? r : b) : (g > b ? g : b);
+ 292              		.loc 1 122 0
+ 293 0038 7745     		cmp	r7, lr
+ 294 003a 8CBF     		ite	hi
+ 295 003c 3E46     		movhi	r6, r7
+ 296 003e 7646     		movls	r6, lr
+ 297 0040 6645     		cmp	r6, ip
+ 298 0042 38BF     		it	cc
+ 299 0044 6646     		movcc	r6, ip
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 9
+
+
+ 300              	.LVL44:
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     lv_color_hsv_t hsv;
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     hsv.v = (100 * rgbMax) >> 10;
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     int32_t delta = rgbMax - rgbMin;
+ 301              		.loc 1 129 0
+ 302 0046 F31A     		subs	r3, r6, r3
+ 303              	.LVL45:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 304              		.loc 1 127 0
+ 305 0048 6424     		movs	r4, #100
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if (LV_MATH_ABS(delta) < 3) {
+ 306              		.loc 1 130 0
+ 307 004a 03F10208 		add	r8, r3, #2
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 308              		.loc 1 127 0
+ 309 004e 04FB06F5 		mul	r5, r4, r6
+ 310              		.loc 1 130 0
+ 311 0052 B8F1040F 		cmp	r8, #4
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t r = ((uint32_t)r8 << 10) / 255;
+ 312              		.loc 1 116 0
+ 313 0056 82B0     		sub	sp, sp, #8
+ 314              		.cfi_def_cfa_offset 32
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 315              		.loc 1 127 0
+ 316 0058 C5F38725 		ubfx	r5, r5, #10, #8
+ 317              	.LVL46:
+ 318              		.loc 1 130 0
+ 319 005c 27D9     		bls	.L34
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.s = 0;
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         return hsv;
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     // https://en.wikipedia.org/wiki/HSL_and_HSV#Saturation
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     hsv.s = 100 * delta / rgbMax;
+ 320              		.loc 1 137 0
+ 321 005e 04FB03F4 		mul	r4, r4, r3
+ 322 0062 94FBF6F4 		sdiv	r4, r4, r6
+ 323 0066 E4B2     		uxtb	r4, r4
+ 324              	.LVL47:
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if(hsv.s < 3) {
+ 325              		.loc 1 138 0
+ 326 0068 022C     		cmp	r4, #2
+ 327 006a 0DD9     		bls	.L35
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         return hsv;
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     // https://en.wikipedia.org/wiki/HSL_and_HSV#Hue_and_chroma
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     int32_t h;
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if(rgbMax == r)
+ 328              		.loc 1 145 0
+ 329 006c BE42     		cmp	r6, r7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 10
+
+
+ 330 006e 36D0     		beq	.L36
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((g - b) << 10) / delta) + (g < b ? (6 << 10) : 0); // between yellow & magenta
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == g)
+ 331              		.loc 1 147 0
+ 332 0070 7645     		cmp	r6, lr
+ 333 0072 24D0     		beq	.L37
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((b - r) << 10) / delta) + (2 << 10); // between cyan & yellow
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == b)
+ 334              		.loc 1 149 0
+ 335 0074 6645     		cmp	r6, ip
+ 336 0076 3FD0     		beq	.L38
+ 337 0078 0023     		movs	r3, #0
+ 338              	.LVL48:
+ 339              	.L28:
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((r - g) << 10) / delta) + (4 << 10); // between magenta & cyan
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = 0;
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h *= 60;
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h >>= 10;
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if (h < 0) h += 360;
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     hsv.h = h;
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     return hsv;
+ 340              		.loc 1 158 0
+ 341 007a ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 342 007e 8DF80640 		strb	r4, [sp, #6]
+ 343 0082 8DF80750 		strb	r5, [sp, #7]
+ 344 0086 06E0     		b	.L22
+ 345              	.LVL49:
+ 346              	.L35:
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 347              		.loc 1 140 0
+ 348 0088 0023     		movs	r3, #0
+ 349              	.LVL50:
+ 350 008a 8DF80640 		strb	r4, [sp, #6]
+ 351 008e 8DF80750 		strb	r5, [sp, #7]
+ 352 0092 ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 353              	.LVL51:
+ 354              	.L22:
+ 355 0096 BDF80420 		ldrh	r2, [sp, #4]
+ 356 009a BDF80630 		ldrh	r3, [sp, #6]
+ 357 009e 0020     		movs	r0, #0
+ 358 00a0 62F30F00 		bfi	r0, r2, #0, #16
+ 359 00a4 63F31F40 		bfi	r0, r3, #16, #16
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** }
+ 360              		.loc 1 159 0
+ 361 00a8 02B0     		add	sp, sp, #8
+ 362              		.cfi_remember_state
+ 363              		.cfi_def_cfa_offset 24
+ 364              		@ sp needed
+ 365 00aa BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 366              	.LVL52:
+ 367              	.L34:
+ 368              		.cfi_restore_state
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 369              		.loc 1 133 0
+ 370 00ae 0023     		movs	r3, #0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 11
+
+
+ 371              	.LVL53:
+ 372 00b0 8DF80750 		strb	r5, [sp, #7]
+ 373 00b4 ADF80430 		strh	r3, [sp, #4]	@ movhi
+ 374 00b8 8DF80630 		strb	r3, [sp, #6]
+ 375 00bc EBE7     		b	.L22
+ 376              	.LVL54:
+ 377              	.L37:
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == b)
+ 378              		.loc 1 148 0
+ 379 00be 111A     		subs	r1, r2, r0
+ 380 00c0 8902     		lsls	r1, r1, #10
+ 381 00c2 91FBF3F3 		sdiv	r3, r1, r3
+ 382              	.LVL55:
+ 383 00c6 03F50063 		add	r3, r3, #2048
+ 384              	.LVL56:
+ 385              	.L26:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h >>= 10;
+ 386              		.loc 1 153 0
+ 387 00ca C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 388              	.LVL57:
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if (h < 0) h += 360;
+ 389              		.loc 1 154 0
+ 390 00ce 43F31523 		sbfx	r3, r3, #8, #22
+ 391              	.LVL58:
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 392              		.loc 1 155 0
+ 393 00d2 002B     		cmp	r3, #0
+ 394              	.LVL59:
+ 395 00d4 B8BF     		it	lt
+ 396 00d6 03F5B473 		addlt	r3, r3, #360
+ 397              	.LVL60:
+ 398 00da 9BB2     		uxth	r3, r3
+ 399 00dc CDE7     		b	.L28
+ 400              	.LVL61:
+ 401              	.L36:
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == g)
+ 402              		.loc 1 146 0
+ 403 00de 8A1A     		subs	r2, r1, r2
+ 404 00e0 E645     		cmp	lr, ip
+ 405 00e2 34BF     		ite	cc
+ 406 00e4 4FF4C05E 		movcc	lr, #6144
+ 407 00e8 4FF0000E 		movcs	lr, #0
+ 408              	.LVL62:
+ 409 00ec 9202     		lsls	r2, r2, #10
+ 410 00ee 92FBF3F2 		sdiv	r2, r2, r3
+ 411 00f2 0EEB0203 		add	r3, lr, r2
+ 412              	.LVL63:
+ 413 00f6 E8E7     		b	.L26
+ 414              	.LVL64:
+ 415              	.L38:
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else
+ 416              		.loc 1 150 0
+ 417 00f8 411A     		subs	r1, r0, r1
+ 418 00fa 8902     		lsls	r1, r1, #10
+ 419 00fc 91FBF3F3 		sdiv	r3, r1, r3
+ 420              	.LVL65:
+ 421 0100 03F58053 		add	r3, r3, #4096
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 12
+
+
+ 422              	.LVL66:
+ 423 0104 E1E7     		b	.L26
+ 424              	.L40:
+ 425 0106 00BF     		.align	2
+ 426              	.L39:
+ 427 0108 81808080 		.word	-2139062143
+ 428              		.cfi_endproc
+ 429              	.LFE10:
+ 430              		.size	lv_color_rgb_to_hsv, .-lv_color_rgb_to_hsv
+ 431              		.section	.text.lv_color_to_hsv,"ax",%progbits
+ 432              		.align	2
+ 433              		.global	lv_color_to_hsv
+ 434              		.thumb
+ 435              		.thumb_func
+ 436              		.type	lv_color_to_hsv, %function
+ 437              	lv_color_to_hsv:
+ 438              	.LFB11:
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** /**
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * Convert a color to HSV
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @param color color
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  * @return the given color in HSV
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****  */
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** lv_color_hsv_t lv_color_to_hsv(lv_color_t color)
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** {
+ 439              		.loc 1 167 0
+ 440              		.cfi_startproc
+ 441              		@ args = 0, pretend = 0, frame = 8
+ 442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 443              	.LVL67:
+ 444 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 445              		.cfi_def_cfa_offset 24
+ 446              		.cfi_offset 4, -24
+ 447              		.cfi_offset 5, -20
+ 448              		.cfi_offset 6, -16
+ 449              		.cfi_offset 7, -12
+ 450              		.cfi_offset 8, -8
+ 451              		.cfi_offset 14, -4
+ 452              	.LBB10:
+ 453              	.LBB11:
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 454              		.loc 1 117 0
+ 455 0004 384B     		ldr	r3, .L61
+ 456 0006 C0F30744 		ubfx	r4, r0, #16, #8
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 457              		.loc 1 118 0
+ 458 000a C0F30721 		ubfx	r1, r0, #8, #8
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 459              		.loc 1 117 0
+ 460 000e A402     		lsls	r4, r4, #10
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 461              		.loc 1 118 0
+ 462 0010 8902     		lsls	r1, r1, #10
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 463              		.loc 1 117 0
+ 464 0012 A3FB0424 		umull	r2, r4, r3, r4
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 13
+
+
+ 465              		.loc 1 118 0
+ 466 0016 A3FB0121 		umull	r2, r1, r3, r1
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 467              		.loc 1 119 0
+ 468 001a C0B2     		uxtb	r0, r0
+ 469              	.LVL68:
+ 470 001c 8002     		lsls	r0, r0, #10
+ 471              	.LVL69:
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 472              		.loc 1 117 0
+ 473 001e E409     		lsrs	r4, r4, #7
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 474              		.loc 1 118 0
+ 475 0020 C909     		lsrs	r1, r1, #7
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 476              		.loc 1 119 0
+ 477 0022 A3FB0030 		umull	r3, r0, r3, r0
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t g = ((uint32_t)g8 << 10) / 255;
+ 478              		.loc 1 117 0
+ 479 0026 1FFA84FC 		uxth	ip, r4
+ 480              	.LVL70:
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t b = ((uint32_t)b8 << 10) / 255;
+ 481              		.loc 1 118 0
+ 482 002a 8AB2     		uxth	r2, r1
+ 483              	.LVL71:
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t rgbMax = r > g ? (r > b ? r : b) : (g > b ? g : b);
+ 484              		.loc 1 121 0
+ 485 002c 9445     		cmp	ip, r2
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 486              		.loc 1 119 0
+ 487 002e 4FEAD010 		lsr	r0, r0, #7
+ 488 0032 1FFA80F8 		uxth	r8, r0
+ 489              	.LVL72:
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     uint16_t rgbMax = r > g ? (r > b ? r : b) : (g > b ? g : b);
+ 490              		.loc 1 121 0
+ 491 0036 2CBF     		ite	cs
+ 492 0038 1346     		movcs	r3, r2
+ 493 003a 6346     		movcc	r3, ip
+ 494 003c 4345     		cmp	r3, r8
+ 495 003e 28BF     		it	cs
+ 496 0040 4346     		movcs	r3, r8
+ 497              	.LVL73:
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 498              		.loc 1 122 0
+ 499 0042 9445     		cmp	ip, r2
+ 500 0044 8CBF     		ite	hi
+ 501 0046 E646     		movhi	lr, ip
+ 502 0048 9646     		movls	lr, r2
+ 503 004a C645     		cmp	lr, r8
+ 504 004c 38BF     		it	cc
+ 505 004e C646     		movcc	lr, r8
+ 506              	.LVL74:
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if (LV_MATH_ABS(delta) < 3) {
+ 507              		.loc 1 129 0
+ 508 0050 C3EB0E07 		rsb	r7, r3, lr
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 509              		.loc 1 127 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 14
+
+
+ 510 0054 6425     		movs	r5, #100
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 511              		.loc 1 130 0
+ 512 0056 BB1C     		adds	r3, r7, #2
+ 513              	.LVL75:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 514              		.loc 1 127 0
+ 515 0058 05FB0EF6 		mul	r6, r5, lr
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 516              		.loc 1 130 0
+ 517 005c 042B     		cmp	r3, #4
+ 518              	.LBE11:
+ 519              	.LBE10:
+ 520              		.loc 1 167 0
+ 521 005e 82B0     		sub	sp, sp, #8
+ 522              		.cfi_def_cfa_offset 32
+ 523              	.LBB14:
+ 524              	.LBB12:
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 525              		.loc 1 127 0
+ 526 0060 C6F38726 		ubfx	r6, r6, #10, #8
+ 527              	.LVL76:
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 528              		.loc 1 130 0
+ 529 0064 2BD9     		bls	.L53
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if(hsv.s < 3) {
+ 530              		.loc 1 137 0
+ 531 0066 05FB07F5 		mul	r5, r5, r7
+ 532 006a 95FBFEF5 		sdiv	r5, r5, lr
+ 533 006e EDB2     		uxtb	r5, r5
+ 534              	.LVL77:
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         hsv.h = 0;
+ 535              		.loc 1 138 0
+ 536 0070 022D     		cmp	r5, #2
+ 537 0072 15D9     		bls	.L54
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((g - b) << 10) / delta) + (g < b ? (6 << 10) : 0); // between yellow & magenta
+ 538              		.loc 1 145 0
+ 539 0074 F445     		cmp	ip, lr
+ 540 0076 2CD0     		beq	.L59
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((b - r) << 10) / delta) + (2 << 10); // between cyan & yellow
+ 541              		.loc 1 147 0
+ 542 0078 7245     		cmp	r2, lr
+ 543 007a 23D0     		beq	.L60
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****         h = (((r - g) << 10) / delta) + (4 << 10); // between magenta & cyan
+ 544              		.loc 1 149 0
+ 545 007c F045     		cmp	r8, lr
+ 546 007e 0FD1     		bne	.L54
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else
+ 547              		.loc 1 150 0
+ 548 0080 631A     		subs	r3, r4, r1
+ 549 0082 9B02     		lsls	r3, r3, #10
+ 550 0084 93FBF7F3 		sdiv	r3, r3, r7
+ 551 0088 03F58053 		add	r3, r3, #4096
+ 552              	.LVL78:
+ 553              	.L49:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     h >>= 10;
+ 554              		.loc 1 153 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 15
+
+
+ 555 008c C3EB0313 		rsb	r3, r3, r3, lsl #4
+ 556              	.LVL79:
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     if (h < 0) h += 360;
+ 557              		.loc 1 154 0
+ 558 0090 43F31523 		sbfx	r3, r3, #8, #22
+ 559              	.LVL80:
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** 
+ 560              		.loc 1 155 0
+ 561 0094 002B     		cmp	r3, #0
+ 562              	.LVL81:
+ 563 0096 B8BF     		it	lt
+ 564 0098 03F5B473 		addlt	r3, r3, #360
+ 565              	.LVL82:
+ 566 009c 9BB2     		uxth	r3, r3
+ 567 009e 00E0     		b	.L46
+ 568              	.LVL83:
+ 569              	.L54:
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 570              		.loc 1 140 0
+ 571 00a0 0023     		movs	r3, #0
+ 572              	.LVL84:
+ 573              	.L46:
+ 574 00a2 8DF80650 		strb	r5, [sp, #6]
+ 575 00a6 8DF80760 		strb	r6, [sp, #7]
+ 576              	.LVL85:
+ 577              	.LBE12:
+ 578              	.LBE14:
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     lv_color32_t color32;
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     color32.full = lv_color_to32(color);
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     return lv_color_rgb_to_hsv(color32.ch.red, color32.ch.green, color32.ch.blue);
+ 579              		.loc 1 170 0
+ 580 00aa BDF80620 		ldrh	r2, [sp, #6]
+ 581 00ae 0020     		movs	r0, #0
+ 582 00b0 63F30F00 		bfi	r0, r3, #0, #16
+ 583 00b4 62F31F40 		bfi	r0, r2, #16, #16
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c **** }
+ 584              		.loc 1 171 0
+ 585 00b8 02B0     		add	sp, sp, #8
+ 586              		.cfi_remember_state
+ 587              		.cfi_def_cfa_offset 24
+ 588              		@ sp needed
+ 589 00ba BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 590              	.LVL86:
+ 591              	.L53:
+ 592              		.cfi_restore_state
+ 593              	.LBB15:
+ 594              	.LBB13:
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     }
+ 595              		.loc 1 133 0
+ 596 00be 0025     		movs	r5, #0
+ 597 00c0 2B46     		mov	r3, r5
+ 598 00c2 EEE7     		b	.L46
+ 599              	.LVL87:
+ 600              	.L60:
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == b)
+ 601              		.loc 1 148 0
+ 602 00c4 001B     		subs	r0, r0, r4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 16
+
+
+ 603 00c6 8002     		lsls	r0, r0, #10
+ 604 00c8 90FBF7F3 		sdiv	r3, r0, r7
+ 605 00cc 03F50063 		add	r3, r3, #2048
+ 606              	.LVL88:
+ 607 00d0 DCE7     		b	.L49
+ 608              	.LVL89:
+ 609              	.L59:
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_color.c ****     else if(rgbMax == g)
+ 610              		.loc 1 146 0
+ 611 00d2 0B1A     		subs	r3, r1, r0
+ 612 00d4 4245     		cmp	r2, r8
+ 613 00d6 34BF     		ite	cc
+ 614 00d8 4FF4C052 		movcc	r2, #6144
+ 615 00dc 0022     		movcs	r2, #0
+ 616              	.LVL90:
+ 617 00de 9B02     		lsls	r3, r3, #10
+ 618 00e0 93FBF7F3 		sdiv	r3, r3, r7
+ 619 00e4 1344     		add	r3, r3, r2
+ 620              	.LVL91:
+ 621 00e6 D1E7     		b	.L49
+ 622              	.L62:
+ 623              		.align	2
+ 624              	.L61:
+ 625 00e8 81808080 		.word	-2139062143
+ 626              	.LBE13:
+ 627              	.LBE15:
+ 628              		.cfi_endproc
+ 629              	.LFE11:
+ 630              		.size	lv_color_to_hsv, .-lv_color_to_hsv
+ 631              		.text
+ 632              	.Letext0:
+ 633              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 634              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 635              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_color.h"
+ 636              		.section	.debug_info,"",%progbits
+ 637              	.Ldebug_info0:
+ 638 0000 FC030000 		.4byte	0x3fc
+ 639 0004 0400     		.2byte	0x4
+ 640 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 641 000a 04       		.byte	0x4
+ 642 000b 01       		.uleb128 0x1
+ 643 000c C3010000 		.4byte	.LASF34
+ 644 0010 0C       		.byte	0xc
+ 645 0011 B6020000 		.4byte	.LASF35
+ 646 0015 14000000 		.4byte	.LASF36
+ 647 0019 20000000 		.4byte	.Ldebug_ranges0+0x20
+ 648 001d 00000000 		.4byte	0
+ 649 0021 00000000 		.4byte	.Ldebug_line0
+ 650 0025 02       		.uleb128 0x2
+ 651 0026 04       		.byte	0x4
+ 652 0027 07       		.byte	0x7
+ 653 0028 9A010000 		.4byte	.LASF0
+ 654 002c 02       		.uleb128 0x2
+ 655 002d 01       		.byte	0x1
+ 656 002e 06       		.byte	0x6
+ 657 002f 6E010000 		.4byte	.LASF1
+ 658 0033 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 17
+
+
+ 659 0034 2F010000 		.4byte	.LASF4
+ 660 0038 02       		.byte	0x2
+ 661 0039 1D       		.byte	0x1d
+ 662 003a 3E000000 		.4byte	0x3e
+ 663 003e 02       		.uleb128 0x2
+ 664 003f 01       		.byte	0x1
+ 665 0040 08       		.byte	0x8
+ 666 0041 5B010000 		.4byte	.LASF2
+ 667 0045 02       		.uleb128 0x2
+ 668 0046 02       		.byte	0x2
+ 669 0047 05       		.byte	0x5
+ 670 0048 A8000000 		.4byte	.LASF3
+ 671 004c 03       		.uleb128 0x3
+ 672 004d C9000000 		.4byte	.LASF5
+ 673 0051 02       		.byte	0x2
+ 674 0052 2B       		.byte	0x2b
+ 675 0053 57000000 		.4byte	0x57
+ 676 0057 02       		.uleb128 0x2
+ 677 0058 02       		.byte	0x2
+ 678 0059 07       		.byte	0x7
+ 679 005a B0010000 		.4byte	.LASF6
+ 680 005e 03       		.uleb128 0x3
+ 681 005f AC020000 		.4byte	.LASF7
+ 682 0063 02       		.byte	0x2
+ 683 0064 3F       		.byte	0x3f
+ 684 0065 69000000 		.4byte	0x69
+ 685 0069 02       		.uleb128 0x2
+ 686 006a 04       		.byte	0x4
+ 687 006b 05       		.byte	0x5
+ 688 006c 16010000 		.4byte	.LASF8
+ 689 0070 03       		.uleb128 0x3
+ 690 0071 BE000000 		.4byte	.LASF9
+ 691 0075 02       		.byte	0x2
+ 692 0076 41       		.byte	0x41
+ 693 0077 7B000000 		.4byte	0x7b
+ 694 007b 02       		.uleb128 0x2
+ 695 007c 04       		.byte	0x4
+ 696 007d 07       		.byte	0x7
+ 697 007e 85020000 		.4byte	.LASF10
+ 698 0082 02       		.uleb128 0x2
+ 699 0083 08       		.byte	0x8
+ 700 0084 05       		.byte	0x5
+ 701 0085 08010000 		.4byte	.LASF11
+ 702 0089 02       		.uleb128 0x2
+ 703 008a 08       		.byte	0x8
+ 704 008b 07       		.byte	0x7
+ 705 008c 7A010000 		.4byte	.LASF12
+ 706 0090 04       		.uleb128 0x4
+ 707 0091 04       		.byte	0x4
+ 708 0092 05       		.byte	0x5
+ 709 0093 696E7400 		.ascii	"int\000"
+ 710 0097 03       		.uleb128 0x3
+ 711 0098 EC000000 		.4byte	.LASF13
+ 712 009c 03       		.byte	0x3
+ 713 009d 18       		.byte	0x18
+ 714 009e 33000000 		.4byte	0x33
+ 715 00a2 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 18
+
+
+ 716 00a3 A7010000 		.4byte	.LASF14
+ 717 00a7 03       		.byte	0x3
+ 718 00a8 24       		.byte	0x24
+ 719 00a9 4C000000 		.4byte	0x4c
+ 720 00ad 03       		.uleb128 0x3
+ 721 00ae 76020000 		.4byte	.LASF15
+ 722 00b2 03       		.byte	0x3
+ 723 00b3 2C       		.byte	0x2c
+ 724 00b4 5E000000 		.4byte	0x5e
+ 725 00b8 03       		.uleb128 0x3
+ 726 00b9 91010000 		.4byte	.LASF16
+ 727 00bd 03       		.byte	0x3
+ 728 00be 30       		.byte	0x30
+ 729 00bf 70000000 		.4byte	0x70
+ 730 00c3 05       		.uleb128 0x5
+ 731 00c4 04       		.byte	0x4
+ 732 00c5 04       		.byte	0x4
+ 733 00c6 F3       		.byte	0xf3
+ 734 00c7 FC000000 		.4byte	0xfc
+ 735 00cb 06       		.uleb128 0x6
+ 736 00cc D4000000 		.4byte	.LASF17
+ 737 00d0 04       		.byte	0x4
+ 738 00d1 F5       		.byte	0xf5
+ 739 00d2 97000000 		.4byte	0x97
+ 740 00d6 00       		.byte	0
+ 741 00d7 06       		.uleb128 0x6
+ 742 00d8 39010000 		.4byte	.LASF18
+ 743 00dc 04       		.byte	0x4
+ 744 00dd F6       		.byte	0xf6
+ 745 00de 97000000 		.4byte	0x97
+ 746 00e2 01       		.byte	0x1
+ 747 00e3 07       		.uleb128 0x7
+ 748 00e4 72656400 		.ascii	"red\000"
+ 749 00e8 04       		.byte	0x4
+ 750 00e9 F7       		.byte	0xf7
+ 751 00ea 97000000 		.4byte	0x97
+ 752 00ee 02       		.byte	0x2
+ 753 00ef 06       		.uleb128 0x6
+ 754 00f0 A6020000 		.4byte	.LASF19
+ 755 00f4 04       		.byte	0x4
+ 756 00f5 F8       		.byte	0xf8
+ 757 00f6 97000000 		.4byte	0x97
+ 758 00fa 03       		.byte	0x3
+ 759 00fb 00       		.byte	0
+ 760 00fc 08       		.uleb128 0x8
+ 761 00fd 04       		.byte	0x4
+ 762 00fe 04       		.byte	0x4
+ 763 00ff F1       		.byte	0xf1
+ 764 0100 1A010000 		.4byte	0x11a
+ 765 0104 09       		.uleb128 0x9
+ 766 0105 636800   		.ascii	"ch\000"
+ 767 0108 04       		.byte	0x4
+ 768 0109 F9       		.byte	0xf9
+ 769 010a C3000000 		.4byte	0xc3
+ 770 010e 0A       		.uleb128 0xa
+ 771 010f 69010000 		.4byte	.LASF20
+ 772 0113 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 19
+
+
+ 773 0114 FA       		.byte	0xfa
+ 774 0115 B8000000 		.4byte	0xb8
+ 775 0119 00       		.byte	0
+ 776 011a 03       		.uleb128 0x3
+ 777 011b 00000000 		.4byte	.LASF21
+ 778 011f 04       		.byte	0x4
+ 779 0120 FB       		.byte	0xfb
+ 780 0121 FC000000 		.4byte	0xfc
+ 781 0125 0B       		.uleb128 0xb
+ 782 0126 D9000000 		.4byte	.LASF22
+ 783 012a 04       		.byte	0x4
+ 784 012b 0801     		.2byte	0x108
+ 785 012d 1A010000 		.4byte	0x11a
+ 786 0131 0C       		.uleb128 0xc
+ 787 0132 04       		.byte	0x4
+ 788 0133 04       		.byte	0x4
+ 789 0134 0F01     		.2byte	0x10f
+ 790 0136 5C010000 		.4byte	0x15c
+ 791 013a 0D       		.uleb128 0xd
+ 792 013b 6800     		.ascii	"h\000"
+ 793 013d 04       		.byte	0x4
+ 794 013e 1101     		.2byte	0x111
+ 795 0140 A2000000 		.4byte	0xa2
+ 796 0144 00       		.byte	0
+ 797 0145 0D       		.uleb128 0xd
+ 798 0146 7300     		.ascii	"s\000"
+ 799 0148 04       		.byte	0x4
+ 800 0149 1201     		.2byte	0x112
+ 801 014b 97000000 		.4byte	0x97
+ 802 014f 02       		.byte	0x2
+ 803 0150 0D       		.uleb128 0xd
+ 804 0151 7600     		.ascii	"v\000"
+ 805 0153 04       		.byte	0x4
+ 806 0154 1301     		.2byte	0x113
+ 807 0156 97000000 		.4byte	0x97
+ 808 015a 03       		.byte	0x3
+ 809 015b 00       		.byte	0
+ 810 015c 0B       		.uleb128 0xb
+ 811 015d 97020000 		.4byte	.LASF23
+ 812 0161 04       		.byte	0x4
+ 813 0162 1401     		.2byte	0x114
+ 814 0164 31010000 		.4byte	0x131
+ 815 0168 0E       		.uleb128 0xe
+ 816 0169 3F010000 		.4byte	.LASF24
+ 817 016d 04       		.byte	0x4
+ 818 016e DD01     		.2byte	0x1dd
+ 819 0170 25010000 		.4byte	0x125
+ 820 0174 03       		.byte	0x3
+ 821 0175 98010000 		.4byte	0x198
+ 822 0179 0F       		.uleb128 0xf
+ 823 017a 7200     		.ascii	"r\000"
+ 824 017c 04       		.byte	0x4
+ 825 017d DD01     		.2byte	0x1dd
+ 826 017f 97000000 		.4byte	0x97
+ 827 0183 0F       		.uleb128 0xf
+ 828 0184 6700     		.ascii	"g\000"
+ 829 0186 04       		.byte	0x4
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 20
+
+
+ 830 0187 DD01     		.2byte	0x1dd
+ 831 0189 97000000 		.4byte	0x97
+ 832 018d 0F       		.uleb128 0xf
+ 833 018e 6200     		.ascii	"b\000"
+ 834 0190 04       		.byte	0x4
+ 835 0191 DD01     		.2byte	0x1dd
+ 836 0193 97000000 		.4byte	0x97
+ 837 0197 00       		.byte	0
+ 838 0198 0E       		.uleb128 0xe
+ 839 0199 4D010000 		.4byte	.LASF25
+ 840 019d 04       		.byte	0x4
+ 841 019e 7A01     		.2byte	0x17a
+ 842 01a0 B8000000 		.4byte	0xb8
+ 843 01a4 03       		.byte	0x3
+ 844 01a5 B6010000 		.4byte	0x1b6
+ 845 01a9 10       		.uleb128 0x10
+ 846 01aa B2000000 		.4byte	.LASF26
+ 847 01ae 04       		.byte	0x4
+ 848 01af 7A01     		.2byte	0x17a
+ 849 01b1 25010000 		.4byte	0x125
+ 850 01b5 00       		.byte	0
+ 851 01b6 11       		.uleb128 0x11
+ 852 01b7 F4000000 		.4byte	.LASF37
+ 853 01bb 01       		.byte	0x1
+ 854 01bc 2F       		.byte	0x2f
+ 855 01bd 25010000 		.4byte	0x125
+ 856 01c1 00000000 		.4byte	.LFB9
+ 857 01c5 F0000000 		.4byte	.LFE9-.LFB9
+ 858 01c9 01       		.uleb128 0x1
+ 859 01ca 9C       		.byte	0x9c
+ 860 01cb 72020000 		.4byte	0x272
+ 861 01cf 12       		.uleb128 0x12
+ 862 01d0 6800     		.ascii	"h\000"
+ 863 01d2 01       		.byte	0x1
+ 864 01d3 2F       		.byte	0x2f
+ 865 01d4 A2000000 		.4byte	0xa2
+ 866 01d8 00000000 		.4byte	.LLST0
+ 867 01dc 12       		.uleb128 0x12
+ 868 01dd 7300     		.ascii	"s\000"
+ 869 01df 01       		.byte	0x1
+ 870 01e0 2F       		.byte	0x2f
+ 871 01e1 97000000 		.4byte	0x97
+ 872 01e5 8D000000 		.4byte	.LLST1
+ 873 01e9 12       		.uleb128 0x12
+ 874 01ea 7600     		.ascii	"v\000"
+ 875 01ec 01       		.byte	0x1
+ 876 01ed 2F       		.byte	0x2f
+ 877 01ee 97000000 		.4byte	0x97
+ 878 01f2 C4000000 		.4byte	.LLST2
+ 879 01f6 13       		.uleb128 0x13
+ 880 01f7 7200     		.ascii	"r\000"
+ 881 01f9 01       		.byte	0x1
+ 882 01fa 35       		.byte	0x35
+ 883 01fb 97000000 		.4byte	0x97
+ 884 01ff 48010000 		.4byte	.LLST3
+ 885 0203 13       		.uleb128 0x13
+ 886 0204 6700     		.ascii	"g\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 21
+
+
+ 887 0206 01       		.byte	0x1
+ 888 0207 35       		.byte	0x35
+ 889 0208 97000000 		.4byte	0x97
+ 890 020c 9D010000 		.4byte	.LLST4
+ 891 0210 13       		.uleb128 0x13
+ 892 0211 6200     		.ascii	"b\000"
+ 893 0213 01       		.byte	0x1
+ 894 0214 35       		.byte	0x35
+ 895 0215 97000000 		.4byte	0x97
+ 896 0219 F2010000 		.4byte	.LLST5
+ 897 021d 14       		.uleb128 0x14
+ 898 021e A1000000 		.4byte	.LASF27
+ 899 0222 01       		.byte	0x1
+ 900 0223 37       		.byte	0x37
+ 901 0224 97000000 		.4byte	0x97
+ 902 0228 52020000 		.4byte	.LLST6
+ 903 022c 14       		.uleb128 0x14
+ 904 022d 97000000 		.4byte	.LASF28
+ 905 0231 01       		.byte	0x1
+ 906 0232 37       		.byte	0x37
+ 907 0233 97000000 		.4byte	0x97
+ 908 0237 70020000 		.4byte	.LLST7
+ 909 023b 13       		.uleb128 0x13
+ 910 023c 7000     		.ascii	"p\000"
+ 911 023e 01       		.byte	0x1
+ 912 023f 37       		.byte	0x37
+ 913 0240 97000000 		.4byte	0x97
+ 914 0244 83020000 		.4byte	.LLST8
+ 915 0248 13       		.uleb128 0x13
+ 916 0249 7100     		.ascii	"q\000"
+ 917 024b 01       		.byte	0x1
+ 918 024c 37       		.byte	0x37
+ 919 024d 97000000 		.4byte	0x97
+ 920 0251 D8020000 		.4byte	.LLST9
+ 921 0255 13       		.uleb128 0x13
+ 922 0256 7400     		.ascii	"t\000"
+ 923 0258 01       		.byte	0x1
+ 924 0259 37       		.byte	0x37
+ 925 025a 97000000 		.4byte	0x97
+ 926 025e 0C030000 		.4byte	.LLST10
+ 927 0262 14       		.uleb128 0x14
+ 928 0263 0D000000 		.4byte	.LASF29
+ 929 0267 01       		.byte	0x1
+ 930 0268 68       		.byte	0x68
+ 931 0269 25010000 		.4byte	0x125
+ 932 026d 61030000 		.4byte	.LLST11
+ 933 0271 00       		.byte	0
+ 934 0272 15       		.uleb128 0x15
+ 935 0273 F5020000 		.4byte	.LASF38
+ 936 0277 01       		.byte	0x1
+ 937 0278 73       		.byte	0x73
+ 938 0279 5C010000 		.4byte	0x15c
+ 939 027d 01       		.byte	0x1
+ 940 027e F1020000 		.4byte	0x2f1
+ 941 0282 16       		.uleb128 0x16
+ 942 0283 723800   		.ascii	"r8\000"
+ 943 0286 01       		.byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 22
+
+
+ 944 0287 73       		.byte	0x73
+ 945 0288 97000000 		.4byte	0x97
+ 946 028c 16       		.uleb128 0x16
+ 947 028d 673800   		.ascii	"g8\000"
+ 948 0290 01       		.byte	0x1
+ 949 0291 73       		.byte	0x73
+ 950 0292 97000000 		.4byte	0x97
+ 951 0296 16       		.uleb128 0x16
+ 952 0297 623800   		.ascii	"b8\000"
+ 953 029a 01       		.byte	0x1
+ 954 029b 73       		.byte	0x73
+ 955 029c 97000000 		.4byte	0x97
+ 956 02a0 17       		.uleb128 0x17
+ 957 02a1 7200     		.ascii	"r\000"
+ 958 02a3 01       		.byte	0x1
+ 959 02a4 75       		.byte	0x75
+ 960 02a5 A2000000 		.4byte	0xa2
+ 961 02a9 17       		.uleb128 0x17
+ 962 02aa 6700     		.ascii	"g\000"
+ 963 02ac 01       		.byte	0x1
+ 964 02ad 76       		.byte	0x76
+ 965 02ae A2000000 		.4byte	0xa2
+ 966 02b2 17       		.uleb128 0x17
+ 967 02b3 6200     		.ascii	"b\000"
+ 968 02b5 01       		.byte	0x1
+ 969 02b6 77       		.byte	0x77
+ 970 02b7 A2000000 		.4byte	0xa2
+ 971 02bb 18       		.uleb128 0x18
+ 972 02bc EE020000 		.4byte	.LASF30
+ 973 02c0 01       		.byte	0x1
+ 974 02c1 79       		.byte	0x79
+ 975 02c2 A2000000 		.4byte	0xa2
+ 976 02c6 18       		.uleb128 0x18
+ 977 02c7 7E020000 		.4byte	.LASF31
+ 978 02cb 01       		.byte	0x1
+ 979 02cc 7A       		.byte	0x7a
+ 980 02cd A2000000 		.4byte	0xa2
+ 981 02d1 17       		.uleb128 0x17
+ 982 02d2 68737600 		.ascii	"hsv\000"
+ 983 02d6 01       		.byte	0x1
+ 984 02d7 7C       		.byte	0x7c
+ 985 02d8 5C010000 		.4byte	0x15c
+ 986 02dc 18       		.uleb128 0x18
+ 987 02dd B8000000 		.4byte	.LASF32
+ 988 02e1 01       		.byte	0x1
+ 989 02e2 81       		.byte	0x81
+ 990 02e3 AD000000 		.4byte	0xad
+ 991 02e7 17       		.uleb128 0x17
+ 992 02e8 6800     		.ascii	"h\000"
+ 993 02ea 01       		.byte	0x1
+ 994 02eb 90       		.byte	0x90
+ 995 02ec AD000000 		.4byte	0xad
+ 996 02f0 00       		.byte	0
+ 997 02f1 19       		.uleb128 0x19
+ 998 02f2 72020000 		.4byte	0x272
+ 999 02f6 00000000 		.4byte	.LFB10
+ 1000 02fa 0C010000 		.4byte	.LFE10-.LFB10
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 23
+
+
+ 1001 02fe 01       		.uleb128 0x1
+ 1002 02ff 9C       		.byte	0x9c
+ 1003 0300 62030000 		.4byte	0x362
+ 1004 0304 1A       		.uleb128 0x1a
+ 1005 0305 82020000 		.4byte	0x282
+ 1006 0309 81030000 		.4byte	.LLST12
+ 1007 030d 1A       		.uleb128 0x1a
+ 1008 030e 8C020000 		.4byte	0x28c
+ 1009 0312 A2030000 		.4byte	.LLST13
+ 1010 0316 1A       		.uleb128 0x1a
+ 1011 0317 96020000 		.4byte	0x296
+ 1012 031b C3030000 		.4byte	.LLST14
+ 1013 031f 1B       		.uleb128 0x1b
+ 1014 0320 A0020000 		.4byte	0x2a0
+ 1015 0324 01       		.uleb128 0x1
+ 1016 0325 57       		.byte	0x57
+ 1017 0326 1C       		.uleb128 0x1c
+ 1018 0327 A9020000 		.4byte	0x2a9
+ 1019 032b E4030000 		.4byte	.LLST15
+ 1020 032f 1B       		.uleb128 0x1b
+ 1021 0330 B2020000 		.4byte	0x2b2
+ 1022 0334 01       		.uleb128 0x1
+ 1023 0335 5C       		.byte	0x5c
+ 1024 0336 1C       		.uleb128 0x1c
+ 1025 0337 BB020000 		.4byte	0x2bb
+ 1026 033b 2E040000 		.4byte	.LLST16
+ 1027 033f 1B       		.uleb128 0x1b
+ 1028 0340 C6020000 		.4byte	0x2c6
+ 1029 0344 01       		.uleb128 0x1
+ 1030 0345 56       		.byte	0x56
+ 1031 0346 1C       		.uleb128 0x1c
+ 1032 0347 D1020000 		.4byte	0x2d1
+ 1033 034b 41040000 		.4byte	.LLST17
+ 1034 034f 1C       		.uleb128 0x1c
+ 1035 0350 DC020000 		.4byte	0x2dc
+ 1036 0354 A5040000 		.4byte	.LLST18
+ 1037 0358 1C       		.uleb128 0x1c
+ 1038 0359 E7020000 		.4byte	0x2e7
+ 1039 035d 3D050000 		.4byte	.LLST19
+ 1040 0361 00       		.byte	0
+ 1041 0362 1D       		.uleb128 0x1d
+ 1042 0363 1F010000 		.4byte	.LASF39
+ 1043 0367 01       		.byte	0x1
+ 1044 0368 A6       		.byte	0xa6
+ 1045 0369 5C010000 		.4byte	0x15c
+ 1046 036d 00000000 		.4byte	.LFB11
+ 1047 0371 EC000000 		.4byte	.LFE11-.LFB11
+ 1048 0375 01       		.uleb128 0x1
+ 1049 0376 9C       		.byte	0x9c
+ 1050 0377 1E       		.uleb128 0x1e
+ 1051 0378 B2000000 		.4byte	.LASF26
+ 1052 037c 01       		.byte	0x1
+ 1053 037d A6       		.byte	0xa6
+ 1054 037e 25010000 		.4byte	0x125
+ 1055 0382 8E050000 		.4byte	.LLST20
+ 1056 0386 18       		.uleb128 0x18
+ 1057 0387 E4000000 		.4byte	.LASF33
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 24
+
+
+ 1058 038b 01       		.byte	0x1
+ 1059 038c A8       		.byte	0xa8
+ 1060 038d 1A010000 		.4byte	0x11a
+ 1061 0391 1F       		.uleb128 0x1f
+ 1062 0392 72020000 		.4byte	0x272
+ 1063 0396 04000000 		.4byte	.LBB10
+ 1064 039a 00000000 		.4byte	.Ldebug_ranges0+0
+ 1065 039e 01       		.byte	0x1
+ 1066 039f AA       		.byte	0xaa
+ 1067 03a0 1A       		.uleb128 0x1a
+ 1068 03a1 96020000 		.4byte	0x296
+ 1069 03a5 A1050000 		.4byte	.LLST21
+ 1070 03a9 20       		.uleb128 0x20
+ 1071 03aa 8C020000 		.4byte	0x28c
+ 1072 03ae 20       		.uleb128 0x20
+ 1073 03af 82020000 		.4byte	0x282
+ 1074 03b3 21       		.uleb128 0x21
+ 1075 03b4 00000000 		.4byte	.Ldebug_ranges0+0
+ 1076 03b8 1C       		.uleb128 0x1c
+ 1077 03b9 A0020000 		.4byte	0x2a0
+ 1078 03bd B4050000 		.4byte	.LLST22
+ 1079 03c1 1C       		.uleb128 0x1c
+ 1080 03c2 A9020000 		.4byte	0x2a9
+ 1081 03c6 D2050000 		.4byte	.LLST23
+ 1082 03ca 1C       		.uleb128 0x1c
+ 1083 03cb B2020000 		.4byte	0x2b2
+ 1084 03cf 1C060000 		.4byte	.LLST24
+ 1085 03d3 1C       		.uleb128 0x1c
+ 1086 03d4 BB020000 		.4byte	0x2bb
+ 1087 03d8 3A060000 		.4byte	.LLST25
+ 1088 03dc 1C       		.uleb128 0x1c
+ 1089 03dd C6020000 		.4byte	0x2c6
+ 1090 03e1 4D060000 		.4byte	.LLST26
+ 1091 03e5 22       		.uleb128 0x22
+ 1092 03e6 D1020000 		.4byte	0x2d1
+ 1093 03ea 1C       		.uleb128 0x1c
+ 1094 03eb DC020000 		.4byte	0x2dc
+ 1095 03ef 6B060000 		.4byte	.LLST27
+ 1096 03f3 1C       		.uleb128 0x1c
+ 1097 03f4 E7020000 		.4byte	0x2e7
+ 1098 03f8 89060000 		.4byte	.LLST28
+ 1099 03fc 00       		.byte	0
+ 1100 03fd 00       		.byte	0
+ 1101 03fe 00       		.byte	0
+ 1102 03ff 00       		.byte	0
+ 1103              		.section	.debug_abbrev,"",%progbits
+ 1104              	.Ldebug_abbrev0:
+ 1105 0000 01       		.uleb128 0x1
+ 1106 0001 11       		.uleb128 0x11
+ 1107 0002 01       		.byte	0x1
+ 1108 0003 25       		.uleb128 0x25
+ 1109 0004 0E       		.uleb128 0xe
+ 1110 0005 13       		.uleb128 0x13
+ 1111 0006 0B       		.uleb128 0xb
+ 1112 0007 03       		.uleb128 0x3
+ 1113 0008 0E       		.uleb128 0xe
+ 1114 0009 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 25
+
+
+ 1115 000a 0E       		.uleb128 0xe
+ 1116 000b 55       		.uleb128 0x55
+ 1117 000c 17       		.uleb128 0x17
+ 1118 000d 11       		.uleb128 0x11
+ 1119 000e 01       		.uleb128 0x1
+ 1120 000f 10       		.uleb128 0x10
+ 1121 0010 17       		.uleb128 0x17
+ 1122 0011 00       		.byte	0
+ 1123 0012 00       		.byte	0
+ 1124 0013 02       		.uleb128 0x2
+ 1125 0014 24       		.uleb128 0x24
+ 1126 0015 00       		.byte	0
+ 1127 0016 0B       		.uleb128 0xb
+ 1128 0017 0B       		.uleb128 0xb
+ 1129 0018 3E       		.uleb128 0x3e
+ 1130 0019 0B       		.uleb128 0xb
+ 1131 001a 03       		.uleb128 0x3
+ 1132 001b 0E       		.uleb128 0xe
+ 1133 001c 00       		.byte	0
+ 1134 001d 00       		.byte	0
+ 1135 001e 03       		.uleb128 0x3
+ 1136 001f 16       		.uleb128 0x16
+ 1137 0020 00       		.byte	0
+ 1138 0021 03       		.uleb128 0x3
+ 1139 0022 0E       		.uleb128 0xe
+ 1140 0023 3A       		.uleb128 0x3a
+ 1141 0024 0B       		.uleb128 0xb
+ 1142 0025 3B       		.uleb128 0x3b
+ 1143 0026 0B       		.uleb128 0xb
+ 1144 0027 49       		.uleb128 0x49
+ 1145 0028 13       		.uleb128 0x13
+ 1146 0029 00       		.byte	0
+ 1147 002a 00       		.byte	0
+ 1148 002b 04       		.uleb128 0x4
+ 1149 002c 24       		.uleb128 0x24
+ 1150 002d 00       		.byte	0
+ 1151 002e 0B       		.uleb128 0xb
+ 1152 002f 0B       		.uleb128 0xb
+ 1153 0030 3E       		.uleb128 0x3e
+ 1154 0031 0B       		.uleb128 0xb
+ 1155 0032 03       		.uleb128 0x3
+ 1156 0033 08       		.uleb128 0x8
+ 1157 0034 00       		.byte	0
+ 1158 0035 00       		.byte	0
+ 1159 0036 05       		.uleb128 0x5
+ 1160 0037 13       		.uleb128 0x13
+ 1161 0038 01       		.byte	0x1
+ 1162 0039 0B       		.uleb128 0xb
+ 1163 003a 0B       		.uleb128 0xb
+ 1164 003b 3A       		.uleb128 0x3a
+ 1165 003c 0B       		.uleb128 0xb
+ 1166 003d 3B       		.uleb128 0x3b
+ 1167 003e 0B       		.uleb128 0xb
+ 1168 003f 01       		.uleb128 0x1
+ 1169 0040 13       		.uleb128 0x13
+ 1170 0041 00       		.byte	0
+ 1171 0042 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 26
+
+
+ 1172 0043 06       		.uleb128 0x6
+ 1173 0044 0D       		.uleb128 0xd
+ 1174 0045 00       		.byte	0
+ 1175 0046 03       		.uleb128 0x3
+ 1176 0047 0E       		.uleb128 0xe
+ 1177 0048 3A       		.uleb128 0x3a
+ 1178 0049 0B       		.uleb128 0xb
+ 1179 004a 3B       		.uleb128 0x3b
+ 1180 004b 0B       		.uleb128 0xb
+ 1181 004c 49       		.uleb128 0x49
+ 1182 004d 13       		.uleb128 0x13
+ 1183 004e 38       		.uleb128 0x38
+ 1184 004f 0B       		.uleb128 0xb
+ 1185 0050 00       		.byte	0
+ 1186 0051 00       		.byte	0
+ 1187 0052 07       		.uleb128 0x7
+ 1188 0053 0D       		.uleb128 0xd
+ 1189 0054 00       		.byte	0
+ 1190 0055 03       		.uleb128 0x3
+ 1191 0056 08       		.uleb128 0x8
+ 1192 0057 3A       		.uleb128 0x3a
+ 1193 0058 0B       		.uleb128 0xb
+ 1194 0059 3B       		.uleb128 0x3b
+ 1195 005a 0B       		.uleb128 0xb
+ 1196 005b 49       		.uleb128 0x49
+ 1197 005c 13       		.uleb128 0x13
+ 1198 005d 38       		.uleb128 0x38
+ 1199 005e 0B       		.uleb128 0xb
+ 1200 005f 00       		.byte	0
+ 1201 0060 00       		.byte	0
+ 1202 0061 08       		.uleb128 0x8
+ 1203 0062 17       		.uleb128 0x17
+ 1204 0063 01       		.byte	0x1
+ 1205 0064 0B       		.uleb128 0xb
+ 1206 0065 0B       		.uleb128 0xb
+ 1207 0066 3A       		.uleb128 0x3a
+ 1208 0067 0B       		.uleb128 0xb
+ 1209 0068 3B       		.uleb128 0x3b
+ 1210 0069 0B       		.uleb128 0xb
+ 1211 006a 01       		.uleb128 0x1
+ 1212 006b 13       		.uleb128 0x13
+ 1213 006c 00       		.byte	0
+ 1214 006d 00       		.byte	0
+ 1215 006e 09       		.uleb128 0x9
+ 1216 006f 0D       		.uleb128 0xd
+ 1217 0070 00       		.byte	0
+ 1218 0071 03       		.uleb128 0x3
+ 1219 0072 08       		.uleb128 0x8
+ 1220 0073 3A       		.uleb128 0x3a
+ 1221 0074 0B       		.uleb128 0xb
+ 1222 0075 3B       		.uleb128 0x3b
+ 1223 0076 0B       		.uleb128 0xb
+ 1224 0077 49       		.uleb128 0x49
+ 1225 0078 13       		.uleb128 0x13
+ 1226 0079 00       		.byte	0
+ 1227 007a 00       		.byte	0
+ 1228 007b 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 27
+
+
+ 1229 007c 0D       		.uleb128 0xd
+ 1230 007d 00       		.byte	0
+ 1231 007e 03       		.uleb128 0x3
+ 1232 007f 0E       		.uleb128 0xe
+ 1233 0080 3A       		.uleb128 0x3a
+ 1234 0081 0B       		.uleb128 0xb
+ 1235 0082 3B       		.uleb128 0x3b
+ 1236 0083 0B       		.uleb128 0xb
+ 1237 0084 49       		.uleb128 0x49
+ 1238 0085 13       		.uleb128 0x13
+ 1239 0086 00       		.byte	0
+ 1240 0087 00       		.byte	0
+ 1241 0088 0B       		.uleb128 0xb
+ 1242 0089 16       		.uleb128 0x16
+ 1243 008a 00       		.byte	0
+ 1244 008b 03       		.uleb128 0x3
+ 1245 008c 0E       		.uleb128 0xe
+ 1246 008d 3A       		.uleb128 0x3a
+ 1247 008e 0B       		.uleb128 0xb
+ 1248 008f 3B       		.uleb128 0x3b
+ 1249 0090 05       		.uleb128 0x5
+ 1250 0091 49       		.uleb128 0x49
+ 1251 0092 13       		.uleb128 0x13
+ 1252 0093 00       		.byte	0
+ 1253 0094 00       		.byte	0
+ 1254 0095 0C       		.uleb128 0xc
+ 1255 0096 13       		.uleb128 0x13
+ 1256 0097 01       		.byte	0x1
+ 1257 0098 0B       		.uleb128 0xb
+ 1258 0099 0B       		.uleb128 0xb
+ 1259 009a 3A       		.uleb128 0x3a
+ 1260 009b 0B       		.uleb128 0xb
+ 1261 009c 3B       		.uleb128 0x3b
+ 1262 009d 05       		.uleb128 0x5
+ 1263 009e 01       		.uleb128 0x1
+ 1264 009f 13       		.uleb128 0x13
+ 1265 00a0 00       		.byte	0
+ 1266 00a1 00       		.byte	0
+ 1267 00a2 0D       		.uleb128 0xd
+ 1268 00a3 0D       		.uleb128 0xd
+ 1269 00a4 00       		.byte	0
+ 1270 00a5 03       		.uleb128 0x3
+ 1271 00a6 08       		.uleb128 0x8
+ 1272 00a7 3A       		.uleb128 0x3a
+ 1273 00a8 0B       		.uleb128 0xb
+ 1274 00a9 3B       		.uleb128 0x3b
+ 1275 00aa 05       		.uleb128 0x5
+ 1276 00ab 49       		.uleb128 0x49
+ 1277 00ac 13       		.uleb128 0x13
+ 1278 00ad 38       		.uleb128 0x38
+ 1279 00ae 0B       		.uleb128 0xb
+ 1280 00af 00       		.byte	0
+ 1281 00b0 00       		.byte	0
+ 1282 00b1 0E       		.uleb128 0xe
+ 1283 00b2 2E       		.uleb128 0x2e
+ 1284 00b3 01       		.byte	0x1
+ 1285 00b4 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 28
+
+
+ 1286 00b5 0E       		.uleb128 0xe
+ 1287 00b6 3A       		.uleb128 0x3a
+ 1288 00b7 0B       		.uleb128 0xb
+ 1289 00b8 3B       		.uleb128 0x3b
+ 1290 00b9 05       		.uleb128 0x5
+ 1291 00ba 27       		.uleb128 0x27
+ 1292 00bb 19       		.uleb128 0x19
+ 1293 00bc 49       		.uleb128 0x49
+ 1294 00bd 13       		.uleb128 0x13
+ 1295 00be 20       		.uleb128 0x20
+ 1296 00bf 0B       		.uleb128 0xb
+ 1297 00c0 01       		.uleb128 0x1
+ 1298 00c1 13       		.uleb128 0x13
+ 1299 00c2 00       		.byte	0
+ 1300 00c3 00       		.byte	0
+ 1301 00c4 0F       		.uleb128 0xf
+ 1302 00c5 05       		.uleb128 0x5
+ 1303 00c6 00       		.byte	0
+ 1304 00c7 03       		.uleb128 0x3
+ 1305 00c8 08       		.uleb128 0x8
+ 1306 00c9 3A       		.uleb128 0x3a
+ 1307 00ca 0B       		.uleb128 0xb
+ 1308 00cb 3B       		.uleb128 0x3b
+ 1309 00cc 05       		.uleb128 0x5
+ 1310 00cd 49       		.uleb128 0x49
+ 1311 00ce 13       		.uleb128 0x13
+ 1312 00cf 00       		.byte	0
+ 1313 00d0 00       		.byte	0
+ 1314 00d1 10       		.uleb128 0x10
+ 1315 00d2 05       		.uleb128 0x5
+ 1316 00d3 00       		.byte	0
+ 1317 00d4 03       		.uleb128 0x3
+ 1318 00d5 0E       		.uleb128 0xe
+ 1319 00d6 3A       		.uleb128 0x3a
+ 1320 00d7 0B       		.uleb128 0xb
+ 1321 00d8 3B       		.uleb128 0x3b
+ 1322 00d9 05       		.uleb128 0x5
+ 1323 00da 49       		.uleb128 0x49
+ 1324 00db 13       		.uleb128 0x13
+ 1325 00dc 00       		.byte	0
+ 1326 00dd 00       		.byte	0
+ 1327 00de 11       		.uleb128 0x11
+ 1328 00df 2E       		.uleb128 0x2e
+ 1329 00e0 01       		.byte	0x1
+ 1330 00e1 3F       		.uleb128 0x3f
+ 1331 00e2 19       		.uleb128 0x19
+ 1332 00e3 03       		.uleb128 0x3
+ 1333 00e4 0E       		.uleb128 0xe
+ 1334 00e5 3A       		.uleb128 0x3a
+ 1335 00e6 0B       		.uleb128 0xb
+ 1336 00e7 3B       		.uleb128 0x3b
+ 1337 00e8 0B       		.uleb128 0xb
+ 1338 00e9 27       		.uleb128 0x27
+ 1339 00ea 19       		.uleb128 0x19
+ 1340 00eb 49       		.uleb128 0x49
+ 1341 00ec 13       		.uleb128 0x13
+ 1342 00ed 11       		.uleb128 0x11
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 29
+
+
+ 1343 00ee 01       		.uleb128 0x1
+ 1344 00ef 12       		.uleb128 0x12
+ 1345 00f0 06       		.uleb128 0x6
+ 1346 00f1 40       		.uleb128 0x40
+ 1347 00f2 18       		.uleb128 0x18
+ 1348 00f3 9742     		.uleb128 0x2117
+ 1349 00f5 19       		.uleb128 0x19
+ 1350 00f6 01       		.uleb128 0x1
+ 1351 00f7 13       		.uleb128 0x13
+ 1352 00f8 00       		.byte	0
+ 1353 00f9 00       		.byte	0
+ 1354 00fa 12       		.uleb128 0x12
+ 1355 00fb 05       		.uleb128 0x5
+ 1356 00fc 00       		.byte	0
+ 1357 00fd 03       		.uleb128 0x3
+ 1358 00fe 08       		.uleb128 0x8
+ 1359 00ff 3A       		.uleb128 0x3a
+ 1360 0100 0B       		.uleb128 0xb
+ 1361 0101 3B       		.uleb128 0x3b
+ 1362 0102 0B       		.uleb128 0xb
+ 1363 0103 49       		.uleb128 0x49
+ 1364 0104 13       		.uleb128 0x13
+ 1365 0105 02       		.uleb128 0x2
+ 1366 0106 17       		.uleb128 0x17
+ 1367 0107 00       		.byte	0
+ 1368 0108 00       		.byte	0
+ 1369 0109 13       		.uleb128 0x13
+ 1370 010a 34       		.uleb128 0x34
+ 1371 010b 00       		.byte	0
+ 1372 010c 03       		.uleb128 0x3
+ 1373 010d 08       		.uleb128 0x8
+ 1374 010e 3A       		.uleb128 0x3a
+ 1375 010f 0B       		.uleb128 0xb
+ 1376 0110 3B       		.uleb128 0x3b
+ 1377 0111 0B       		.uleb128 0xb
+ 1378 0112 49       		.uleb128 0x49
+ 1379 0113 13       		.uleb128 0x13
+ 1380 0114 02       		.uleb128 0x2
+ 1381 0115 17       		.uleb128 0x17
+ 1382 0116 00       		.byte	0
+ 1383 0117 00       		.byte	0
+ 1384 0118 14       		.uleb128 0x14
+ 1385 0119 34       		.uleb128 0x34
+ 1386 011a 00       		.byte	0
+ 1387 011b 03       		.uleb128 0x3
+ 1388 011c 0E       		.uleb128 0xe
+ 1389 011d 3A       		.uleb128 0x3a
+ 1390 011e 0B       		.uleb128 0xb
+ 1391 011f 3B       		.uleb128 0x3b
+ 1392 0120 0B       		.uleb128 0xb
+ 1393 0121 49       		.uleb128 0x49
+ 1394 0122 13       		.uleb128 0x13
+ 1395 0123 02       		.uleb128 0x2
+ 1396 0124 17       		.uleb128 0x17
+ 1397 0125 00       		.byte	0
+ 1398 0126 00       		.byte	0
+ 1399 0127 15       		.uleb128 0x15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 30
+
+
+ 1400 0128 2E       		.uleb128 0x2e
+ 1401 0129 01       		.byte	0x1
+ 1402 012a 3F       		.uleb128 0x3f
+ 1403 012b 19       		.uleb128 0x19
+ 1404 012c 03       		.uleb128 0x3
+ 1405 012d 0E       		.uleb128 0xe
+ 1406 012e 3A       		.uleb128 0x3a
+ 1407 012f 0B       		.uleb128 0xb
+ 1408 0130 3B       		.uleb128 0x3b
+ 1409 0131 0B       		.uleb128 0xb
+ 1410 0132 27       		.uleb128 0x27
+ 1411 0133 19       		.uleb128 0x19
+ 1412 0134 49       		.uleb128 0x49
+ 1413 0135 13       		.uleb128 0x13
+ 1414 0136 20       		.uleb128 0x20
+ 1415 0137 0B       		.uleb128 0xb
+ 1416 0138 01       		.uleb128 0x1
+ 1417 0139 13       		.uleb128 0x13
+ 1418 013a 00       		.byte	0
+ 1419 013b 00       		.byte	0
+ 1420 013c 16       		.uleb128 0x16
+ 1421 013d 05       		.uleb128 0x5
+ 1422 013e 00       		.byte	0
+ 1423 013f 03       		.uleb128 0x3
+ 1424 0140 08       		.uleb128 0x8
+ 1425 0141 3A       		.uleb128 0x3a
+ 1426 0142 0B       		.uleb128 0xb
+ 1427 0143 3B       		.uleb128 0x3b
+ 1428 0144 0B       		.uleb128 0xb
+ 1429 0145 49       		.uleb128 0x49
+ 1430 0146 13       		.uleb128 0x13
+ 1431 0147 00       		.byte	0
+ 1432 0148 00       		.byte	0
+ 1433 0149 17       		.uleb128 0x17
+ 1434 014a 34       		.uleb128 0x34
+ 1435 014b 00       		.byte	0
+ 1436 014c 03       		.uleb128 0x3
+ 1437 014d 08       		.uleb128 0x8
+ 1438 014e 3A       		.uleb128 0x3a
+ 1439 014f 0B       		.uleb128 0xb
+ 1440 0150 3B       		.uleb128 0x3b
+ 1441 0151 0B       		.uleb128 0xb
+ 1442 0152 49       		.uleb128 0x49
+ 1443 0153 13       		.uleb128 0x13
+ 1444 0154 00       		.byte	0
+ 1445 0155 00       		.byte	0
+ 1446 0156 18       		.uleb128 0x18
+ 1447 0157 34       		.uleb128 0x34
+ 1448 0158 00       		.byte	0
+ 1449 0159 03       		.uleb128 0x3
+ 1450 015a 0E       		.uleb128 0xe
+ 1451 015b 3A       		.uleb128 0x3a
+ 1452 015c 0B       		.uleb128 0xb
+ 1453 015d 3B       		.uleb128 0x3b
+ 1454 015e 0B       		.uleb128 0xb
+ 1455 015f 49       		.uleb128 0x49
+ 1456 0160 13       		.uleb128 0x13
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 31
+
+
+ 1457 0161 00       		.byte	0
+ 1458 0162 00       		.byte	0
+ 1459 0163 19       		.uleb128 0x19
+ 1460 0164 2E       		.uleb128 0x2e
+ 1461 0165 01       		.byte	0x1
+ 1462 0166 31       		.uleb128 0x31
+ 1463 0167 13       		.uleb128 0x13
+ 1464 0168 11       		.uleb128 0x11
+ 1465 0169 01       		.uleb128 0x1
+ 1466 016a 12       		.uleb128 0x12
+ 1467 016b 06       		.uleb128 0x6
+ 1468 016c 40       		.uleb128 0x40
+ 1469 016d 18       		.uleb128 0x18
+ 1470 016e 9742     		.uleb128 0x2117
+ 1471 0170 19       		.uleb128 0x19
+ 1472 0171 01       		.uleb128 0x1
+ 1473 0172 13       		.uleb128 0x13
+ 1474 0173 00       		.byte	0
+ 1475 0174 00       		.byte	0
+ 1476 0175 1A       		.uleb128 0x1a
+ 1477 0176 05       		.uleb128 0x5
+ 1478 0177 00       		.byte	0
+ 1479 0178 31       		.uleb128 0x31
+ 1480 0179 13       		.uleb128 0x13
+ 1481 017a 02       		.uleb128 0x2
+ 1482 017b 17       		.uleb128 0x17
+ 1483 017c 00       		.byte	0
+ 1484 017d 00       		.byte	0
+ 1485 017e 1B       		.uleb128 0x1b
+ 1486 017f 34       		.uleb128 0x34
+ 1487 0180 00       		.byte	0
+ 1488 0181 31       		.uleb128 0x31
+ 1489 0182 13       		.uleb128 0x13
+ 1490 0183 02       		.uleb128 0x2
+ 1491 0184 18       		.uleb128 0x18
+ 1492 0185 00       		.byte	0
+ 1493 0186 00       		.byte	0
+ 1494 0187 1C       		.uleb128 0x1c
+ 1495 0188 34       		.uleb128 0x34
+ 1496 0189 00       		.byte	0
+ 1497 018a 31       		.uleb128 0x31
+ 1498 018b 13       		.uleb128 0x13
+ 1499 018c 02       		.uleb128 0x2
+ 1500 018d 17       		.uleb128 0x17
+ 1501 018e 00       		.byte	0
+ 1502 018f 00       		.byte	0
+ 1503 0190 1D       		.uleb128 0x1d
+ 1504 0191 2E       		.uleb128 0x2e
+ 1505 0192 01       		.byte	0x1
+ 1506 0193 3F       		.uleb128 0x3f
+ 1507 0194 19       		.uleb128 0x19
+ 1508 0195 03       		.uleb128 0x3
+ 1509 0196 0E       		.uleb128 0xe
+ 1510 0197 3A       		.uleb128 0x3a
+ 1511 0198 0B       		.uleb128 0xb
+ 1512 0199 3B       		.uleb128 0x3b
+ 1513 019a 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 32
+
+
+ 1514 019b 27       		.uleb128 0x27
+ 1515 019c 19       		.uleb128 0x19
+ 1516 019d 49       		.uleb128 0x49
+ 1517 019e 13       		.uleb128 0x13
+ 1518 019f 11       		.uleb128 0x11
+ 1519 01a0 01       		.uleb128 0x1
+ 1520 01a1 12       		.uleb128 0x12
+ 1521 01a2 06       		.uleb128 0x6
+ 1522 01a3 40       		.uleb128 0x40
+ 1523 01a4 18       		.uleb128 0x18
+ 1524 01a5 9742     		.uleb128 0x2117
+ 1525 01a7 19       		.uleb128 0x19
+ 1526 01a8 00       		.byte	0
+ 1527 01a9 00       		.byte	0
+ 1528 01aa 1E       		.uleb128 0x1e
+ 1529 01ab 05       		.uleb128 0x5
+ 1530 01ac 00       		.byte	0
+ 1531 01ad 03       		.uleb128 0x3
+ 1532 01ae 0E       		.uleb128 0xe
+ 1533 01af 3A       		.uleb128 0x3a
+ 1534 01b0 0B       		.uleb128 0xb
+ 1535 01b1 3B       		.uleb128 0x3b
+ 1536 01b2 0B       		.uleb128 0xb
+ 1537 01b3 49       		.uleb128 0x49
+ 1538 01b4 13       		.uleb128 0x13
+ 1539 01b5 02       		.uleb128 0x2
+ 1540 01b6 17       		.uleb128 0x17
+ 1541 01b7 00       		.byte	0
+ 1542 01b8 00       		.byte	0
+ 1543 01b9 1F       		.uleb128 0x1f
+ 1544 01ba 1D       		.uleb128 0x1d
+ 1545 01bb 01       		.byte	0x1
+ 1546 01bc 31       		.uleb128 0x31
+ 1547 01bd 13       		.uleb128 0x13
+ 1548 01be 52       		.uleb128 0x52
+ 1549 01bf 01       		.uleb128 0x1
+ 1550 01c0 55       		.uleb128 0x55
+ 1551 01c1 17       		.uleb128 0x17
+ 1552 01c2 58       		.uleb128 0x58
+ 1553 01c3 0B       		.uleb128 0xb
+ 1554 01c4 59       		.uleb128 0x59
+ 1555 01c5 0B       		.uleb128 0xb
+ 1556 01c6 00       		.byte	0
+ 1557 01c7 00       		.byte	0
+ 1558 01c8 20       		.uleb128 0x20
+ 1559 01c9 05       		.uleb128 0x5
+ 1560 01ca 00       		.byte	0
+ 1561 01cb 31       		.uleb128 0x31
+ 1562 01cc 13       		.uleb128 0x13
+ 1563 01cd 00       		.byte	0
+ 1564 01ce 00       		.byte	0
+ 1565 01cf 21       		.uleb128 0x21
+ 1566 01d0 0B       		.uleb128 0xb
+ 1567 01d1 01       		.byte	0x1
+ 1568 01d2 55       		.uleb128 0x55
+ 1569 01d3 17       		.uleb128 0x17
+ 1570 01d4 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 33
+
+
+ 1571 01d5 00       		.byte	0
+ 1572 01d6 22       		.uleb128 0x22
+ 1573 01d7 34       		.uleb128 0x34
+ 1574 01d8 00       		.byte	0
+ 1575 01d9 31       		.uleb128 0x31
+ 1576 01da 13       		.uleb128 0x13
+ 1577 01db 00       		.byte	0
+ 1578 01dc 00       		.byte	0
+ 1579 01dd 00       		.byte	0
+ 1580              		.section	.debug_loc,"",%progbits
+ 1581              	.Ldebug_loc0:
+ 1582              	.LLST0:
+ 1583 0000 00000000 		.4byte	.LVL0
+ 1584 0004 1C000000 		.4byte	.LVL3
+ 1585 0008 0100     		.2byte	0x1
+ 1586 000a 50       		.byte	0x50
+ 1587 000b 1C000000 		.4byte	.LVL3
+ 1588 000f 28000000 		.4byte	.LVL5
+ 1589 0013 1400     		.2byte	0x14
+ 1590 0015 70       		.byte	0x70
+ 1591 0016 00       		.sleb128 0
+ 1592 0017 0A       		.byte	0xa
+ 1593 0018 FFFF     		.2byte	0xffff
+ 1594 001a 1A       		.byte	0x1a
+ 1595 001b 08       		.byte	0x8
+ 1596 001c FF       		.byte	0xff
+ 1597 001d 1E       		.byte	0x1e
+ 1598 001e F7       		.byte	0xf7
+ 1599 001f 25       		.uleb128 0x25
+ 1600 0020 0A       		.byte	0xa
+ 1601 0021 6801     		.2byte	0x168
+ 1602 0023 F7       		.byte	0xf7
+ 1603 0024 25       		.uleb128 0x25
+ 1604 0025 1B       		.byte	0x1b
+ 1605 0026 F7       		.byte	0xf7
+ 1606 0027 00       		.uleb128 0
+ 1607 0028 9F       		.byte	0x9f
+ 1608 0029 28000000 		.4byte	.LVL5
+ 1609 002d AA000000 		.4byte	.LVL16
+ 1610 0031 1500     		.2byte	0x15
+ 1611 0033 F3       		.byte	0xf3
+ 1612 0034 01       		.uleb128 0x1
+ 1613 0035 50       		.byte	0x50
+ 1614 0036 0A       		.byte	0xa
+ 1615 0037 FFFF     		.2byte	0xffff
+ 1616 0039 1A       		.byte	0x1a
+ 1617 003a 08       		.byte	0x8
+ 1618 003b FF       		.byte	0xff
+ 1619 003c 1E       		.byte	0x1e
+ 1620 003d F7       		.byte	0xf7
+ 1621 003e 25       		.uleb128 0x25
+ 1622 003f 0A       		.byte	0xa
+ 1623 0040 6801     		.2byte	0x168
+ 1624 0042 F7       		.byte	0xf7
+ 1625 0043 25       		.uleb128 0x25
+ 1626 0044 1B       		.byte	0x1b
+ 1627 0045 F7       		.byte	0xf7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 34
+
+
+ 1628 0046 00       		.uleb128 0
+ 1629 0047 9F       		.byte	0x9f
+ 1630 0048 AA000000 		.4byte	.LVL16
+ 1631 004c AC000000 		.4byte	.LVL17
+ 1632 0050 1400     		.2byte	0x14
+ 1633 0052 70       		.byte	0x70
+ 1634 0053 00       		.sleb128 0
+ 1635 0054 0A       		.byte	0xa
+ 1636 0055 FFFF     		.2byte	0xffff
+ 1637 0057 1A       		.byte	0x1a
+ 1638 0058 08       		.byte	0x8
+ 1639 0059 FF       		.byte	0xff
+ 1640 005a 1E       		.byte	0x1e
+ 1641 005b F7       		.byte	0xf7
+ 1642 005c 25       		.uleb128 0x25
+ 1643 005d 0A       		.byte	0xa
+ 1644 005e 6801     		.2byte	0x168
+ 1645 0060 F7       		.byte	0xf7
+ 1646 0061 25       		.uleb128 0x25
+ 1647 0062 1B       		.byte	0x1b
+ 1648 0063 F7       		.byte	0xf7
+ 1649 0064 00       		.uleb128 0
+ 1650 0065 9F       		.byte	0x9f
+ 1651 0066 AC000000 		.4byte	.LVL17
+ 1652 006a F0000000 		.4byte	.LFE9
+ 1653 006e 1500     		.2byte	0x15
+ 1654 0070 F3       		.byte	0xf3
+ 1655 0071 01       		.uleb128 0x1
+ 1656 0072 50       		.byte	0x50
+ 1657 0073 0A       		.byte	0xa
+ 1658 0074 FFFF     		.2byte	0xffff
+ 1659 0076 1A       		.byte	0x1a
+ 1660 0077 08       		.byte	0x8
+ 1661 0078 FF       		.byte	0xff
+ 1662 0079 1E       		.byte	0x1e
+ 1663 007a F7       		.byte	0xf7
+ 1664 007b 25       		.uleb128 0x25
+ 1665 007c 0A       		.byte	0xa
+ 1666 007d 6801     		.2byte	0x168
+ 1667 007f F7       		.byte	0xf7
+ 1668 0080 25       		.uleb128 0x25
+ 1669 0081 1B       		.byte	0x1b
+ 1670 0082 F7       		.byte	0xf7
+ 1671 0083 00       		.uleb128 0
+ 1672 0084 9F       		.byte	0x9f
+ 1673 0085 00000000 		.4byte	0
+ 1674 0089 00000000 		.4byte	0
+ 1675              	.LLST1:
+ 1676 008d 00000000 		.4byte	.LVL0
+ 1677 0091 06000000 		.4byte	.LVL1
+ 1678 0095 0100     		.2byte	0x1
+ 1679 0097 51       		.byte	0x51
+ 1680 0098 06000000 		.4byte	.LVL1
+ 1681 009c 1C000000 		.4byte	.LVL3
+ 1682 00a0 0400     		.2byte	0x4
+ 1683 00a2 F3       		.byte	0xf3
+ 1684 00a3 01       		.uleb128 0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 35
+
+
+ 1685 00a4 51       		.byte	0x51
+ 1686 00a5 9F       		.byte	0x9f
+ 1687 00a6 1C000000 		.4byte	.LVL3
+ 1688 00aa 6A000000 		.4byte	.LVL9
+ 1689 00ae 0100     		.2byte	0x1
+ 1690 00b0 51       		.byte	0x51
+ 1691 00b1 AA000000 		.4byte	.LVL16
+ 1692 00b5 C0000000 		.4byte	.LVL18
+ 1693 00b9 0100     		.2byte	0x1
+ 1694 00bb 51       		.byte	0x51
+ 1695 00bc 00000000 		.4byte	0
+ 1696 00c0 00000000 		.4byte	0
+ 1697              	.LLST2:
+ 1698 00c4 00000000 		.4byte	.LVL0
+ 1699 00c8 0C000000 		.4byte	.LVL2
+ 1700 00cc 0100     		.2byte	0x1
+ 1701 00ce 52       		.byte	0x52
+ 1702 00cf 0C000000 		.4byte	.LVL2
+ 1703 00d3 20000000 		.4byte	.LVL4
+ 1704 00d7 0400     		.2byte	0x4
+ 1705 00d9 F3       		.byte	0xf3
+ 1706 00da 01       		.uleb128 0x1
+ 1707 00db 52       		.byte	0x52
+ 1708 00dc 9F       		.byte	0x9f
+ 1709 00dd 20000000 		.4byte	.LVL4
+ 1710 00e1 94000000 		.4byte	.LVL13
+ 1711 00e5 0100     		.2byte	0x1
+ 1712 00e7 52       		.byte	0x52
+ 1713 00e8 AA000000 		.4byte	.LVL16
+ 1714 00ec C4000000 		.4byte	.LVL20
+ 1715 00f0 0100     		.2byte	0x1
+ 1716 00f2 52       		.byte	0x52
+ 1717 00f3 C4000000 		.4byte	.LVL20
+ 1718 00f7 CA000000 		.4byte	.LVL23
+ 1719 00fb 0100     		.2byte	0x1
+ 1720 00fd 53       		.byte	0x53
+ 1721 00fe CA000000 		.4byte	.LVL23
+ 1722 0102 CE000000 		.4byte	.LVL25
+ 1723 0106 0100     		.2byte	0x1
+ 1724 0108 52       		.byte	0x52
+ 1725 0109 CE000000 		.4byte	.LVL25
+ 1726 010d D0000000 		.4byte	.LVL26
+ 1727 0111 0100     		.2byte	0x1
+ 1728 0113 54       		.byte	0x54
+ 1729 0114 D0000000 		.4byte	.LVL26
+ 1730 0118 D4000000 		.4byte	.LVL28
+ 1731 011c 0100     		.2byte	0x1
+ 1732 011e 52       		.byte	0x52
+ 1733 011f D4000000 		.4byte	.LVL28
+ 1734 0123 DA000000 		.4byte	.LVL31
+ 1735 0127 0100     		.2byte	0x1
+ 1736 0129 53       		.byte	0x53
+ 1737 012a DA000000 		.4byte	.LVL31
+ 1738 012e E0000000 		.4byte	.LVL34
+ 1739 0132 0100     		.2byte	0x1
+ 1740 0134 52       		.byte	0x52
+ 1741 0135 E0000000 		.4byte	.LVL34
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 36
+
+
+ 1742 0139 F0000000 		.4byte	.LFE9
+ 1743 013d 0100     		.2byte	0x1
+ 1744 013f 50       		.byte	0x50
+ 1745 0140 00000000 		.4byte	0
+ 1746 0144 00000000 		.4byte	0
+ 1747              	.LLST3:
+ 1748 0148 90000000 		.4byte	.LVL11
+ 1749 014c C0000000 		.4byte	.LVL18
+ 1750 0150 0100     		.2byte	0x1
+ 1751 0152 52       		.byte	0x52
+ 1752 0153 C0000000 		.4byte	.LVL18
+ 1753 0157 C6000000 		.4byte	.LVL21
+ 1754 015b 0100     		.2byte	0x1
+ 1755 015d 54       		.byte	0x54
+ 1756 015e C6000000 		.4byte	.LVL21
+ 1757 0162 CA000000 		.4byte	.LVL23
+ 1758 0166 0100     		.2byte	0x1
+ 1759 0168 52       		.byte	0x52
+ 1760 0169 D0000000 		.4byte	.LVL26
+ 1761 016d D6000000 		.4byte	.LVL29
+ 1762 0171 0100     		.2byte	0x1
+ 1763 0173 51       		.byte	0x51
+ 1764 0174 D6000000 		.4byte	.LVL29
+ 1765 0178 DA000000 		.4byte	.LVL31
+ 1766 017c 0100     		.2byte	0x1
+ 1767 017e 52       		.byte	0x52
+ 1768 017f DA000000 		.4byte	.LVL31
+ 1769 0183 E2000000 		.4byte	.LVL35
+ 1770 0187 0100     		.2byte	0x1
+ 1771 0189 51       		.byte	0x51
+ 1772 018a E2000000 		.4byte	.LVL35
+ 1773 018e F0000000 		.4byte	.LFE9
+ 1774 0192 0100     		.2byte	0x1
+ 1775 0194 52       		.byte	0x52
+ 1776 0195 00000000 		.4byte	0
+ 1777 0199 00000000 		.4byte	0
+ 1778              	.LLST4:
+ 1779 019d 90000000 		.4byte	.LVL11
+ 1780 01a1 94000000 		.4byte	.LVL13
+ 1781 01a5 0100     		.2byte	0x1
+ 1782 01a7 51       		.byte	0x51
+ 1783 01a8 94000000 		.4byte	.LVL13
+ 1784 01ac A8000000 		.4byte	.LVL15
+ 1785 01b0 0100     		.2byte	0x1
+ 1786 01b2 54       		.byte	0x54
+ 1787 01b3 AA000000 		.4byte	.LVL16
+ 1788 01b7 C0000000 		.4byte	.LVL18
+ 1789 01bb 0100     		.2byte	0x1
+ 1790 01bd 52       		.byte	0x52
+ 1791 01be C0000000 		.4byte	.LVL18
+ 1792 01c2 C8000000 		.4byte	.LVL22
+ 1793 01c6 0100     		.2byte	0x1
+ 1794 01c8 51       		.byte	0x51
+ 1795 01c9 C8000000 		.4byte	.LVL22
+ 1796 01cd CA000000 		.4byte	.LVL23
+ 1797 01d1 0100     		.2byte	0x1
+ 1798 01d3 54       		.byte	0x54
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 37
+
+
+ 1799 01d4 D0000000 		.4byte	.LVL26
+ 1800 01d8 D4000000 		.4byte	.LVL28
+ 1801 01dc 0100     		.2byte	0x1
+ 1802 01de 52       		.byte	0x52
+ 1803 01df D4000000 		.4byte	.LVL28
+ 1804 01e3 F0000000 		.4byte	.LFE9
+ 1805 01e7 0100     		.2byte	0x1
+ 1806 01e9 53       		.byte	0x53
+ 1807 01ea 00000000 		.4byte	0
+ 1808 01ee 00000000 		.4byte	0
+ 1809              	.LLST5:
+ 1810 01f2 90000000 		.4byte	.LVL11
+ 1811 01f6 94000000 		.4byte	.LVL13
+ 1812 01fa 0100     		.2byte	0x1
+ 1813 01fc 53       		.byte	0x53
+ 1814 01fd 94000000 		.4byte	.LVL13
+ 1815 0201 AA000000 		.4byte	.LVL16
+ 1816 0205 0100     		.2byte	0x1
+ 1817 0207 51       		.byte	0x51
+ 1818 0208 AA000000 		.4byte	.LVL16
+ 1819 020c C4000000 		.4byte	.LVL20
+ 1820 0210 0100     		.2byte	0x1
+ 1821 0212 52       		.byte	0x52
+ 1822 0213 C4000000 		.4byte	.LVL20
+ 1823 0217 CA000000 		.4byte	.LVL23
+ 1824 021b 0100     		.2byte	0x1
+ 1825 021d 53       		.byte	0x53
+ 1826 021e D0000000 		.4byte	.LVL26
+ 1827 0222 D8000000 		.4byte	.LVL30
+ 1828 0226 0100     		.2byte	0x1
+ 1829 0228 54       		.byte	0x54
+ 1830 0229 D8000000 		.4byte	.LVL30
+ 1831 022d DA000000 		.4byte	.LVL31
+ 1832 0231 0100     		.2byte	0x1
+ 1833 0233 51       		.byte	0x51
+ 1834 0234 DA000000 		.4byte	.LVL31
+ 1835 0238 E0000000 		.4byte	.LVL34
+ 1836 023c 0100     		.2byte	0x1
+ 1837 023e 52       		.byte	0x52
+ 1838 023f E0000000 		.4byte	.LVL34
+ 1839 0243 F0000000 		.4byte	.LFE9
+ 1840 0247 0100     		.2byte	0x1
+ 1841 0249 50       		.byte	0x50
+ 1842 024a 00000000 		.4byte	0
+ 1843 024e 00000000 		.4byte	0
+ 1844              	.LLST6:
+ 1845 0252 3E000000 		.4byte	.LVL6
+ 1846 0256 94000000 		.4byte	.LVL13
+ 1847 025a 0100     		.2byte	0x1
+ 1848 025c 50       		.byte	0x50
+ 1849 025d C0000000 		.4byte	.LVL18
+ 1850 0261 DC000000 		.4byte	.LVL32
+ 1851 0265 0100     		.2byte	0x1
+ 1852 0267 50       		.byte	0x50
+ 1853 0268 00000000 		.4byte	0
+ 1854 026c 00000000 		.4byte	0
+ 1855              	.LLST7:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 38
+
+
+ 1856 0270 4E000000 		.4byte	.LVL7
+ 1857 0274 5A000000 		.4byte	.LVL8
+ 1858 0278 0100     		.2byte	0x1
+ 1859 027a 53       		.byte	0x53
+ 1860 027b 00000000 		.4byte	0
+ 1861 027f 00000000 		.4byte	0
+ 1862              	.LLST8:
+ 1863 0283 82000000 		.4byte	.LVL10
+ 1864 0287 94000000 		.4byte	.LVL13
+ 1865 028b 0100     		.2byte	0x1
+ 1866 028d 51       		.byte	0x51
+ 1867 028e C0000000 		.4byte	.LVL18
+ 1868 0292 C8000000 		.4byte	.LVL22
+ 1869 0296 0100     		.2byte	0x1
+ 1870 0298 51       		.byte	0x51
+ 1871 0299 C8000000 		.4byte	.LVL22
+ 1872 029d CA000000 		.4byte	.LVL23
+ 1873 02a1 0100     		.2byte	0x1
+ 1874 02a3 54       		.byte	0x54
+ 1875 02a4 CA000000 		.4byte	.LVL23
+ 1876 02a8 D6000000 		.4byte	.LVL29
+ 1877 02ac 0100     		.2byte	0x1
+ 1878 02ae 51       		.byte	0x51
+ 1879 02af D6000000 		.4byte	.LVL29
+ 1880 02b3 DA000000 		.4byte	.LVL31
+ 1881 02b7 0100     		.2byte	0x1
+ 1882 02b9 52       		.byte	0x52
+ 1883 02ba DA000000 		.4byte	.LVL31
+ 1884 02be E2000000 		.4byte	.LVL35
+ 1885 02c2 0100     		.2byte	0x1
+ 1886 02c4 51       		.byte	0x51
+ 1887 02c5 E2000000 		.4byte	.LVL35
+ 1888 02c9 F0000000 		.4byte	.LFE9
+ 1889 02cd 0100     		.2byte	0x1
+ 1890 02cf 52       		.byte	0x52
+ 1891 02d0 00000000 		.4byte	0
+ 1892 02d4 00000000 		.4byte	0
+ 1893              	.LLST9:
+ 1894 02d8 82000000 		.4byte	.LVL10
+ 1895 02dc 94000000 		.4byte	.LVL13
+ 1896 02e0 0100     		.2byte	0x1
+ 1897 02e2 53       		.byte	0x53
+ 1898 02e3 C0000000 		.4byte	.LVL18
+ 1899 02e7 C2000000 		.4byte	.LVL19
+ 1900 02eb 0100     		.2byte	0x1
+ 1901 02ed 53       		.byte	0x53
+ 1902 02ee CA000000 		.4byte	.LVL23
+ 1903 02f2 D2000000 		.4byte	.LVL27
+ 1904 02f6 0100     		.2byte	0x1
+ 1905 02f8 53       		.byte	0x53
+ 1906 02f9 DA000000 		.4byte	.LVL31
+ 1907 02fd F0000000 		.4byte	.LFE9
+ 1908 0301 0100     		.2byte	0x1
+ 1909 0303 53       		.byte	0x53
+ 1910 0304 00000000 		.4byte	0
+ 1911 0308 00000000 		.4byte	0
+ 1912              	.LLST10:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 39
+
+
+ 1913 030c 82000000 		.4byte	.LVL10
+ 1914 0310 92000000 		.4byte	.LVL12
+ 1915 0314 0100     		.2byte	0x1
+ 1916 0316 54       		.byte	0x54
+ 1917 0317 C0000000 		.4byte	.LVL18
+ 1918 031b C6000000 		.4byte	.LVL21
+ 1919 031f 0100     		.2byte	0x1
+ 1920 0321 54       		.byte	0x54
+ 1921 0322 C6000000 		.4byte	.LVL21
+ 1922 0326 CA000000 		.4byte	.LVL23
+ 1923 032a 0100     		.2byte	0x1
+ 1924 032c 52       		.byte	0x52
+ 1925 032d CA000000 		.4byte	.LVL23
+ 1926 0331 CC000000 		.4byte	.LVL24
+ 1927 0335 0100     		.2byte	0x1
+ 1928 0337 54       		.byte	0x54
+ 1929 0338 D0000000 		.4byte	.LVL26
+ 1930 033c D8000000 		.4byte	.LVL30
+ 1931 0340 0100     		.2byte	0x1
+ 1932 0342 54       		.byte	0x54
+ 1933 0343 D8000000 		.4byte	.LVL30
+ 1934 0347 DA000000 		.4byte	.LVL31
+ 1935 034b 0100     		.2byte	0x1
+ 1936 034d 51       		.byte	0x51
+ 1937 034e DA000000 		.4byte	.LVL31
+ 1938 0352 DE000000 		.4byte	.LVL33
+ 1939 0356 0100     		.2byte	0x1
+ 1940 0358 54       		.byte	0x54
+ 1941 0359 00000000 		.4byte	0
+ 1942 035d 00000000 		.4byte	0
+ 1943              	.LLST11:
+ 1944 0361 94000000 		.4byte	.LVL13
+ 1945 0365 A6000000 		.4byte	.LVL14
+ 1946 0369 0E00     		.2byte	0xe
+ 1947 036b 51       		.byte	0x51
+ 1948 036c 93       		.byte	0x93
+ 1949 036d 01       		.uleb128 0x1
+ 1950 036e 54       		.byte	0x54
+ 1951 036f 93       		.byte	0x93
+ 1952 0370 01       		.uleb128 0x1
+ 1953 0371 52       		.byte	0x52
+ 1954 0372 93       		.byte	0x93
+ 1955 0373 01       		.uleb128 0x1
+ 1956 0374 09       		.byte	0x9
+ 1957 0375 FF       		.byte	0xff
+ 1958 0376 9F       		.byte	0x9f
+ 1959 0377 93       		.byte	0x93
+ 1960 0378 01       		.uleb128 0x1
+ 1961 0379 00000000 		.4byte	0
+ 1962 037d 00000000 		.4byte	0
+ 1963              	.LLST12:
+ 1964 0381 00000000 		.4byte	.LVL36
+ 1965 0385 0A000000 		.4byte	.LVL38
+ 1966 0389 0100     		.2byte	0x1
+ 1967 038b 50       		.byte	0x50
+ 1968 038c 0A000000 		.4byte	.LVL38
+ 1969 0390 0C010000 		.4byte	.LFE10
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 40
+
+
+ 1970 0394 0400     		.2byte	0x4
+ 1971 0396 F3       		.byte	0xf3
+ 1972 0397 01       		.uleb128 0x1
+ 1973 0398 50       		.byte	0x50
+ 1974 0399 9F       		.byte	0x9f
+ 1975 039a 00000000 		.4byte	0
+ 1976 039e 00000000 		.4byte	0
+ 1977              	.LLST13:
+ 1978 03a2 00000000 		.4byte	.LVL36
+ 1979 03a6 08000000 		.4byte	.LVL37
+ 1980 03aa 0100     		.2byte	0x1
+ 1981 03ac 51       		.byte	0x51
+ 1982 03ad 08000000 		.4byte	.LVL37
+ 1983 03b1 0C010000 		.4byte	.LFE10
+ 1984 03b5 0400     		.2byte	0x4
+ 1985 03b7 F3       		.byte	0xf3
+ 1986 03b8 01       		.uleb128 0x1
+ 1987 03b9 51       		.byte	0x51
+ 1988 03ba 9F       		.byte	0x9f
+ 1989 03bb 00000000 		.4byte	0
+ 1990 03bf 00000000 		.4byte	0
+ 1991              	.LLST14:
+ 1992 03c3 00000000 		.4byte	.LVL36
+ 1993 03c7 16000000 		.4byte	.LVL39
+ 1994 03cb 0100     		.2byte	0x1
+ 1995 03cd 52       		.byte	0x52
+ 1996 03ce 16000000 		.4byte	.LVL39
+ 1997 03d2 0C010000 		.4byte	.LFE10
+ 1998 03d6 0400     		.2byte	0x4
+ 1999 03d8 F3       		.byte	0xf3
+ 2000 03d9 01       		.uleb128 0x1
+ 2001 03da 52       		.byte	0x52
+ 2002 03db 9F       		.byte	0x9f
+ 2003 03dc 00000000 		.4byte	0
+ 2004 03e0 00000000 		.4byte	0
+ 2005              	.LLST15:
+ 2006 03e4 22000000 		.4byte	.LVL41
+ 2007 03e8 7A000000 		.4byte	.LVL48
+ 2008 03ec 0100     		.2byte	0x1
+ 2009 03ee 5E       		.byte	0x5e
+ 2010 03ef 88000000 		.4byte	.LVL49
+ 2011 03f3 96000000 		.4byte	.LVL51
+ 2012 03f7 0100     		.2byte	0x1
+ 2013 03f9 5E       		.byte	0x5e
+ 2014 03fa AE000000 		.4byte	.LVL52
+ 2015 03fe CA000000 		.4byte	.LVL56
+ 2016 0402 0100     		.2byte	0x1
+ 2017 0404 5E       		.byte	0x5e
+ 2018 0405 DE000000 		.4byte	.LVL61
+ 2019 0409 EC000000 		.4byte	.LVL62
+ 2020 040d 0100     		.2byte	0x1
+ 2021 040f 5E       		.byte	0x5e
+ 2022 0410 EC000000 		.4byte	.LVL62
+ 2023 0414 F8000000 		.4byte	.LVL64
+ 2024 0418 0100     		.2byte	0x1
+ 2025 041a 51       		.byte	0x51
+ 2026 041b F8000000 		.4byte	.LVL64
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 41
+
+
+ 2027 041f 0C010000 		.4byte	.LFE10
+ 2028 0423 0100     		.2byte	0x1
+ 2029 0425 5E       		.byte	0x5e
+ 2030 0426 00000000 		.4byte	0
+ 2031 042a 00000000 		.4byte	0
+ 2032              	.LLST16:
+ 2033 042e 38000000 		.4byte	.LVL43
+ 2034 0432 48000000 		.4byte	.LVL45
+ 2035 0436 0100     		.2byte	0x1
+ 2036 0438 53       		.byte	0x53
+ 2037 0439 00000000 		.4byte	0
+ 2038 043d 00000000 		.4byte	0
+ 2039              	.LLST17:
+ 2040 0441 5C000000 		.4byte	.LVL46
+ 2041 0445 68000000 		.4byte	.LVL47
+ 2042 0449 0500     		.2byte	0x5
+ 2043 044b 93       		.byte	0x93
+ 2044 044c 03       		.uleb128 0x3
+ 2045 044d 55       		.byte	0x55
+ 2046 044e 93       		.byte	0x93
+ 2047 044f 01       		.uleb128 0x1
+ 2048 0450 68000000 		.4byte	.LVL47
+ 2049 0454 88000000 		.4byte	.LVL49
+ 2050 0458 0800     		.2byte	0x8
+ 2051 045a 93       		.byte	0x93
+ 2052 045b 02       		.uleb128 0x2
+ 2053 045c 54       		.byte	0x54
+ 2054 045d 93       		.byte	0x93
+ 2055 045e 01       		.uleb128 0x1
+ 2056 045f 55       		.byte	0x55
+ 2057 0460 93       		.byte	0x93
+ 2058 0461 01       		.uleb128 0x1
+ 2059 0462 88000000 		.4byte	.LVL49
+ 2060 0466 96000000 		.4byte	.LVL51
+ 2061 046a 0A00     		.2byte	0xa
+ 2062 046c 30       		.byte	0x30
+ 2063 046d 9F       		.byte	0x9f
+ 2064 046e 93       		.byte	0x93
+ 2065 046f 02       		.uleb128 0x2
+ 2066 0470 54       		.byte	0x54
+ 2067 0471 93       		.byte	0x93
+ 2068 0472 01       		.uleb128 0x1
+ 2069 0473 55       		.byte	0x55
+ 2070 0474 93       		.byte	0x93
+ 2071 0475 01       		.uleb128 0x1
+ 2072 0476 AE000000 		.4byte	.LVL52
+ 2073 047a BE000000 		.4byte	.LVL54
+ 2074 047e 0B00     		.2byte	0xb
+ 2075 0480 30       		.byte	0x30
+ 2076 0481 9F       		.byte	0x9f
+ 2077 0482 93       		.byte	0x93
+ 2078 0483 02       		.uleb128 0x2
+ 2079 0484 30       		.byte	0x30
+ 2080 0485 9F       		.byte	0x9f
+ 2081 0486 93       		.byte	0x93
+ 2082 0487 01       		.uleb128 0x1
+ 2083 0488 55       		.byte	0x55
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 42
+
+
+ 2084 0489 93       		.byte	0x93
+ 2085 048a 01       		.uleb128 0x1
+ 2086 048b BE000000 		.4byte	.LVL54
+ 2087 048f 0C010000 		.4byte	.LFE10
+ 2088 0493 0800     		.2byte	0x8
+ 2089 0495 93       		.byte	0x93
+ 2090 0496 02       		.uleb128 0x2
+ 2091 0497 54       		.byte	0x54
+ 2092 0498 93       		.byte	0x93
+ 2093 0499 01       		.uleb128 0x1
+ 2094 049a 55       		.byte	0x55
+ 2095 049b 93       		.byte	0x93
+ 2096 049c 01       		.uleb128 0x1
+ 2097 049d 00000000 		.4byte	0
+ 2098 04a1 00000000 		.4byte	0
+ 2099              	.LLST18:
+ 2100 04a5 5C000000 		.4byte	.LVL46
+ 2101 04a9 7A000000 		.4byte	.LVL48
+ 2102 04ad 0100     		.2byte	0x1
+ 2103 04af 53       		.byte	0x53
+ 2104 04b0 7A000000 		.4byte	.LVL48
+ 2105 04b4 88000000 		.4byte	.LVL49
+ 2106 04b8 0300     		.2byte	0x3
+ 2107 04ba 78       		.byte	0x78
+ 2108 04bb 7E       		.sleb128 -2
+ 2109 04bc 9F       		.byte	0x9f
+ 2110 04bd 88000000 		.4byte	.LVL49
+ 2111 04c1 8A000000 		.4byte	.LVL50
+ 2112 04c5 0100     		.2byte	0x1
+ 2113 04c7 53       		.byte	0x53
+ 2114 04c8 8A000000 		.4byte	.LVL50
+ 2115 04cc AE000000 		.4byte	.LVL52
+ 2116 04d0 0300     		.2byte	0x3
+ 2117 04d2 78       		.byte	0x78
+ 2118 04d3 7E       		.sleb128 -2
+ 2119 04d4 9F       		.byte	0x9f
+ 2120 04d5 AE000000 		.4byte	.LVL52
+ 2121 04d9 B0000000 		.4byte	.LVL53
+ 2122 04dd 0100     		.2byte	0x1
+ 2123 04df 53       		.byte	0x53
+ 2124 04e0 B0000000 		.4byte	.LVL53
+ 2125 04e4 BE000000 		.4byte	.LVL54
+ 2126 04e8 0300     		.2byte	0x3
+ 2127 04ea 78       		.byte	0x78
+ 2128 04eb 7E       		.sleb128 -2
+ 2129 04ec 9F       		.byte	0x9f
+ 2130 04ed BE000000 		.4byte	.LVL54
+ 2131 04f1 C6000000 		.4byte	.LVL55
+ 2132 04f5 0100     		.2byte	0x1
+ 2133 04f7 53       		.byte	0x53
+ 2134 04f8 C6000000 		.4byte	.LVL55
+ 2135 04fc DE000000 		.4byte	.LVL61
+ 2136 0500 0300     		.2byte	0x3
+ 2137 0502 78       		.byte	0x78
+ 2138 0503 7E       		.sleb128 -2
+ 2139 0504 9F       		.byte	0x9f
+ 2140 0505 DE000000 		.4byte	.LVL61
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 43
+
+
+ 2141 0509 F6000000 		.4byte	.LVL63
+ 2142 050d 0100     		.2byte	0x1
+ 2143 050f 53       		.byte	0x53
+ 2144 0510 F6000000 		.4byte	.LVL63
+ 2145 0514 F8000000 		.4byte	.LVL64
+ 2146 0518 0300     		.2byte	0x3
+ 2147 051a 78       		.byte	0x78
+ 2148 051b 7E       		.sleb128 -2
+ 2149 051c 9F       		.byte	0x9f
+ 2150 051d F8000000 		.4byte	.LVL64
+ 2151 0521 00010000 		.4byte	.LVL65
+ 2152 0525 0100     		.2byte	0x1
+ 2153 0527 53       		.byte	0x53
+ 2154 0528 00010000 		.4byte	.LVL65
+ 2155 052c 0C010000 		.4byte	.LFE10
+ 2156 0530 0300     		.2byte	0x3
+ 2157 0532 78       		.byte	0x78
+ 2158 0533 7E       		.sleb128 -2
+ 2159 0534 9F       		.byte	0x9f
+ 2160 0535 00000000 		.4byte	0
+ 2161 0539 00000000 		.4byte	0
+ 2162              	.LLST19:
+ 2163 053d CA000000 		.4byte	.LVL56
+ 2164 0541 CE000000 		.4byte	.LVL57
+ 2165 0545 0100     		.2byte	0x1
+ 2166 0547 53       		.byte	0x53
+ 2167 0548 CE000000 		.4byte	.LVL57
+ 2168 054c D2000000 		.4byte	.LVL58
+ 2169 0550 0500     		.2byte	0x5
+ 2170 0552 73       		.byte	0x73
+ 2171 0553 00       		.sleb128 0
+ 2172 0554 32       		.byte	0x32
+ 2173 0555 24       		.byte	0x24
+ 2174 0556 9F       		.byte	0x9f
+ 2175 0557 D2000000 		.4byte	.LVL58
+ 2176 055b D4000000 		.4byte	.LVL59
+ 2177 055f 0100     		.2byte	0x1
+ 2178 0561 53       		.byte	0x53
+ 2179 0562 D4000000 		.4byte	.LVL59
+ 2180 0566 DA000000 		.4byte	.LVL60
+ 2181 056a 0400     		.2byte	0x4
+ 2182 056c 73       		.byte	0x73
+ 2183 056d E802     		.sleb128 360
+ 2184 056f 9F       		.byte	0x9f
+ 2185 0570 F6000000 		.4byte	.LVL63
+ 2186 0574 F8000000 		.4byte	.LVL64
+ 2187 0578 0100     		.2byte	0x1
+ 2188 057a 53       		.byte	0x53
+ 2189 057b 04010000 		.4byte	.LVL66
+ 2190 057f 0C010000 		.4byte	.LFE10
+ 2191 0583 0100     		.2byte	0x1
+ 2192 0585 53       		.byte	0x53
+ 2193 0586 00000000 		.4byte	0
+ 2194 058a 00000000 		.4byte	0
+ 2195              	.LLST20:
+ 2196 058e 00000000 		.4byte	.LVL67
+ 2197 0592 1C000000 		.4byte	.LVL68
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 44
+
+
+ 2198 0596 0100     		.2byte	0x1
+ 2199 0598 50       		.byte	0x50
+ 2200 0599 00000000 		.4byte	0
+ 2201 059d 00000000 		.4byte	0
+ 2202              	.LLST21:
+ 2203 05a1 00000000 		.4byte	.LVL67
+ 2204 05a5 1E000000 		.4byte	.LVL69
+ 2205 05a9 0100     		.2byte	0x1
+ 2206 05ab 50       		.byte	0x50
+ 2207 05ac 00000000 		.4byte	0
+ 2208 05b0 00000000 		.4byte	0
+ 2209              	.LLST22:
+ 2210 05b4 2A000000 		.4byte	.LVL70
+ 2211 05b8 AA000000 		.4byte	.LVL85
+ 2212 05bc 0100     		.2byte	0x1
+ 2213 05be 5C       		.byte	0x5c
+ 2214 05bf BE000000 		.4byte	.LVL86
+ 2215 05c3 EC000000 		.4byte	.LFE11
+ 2216 05c7 0100     		.2byte	0x1
+ 2217 05c9 5C       		.byte	0x5c
+ 2218 05ca 00000000 		.4byte	0
+ 2219 05ce 00000000 		.4byte	0
+ 2220              	.LLST23:
+ 2221 05d2 2C000000 		.4byte	.LVL71
+ 2222 05d6 8C000000 		.4byte	.LVL78
+ 2223 05da 0100     		.2byte	0x1
+ 2224 05dc 52       		.byte	0x52
+ 2225 05dd 8C000000 		.4byte	.LVL78
+ 2226 05e1 A0000000 		.4byte	.LVL83
+ 2227 05e5 0100     		.2byte	0x1
+ 2228 05e7 51       		.byte	0x51
+ 2229 05e8 A0000000 		.4byte	.LVL83
+ 2230 05ec A2000000 		.4byte	.LVL84
+ 2231 05f0 0100     		.2byte	0x1
+ 2232 05f2 52       		.byte	0x52
+ 2233 05f3 A2000000 		.4byte	.LVL84
+ 2234 05f7 AA000000 		.4byte	.LVL85
+ 2235 05fb 0100     		.2byte	0x1
+ 2236 05fd 51       		.byte	0x51
+ 2237 05fe BE000000 		.4byte	.LVL86
+ 2238 0602 DE000000 		.4byte	.LVL90
+ 2239 0606 0100     		.2byte	0x1
+ 2240 0608 52       		.byte	0x52
+ 2241 0609 DE000000 		.4byte	.LVL90
+ 2242 060d EC000000 		.4byte	.LFE11
+ 2243 0611 0100     		.2byte	0x1
+ 2244 0613 51       		.byte	0x51
+ 2245 0614 00000000 		.4byte	0
+ 2246 0618 00000000 		.4byte	0
+ 2247              	.LLST24:
+ 2248 061c 36000000 		.4byte	.LVL72
+ 2249 0620 AA000000 		.4byte	.LVL85
+ 2250 0624 0100     		.2byte	0x1
+ 2251 0626 58       		.byte	0x58
+ 2252 0627 BE000000 		.4byte	.LVL86
+ 2253 062b EC000000 		.4byte	.LFE11
+ 2254 062f 0100     		.2byte	0x1
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 45
+
+
+ 2255 0631 58       		.byte	0x58
+ 2256 0632 00000000 		.4byte	0
+ 2257 0636 00000000 		.4byte	0
+ 2258              	.LLST25:
+ 2259 063a 42000000 		.4byte	.LVL73
+ 2260 063e 58000000 		.4byte	.LVL75
+ 2261 0642 0100     		.2byte	0x1
+ 2262 0644 53       		.byte	0x53
+ 2263 0645 00000000 		.4byte	0
+ 2264 0649 00000000 		.4byte	0
+ 2265              	.LLST26:
+ 2266 064d 50000000 		.4byte	.LVL74
+ 2267 0651 AA000000 		.4byte	.LVL85
+ 2268 0655 0100     		.2byte	0x1
+ 2269 0657 5E       		.byte	0x5e
+ 2270 0658 BE000000 		.4byte	.LVL86
+ 2271 065c EC000000 		.4byte	.LFE11
+ 2272 0660 0100     		.2byte	0x1
+ 2273 0662 5E       		.byte	0x5e
+ 2274 0663 00000000 		.4byte	0
+ 2275 0667 00000000 		.4byte	0
+ 2276              	.LLST27:
+ 2277 066b 64000000 		.4byte	.LVL76
+ 2278 066f AA000000 		.4byte	.LVL85
+ 2279 0673 0100     		.2byte	0x1
+ 2280 0675 57       		.byte	0x57
+ 2281 0676 BE000000 		.4byte	.LVL86
+ 2282 067a EC000000 		.4byte	.LFE11
+ 2283 067e 0100     		.2byte	0x1
+ 2284 0680 57       		.byte	0x57
+ 2285 0681 00000000 		.4byte	0
+ 2286 0685 00000000 		.4byte	0
+ 2287              	.LLST28:
+ 2288 0689 8C000000 		.4byte	.LVL78
+ 2289 068d 90000000 		.4byte	.LVL79
+ 2290 0691 0100     		.2byte	0x1
+ 2291 0693 53       		.byte	0x53
+ 2292 0694 90000000 		.4byte	.LVL79
+ 2293 0698 94000000 		.4byte	.LVL80
+ 2294 069c 0500     		.2byte	0x5
+ 2295 069e 73       		.byte	0x73
+ 2296 069f 00       		.sleb128 0
+ 2297 06a0 32       		.byte	0x32
+ 2298 06a1 24       		.byte	0x24
+ 2299 06a2 9F       		.byte	0x9f
+ 2300 06a3 94000000 		.4byte	.LVL80
+ 2301 06a7 96000000 		.4byte	.LVL81
+ 2302 06ab 0100     		.2byte	0x1
+ 2303 06ad 53       		.byte	0x53
+ 2304 06ae 96000000 		.4byte	.LVL81
+ 2305 06b2 9C000000 		.4byte	.LVL82
+ 2306 06b6 0400     		.2byte	0x4
+ 2307 06b8 73       		.byte	0x73
+ 2308 06b9 E802     		.sleb128 360
+ 2309 06bb 9F       		.byte	0x9f
+ 2310 06bc D0000000 		.4byte	.LVL88
+ 2311 06c0 D2000000 		.4byte	.LVL89
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 46
+
+
+ 2312 06c4 0100     		.2byte	0x1
+ 2313 06c6 53       		.byte	0x53
+ 2314 06c7 E6000000 		.4byte	.LVL91
+ 2315 06cb EC000000 		.4byte	.LFE11
+ 2316 06cf 0100     		.2byte	0x1
+ 2317 06d1 53       		.byte	0x53
+ 2318 06d2 00000000 		.4byte	0
+ 2319 06d6 00000000 		.4byte	0
+ 2320              		.section	.debug_aranges,"",%progbits
+ 2321 0000 2C000000 		.4byte	0x2c
+ 2322 0004 0200     		.2byte	0x2
+ 2323 0006 00000000 		.4byte	.Ldebug_info0
+ 2324 000a 04       		.byte	0x4
+ 2325 000b 00       		.byte	0
+ 2326 000c 0000     		.2byte	0
+ 2327 000e 0000     		.2byte	0
+ 2328 0010 00000000 		.4byte	.LFB9
+ 2329 0014 F0000000 		.4byte	.LFE9-.LFB9
+ 2330 0018 00000000 		.4byte	.LFB10
+ 2331 001c 0C010000 		.4byte	.LFE10-.LFB10
+ 2332 0020 00000000 		.4byte	.LFB11
+ 2333 0024 EC000000 		.4byte	.LFE11-.LFB11
+ 2334 0028 00000000 		.4byte	0
+ 2335 002c 00000000 		.4byte	0
+ 2336              		.section	.debug_ranges,"",%progbits
+ 2337              	.Ldebug_ranges0:
+ 2338 0000 04000000 		.4byte	.LBB10
+ 2339 0004 5E000000 		.4byte	.LBE10
+ 2340 0008 60000000 		.4byte	.LBB14
+ 2341 000c AA000000 		.4byte	.LBE14
+ 2342 0010 BE000000 		.4byte	.LBB15
+ 2343 0014 EC000000 		.4byte	.LBE15
+ 2344 0018 00000000 		.4byte	0
+ 2345 001c 00000000 		.4byte	0
+ 2346 0020 00000000 		.4byte	.LFB9
+ 2347 0024 F0000000 		.4byte	.LFE9
+ 2348 0028 00000000 		.4byte	.LFB10
+ 2349 002c 0C010000 		.4byte	.LFE10
+ 2350 0030 00000000 		.4byte	.LFB11
+ 2351 0034 EC000000 		.4byte	.LFE11
+ 2352 0038 00000000 		.4byte	0
+ 2353 003c 00000000 		.4byte	0
+ 2354              		.section	.debug_line,"",%progbits
+ 2355              	.Ldebug_line0:
+ 2356 0000 36020000 		.section	.debug_str,"MS",%progbits,1
+ 2356      02005901 
+ 2356      00000201 
+ 2356      FB0E0D00 
+ 2356      01010101 
+ 2357              	.LASF21:
+ 2358 0000 6C765F63 		.ascii	"lv_color32_t\000"
+ 2358      6F6C6F72 
+ 2358      33325F74 
+ 2358      00
+ 2359              	.LASF29:
+ 2360 000d 72657375 		.ascii	"result\000"
+ 2360      6C7400
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 47
+
+
+ 2361              	.LASF36:
+ 2362 0014 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 2362      73657273 
+ 2362      5C706561 
+ 2362      726C7374 
+ 2362      6C5C446F 
+ 2363 0042 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 2363      6D5F656E 
+ 2363      67696E65 
+ 2363      6572696E 
+ 2363      675C656D 
+ 2364 0071 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 2364      6C76676C 
+ 2364      365C7463 
+ 2364      6F6D5F64 
+ 2364      6973706C 
+ 2365              	.LASF28:
+ 2366 0097 72656D61 		.ascii	"remainder\000"
+ 2366      696E6465 
+ 2366      7200
+ 2367              	.LASF27:
+ 2368 00a1 72656769 		.ascii	"region\000"
+ 2368      6F6E00
+ 2369              	.LASF3:
+ 2370 00a8 73686F72 		.ascii	"short int\000"
+ 2370      7420696E 
+ 2370      7400
+ 2371              	.LASF26:
+ 2372 00b2 636F6C6F 		.ascii	"color\000"
+ 2372      7200
+ 2373              	.LASF32:
+ 2374 00b8 64656C74 		.ascii	"delta\000"
+ 2374      6100
+ 2375              	.LASF9:
+ 2376 00be 5F5F7569 		.ascii	"__uint32_t\000"
+ 2376      6E743332 
+ 2376      5F7400
+ 2377              	.LASF5:
+ 2378 00c9 5F5F7569 		.ascii	"__uint16_t\000"
+ 2378      6E743136 
+ 2378      5F7400
+ 2379              	.LASF17:
+ 2380 00d4 626C7565 		.ascii	"blue\000"
+ 2380      00
+ 2381              	.LASF22:
+ 2382 00d9 6C765F63 		.ascii	"lv_color_t\000"
+ 2382      6F6C6F72 
+ 2382      5F7400
+ 2383              	.LASF33:
+ 2384 00e4 636F6C6F 		.ascii	"color32\000"
+ 2384      72333200 
+ 2385              	.LASF13:
+ 2386 00ec 75696E74 		.ascii	"uint8_t\000"
+ 2386      385F7400 
+ 2387              	.LASF37:
+ 2388 00f4 6C765F63 		.ascii	"lv_color_hsv_to_rgb\000"
+ 2388      6F6C6F72 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 48
+
+
+ 2388      5F687376 
+ 2388      5F746F5F 
+ 2388      72676200 
+ 2389              	.LASF11:
+ 2390 0108 6C6F6E67 		.ascii	"long long int\000"
+ 2390      206C6F6E 
+ 2390      6720696E 
+ 2390      7400
+ 2391              	.LASF8:
+ 2392 0116 6C6F6E67 		.ascii	"long int\000"
+ 2392      20696E74 
+ 2392      00
+ 2393              	.LASF39:
+ 2394 011f 6C765F63 		.ascii	"lv_color_to_hsv\000"
+ 2394      6F6C6F72 
+ 2394      5F746F5F 
+ 2394      68737600 
+ 2395              	.LASF4:
+ 2396 012f 5F5F7569 		.ascii	"__uint8_t\000"
+ 2396      6E74385F 
+ 2396      7400
+ 2397              	.LASF18:
+ 2398 0139 67726565 		.ascii	"green\000"
+ 2398      6E00
+ 2399              	.LASF24:
+ 2400 013f 6C765F63 		.ascii	"lv_color_make\000"
+ 2400      6F6C6F72 
+ 2400      5F6D616B 
+ 2400      6500
+ 2401              	.LASF25:
+ 2402 014d 6C765F63 		.ascii	"lv_color_to32\000"
+ 2402      6F6C6F72 
+ 2402      5F746F33 
+ 2402      3200
+ 2403              	.LASF2:
+ 2404 015b 756E7369 		.ascii	"unsigned char\000"
+ 2404      676E6564 
+ 2404      20636861 
+ 2404      7200
+ 2405              	.LASF20:
+ 2406 0169 66756C6C 		.ascii	"full\000"
+ 2406      00
+ 2407              	.LASF1:
+ 2408 016e 7369676E 		.ascii	"signed char\000"
+ 2408      65642063 
+ 2408      68617200 
+ 2409              	.LASF12:
+ 2410 017a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2410      206C6F6E 
+ 2410      6720756E 
+ 2410      7369676E 
+ 2410      65642069 
+ 2411              	.LASF16:
+ 2412 0191 75696E74 		.ascii	"uint32_t\000"
+ 2412      33325F74 
+ 2412      00
+ 2413              	.LASF0:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 49
+
+
+ 2414 019a 756E7369 		.ascii	"unsigned int\000"
+ 2414      676E6564 
+ 2414      20696E74 
+ 2414      00
+ 2415              	.LASF14:
+ 2416 01a7 75696E74 		.ascii	"uint16_t\000"
+ 2416      31365F74 
+ 2416      00
+ 2417              	.LASF6:
+ 2418 01b0 73686F72 		.ascii	"short unsigned int\000"
+ 2418      7420756E 
+ 2418      7369676E 
+ 2418      65642069 
+ 2418      6E7400
+ 2419              	.LASF34:
+ 2420 01c3 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2420      43313120 
+ 2420      352E342E 
+ 2420      31203230 
+ 2420      31363036 
+ 2421 01f6 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2421      20726576 
+ 2421      6973696F 
+ 2421      6E203233 
+ 2421      37373135 
+ 2422 0229 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 2422      70202D6D 
+ 2422      6670753D 
+ 2422      66707634 
+ 2422      2D73702D 
+ 2423 025c 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2423      6F6E7320 
+ 2423      2D666661 
+ 2423      742D6C74 
+ 2423      6F2D6F62 
+ 2424              	.LASF15:
+ 2425 0276 696E7433 		.ascii	"int32_t\000"
+ 2425      325F7400 
+ 2426              	.LASF31:
+ 2427 027e 7267624D 		.ascii	"rgbMax\000"
+ 2427      617800
+ 2428              	.LASF10:
+ 2429 0285 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2429      20756E73 
+ 2429      69676E65 
+ 2429      6420696E 
+ 2429      7400
+ 2430              	.LASF23:
+ 2431 0297 6C765F63 		.ascii	"lv_color_hsv_t\000"
+ 2431      6F6C6F72 
+ 2431      5F687376 
+ 2431      5F7400
+ 2432              	.LASF19:
+ 2433 02a6 616C7068 		.ascii	"alpha\000"
+ 2433      6100
+ 2434              	.LASF7:
+ 2435 02ac 5F5F696E 		.ascii	"__int32_t\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cc7pgkmL.s 			page 50
+
+
+ 2435      7433325F 
+ 2435      7400
+ 2436              	.LASF35:
+ 2437 02b6 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 2437      2E5C2E2E 
+ 2437      5C6C7667 
+ 2437      6C5C7665 
+ 2437      7273696F 
+ 2438 02e2 5C6C765F 		.ascii	"\\lv_color.c\000"
+ 2438      636F6C6F 
+ 2438      722E6300 
+ 2439              	.LASF30:
+ 2440 02ee 7267624D 		.ascii	"rgbMin\000"
+ 2440      696E00
+ 2441              	.LASF38:
+ 2442 02f5 6C765F63 		.ascii	"lv_color_rgb_to_hsv\000"
+ 2442      6F6C6F72 
+ 2442      5F726762 
+ 2442      5F746F5F 
+ 2442      68737600 
+ 2443              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

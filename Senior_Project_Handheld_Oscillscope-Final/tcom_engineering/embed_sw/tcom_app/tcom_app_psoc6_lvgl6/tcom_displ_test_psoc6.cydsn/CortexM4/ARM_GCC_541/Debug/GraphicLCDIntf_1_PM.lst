@@ -1,0 +1,706 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"GraphicLCDIntf_1_PM.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.GraphicLCDIntf_1_SaveConfig,"ax",%progbits
+  21              		.align	2
+  22              		.global	GraphicLCDIntf_1_SaveConfig
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	GraphicLCDIntf_1_SaveConfig, %function
+  26              	GraphicLCDIntf_1_SaveConfig:
+  27              	.LFB132:
+  28              		.file 1 "Generated_Source\\PSoC6\\GraphicLCDIntf_1_PM.c"
+   1:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * File Name: GraphicLCDIntf_1_PM.c
+   3:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Version 1.80
+   4:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+   5:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Description:
+   6:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  This file contains the setup, control and status commands to support 
+   7:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  the component operations in Low-power mode.  
+   8:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+   9:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** ********************************************************************************
+  10:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Copyright 2008-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  11:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  12:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  13:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * the software package with which this file was provided.
+  14:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *******************************************************************************/
+  15:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  16:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** #include "GraphicLCDIntf_1.h" 
+  17:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  18:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  19:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** /*******************************************************************************
+  20:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Function Name: GraphicLCDIntf_1_SaveConfig
+  21:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** ********************************************************************************
+  22:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  23:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Summary:
+  24:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  All configuration registers are retention. Nothing to save here.
+  25:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  26:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *******************************************************************************/
+  27:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** void GraphicLCDIntf_1_SaveConfig(void) 
+  28:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** {   
+  29              		.loc 1 28 0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 2
+
+
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE132:
+  37              		.size	GraphicLCDIntf_1_SaveConfig, .-GraphicLCDIntf_1_SaveConfig
+  38 0002 00BF     		.section	.text.GraphicLCDIntf_1_RestoreConfig,"ax",%progbits
+  39              		.align	2
+  40              		.global	GraphicLCDIntf_1_RestoreConfig
+  41              		.thumb
+  42              		.thumb_func
+  43              		.type	GraphicLCDIntf_1_RestoreConfig, %function
+  44              	GraphicLCDIntf_1_RestoreConfig:
+  45              	.LFB133:
+  29:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c ****     
+  30:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** }
+  31:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  32:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  33:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** /*******************************************************************************
+  34:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Function Name: GraphicLCDIntf_1_RestoreConfig
+  35:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** ********************************************************************************
+  36:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  37:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Summary:
+  38:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  All configuration registers are retention. Nothing to restore here.
+  39:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  40:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *******************************************************************************/
+  41:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** void GraphicLCDIntf_1_RestoreConfig(void) 
+  42:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** {    
+  46              		.loc 1 42 0
+  47              		.cfi_startproc
+  48              		@ args = 0, pretend = 0, frame = 0
+  49              		@ frame_needed = 0, uses_anonymous_args = 0
+  50              		@ link register save eliminated.
+  51 0000 7047     		bx	lr
+  52              		.cfi_endproc
+  53              	.LFE133:
+  54              		.size	GraphicLCDIntf_1_RestoreConfig, .-GraphicLCDIntf_1_RestoreConfig
+  55 0002 00BF     		.section	.text.GraphicLCDIntf_1_Sleep,"ax",%progbits
+  56              		.align	2
+  57              		.global	GraphicLCDIntf_1_Sleep
+  58              		.thumb
+  59              		.thumb_func
+  60              		.type	GraphicLCDIntf_1_Sleep, %function
+  61              	GraphicLCDIntf_1_Sleep:
+  62              	.LFB134:
+  43:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c ****     
+  44:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** }
+  45:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  46:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  47:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** /*******************************************************************************
+  48:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Function Name: GraphicLCDIntf_1_Sleep
+  49:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** ********************************************************************************
+  50:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  51:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Summary:
+  52:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  Disables block's operation and saves its configuration. Should be called 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 3
+
+
+  53:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  prior to entering Sleep.
+  54:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  55:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *******************************************************************************/
+  56:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** void GraphicLCDIntf_1_Sleep(void) 
+  57:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** {
+  63              		.loc 1 57 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		.loc 1 57 0
+  68 0000 08B5     		push	{r3, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  58:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c ****     GraphicLCDIntf_1_Stop();
+  72              		.loc 1 58 0
+  73 0002 FFF7FEFF 		bl	GraphicLCDIntf_1_Stop
+  74              	.LVL0:
+  75 0006 08BD     		pop	{r3, pc}
+  76              		.cfi_endproc
+  77              	.LFE134:
+  78              		.size	GraphicLCDIntf_1_Sleep, .-GraphicLCDIntf_1_Sleep
+  79              		.section	.text.GraphicLCDIntf_1_Wakeup,"ax",%progbits
+  80              		.align	2
+  81              		.global	GraphicLCDIntf_1_Wakeup
+  82              		.thumb
+  83              		.thumb_func
+  84              		.type	GraphicLCDIntf_1_Wakeup, %function
+  85              	GraphicLCDIntf_1_Wakeup:
+  86              	.LFB135:
+  59:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** }
+  60:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  61:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** 
+  62:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** /*******************************************************************************
+  63:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Function Name: GraphicLCDIntf_1_Wakeup
+  64:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** ********************************************************************************
+  65:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  66:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** * Summary:
+  67:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  Enables block's operation and restores its configuration. Should be called
+  68:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *  after awaking from Sleep.
+  69:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *
+  70:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** *******************************************************************************/
+  71:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** void GraphicLCDIntf_1_Wakeup(void) 
+  72:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c **** {
+  87              		.loc 1 72 0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91 0000 08B5     		push	{r3, lr}
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 3, -8
+  94              		.cfi_offset 14, -4
+  73:Generated_Source\PSoC6/GraphicLCDIntf_1_PM.c ****     GraphicLCDIntf_1_Enable();
+  95              		.loc 1 73 0
+  96 0002 FFF7FEFF 		bl	GraphicLCDIntf_1_Enable
+  97              	.LVL1:
+  98 0006 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 4
+
+
+  99              		.cfi_endproc
+ 100              	.LFE135:
+ 101              		.size	GraphicLCDIntf_1_Wakeup, .-GraphicLCDIntf_1_Wakeup
+ 102              		.text
+ 103              	.Letext0:
+ 104              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 105              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 106              		.file 4 "Generated_Source\\PSoC6\\GraphicLCDIntf_1.h"
+ 107              		.file 5 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 108              		.section	.debug_info,"",%progbits
+ 109              	.Ldebug_info0:
+ 110 0000 28010000 		.4byte	0x128
+ 111 0004 0400     		.2byte	0x4
+ 112 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 113 000a 04       		.byte	0x4
+ 114 000b 01       		.uleb128 0x1
+ 115 000c 0E000000 		.4byte	.LASF22
+ 116 0010 0C       		.byte	0xc
+ 117 0011 97020000 		.4byte	.LASF23
+ 118 0015 C1000000 		.4byte	.LASF24
+ 119 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 120 001d 00000000 		.4byte	0
+ 121 0021 00000000 		.4byte	.Ldebug_line0
+ 122 0025 02       		.uleb128 0x2
+ 123 0026 02       		.byte	0x2
+ 124 0027 05       		.byte	0x5
+ 125 0028 C5010000 		.4byte	.LASF0
+ 126 002c 02       		.uleb128 0x2
+ 127 002d 01       		.byte	0x1
+ 128 002e 06       		.byte	0x6
+ 129 002f 2B020000 		.4byte	.LASF1
+ 130 0033 02       		.uleb128 0x2
+ 131 0034 01       		.byte	0x1
+ 132 0035 08       		.byte	0x8
+ 133 0036 A5010000 		.4byte	.LASF2
+ 134 003a 02       		.uleb128 0x2
+ 135 003b 02       		.byte	0x2
+ 136 003c 07       		.byte	0x7
+ 137 003d 18020000 		.4byte	.LASF3
+ 138 0041 03       		.uleb128 0x3
+ 139 0042 44020000 		.4byte	.LASF9
+ 140 0046 02       		.byte	0x2
+ 141 0047 3F       		.byte	0x3f
+ 142 0048 4C000000 		.4byte	0x4c
+ 143 004c 02       		.uleb128 0x2
+ 144 004d 04       		.byte	0x4
+ 145 004e 05       		.byte	0x5
+ 146 004f EE010000 		.4byte	.LASF4
+ 147 0053 02       		.uleb128 0x2
+ 148 0054 04       		.byte	0x4
+ 149 0055 07       		.byte	0x7
+ 150 0056 43010000 		.4byte	.LASF5
+ 151 005a 02       		.uleb128 0x2
+ 152 005b 08       		.byte	0x8
+ 153 005c 05       		.byte	0x5
+ 154 005d 00000000 		.4byte	.LASF6
+ 155 0061 02       		.uleb128 0x2
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 5
+
+
+ 156 0062 08       		.byte	0x8
+ 157 0063 07       		.byte	0x7
+ 158 0064 71010000 		.4byte	.LASF7
+ 159 0068 04       		.uleb128 0x4
+ 160 0069 04       		.byte	0x4
+ 161 006a 05       		.byte	0x5
+ 162 006b 696E7400 		.ascii	"int\000"
+ 163 006f 02       		.uleb128 0x2
+ 164 0070 04       		.byte	0x4
+ 165 0071 07       		.byte	0x7
+ 166 0072 37020000 		.4byte	.LASF8
+ 167 0076 03       		.uleb128 0x3
+ 168 0077 79020000 		.4byte	.LASF10
+ 169 007b 03       		.byte	0x3
+ 170 007c 2C       		.byte	0x2c
+ 171 007d 41000000 		.4byte	0x41
+ 172 0081 02       		.uleb128 0x2
+ 173 0082 04       		.byte	0x4
+ 174 0083 07       		.byte	0x7
+ 175 0084 0F020000 		.4byte	.LASF11
+ 176 0088 02       		.uleb128 0x2
+ 177 0089 08       		.byte	0x8
+ 178 008a 04       		.byte	0x4
+ 179 008b 4E020000 		.4byte	.LASF12
+ 180 008f 02       		.uleb128 0x2
+ 181 0090 01       		.byte	0x1
+ 182 0091 08       		.byte	0x8
+ 183 0092 B3010000 		.4byte	.LASF13
+ 184 0096 02       		.uleb128 0x2
+ 185 0097 04       		.byte	0x4
+ 186 0098 04       		.byte	0x4
+ 187 0099 88010000 		.4byte	.LASF14
+ 188 009d 02       		.uleb128 0x2
+ 189 009e 08       		.byte	0x8
+ 190 009f 04       		.byte	0x4
+ 191 00a0 E7010000 		.4byte	.LASF15
+ 192 00a4 05       		.uleb128 0x5
+ 193 00a5 55010000 		.4byte	.LASF16
+ 194 00a9 01       		.byte	0x1
+ 195 00aa 1B       		.byte	0x1b
+ 196 00ab 00000000 		.4byte	.LFB132
+ 197 00af 02000000 		.4byte	.LFE132-.LFB132
+ 198 00b3 01       		.uleb128 0x1
+ 199 00b4 9C       		.byte	0x9c
+ 200 00b5 05       		.uleb128 0x5
+ 201 00b6 5A020000 		.4byte	.LASF17
+ 202 00ba 01       		.byte	0x1
+ 203 00bb 29       		.byte	0x29
+ 204 00bc 00000000 		.4byte	.LFB133
+ 205 00c0 02000000 		.4byte	.LFE133-.LFB133
+ 206 00c4 01       		.uleb128 0x1
+ 207 00c5 9C       		.byte	0x9c
+ 208 00c6 06       		.uleb128 0x6
+ 209 00c7 8E010000 		.4byte	.LASF18
+ 210 00cb 01       		.byte	0x1
+ 211 00cc 38       		.byte	0x38
+ 212 00cd 00000000 		.4byte	.LFB134
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 6
+
+
+ 213 00d1 08000000 		.4byte	.LFE134-.LFB134
+ 214 00d5 01       		.uleb128 0x1
+ 215 00d6 9C       		.byte	0x9c
+ 216 00d7 E5000000 		.4byte	0xe5
+ 217 00db 07       		.uleb128 0x7
+ 218 00dc 06000000 		.4byte	.LVL0
+ 219 00e0 15010000 		.4byte	0x115
+ 220 00e4 00       		.byte	0
+ 221 00e5 06       		.uleb128 0x6
+ 222 00e6 CF010000 		.4byte	.LASF19
+ 223 00ea 01       		.byte	0x1
+ 224 00eb 47       		.byte	0x47
+ 225 00ec 00000000 		.4byte	.LFB135
+ 226 00f0 08000000 		.4byte	.LFE135-.LFB135
+ 227 00f4 01       		.uleb128 0x1
+ 228 00f5 9C       		.byte	0x9c
+ 229 00f6 04010000 		.4byte	0x104
+ 230 00fa 07       		.uleb128 0x7
+ 231 00fb 06000000 		.4byte	.LVL1
+ 232 00ff 20010000 		.4byte	0x120
+ 233 0103 00       		.byte	0
+ 234 0104 08       		.uleb128 0x8
+ 235 0105 B8010000 		.4byte	.LASF25
+ 236 0109 05       		.byte	0x5
+ 237 010a F907     		.2byte	0x7f9
+ 238 010c 10010000 		.4byte	0x110
+ 239 0110 09       		.uleb128 0x9
+ 240 0111 76000000 		.4byte	0x76
+ 241 0115 0A       		.uleb128 0xa
+ 242 0116 81020000 		.4byte	.LASF20
+ 243 011a 81020000 		.4byte	.LASF20
+ 244 011e 04       		.byte	0x4
+ 245 011f 28       		.byte	0x28
+ 246 0120 0A       		.uleb128 0xa
+ 247 0121 F7010000 		.4byte	.LASF21
+ 248 0125 F7010000 		.4byte	.LASF21
+ 249 0129 04       		.byte	0x4
+ 250 012a 3A       		.byte	0x3a
+ 251 012b 00       		.byte	0
+ 252              		.section	.debug_abbrev,"",%progbits
+ 253              	.Ldebug_abbrev0:
+ 254 0000 01       		.uleb128 0x1
+ 255 0001 11       		.uleb128 0x11
+ 256 0002 01       		.byte	0x1
+ 257 0003 25       		.uleb128 0x25
+ 258 0004 0E       		.uleb128 0xe
+ 259 0005 13       		.uleb128 0x13
+ 260 0006 0B       		.uleb128 0xb
+ 261 0007 03       		.uleb128 0x3
+ 262 0008 0E       		.uleb128 0xe
+ 263 0009 1B       		.uleb128 0x1b
+ 264 000a 0E       		.uleb128 0xe
+ 265 000b 55       		.uleb128 0x55
+ 266 000c 17       		.uleb128 0x17
+ 267 000d 11       		.uleb128 0x11
+ 268 000e 01       		.uleb128 0x1
+ 269 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 7
+
+
+ 270 0010 17       		.uleb128 0x17
+ 271 0011 00       		.byte	0
+ 272 0012 00       		.byte	0
+ 273 0013 02       		.uleb128 0x2
+ 274 0014 24       		.uleb128 0x24
+ 275 0015 00       		.byte	0
+ 276 0016 0B       		.uleb128 0xb
+ 277 0017 0B       		.uleb128 0xb
+ 278 0018 3E       		.uleb128 0x3e
+ 279 0019 0B       		.uleb128 0xb
+ 280 001a 03       		.uleb128 0x3
+ 281 001b 0E       		.uleb128 0xe
+ 282 001c 00       		.byte	0
+ 283 001d 00       		.byte	0
+ 284 001e 03       		.uleb128 0x3
+ 285 001f 16       		.uleb128 0x16
+ 286 0020 00       		.byte	0
+ 287 0021 03       		.uleb128 0x3
+ 288 0022 0E       		.uleb128 0xe
+ 289 0023 3A       		.uleb128 0x3a
+ 290 0024 0B       		.uleb128 0xb
+ 291 0025 3B       		.uleb128 0x3b
+ 292 0026 0B       		.uleb128 0xb
+ 293 0027 49       		.uleb128 0x49
+ 294 0028 13       		.uleb128 0x13
+ 295 0029 00       		.byte	0
+ 296 002a 00       		.byte	0
+ 297 002b 04       		.uleb128 0x4
+ 298 002c 24       		.uleb128 0x24
+ 299 002d 00       		.byte	0
+ 300 002e 0B       		.uleb128 0xb
+ 301 002f 0B       		.uleb128 0xb
+ 302 0030 3E       		.uleb128 0x3e
+ 303 0031 0B       		.uleb128 0xb
+ 304 0032 03       		.uleb128 0x3
+ 305 0033 08       		.uleb128 0x8
+ 306 0034 00       		.byte	0
+ 307 0035 00       		.byte	0
+ 308 0036 05       		.uleb128 0x5
+ 309 0037 2E       		.uleb128 0x2e
+ 310 0038 00       		.byte	0
+ 311 0039 3F       		.uleb128 0x3f
+ 312 003a 19       		.uleb128 0x19
+ 313 003b 03       		.uleb128 0x3
+ 314 003c 0E       		.uleb128 0xe
+ 315 003d 3A       		.uleb128 0x3a
+ 316 003e 0B       		.uleb128 0xb
+ 317 003f 3B       		.uleb128 0x3b
+ 318 0040 0B       		.uleb128 0xb
+ 319 0041 27       		.uleb128 0x27
+ 320 0042 19       		.uleb128 0x19
+ 321 0043 11       		.uleb128 0x11
+ 322 0044 01       		.uleb128 0x1
+ 323 0045 12       		.uleb128 0x12
+ 324 0046 06       		.uleb128 0x6
+ 325 0047 40       		.uleb128 0x40
+ 326 0048 18       		.uleb128 0x18
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 8
+
+
+ 327 0049 9742     		.uleb128 0x2117
+ 328 004b 19       		.uleb128 0x19
+ 329 004c 00       		.byte	0
+ 330 004d 00       		.byte	0
+ 331 004e 06       		.uleb128 0x6
+ 332 004f 2E       		.uleb128 0x2e
+ 333 0050 01       		.byte	0x1
+ 334 0051 3F       		.uleb128 0x3f
+ 335 0052 19       		.uleb128 0x19
+ 336 0053 03       		.uleb128 0x3
+ 337 0054 0E       		.uleb128 0xe
+ 338 0055 3A       		.uleb128 0x3a
+ 339 0056 0B       		.uleb128 0xb
+ 340 0057 3B       		.uleb128 0x3b
+ 341 0058 0B       		.uleb128 0xb
+ 342 0059 27       		.uleb128 0x27
+ 343 005a 19       		.uleb128 0x19
+ 344 005b 11       		.uleb128 0x11
+ 345 005c 01       		.uleb128 0x1
+ 346 005d 12       		.uleb128 0x12
+ 347 005e 06       		.uleb128 0x6
+ 348 005f 40       		.uleb128 0x40
+ 349 0060 18       		.uleb128 0x18
+ 350 0061 9742     		.uleb128 0x2117
+ 351 0063 19       		.uleb128 0x19
+ 352 0064 01       		.uleb128 0x1
+ 353 0065 13       		.uleb128 0x13
+ 354 0066 00       		.byte	0
+ 355 0067 00       		.byte	0
+ 356 0068 07       		.uleb128 0x7
+ 357 0069 898201   		.uleb128 0x4109
+ 358 006c 00       		.byte	0
+ 359 006d 11       		.uleb128 0x11
+ 360 006e 01       		.uleb128 0x1
+ 361 006f 31       		.uleb128 0x31
+ 362 0070 13       		.uleb128 0x13
+ 363 0071 00       		.byte	0
+ 364 0072 00       		.byte	0
+ 365 0073 08       		.uleb128 0x8
+ 366 0074 34       		.uleb128 0x34
+ 367 0075 00       		.byte	0
+ 368 0076 03       		.uleb128 0x3
+ 369 0077 0E       		.uleb128 0xe
+ 370 0078 3A       		.uleb128 0x3a
+ 371 0079 0B       		.uleb128 0xb
+ 372 007a 3B       		.uleb128 0x3b
+ 373 007b 05       		.uleb128 0x5
+ 374 007c 49       		.uleb128 0x49
+ 375 007d 13       		.uleb128 0x13
+ 376 007e 3F       		.uleb128 0x3f
+ 377 007f 19       		.uleb128 0x19
+ 378 0080 3C       		.uleb128 0x3c
+ 379 0081 19       		.uleb128 0x19
+ 380 0082 00       		.byte	0
+ 381 0083 00       		.byte	0
+ 382 0084 09       		.uleb128 0x9
+ 383 0085 35       		.uleb128 0x35
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 9
+
+
+ 384 0086 00       		.byte	0
+ 385 0087 49       		.uleb128 0x49
+ 386 0088 13       		.uleb128 0x13
+ 387 0089 00       		.byte	0
+ 388 008a 00       		.byte	0
+ 389 008b 0A       		.uleb128 0xa
+ 390 008c 2E       		.uleb128 0x2e
+ 391 008d 00       		.byte	0
+ 392 008e 3F       		.uleb128 0x3f
+ 393 008f 19       		.uleb128 0x19
+ 394 0090 3C       		.uleb128 0x3c
+ 395 0091 19       		.uleb128 0x19
+ 396 0092 6E       		.uleb128 0x6e
+ 397 0093 0E       		.uleb128 0xe
+ 398 0094 03       		.uleb128 0x3
+ 399 0095 0E       		.uleb128 0xe
+ 400 0096 3A       		.uleb128 0x3a
+ 401 0097 0B       		.uleb128 0xb
+ 402 0098 3B       		.uleb128 0x3b
+ 403 0099 0B       		.uleb128 0xb
+ 404 009a 00       		.byte	0
+ 405 009b 00       		.byte	0
+ 406 009c 00       		.byte	0
+ 407              		.section	.debug_aranges,"",%progbits
+ 408 0000 34000000 		.4byte	0x34
+ 409 0004 0200     		.2byte	0x2
+ 410 0006 00000000 		.4byte	.Ldebug_info0
+ 411 000a 04       		.byte	0x4
+ 412 000b 00       		.byte	0
+ 413 000c 0000     		.2byte	0
+ 414 000e 0000     		.2byte	0
+ 415 0010 00000000 		.4byte	.LFB132
+ 416 0014 02000000 		.4byte	.LFE132-.LFB132
+ 417 0018 00000000 		.4byte	.LFB133
+ 418 001c 02000000 		.4byte	.LFE133-.LFB133
+ 419 0020 00000000 		.4byte	.LFB134
+ 420 0024 08000000 		.4byte	.LFE134-.LFB134
+ 421 0028 00000000 		.4byte	.LFB135
+ 422 002c 08000000 		.4byte	.LFE135-.LFB135
+ 423 0030 00000000 		.4byte	0
+ 424 0034 00000000 		.4byte	0
+ 425              		.section	.debug_ranges,"",%progbits
+ 426              	.Ldebug_ranges0:
+ 427 0000 00000000 		.4byte	.LFB132
+ 428 0004 02000000 		.4byte	.LFE132
+ 429 0008 00000000 		.4byte	.LFB133
+ 430 000c 02000000 		.4byte	.LFE133
+ 431 0010 00000000 		.4byte	.LFB134
+ 432 0014 08000000 		.4byte	.LFE134
+ 433 0018 00000000 		.4byte	.LFB135
+ 434 001c 08000000 		.4byte	.LFE135
+ 435 0020 00000000 		.4byte	0
+ 436 0024 00000000 		.4byte	0
+ 437              		.section	.debug_line,"",%progbits
+ 438              	.Ldebug_line0:
+ 439 0000 D3010000 		.section	.debug_str,"MS",%progbits,1
+ 439      02008D01 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 10
+
+
+ 439      00000201 
+ 439      FB0E0D00 
+ 439      01010101 
+ 440              	.LASF6:
+ 441 0000 6C6F6E67 		.ascii	"long long int\000"
+ 441      206C6F6E 
+ 441      6720696E 
+ 441      7400
+ 442              	.LASF22:
+ 443 000e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 443      43313120 
+ 443      352E342E 
+ 443      31203230 
+ 443      31363036 
+ 444 0041 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 444      20726576 
+ 444      6973696F 
+ 444      6E203233 
+ 444      37373135 
+ 445 0074 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 445      70202D6D 
+ 445      6670753D 
+ 445      66707634 
+ 445      2D73702D 
+ 446 00a7 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 446      6F6E7320 
+ 446      2D666661 
+ 446      742D6C74 
+ 446      6F2D6F62 
+ 447              	.LASF24:
+ 448 00c1 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 448      73657273 
+ 448      5C706561 
+ 448      726C7374 
+ 448      6C5C446F 
+ 449 00ef 5C74636F 		.ascii	"\\tcom_engineering\\hw\\display\\diag\\tcom_displ_t"
+ 449      6D5F656E 
+ 449      67696E65 
+ 449      6572696E 
+ 449      675C6877 
+ 450 011d 6573745F 		.ascii	"est_psoc6\\tcom_displ_test_psoc6.cydsn\000"
+ 450      70736F63 
+ 450      365C7463 
+ 450      6F6D5F64 
+ 450      6973706C 
+ 451              	.LASF5:
+ 452 0143 6C6F6E67 		.ascii	"long unsigned int\000"
+ 452      20756E73 
+ 452      69676E65 
+ 452      6420696E 
+ 452      7400
+ 453              	.LASF16:
+ 454 0155 47726170 		.ascii	"GraphicLCDIntf_1_SaveConfig\000"
+ 454      6869634C 
+ 454      4344496E 
+ 454      74665F31 
+ 454      5F536176 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 11
+
+
+ 455              	.LASF7:
+ 456 0171 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 456      206C6F6E 
+ 456      6720756E 
+ 456      7369676E 
+ 456      65642069 
+ 457              	.LASF14:
+ 458 0188 666C6F61 		.ascii	"float\000"
+ 458      7400
+ 459              	.LASF18:
+ 460 018e 47726170 		.ascii	"GraphicLCDIntf_1_Sleep\000"
+ 460      6869634C 
+ 460      4344496E 
+ 460      74665F31 
+ 460      5F536C65 
+ 461              	.LASF2:
+ 462 01a5 756E7369 		.ascii	"unsigned char\000"
+ 462      676E6564 
+ 462      20636861 
+ 462      7200
+ 463              	.LASF13:
+ 464 01b3 63686172 		.ascii	"char\000"
+ 464      00
+ 465              	.LASF25:
+ 466 01b8 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 466      52784275 
+ 466      66666572 
+ 466      00
+ 467              	.LASF0:
+ 468 01c5 73686F72 		.ascii	"short int\000"
+ 468      7420696E 
+ 468      7400
+ 469              	.LASF19:
+ 470 01cf 47726170 		.ascii	"GraphicLCDIntf_1_Wakeup\000"
+ 470      6869634C 
+ 470      4344496E 
+ 470      74665F31 
+ 470      5F57616B 
+ 471              	.LASF15:
+ 472 01e7 646F7562 		.ascii	"double\000"
+ 472      6C6500
+ 473              	.LASF4:
+ 474 01ee 6C6F6E67 		.ascii	"long int\000"
+ 474      20696E74 
+ 474      00
+ 475              	.LASF21:
+ 476 01f7 47726170 		.ascii	"GraphicLCDIntf_1_Enable\000"
+ 476      6869634C 
+ 476      4344496E 
+ 476      74665F31 
+ 476      5F456E61 
+ 477              	.LASF11:
+ 478 020f 73697A65 		.ascii	"sizetype\000"
+ 478      74797065 
+ 478      00
+ 479              	.LASF3:
+ 480 0218 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccxmfpW4.s 			page 12
+
+
+ 480      7420756E 
+ 480      7369676E 
+ 480      65642069 
+ 480      6E7400
+ 481              	.LASF1:
+ 482 022b 7369676E 		.ascii	"signed char\000"
+ 482      65642063 
+ 482      68617200 
+ 483              	.LASF8:
+ 484 0237 756E7369 		.ascii	"unsigned int\000"
+ 484      676E6564 
+ 484      20696E74 
+ 484      00
+ 485              	.LASF9:
+ 486 0244 5F5F696E 		.ascii	"__int32_t\000"
+ 486      7433325F 
+ 486      7400
+ 487              	.LASF12:
+ 488 024e 6C6F6E67 		.ascii	"long double\000"
+ 488      20646F75 
+ 488      626C6500 
+ 489              	.LASF17:
+ 490 025a 47726170 		.ascii	"GraphicLCDIntf_1_RestoreConfig\000"
+ 490      6869634C 
+ 490      4344496E 
+ 490      74665F31 
+ 490      5F526573 
+ 491              	.LASF10:
+ 492 0279 696E7433 		.ascii	"int32_t\000"
+ 492      325F7400 
+ 493              	.LASF20:
+ 494 0281 47726170 		.ascii	"GraphicLCDIntf_1_Stop\000"
+ 494      6869634C 
+ 494      4344496E 
+ 494      74665F31 
+ 494      5F53746F 
+ 495              	.LASF23:
+ 496 0297 47656E65 		.ascii	"Generated_Source\\PSoC6\\GraphicLCDIntf_1_PM.c\000"
+ 496      72617465 
+ 496      645F536F 
+ 496      75726365 
+ 496      5C50536F 
+ 497              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

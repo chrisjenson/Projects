@@ -1,0 +1,628 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"LCD_INTERFACE_PM.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.LCD_INTERFACE_SaveConfig,"ax",%progbits
+  20              		.align	1
+  21              		.global	LCD_INTERFACE_SaveConfig
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	LCD_INTERFACE_SaveConfig, %function
+  25              	LCD_INTERFACE_SaveConfig:
+  26              	.LFB50:
+  27              		.cfi_startproc
+  28              		@ args = 0, pretend = 0, frame = 0
+  29              		@ frame_needed = 0, uses_anonymous_args = 0
+  30              		@ link register save eliminated.
+  31              		@ sp needed
+  32 0000 7047     		bx	lr
+  33              		.cfi_endproc
+  34              	.LFE50:
+  35              		.size	LCD_INTERFACE_SaveConfig, .-LCD_INTERFACE_SaveConfig
+  36              		.section	.text.LCD_INTERFACE_RestoreConfig,"ax",%progbits
+  37              		.align	1
+  38              		.global	LCD_INTERFACE_RestoreConfig
+  39              		.code	16
+  40              		.thumb_func
+  41              		.type	LCD_INTERFACE_RestoreConfig, %function
+  42              	LCD_INTERFACE_RestoreConfig:
+  43              	.LFB46:
+  44              		.file 1 "Generated_Source\\PSoC6\\LCD_INTERFACE_PM.c"
+   1:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * File Name: LCD_INTERFACE_PM.c
+   3:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Version 1.80
+   4:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+   5:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Description:
+   6:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  This file contains the setup, control and status commands to support 
+   7:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  the component operations in Low-power mode.  
+   8:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+   9:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  10:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Copyright 2008-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  11:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  12:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  13:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * the software package with which this file was provided.
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 2
+
+
+  14:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  15:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  16:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** #include "LCD_INTERFACE.h" 
+  17:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  18:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  19:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  20:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_SaveConfig
+  21:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  22:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  23:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  24:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  All configuration registers are retention. Nothing to save here.
+  25:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  26:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  27:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_SaveConfig(void) 
+  28:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {   
+  29:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     
+  30:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+  31:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  32:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  33:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  34:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_RestoreConfig
+  35:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  36:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  37:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  38:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  All configuration registers are retention. Nothing to restore here.
+  39:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  40:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  41:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_RestoreConfig(void) 
+  42:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {    
+  45              		.loc 1 42 0
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49              		@ link register save eliminated.
+  43:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     
+  44:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+  50              		.loc 1 44 0
+  51              		@ sp needed
+  52 0000 7047     		bx	lr
+  53              		.cfi_endproc
+  54              	.LFE46:
+  55              		.size	LCD_INTERFACE_RestoreConfig, .-LCD_INTERFACE_RestoreConfig
+  56              		.section	.text.LCD_INTERFACE_Sleep,"ax",%progbits
+  57              		.align	1
+  58              		.global	LCD_INTERFACE_Sleep
+  59              		.code	16
+  60              		.thumb_func
+  61              		.type	LCD_INTERFACE_Sleep, %function
+  62              	LCD_INTERFACE_Sleep:
+  63              	.LFB47:
+  45:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  46:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  47:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  48:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_Sleep
+  49:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  50:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  51:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 3
+
+
+  52:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  Disables block's operation and saves its configuration. Should be called 
+  53:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  prior to entering Sleep.
+  54:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  55:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  56:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_Sleep(void) 
+  57:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {
+  64              		.loc 1 57 0
+  65              		.cfi_startproc
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68 0000 10B5     		push	{r4, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 4, -8
+  71              		.cfi_offset 14, -4
+  58:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     LCD_INTERFACE_Stop();
+  72              		.loc 1 58 0
+  73 0002 FFF7FEFF 		bl	LCD_INTERFACE_Stop
+  74              	.LVL0:
+  59:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+  75              		.loc 1 59 0
+  76              		@ sp needed
+  77 0006 10BD     		pop	{r4, pc}
+  78              		.cfi_endproc
+  79              	.LFE47:
+  80              		.size	LCD_INTERFACE_Sleep, .-LCD_INTERFACE_Sleep
+  81              		.section	.text.LCD_INTERFACE_Wakeup,"ax",%progbits
+  82              		.align	1
+  83              		.global	LCD_INTERFACE_Wakeup
+  84              		.code	16
+  85              		.thumb_func
+  86              		.type	LCD_INTERFACE_Wakeup, %function
+  87              	LCD_INTERFACE_Wakeup:
+  88              	.LFB48:
+  60:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  61:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  62:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  63:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_Wakeup
+  64:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  65:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  66:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  67:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  Enables block's operation and restores its configuration. Should be called
+  68:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  after awaking from Sleep.
+  69:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  70:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  71:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_Wakeup(void) 
+  72:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {
+  89              		.loc 1 72 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 0, uses_anonymous_args = 0
+  93 0000 10B5     		push	{r4, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 4, -8
+  96              		.cfi_offset 14, -4
+  73:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     LCD_INTERFACE_Enable();
+  97              		.loc 1 73 0
+  98 0002 FFF7FEFF 		bl	LCD_INTERFACE_Enable
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 4
+
+
+  99              	.LVL1:
+  74:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+ 100              		.loc 1 74 0
+ 101              		@ sp needed
+ 102 0006 10BD     		pop	{r4, pc}
+ 103              		.cfi_endproc
+ 104              	.LFE48:
+ 105              		.size	LCD_INTERFACE_Wakeup, .-LCD_INTERFACE_Wakeup
+ 106              		.text
+ 107              	.Letext0:
+ 108              		.file 2 "Generated_Source\\PSoC6\\LCD_INTERFACE.h"
+ 109              		.section	.debug_info,"",%progbits
+ 110              	.Ldebug_info0:
+ 111 0000 F6000000 		.4byte	0xf6
+ 112 0004 0400     		.2byte	0x4
+ 113 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 114 000a 04       		.byte	0x4
+ 115 000b 01       		.uleb128 0x1
+ 116 000c 43000000 		.4byte	.LASF18
+ 117 0010 0C       		.byte	0xc
+ 118 0011 61010000 		.4byte	.LASF19
+ 119 0015 B6010000 		.4byte	.LASF20
+ 120 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 121 001d 00000000 		.4byte	0
+ 122 0021 00000000 		.4byte	.Ldebug_line0
+ 123 0025 02       		.uleb128 0x2
+ 124 0026 02       		.byte	0x2
+ 125 0027 05       		.byte	0x5
+ 126 0028 50010000 		.4byte	.LASF0
+ 127 002c 02       		.uleb128 0x2
+ 128 002d 01       		.byte	0x1
+ 129 002e 08       		.byte	0x8
+ 130 002f 34010000 		.4byte	.LASF1
+ 131 0033 02       		.uleb128 0x2
+ 132 0034 01       		.byte	0x1
+ 133 0035 06       		.byte	0x6
+ 134 0036 9E010000 		.4byte	.LASF2
+ 135 003a 02       		.uleb128 0x2
+ 136 003b 02       		.byte	0x2
+ 137 003c 07       		.byte	0x7
+ 138 003d 8B010000 		.4byte	.LASF3
+ 139 0041 02       		.uleb128 0x2
+ 140 0042 04       		.byte	0x4
+ 141 0043 05       		.byte	0x5
+ 142 0044 47010000 		.4byte	.LASF4
+ 143 0048 02       		.uleb128 0x2
+ 144 0049 04       		.byte	0x4
+ 145 004a 07       		.byte	0x7
+ 146 004b F1000000 		.4byte	.LASF5
+ 147 004f 02       		.uleb128 0x2
+ 148 0050 08       		.byte	0x8
+ 149 0051 05       		.byte	0x5
+ 150 0052 00000000 		.4byte	.LASF6
+ 151 0056 02       		.uleb128 0x2
+ 152 0057 08       		.byte	0x8
+ 153 0058 07       		.byte	0x7
+ 154 0059 03010000 		.4byte	.LASF7
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 5
+
+
+ 155 005d 03       		.uleb128 0x3
+ 156 005e 04       		.byte	0x4
+ 157 005f 05       		.byte	0x5
+ 158 0060 696E7400 		.ascii	"int\000"
+ 159 0064 02       		.uleb128 0x2
+ 160 0065 04       		.byte	0x4
+ 161 0066 07       		.byte	0x7
+ 162 0067 0E000000 		.4byte	.LASF8
+ 163 006b 02       		.uleb128 0x2
+ 164 006c 04       		.byte	0x4
+ 165 006d 07       		.byte	0x7
+ 166 006e 4E020000 		.4byte	.LASF9
+ 167 0072 02       		.uleb128 0x2
+ 168 0073 08       		.byte	0x8
+ 169 0074 04       		.byte	0x4
+ 170 0075 AA010000 		.4byte	.LASF10
+ 171 0079 02       		.uleb128 0x2
+ 172 007a 01       		.byte	0x1
+ 173 007b 08       		.byte	0x8
+ 174 007c 42010000 		.4byte	.LASF11
+ 175 0080 02       		.uleb128 0x2
+ 176 0081 04       		.byte	0x4
+ 177 0082 04       		.byte	0x4
+ 178 0083 2E010000 		.4byte	.LASF12
+ 179 0087 02       		.uleb128 0x2
+ 180 0088 08       		.byte	0x8
+ 181 0089 04       		.byte	0x4
+ 182 008a 5A010000 		.4byte	.LASF13
+ 183 008e 04       		.uleb128 0x4
+ 184 008f D5000000 		.4byte	.LASF21
+ 185 0093 01       		.byte	0x1
+ 186 0094 29       		.byte	0x29
+ 187 0095 01       		.byte	0x1
+ 188 0096 05       		.uleb128 0x5
+ 189 0097 8E000000 		.4byte	0x8e
+ 190 009b 00000000 		.4byte	.LFB46
+ 191 009f 02000000 		.4byte	.LFE46-.LFB46
+ 192 00a3 01       		.uleb128 0x1
+ 193 00a4 9C       		.byte	0x9c
+ 194 00a5 06       		.uleb128 0x6
+ 195 00a6 1A010000 		.4byte	.LASF14
+ 196 00aa 01       		.byte	0x1
+ 197 00ab 38       		.byte	0x38
+ 198 00ac 00000000 		.4byte	.LFB47
+ 199 00b0 08000000 		.4byte	.LFE47-.LFB47
+ 200 00b4 01       		.uleb128 0x1
+ 201 00b5 9C       		.byte	0x9c
+ 202 00b6 C4000000 		.4byte	0xc4
+ 203 00ba 07       		.uleb128 0x7
+ 204 00bb 06000000 		.4byte	.LVL0
+ 205 00bf E3000000 		.4byte	0xe3
+ 206 00c3 00       		.byte	0
+ 207 00c4 06       		.uleb128 0x6
+ 208 00c5 39020000 		.4byte	.LASF15
+ 209 00c9 01       		.byte	0x1
+ 210 00ca 47       		.byte	0x47
+ 211 00cb 00000000 		.4byte	.LFB48
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 6
+
+
+ 212 00cf 08000000 		.4byte	.LFE48-.LFB48
+ 213 00d3 01       		.uleb128 0x1
+ 214 00d4 9C       		.byte	0x9c
+ 215 00d5 E3000000 		.4byte	0xe3
+ 216 00d9 07       		.uleb128 0x7
+ 217 00da 06000000 		.4byte	.LVL1
+ 218 00de EE000000 		.4byte	0xee
+ 219 00e2 00       		.byte	0
+ 220 00e3 08       		.uleb128 0x8
+ 221 00e4 1B000000 		.4byte	.LASF16
+ 222 00e8 1B000000 		.4byte	.LASF16
+ 223 00ec 02       		.byte	0x2
+ 224 00ed 28       		.byte	0x28
+ 225 00ee 08       		.uleb128 0x8
+ 226 00ef 2E000000 		.4byte	.LASF17
+ 227 00f3 2E000000 		.4byte	.LASF17
+ 228 00f7 02       		.byte	0x2
+ 229 00f8 3A       		.byte	0x3a
+ 230 00f9 00       		.byte	0
+ 231              		.section	.debug_abbrev,"",%progbits
+ 232              	.Ldebug_abbrev0:
+ 233 0000 01       		.uleb128 0x1
+ 234 0001 11       		.uleb128 0x11
+ 235 0002 01       		.byte	0x1
+ 236 0003 25       		.uleb128 0x25
+ 237 0004 0E       		.uleb128 0xe
+ 238 0005 13       		.uleb128 0x13
+ 239 0006 0B       		.uleb128 0xb
+ 240 0007 03       		.uleb128 0x3
+ 241 0008 0E       		.uleb128 0xe
+ 242 0009 1B       		.uleb128 0x1b
+ 243 000a 0E       		.uleb128 0xe
+ 244 000b 55       		.uleb128 0x55
+ 245 000c 17       		.uleb128 0x17
+ 246 000d 11       		.uleb128 0x11
+ 247 000e 01       		.uleb128 0x1
+ 248 000f 10       		.uleb128 0x10
+ 249 0010 17       		.uleb128 0x17
+ 250 0011 00       		.byte	0
+ 251 0012 00       		.byte	0
+ 252 0013 02       		.uleb128 0x2
+ 253 0014 24       		.uleb128 0x24
+ 254 0015 00       		.byte	0
+ 255 0016 0B       		.uleb128 0xb
+ 256 0017 0B       		.uleb128 0xb
+ 257 0018 3E       		.uleb128 0x3e
+ 258 0019 0B       		.uleb128 0xb
+ 259 001a 03       		.uleb128 0x3
+ 260 001b 0E       		.uleb128 0xe
+ 261 001c 00       		.byte	0
+ 262 001d 00       		.byte	0
+ 263 001e 03       		.uleb128 0x3
+ 264 001f 24       		.uleb128 0x24
+ 265 0020 00       		.byte	0
+ 266 0021 0B       		.uleb128 0xb
+ 267 0022 0B       		.uleb128 0xb
+ 268 0023 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 7
+
+
+ 269 0024 0B       		.uleb128 0xb
+ 270 0025 03       		.uleb128 0x3
+ 271 0026 08       		.uleb128 0x8
+ 272 0027 00       		.byte	0
+ 273 0028 00       		.byte	0
+ 274 0029 04       		.uleb128 0x4
+ 275 002a 2E       		.uleb128 0x2e
+ 276 002b 00       		.byte	0
+ 277 002c 3F       		.uleb128 0x3f
+ 278 002d 19       		.uleb128 0x19
+ 279 002e 03       		.uleb128 0x3
+ 280 002f 0E       		.uleb128 0xe
+ 281 0030 3A       		.uleb128 0x3a
+ 282 0031 0B       		.uleb128 0xb
+ 283 0032 3B       		.uleb128 0x3b
+ 284 0033 0B       		.uleb128 0xb
+ 285 0034 27       		.uleb128 0x27
+ 286 0035 19       		.uleb128 0x19
+ 287 0036 20       		.uleb128 0x20
+ 288 0037 0B       		.uleb128 0xb
+ 289 0038 00       		.byte	0
+ 290 0039 00       		.byte	0
+ 291 003a 05       		.uleb128 0x5
+ 292 003b 2E       		.uleb128 0x2e
+ 293 003c 00       		.byte	0
+ 294 003d 31       		.uleb128 0x31
+ 295 003e 13       		.uleb128 0x13
+ 296 003f 11       		.uleb128 0x11
+ 297 0040 01       		.uleb128 0x1
+ 298 0041 12       		.uleb128 0x12
+ 299 0042 06       		.uleb128 0x6
+ 300 0043 40       		.uleb128 0x40
+ 301 0044 18       		.uleb128 0x18
+ 302 0045 9742     		.uleb128 0x2117
+ 303 0047 19       		.uleb128 0x19
+ 304 0048 00       		.byte	0
+ 305 0049 00       		.byte	0
+ 306 004a 06       		.uleb128 0x6
+ 307 004b 2E       		.uleb128 0x2e
+ 308 004c 01       		.byte	0x1
+ 309 004d 3F       		.uleb128 0x3f
+ 310 004e 19       		.uleb128 0x19
+ 311 004f 03       		.uleb128 0x3
+ 312 0050 0E       		.uleb128 0xe
+ 313 0051 3A       		.uleb128 0x3a
+ 314 0052 0B       		.uleb128 0xb
+ 315 0053 3B       		.uleb128 0x3b
+ 316 0054 0B       		.uleb128 0xb
+ 317 0055 27       		.uleb128 0x27
+ 318 0056 19       		.uleb128 0x19
+ 319 0057 11       		.uleb128 0x11
+ 320 0058 01       		.uleb128 0x1
+ 321 0059 12       		.uleb128 0x12
+ 322 005a 06       		.uleb128 0x6
+ 323 005b 40       		.uleb128 0x40
+ 324 005c 18       		.uleb128 0x18
+ 325 005d 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 8
+
+
+ 326 005f 19       		.uleb128 0x19
+ 327 0060 01       		.uleb128 0x1
+ 328 0061 13       		.uleb128 0x13
+ 329 0062 00       		.byte	0
+ 330 0063 00       		.byte	0
+ 331 0064 07       		.uleb128 0x7
+ 332 0065 898201   		.uleb128 0x4109
+ 333 0068 00       		.byte	0
+ 334 0069 11       		.uleb128 0x11
+ 335 006a 01       		.uleb128 0x1
+ 336 006b 31       		.uleb128 0x31
+ 337 006c 13       		.uleb128 0x13
+ 338 006d 00       		.byte	0
+ 339 006e 00       		.byte	0
+ 340 006f 08       		.uleb128 0x8
+ 341 0070 2E       		.uleb128 0x2e
+ 342 0071 00       		.byte	0
+ 343 0072 3F       		.uleb128 0x3f
+ 344 0073 19       		.uleb128 0x19
+ 345 0074 3C       		.uleb128 0x3c
+ 346 0075 19       		.uleb128 0x19
+ 347 0076 6E       		.uleb128 0x6e
+ 348 0077 0E       		.uleb128 0xe
+ 349 0078 03       		.uleb128 0x3
+ 350 0079 0E       		.uleb128 0xe
+ 351 007a 3A       		.uleb128 0x3a
+ 352 007b 0B       		.uleb128 0xb
+ 353 007c 3B       		.uleb128 0x3b
+ 354 007d 0B       		.uleb128 0xb
+ 355 007e 00       		.byte	0
+ 356 007f 00       		.byte	0
+ 357 0080 00       		.byte	0
+ 358              		.section	.debug_aranges,"",%progbits
+ 359 0000 2C000000 		.4byte	0x2c
+ 360 0004 0200     		.2byte	0x2
+ 361 0006 00000000 		.4byte	.Ldebug_info0
+ 362 000a 04       		.byte	0x4
+ 363 000b 00       		.byte	0
+ 364 000c 0000     		.2byte	0
+ 365 000e 0000     		.2byte	0
+ 366 0010 00000000 		.4byte	.LFB46
+ 367 0014 02000000 		.4byte	.LFE46-.LFB46
+ 368 0018 00000000 		.4byte	.LFB47
+ 369 001c 08000000 		.4byte	.LFE47-.LFB47
+ 370 0020 00000000 		.4byte	.LFB48
+ 371 0024 08000000 		.4byte	.LFE48-.LFB48
+ 372 0028 00000000 		.4byte	0
+ 373 002c 00000000 		.4byte	0
+ 374              		.section	.debug_ranges,"",%progbits
+ 375              	.Ldebug_ranges0:
+ 376 0000 00000000 		.4byte	.LFB46
+ 377 0004 02000000 		.4byte	.LFE46
+ 378 0008 00000000 		.4byte	.LFB47
+ 379 000c 08000000 		.4byte	.LFE47
+ 380 0010 00000000 		.4byte	.LFB48
+ 381 0014 08000000 		.4byte	.LFE48
+ 382 0018 00000000 		.4byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 9
+
+
+ 383 001c 00000000 		.4byte	0
+ 384              		.section	.debug_line,"",%progbits
+ 385              	.Ldebug_line0:
+ 386 0000 8C000000 		.section	.debug_str,"MS",%progbits,1
+ 386      02005300 
+ 386      00000201 
+ 386      FB0E0D00 
+ 386      01010101 
+ 387              	.LASF6:
+ 388 0000 6C6F6E67 		.ascii	"long long int\000"
+ 388      206C6F6E 
+ 388      6720696E 
+ 388      7400
+ 389              	.LASF8:
+ 390 000e 756E7369 		.ascii	"unsigned int\000"
+ 390      676E6564 
+ 390      20696E74 
+ 390      00
+ 391              	.LASF16:
+ 392 001b 4C43445F 		.ascii	"LCD_INTERFACE_Stop\000"
+ 392      494E5445 
+ 392      52464143 
+ 392      455F5374 
+ 392      6F7000
+ 393              	.LASF17:
+ 394 002e 4C43445F 		.ascii	"LCD_INTERFACE_Enable\000"
+ 394      494E5445 
+ 394      52464143 
+ 394      455F456E 
+ 394      61626C65 
+ 395              	.LASF18:
+ 396 0043 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 396      43313120 
+ 396      352E342E 
+ 396      31203230 
+ 396      31363036 
+ 397 0076 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 397      20726576 
+ 397      6973696F 
+ 397      6E203233 
+ 397      37373135 
+ 398 00a9 67202D4F 		.ascii	"g -Os -ffunction-sections -ffat-lto-objects\000"
+ 398      73202D66 
+ 398      66756E63 
+ 398      74696F6E 
+ 398      2D736563 
+ 399              	.LASF21:
+ 400 00d5 4C43445F 		.ascii	"LCD_INTERFACE_RestoreConfig\000"
+ 400      494E5445 
+ 400      52464143 
+ 400      455F5265 
+ 400      73746F72 
+ 401              	.LASF5:
+ 402 00f1 6C6F6E67 		.ascii	"long unsigned int\000"
+ 402      20756E73 
+ 402      69676E65 
+ 402      6420696E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 10
+
+
+ 402      7400
+ 403              	.LASF7:
+ 404 0103 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 404      206C6F6E 
+ 404      6720756E 
+ 404      7369676E 
+ 404      65642069 
+ 405              	.LASF14:
+ 406 011a 4C43445F 		.ascii	"LCD_INTERFACE_Sleep\000"
+ 406      494E5445 
+ 406      52464143 
+ 406      455F536C 
+ 406      65657000 
+ 407              	.LASF12:
+ 408 012e 666C6F61 		.ascii	"float\000"
+ 408      7400
+ 409              	.LASF1:
+ 410 0134 756E7369 		.ascii	"unsigned char\000"
+ 410      676E6564 
+ 410      20636861 
+ 410      7200
+ 411              	.LASF11:
+ 412 0142 63686172 		.ascii	"char\000"
+ 412      00
+ 413              	.LASF4:
+ 414 0147 6C6F6E67 		.ascii	"long int\000"
+ 414      20696E74 
+ 414      00
+ 415              	.LASF0:
+ 416 0150 73686F72 		.ascii	"short int\000"
+ 416      7420696E 
+ 416      7400
+ 417              	.LASF13:
+ 418 015a 646F7562 		.ascii	"double\000"
+ 418      6C6500
+ 419              	.LASF19:
+ 420 0161 47656E65 		.ascii	"Generated_Source\\PSoC6\\LCD_INTERFACE_PM.c\000"
+ 420      72617465 
+ 420      645F536F 
+ 420      75726365 
+ 420      5C50536F 
+ 421              	.LASF3:
+ 422 018b 73686F72 		.ascii	"short unsigned int\000"
+ 422      7420756E 
+ 422      7369676E 
+ 422      65642069 
+ 422      6E7400
+ 423              	.LASF2:
+ 424 019e 7369676E 		.ascii	"signed char\000"
+ 424      65642063 
+ 424      68617200 
+ 425              	.LASF10:
+ 426 01aa 6C6F6E67 		.ascii	"long double\000"
+ 426      20646F75 
+ 426      626C6500 
+ 427              	.LASF20:
+ 428 01b6 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cccl86yd.s 			page 11
+
+
+ 428      73657273 
+ 428      5C706561 
+ 428      726C7374 
+ 428      6C5C446F 
+ 429 01e4 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 429      6D5F656E 
+ 429      67696E65 
+ 429      6572696E 
+ 429      675C656D 
+ 430 0213 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 430      6C76676C 
+ 430      365C7463 
+ 430      6F6D5F64 
+ 430      6973706C 
+ 431              	.LASF15:
+ 432 0239 4C43445F 		.ascii	"LCD_INTERFACE_Wakeup\000"
+ 432      494E5445 
+ 432      52464143 
+ 432      455F5761 
+ 432      6B657570 
+ 433              	.LASF9:
+ 434 024e 73697A65 		.ascii	"sizetype\000"
+ 434      74797065 
+ 434      00
+ 435              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

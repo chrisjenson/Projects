@@ -1,0 +1,22 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Mon Apr 26 15:24:38 2021
+# Process ID: 11660
+# Current directory: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20820 D:\SeniorProject\Oscilloscope_Senior_Project\Verilog\FullSystem\FullSystem.xpr
+# Log file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/vivado.log
+# Journal file: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2020.2/data/ip'.
+WARNING: [IP_Flow 19-2162] IP 'blk_mem_gen_0' is locked:
+* IP definition 'Block Memory Generator (8.4)' for IP 'blk_mem_gen_0' (customized with software release 2019.1) has a different revision in the IP Catalog.
+open_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 1001.723 ; gain = 0.000
+update_compile_order -fileset sources_1

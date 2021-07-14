@@ -1,0 +1,26 @@
+# tcom_displ_test_psoc6
+# 2020-09-16 16:56:03Z
+
+dont_use_location SMIF -1 -1 0
+dont_use_location p4usbcell -1 -1 0
+dont_use_location USB -1 -1 0
+dont_use_location usbcell -1 -1 0
+set_location "ClockGenBlock" CLK_GEN -1 -1 0
+set_io "CY_CPUSS_SWJ_SWCLK_TCLK(0)" iocell 6 7
+set_io "CY_CPUSS_SWJ_SWDIO_TMS(0)" iocell 6 6
+set_io "d(0)" iocell 10 0
+set_io "d(1)" iocell 10 1
+set_io "d(2)" iocell 10 2
+set_io "d(3)" iocell 10 3
+set_io "d(4)" iocell 10 4
+set_io "d(5)" iocell 10 5
+set_io "d(6)" iocell 10 6
+set_io "d(7)" iocell 5 6
+set_io "d_c(0)" iocell 5 1
+set_io "ncs(0)" iocell 5 2
+set_io "nwr(0)" iocell 9 6
+set_io "nrd(0)" iocell 5 0
+set_io "PORT6_PIN2(0)" iocell 6 2
+set_io "PORT9_PIN1(0)" iocell 9 1
+set_io "PORT6_PIN4(0)" iocell 6 4
+set_io "PORT6_PIN5(0)" iocell 6 5

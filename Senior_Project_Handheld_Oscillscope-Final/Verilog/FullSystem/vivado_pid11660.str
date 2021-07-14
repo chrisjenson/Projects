@@ -1,0 +1,192 @@
+/*
+
+Xilinx Vivado v2020.2 (64-bit) [Major: 2020, Minor: 2]
+SW Build: 3064766 on Wed Nov 18 09:12:45 MST 2020
+IP Build: 3064653 on Wed Nov 18 14:17:31 MST 2020
+
+Process ID (PID): 11660
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Mon Apr 26 15:25:43 EDT 2021
+Time zone: 	Eastern Standard Time (America/New_York)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 8
+
+Screen size: 1920x1080
+Screen resolution (DPI): 100
+Available screens: 2
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+
+Java version: 	11.0.2 64-bit
+Java home: 	D:/Xilinx/Vivado/2020.2/tps/win64/jre11.0.2
+Java executable location: 	D:/Xilinx/Vivado/2020.2/tps/win64/jre11.0.2/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	Brian Worts
+User home directory: C:/Users/Brian Worts
+User working directory: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: D:/Xilinx/Vivado
+HDI_APPROOT: D:/Xilinx/Vivado/2020.2
+RDI_DATADIR: D:/Xilinx/Vivado/2020.2/data
+RDI_BINDIR: D:/Xilinx/Vivado/2020.2/bin
+
+Vivado preferences file location: C:/Users/Brian Worts/AppData/Roaming/Xilinx/Vivado/2020.2/vivado.xml
+Vivado preferences directory: C:/Users/Brian Worts/AppData/Roaming/Xilinx/Vivado/2020.2/
+Vivado layouts directory: C:/Users/Brian Worts/AppData/Roaming/Xilinx/Vivado/2020.2/data/layouts
+PlanAhead jar file location: 	D:/Xilinx/Vivado/2020.2/lib/classes/planAhead.jar
+Vivado log file location: 	D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/vivado.log
+Vivado journal file location: 	D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/vivado.jou
+Engine tmp dir: 	D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/.Xil/Vivado-11660-MSI
+
+Xilinx Environment Variables
+----------------------------
+XILINX: D:/Xilinx/Vivado/2020.2/ids_lite/ISE
+XILINX_DSP: D:/Xilinx/Vivado/2020.2/ids_lite/ISE
+XILINX_HLS: D:/Xilinx/Vitis_HLS/2020.2
+XILINX_PLANAHEAD: D:/Xilinx/Vivado/2020.2
+XILINX_VIVADO: D:/Xilinx/Vivado/2020.2
+XILINX_VIVADO_HLS: D:/Xilinx/Vivado/2020.2
+
+
+GUI allocated memory:	128 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 1,025 MB
+
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// bz (cr):  Open Project : addNotify
+// Opening Vivado Project: D:\SeniorProject\Oscilloscope_Senior_Project\Verilog\FullSystem\FullSystem.xpr. Version: Vivado v2020.2 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 52 MB. Current time: 4/26/21, 3:25:44 PM EDT
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 111 MB (+113954kb) [00:00:29]
+// [Engine Memory]: 1,025 MB (+922917kb) [00:00:29]
+// WARNING: HEventQueue.dispatchEvent() is taking  5205 ms.
+// Tcl Message: open_project D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem/FullSystem.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Xilinx/Vivado/2020.2/data/ip'. 
+// Tcl Message: open_project: Time (s): cpu = 00:00:16 ; elapsed = 00:00:13 . Memory (MB): peak = 1001.723 ; gain = 0.000 
+// Project name: FullSystem; location: D:/SeniorProject/Oscilloscope_Senior_Project/Verilog/FullSystem; part: xc7a100tcsg324-1
+dismissDialog("Open Project"); // bz
+// Tcl Command: 'rdi::info_commands {device::*}'
+// Tcl Command: 'rdi::info_commands {debug::*}'
+// Tcl Command: 'rdi::info_commands {*}'
+// [GUI Memory]: 119 MB (+2349kb) [00:00:38]
+// Tcl Message: update_compile_order -fileset sources_1 
+// Elapsed time: 48 seconds
+expandTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Top (Top.v)]", 1); // D
+// PAPropertyPanels.initPanels (Regs.v) elapsed time: 0.2s
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Top (Top.v), u_REGS : Regs (Regs.v)]", 9, false); // D
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Top (Top.v), u_REGS : Regs (Regs.v)]", 9, false, false, false, false, false, true); // D - Double Click
+// [GUI Memory]: 131 MB (+6888kb) [00:01:24]
+selectCodeEditor("Regs.v", 391, 206); // bP
+selectCodeEditor("Regs.v", 397, 198); // bP
+// Elapsed time: 48 seconds
+selectCodeEditor("Regs.v", 423, 191); // bP
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Top (Top.v), u_TriggerLogic : TriggerLogic (TriggerLogic.v)]", 4, false); // D
+selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources, Top (Top.v), u_TriggerLogic : TriggerLogic (TriggerLogic.v)]", 4, false, false, false, false, false, true); // D - Double Click
+selectCodeEditor("TriggerLogic.v", 169, 168); // bP
+selectCodeEditor("TriggerLogic.v", 169, 168, false, false, false, false, true); // bP - Double Click
+selectCodeEditor("TriggerLogic.v", 166, 180); // bP
+selectCodeEditor("TriggerLogic.v", 166, 180, false, false, false, false, true); // bP - Double Click
+// [GUI Memory]: 140 MB (+2233kb) [00:05:00]
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 78 MB. Current time: 4/26/21, 3:55:44 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/26/21, 4:25:45 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/26/21, 4:55:45 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/26/21, 5:25:45 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/26/21, 5:55:46 PM EDT
+// WARNING: HEventQueue.dispatchEvent() is taking  899152 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  5041909 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  4703 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/26/21, 7:36:34 PM EDT
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 521 ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 7300 ms. Increasing delay to 21900 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 18219 ms. Increasing delay to 3000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 5479 ms. Increasing delay to 4000 ms.
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 831 ms. Decreasing delay to 2831 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/26/21, 8:06:33 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/26/21, 8:36:34 PM EDT
+// WARNING: HEventQueue.dispatchEvent() is taking  899475 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 900225 ms. Increasing delay to 5000 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  64730199 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/27/21, 2:50:46 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/27/21, 3:20:47 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/27/21, 3:50:47 PM EDT
+// WARNING: HEventQueue.dispatchEvent() is taking  900482 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  540647 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/27/21, 4:29:46 PM EDT
+// WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 2877 ms. Increasing delay to 8631 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 5042 ms. Increasing delay to 6000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 8218 ms. Increasing delay to 7000 ms.
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 942 ms to process. Increasing delay to 2000 ms.
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 3588 ms. Increasing delay to 8000 ms.
+// Elapsed time: 90522 seconds
+selectCodeEditor("TriggerLogic.v", 489, 289); // bP
+// WARNING: HEventQueue.dispatchEvent() is taking  1610 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1419 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1825 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/27/21, 4:59:49 PM EDT
+// WARNING: HEventQueue.dispatchEvent() is taking  900476 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 68 MB. Current time: 4/27/21, 5:40:38 PM EDT
+// WARNING: HSwingWorker (Update Runs Swing Worker) is taking 900821 ms. Increasing delay to 9000 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1669719 ms.
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 1176 ms to process. Increasing delay to 3000 ms.
+// WARNING: HSwingWorker (Monitor File Timestamp Swing Worker) is taking 1181 ms to process. Increasing delay to 3000 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/27/21, 6:10:40 PM EDT
+// Elapsed time: 6092 seconds
+selectCodeEditor("TriggerLogic.v", 369, 265); // bP
+selectCodeEditor("TriggerLogic.v", 232, 316); // bP
+selectCodeEditor("TriggerLogic.v", 243, 296); // bP
+selectCodeEditor("TriggerLogic.v", 243, 296, false, false, false, false, true); // bP - Double Click
+// Elapsed time: 10 seconds
+selectCodeEditor("TriggerLogic.v", 303, 394); // bP
+// Elapsed time: 164 seconds
+selectCodeEditor("TriggerLogic.v", 437, 358); // bP
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 69 MB. Current time: 4/27/21, 6:40:41 PM EDT
+// HMemoryUtils.trashcanNow. Engine heap size: 1,025 MB. GUI used memory: 61 MB. Current time: 4/27/21, 7:10:41 PM EDT

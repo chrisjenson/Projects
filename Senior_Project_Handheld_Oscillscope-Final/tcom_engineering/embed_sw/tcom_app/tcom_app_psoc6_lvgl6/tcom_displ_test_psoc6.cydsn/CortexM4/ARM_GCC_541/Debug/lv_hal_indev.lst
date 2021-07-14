@@ -1,0 +1,4175 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_hal_indev.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_indev_drv_init,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_indev_drv_init
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_indev_drv_init, %function
+  26              	lv_indev_drv_init:
+  27              	.LFB31:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\lv_hal_indev.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @file hal_indev.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @description Input device HAL interface
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /*********************
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *      INCLUDES
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *********************/
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "../lv_core/lv_debug.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "../lv_hal/lv_hal_indev.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "../lv_core/lv_indev.h"
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "../lv_misc/lv_mem.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "../lv_misc/lv_gc.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include "lv_hal_disp.h"
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #if defined(LV_GC_INCLUDE)
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #include LV_GC_INCLUDE
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** #endif /* LV_ENABLE_GC */
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /*********************
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *      DEFINES
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *********************/
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**********************
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *      TYPEDEFS
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  **********************/
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *  STATIC PROTOTYPES
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *  STATIC VARIABLES
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**********************
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *      MACROS
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  **********************/
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**********************
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  *   GLOBAL FUNCTIONS
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  **********************/
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * Initialize an input device driver with default values.
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * It is used to surly have known values in the fields ant not memory junk.
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * After it you can set the fields.
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param driver pointer to driver variable to initialize
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** void lv_indev_drv_init(lv_indev_drv_t * driver)
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** {
+  29              		.loc 1 53 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33 0000 80B5     		push	{r7, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 7, -8
+  36              		.cfi_offset 14, -4
+  37 0002 82B0     		sub	sp, sp, #8
+  38              		.cfi_def_cfa_offset 16
+  39 0004 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  41 0006 7860     		str	r0, [r7, #4]
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     memset(driver, 0, sizeof(lv_indev_drv_t));
+  42              		.loc 1 54 0
+  43 0008 1C22     		movs	r2, #28
+  44 000a 0021     		movs	r1, #0
+  45 000c 7868     		ldr	r0, [r7, #4]
+  46 000e FFF7FEFF 		bl	memset
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     driver->type                = LV_INDEV_TYPE_NONE;
+  47              		.loc 1 56 0
+  48 0012 7B68     		ldr	r3, [r7, #4]
+  49 0014 0022     		movs	r2, #0
+  50 0016 1A70     		strb	r2, [r3]
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     driver->drag_limit          = LV_INDEV_DEF_DRAG_LIMIT;
+  51              		.loc 1 57 0
+  52 0018 7B68     		ldr	r3, [r7, #4]
+  53 001a 0A22     		movs	r2, #10
+  54 001c 1A75     		strb	r2, [r3, #20]
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     driver->drag_throw          = LV_INDEV_DEF_DRAG_THROW;
+  55              		.loc 1 58 0
+  56 001e 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 3
+
+
+  57 0020 1422     		movs	r2, #20
+  58 0022 5A75     		strb	r2, [r3, #21]
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     driver->long_press_time     = LV_INDEV_DEF_LONG_PRESS_TIME;
+  59              		.loc 1 59 0
+  60 0024 7B68     		ldr	r3, [r7, #4]
+  61 0026 4FF4C872 		mov	r2, #400
+  62 002a DA82     		strh	r2, [r3, #22]	@ movhi
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     driver->long_press_rep_time = LV_INDEV_DEF_LONG_PRESS_REP_TIME;
+  63              		.loc 1 60 0
+  64 002c 7B68     		ldr	r3, [r7, #4]
+  65 002e 6422     		movs	r2, #100
+  66 0030 1A83     		strh	r2, [r3, #24]	@ movhi
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** }
+  67              		.loc 1 61 0
+  68 0032 00BF     		nop
+  69 0034 0837     		adds	r7, r7, #8
+  70              		.cfi_def_cfa_offset 8
+  71 0036 BD46     		mov	sp, r7
+  72              		.cfi_def_cfa_register 13
+  73              		@ sp needed
+  74 0038 80BD     		pop	{r7, pc}
+  75              		.cfi_endproc
+  76              	.LFE31:
+  77              		.size	lv_indev_drv_init, .-lv_indev_drv_init
+  78 003a 00BF     		.section	.text.lv_indev_drv_register,"ax",%progbits
+  79              		.align	2
+  80              		.global	lv_indev_drv_register
+  81              		.thumb
+  82              		.thumb_func
+  83              		.type	lv_indev_drv_register, %function
+  84              	lv_indev_drv_register:
+  85              	.LFB32:
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * Register an initialized input device driver.
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param driver pointer to an initialized 'lv_indev_drv_t' variable (can be local variable)
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @return pointer to the new input device or NULL on error
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** lv_indev_t * lv_indev_drv_register(lv_indev_drv_t * driver)
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** {
+  86              		.loc 1 69 0
+  87              		.cfi_startproc
+  88              		@ args = 0, pretend = 0, frame = 16
+  89              		@ frame_needed = 1, uses_anonymous_args = 0
+  90 0000 80B5     		push	{r7, lr}
+  91              		.cfi_def_cfa_offset 8
+  92              		.cfi_offset 7, -8
+  93              		.cfi_offset 14, -4
+  94 0002 84B0     		sub	sp, sp, #16
+  95              		.cfi_def_cfa_offset 24
+  96 0004 00AF     		add	r7, sp, #0
+  97              		.cfi_def_cfa_register 7
+  98 0006 7860     		str	r0, [r7, #4]
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(driver->disp == NULL) driver->disp = lv_disp_get_default();
+  99              		.loc 1 71 0
+ 100 0008 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 4
+
+
+ 101 000a DB68     		ldr	r3, [r3, #12]
+ 102 000c 002B     		cmp	r3, #0
+ 103 000e 04D1     		bne	.L3
+ 104              		.loc 1 71 0 is_stmt 0 discriminator 1
+ 105 0010 FFF7FEFF 		bl	lv_disp_get_default
+ 106 0014 0246     		mov	r2, r0
+ 107 0016 7B68     		ldr	r3, [r7, #4]
+ 108 0018 DA60     		str	r2, [r3, #12]
+ 109              	.L3:
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(driver->disp == NULL) {
+ 110              		.loc 1 73 0 is_stmt 1
+ 111 001a 7B68     		ldr	r3, [r7, #4]
+ 112 001c DB68     		ldr	r3, [r3, #12]
+ 113 001e 002B     		cmp	r3, #0
+ 114 0020 01D1     		bne	.L4
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         LV_LOG_WARN("lv_indev_drv_register: no display registered hence can't attache the indev to 
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****                     "a display");
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         return NULL;
+ 115              		.loc 1 76 0
+ 116 0022 0023     		movs	r3, #0
+ 117 0024 2DE0     		b	.L5
+ 118              	.L4:
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     }
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     lv_indev_t * indev = lv_ll_ins_head(&LV_GC_ROOT(_lv_indev_ll));
+ 119              		.loc 1 79 0
+ 120 0026 1948     		ldr	r0, .L7
+ 121 0028 FFF7FEFF 		bl	lv_ll_ins_head
+ 122 002c F860     		str	r0, [r7, #12]
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(!indev) {
+ 123              		.loc 1 80 0
+ 124 002e FB68     		ldr	r3, [r7, #12]
+ 125 0030 002B     		cmp	r3, #0
+ 126 0032 01D1     		bne	.L6
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         LV_ASSERT_MEM(indev);
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         return NULL;
+ 127              		.loc 1 82 0
+ 128 0034 0023     		movs	r3, #0
+ 129 0036 24E0     		b	.L5
+ 130              	.L6:
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     }
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     memset(indev, 0, sizeof(lv_indev_t));
+ 131              		.loc 1 85 0
+ 132 0038 5C22     		movs	r2, #92
+ 133 003a 0021     		movs	r1, #0
+ 134 003c F868     		ldr	r0, [r7, #12]
+ 135 003e FFF7FEFF 		bl	memset
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     memcpy(&indev->driver, driver, sizeof(lv_indev_drv_t));
+ 136              		.loc 1 86 0
+ 137 0042 FB68     		ldr	r3, [r7, #12]
+ 138 0044 1C22     		movs	r2, #28
+ 139 0046 7968     		ldr	r1, [r7, #4]
+ 140 0048 1846     		mov	r0, r3
+ 141 004a FFF7FEFF 		bl	memcpy
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 5
+
+
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     indev->proc.reset_query = 1;
+ 142              		.loc 1 88 0
+ 143 004e FA68     		ldr	r2, [r7, #12]
+ 144 0050 92F84C30 		ldrb	r3, [r2, #76]
+ 145 0054 43F00203 		orr	r3, r3, #2
+ 146 0058 82F84C30 		strb	r3, [r2, #76]
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     indev->cursor           = NULL;
+ 147              		.loc 1 89 0
+ 148 005c FB68     		ldr	r3, [r7, #12]
+ 149 005e 0022     		movs	r2, #0
+ 150 0060 1A65     		str	r2, [r3, #80]
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     indev->group            = NULL;
+ 151              		.loc 1 90 0
+ 152 0062 FB68     		ldr	r3, [r7, #12]
+ 153 0064 0022     		movs	r2, #0
+ 154 0066 5A65     		str	r2, [r3, #84]
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     indev->btn_points       = NULL;
+ 155              		.loc 1 91 0
+ 156 0068 FB68     		ldr	r3, [r7, #12]
+ 157 006a 0022     		movs	r2, #0
+ 158 006c 9A65     		str	r2, [r3, #88]
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     indev->driver.read_task = lv_task_create(lv_indev_read_task, LV_INDEV_DEF_READ_PERIOD, LV_TASK_
+ 159              		.loc 1 93 0
+ 160 006e FB68     		ldr	r3, [r7, #12]
+ 161 0070 0322     		movs	r2, #3
+ 162 0072 1E21     		movs	r1, #30
+ 163 0074 0648     		ldr	r0, .L7+4
+ 164 0076 FFF7FEFF 		bl	lv_task_create
+ 165 007a 0246     		mov	r2, r0
+ 166 007c FB68     		ldr	r3, [r7, #12]
+ 167 007e 1A61     		str	r2, [r3, #16]
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     return indev;
+ 168              		.loc 1 95 0
+ 169 0080 FB68     		ldr	r3, [r7, #12]
+ 170              	.L5:
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** }
+ 171              		.loc 1 96 0
+ 172 0082 1846     		mov	r0, r3
+ 173 0084 1037     		adds	r7, r7, #16
+ 174              		.cfi_def_cfa_offset 8
+ 175 0086 BD46     		mov	sp, r7
+ 176              		.cfi_def_cfa_register 13
+ 177              		@ sp needed
+ 178 0088 80BD     		pop	{r7, pc}
+ 179              	.L8:
+ 180 008a 00BF     		.align	2
+ 181              	.L7:
+ 182 008c 00000000 		.word	_lv_indev_ll
+ 183 0090 00000000 		.word	lv_indev_read_task
+ 184              		.cfi_endproc
+ 185              	.LFE32:
+ 186              		.size	lv_indev_drv_register, .-lv_indev_drv_register
+ 187              		.section	.text.lv_indev_drv_update,"ax",%progbits
+ 188              		.align	2
+ 189              		.global	lv_indev_drv_update
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 6
+
+
+ 190              		.thumb
+ 191              		.thumb_func
+ 192              		.type	lv_indev_drv_update, %function
+ 193              	lv_indev_drv_update:
+ 194              	.LFB33:
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * Update the driver in run time.
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param indev pointer to a input device. (return value of `lv_indev_drv_register`)
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param new_drv pointer to the new driver
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** void lv_indev_drv_update(lv_indev_t * indev, lv_indev_drv_t * new_drv)
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** {
+ 195              		.loc 1 104 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 8
+ 198              		@ frame_needed = 1, uses_anonymous_args = 0
+ 199 0000 80B5     		push	{r7, lr}
+ 200              		.cfi_def_cfa_offset 8
+ 201              		.cfi_offset 7, -8
+ 202              		.cfi_offset 14, -4
+ 203 0002 82B0     		sub	sp, sp, #8
+ 204              		.cfi_def_cfa_offset 16
+ 205 0004 00AF     		add	r7, sp, #0
+ 206              		.cfi_def_cfa_register 7
+ 207 0006 7860     		str	r0, [r7, #4]
+ 208 0008 3960     		str	r1, [r7]
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     memcpy(&indev->driver, new_drv, sizeof(lv_indev_drv_t));
+ 209              		.loc 1 105 0
+ 210 000a 7B68     		ldr	r3, [r7, #4]
+ 211 000c 1C22     		movs	r2, #28
+ 212 000e 3968     		ldr	r1, [r7]
+ 213 0010 1846     		mov	r0, r3
+ 214 0012 FFF7FEFF 		bl	memcpy
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** }
+ 215              		.loc 1 106 0
+ 216 0016 00BF     		nop
+ 217 0018 0837     		adds	r7, r7, #8
+ 218              		.cfi_def_cfa_offset 8
+ 219 001a BD46     		mov	sp, r7
+ 220              		.cfi_def_cfa_register 13
+ 221              		@ sp needed
+ 222 001c 80BD     		pop	{r7, pc}
+ 223              		.cfi_endproc
+ 224              	.LFE33:
+ 225              		.size	lv_indev_drv_update, .-lv_indev_drv_update
+ 226 001e 00BF     		.section	.text.lv_indev_get_next,"ax",%progbits
+ 227              		.align	2
+ 228              		.global	lv_indev_get_next
+ 229              		.thumb
+ 230              		.thumb_func
+ 231              		.type	lv_indev_get_next, %function
+ 232              	lv_indev_get_next:
+ 233              	.LFB34:
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * Get the next input device.
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 7
+
+
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param indev pointer to the current input device. NULL to initialize.
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @return the next input devise or NULL if no more. Give the first input device when the parameter
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * is NULL
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** lv_indev_t * lv_indev_get_next(lv_indev_t * indev)
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** {
+ 234              		.loc 1 115 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 8
+ 237              		@ frame_needed = 1, uses_anonymous_args = 0
+ 238 0000 80B5     		push	{r7, lr}
+ 239              		.cfi_def_cfa_offset 8
+ 240              		.cfi_offset 7, -8
+ 241              		.cfi_offset 14, -4
+ 242 0002 82B0     		sub	sp, sp, #8
+ 243              		.cfi_def_cfa_offset 16
+ 244 0004 00AF     		add	r7, sp, #0
+ 245              		.cfi_def_cfa_register 7
+ 246 0006 7860     		str	r0, [r7, #4]
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(indev == NULL)
+ 247              		.loc 1 116 0
+ 248 0008 7B68     		ldr	r3, [r7, #4]
+ 249 000a 002B     		cmp	r3, #0
+ 250 000c 04D1     		bne	.L11
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         return lv_ll_get_head(&LV_GC_ROOT(_lv_indev_ll));
+ 251              		.loc 1 117 0
+ 252 000e 0748     		ldr	r0, .L13
+ 253 0010 FFF7FEFF 		bl	lv_ll_get_head
+ 254 0014 0346     		mov	r3, r0
+ 255 0016 04E0     		b	.L12
+ 256              	.L11:
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     else
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         return lv_ll_get_next(&LV_GC_ROOT(_lv_indev_ll), indev);
+ 257              		.loc 1 119 0
+ 258 0018 7968     		ldr	r1, [r7, #4]
+ 259 001a 0448     		ldr	r0, .L13
+ 260 001c FFF7FEFF 		bl	lv_ll_get_next
+ 261 0020 0346     		mov	r3, r0
+ 262              	.L12:
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** }
+ 263              		.loc 1 120 0
+ 264 0022 1846     		mov	r0, r3
+ 265 0024 0837     		adds	r7, r7, #8
+ 266              		.cfi_def_cfa_offset 8
+ 267 0026 BD46     		mov	sp, r7
+ 268              		.cfi_def_cfa_register 13
+ 269              		@ sp needed
+ 270 0028 80BD     		pop	{r7, pc}
+ 271              	.L14:
+ 272 002a 00BF     		.align	2
+ 273              	.L13:
+ 274 002c 00000000 		.word	_lv_indev_ll
+ 275              		.cfi_endproc
+ 276              	.LFE34:
+ 277              		.size	lv_indev_get_next, .-lv_indev_get_next
+ 278              		.section	.text.lv_indev_read,"ax",%progbits
+ 279              		.align	2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 8
+
+
+ 280              		.global	lv_indev_read
+ 281              		.thumb
+ 282              		.thumb_func
+ 283              		.type	lv_indev_read, %function
+ 284              	lv_indev_read:
+ 285              	.LFB35:
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** /**
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * Read data from an input device.
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param indev pointer to an input device
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @param data input device will write its data here
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  * @return false: no more data; true: there more data to read (buffered)
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****  */
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** bool lv_indev_read(lv_indev_t * indev, lv_indev_data_t * data)
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** {
+ 286              		.loc 1 129 0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 16
+ 289              		@ frame_needed = 1, uses_anonymous_args = 0
+ 290 0000 80B5     		push	{r7, lr}
+ 291              		.cfi_def_cfa_offset 8
+ 292              		.cfi_offset 7, -8
+ 293              		.cfi_offset 14, -4
+ 294 0002 84B0     		sub	sp, sp, #16
+ 295              		.cfi_def_cfa_offset 24
+ 296 0004 00AF     		add	r7, sp, #0
+ 297              		.cfi_def_cfa_register 7
+ 298 0006 7860     		str	r0, [r7, #4]
+ 299 0008 3960     		str	r1, [r7]
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     bool cont = false;
+ 300              		.loc 1 130 0
+ 301 000a 0023     		movs	r3, #0
+ 302 000c FB73     		strb	r3, [r7, #15]
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     memset(data, 0, sizeof(lv_indev_data_t));
+ 303              		.loc 1 132 0
+ 304 000e 1022     		movs	r2, #16
+ 305 0010 0021     		movs	r1, #0
+ 306 0012 3868     		ldr	r0, [r7]
+ 307 0014 FFF7FEFF 		bl	memset
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     /* For touchpad sometimes users don't the last pressed coordinate on release.
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****      * So be sure a coordinates are initialized to the last point */
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(indev->driver.type == LV_INDEV_TYPE_POINTER) {
+ 308              		.loc 1 136 0
+ 309 0018 7B68     		ldr	r3, [r7, #4]
+ 310 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 311 001c 012B     		cmp	r3, #1
+ 312 001e 0AD1     		bne	.L16
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         data->point.x = indev->proc.types.pointer.act_point.x;
+ 313              		.loc 1 137 0
+ 314 0020 7B68     		ldr	r3, [r7, #4]
+ 315 0022 B3F92020 		ldrsh	r2, [r3, #32]
+ 316 0026 3B68     		ldr	r3, [r7]
+ 317 0028 1A80     		strh	r2, [r3]	@ movhi
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         data->point.y = indev->proc.types.pointer.act_point.y;
+ 318              		.loc 1 138 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 9
+
+
+ 319 002a 7B68     		ldr	r3, [r7, #4]
+ 320 002c B3F92220 		ldrsh	r2, [r3, #34]
+ 321 0030 3B68     		ldr	r3, [r7]
+ 322 0032 5A80     		strh	r2, [r3, #2]	@ movhi
+ 323 0034 07E0     		b	.L17
+ 324              	.L16:
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     }
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     /*Similarly set at least the last key in case of the  the user doesn't set it  on release*/
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     else if(indev->driver.type == LV_INDEV_TYPE_KEYPAD) {
+ 325              		.loc 1 141 0
+ 326 0036 7B68     		ldr	r3, [r7, #4]
+ 327 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 328 003a 022B     		cmp	r3, #2
+ 329 003c 03D1     		bne	.L17
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         data->key = indev->proc.types.keypad.last_key;
+ 330              		.loc 1 142 0
+ 331 003e 7B68     		ldr	r3, [r7, #4]
+ 332 0040 5A6A     		ldr	r2, [r3, #36]
+ 333 0042 3B68     		ldr	r3, [r7]
+ 334 0044 5A60     		str	r2, [r3, #4]
+ 335              	.L17:
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     }
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     if(indev->driver.read_cb) {
+ 336              		.loc 1 145 0
+ 337 0046 7B68     		ldr	r3, [r7, #4]
+ 338 0048 5B68     		ldr	r3, [r3, #4]
+ 339 004a 002B     		cmp	r3, #0
+ 340 004c 07D0     		beq	.L18
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         LV_LOG_TRACE("idnev read started");
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         cont = indev->driver.read_cb(&indev->driver, data);
+ 341              		.loc 1 147 0
+ 342 004e 7B68     		ldr	r3, [r7, #4]
+ 343 0050 5B68     		ldr	r3, [r3, #4]
+ 344 0052 7A68     		ldr	r2, [r7, #4]
+ 345 0054 3968     		ldr	r1, [r7]
+ 346 0056 1046     		mov	r0, r2
+ 347 0058 9847     		blx	r3
+ 348 005a 0346     		mov	r3, r0
+ 349 005c FB73     		strb	r3, [r7, #15]
+ 350              	.L18:
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         LV_LOG_TRACE("idnev read finished");
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     } else {
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****         LV_LOG_WARN("indev function registered");
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     }
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** 
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c ****     return cont;
+ 351              		.loc 1 153 0
+ 352 005e FB7B     		ldrb	r3, [r7, #15]	@ zero_extendqisi2
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_hal/lv_hal_indev.c **** }
+ 353              		.loc 1 154 0
+ 354 0060 1846     		mov	r0, r3
+ 355 0062 1037     		adds	r7, r7, #16
+ 356              		.cfi_def_cfa_offset 8
+ 357 0064 BD46     		mov	sp, r7
+ 358              		.cfi_def_cfa_register 13
+ 359              		@ sp needed
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 10
+
+
+ 360 0066 80BD     		pop	{r7, pc}
+ 361              		.cfi_endproc
+ 362              	.LFE35:
+ 363              		.size	lv_indev_read, .-lv_indev_read
+ 364              		.text
+ 365              	.Letext0:
+ 366              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 367              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 368              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../../../lv_conf.h"
+ 369              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_font/lv_font.h"
+ 370              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_misc/lv_color.h"
+ 371              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_misc/lv_area.h"
+ 372              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/lv_style.h"
+ 373              		.file 9 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_misc/lv_types.h"
+ 374              		.file 10 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_misc/lv_ll.h"
+ 375              		.file 11 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_misc/lv_bidi.h"
+ 376              		.file 12 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_hal/../lv_misc/lv_t
+ 377              		.file 13 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_hal/lv_hal_disp.h"
+ 378              		.file 14 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/lv_obj.h"
+ 379              		.file 15 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_core/../lv_hal/lv_hal_indev.h"
+ 380              		.file 16 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\../lv_misc/lv_gc.h"
+ 381              		.section	.debug_info,"",%progbits
+ 382              	.Ldebug_info0:
+ 383 0000 160F0000 		.4byte	0xf16
+ 384 0004 0400     		.2byte	0x4
+ 385 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 386 000a 04       		.byte	0x4
+ 387 000b 01       		.uleb128 0x1
+ 388 000c D2090000 		.4byte	.LASF222
+ 389 0010 0C       		.byte	0xc
+ 390 0011 E7020000 		.4byte	.LASF223
+ 391 0015 7A010000 		.4byte	.LASF224
+ 392 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 393 001d 00000000 		.4byte	0
+ 394 0021 00000000 		.4byte	.Ldebug_line0
+ 395 0025 02       		.uleb128 0x2
+ 396 0026 65060000 		.4byte	.LASF0
+ 397 002a 02       		.byte	0x2
+ 398 002b 1B       		.byte	0x1b
+ 399 002c 30000000 		.4byte	0x30
+ 400 0030 03       		.uleb128 0x3
+ 401 0031 01       		.byte	0x1
+ 402 0032 06       		.byte	0x6
+ 403 0033 39090000 		.4byte	.LASF2
+ 404 0037 02       		.uleb128 0x2
+ 405 0038 B6070000 		.4byte	.LASF1
+ 406 003c 02       		.byte	0x2
+ 407 003d 1D       		.byte	0x1d
+ 408 003e 42000000 		.4byte	0x42
+ 409 0042 03       		.uleb128 0x3
+ 410 0043 01       		.byte	0x1
+ 411 0044 08       		.byte	0x8
+ 412 0045 89080000 		.4byte	.LASF3
+ 413 0049 02       		.uleb128 0x2
+ 414 004a A4050000 		.4byte	.LASF4
+ 415 004e 02       		.byte	0x2
+ 416 004f 29       		.byte	0x29
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 11
+
+
+ 417 0050 54000000 		.4byte	0x54
+ 418 0054 03       		.uleb128 0x3
+ 419 0055 02       		.byte	0x2
+ 420 0056 05       		.byte	0x5
+ 421 0057 1C070000 		.4byte	.LASF5
+ 422 005b 02       		.uleb128 0x2
+ 423 005c CB020000 		.4byte	.LASF6
+ 424 0060 02       		.byte	0x2
+ 425 0061 2B       		.byte	0x2b
+ 426 0062 66000000 		.4byte	0x66
+ 427 0066 03       		.uleb128 0x3
+ 428 0067 02       		.byte	0x2
+ 429 0068 07       		.byte	0x7
+ 430 0069 53090000 		.4byte	.LASF7
+ 431 006d 03       		.uleb128 0x3
+ 432 006e 04       		.byte	0x4
+ 433 006f 05       		.byte	0x5
+ 434 0070 41070000 		.4byte	.LASF8
+ 435 0074 02       		.uleb128 0x2
+ 436 0075 9C080000 		.4byte	.LASF9
+ 437 0079 02       		.byte	0x2
+ 438 007a 41       		.byte	0x41
+ 439 007b 7F000000 		.4byte	0x7f
+ 440 007f 03       		.uleb128 0x3
+ 441 0080 04       		.byte	0x4
+ 442 0081 07       		.byte	0x7
+ 443 0082 0A080000 		.4byte	.LASF10
+ 444 0086 03       		.uleb128 0x3
+ 445 0087 08       		.byte	0x8
+ 446 0088 05       		.byte	0x5
+ 447 0089 29050000 		.4byte	.LASF11
+ 448 008d 03       		.uleb128 0x3
+ 449 008e 08       		.byte	0x8
+ 450 008f 07       		.byte	0x7
+ 451 0090 81020000 		.4byte	.LASF12
+ 452 0094 04       		.uleb128 0x4
+ 453 0095 04       		.byte	0x4
+ 454 0096 05       		.byte	0x5
+ 455 0097 696E7400 		.ascii	"int\000"
+ 456 009b 03       		.uleb128 0x3
+ 457 009c 04       		.byte	0x4
+ 458 009d 07       		.byte	0x7
+ 459 009e B4000000 		.4byte	.LASF13
+ 460 00a2 02       		.uleb128 0x2
+ 461 00a3 2E020000 		.4byte	.LASF14
+ 462 00a7 03       		.byte	0x3
+ 463 00a8 14       		.byte	0x14
+ 464 00a9 25000000 		.4byte	0x25
+ 465 00ad 02       		.uleb128 0x2
+ 466 00ae CE040000 		.4byte	.LASF15
+ 467 00b2 03       		.byte	0x3
+ 468 00b3 18       		.byte	0x18
+ 469 00b4 37000000 		.4byte	0x37
+ 470 00b8 02       		.uleb128 0x2
+ 471 00b9 70020000 		.4byte	.LASF16
+ 472 00bd 03       		.byte	0x3
+ 473 00be 20       		.byte	0x20
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 12
+
+
+ 474 00bf 49000000 		.4byte	0x49
+ 475 00c3 02       		.uleb128 0x2
+ 476 00c4 8B060000 		.4byte	.LASF17
+ 477 00c8 03       		.byte	0x3
+ 478 00c9 24       		.byte	0x24
+ 479 00ca 5B000000 		.4byte	0x5b
+ 480 00ce 02       		.uleb128 0x2
+ 481 00cf 25020000 		.4byte	.LASF18
+ 482 00d3 03       		.byte	0x3
+ 483 00d4 30       		.byte	0x30
+ 484 00d5 74000000 		.4byte	0x74
+ 485 00d9 02       		.uleb128 0x2
+ 486 00da 96070000 		.4byte	.LASF19
+ 487 00de 04       		.byte	0x4
+ 488 00df 3C       		.byte	0x3c
+ 489 00e0 B8000000 		.4byte	0xb8
+ 490 00e4 05       		.uleb128 0x5
+ 491 00e5 04       		.byte	0x4
+ 492 00e6 03       		.uleb128 0x3
+ 493 00e7 08       		.byte	0x8
+ 494 00e8 04       		.byte	0x4
+ 495 00e9 7F060000 		.4byte	.LASF20
+ 496 00ed 06       		.uleb128 0x6
+ 497 00ee 08       		.byte	0x8
+ 498 00ef 05       		.byte	0x5
+ 499 00f0 2E       		.byte	0x2e
+ 500 00f1 3E010000 		.4byte	0x13e
+ 501 00f5 07       		.uleb128 0x7
+ 502 00f6 C30A0000 		.4byte	.LASF21
+ 503 00fa 05       		.byte	0x5
+ 504 00fb 30       		.byte	0x30
+ 505 00fc C3000000 		.4byte	0xc3
+ 506 0100 00       		.byte	0
+ 507 0101 07       		.uleb128 0x7
+ 508 0102 F7070000 		.4byte	.LASF22
+ 509 0106 05       		.byte	0x5
+ 510 0107 31       		.byte	0x31
+ 511 0108 AD000000 		.4byte	0xad
+ 512 010c 02       		.byte	0x2
+ 513 010d 07       		.uleb128 0x7
+ 514 010e D2070000 		.4byte	.LASF23
+ 515 0112 05       		.byte	0x5
+ 516 0113 32       		.byte	0x32
+ 517 0114 AD000000 		.4byte	0xad
+ 518 0118 03       		.byte	0x3
+ 519 0119 07       		.uleb128 0x7
+ 520 011a C1000000 		.4byte	.LASF24
+ 521 011e 05       		.byte	0x5
+ 522 011f 33       		.byte	0x33
+ 523 0120 A2000000 		.4byte	0xa2
+ 524 0124 04       		.byte	0x4
+ 525 0125 07       		.uleb128 0x7
+ 526 0126 C7000000 		.4byte	.LASF25
+ 527 012a 05       		.byte	0x5
+ 528 012b 34       		.byte	0x34
+ 529 012c A2000000 		.4byte	0xa2
+ 530 0130 05       		.byte	0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 13
+
+
+ 531 0131 08       		.uleb128 0x8
+ 532 0132 62707000 		.ascii	"bpp\000"
+ 533 0136 05       		.byte	0x5
+ 534 0137 35       		.byte	0x35
+ 535 0138 AD000000 		.4byte	0xad
+ 536 013c 06       		.byte	0x6
+ 537 013d 00       		.byte	0
+ 538 013e 02       		.uleb128 0x2
+ 539 013f 99040000 		.4byte	.LASF26
+ 540 0143 05       		.byte	0x5
+ 541 0144 36       		.byte	0x36
+ 542 0145 ED000000 		.4byte	0xed
+ 543 0149 09       		.uleb128 0x9
+ 544 014a E6030000 		.4byte	.LASF81
+ 545 014e 10       		.byte	0x10
+ 546 014f 05       		.byte	0x5
+ 547 0150 44       		.byte	0x44
+ 548 0151 A1010000 		.4byte	0x1a1
+ 549 0155 07       		.uleb128 0x7
+ 550 0156 DF000000 		.4byte	.LASF27
+ 551 015a 05       		.byte	0x5
+ 552 015b 47       		.byte	0x47
+ 553 015c D7010000 		.4byte	0x1d7
+ 554 0160 00       		.byte	0
+ 555 0161 07       		.uleb128 0x7
+ 556 0162 C0080000 		.4byte	.LASF28
+ 557 0166 05       		.byte	0x5
+ 558 0167 4A       		.byte	0x4a
+ 559 0168 FC010000 		.4byte	0x1fc
+ 560 016c 04       		.byte	0x4
+ 561 016d 07       		.uleb128 0x7
+ 562 016e 2A040000 		.4byte	.LASF29
+ 563 0172 05       		.byte	0x5
+ 564 0173 4D       		.byte	0x4d
+ 565 0174 AD000000 		.4byte	0xad
+ 566 0178 08       		.byte	0x8
+ 567 0179 07       		.uleb128 0x7
+ 568 017a 36080000 		.4byte	.LASF30
+ 569 017e 05       		.byte	0x5
+ 570 017f 4E       		.byte	0x4e
+ 571 0180 A2000000 		.4byte	0xa2
+ 572 0184 09       		.byte	0x9
+ 573 0185 0A       		.uleb128 0xa
+ 574 0186 54060000 		.4byte	.LASF65
+ 575 018a 05       		.byte	0x5
+ 576 018b 4F       		.byte	0x4f
+ 577 018c AD000000 		.4byte	0xad
+ 578 0190 01       		.byte	0x1
+ 579 0191 02       		.byte	0x2
+ 580 0192 06       		.byte	0x6
+ 581 0193 0A       		.byte	0xa
+ 582 0194 08       		.uleb128 0x8
+ 583 0195 64736300 		.ascii	"dsc\000"
+ 584 0199 05       		.byte	0x5
+ 585 019a 50       		.byte	0x50
+ 586 019b E4000000 		.4byte	0xe4
+ 587 019f 0C       		.byte	0xc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 14
+
+
+ 588 01a0 00       		.byte	0
+ 589 01a1 0B       		.uleb128 0xb
+ 590 01a2 BF010000 		.4byte	0x1bf
+ 591 01a6 BF010000 		.4byte	0x1bf
+ 592 01aa 0C       		.uleb128 0xc
+ 593 01ab C6010000 		.4byte	0x1c6
+ 594 01af 0C       		.uleb128 0xc
+ 595 01b0 D1010000 		.4byte	0x1d1
+ 596 01b4 0C       		.uleb128 0xc
+ 597 01b5 CE000000 		.4byte	0xce
+ 598 01b9 0C       		.uleb128 0xc
+ 599 01ba CE000000 		.4byte	0xce
+ 600 01be 00       		.byte	0
+ 601 01bf 03       		.uleb128 0x3
+ 602 01c0 01       		.byte	0x1
+ 603 01c1 02       		.byte	0x2
+ 604 01c2 C5030000 		.4byte	.LASF31
+ 605 01c6 0D       		.uleb128 0xd
+ 606 01c7 04       		.byte	0x4
+ 607 01c8 CC010000 		.4byte	0x1cc
+ 608 01cc 0E       		.uleb128 0xe
+ 609 01cd 49010000 		.4byte	0x149
+ 610 01d1 0D       		.uleb128 0xd
+ 611 01d2 04       		.byte	0x4
+ 612 01d3 3E010000 		.4byte	0x13e
+ 613 01d7 0D       		.uleb128 0xd
+ 614 01d8 04       		.byte	0x4
+ 615 01d9 A1010000 		.4byte	0x1a1
+ 616 01dd 0B       		.uleb128 0xb
+ 617 01de F1010000 		.4byte	0x1f1
+ 618 01e2 F1010000 		.4byte	0x1f1
+ 619 01e6 0C       		.uleb128 0xc
+ 620 01e7 C6010000 		.4byte	0x1c6
+ 621 01eb 0C       		.uleb128 0xc
+ 622 01ec CE000000 		.4byte	0xce
+ 623 01f0 00       		.byte	0
+ 624 01f1 0D       		.uleb128 0xd
+ 625 01f2 04       		.byte	0x4
+ 626 01f3 F7010000 		.4byte	0x1f7
+ 627 01f7 0E       		.uleb128 0xe
+ 628 01f8 AD000000 		.4byte	0xad
+ 629 01fc 0D       		.uleb128 0xd
+ 630 01fd 04       		.byte	0x4
+ 631 01fe DD010000 		.4byte	0x1dd
+ 632 0202 02       		.uleb128 0x2
+ 633 0203 EC060000 		.4byte	.LASF32
+ 634 0207 05       		.byte	0x5
+ 635 0208 56       		.byte	0x56
+ 636 0209 49010000 		.4byte	0x149
+ 637 020d 06       		.uleb128 0x6
+ 638 020e 04       		.byte	0x4
+ 639 020f 06       		.byte	0x6
+ 640 0210 F3       		.byte	0xf3
+ 641 0211 46020000 		.4byte	0x246
+ 642 0215 07       		.uleb128 0x7
+ 643 0216 78070000 		.4byte	.LASF33
+ 644 021a 06       		.byte	0x6
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 15
+
+
+ 645 021b F5       		.byte	0xf5
+ 646 021c AD000000 		.4byte	0xad
+ 647 0220 00       		.byte	0
+ 648 0221 07       		.uleb128 0x7
+ 649 0222 6E060000 		.4byte	.LASF34
+ 650 0226 06       		.byte	0x6
+ 651 0227 F6       		.byte	0xf6
+ 652 0228 AD000000 		.4byte	0xad
+ 653 022c 01       		.byte	0x1
+ 654 022d 08       		.uleb128 0x8
+ 655 022e 72656400 		.ascii	"red\000"
+ 656 0232 06       		.byte	0x6
+ 657 0233 F7       		.byte	0xf7
+ 658 0234 AD000000 		.4byte	0xad
+ 659 0238 02       		.byte	0x2
+ 660 0239 07       		.uleb128 0x7
+ 661 023a 30080000 		.4byte	.LASF35
+ 662 023e 06       		.byte	0x6
+ 663 023f F8       		.byte	0xf8
+ 664 0240 AD000000 		.4byte	0xad
+ 665 0244 03       		.byte	0x3
+ 666 0245 00       		.byte	0
+ 667 0246 0F       		.uleb128 0xf
+ 668 0247 04       		.byte	0x4
+ 669 0248 06       		.byte	0x6
+ 670 0249 F1       		.byte	0xf1
+ 671 024a 64020000 		.4byte	0x264
+ 672 024e 10       		.uleb128 0x10
+ 673 024f 636800   		.ascii	"ch\000"
+ 674 0252 06       		.byte	0x6
+ 675 0253 F9       		.byte	0xf9
+ 676 0254 0D020000 		.4byte	0x20d
+ 677 0258 11       		.uleb128 0x11
+ 678 0259 22000000 		.4byte	.LASF36
+ 679 025d 06       		.byte	0x6
+ 680 025e FA       		.byte	0xfa
+ 681 025f CE000000 		.4byte	0xce
+ 682 0263 00       		.byte	0
+ 683 0264 02       		.uleb128 0x2
+ 684 0265 35020000 		.4byte	.LASF37
+ 685 0269 06       		.byte	0x6
+ 686 026a FB       		.byte	0xfb
+ 687 026b 46020000 		.4byte	0x246
+ 688 026f 12       		.uleb128 0x12
+ 689 0270 5A060000 		.4byte	.LASF38
+ 690 0274 06       		.byte	0x6
+ 691 0275 0801     		.2byte	0x108
+ 692 0277 64020000 		.4byte	0x264
+ 693 027b 12       		.uleb128 0x12
+ 694 027c 2D070000 		.4byte	.LASF39
+ 695 0280 06       		.byte	0x6
+ 696 0281 0D01     		.2byte	0x10d
+ 697 0283 AD000000 		.4byte	0xad
+ 698 0287 03       		.uleb128 0x3
+ 699 0288 04       		.byte	0x4
+ 700 0289 07       		.byte	0x7
+ 701 028a E3060000 		.4byte	.LASF40
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 16
+
+
+ 702 028e 03       		.uleb128 0x3
+ 703 028f 01       		.byte	0x1
+ 704 0290 08       		.byte	0x8
+ 705 0291 4F040000 		.4byte	.LASF41
+ 706 0295 06       		.uleb128 0x6
+ 707 0296 04       		.byte	0x4
+ 708 0297 07       		.byte	0x7
+ 709 0298 2A       		.byte	0x2a
+ 710 0299 B2020000 		.4byte	0x2b2
+ 711 029d 08       		.uleb128 0x8
+ 712 029e 7800     		.ascii	"x\000"
+ 713 02a0 07       		.byte	0x7
+ 714 02a1 2C       		.byte	0x2c
+ 715 02a2 D9000000 		.4byte	0xd9
+ 716 02a6 00       		.byte	0
+ 717 02a7 08       		.uleb128 0x8
+ 718 02a8 7900     		.ascii	"y\000"
+ 719 02aa 07       		.byte	0x7
+ 720 02ab 2D       		.byte	0x2d
+ 721 02ac D9000000 		.4byte	0xd9
+ 722 02b0 02       		.byte	0x2
+ 723 02b1 00       		.byte	0
+ 724 02b2 02       		.uleb128 0x2
+ 725 02b3 03010000 		.4byte	.LASF42
+ 726 02b7 07       		.byte	0x7
+ 727 02b8 2E       		.byte	0x2e
+ 728 02b9 95020000 		.4byte	0x295
+ 729 02bd 06       		.uleb128 0x6
+ 730 02be 08       		.byte	0x8
+ 731 02bf 07       		.byte	0x7
+ 732 02c0 31       		.byte	0x31
+ 733 02c1 F2020000 		.4byte	0x2f2
+ 734 02c5 08       		.uleb128 0x8
+ 735 02c6 783100   		.ascii	"x1\000"
+ 736 02c9 07       		.byte	0x7
+ 737 02ca 33       		.byte	0x33
+ 738 02cb D9000000 		.4byte	0xd9
+ 739 02cf 00       		.byte	0
+ 740 02d0 08       		.uleb128 0x8
+ 741 02d1 793100   		.ascii	"y1\000"
+ 742 02d4 07       		.byte	0x7
+ 743 02d5 34       		.byte	0x34
+ 744 02d6 D9000000 		.4byte	0xd9
+ 745 02da 02       		.byte	0x2
+ 746 02db 08       		.uleb128 0x8
+ 747 02dc 783200   		.ascii	"x2\000"
+ 748 02df 07       		.byte	0x7
+ 749 02e0 35       		.byte	0x35
+ 750 02e1 D9000000 		.4byte	0xd9
+ 751 02e5 04       		.byte	0x4
+ 752 02e6 08       		.uleb128 0x8
+ 753 02e7 793200   		.ascii	"y2\000"
+ 754 02ea 07       		.byte	0x7
+ 755 02eb 36       		.byte	0x36
+ 756 02ec D9000000 		.4byte	0xd9
+ 757 02f0 06       		.byte	0x6
+ 758 02f1 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 17
+
+
+ 759 02f2 02       		.uleb128 0x2
+ 760 02f3 2F090000 		.4byte	.LASF43
+ 761 02f7 07       		.byte	0x7
+ 762 02f8 37       		.byte	0x37
+ 763 02f9 BD020000 		.4byte	0x2bd
+ 764 02fd 02       		.uleb128 0x2
+ 765 02fe 850A0000 		.4byte	.LASF44
+ 766 0302 08       		.byte	0x8
+ 767 0303 2C       		.byte	0x2c
+ 768 0304 AD000000 		.4byte	0xad
+ 769 0308 02       		.uleb128 0x2
+ 770 0309 FF040000 		.4byte	.LASF45
+ 771 030d 08       		.byte	0x8
+ 772 030e 33       		.byte	0x33
+ 773 030f AD000000 		.4byte	0xad
+ 774 0313 06       		.uleb128 0x6
+ 775 0314 08       		.byte	0x8
+ 776 0315 08       		.byte	0x8
+ 777 0316 48       		.byte	0x48
+ 778 0317 4C030000 		.4byte	0x34c
+ 779 031b 07       		.uleb128 0x7
+ 780 031c 60030000 		.4byte	.LASF46
+ 781 0320 08       		.byte	0x8
+ 782 0321 4A       		.byte	0x4a
+ 783 0322 6F020000 		.4byte	0x26f
+ 784 0326 00       		.byte	0
+ 785 0327 07       		.uleb128 0x7
+ 786 0328 A2030000 		.4byte	.LASF47
+ 787 032c 08       		.byte	0x8
+ 788 032d 4B       		.byte	0x4b
+ 789 032e D9000000 		.4byte	0xd9
+ 790 0332 04       		.byte	0x4
+ 791 0333 07       		.uleb128 0x7
+ 792 0334 A7020000 		.4byte	.LASF48
+ 793 0338 08       		.byte	0x8
+ 794 0339 4C       		.byte	0x4c
+ 795 033a FD020000 		.4byte	0x2fd
+ 796 033e 06       		.byte	0x6
+ 797 033f 08       		.uleb128 0x8
+ 798 0340 6F706100 		.ascii	"opa\000"
+ 799 0344 08       		.byte	0x8
+ 800 0345 4D       		.byte	0x4d
+ 801 0346 7B020000 		.4byte	0x27b
+ 802 034a 07       		.byte	0x7
+ 803 034b 00       		.byte	0
+ 804 034c 06       		.uleb128 0x6
+ 805 034d 08       		.byte	0x8
+ 806 034e 08       		.byte	0x8
+ 807 034f 51       		.byte	0x51
+ 808 0350 79030000 		.4byte	0x379
+ 809 0354 07       		.uleb128 0x7
+ 810 0355 60030000 		.4byte	.LASF46
+ 811 0359 08       		.byte	0x8
+ 812 035a 53       		.byte	0x53
+ 813 035b 6F020000 		.4byte	0x26f
+ 814 035f 00       		.byte	0
+ 815 0360 07       		.uleb128 0x7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 18
+
+
+ 816 0361 A2030000 		.4byte	.LASF47
+ 817 0365 08       		.byte	0x8
+ 818 0366 54       		.byte	0x54
+ 819 0367 D9000000 		.4byte	0xd9
+ 820 036b 04       		.byte	0x4
+ 821 036c 07       		.uleb128 0x7
+ 822 036d 6E080000 		.4byte	.LASF49
+ 823 0371 08       		.byte	0x8
+ 824 0372 55       		.byte	0x55
+ 825 0373 08030000 		.4byte	0x308
+ 826 0377 06       		.byte	0x6
+ 827 0378 00       		.byte	0
+ 828 0379 06       		.uleb128 0x6
+ 829 037a 0A       		.byte	0xa
+ 830 037b 08       		.byte	0x8
+ 831 037c 58       		.byte	0x58
+ 832 037d BE030000 		.4byte	0x3be
+ 833 0381 08       		.uleb128 0x8
+ 834 0382 746F7000 		.ascii	"top\000"
+ 835 0386 08       		.byte	0x8
+ 836 0387 5A       		.byte	0x5a
+ 837 0388 D9000000 		.4byte	0xd9
+ 838 038c 00       		.byte	0
+ 839 038d 07       		.uleb128 0x7
+ 840 038e 6A040000 		.4byte	.LASF50
+ 841 0392 08       		.byte	0x8
+ 842 0393 5B       		.byte	0x5b
+ 843 0394 D9000000 		.4byte	0xd9
+ 844 0398 02       		.byte	0x2
+ 845 0399 07       		.uleb128 0x7
+ 846 039a A9070000 		.4byte	.LASF51
+ 847 039e 08       		.byte	0x8
+ 848 039f 5C       		.byte	0x5c
+ 849 03a0 D9000000 		.4byte	0xd9
+ 850 03a4 04       		.byte	0x4
+ 851 03a5 07       		.uleb128 0x7
+ 852 03a6 19050000 		.4byte	.LASF52
+ 853 03aa 08       		.byte	0x8
+ 854 03ab 5D       		.byte	0x5d
+ 855 03ac D9000000 		.4byte	0xd9
+ 856 03b0 06       		.byte	0x6
+ 857 03b1 07       		.uleb128 0x7
+ 858 03b2 1F020000 		.4byte	.LASF53
+ 859 03b6 08       		.byte	0x8
+ 860 03b7 5E       		.byte	0x5e
+ 861 03b8 D9000000 		.4byte	0xd9
+ 862 03bc 08       		.byte	0x8
+ 863 03bd 00       		.byte	0
+ 864 03be 06       		.uleb128 0x6
+ 865 03bf 28       		.byte	0x28
+ 866 03c0 08       		.byte	0x8
+ 867 03c1 41       		.byte	0x41
+ 868 03c2 1B040000 		.4byte	0x41b
+ 869 03c6 07       		.uleb128 0x7
+ 870 03c7 03070000 		.4byte	.LASF54
+ 871 03cb 08       		.byte	0x8
+ 872 03cc 43       		.byte	0x43
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 19
+
+
+ 873 03cd 6F020000 		.4byte	0x26f
+ 874 03d1 00       		.byte	0
+ 875 03d2 07       		.uleb128 0x7
+ 876 03d3 BC060000 		.4byte	.LASF55
+ 877 03d7 08       		.byte	0x8
+ 878 03d8 44       		.byte	0x44
+ 879 03d9 6F020000 		.4byte	0x26f
+ 880 03dd 04       		.byte	0x4
+ 881 03de 07       		.uleb128 0x7
+ 882 03df 4C080000 		.4byte	.LASF56
+ 883 03e3 08       		.byte	0x8
+ 884 03e4 45       		.byte	0x45
+ 885 03e5 D9000000 		.4byte	0xd9
+ 886 03e9 08       		.byte	0x8
+ 887 03ea 08       		.uleb128 0x8
+ 888 03eb 6F706100 		.ascii	"opa\000"
+ 889 03ef 08       		.byte	0x8
+ 890 03f0 46       		.byte	0x46
+ 891 03f1 7B020000 		.4byte	0x27b
+ 892 03f5 0A       		.byte	0xa
+ 893 03f6 07       		.uleb128 0x7
+ 894 03f7 22030000 		.4byte	.LASF57
+ 895 03fb 08       		.byte	0x8
+ 896 03fc 4E       		.byte	0x4e
+ 897 03fd 13030000 		.4byte	0x313
+ 898 0401 0C       		.byte	0xc
+ 899 0402 07       		.uleb128 0x7
+ 900 0403 28090000 		.4byte	.LASF58
+ 901 0407 08       		.byte	0x8
+ 902 0408 56       		.byte	0x56
+ 903 0409 4C030000 		.4byte	0x34c
+ 904 040d 14       		.byte	0x14
+ 905 040e 07       		.uleb128 0x7
+ 906 040f 66050000 		.4byte	.LASF59
+ 907 0413 08       		.byte	0x8
+ 908 0414 5F       		.byte	0x5f
+ 909 0415 79030000 		.4byte	0x379
+ 910 0419 1C       		.byte	0x1c
+ 911 041a 00       		.byte	0
+ 912 041b 06       		.uleb128 0x6
+ 913 041c 14       		.byte	0x14
+ 914 041d 08       		.byte	0x8
+ 915 041e 63       		.byte	0x63
+ 916 041f 6C040000 		.4byte	0x46c
+ 917 0423 07       		.uleb128 0x7
+ 918 0424 60030000 		.4byte	.LASF46
+ 919 0428 08       		.byte	0x8
+ 920 0429 65       		.byte	0x65
+ 921 042a 6F020000 		.4byte	0x26f
+ 922 042e 00       		.byte	0
+ 923 042f 07       		.uleb128 0x7
+ 924 0430 4F020000 		.4byte	.LASF60
+ 925 0434 08       		.byte	0x8
+ 926 0435 66       		.byte	0x66
+ 927 0436 6F020000 		.4byte	0x26f
+ 928 043a 04       		.byte	0x4
+ 929 043b 07       		.uleb128 0x7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 20
+
+
+ 930 043c E0070000 		.4byte	.LASF61
+ 931 0440 08       		.byte	0x8
+ 932 0441 67       		.byte	0x67
+ 933 0442 6C040000 		.4byte	0x46c
+ 934 0446 08       		.byte	0x8
+ 935 0447 07       		.uleb128 0x7
+ 936 0448 F6060000 		.4byte	.LASF62
+ 937 044c 08       		.byte	0x8
+ 938 044d 68       		.byte	0x68
+ 939 044e D9000000 		.4byte	0xd9
+ 940 0452 0C       		.byte	0xc
+ 941 0453 07       		.uleb128 0x7
+ 942 0454 15040000 		.4byte	.LASF63
+ 943 0458 08       		.byte	0x8
+ 944 0459 69       		.byte	0x69
+ 945 045a D9000000 		.4byte	0xd9
+ 946 045e 0E       		.byte	0xe
+ 947 045f 08       		.uleb128 0x8
+ 948 0460 6F706100 		.ascii	"opa\000"
+ 949 0464 08       		.byte	0x8
+ 950 0465 6A       		.byte	0x6a
+ 951 0466 7B020000 		.4byte	0x27b
+ 952 046a 10       		.byte	0x10
+ 953 046b 00       		.byte	0
+ 954 046c 0D       		.uleb128 0xd
+ 955 046d 04       		.byte	0x4
+ 956 046e 72040000 		.4byte	0x472
+ 957 0472 0E       		.uleb128 0xe
+ 958 0473 02020000 		.4byte	0x202
+ 959 0477 06       		.uleb128 0x6
+ 960 0478 08       		.byte	0x8
+ 961 0479 08       		.byte	0x8
+ 962 047a 6E       		.byte	0x6e
+ 963 047b A4040000 		.4byte	0x4a4
+ 964 047f 07       		.uleb128 0x7
+ 965 0480 60030000 		.4byte	.LASF46
+ 966 0484 08       		.byte	0x8
+ 967 0485 70       		.byte	0x70
+ 968 0486 6F020000 		.4byte	0x26f
+ 969 048a 00       		.byte	0
+ 970 048b 07       		.uleb128 0x7
+ 971 048c AE070000 		.4byte	.LASF64
+ 972 0490 08       		.byte	0x8
+ 973 0491 71       		.byte	0x71
+ 974 0492 7B020000 		.4byte	0x27b
+ 975 0496 04       		.byte	0x4
+ 976 0497 08       		.uleb128 0x8
+ 977 0498 6F706100 		.ascii	"opa\000"
+ 978 049c 08       		.byte	0x8
+ 979 049d 72       		.byte	0x72
+ 980 049e 7B020000 		.4byte	0x27b
+ 981 04a2 05       		.byte	0x5
+ 982 04a3 00       		.byte	0
+ 983 04a4 06       		.uleb128 0x6
+ 984 04a5 08       		.byte	0x8
+ 985 04a6 08       		.byte	0x8
+ 986 04a7 76       		.byte	0x76
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 21
+
+
+ 987 04a8 E0040000 		.4byte	0x4e0
+ 988 04ac 07       		.uleb128 0x7
+ 989 04ad 60030000 		.4byte	.LASF46
+ 990 04b1 08       		.byte	0x8
+ 991 04b2 78       		.byte	0x78
+ 992 04b3 6F020000 		.4byte	0x26f
+ 993 04b7 00       		.byte	0
+ 994 04b8 07       		.uleb128 0x7
+ 995 04b9 A2030000 		.4byte	.LASF47
+ 996 04bd 08       		.byte	0x8
+ 997 04be 79       		.byte	0x79
+ 998 04bf D9000000 		.4byte	0xd9
+ 999 04c3 04       		.byte	0x4
+ 1000 04c4 08       		.uleb128 0x8
+ 1001 04c5 6F706100 		.ascii	"opa\000"
+ 1002 04c9 08       		.byte	0x8
+ 1003 04ca 7A       		.byte	0x7a
+ 1004 04cb 7B020000 		.4byte	0x27b
+ 1005 04cf 06       		.byte	0x6
+ 1006 04d0 0A       		.uleb128 0xa
+ 1007 04d1 75030000 		.4byte	.LASF66
+ 1008 04d5 08       		.byte	0x8
+ 1009 04d6 7B       		.byte	0x7b
+ 1010 04d7 AD000000 		.4byte	0xad
+ 1011 04db 01       		.byte	0x1
+ 1012 04dc 01       		.byte	0x1
+ 1013 04dd 07       		.byte	0x7
+ 1014 04de 07       		.byte	0x7
+ 1015 04df 00       		.byte	0
+ 1016 04e0 06       		.uleb128 0x6
+ 1017 04e1 50       		.byte	0x50
+ 1018 04e2 08       		.byte	0x8
+ 1019 04e3 3C       		.byte	0x3c
+ 1020 04e4 28050000 		.4byte	0x528
+ 1021 04e8 0A       		.uleb128 0xa
+ 1022 04e9 37050000 		.4byte	.LASF67
+ 1023 04ed 08       		.byte	0x8
+ 1024 04ee 3E       		.byte	0x3e
+ 1025 04ef AD000000 		.4byte	0xad
+ 1026 04f3 01       		.byte	0x1
+ 1027 04f4 01       		.byte	0x1
+ 1028 04f5 07       		.byte	0x7
+ 1029 04f6 00       		.byte	0
+ 1030 04f7 07       		.uleb128 0x7
+ 1031 04f8 5D080000 		.4byte	.LASF68
+ 1032 04fc 08       		.byte	0x8
+ 1033 04fd 60       		.byte	0x60
+ 1034 04fe BE030000 		.4byte	0x3be
+ 1035 0502 04       		.byte	0x4
+ 1036 0503 07       		.uleb128 0x7
+ 1037 0504 4C050000 		.4byte	.LASF69
+ 1038 0508 08       		.byte	0x8
+ 1039 0509 6B       		.byte	0x6b
+ 1040 050a 1B040000 		.4byte	0x41b
+ 1041 050e 2C       		.byte	0x2c
+ 1042 050f 07       		.uleb128 0x7
+ 1043 0510 0B060000 		.4byte	.LASF70
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 22
+
+
+ 1044 0514 08       		.byte	0x8
+ 1045 0515 73       		.byte	0x73
+ 1046 0516 77040000 		.4byte	0x477
+ 1047 051a 40       		.byte	0x40
+ 1048 051b 07       		.uleb128 0x7
+ 1049 051c A7080000 		.4byte	.LASF71
+ 1050 0520 08       		.byte	0x8
+ 1051 0521 7C       		.byte	0x7c
+ 1052 0522 A4040000 		.4byte	0x4a4
+ 1053 0526 48       		.byte	0x48
+ 1054 0527 00       		.byte	0
+ 1055 0528 02       		.uleb128 0x2
+ 1056 0529 ED000000 		.4byte	.LASF72
+ 1057 052d 08       		.byte	0x8
+ 1058 052e 84       		.byte	0x84
+ 1059 052f E0040000 		.4byte	0x4e0
+ 1060 0533 02       		.uleb128 0x2
+ 1061 0534 54040000 		.4byte	.LASF73
+ 1062 0538 09       		.byte	0x9
+ 1063 0539 2C       		.byte	0x2c
+ 1064 053a AD000000 		.4byte	0xad
+ 1065 053e 02       		.uleb128 0x2
+ 1066 053f B0030000 		.4byte	.LASF74
+ 1067 0543 0A       		.byte	0xa
+ 1068 0544 1E       		.byte	0x1e
+ 1069 0545 AD000000 		.4byte	0xad
+ 1070 0549 06       		.uleb128 0x6
+ 1071 054a 0C       		.byte	0xc
+ 1072 054b 0A       		.byte	0xa
+ 1073 054c 21       		.byte	0x21
+ 1074 054d 76050000 		.4byte	0x576
+ 1075 0551 07       		.uleb128 0x7
+ 1076 0552 4E010000 		.4byte	.LASF75
+ 1077 0556 0A       		.byte	0xa
+ 1078 0557 23       		.byte	0x23
+ 1079 0558 CE000000 		.4byte	0xce
+ 1080 055c 00       		.byte	0
+ 1081 055d 07       		.uleb128 0x7
+ 1082 055e FE000000 		.4byte	.LASF76
+ 1083 0562 0A       		.byte	0xa
+ 1084 0563 24       		.byte	0x24
+ 1085 0564 76050000 		.4byte	0x576
+ 1086 0568 04       		.byte	0x4
+ 1087 0569 07       		.uleb128 0x7
+ 1088 056a D1080000 		.4byte	.LASF77
+ 1089 056e 0A       		.byte	0xa
+ 1090 056f 25       		.byte	0x25
+ 1091 0570 76050000 		.4byte	0x576
+ 1092 0574 08       		.byte	0x8
+ 1093 0575 00       		.byte	0
+ 1094 0576 0D       		.uleb128 0xd
+ 1095 0577 04       		.byte	0x4
+ 1096 0578 3E050000 		.4byte	0x53e
+ 1097 057c 02       		.uleb128 0x2
+ 1098 057d 44050000 		.4byte	.LASF78
+ 1099 0581 0A       		.byte	0xa
+ 1100 0582 26       		.byte	0x26
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 23
+
+
+ 1101 0583 49050000 		.4byte	0x549
+ 1102 0587 02       		.uleb128 0x2
+ 1103 0588 0E070000 		.4byte	.LASF79
+ 1104 058c 0B       		.byte	0xb
+ 1105 058d 30       		.byte	0x30
+ 1106 058e AD000000 		.4byte	0xad
+ 1107 0592 02       		.uleb128 0x2
+ 1108 0593 FD070000 		.4byte	.LASF80
+ 1109 0597 0C       		.byte	0xc
+ 1110 0598 2B       		.byte	0x2b
+ 1111 0599 9D050000 		.4byte	0x59d
+ 1112 059d 0D       		.uleb128 0xd
+ 1113 059e 04       		.byte	0x4
+ 1114 059f A3050000 		.4byte	0x5a3
+ 1115 05a3 13       		.uleb128 0x13
+ 1116 05a4 AE050000 		.4byte	0x5ae
+ 1117 05a8 0C       		.uleb128 0xc
+ 1118 05a9 AE050000 		.4byte	0x5ae
+ 1119 05ad 00       		.byte	0
+ 1120 05ae 0D       		.uleb128 0xd
+ 1121 05af 04       		.byte	0x4
+ 1122 05b0 B4050000 		.4byte	0x5b4
+ 1123 05b4 09       		.uleb128 0x9
+ 1124 05b5 6F010000 		.4byte	.LASF82
+ 1125 05b9 14       		.byte	0x14
+ 1126 05ba 0C       		.byte	0xc
+ 1127 05bb 3E       		.byte	0x3e
+ 1128 05bc 0F060000 		.4byte	0x60f
+ 1129 05c0 07       		.uleb128 0x7
+ 1130 05c1 45090000 		.4byte	.LASF83
+ 1131 05c5 0C       		.byte	0xc
+ 1132 05c6 40       		.byte	0x40
+ 1133 05c7 CE000000 		.4byte	0xce
+ 1134 05cb 00       		.byte	0
+ 1135 05cc 07       		.uleb128 0x7
+ 1136 05cd 6F070000 		.4byte	.LASF84
+ 1137 05d1 0C       		.byte	0xc
+ 1138 05d2 41       		.byte	0x41
+ 1139 05d3 CE000000 		.4byte	0xce
+ 1140 05d7 04       		.byte	0x4
+ 1141 05d8 07       		.uleb128 0x7
+ 1142 05d9 D8070000 		.4byte	.LASF85
+ 1143 05dd 0C       		.byte	0xc
+ 1144 05de 42       		.byte	0x42
+ 1145 05df 92050000 		.4byte	0x592
+ 1146 05e3 08       		.byte	0x8
+ 1147 05e4 07       		.uleb128 0x7
+ 1148 05e5 1F050000 		.4byte	.LASF86
+ 1149 05e9 0C       		.byte	0xc
+ 1150 05ea 44       		.byte	0x44
+ 1151 05eb E4000000 		.4byte	0xe4
+ 1152 05ef 0C       		.byte	0xc
+ 1153 05f0 0A       		.uleb128 0xa
+ 1154 05f1 4A040000 		.4byte	.LASF87
+ 1155 05f5 0C       		.byte	0xc
+ 1156 05f6 46       		.byte	0x46
+ 1157 05f7 AD000000 		.4byte	0xad
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 24
+
+
+ 1158 05fb 01       		.byte	0x1
+ 1159 05fc 03       		.byte	0x3
+ 1160 05fd 05       		.byte	0x5
+ 1161 05fe 10       		.byte	0x10
+ 1162 05ff 0A       		.uleb128 0xa
+ 1163 0600 97080000 		.4byte	.LASF88
+ 1164 0604 0C       		.byte	0xc
+ 1165 0605 47       		.byte	0x47
+ 1166 0606 AD000000 		.4byte	0xad
+ 1167 060a 01       		.byte	0x1
+ 1168 060b 01       		.byte	0x1
+ 1169 060c 04       		.byte	0x4
+ 1170 060d 10       		.byte	0x10
+ 1171 060e 00       		.byte	0
+ 1172 060f 14       		.uleb128 0x14
+ 1173 0610 01       		.byte	0x1
+ 1174 0611 42000000 		.4byte	0x42
+ 1175 0615 0C       		.byte	0xc
+ 1176 0616 30       		.byte	0x30
+ 1177 0617 46060000 		.4byte	0x646
+ 1178 061b 15       		.uleb128 0x15
+ 1179 061c 79050000 		.4byte	.LASF89
+ 1180 0620 00       		.byte	0
+ 1181 0621 15       		.uleb128 0x15
+ 1182 0622 AC080000 		.4byte	.LASF90
+ 1183 0626 01       		.byte	0x1
+ 1184 0627 15       		.uleb128 0x15
+ 1185 0628 93090000 		.4byte	.LASF91
+ 1186 062c 02       		.byte	0x2
+ 1187 062d 15       		.uleb128 0x15
+ 1188 062e 66090000 		.4byte	.LASF92
+ 1189 0632 03       		.byte	0x3
+ 1190 0633 15       		.uleb128 0x15
+ 1191 0634 5E020000 		.4byte	.LASF93
+ 1192 0638 04       		.byte	0x4
+ 1193 0639 15       		.uleb128 0x15
+ 1194 063a D6040000 		.4byte	.LASF94
+ 1195 063e 05       		.byte	0x5
+ 1196 063f 15       		.uleb128 0x15
+ 1197 0640 24060000 		.4byte	.LASF95
+ 1198 0644 06       		.byte	0x6
+ 1199 0645 00       		.byte	0
+ 1200 0646 02       		.uleb128 0x2
+ 1201 0647 20040000 		.4byte	.LASF96
+ 1202 064b 0C       		.byte	0xc
+ 1203 064c 48       		.byte	0x48
+ 1204 064d B4050000 		.4byte	0x5b4
+ 1205 0651 06       		.uleb128 0x6
+ 1206 0652 1C       		.byte	0x1c
+ 1207 0653 0D       		.byte	0xd
+ 1208 0654 2F       		.byte	0x2f
+ 1209 0655 A5060000 		.4byte	0x6a5
+ 1210 0659 07       		.uleb128 0x7
+ 1211 065a AC020000 		.4byte	.LASF97
+ 1212 065e 0D       		.byte	0xd
+ 1213 065f 31       		.byte	0x31
+ 1214 0660 E4000000 		.4byte	0xe4
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 25
+
+
+ 1215 0664 00       		.byte	0
+ 1216 0665 07       		.uleb128 0x7
+ 1217 0666 B1020000 		.4byte	.LASF98
+ 1218 066a 0D       		.byte	0xd
+ 1219 066b 32       		.byte	0x32
+ 1220 066c E4000000 		.4byte	0xe4
+ 1221 0670 04       		.byte	0x4
+ 1222 0671 07       		.uleb128 0x7
+ 1223 0672 52000000 		.4byte	.LASF99
+ 1224 0676 0D       		.byte	0xd
+ 1225 0677 35       		.byte	0x35
+ 1226 0678 E4000000 		.4byte	0xe4
+ 1227 067c 08       		.byte	0x8
+ 1228 067d 07       		.uleb128 0x7
+ 1229 067e EB050000 		.4byte	.LASF100
+ 1230 0682 0D       		.byte	0xd
+ 1231 0683 36       		.byte	0x36
+ 1232 0684 CE000000 		.4byte	0xce
+ 1233 0688 0C       		.byte	0xc
+ 1234 0689 07       		.uleb128 0x7
+ 1235 068a FA040000 		.4byte	.LASF101
+ 1236 068e 0D       		.byte	0xd
+ 1237 068f 37       		.byte	0x37
+ 1238 0690 F2020000 		.4byte	0x2f2
+ 1239 0694 10       		.byte	0x10
+ 1240 0695 0A       		.uleb128 0xa
+ 1241 0696 90040000 		.4byte	.LASF102
+ 1242 069a 0D       		.byte	0xd
+ 1243 069b 38       		.byte	0x38
+ 1244 069c A5060000 		.4byte	0x6a5
+ 1245 06a0 04       		.byte	0x4
+ 1246 06a1 01       		.byte	0x1
+ 1247 06a2 1F       		.byte	0x1f
+ 1248 06a3 18       		.byte	0x18
+ 1249 06a4 00       		.byte	0
+ 1250 06a5 16       		.uleb128 0x16
+ 1251 06a6 CE000000 		.4byte	0xce
+ 1252 06aa 02       		.uleb128 0x2
+ 1253 06ab CB030000 		.4byte	.LASF103
+ 1254 06af 0D       		.byte	0xd
+ 1255 06b0 39       		.byte	0x39
+ 1256 06b1 51060000 		.4byte	0x651
+ 1257 06b5 09       		.uleb128 0x9
+ 1258 06b6 5A000000 		.4byte	.LASF104
+ 1259 06ba 20       		.byte	0x20
+ 1260 06bb 0D       		.byte	0xd
+ 1261 06bc 3E       		.byte	0x3e
+ 1262 06bd 31070000 		.4byte	0x731
+ 1263 06c1 07       		.uleb128 0x7
+ 1264 06c2 A1070000 		.4byte	.LASF105
+ 1265 06c6 0D       		.byte	0xd
+ 1266 06c7 41       		.byte	0x41
+ 1267 06c8 D9000000 		.4byte	0xd9
+ 1268 06cc 00       		.byte	0
+ 1269 06cd 07       		.uleb128 0x7
+ 1270 06ce EB040000 		.4byte	.LASF106
+ 1271 06d2 0D       		.byte	0xd
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 26
+
+
+ 1272 06d3 42       		.byte	0x42
+ 1273 06d4 D9000000 		.4byte	0xd9
+ 1274 06d8 02       		.byte	0x2
+ 1275 06d9 07       		.uleb128 0x7
+ 1276 06da 66000000 		.4byte	.LASF107
+ 1277 06de 0D       		.byte	0xd
+ 1278 06df 46       		.byte	0x46
+ 1279 06e0 31070000 		.4byte	0x731
+ 1280 06e4 04       		.byte	0x4
+ 1281 06e5 0A       		.uleb128 0xa
+ 1282 06e6 47020000 		.4byte	.LASF108
+ 1283 06ea 0D       		.byte	0xd
+ 1284 06eb 4B       		.byte	0x4b
+ 1285 06ec CE000000 		.4byte	0xce
+ 1286 06f0 04       		.byte	0x4
+ 1287 06f1 01       		.byte	0x1
+ 1288 06f2 1F       		.byte	0x1f
+ 1289 06f3 08       		.byte	0x8
+ 1290 06f4 07       		.uleb128 0x7
+ 1291 06f5 C0070000 		.4byte	.LASF109
+ 1292 06f9 0D       		.byte	0xd
+ 1293 06fa 55       		.byte	0x55
+ 1294 06fb 63070000 		.4byte	0x763
+ 1295 06ff 0C       		.byte	0xc
+ 1296 0700 07       		.uleb128 0x7
+ 1297 0701 D6020000 		.4byte	.LASF110
+ 1298 0705 0D       		.byte	0xd
+ 1299 0706 59       		.byte	0x59
+ 1300 0707 7F070000 		.4byte	0x77f
+ 1301 070b 10       		.byte	0x10
+ 1302 070c 07       		.uleb128 0x7
+ 1303 070d 2F010000 		.4byte	.LASF111
+ 1304 0711 0D       		.byte	0xd
+ 1305 0712 5E       		.byte	0x5e
+ 1306 0713 B4070000 		.4byte	0x7b4
+ 1307 0717 14       		.byte	0x14
+ 1308 0718 07       		.uleb128 0x7
+ 1309 0719 C90A0000 		.4byte	.LASF112
+ 1310 071d 0D       		.byte	0xd
+ 1311 071e 63       		.byte	0x63
+ 1312 071f CF070000 		.4byte	0x7cf
+ 1313 0723 18       		.byte	0x18
+ 1314 0724 07       		.uleb128 0x7
+ 1315 0725 3F030000 		.4byte	.LASF113
+ 1316 0729 0D       		.byte	0xd
+ 1317 072a 71       		.byte	0x71
+ 1318 072b 6F020000 		.4byte	0x26f
+ 1319 072f 1C       		.byte	0x1c
+ 1320 0730 00       		.byte	0
+ 1321 0731 0D       		.uleb128 0xd
+ 1322 0732 04       		.byte	0x4
+ 1323 0733 AA060000 		.4byte	0x6aa
+ 1324 0737 13       		.uleb128 0x13
+ 1325 0738 4C070000 		.4byte	0x74c
+ 1326 073c 0C       		.uleb128 0xc
+ 1327 073d 4C070000 		.4byte	0x74c
+ 1328 0741 0C       		.uleb128 0xc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 27
+
+
+ 1329 0742 52070000 		.4byte	0x752
+ 1330 0746 0C       		.uleb128 0xc
+ 1331 0747 5D070000 		.4byte	0x75d
+ 1332 074b 00       		.byte	0
+ 1333 074c 0D       		.uleb128 0xd
+ 1334 074d 04       		.byte	0x4
+ 1335 074e B5060000 		.4byte	0x6b5
+ 1336 0752 0D       		.uleb128 0xd
+ 1337 0753 04       		.byte	0x4
+ 1338 0754 58070000 		.4byte	0x758
+ 1339 0758 0E       		.uleb128 0xe
+ 1340 0759 F2020000 		.4byte	0x2f2
+ 1341 075d 0D       		.uleb128 0xd
+ 1342 075e 04       		.byte	0x4
+ 1343 075f 6F020000 		.4byte	0x26f
+ 1344 0763 0D       		.uleb128 0xd
+ 1345 0764 04       		.byte	0x4
+ 1346 0765 37070000 		.4byte	0x737
+ 1347 0769 13       		.uleb128 0x13
+ 1348 076a 79070000 		.4byte	0x779
+ 1349 076e 0C       		.uleb128 0xc
+ 1350 076f 4C070000 		.4byte	0x74c
+ 1351 0773 0C       		.uleb128 0xc
+ 1352 0774 79070000 		.4byte	0x779
+ 1353 0778 00       		.byte	0
+ 1354 0779 0D       		.uleb128 0xd
+ 1355 077a 04       		.byte	0x4
+ 1356 077b F2020000 		.4byte	0x2f2
+ 1357 077f 0D       		.uleb128 0xd
+ 1358 0780 04       		.byte	0x4
+ 1359 0781 69070000 		.4byte	0x769
+ 1360 0785 13       		.uleb128 0x13
+ 1361 0786 AE070000 		.4byte	0x7ae
+ 1362 078a 0C       		.uleb128 0xc
+ 1363 078b 4C070000 		.4byte	0x74c
+ 1364 078f 0C       		.uleb128 0xc
+ 1365 0790 AE070000 		.4byte	0x7ae
+ 1366 0794 0C       		.uleb128 0xc
+ 1367 0795 D9000000 		.4byte	0xd9
+ 1368 0799 0C       		.uleb128 0xc
+ 1369 079a D9000000 		.4byte	0xd9
+ 1370 079e 0C       		.uleb128 0xc
+ 1371 079f D9000000 		.4byte	0xd9
+ 1372 07a3 0C       		.uleb128 0xc
+ 1373 07a4 6F020000 		.4byte	0x26f
+ 1374 07a8 0C       		.uleb128 0xc
+ 1375 07a9 7B020000 		.4byte	0x27b
+ 1376 07ad 00       		.byte	0
+ 1377 07ae 0D       		.uleb128 0xd
+ 1378 07af 04       		.byte	0x4
+ 1379 07b0 AD000000 		.4byte	0xad
+ 1380 07b4 0D       		.uleb128 0xd
+ 1381 07b5 04       		.byte	0x4
+ 1382 07b6 85070000 		.4byte	0x785
+ 1383 07ba 13       		.uleb128 0x13
+ 1384 07bb CF070000 		.4byte	0x7cf
+ 1385 07bf 0C       		.uleb128 0xc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 28
+
+
+ 1386 07c0 4C070000 		.4byte	0x74c
+ 1387 07c4 0C       		.uleb128 0xc
+ 1388 07c5 CE000000 		.4byte	0xce
+ 1389 07c9 0C       		.uleb128 0xc
+ 1390 07ca CE000000 		.4byte	0xce
+ 1391 07ce 00       		.byte	0
+ 1392 07cf 0D       		.uleb128 0xd
+ 1393 07d0 04       		.byte	0x4
+ 1394 07d1 BA070000 		.4byte	0x7ba
+ 1395 07d5 02       		.uleb128 0x2
+ 1396 07d6 BD020000 		.4byte	.LASF114
+ 1397 07da 0D       		.byte	0xd
+ 1398 07db 77       		.byte	0x77
+ 1399 07dc B5060000 		.4byte	0x6b5
+ 1400 07e0 17       		.uleb128 0x17
+ 1401 07e1 C9050000 		.4byte	.LASF115
+ 1402 07e5 6401     		.2byte	0x164
+ 1403 07e7 0D       		.byte	0xd
+ 1404 07e8 7F       		.byte	0x7f
+ 1405 07e9 6C080000 		.4byte	0x86c
+ 1406 07ed 07       		.uleb128 0x7
+ 1407 07ee F3040000 		.4byte	.LASF116
+ 1408 07f2 0D       		.byte	0xd
+ 1409 07f3 82       		.byte	0x82
+ 1410 07f4 D5070000 		.4byte	0x7d5
+ 1411 07f8 00       		.byte	0
+ 1412 07f9 07       		.uleb128 0x7
+ 1413 07fa 02040000 		.4byte	.LASF117
+ 1414 07fe 0D       		.byte	0xd
+ 1415 07ff 85       		.byte	0x85
+ 1416 0800 6C080000 		.4byte	0x86c
+ 1417 0804 20       		.byte	0x20
+ 1418 0805 07       		.uleb128 0x7
+ 1419 0806 B6020000 		.4byte	.LASF118
+ 1420 080a 0D       		.byte	0xd
+ 1421 080b 88       		.byte	0x88
+ 1422 080c 7C050000 		.4byte	0x57c
+ 1423 0810 24       		.byte	0x24
+ 1424 0811 07       		.uleb128 0x7
+ 1425 0812 39010000 		.4byte	.LASF119
+ 1426 0816 0D       		.byte	0xd
+ 1427 0817 89       		.byte	0x89
+ 1428 0818 B4090000 		.4byte	0x9b4
+ 1429 081c 30       		.byte	0x30
+ 1430 081d 07       		.uleb128 0x7
+ 1431 081e 4A060000 		.4byte	.LASF120
+ 1432 0822 0D       		.byte	0xd
+ 1433 0823 8A       		.byte	0x8a
+ 1434 0824 B4090000 		.4byte	0x9b4
+ 1435 0828 34       		.byte	0x34
+ 1436 0829 07       		.uleb128 0x7
+ 1437 082a B2060000 		.4byte	.LASF121
+ 1438 082e 0D       		.byte	0xd
+ 1439 082f 8B       		.byte	0x8b
+ 1440 0830 B4090000 		.4byte	0x9b4
+ 1441 0834 38       		.byte	0x38
+ 1442 0835 07       		.uleb128 0x7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 29
+
+
+ 1443 0836 02090000 		.4byte	.LASF122
+ 1444 083a 0D       		.byte	0xd
+ 1445 083b 8E       		.byte	0x8e
+ 1446 083c BA090000 		.4byte	0x9ba
+ 1447 0840 3C       		.byte	0x3c
+ 1448 0841 18       		.uleb128 0x18
+ 1449 0842 50030000 		.4byte	.LASF123
+ 1450 0846 0D       		.byte	0xd
+ 1451 0847 8F       		.byte	0x8f
+ 1452 0848 CA090000 		.4byte	0x9ca
+ 1453 084c 3C01     		.2byte	0x13c
+ 1454 084e 19       		.uleb128 0x19
+ 1455 084f 7D070000 		.4byte	.LASF124
+ 1456 0853 0D       		.byte	0xd
+ 1457 0854 90       		.byte	0x90
+ 1458 0855 CE000000 		.4byte	0xce
+ 1459 0859 04       		.byte	0x4
+ 1460 085a 0A       		.byte	0xa
+ 1461 085b 16       		.byte	0x16
+ 1462 085c 5C01     		.2byte	0x15c
+ 1463 085e 18       		.uleb128 0x18
+ 1464 085f 83000000 		.4byte	.LASF125
+ 1465 0863 0D       		.byte	0xd
+ 1466 0864 93       		.byte	0x93
+ 1467 0865 CE000000 		.4byte	0xce
+ 1468 0869 6001     		.2byte	0x160
+ 1469 086b 00       		.byte	0
+ 1470 086c 0D       		.uleb128 0xd
+ 1471 086d 04       		.byte	0x4
+ 1472 086e 46060000 		.4byte	0x646
+ 1473 0872 09       		.uleb128 0x9
+ 1474 0873 18000000 		.4byte	.LASF126
+ 1475 0877 40       		.byte	0x40
+ 1476 0878 0E       		.byte	0xe
+ 1477 0879 BB       		.byte	0xbb
+ 1478 087a B4090000 		.4byte	0x9b4
+ 1479 087e 08       		.uleb128 0x8
+ 1480 087f 70617200 		.ascii	"par\000"
+ 1481 0883 0E       		.byte	0xe
+ 1482 0884 BD       		.byte	0xbd
+ 1483 0885 B4090000 		.4byte	0x9b4
+ 1484 0889 00       		.byte	0
+ 1485 088a 07       		.uleb128 0x7
+ 1486 088b D6080000 		.4byte	.LASF127
+ 1487 088f 0E       		.byte	0xe
+ 1488 0890 BE       		.byte	0xbe
+ 1489 0891 7C050000 		.4byte	0x57c
+ 1490 0895 04       		.byte	0x4
+ 1491 0896 07       		.uleb128 0x7
+ 1492 0897 26070000 		.4byte	.LASF128
+ 1493 089b 0E       		.byte	0xe
+ 1494 089c C0       		.byte	0xc0
+ 1495 089d F2020000 		.4byte	0x2f2
+ 1496 08a1 10       		.byte	0x10
+ 1497 08a2 07       		.uleb128 0x7
+ 1498 08a3 0C090000 		.4byte	.LASF129
+ 1499 08a7 0E       		.byte	0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 30
+
+
+ 1500 08a8 C2       		.byte	0xc2
+ 1501 08a9 260D0000 		.4byte	0xd26
+ 1502 08ad 18       		.byte	0x18
+ 1503 08ae 07       		.uleb128 0x7
+ 1504 08af BD090000 		.4byte	.LASF130
+ 1505 08b3 0E       		.byte	0xe
+ 1506 08b4 C3       		.byte	0xc3
+ 1507 08b5 520D0000 		.4byte	0xd52
+ 1508 08b9 1C       		.byte	0x1c
+ 1509 08ba 07       		.uleb128 0x7
+ 1510 08bb 1E090000 		.4byte	.LASF131
+ 1511 08bf 0E       		.byte	0xe
+ 1512 08c0 C4       		.byte	0xc4
+ 1513 08c1 F10C0000 		.4byte	0xcf1
+ 1514 08c5 20       		.byte	0x20
+ 1515 08c6 07       		.uleb128 0x7
+ 1516 08c7 55010000 		.4byte	.LASF132
+ 1517 08cb 0E       		.byte	0xe
+ 1518 08cc C6       		.byte	0xc6
+ 1519 08cd E4000000 		.4byte	0xe4
+ 1520 08d1 24       		.byte	0x24
+ 1521 08d2 07       		.uleb128 0x7
+ 1522 08d3 9A030000 		.4byte	.LASF133
+ 1523 08d7 0E       		.byte	0xe
+ 1524 08d8 C7       		.byte	0xc7
+ 1525 08d9 FF0D0000 		.4byte	0xdff
+ 1526 08dd 28       		.byte	0x28
+ 1527 08de 0A       		.uleb128 0xa
+ 1528 08df 12000000 		.4byte	.LASF134
+ 1529 08e3 0E       		.byte	0xe
+ 1530 08e4 D7       		.byte	0xd7
+ 1531 08e5 AD000000 		.4byte	0xad
+ 1532 08e9 01       		.byte	0x1
+ 1533 08ea 01       		.byte	0x1
+ 1534 08eb 07       		.byte	0x7
+ 1535 08ec 2C       		.byte	0x2c
+ 1536 08ed 0A       		.uleb128 0xa
+ 1537 08ee B8090000 		.4byte	.LASF135
+ 1538 08f2 0E       		.byte	0xe
+ 1539 08f3 D8       		.byte	0xd8
+ 1540 08f4 AD000000 		.4byte	0xad
+ 1541 08f8 01       		.byte	0x1
+ 1542 08f9 01       		.byte	0x1
+ 1543 08fa 06       		.byte	0x6
+ 1544 08fb 2C       		.byte	0x2c
+ 1545 08fc 0A       		.uleb128 0xa
+ 1546 08fd A9000000 		.4byte	.LASF136
+ 1547 0901 0E       		.byte	0xe
+ 1548 0902 D9       		.byte	0xd9
+ 1549 0903 AD000000 		.4byte	0xad
+ 1550 0907 01       		.byte	0x1
+ 1551 0908 01       		.byte	0x1
+ 1552 0909 05       		.byte	0x5
+ 1553 090a 2C       		.byte	0x2c
+ 1554 090b 0A       		.uleb128 0xa
+ 1555 090c DF080000 		.4byte	.LASF137
+ 1556 0910 0E       		.byte	0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 31
+
+
+ 1557 0911 DA       		.byte	0xda
+ 1558 0912 AD000000 		.4byte	0xad
+ 1559 0916 01       		.byte	0x1
+ 1560 0917 01       		.byte	0x1
+ 1561 0918 04       		.byte	0x4
+ 1562 0919 2C       		.byte	0x2c
+ 1563 091a 0A       		.uleb128 0xa
+ 1564 091b 4C090000 		.4byte	.LASF138
+ 1565 091f 0E       		.byte	0xe
+ 1566 0920 DB       		.byte	0xdb
+ 1567 0921 AD000000 		.4byte	0xad
+ 1568 0925 01       		.byte	0x1
+ 1569 0926 01       		.byte	0x1
+ 1570 0927 03       		.byte	0x3
+ 1571 0928 2C       		.byte	0x2c
+ 1572 0929 1A       		.uleb128 0x1a
+ 1573 092a 746F7000 		.ascii	"top\000"
+ 1574 092e 0E       		.byte	0xe
+ 1575 092f DC       		.byte	0xdc
+ 1576 0930 AD000000 		.4byte	0xad
+ 1577 0934 01       		.byte	0x1
+ 1578 0935 01       		.byte	0x1
+ 1579 0936 02       		.byte	0x2
+ 1580 0937 2C       		.byte	0x2c
+ 1581 0938 0A       		.uleb128 0xa
+ 1582 0939 D9030000 		.4byte	.LASF139
+ 1583 093d 0E       		.byte	0xe
+ 1584 093e DD       		.byte	0xdd
+ 1585 093f AD000000 		.4byte	0xad
+ 1586 0943 01       		.byte	0x1
+ 1587 0944 01       		.byte	0x1
+ 1588 0945 01       		.byte	0x1
+ 1589 0946 2C       		.byte	0x2c
+ 1590 0947 0A       		.uleb128 0xa
+ 1591 0948 76000000 		.4byte	.LASF140
+ 1592 094c 0E       		.byte	0xe
+ 1593 094d DE       		.byte	0xde
+ 1594 094e AD000000 		.4byte	0xad
+ 1595 0952 01       		.byte	0x1
+ 1596 0953 01       		.byte	0x1
+ 1597 0954 00       		.byte	0
+ 1598 0955 2C       		.byte	0x2c
+ 1599 0956 0A       		.uleb128 0xa
+ 1600 0957 94060000 		.4byte	.LASF141
+ 1601 095b 0E       		.byte	0xe
+ 1602 095c DF       		.byte	0xdf
+ 1603 095d F40D0000 		.4byte	0xdf4
+ 1604 0961 01       		.byte	0x1
+ 1605 0962 02       		.byte	0x2
+ 1606 0963 06       		.byte	0x6
+ 1607 0964 2D       		.byte	0x2d
+ 1608 0965 0A       		.uleb128 0xa
+ 1609 0966 6D000000 		.4byte	.LASF142
+ 1610 096a 0E       		.byte	0xe
+ 1611 096b E0       		.byte	0xe0
+ 1612 096c 87050000 		.4byte	0x587
+ 1613 0970 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 32
+
+
+ 1614 0971 02       		.byte	0x2
+ 1615 0972 04       		.byte	0x4
+ 1616 0973 2D       		.byte	0x2d
+ 1617 0974 0A       		.uleb128 0xa
+ 1618 0975 84090000 		.4byte	.LASF143
+ 1619 0979 0E       		.byte	0xe
+ 1620 097a E1       		.byte	0xe1
+ 1621 097b AD000000 		.4byte	0xad
+ 1622 097f 01       		.byte	0x1
+ 1623 0980 03       		.byte	0x3
+ 1624 0981 01       		.byte	0x1
+ 1625 0982 2D       		.byte	0x2d
+ 1626 0983 07       		.uleb128 0x7
+ 1627 0984 11060000 		.4byte	.LASF144
+ 1628 0988 0E       		.byte	0xe
+ 1629 0989 E2       		.byte	0xe2
+ 1630 098a AD000000 		.4byte	0xad
+ 1631 098e 2E       		.byte	0x2e
+ 1632 098f 07       		.uleb128 0x7
+ 1633 0990 53080000 		.4byte	.LASF145
+ 1634 0994 0E       		.byte	0xe
+ 1635 0995 E4       		.byte	0xe4
+ 1636 0996 7B020000 		.4byte	0x27b
+ 1637 099a 2F       		.byte	0x2f
+ 1638 099b 07       		.uleb128 0x7
+ 1639 099c 5D040000 		.4byte	.LASF146
+ 1640 09a0 0E       		.byte	0xe
+ 1641 09a1 E6       		.byte	0xe6
+ 1642 09a2 D9000000 		.4byte	0xd9
+ 1643 09a6 30       		.byte	0x30
+ 1644 09a7 07       		.uleb128 0x7
+ 1645 09a8 17020000 		.4byte	.LASF147
+ 1646 09ac 0E       		.byte	0xe
+ 1647 09ad E9       		.byte	0xe9
+ 1648 09ae E90D0000 		.4byte	0xde9
+ 1649 09b2 34       		.byte	0x34
+ 1650 09b3 00       		.byte	0
+ 1651 09b4 0D       		.uleb128 0xd
+ 1652 09b5 04       		.byte	0x4
+ 1653 09b6 72080000 		.4byte	0x872
+ 1654 09ba 1B       		.uleb128 0x1b
+ 1655 09bb F2020000 		.4byte	0x2f2
+ 1656 09bf CA090000 		.4byte	0x9ca
+ 1657 09c3 1C       		.uleb128 0x1c
+ 1658 09c4 87020000 		.4byte	0x287
+ 1659 09c8 1F       		.byte	0x1f
+ 1660 09c9 00       		.byte	0
+ 1661 09ca 1B       		.uleb128 0x1b
+ 1662 09cb AD000000 		.4byte	0xad
+ 1663 09cf DA090000 		.4byte	0x9da
+ 1664 09d3 1C       		.uleb128 0x1c
+ 1665 09d4 87020000 		.4byte	0x287
+ 1666 09d8 1F       		.byte	0x1f
+ 1667 09d9 00       		.byte	0
+ 1668 09da 14       		.uleb128 0x14
+ 1669 09db 01       		.byte	0x1
+ 1670 09dc 42000000 		.4byte	0x42
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 33
+
+
+ 1671 09e0 0F       		.byte	0xf
+ 1672 09e1 2B       		.byte	0x2b
+ 1673 09e2 050A0000 		.4byte	0xa05
+ 1674 09e6 15       		.uleb128 0x15
+ 1675 09e7 96000000 		.4byte	.LASF148
+ 1676 09eb 00       		.byte	0
+ 1677 09ec 15       		.uleb128 0x15
+ 1678 09ed 59070000 		.4byte	.LASF149
+ 1679 09f1 01       		.byte	0x1
+ 1680 09f2 15       		.uleb128 0x15
+ 1681 09f3 9D060000 		.4byte	.LASF150
+ 1682 09f7 02       		.byte	0x2
+ 1683 09f8 15       		.uleb128 0x15
+ 1684 09f9 960A0000 		.4byte	.LASF151
+ 1685 09fd 03       		.byte	0x3
+ 1686 09fe 15       		.uleb128 0x15
+ 1687 09ff 29030000 		.4byte	.LASF152
+ 1688 0a03 04       		.byte	0x4
+ 1689 0a04 00       		.byte	0
+ 1690 0a05 02       		.uleb128 0x2
+ 1691 0a06 FB050000 		.4byte	.LASF153
+ 1692 0a0a 0F       		.byte	0xf
+ 1693 0a0b 33       		.byte	0x33
+ 1694 0a0c AD000000 		.4byte	0xad
+ 1695 0a10 02       		.uleb128 0x2
+ 1696 0a11 AD040000 		.4byte	.LASF154
+ 1697 0a15 0F       		.byte	0xf
+ 1698 0a16 37       		.byte	0x37
+ 1699 0a17 AD000000 		.4byte	0xad
+ 1700 0a1b 06       		.uleb128 0x6
+ 1701 0a1c 10       		.byte	0x10
+ 1702 0a1d 0F       		.byte	0xf
+ 1703 0a1e 3A       		.byte	0x3a
+ 1704 0a1f 600A0000 		.4byte	0xa60
+ 1705 0a23 07       		.uleb128 0x7
+ 1706 0a24 8D090000 		.4byte	.LASF155
+ 1707 0a28 0F       		.byte	0xf
+ 1708 0a29 3C       		.byte	0x3c
+ 1709 0a2a B2020000 		.4byte	0x2b2
+ 1710 0a2e 00       		.byte	0
+ 1711 0a2f 08       		.uleb128 0x8
+ 1712 0a30 6B657900 		.ascii	"key\000"
+ 1713 0a34 0F       		.byte	0xf
+ 1714 0a35 3D       		.byte	0x3d
+ 1715 0a36 CE000000 		.4byte	0xce
+ 1716 0a3a 04       		.byte	0x4
+ 1717 0a3b 07       		.uleb128 0x7
+ 1718 0a3c 3D050000 		.4byte	.LASF156
+ 1719 0a40 0F       		.byte	0xf
+ 1720 0a41 3E       		.byte	0x3e
+ 1721 0a42 CE000000 		.4byte	0xce
+ 1722 0a46 08       		.byte	0x8
+ 1723 0a47 07       		.uleb128 0x7
+ 1724 0a48 10050000 		.4byte	.LASF157
+ 1725 0a4c 0F       		.byte	0xf
+ 1726 0a4d 3F       		.byte	0x3f
+ 1727 0a4e B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 34
+
+
+ 1728 0a52 0C       		.byte	0xc
+ 1729 0a53 07       		.uleb128 0x7
+ 1730 0a54 EB080000 		.4byte	.LASF158
+ 1731 0a58 0F       		.byte	0xf
+ 1732 0a59 41       		.byte	0x41
+ 1733 0a5a 100A0000 		.4byte	0xa10
+ 1734 0a5e 0E       		.byte	0xe
+ 1735 0a5f 00       		.byte	0
+ 1736 0a60 02       		.uleb128 0x2
+ 1737 0a61 7D030000 		.4byte	.LASF159
+ 1738 0a65 0F       		.byte	0xf
+ 1739 0a66 42       		.byte	0x42
+ 1740 0a67 1B0A0000 		.4byte	0xa1b
+ 1741 0a6b 09       		.uleb128 0x9
+ 1742 0a6c C7060000 		.4byte	.LASF160
+ 1743 0a70 1C       		.byte	0x1c
+ 1744 0a71 0F       		.byte	0xf
+ 1745 0a72 45       		.byte	0x45
+ 1746 0a73 E40A0000 		.4byte	0xae4
+ 1747 0a77 07       		.uleb128 0x7
+ 1748 0a78 6E080000 		.4byte	.LASF49
+ 1749 0a7c 0F       		.byte	0xf
+ 1750 0a7d 49       		.byte	0x49
+ 1751 0a7e 050A0000 		.4byte	0xa05
+ 1752 0a82 00       		.byte	0
+ 1753 0a83 07       		.uleb128 0x7
+ 1754 0a84 A8030000 		.4byte	.LASF161
+ 1755 0a88 0F       		.byte	0xf
+ 1756 0a89 4E       		.byte	0x4e
+ 1757 0a8a 040B0000 		.4byte	0xb04
+ 1758 0a8e 04       		.byte	0x4
+ 1759 0a8f 07       		.uleb128 0x7
+ 1760 0a90 40080000 		.4byte	.LASF162
+ 1761 0a94 0F       		.byte	0xf
+ 1762 0a95 52       		.byte	0x52
+ 1763 0a96 1A0B0000 		.4byte	0xb1a
+ 1764 0a9a 08       		.byte	0x8
+ 1765 0a9b 07       		.uleb128 0x7
+ 1766 0a9c F6050000 		.4byte	.LASF163
+ 1767 0aa0 0F       		.byte	0xf
+ 1768 0aa1 59       		.byte	0x59
+ 1769 0aa2 200B0000 		.4byte	0xb20
+ 1770 0aa6 0C       		.byte	0xc
+ 1771 0aa7 07       		.uleb128 0x7
+ 1772 0aa8 AB0A0000 		.4byte	.LASF164
+ 1773 0aac 0F       		.byte	0xf
+ 1774 0aad 5C       		.byte	0x5c
+ 1775 0aae 6C080000 		.4byte	0x86c
+ 1776 0ab2 10       		.byte	0x10
+ 1777 0ab3 07       		.uleb128 0x7
+ 1778 0ab4 36070000 		.4byte	.LASF165
+ 1779 0ab8 0F       		.byte	0xf
+ 1780 0ab9 5F       		.byte	0x5f
+ 1781 0aba AD000000 		.4byte	0xad
+ 1782 0abe 14       		.byte	0x14
+ 1783 0abf 07       		.uleb128 0x7
+ 1784 0ac0 A9000000 		.4byte	.LASF136
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 35
+
+
+ 1785 0ac4 0F       		.byte	0xf
+ 1786 0ac5 62       		.byte	0x62
+ 1787 0ac6 AD000000 		.4byte	0xad
+ 1788 0aca 15       		.byte	0x15
+ 1789 0acb 07       		.uleb128 0x7
+ 1790 0acc BE040000 		.4byte	.LASF166
+ 1791 0ad0 0F       		.byte	0xf
+ 1792 0ad1 65       		.byte	0x65
+ 1793 0ad2 C3000000 		.4byte	0xc3
+ 1794 0ad6 16       		.byte	0x16
+ 1795 0ad7 07       		.uleb128 0x7
+ 1796 0ad8 A4090000 		.4byte	.LASF167
+ 1797 0adc 0F       		.byte	0xf
+ 1798 0add 68       		.byte	0x68
+ 1799 0ade C3000000 		.4byte	0xc3
+ 1800 0ae2 18       		.byte	0x18
+ 1801 0ae3 00       		.byte	0
+ 1802 0ae4 0B       		.uleb128 0xb
+ 1803 0ae5 BF010000 		.4byte	0x1bf
+ 1804 0ae9 F80A0000 		.4byte	0xaf8
+ 1805 0aed 0C       		.uleb128 0xc
+ 1806 0aee F80A0000 		.4byte	0xaf8
+ 1807 0af2 0C       		.uleb128 0xc
+ 1808 0af3 FE0A0000 		.4byte	0xafe
+ 1809 0af7 00       		.byte	0
+ 1810 0af8 0D       		.uleb128 0xd
+ 1811 0af9 04       		.byte	0x4
+ 1812 0afa 6B0A0000 		.4byte	0xa6b
+ 1813 0afe 0D       		.uleb128 0xd
+ 1814 0aff 04       		.byte	0x4
+ 1815 0b00 600A0000 		.4byte	0xa60
+ 1816 0b04 0D       		.uleb128 0xd
+ 1817 0b05 04       		.byte	0x4
+ 1818 0b06 E40A0000 		.4byte	0xae4
+ 1819 0b0a 13       		.uleb128 0x13
+ 1820 0b0b 1A0B0000 		.4byte	0xb1a
+ 1821 0b0f 0C       		.uleb128 0xc
+ 1822 0b10 F80A0000 		.4byte	0xaf8
+ 1823 0b14 0C       		.uleb128 0xc
+ 1824 0b15 AD000000 		.4byte	0xad
+ 1825 0b19 00       		.byte	0
+ 1826 0b1a 0D       		.uleb128 0xd
+ 1827 0b1b 04       		.byte	0x4
+ 1828 0b1c 0A0B0000 		.4byte	0xb0a
+ 1829 0b20 0D       		.uleb128 0xd
+ 1830 0b21 04       		.byte	0x4
+ 1831 0b22 E0070000 		.4byte	0x7e0
+ 1832 0b26 02       		.uleb128 0x2
+ 1833 0b27 4A070000 		.4byte	.LASF168
+ 1834 0b2b 0F       		.byte	0xf
+ 1835 0b2c 69       		.byte	0x69
+ 1836 0b2d 6B0A0000 		.4byte	0xa6b
+ 1837 0b31 06       		.uleb128 0x6
+ 1838 0b32 24       		.byte	0x24
+ 1839 0b33 0F       		.byte	0xf
+ 1840 0b34 73       		.byte	0x73
+ 1841 0b35 B80B0000 		.4byte	0xbb8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 36
+
+
+ 1842 0b39 07       		.uleb128 0x7
+ 1843 0b3a 33000000 		.4byte	.LASF169
+ 1844 0b3e 0F       		.byte	0xf
+ 1845 0b3f 75       		.byte	0x75
+ 1846 0b40 B2020000 		.4byte	0x2b2
+ 1847 0b44 00       		.byte	0
+ 1848 0b45 07       		.uleb128 0x7
+ 1849 0b46 19060000 		.4byte	.LASF170
+ 1850 0b4a 0F       		.byte	0xf
+ 1851 0b4b 76       		.byte	0x76
+ 1852 0b4c B2020000 		.4byte	0x2b2
+ 1853 0b50 04       		.byte	0x4
+ 1854 0b51 07       		.uleb128 0x7
+ 1855 0b52 42020000 		.4byte	.LASF171
+ 1856 0b56 0F       		.byte	0xf
+ 1857 0b57 77       		.byte	0x77
+ 1858 0b58 B2020000 		.4byte	0x2b2
+ 1859 0b5c 08       		.byte	0x8
+ 1860 0b5d 07       		.uleb128 0x7
+ 1861 0b5e 0C040000 		.4byte	.LASF172
+ 1862 0b62 0F       		.byte	0xf
+ 1863 0b63 78       		.byte	0x78
+ 1864 0b64 B2020000 		.4byte	0x2b2
+ 1865 0b68 0C       		.byte	0xc
+ 1866 0b69 07       		.uleb128 0x7
+ 1867 0b6a 3D000000 		.4byte	.LASF173
+ 1868 0b6e 0F       		.byte	0xf
+ 1869 0b6f 79       		.byte	0x79
+ 1870 0b70 B2020000 		.4byte	0x2b2
+ 1871 0b74 10       		.byte	0x10
+ 1872 0b75 07       		.uleb128 0x7
+ 1873 0b76 BD030000 		.4byte	.LASF174
+ 1874 0b7a 0F       		.byte	0xf
+ 1875 0b7b 7A       		.byte	0x7a
+ 1876 0b7c B4090000 		.4byte	0x9b4
+ 1877 0b80 14       		.byte	0x14
+ 1878 0b81 07       		.uleb128 0x7
+ 1879 0b82 C9070000 		.4byte	.LASF175
+ 1880 0b86 0F       		.byte	0xf
+ 1881 0b87 7B       		.byte	0x7b
+ 1882 0b88 B4090000 		.4byte	0x9b4
+ 1883 0b8c 18       		.byte	0x18
+ 1884 0b8d 07       		.uleb128 0x7
+ 1885 0b8e 8D030000 		.4byte	.LASF176
+ 1886 0b92 0F       		.byte	0xf
+ 1887 0b93 7D       		.byte	0x7d
+ 1888 0b94 B4090000 		.4byte	0x9b4
+ 1889 0b98 1C       		.byte	0x1c
+ 1890 0b99 0A       		.uleb128 0xa
+ 1891 0b9a 66030000 		.4byte	.LASF177
+ 1892 0b9e 0F       		.byte	0xf
+ 1893 0b9f 80       		.byte	0x80
+ 1894 0ba0 AD000000 		.4byte	0xad
+ 1895 0ba4 01       		.byte	0x1
+ 1896 0ba5 01       		.byte	0x1
+ 1897 0ba6 07       		.byte	0x7
+ 1898 0ba7 20       		.byte	0x20
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 37
+
+
+ 1899 0ba8 0A       		.uleb128 0xa
+ 1900 0ba9 36060000 		.4byte	.LASF178
+ 1901 0bad 0F       		.byte	0xf
+ 1902 0bae 81       		.byte	0x81
+ 1903 0baf AD000000 		.4byte	0xad
+ 1904 0bb3 01       		.byte	0x1
+ 1905 0bb4 01       		.byte	0x1
+ 1906 0bb5 06       		.byte	0x6
+ 1907 0bb6 20       		.byte	0x20
+ 1908 0bb7 00       		.byte	0
+ 1909 0bb8 06       		.uleb128 0x6
+ 1910 0bb9 08       		.byte	0x8
+ 1911 0bba 0F       		.byte	0xf
+ 1912 0bbb 83       		.byte	0x83
+ 1913 0bbc D90B0000 		.4byte	0xbd9
+ 1914 0bc0 07       		.uleb128 0x7
+ 1915 0bc1 74060000 		.4byte	.LASF179
+ 1916 0bc5 0F       		.byte	0xf
+ 1917 0bc6 85       		.byte	0x85
+ 1918 0bc7 100A0000 		.4byte	0xa10
+ 1919 0bcb 00       		.byte	0
+ 1920 0bcc 07       		.uleb128 0x7
+ 1921 0bcd 15090000 		.4byte	.LASF180
+ 1922 0bd1 0F       		.byte	0xf
+ 1923 0bd2 86       		.byte	0x86
+ 1924 0bd3 CE000000 		.4byte	0xce
+ 1925 0bd7 04       		.byte	0x4
+ 1926 0bd8 00       		.byte	0
+ 1927 0bd9 0F       		.uleb128 0xf
+ 1928 0bda 24       		.byte	0x24
+ 1929 0bdb 0F       		.byte	0xf
+ 1930 0bdc 71       		.byte	0x71
+ 1931 0bdd F80B0000 		.4byte	0xbf8
+ 1932 0be1 11       		.uleb128 0x11
+ 1933 0be2 83070000 		.4byte	.LASF181
+ 1934 0be6 0F       		.byte	0xf
+ 1935 0be7 82       		.byte	0x82
+ 1936 0be8 310B0000 		.4byte	0xb31
+ 1937 0bec 11       		.uleb128 0x11
+ 1938 0bed 43060000 		.4byte	.LASF182
+ 1939 0bf1 0F       		.byte	0xf
+ 1940 0bf2 87       		.byte	0x87
+ 1941 0bf3 B80B0000 		.4byte	0xbb8
+ 1942 0bf7 00       		.byte	0
+ 1943 0bf8 09       		.uleb128 0x9
+ 1944 0bf9 5E010000 		.4byte	.LASF183
+ 1945 0bfd 34       		.byte	0x34
+ 1946 0bfe 0F       		.byte	0xf
+ 1947 0bff 6E       		.byte	0x6e
+ 1948 0c00 710C0000 		.4byte	0xc71
+ 1949 0c04 07       		.uleb128 0x7
+ 1950 0c05 EB080000 		.4byte	.LASF158
+ 1951 0c09 0F       		.byte	0xf
+ 1952 0c0a 70       		.byte	0x70
+ 1953 0c0b 100A0000 		.4byte	0xa10
+ 1954 0c0f 00       		.byte	0
+ 1955 0c10 07       		.uleb128 0x7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 38
+
+
+ 1956 0c11 44040000 		.4byte	.LASF184
+ 1957 0c15 0F       		.byte	0xf
+ 1958 0c16 88       		.byte	0x88
+ 1959 0c17 D90B0000 		.4byte	0xbd9
+ 1960 0c1b 04       		.byte	0x4
+ 1961 0c1c 07       		.uleb128 0x7
+ 1962 0c1d 41010000 		.4byte	.LASF185
+ 1963 0c21 0F       		.byte	0xf
+ 1964 0c22 8A       		.byte	0x8a
+ 1965 0c23 CE000000 		.4byte	0xce
+ 1966 0c27 28       		.byte	0x28
+ 1967 0c28 07       		.uleb128 0x7
+ 1968 0c29 8F050000 		.4byte	.LASF186
+ 1969 0c2d 0F       		.byte	0xf
+ 1970 0c2e 8B       		.byte	0x8b
+ 1971 0c2f CE000000 		.4byte	0xce
+ 1972 0c33 2C       		.byte	0x2c
+ 1973 0c34 0A       		.uleb128 0xa
+ 1974 0c35 0E010000 		.4byte	.LASF187
+ 1975 0c39 0F       		.byte	0xf
+ 1976 0c3a 8E       		.byte	0x8e
+ 1977 0c3b AD000000 		.4byte	0xad
+ 1978 0c3f 01       		.byte	0x1
+ 1979 0c40 01       		.byte	0x1
+ 1980 0c41 07       		.byte	0x7
+ 1981 0c42 30       		.byte	0x30
+ 1982 0c43 0A       		.uleb128 0xa
+ 1983 0c44 D7060000 		.4byte	.LASF188
+ 1984 0c48 0F       		.byte	0xf
+ 1985 0c49 8F       		.byte	0x8f
+ 1986 0c4a AD000000 		.4byte	0xad
+ 1987 0c4e 01       		.byte	0x1
+ 1988 0c4f 01       		.byte	0x1
+ 1989 0c50 06       		.byte	0x6
+ 1990 0c51 30       		.byte	0x30
+ 1991 0c52 0A       		.uleb128 0xa
+ 1992 0c53 78020000 		.4byte	.LASF189
+ 1993 0c57 0F       		.byte	0xf
+ 1994 0c58 90       		.byte	0x90
+ 1995 0c59 AD000000 		.4byte	0xad
+ 1996 0c5d 01       		.byte	0x1
+ 1997 0c5e 01       		.byte	0x1
+ 1998 0c5f 05       		.byte	0x5
+ 1999 0c60 30       		.byte	0x30
+ 2000 0c61 0A       		.uleb128 0xa
+ 2001 0c62 7D040000 		.4byte	.LASF190
+ 2002 0c66 0F       		.byte	0xf
+ 2003 0c67 91       		.byte	0x91
+ 2004 0c68 AD000000 		.4byte	0xad
+ 2005 0c6c 01       		.byte	0x1
+ 2006 0c6d 01       		.byte	0x1
+ 2007 0c6e 04       		.byte	0x4
+ 2008 0c6f 30       		.byte	0x30
+ 2009 0c70 00       		.byte	0
+ 2010 0c71 02       		.uleb128 0x2
+ 2011 0c72 AE050000 		.4byte	.LASF191
+ 2012 0c76 0F       		.byte	0xf
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 39
+
+
+ 2013 0c77 92       		.byte	0x92
+ 2014 0c78 F80B0000 		.4byte	0xbf8
+ 2015 0c7c 09       		.uleb128 0x9
+ 2016 0c7d 27000000 		.4byte	.LASF192
+ 2017 0c81 5C       		.byte	0x5c
+ 2018 0c82 0F       		.byte	0xf
+ 2019 0c83 99       		.byte	0x99
+ 2020 0c84 C50C0000 		.4byte	0xcc5
+ 2021 0c88 07       		.uleb128 0x7
+ 2022 0c89 F3040000 		.4byte	.LASF116
+ 2023 0c8d 0F       		.byte	0xf
+ 2024 0c8e 9B       		.byte	0x9b
+ 2025 0c8f 260B0000 		.4byte	0xb26
+ 2026 0c93 00       		.byte	0
+ 2027 0c94 07       		.uleb128 0x7
+ 2028 0c95 F2070000 		.4byte	.LASF193
+ 2029 0c99 0F       		.byte	0xf
+ 2030 0c9a 9C       		.byte	0x9c
+ 2031 0c9b 710C0000 		.4byte	0xc71
+ 2032 0c9f 1C       		.byte	0x1c
+ 2033 0ca0 07       		.uleb128 0x7
+ 2034 0ca1 71040000 		.4byte	.LASF194
+ 2035 0ca5 0F       		.byte	0xf
+ 2036 0ca6 9D       		.byte	0x9d
+ 2037 0ca7 B4090000 		.4byte	0x9b4
+ 2038 0cab 50       		.byte	0x50
+ 2039 0cac 07       		.uleb128 0x7
+ 2040 0cad E1020000 		.4byte	.LASF195
+ 2041 0cb1 0F       		.byte	0xf
+ 2042 0cb2 9E       		.byte	0x9e
+ 2043 0cb3 CA0C0000 		.4byte	0xcca
+ 2044 0cb7 54       		.byte	0x54
+ 2045 0cb8 07       		.uleb128 0x7
+ 2046 0cb9 8B070000 		.4byte	.LASF196
+ 2047 0cbd 0F       		.byte	0xf
+ 2048 0cbe 9F       		.byte	0x9f
+ 2049 0cbf D00C0000 		.4byte	0xcd0
+ 2050 0cc3 58       		.byte	0x58
+ 2051 0cc4 00       		.byte	0
+ 2052 0cc5 1D       		.uleb128 0x1d
+ 2053 0cc6 F6030000 		.4byte	.LASF225
+ 2054 0cca 0D       		.uleb128 0xd
+ 2055 0ccb 04       		.byte	0x4
+ 2056 0ccc C50C0000 		.4byte	0xcc5
+ 2057 0cd0 0D       		.uleb128 0xd
+ 2058 0cd1 04       		.byte	0x4
+ 2059 0cd2 D60C0000 		.4byte	0xcd6
+ 2060 0cd6 0E       		.uleb128 0xe
+ 2061 0cd7 B2020000 		.4byte	0x2b2
+ 2062 0cdb 02       		.uleb128 0x2
+ 2063 0cdc C7090000 		.4byte	.LASF197
+ 2064 0ce0 0F       		.byte	0xf
+ 2065 0ce1 A1       		.byte	0xa1
+ 2066 0ce2 7C0C0000 		.4byte	0xc7c
+ 2067 0ce6 02       		.uleb128 0x2
+ 2068 0ce7 F1080000 		.4byte	.LASF198
+ 2069 0ceb 0E       		.byte	0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 40
+
+
+ 2070 0cec 42       		.byte	0x42
+ 2071 0ced AD000000 		.4byte	0xad
+ 2072 0cf1 02       		.uleb128 0x2
+ 2073 0cf2 20010000 		.4byte	.LASF199
+ 2074 0cf6 0E       		.byte	0xe
+ 2075 0cf7 48       		.byte	0x48
+ 2076 0cf8 FC0C0000 		.4byte	0xcfc
+ 2077 0cfc 0D       		.uleb128 0xd
+ 2078 0cfd 04       		.byte	0x4
+ 2079 0cfe 020D0000 		.4byte	0xd02
+ 2080 0d02 0B       		.uleb128 0xb
+ 2081 0d03 BF010000 		.4byte	0x1bf
+ 2082 0d07 1B0D0000 		.4byte	0xd1b
+ 2083 0d0b 0C       		.uleb128 0xc
+ 2084 0d0c B4090000 		.4byte	0x9b4
+ 2085 0d10 0C       		.uleb128 0xc
+ 2086 0d11 52070000 		.4byte	0x752
+ 2087 0d15 0C       		.uleb128 0xc
+ 2088 0d16 E60C0000 		.4byte	0xce6
+ 2089 0d1a 00       		.byte	0
+ 2090 0d1b 02       		.uleb128 0x2
+ 2091 0d1c BE050000 		.4byte	.LASF200
+ 2092 0d20 0E       		.byte	0xe
+ 2093 0d21 61       		.byte	0x61
+ 2094 0d22 AD000000 		.4byte	0xad
+ 2095 0d26 02       		.uleb128 0x2
+ 2096 0d27 B50A0000 		.4byte	.LASF201
+ 2097 0d2b 0E       		.byte	0xe
+ 2098 0d2c 68       		.byte	0x68
+ 2099 0d2d 310D0000 		.4byte	0xd31
+ 2100 0d31 0D       		.uleb128 0xd
+ 2101 0d32 04       		.byte	0x4
+ 2102 0d33 370D0000 		.4byte	0xd37
+ 2103 0d37 13       		.uleb128 0x13
+ 2104 0d38 470D0000 		.4byte	0xd47
+ 2105 0d3c 0C       		.uleb128 0xc
+ 2106 0d3d B4090000 		.4byte	0x9b4
+ 2107 0d41 0C       		.uleb128 0xc
+ 2108 0d42 1B0D0000 		.4byte	0xd1b
+ 2109 0d46 00       		.byte	0
+ 2110 0d47 02       		.uleb128 0x2
+ 2111 0d48 62080000 		.4byte	.LASF202
+ 2112 0d4c 0E       		.byte	0xe
+ 2113 0d4d 88       		.byte	0x88
+ 2114 0d4e AD000000 		.4byte	0xad
+ 2115 0d52 02       		.uleb128 0x2
+ 2116 0d53 98020000 		.4byte	.LASF203
+ 2117 0d57 0E       		.byte	0xe
+ 2118 0d58 8A       		.byte	0x8a
+ 2119 0d59 5D0D0000 		.4byte	0xd5d
+ 2120 0d5d 0D       		.uleb128 0xd
+ 2121 0d5e 04       		.byte	0x4
+ 2122 0d5f 630D0000 		.4byte	0xd63
+ 2123 0d63 0B       		.uleb128 0xb
+ 2124 0d64 33050000 		.4byte	0x533
+ 2125 0d68 7C0D0000 		.4byte	0xd7c
+ 2126 0d6c 0C       		.uleb128 0xc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 41
+
+
+ 2127 0d6d B4090000 		.4byte	0x9b4
+ 2128 0d71 0C       		.uleb128 0xc
+ 2129 0d72 470D0000 		.4byte	0xd47
+ 2130 0d76 0C       		.uleb128 0xc
+ 2131 0d77 E4000000 		.4byte	0xe4
+ 2132 0d7b 00       		.byte	0
+ 2133 0d7c 02       		.uleb128 0x2
+ 2134 0d7d 6E050000 		.4byte	.LASF204
+ 2135 0d81 0E       		.byte	0xe
+ 2136 0d82 A4       		.byte	0xa4
+ 2137 0d83 AD000000 		.4byte	0xad
+ 2138 0d87 06       		.uleb128 0x6
+ 2139 0d88 0C       		.byte	0xc
+ 2140 0d89 0E       		.byte	0xe
+ 2141 0d8a A7       		.byte	0xa7
+ 2142 0d8b DE0D0000 		.4byte	0xdde
+ 2143 0d8f 07       		.uleb128 0x7
+ 2144 0d90 59020000 		.4byte	.LASF205
+ 2145 0d94 0E       		.byte	0xe
+ 2146 0d95 A9       		.byte	0xa9
+ 2147 0d96 DE0D0000 		.4byte	0xdde
+ 2148 0d9a 00       		.byte	0
+ 2149 0d9b 07       		.uleb128 0x7
+ 2150 0d9c 8A050000 		.4byte	.LASF206
+ 2151 0da0 0E       		.byte	0xe
+ 2152 0da1 AA       		.byte	0xaa
+ 2153 0da2 D9000000 		.4byte	0xd9
+ 2154 0da6 04       		.byte	0x4
+ 2155 0da7 07       		.uleb128 0x7
+ 2156 0da8 1B010000 		.4byte	.LASF207
+ 2157 0dac 0E       		.byte	0xe
+ 2158 0dad AB       		.byte	0xab
+ 2159 0dae D9000000 		.4byte	0xd9
+ 2160 0db2 06       		.byte	0x6
+ 2161 0db3 07       		.uleb128 0x7
+ 2162 0db4 F0050000 		.4byte	.LASF208
+ 2163 0db8 0E       		.byte	0xe
+ 2164 0db9 AC       		.byte	0xac
+ 2165 0dba 7C0D0000 		.4byte	0xd7c
+ 2166 0dbe 08       		.byte	0x8
+ 2167 0dbf 0A       		.uleb128 0xa
+ 2168 0dc0 51050000 		.4byte	.LASF209
+ 2169 0dc4 0E       		.byte	0xe
+ 2170 0dc5 AD       		.byte	0xad
+ 2171 0dc6 AD000000 		.4byte	0xad
+ 2172 0dca 01       		.byte	0x1
+ 2173 0dcb 01       		.byte	0x1
+ 2174 0dcc 07       		.byte	0x7
+ 2175 0dcd 09       		.byte	0x9
+ 2176 0dce 0A       		.uleb128 0xa
+ 2177 0dcf D1050000 		.4byte	.LASF210
+ 2178 0dd3 0E       		.byte	0xe
+ 2179 0dd4 AE       		.byte	0xae
+ 2180 0dd5 AD000000 		.4byte	0xad
+ 2181 0dd9 01       		.byte	0x1
+ 2182 0dda 01       		.byte	0x1
+ 2183 0ddb 06       		.byte	0x6
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 42
+
+
+ 2184 0ddc 09       		.byte	0x9
+ 2185 0ddd 00       		.byte	0
+ 2186 0dde 0D       		.uleb128 0xd
+ 2187 0ddf 04       		.byte	0x4
+ 2188 0de0 E40D0000 		.4byte	0xde4
+ 2189 0de4 0E       		.uleb128 0xe
+ 2190 0de5 72080000 		.4byte	0x872
+ 2191 0de9 02       		.uleb128 0x2
+ 2192 0dea 77090000 		.4byte	.LASF211
+ 2193 0dee 0E       		.byte	0xe
+ 2194 0def B0       		.byte	0xb0
+ 2195 0df0 870D0000 		.4byte	0xd87
+ 2196 0df4 02       		.uleb128 0x2
+ 2197 0df5 DD050000 		.4byte	.LASF212
+ 2198 0df9 0E       		.byte	0xe
+ 2199 0dfa B9       		.byte	0xb9
+ 2200 0dfb AD000000 		.4byte	0xad
+ 2201 0dff 0D       		.uleb128 0xd
+ 2202 0e00 04       		.byte	0x4
+ 2203 0e01 050E0000 		.4byte	0xe05
+ 2204 0e05 0E       		.uleb128 0xe
+ 2205 0e06 28050000 		.4byte	0x528
+ 2206 0e0a 1E       		.uleb128 0x1e
+ 2207 0e0b CD000000 		.4byte	.LASF213
+ 2208 0e0f 01       		.byte	0x1
+ 2209 0e10 34       		.byte	0x34
+ 2210 0e11 00000000 		.4byte	.LFB31
+ 2211 0e15 3A000000 		.4byte	.LFE31-.LFB31
+ 2212 0e19 01       		.uleb128 0x1
+ 2213 0e1a 9C       		.byte	0x9c
+ 2214 0e1b 2E0E0000 		.4byte	0xe2e
+ 2215 0e1f 1F       		.uleb128 0x1f
+ 2216 0e20 F3040000 		.4byte	.LASF116
+ 2217 0e24 01       		.byte	0x1
+ 2218 0e25 34       		.byte	0x34
+ 2219 0e26 2E0E0000 		.4byte	0xe2e
+ 2220 0e2a 02       		.uleb128 0x2
+ 2221 0e2b 91       		.byte	0x91
+ 2222 0e2c 74       		.sleb128 -12
+ 2223 0e2d 00       		.byte	0
+ 2224 0e2e 0D       		.uleb128 0xd
+ 2225 0e2f 04       		.byte	0x4
+ 2226 0e30 260B0000 		.4byte	0xb26
+ 2227 0e34 20       		.uleb128 0x20
+ 2228 0e35 73080000 		.4byte	.LASF217
+ 2229 0e39 01       		.byte	0x1
+ 2230 0e3a 44       		.byte	0x44
+ 2231 0e3b 6A0E0000 		.4byte	0xe6a
+ 2232 0e3f 00000000 		.4byte	.LFB32
+ 2233 0e43 94000000 		.4byte	.LFE32-.LFB32
+ 2234 0e47 01       		.uleb128 0x1
+ 2235 0e48 9C       		.byte	0x9c
+ 2236 0e49 6A0E0000 		.4byte	0xe6a
+ 2237 0e4d 1F       		.uleb128 0x1f
+ 2238 0e4e F3040000 		.4byte	.LASF116
+ 2239 0e52 01       		.byte	0x1
+ 2240 0e53 44       		.byte	0x44
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 43
+
+
+ 2241 0e54 2E0E0000 		.4byte	0xe2e
+ 2242 0e58 02       		.uleb128 0x2
+ 2243 0e59 91       		.byte	0x91
+ 2244 0e5a 6C       		.sleb128 -20
+ 2245 0e5b 21       		.uleb128 0x21
+ 2246 0e5c F8000000 		.4byte	.LASF215
+ 2247 0e60 01       		.byte	0x1
+ 2248 0e61 4F       		.byte	0x4f
+ 2249 0e62 6A0E0000 		.4byte	0xe6a
+ 2250 0e66 02       		.uleb128 0x2
+ 2251 0e67 91       		.byte	0x91
+ 2252 0e68 74       		.sleb128 -12
+ 2253 0e69 00       		.byte	0
+ 2254 0e6a 0D       		.uleb128 0xd
+ 2255 0e6b 04       		.byte	0x4
+ 2256 0e6c DB0C0000 		.4byte	0xcdb
+ 2257 0e70 1E       		.uleb128 0x1e
+ 2258 0e71 1C080000 		.4byte	.LASF214
+ 2259 0e75 01       		.byte	0x1
+ 2260 0e76 67       		.byte	0x67
+ 2261 0e77 00000000 		.4byte	.LFB33
+ 2262 0e7b 1E000000 		.4byte	.LFE33-.LFB33
+ 2263 0e7f 01       		.uleb128 0x1
+ 2264 0e80 9C       		.byte	0x9c
+ 2265 0e81 A20E0000 		.4byte	0xea2
+ 2266 0e85 1F       		.uleb128 0x1f
+ 2267 0e86 F8000000 		.4byte	.LASF215
+ 2268 0e8a 01       		.byte	0x1
+ 2269 0e8b 67       		.byte	0x67
+ 2270 0e8c 6A0E0000 		.4byte	0xe6a
+ 2271 0e90 02       		.uleb128 0x2
+ 2272 0e91 91       		.byte	0x91
+ 2273 0e92 74       		.sleb128 -12
+ 2274 0e93 1F       		.uleb128 0x1f
+ 2275 0e94 5E050000 		.4byte	.LASF216
+ 2276 0e98 01       		.byte	0x1
+ 2277 0e99 67       		.byte	0x67
+ 2278 0e9a 2E0E0000 		.4byte	0xe2e
+ 2279 0e9e 02       		.uleb128 0x2
+ 2280 0e9f 91       		.byte	0x91
+ 2281 0ea0 70       		.sleb128 -16
+ 2282 0ea1 00       		.byte	0
+ 2283 0ea2 20       		.uleb128 0x20
+ 2284 0ea3 00000000 		.4byte	.LASF218
+ 2285 0ea7 01       		.byte	0x1
+ 2286 0ea8 72       		.byte	0x72
+ 2287 0ea9 6A0E0000 		.4byte	0xe6a
+ 2288 0ead 00000000 		.4byte	.LFB34
+ 2289 0eb1 30000000 		.4byte	.LFE34-.LFB34
+ 2290 0eb5 01       		.uleb128 0x1
+ 2291 0eb6 9C       		.byte	0x9c
+ 2292 0eb7 CA0E0000 		.4byte	0xeca
+ 2293 0ebb 1F       		.uleb128 0x1f
+ 2294 0ebc F8000000 		.4byte	.LASF215
+ 2295 0ec0 01       		.byte	0x1
+ 2296 0ec1 72       		.byte	0x72
+ 2297 0ec2 6A0E0000 		.4byte	0xe6a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 44
+
+
+ 2298 0ec6 02       		.uleb128 0x2
+ 2299 0ec7 91       		.byte	0x91
+ 2300 0ec8 74       		.sleb128 -12
+ 2301 0ec9 00       		.byte	0
+ 2302 0eca 20       		.uleb128 0x20
+ 2303 0ecb 36040000 		.4byte	.LASF219
+ 2304 0ecf 01       		.byte	0x1
+ 2305 0ed0 80       		.byte	0x80
+ 2306 0ed1 BF010000 		.4byte	0x1bf
+ 2307 0ed5 00000000 		.4byte	.LFB35
+ 2308 0ed9 68000000 		.4byte	.LFE35-.LFB35
+ 2309 0edd 01       		.uleb128 0x1
+ 2310 0ede 9C       		.byte	0x9c
+ 2311 0edf 0E0F0000 		.4byte	0xf0e
+ 2312 0ee3 1F       		.uleb128 0x1f
+ 2313 0ee4 F8000000 		.4byte	.LASF215
+ 2314 0ee8 01       		.byte	0x1
+ 2315 0ee9 80       		.byte	0x80
+ 2316 0eea 6A0E0000 		.4byte	0xe6a
+ 2317 0eee 02       		.uleb128 0x2
+ 2318 0eef 91       		.byte	0x91
+ 2319 0ef0 6C       		.sleb128 -20
+ 2320 0ef1 1F       		.uleb128 0x1f
+ 2321 0ef2 78040000 		.4byte	.LASF220
+ 2322 0ef6 01       		.byte	0x1
+ 2323 0ef7 80       		.byte	0x80
+ 2324 0ef8 FE0A0000 		.4byte	0xafe
+ 2325 0efc 02       		.uleb128 0x2
+ 2326 0efd 91       		.byte	0x91
+ 2327 0efe 68       		.sleb128 -24
+ 2328 0eff 21       		.uleb128 0x21
+ 2329 0f00 4D000000 		.4byte	.LASF221
+ 2330 0f04 01       		.byte	0x1
+ 2331 0f05 82       		.byte	0x82
+ 2332 0f06 BF010000 		.4byte	0x1bf
+ 2333 0f0a 02       		.uleb128 0x2
+ 2334 0f0b 91       		.byte	0x91
+ 2335 0f0c 77       		.sleb128 -9
+ 2336 0f0d 00       		.byte	0
+ 2337 0f0e 22       		.uleb128 0x22
+ 2338 0f0f E5070000 		.4byte	.LASF226
+ 2339 0f13 10       		.byte	0x10
+ 2340 0f14 38       		.byte	0x38
+ 2341 0f15 7C050000 		.4byte	0x57c
+ 2342 0f19 00       		.byte	0
+ 2343              		.section	.debug_abbrev,"",%progbits
+ 2344              	.Ldebug_abbrev0:
+ 2345 0000 01       		.uleb128 0x1
+ 2346 0001 11       		.uleb128 0x11
+ 2347 0002 01       		.byte	0x1
+ 2348 0003 25       		.uleb128 0x25
+ 2349 0004 0E       		.uleb128 0xe
+ 2350 0005 13       		.uleb128 0x13
+ 2351 0006 0B       		.uleb128 0xb
+ 2352 0007 03       		.uleb128 0x3
+ 2353 0008 0E       		.uleb128 0xe
+ 2354 0009 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 45
+
+
+ 2355 000a 0E       		.uleb128 0xe
+ 2356 000b 55       		.uleb128 0x55
+ 2357 000c 17       		.uleb128 0x17
+ 2358 000d 11       		.uleb128 0x11
+ 2359 000e 01       		.uleb128 0x1
+ 2360 000f 10       		.uleb128 0x10
+ 2361 0010 17       		.uleb128 0x17
+ 2362 0011 00       		.byte	0
+ 2363 0012 00       		.byte	0
+ 2364 0013 02       		.uleb128 0x2
+ 2365 0014 16       		.uleb128 0x16
+ 2366 0015 00       		.byte	0
+ 2367 0016 03       		.uleb128 0x3
+ 2368 0017 0E       		.uleb128 0xe
+ 2369 0018 3A       		.uleb128 0x3a
+ 2370 0019 0B       		.uleb128 0xb
+ 2371 001a 3B       		.uleb128 0x3b
+ 2372 001b 0B       		.uleb128 0xb
+ 2373 001c 49       		.uleb128 0x49
+ 2374 001d 13       		.uleb128 0x13
+ 2375 001e 00       		.byte	0
+ 2376 001f 00       		.byte	0
+ 2377 0020 03       		.uleb128 0x3
+ 2378 0021 24       		.uleb128 0x24
+ 2379 0022 00       		.byte	0
+ 2380 0023 0B       		.uleb128 0xb
+ 2381 0024 0B       		.uleb128 0xb
+ 2382 0025 3E       		.uleb128 0x3e
+ 2383 0026 0B       		.uleb128 0xb
+ 2384 0027 03       		.uleb128 0x3
+ 2385 0028 0E       		.uleb128 0xe
+ 2386 0029 00       		.byte	0
+ 2387 002a 00       		.byte	0
+ 2388 002b 04       		.uleb128 0x4
+ 2389 002c 24       		.uleb128 0x24
+ 2390 002d 00       		.byte	0
+ 2391 002e 0B       		.uleb128 0xb
+ 2392 002f 0B       		.uleb128 0xb
+ 2393 0030 3E       		.uleb128 0x3e
+ 2394 0031 0B       		.uleb128 0xb
+ 2395 0032 03       		.uleb128 0x3
+ 2396 0033 08       		.uleb128 0x8
+ 2397 0034 00       		.byte	0
+ 2398 0035 00       		.byte	0
+ 2399 0036 05       		.uleb128 0x5
+ 2400 0037 0F       		.uleb128 0xf
+ 2401 0038 00       		.byte	0
+ 2402 0039 0B       		.uleb128 0xb
+ 2403 003a 0B       		.uleb128 0xb
+ 2404 003b 00       		.byte	0
+ 2405 003c 00       		.byte	0
+ 2406 003d 06       		.uleb128 0x6
+ 2407 003e 13       		.uleb128 0x13
+ 2408 003f 01       		.byte	0x1
+ 2409 0040 0B       		.uleb128 0xb
+ 2410 0041 0B       		.uleb128 0xb
+ 2411 0042 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 46
+
+
+ 2412 0043 0B       		.uleb128 0xb
+ 2413 0044 3B       		.uleb128 0x3b
+ 2414 0045 0B       		.uleb128 0xb
+ 2415 0046 01       		.uleb128 0x1
+ 2416 0047 13       		.uleb128 0x13
+ 2417 0048 00       		.byte	0
+ 2418 0049 00       		.byte	0
+ 2419 004a 07       		.uleb128 0x7
+ 2420 004b 0D       		.uleb128 0xd
+ 2421 004c 00       		.byte	0
+ 2422 004d 03       		.uleb128 0x3
+ 2423 004e 0E       		.uleb128 0xe
+ 2424 004f 3A       		.uleb128 0x3a
+ 2425 0050 0B       		.uleb128 0xb
+ 2426 0051 3B       		.uleb128 0x3b
+ 2427 0052 0B       		.uleb128 0xb
+ 2428 0053 49       		.uleb128 0x49
+ 2429 0054 13       		.uleb128 0x13
+ 2430 0055 38       		.uleb128 0x38
+ 2431 0056 0B       		.uleb128 0xb
+ 2432 0057 00       		.byte	0
+ 2433 0058 00       		.byte	0
+ 2434 0059 08       		.uleb128 0x8
+ 2435 005a 0D       		.uleb128 0xd
+ 2436 005b 00       		.byte	0
+ 2437 005c 03       		.uleb128 0x3
+ 2438 005d 08       		.uleb128 0x8
+ 2439 005e 3A       		.uleb128 0x3a
+ 2440 005f 0B       		.uleb128 0xb
+ 2441 0060 3B       		.uleb128 0x3b
+ 2442 0061 0B       		.uleb128 0xb
+ 2443 0062 49       		.uleb128 0x49
+ 2444 0063 13       		.uleb128 0x13
+ 2445 0064 38       		.uleb128 0x38
+ 2446 0065 0B       		.uleb128 0xb
+ 2447 0066 00       		.byte	0
+ 2448 0067 00       		.byte	0
+ 2449 0068 09       		.uleb128 0x9
+ 2450 0069 13       		.uleb128 0x13
+ 2451 006a 01       		.byte	0x1
+ 2452 006b 03       		.uleb128 0x3
+ 2453 006c 0E       		.uleb128 0xe
+ 2454 006d 0B       		.uleb128 0xb
+ 2455 006e 0B       		.uleb128 0xb
+ 2456 006f 3A       		.uleb128 0x3a
+ 2457 0070 0B       		.uleb128 0xb
+ 2458 0071 3B       		.uleb128 0x3b
+ 2459 0072 0B       		.uleb128 0xb
+ 2460 0073 01       		.uleb128 0x1
+ 2461 0074 13       		.uleb128 0x13
+ 2462 0075 00       		.byte	0
+ 2463 0076 00       		.byte	0
+ 2464 0077 0A       		.uleb128 0xa
+ 2465 0078 0D       		.uleb128 0xd
+ 2466 0079 00       		.byte	0
+ 2467 007a 03       		.uleb128 0x3
+ 2468 007b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 47
+
+
+ 2469 007c 3A       		.uleb128 0x3a
+ 2470 007d 0B       		.uleb128 0xb
+ 2471 007e 3B       		.uleb128 0x3b
+ 2472 007f 0B       		.uleb128 0xb
+ 2473 0080 49       		.uleb128 0x49
+ 2474 0081 13       		.uleb128 0x13
+ 2475 0082 0B       		.uleb128 0xb
+ 2476 0083 0B       		.uleb128 0xb
+ 2477 0084 0D       		.uleb128 0xd
+ 2478 0085 0B       		.uleb128 0xb
+ 2479 0086 0C       		.uleb128 0xc
+ 2480 0087 0B       		.uleb128 0xb
+ 2481 0088 38       		.uleb128 0x38
+ 2482 0089 0B       		.uleb128 0xb
+ 2483 008a 00       		.byte	0
+ 2484 008b 00       		.byte	0
+ 2485 008c 0B       		.uleb128 0xb
+ 2486 008d 15       		.uleb128 0x15
+ 2487 008e 01       		.byte	0x1
+ 2488 008f 27       		.uleb128 0x27
+ 2489 0090 19       		.uleb128 0x19
+ 2490 0091 49       		.uleb128 0x49
+ 2491 0092 13       		.uleb128 0x13
+ 2492 0093 01       		.uleb128 0x1
+ 2493 0094 13       		.uleb128 0x13
+ 2494 0095 00       		.byte	0
+ 2495 0096 00       		.byte	0
+ 2496 0097 0C       		.uleb128 0xc
+ 2497 0098 05       		.uleb128 0x5
+ 2498 0099 00       		.byte	0
+ 2499 009a 49       		.uleb128 0x49
+ 2500 009b 13       		.uleb128 0x13
+ 2501 009c 00       		.byte	0
+ 2502 009d 00       		.byte	0
+ 2503 009e 0D       		.uleb128 0xd
+ 2504 009f 0F       		.uleb128 0xf
+ 2505 00a0 00       		.byte	0
+ 2506 00a1 0B       		.uleb128 0xb
+ 2507 00a2 0B       		.uleb128 0xb
+ 2508 00a3 49       		.uleb128 0x49
+ 2509 00a4 13       		.uleb128 0x13
+ 2510 00a5 00       		.byte	0
+ 2511 00a6 00       		.byte	0
+ 2512 00a7 0E       		.uleb128 0xe
+ 2513 00a8 26       		.uleb128 0x26
+ 2514 00a9 00       		.byte	0
+ 2515 00aa 49       		.uleb128 0x49
+ 2516 00ab 13       		.uleb128 0x13
+ 2517 00ac 00       		.byte	0
+ 2518 00ad 00       		.byte	0
+ 2519 00ae 0F       		.uleb128 0xf
+ 2520 00af 17       		.uleb128 0x17
+ 2521 00b0 01       		.byte	0x1
+ 2522 00b1 0B       		.uleb128 0xb
+ 2523 00b2 0B       		.uleb128 0xb
+ 2524 00b3 3A       		.uleb128 0x3a
+ 2525 00b4 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 48
+
+
+ 2526 00b5 3B       		.uleb128 0x3b
+ 2527 00b6 0B       		.uleb128 0xb
+ 2528 00b7 01       		.uleb128 0x1
+ 2529 00b8 13       		.uleb128 0x13
+ 2530 00b9 00       		.byte	0
+ 2531 00ba 00       		.byte	0
+ 2532 00bb 10       		.uleb128 0x10
+ 2533 00bc 0D       		.uleb128 0xd
+ 2534 00bd 00       		.byte	0
+ 2535 00be 03       		.uleb128 0x3
+ 2536 00bf 08       		.uleb128 0x8
+ 2537 00c0 3A       		.uleb128 0x3a
+ 2538 00c1 0B       		.uleb128 0xb
+ 2539 00c2 3B       		.uleb128 0x3b
+ 2540 00c3 0B       		.uleb128 0xb
+ 2541 00c4 49       		.uleb128 0x49
+ 2542 00c5 13       		.uleb128 0x13
+ 2543 00c6 00       		.byte	0
+ 2544 00c7 00       		.byte	0
+ 2545 00c8 11       		.uleb128 0x11
+ 2546 00c9 0D       		.uleb128 0xd
+ 2547 00ca 00       		.byte	0
+ 2548 00cb 03       		.uleb128 0x3
+ 2549 00cc 0E       		.uleb128 0xe
+ 2550 00cd 3A       		.uleb128 0x3a
+ 2551 00ce 0B       		.uleb128 0xb
+ 2552 00cf 3B       		.uleb128 0x3b
+ 2553 00d0 0B       		.uleb128 0xb
+ 2554 00d1 49       		.uleb128 0x49
+ 2555 00d2 13       		.uleb128 0x13
+ 2556 00d3 00       		.byte	0
+ 2557 00d4 00       		.byte	0
+ 2558 00d5 12       		.uleb128 0x12
+ 2559 00d6 16       		.uleb128 0x16
+ 2560 00d7 00       		.byte	0
+ 2561 00d8 03       		.uleb128 0x3
+ 2562 00d9 0E       		.uleb128 0xe
+ 2563 00da 3A       		.uleb128 0x3a
+ 2564 00db 0B       		.uleb128 0xb
+ 2565 00dc 3B       		.uleb128 0x3b
+ 2566 00dd 05       		.uleb128 0x5
+ 2567 00de 49       		.uleb128 0x49
+ 2568 00df 13       		.uleb128 0x13
+ 2569 00e0 00       		.byte	0
+ 2570 00e1 00       		.byte	0
+ 2571 00e2 13       		.uleb128 0x13
+ 2572 00e3 15       		.uleb128 0x15
+ 2573 00e4 01       		.byte	0x1
+ 2574 00e5 27       		.uleb128 0x27
+ 2575 00e6 19       		.uleb128 0x19
+ 2576 00e7 01       		.uleb128 0x1
+ 2577 00e8 13       		.uleb128 0x13
+ 2578 00e9 00       		.byte	0
+ 2579 00ea 00       		.byte	0
+ 2580 00eb 14       		.uleb128 0x14
+ 2581 00ec 04       		.uleb128 0x4
+ 2582 00ed 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 49
+
+
+ 2583 00ee 0B       		.uleb128 0xb
+ 2584 00ef 0B       		.uleb128 0xb
+ 2585 00f0 49       		.uleb128 0x49
+ 2586 00f1 13       		.uleb128 0x13
+ 2587 00f2 3A       		.uleb128 0x3a
+ 2588 00f3 0B       		.uleb128 0xb
+ 2589 00f4 3B       		.uleb128 0x3b
+ 2590 00f5 0B       		.uleb128 0xb
+ 2591 00f6 01       		.uleb128 0x1
+ 2592 00f7 13       		.uleb128 0x13
+ 2593 00f8 00       		.byte	0
+ 2594 00f9 00       		.byte	0
+ 2595 00fa 15       		.uleb128 0x15
+ 2596 00fb 28       		.uleb128 0x28
+ 2597 00fc 00       		.byte	0
+ 2598 00fd 03       		.uleb128 0x3
+ 2599 00fe 0E       		.uleb128 0xe
+ 2600 00ff 1C       		.uleb128 0x1c
+ 2601 0100 0B       		.uleb128 0xb
+ 2602 0101 00       		.byte	0
+ 2603 0102 00       		.byte	0
+ 2604 0103 16       		.uleb128 0x16
+ 2605 0104 35       		.uleb128 0x35
+ 2606 0105 00       		.byte	0
+ 2607 0106 49       		.uleb128 0x49
+ 2608 0107 13       		.uleb128 0x13
+ 2609 0108 00       		.byte	0
+ 2610 0109 00       		.byte	0
+ 2611 010a 17       		.uleb128 0x17
+ 2612 010b 13       		.uleb128 0x13
+ 2613 010c 01       		.byte	0x1
+ 2614 010d 03       		.uleb128 0x3
+ 2615 010e 0E       		.uleb128 0xe
+ 2616 010f 0B       		.uleb128 0xb
+ 2617 0110 05       		.uleb128 0x5
+ 2618 0111 3A       		.uleb128 0x3a
+ 2619 0112 0B       		.uleb128 0xb
+ 2620 0113 3B       		.uleb128 0x3b
+ 2621 0114 0B       		.uleb128 0xb
+ 2622 0115 01       		.uleb128 0x1
+ 2623 0116 13       		.uleb128 0x13
+ 2624 0117 00       		.byte	0
+ 2625 0118 00       		.byte	0
+ 2626 0119 18       		.uleb128 0x18
+ 2627 011a 0D       		.uleb128 0xd
+ 2628 011b 00       		.byte	0
+ 2629 011c 03       		.uleb128 0x3
+ 2630 011d 0E       		.uleb128 0xe
+ 2631 011e 3A       		.uleb128 0x3a
+ 2632 011f 0B       		.uleb128 0xb
+ 2633 0120 3B       		.uleb128 0x3b
+ 2634 0121 0B       		.uleb128 0xb
+ 2635 0122 49       		.uleb128 0x49
+ 2636 0123 13       		.uleb128 0x13
+ 2637 0124 38       		.uleb128 0x38
+ 2638 0125 05       		.uleb128 0x5
+ 2639 0126 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 50
+
+
+ 2640 0127 00       		.byte	0
+ 2641 0128 19       		.uleb128 0x19
+ 2642 0129 0D       		.uleb128 0xd
+ 2643 012a 00       		.byte	0
+ 2644 012b 03       		.uleb128 0x3
+ 2645 012c 0E       		.uleb128 0xe
+ 2646 012d 3A       		.uleb128 0x3a
+ 2647 012e 0B       		.uleb128 0xb
+ 2648 012f 3B       		.uleb128 0x3b
+ 2649 0130 0B       		.uleb128 0xb
+ 2650 0131 49       		.uleb128 0x49
+ 2651 0132 13       		.uleb128 0x13
+ 2652 0133 0B       		.uleb128 0xb
+ 2653 0134 0B       		.uleb128 0xb
+ 2654 0135 0D       		.uleb128 0xd
+ 2655 0136 0B       		.uleb128 0xb
+ 2656 0137 0C       		.uleb128 0xc
+ 2657 0138 0B       		.uleb128 0xb
+ 2658 0139 38       		.uleb128 0x38
+ 2659 013a 05       		.uleb128 0x5
+ 2660 013b 00       		.byte	0
+ 2661 013c 00       		.byte	0
+ 2662 013d 1A       		.uleb128 0x1a
+ 2663 013e 0D       		.uleb128 0xd
+ 2664 013f 00       		.byte	0
+ 2665 0140 03       		.uleb128 0x3
+ 2666 0141 08       		.uleb128 0x8
+ 2667 0142 3A       		.uleb128 0x3a
+ 2668 0143 0B       		.uleb128 0xb
+ 2669 0144 3B       		.uleb128 0x3b
+ 2670 0145 0B       		.uleb128 0xb
+ 2671 0146 49       		.uleb128 0x49
+ 2672 0147 13       		.uleb128 0x13
+ 2673 0148 0B       		.uleb128 0xb
+ 2674 0149 0B       		.uleb128 0xb
+ 2675 014a 0D       		.uleb128 0xd
+ 2676 014b 0B       		.uleb128 0xb
+ 2677 014c 0C       		.uleb128 0xc
+ 2678 014d 0B       		.uleb128 0xb
+ 2679 014e 38       		.uleb128 0x38
+ 2680 014f 0B       		.uleb128 0xb
+ 2681 0150 00       		.byte	0
+ 2682 0151 00       		.byte	0
+ 2683 0152 1B       		.uleb128 0x1b
+ 2684 0153 01       		.uleb128 0x1
+ 2685 0154 01       		.byte	0x1
+ 2686 0155 49       		.uleb128 0x49
+ 2687 0156 13       		.uleb128 0x13
+ 2688 0157 01       		.uleb128 0x1
+ 2689 0158 13       		.uleb128 0x13
+ 2690 0159 00       		.byte	0
+ 2691 015a 00       		.byte	0
+ 2692 015b 1C       		.uleb128 0x1c
+ 2693 015c 21       		.uleb128 0x21
+ 2694 015d 00       		.byte	0
+ 2695 015e 49       		.uleb128 0x49
+ 2696 015f 13       		.uleb128 0x13
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 51
+
+
+ 2697 0160 2F       		.uleb128 0x2f
+ 2698 0161 0B       		.uleb128 0xb
+ 2699 0162 00       		.byte	0
+ 2700 0163 00       		.byte	0
+ 2701 0164 1D       		.uleb128 0x1d
+ 2702 0165 13       		.uleb128 0x13
+ 2703 0166 00       		.byte	0
+ 2704 0167 03       		.uleb128 0x3
+ 2705 0168 0E       		.uleb128 0xe
+ 2706 0169 3C       		.uleb128 0x3c
+ 2707 016a 19       		.uleb128 0x19
+ 2708 016b 00       		.byte	0
+ 2709 016c 00       		.byte	0
+ 2710 016d 1E       		.uleb128 0x1e
+ 2711 016e 2E       		.uleb128 0x2e
+ 2712 016f 01       		.byte	0x1
+ 2713 0170 3F       		.uleb128 0x3f
+ 2714 0171 19       		.uleb128 0x19
+ 2715 0172 03       		.uleb128 0x3
+ 2716 0173 0E       		.uleb128 0xe
+ 2717 0174 3A       		.uleb128 0x3a
+ 2718 0175 0B       		.uleb128 0xb
+ 2719 0176 3B       		.uleb128 0x3b
+ 2720 0177 0B       		.uleb128 0xb
+ 2721 0178 27       		.uleb128 0x27
+ 2722 0179 19       		.uleb128 0x19
+ 2723 017a 11       		.uleb128 0x11
+ 2724 017b 01       		.uleb128 0x1
+ 2725 017c 12       		.uleb128 0x12
+ 2726 017d 06       		.uleb128 0x6
+ 2727 017e 40       		.uleb128 0x40
+ 2728 017f 18       		.uleb128 0x18
+ 2729 0180 9642     		.uleb128 0x2116
+ 2730 0182 19       		.uleb128 0x19
+ 2731 0183 01       		.uleb128 0x1
+ 2732 0184 13       		.uleb128 0x13
+ 2733 0185 00       		.byte	0
+ 2734 0186 00       		.byte	0
+ 2735 0187 1F       		.uleb128 0x1f
+ 2736 0188 05       		.uleb128 0x5
+ 2737 0189 00       		.byte	0
+ 2738 018a 03       		.uleb128 0x3
+ 2739 018b 0E       		.uleb128 0xe
+ 2740 018c 3A       		.uleb128 0x3a
+ 2741 018d 0B       		.uleb128 0xb
+ 2742 018e 3B       		.uleb128 0x3b
+ 2743 018f 0B       		.uleb128 0xb
+ 2744 0190 49       		.uleb128 0x49
+ 2745 0191 13       		.uleb128 0x13
+ 2746 0192 02       		.uleb128 0x2
+ 2747 0193 18       		.uleb128 0x18
+ 2748 0194 00       		.byte	0
+ 2749 0195 00       		.byte	0
+ 2750 0196 20       		.uleb128 0x20
+ 2751 0197 2E       		.uleb128 0x2e
+ 2752 0198 01       		.byte	0x1
+ 2753 0199 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 52
+
+
+ 2754 019a 19       		.uleb128 0x19
+ 2755 019b 03       		.uleb128 0x3
+ 2756 019c 0E       		.uleb128 0xe
+ 2757 019d 3A       		.uleb128 0x3a
+ 2758 019e 0B       		.uleb128 0xb
+ 2759 019f 3B       		.uleb128 0x3b
+ 2760 01a0 0B       		.uleb128 0xb
+ 2761 01a1 27       		.uleb128 0x27
+ 2762 01a2 19       		.uleb128 0x19
+ 2763 01a3 49       		.uleb128 0x49
+ 2764 01a4 13       		.uleb128 0x13
+ 2765 01a5 11       		.uleb128 0x11
+ 2766 01a6 01       		.uleb128 0x1
+ 2767 01a7 12       		.uleb128 0x12
+ 2768 01a8 06       		.uleb128 0x6
+ 2769 01a9 40       		.uleb128 0x40
+ 2770 01aa 18       		.uleb128 0x18
+ 2771 01ab 9642     		.uleb128 0x2116
+ 2772 01ad 19       		.uleb128 0x19
+ 2773 01ae 01       		.uleb128 0x1
+ 2774 01af 13       		.uleb128 0x13
+ 2775 01b0 00       		.byte	0
+ 2776 01b1 00       		.byte	0
+ 2777 01b2 21       		.uleb128 0x21
+ 2778 01b3 34       		.uleb128 0x34
+ 2779 01b4 00       		.byte	0
+ 2780 01b5 03       		.uleb128 0x3
+ 2781 01b6 0E       		.uleb128 0xe
+ 2782 01b7 3A       		.uleb128 0x3a
+ 2783 01b8 0B       		.uleb128 0xb
+ 2784 01b9 3B       		.uleb128 0x3b
+ 2785 01ba 0B       		.uleb128 0xb
+ 2786 01bb 49       		.uleb128 0x49
+ 2787 01bc 13       		.uleb128 0x13
+ 2788 01bd 02       		.uleb128 0x2
+ 2789 01be 18       		.uleb128 0x18
+ 2790 01bf 00       		.byte	0
+ 2791 01c0 00       		.byte	0
+ 2792 01c1 22       		.uleb128 0x22
+ 2793 01c2 34       		.uleb128 0x34
+ 2794 01c3 00       		.byte	0
+ 2795 01c4 03       		.uleb128 0x3
+ 2796 01c5 0E       		.uleb128 0xe
+ 2797 01c6 3A       		.uleb128 0x3a
+ 2798 01c7 0B       		.uleb128 0xb
+ 2799 01c8 3B       		.uleb128 0x3b
+ 2800 01c9 0B       		.uleb128 0xb
+ 2801 01ca 49       		.uleb128 0x49
+ 2802 01cb 13       		.uleb128 0x13
+ 2803 01cc 3F       		.uleb128 0x3f
+ 2804 01cd 19       		.uleb128 0x19
+ 2805 01ce 3C       		.uleb128 0x3c
+ 2806 01cf 19       		.uleb128 0x19
+ 2807 01d0 00       		.byte	0
+ 2808 01d1 00       		.byte	0
+ 2809 01d2 00       		.byte	0
+ 2810              		.section	.debug_aranges,"",%progbits
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 53
+
+
+ 2811 0000 3C000000 		.4byte	0x3c
+ 2812 0004 0200     		.2byte	0x2
+ 2813 0006 00000000 		.4byte	.Ldebug_info0
+ 2814 000a 04       		.byte	0x4
+ 2815 000b 00       		.byte	0
+ 2816 000c 0000     		.2byte	0
+ 2817 000e 0000     		.2byte	0
+ 2818 0010 00000000 		.4byte	.LFB31
+ 2819 0014 3A000000 		.4byte	.LFE31-.LFB31
+ 2820 0018 00000000 		.4byte	.LFB32
+ 2821 001c 94000000 		.4byte	.LFE32-.LFB32
+ 2822 0020 00000000 		.4byte	.LFB33
+ 2823 0024 1E000000 		.4byte	.LFE33-.LFB33
+ 2824 0028 00000000 		.4byte	.LFB34
+ 2825 002c 30000000 		.4byte	.LFE34-.LFB34
+ 2826 0030 00000000 		.4byte	.LFB35
+ 2827 0034 68000000 		.4byte	.LFE35-.LFB35
+ 2828 0038 00000000 		.4byte	0
+ 2829 003c 00000000 		.4byte	0
+ 2830              		.section	.debug_ranges,"",%progbits
+ 2831              	.Ldebug_ranges0:
+ 2832 0000 00000000 		.4byte	.LFB31
+ 2833 0004 3A000000 		.4byte	.LFE31
+ 2834 0008 00000000 		.4byte	.LFB32
+ 2835 000c 94000000 		.4byte	.LFE32
+ 2836 0010 00000000 		.4byte	.LFB33
+ 2837 0014 1E000000 		.4byte	.LFE33
+ 2838 0018 00000000 		.4byte	.LFB34
+ 2839 001c 30000000 		.4byte	.LFE34
+ 2840 0020 00000000 		.4byte	.LFB35
+ 2841 0024 68000000 		.4byte	.LFE35
+ 2842 0028 00000000 		.4byte	0
+ 2843 002c 00000000 		.4byte	0
+ 2844              		.section	.debug_line,"",%progbits
+ 2845              	.Ldebug_line0:
+ 2846 0000 40040000 		.section	.debug_str,"MS",%progbits,1
+ 2846      0200BD03 
+ 2846      00000201 
+ 2846      FB0E0D00 
+ 2846      01010101 
+ 2847              	.LASF218:
+ 2848 0000 6C765F69 		.ascii	"lv_indev_get_next\000"
+ 2848      6E646576 
+ 2848      5F676574 
+ 2848      5F6E6578 
+ 2848      7400
+ 2849              	.LASF134:
+ 2850 0012 636C6963 		.ascii	"click\000"
+ 2850      6B00
+ 2851              	.LASF126:
+ 2852 0018 5F6C765F 		.ascii	"_lv_obj_t\000"
+ 2852      6F626A5F 
+ 2852      7400
+ 2853              	.LASF36:
+ 2854 0022 66756C6C 		.ascii	"full\000"
+ 2854      00
+ 2855              	.LASF192:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 54
+
+
+ 2856 0027 5F6C765F 		.ascii	"_lv_indev_t\000"
+ 2856      696E6465 
+ 2856      765F7400 
+ 2857              	.LASF169:
+ 2858 0033 6163745F 		.ascii	"act_point\000"
+ 2858      706F696E 
+ 2858      7400
+ 2859              	.LASF173:
+ 2860 003d 64726167 		.ascii	"drag_throw_vect\000"
+ 2860      5F746872 
+ 2860      6F775F76 
+ 2860      65637400 
+ 2861              	.LASF221:
+ 2862 004d 636F6E74 		.ascii	"cont\000"
+ 2862      00
+ 2863              	.LASF99:
+ 2864 0052 6275665F 		.ascii	"buf_act\000"
+ 2864      61637400 
+ 2865              	.LASF104:
+ 2866 005a 5F646973 		.ascii	"_disp_drv_t\000"
+ 2866      705F6472 
+ 2866      765F7400 
+ 2867              	.LASF107:
+ 2868 0066 62756666 		.ascii	"buffer\000"
+ 2868      657200
+ 2869              	.LASF142:
+ 2870 006d 62617365 		.ascii	"base_dir\000"
+ 2870      5F646972 
+ 2870      00
+ 2871              	.LASF140:
+ 2872 0076 70617265 		.ascii	"parent_event\000"
+ 2872      6E745F65 
+ 2872      76656E74 
+ 2872      00
+ 2873              	.LASF125:
+ 2874 0083 6C617374 		.ascii	"last_activity_time\000"
+ 2874      5F616374 
+ 2874      69766974 
+ 2874      795F7469 
+ 2874      6D6500
+ 2875              	.LASF148:
+ 2876 0096 4C565F49 		.ascii	"LV_INDEV_TYPE_NONE\000"
+ 2876      4E444556 
+ 2876      5F545950 
+ 2876      455F4E4F 
+ 2876      4E4500
+ 2877              	.LASF136:
+ 2878 00a9 64726167 		.ascii	"drag_throw\000"
+ 2878      5F746872 
+ 2878      6F7700
+ 2879              	.LASF13:
+ 2880 00b4 756E7369 		.ascii	"unsigned int\000"
+ 2880      676E6564 
+ 2880      20696E74 
+ 2880      00
+ 2881              	.LASF24:
+ 2882 00c1 6F66735F 		.ascii	"ofs_x\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 55
+
+
+ 2882      7800
+ 2883              	.LASF25:
+ 2884 00c7 6F66735F 		.ascii	"ofs_y\000"
+ 2884      7900
+ 2885              	.LASF213:
+ 2886 00cd 6C765F69 		.ascii	"lv_indev_drv_init\000"
+ 2886      6E646576 
+ 2886      5F647276 
+ 2886      5F696E69 
+ 2886      7400
+ 2887              	.LASF27:
+ 2888 00df 6765745F 		.ascii	"get_glyph_dsc\000"
+ 2888      676C7970 
+ 2888      685F6473 
+ 2888      6300
+ 2889              	.LASF72:
+ 2890 00ed 6C765F73 		.ascii	"lv_style_t\000"
+ 2890      74796C65 
+ 2890      5F7400
+ 2891              	.LASF215:
+ 2892 00f8 696E6465 		.ascii	"indev\000"
+ 2892      7600
+ 2893              	.LASF76:
+ 2894 00fe 68656164 		.ascii	"head\000"
+ 2894      00
+ 2895              	.LASF42:
+ 2896 0103 6C765F70 		.ascii	"lv_point_t\000"
+ 2896      6F696E74 
+ 2896      5F7400
+ 2897              	.LASF187:
+ 2898 010e 6C6F6E67 		.ascii	"long_pr_sent\000"
+ 2898      5F70725F 
+ 2898      73656E74 
+ 2898      00
+ 2899              	.LASF207:
+ 2900 011b 796F6673 		.ascii	"yofs\000"
+ 2900      00
+ 2901              	.LASF199:
+ 2902 0120 6C765F64 		.ascii	"lv_design_cb_t\000"
+ 2902      65736967 
+ 2902      6E5F6362 
+ 2902      5F7400
+ 2903              	.LASF111:
+ 2904 012f 7365745F 		.ascii	"set_px_cb\000"
+ 2904      70785F63 
+ 2904      6200
+ 2905              	.LASF119:
+ 2906 0139 6163745F 		.ascii	"act_scr\000"
+ 2906      73637200 
+ 2907              	.LASF185:
+ 2908 0141 70725F74 		.ascii	"pr_timestamp\000"
+ 2908      696D6573 
+ 2908      74616D70 
+ 2908      00
+ 2909              	.LASF75:
+ 2910 014e 6E5F7369 		.ascii	"n_size\000"
+ 2910      7A6500
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 56
+
+
+ 2911              	.LASF132:
+ 2912 0155 6578745F 		.ascii	"ext_attr\000"
+ 2912      61747472 
+ 2912      00
+ 2913              	.LASF183:
+ 2914 015e 5F6C765F 		.ascii	"_lv_indev_proc_t\000"
+ 2914      696E6465 
+ 2914      765F7072 
+ 2914      6F635F74 
+ 2914      00
+ 2915              	.LASF82:
+ 2916 016f 5F6C765F 		.ascii	"_lv_task_t\000"
+ 2916      7461736B 
+ 2916      5F7400
+ 2917              	.LASF224:
+ 2918 017a 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 2918      73657273 
+ 2918      5C746D6A 
+ 2918      33325C44 
+ 2918      6F63756D 
+ 2919 01a7 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 2919      6C6C6F73 
+ 2919      636F7065 
+ 2919      5F53656E 
+ 2919      696F725F 
+ 2920 01d8 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 2920      5C74636F 
+ 2920      6D5F6170 
+ 2920      705C7463 
+ 2920      6F6D5F61 
+ 2921 0208 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 2921      736F6336 
+ 2921      2E637964 
+ 2921      736E00
+ 2922              	.LASF147:
+ 2923 0217 7265616C 		.ascii	"realign\000"
+ 2923      69676E00 
+ 2924              	.LASF53:
+ 2925 021f 696E6E65 		.ascii	"inner\000"
+ 2925      7200
+ 2926              	.LASF18:
+ 2927 0225 75696E74 		.ascii	"uint32_t\000"
+ 2927      33325F74 
+ 2927      00
+ 2928              	.LASF14:
+ 2929 022e 696E7438 		.ascii	"int8_t\000"
+ 2929      5F7400
+ 2930              	.LASF37:
+ 2931 0235 6C765F63 		.ascii	"lv_color32_t\000"
+ 2931      6F6C6F72 
+ 2931      33325F74 
+ 2931      00
+ 2932              	.LASF171:
+ 2933 0242 76656374 		.ascii	"vect\000"
+ 2933      00
+ 2934              	.LASF108:
+ 2935 0247 726F7461 		.ascii	"rotated\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 57
+
+
+ 2935      74656400 
+ 2936              	.LASF60:
+ 2937 024f 73656C5F 		.ascii	"sel_color\000"
+ 2937      636F6C6F 
+ 2937      7200
+ 2938              	.LASF205:
+ 2939 0259 62617365 		.ascii	"base\000"
+ 2939      00
+ 2940              	.LASF93:
+ 2941 025e 4C565F54 		.ascii	"LV_TASK_PRIO_HIGH\000"
+ 2941      41534B5F 
+ 2941      5052494F 
+ 2941      5F484947 
+ 2941      4800
+ 2942              	.LASF16:
+ 2943 0270 696E7431 		.ascii	"int16_t\000"
+ 2943      365F7400 
+ 2944              	.LASF189:
+ 2945 0278 64697361 		.ascii	"disabled\000"
+ 2945      626C6564 
+ 2945      00
+ 2946              	.LASF12:
+ 2947 0281 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2947      206C6F6E 
+ 2947      6720756E 
+ 2947      7369676E 
+ 2947      65642069 
+ 2948              	.LASF203:
+ 2949 0298 6C765F73 		.ascii	"lv_signal_cb_t\000"
+ 2949      69676E61 
+ 2949      6C5F6362 
+ 2949      5F7400
+ 2950              	.LASF48:
+ 2951 02a7 70617274 		.ascii	"part\000"
+ 2951      00
+ 2952              	.LASF97:
+ 2953 02ac 62756631 		.ascii	"buf1\000"
+ 2953      00
+ 2954              	.LASF98:
+ 2955 02b1 62756632 		.ascii	"buf2\000"
+ 2955      00
+ 2956              	.LASF118:
+ 2957 02b6 7363725F 		.ascii	"scr_ll\000"
+ 2957      6C6C00
+ 2958              	.LASF114:
+ 2959 02bd 6C765F64 		.ascii	"lv_disp_drv_t\000"
+ 2959      6973705F 
+ 2959      6472765F 
+ 2959      7400
+ 2960              	.LASF6:
+ 2961 02cb 5F5F7569 		.ascii	"__uint16_t\000"
+ 2961      6E743136 
+ 2961      5F7400
+ 2962              	.LASF110:
+ 2963 02d6 726F756E 		.ascii	"rounder_cb\000"
+ 2963      6465725F 
+ 2963      636200
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 58
+
+
+ 2964              	.LASF195:
+ 2965 02e1 67726F75 		.ascii	"group\000"
+ 2965      7000
+ 2966              	.LASF223:
+ 2967 02e7 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_hal\\"
+ 2967      2E5C2E2E 
+ 2967      5C6C7667 
+ 2967      6C5C7665 
+ 2967      7273696F 
+ 2968 0313 6C765F68 		.ascii	"lv_hal_indev.c\000"
+ 2968      616C5F69 
+ 2968      6E646576 
+ 2968      2E6300
+ 2969              	.LASF57:
+ 2970 0322 626F7264 		.ascii	"border\000"
+ 2970      657200
+ 2971              	.LASF152:
+ 2972 0329 4C565F49 		.ascii	"LV_INDEV_TYPE_ENCODER\000"
+ 2972      4E444556 
+ 2972      5F545950 
+ 2972      455F454E 
+ 2972      434F4445 
+ 2973              	.LASF113:
+ 2974 033f 636F6C6F 		.ascii	"color_chroma_key\000"
+ 2974      725F6368 
+ 2974      726F6D61 
+ 2974      5F6B6579 
+ 2974      00
+ 2975              	.LASF123:
+ 2976 0350 696E765F 		.ascii	"inv_area_joined\000"
+ 2976      61726561 
+ 2976      5F6A6F69 
+ 2976      6E656400 
+ 2977              	.LASF46:
+ 2978 0360 636F6C6F 		.ascii	"color\000"
+ 2978      7200
+ 2979              	.LASF177:
+ 2980 0366 64726167 		.ascii	"drag_limit_out\000"
+ 2980      5F6C696D 
+ 2980      69745F6F 
+ 2980      757400
+ 2981              	.LASF66:
+ 2982 0375 726F756E 		.ascii	"rounded\000"
+ 2982      64656400 
+ 2983              	.LASF159:
+ 2984 037d 6C765F69 		.ascii	"lv_indev_data_t\000"
+ 2984      6E646576 
+ 2984      5F646174 
+ 2984      615F7400 
+ 2985              	.LASF176:
+ 2986 038d 6C617374 		.ascii	"last_pressed\000"
+ 2986      5F707265 
+ 2986      73736564 
+ 2986      00
+ 2987              	.LASF133:
+ 2988 039a 7374796C 		.ascii	"style_p\000"
+ 2988      655F7000 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 59
+
+
+ 2989              	.LASF47:
+ 2990 03a2 77696474 		.ascii	"width\000"
+ 2990      6800
+ 2991              	.LASF161:
+ 2992 03a8 72656164 		.ascii	"read_cb\000"
+ 2992      5F636200 
+ 2993              	.LASF74:
+ 2994 03b0 6C765F6C 		.ascii	"lv_ll_node_t\000"
+ 2994      6C5F6E6F 
+ 2994      64655F74 
+ 2994      00
+ 2995              	.LASF174:
+ 2996 03bd 6163745F 		.ascii	"act_obj\000"
+ 2996      6F626A00 
+ 2997              	.LASF31:
+ 2998 03c5 5F426F6F 		.ascii	"_Bool\000"
+ 2998      6C00
+ 2999              	.LASF103:
+ 3000 03cb 6C765F64 		.ascii	"lv_disp_buf_t\000"
+ 3000      6973705F 
+ 3000      6275665F 
+ 3000      7400
+ 3001              	.LASF139:
+ 3002 03d9 6F70615F 		.ascii	"opa_scale_en\000"
+ 3002      7363616C 
+ 3002      655F656E 
+ 3002      00
+ 3003              	.LASF81:
+ 3004 03e6 5F6C765F 		.ascii	"_lv_font_struct\000"
+ 3004      666F6E74 
+ 3004      5F737472 
+ 3004      75637400 
+ 3005              	.LASF225:
+ 3006 03f6 5F6C765F 		.ascii	"_lv_group_t\000"
+ 3006      67726F75 
+ 3006      705F7400 
+ 3007              	.LASF117:
+ 3008 0402 72656672 		.ascii	"refr_task\000"
+ 3008      5F746173 
+ 3008      6B00
+ 3009              	.LASF172:
+ 3010 040c 64726167 		.ascii	"drag_sum\000"
+ 3010      5F73756D 
+ 3010      00
+ 3011              	.LASF63:
+ 3012 0415 6C696E65 		.ascii	"line_space\000"
+ 3012      5F737061 
+ 3012      636500
+ 3013              	.LASF96:
+ 3014 0420 6C765F74 		.ascii	"lv_task_t\000"
+ 3014      61736B5F 
+ 3014      7400
+ 3015              	.LASF29:
+ 3016 042a 6C696E65 		.ascii	"line_height\000"
+ 3016      5F686569 
+ 3016      67687400 
+ 3017              	.LASF219:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 60
+
+
+ 3018 0436 6C765F69 		.ascii	"lv_indev_read\000"
+ 3018      6E646576 
+ 3018      5F726561 
+ 3018      6400
+ 3019              	.LASF184:
+ 3020 0444 74797065 		.ascii	"types\000"
+ 3020      7300
+ 3021              	.LASF87:
+ 3022 044a 7072696F 		.ascii	"prio\000"
+ 3022      00
+ 3023              	.LASF41:
+ 3024 044f 63686172 		.ascii	"char\000"
+ 3024      00
+ 3025              	.LASF73:
+ 3026 0454 6C765F72 		.ascii	"lv_res_t\000"
+ 3026      65735F74 
+ 3026      00
+ 3027              	.LASF146:
+ 3028 045d 6578745F 		.ascii	"ext_draw_pad\000"
+ 3028      64726177 
+ 3028      5F706164 
+ 3028      00
+ 3029              	.LASF50:
+ 3030 046a 626F7474 		.ascii	"bottom\000"
+ 3030      6F6D00
+ 3031              	.LASF194:
+ 3032 0471 63757273 		.ascii	"cursor\000"
+ 3032      6F7200
+ 3033              	.LASF220:
+ 3034 0478 64617461 		.ascii	"data\000"
+ 3034      00
+ 3035              	.LASF190:
+ 3036 047d 77616974 		.ascii	"wait_until_release\000"
+ 3036      5F756E74 
+ 3036      696C5F72 
+ 3036      656C6561 
+ 3036      736500
+ 3037              	.LASF102:
+ 3038 0490 666C7573 		.ascii	"flushing\000"
+ 3038      68696E67 
+ 3038      00
+ 3039              	.LASF26:
+ 3040 0499 6C765F66 		.ascii	"lv_font_glyph_dsc_t\000"
+ 3040      6F6E745F 
+ 3040      676C7970 
+ 3040      685F6473 
+ 3040      635F7400 
+ 3041              	.LASF154:
+ 3042 04ad 6C765F69 		.ascii	"lv_indev_state_t\000"
+ 3042      6E646576 
+ 3042      5F737461 
+ 3042      74655F74 
+ 3042      00
+ 3043              	.LASF166:
+ 3044 04be 6C6F6E67 		.ascii	"long_press_time\000"
+ 3044      5F707265 
+ 3044      73735F74 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 61
+
+
+ 3044      696D6500 
+ 3045              	.LASF15:
+ 3046 04ce 75696E74 		.ascii	"uint8_t\000"
+ 3046      385F7400 
+ 3047              	.LASF94:
+ 3048 04d6 4C565F54 		.ascii	"LV_TASK_PRIO_HIGHEST\000"
+ 3048      41534B5F 
+ 3048      5052494F 
+ 3048      5F484947 
+ 3048      48455354 
+ 3049              	.LASF106:
+ 3050 04eb 7665725F 		.ascii	"ver_res\000"
+ 3050      72657300 
+ 3051              	.LASF116:
+ 3052 04f3 64726976 		.ascii	"driver\000"
+ 3052      657200
+ 3053              	.LASF101:
+ 3054 04fa 61726561 		.ascii	"area\000"
+ 3054      00
+ 3055              	.LASF45:
+ 3056 04ff 6C765F73 		.ascii	"lv_shadow_type_t\000"
+ 3056      6861646F 
+ 3056      775F7479 
+ 3056      70655F74 
+ 3056      00
+ 3057              	.LASF157:
+ 3058 0510 656E635F 		.ascii	"enc_diff\000"
+ 3058      64696666 
+ 3058      00
+ 3059              	.LASF52:
+ 3060 0519 72696768 		.ascii	"right\000"
+ 3060      7400
+ 3061              	.LASF86:
+ 3062 051f 75736572 		.ascii	"user_data\000"
+ 3062      5F646174 
+ 3062      6100
+ 3063              	.LASF11:
+ 3064 0529 6C6F6E67 		.ascii	"long long int\000"
+ 3064      206C6F6E 
+ 3064      6720696E 
+ 3064      7400
+ 3065              	.LASF67:
+ 3066 0537 676C6173 		.ascii	"glass\000"
+ 3066      7300
+ 3067              	.LASF156:
+ 3068 053d 62746E5F 		.ascii	"btn_id\000"
+ 3068      696400
+ 3069              	.LASF78:
+ 3070 0544 6C765F6C 		.ascii	"lv_ll_t\000"
+ 3070      6C5F7400 
+ 3071              	.LASF69:
+ 3072 054c 74657874 		.ascii	"text\000"
+ 3072      00
+ 3073              	.LASF209:
+ 3074 0551 6175746F 		.ascii	"auto_realign\000"
+ 3074      5F726561 
+ 3074      6C69676E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 62
+
+
+ 3074      00
+ 3075              	.LASF216:
+ 3076 055e 6E65775F 		.ascii	"new_drv\000"
+ 3076      64727600 
+ 3077              	.LASF59:
+ 3078 0566 70616464 		.ascii	"padding\000"
+ 3078      696E6700 
+ 3079              	.LASF204:
+ 3080 056e 6C765F61 		.ascii	"lv_align_t\000"
+ 3080      6C69676E 
+ 3080      5F7400
+ 3081              	.LASF89:
+ 3082 0579 4C565F54 		.ascii	"LV_TASK_PRIO_OFF\000"
+ 3082      41534B5F 
+ 3082      5052494F 
+ 3082      5F4F4646 
+ 3082      00
+ 3083              	.LASF206:
+ 3084 058a 786F6673 		.ascii	"xofs\000"
+ 3084      00
+ 3085              	.LASF186:
+ 3086 058f 6C6F6E67 		.ascii	"longpr_rep_timestamp\000"
+ 3086      70725F72 
+ 3086      65705F74 
+ 3086      696D6573 
+ 3086      74616D70 
+ 3087              	.LASF4:
+ 3088 05a4 5F5F696E 		.ascii	"__int16_t\000"
+ 3088      7431365F 
+ 3088      7400
+ 3089              	.LASF191:
+ 3090 05ae 6C765F69 		.ascii	"lv_indev_proc_t\000"
+ 3090      6E646576 
+ 3090      5F70726F 
+ 3090      635F7400 
+ 3091              	.LASF200:
+ 3092 05be 6C765F65 		.ascii	"lv_event_t\000"
+ 3092      76656E74 
+ 3092      5F7400
+ 3093              	.LASF115:
+ 3094 05c9 5F646973 		.ascii	"_disp_t\000"
+ 3094      705F7400 
+ 3095              	.LASF210:
+ 3096 05d1 6F726967 		.ascii	"origo_align\000"
+ 3096      6F5F616C 
+ 3096      69676E00 
+ 3097              	.LASF212:
+ 3098 05dd 6C765F64 		.ascii	"lv_drag_dir_t\000"
+ 3098      7261675F 
+ 3098      6469725F 
+ 3098      7400
+ 3099              	.LASF100:
+ 3100 05eb 73697A65 		.ascii	"size\000"
+ 3100      00
+ 3101              	.LASF208:
+ 3102 05f0 616C6967 		.ascii	"align\000"
+ 3102      6E00
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 63
+
+
+ 3103              	.LASF163:
+ 3104 05f6 64697370 		.ascii	"disp\000"
+ 3104      00
+ 3105              	.LASF153:
+ 3106 05fb 6C765F69 		.ascii	"lv_indev_type_t\000"
+ 3106      6E646576 
+ 3106      5F747970 
+ 3106      655F7400 
+ 3107              	.LASF70:
+ 3108 060b 696D6167 		.ascii	"image\000"
+ 3108      6500
+ 3109              	.LASF144:
+ 3110 0611 70726F74 		.ascii	"protect\000"
+ 3110      65637400 
+ 3111              	.LASF170:
+ 3112 0619 6C617374 		.ascii	"last_point\000"
+ 3112      5F706F69 
+ 3112      6E7400
+ 3113              	.LASF95:
+ 3114 0624 5F4C565F 		.ascii	"_LV_TASK_PRIO_NUM\000"
+ 3114      5441534B 
+ 3114      5F505249 
+ 3114      4F5F4E55 
+ 3114      4D00
+ 3115              	.LASF178:
+ 3116 0636 64726167 		.ascii	"drag_in_prog\000"
+ 3116      5F696E5F 
+ 3116      70726F67 
+ 3116      00
+ 3117              	.LASF182:
+ 3118 0643 6B657970 		.ascii	"keypad\000"
+ 3118      616400
+ 3119              	.LASF120:
+ 3120 064a 746F705F 		.ascii	"top_layer\000"
+ 3120      6C617965 
+ 3120      7200
+ 3121              	.LASF65:
+ 3122 0654 73756270 		.ascii	"subpx\000"
+ 3122      7800
+ 3123              	.LASF38:
+ 3124 065a 6C765F63 		.ascii	"lv_color_t\000"
+ 3124      6F6C6F72 
+ 3124      5F7400
+ 3125              	.LASF0:
+ 3126 0665 5F5F696E 		.ascii	"__int8_t\000"
+ 3126      74385F74 
+ 3126      00
+ 3127              	.LASF34:
+ 3128 066e 67726565 		.ascii	"green\000"
+ 3128      6E00
+ 3129              	.LASF179:
+ 3130 0674 6C617374 		.ascii	"last_state\000"
+ 3130      5F737461 
+ 3130      746500
+ 3131              	.LASF20:
+ 3132 067f 6C6F6E67 		.ascii	"long double\000"
+ 3132      20646F75 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 64
+
+
+ 3132      626C6500 
+ 3133              	.LASF17:
+ 3134 068b 75696E74 		.ascii	"uint16_t\000"
+ 3134      31365F74 
+ 3134      00
+ 3135              	.LASF141:
+ 3136 0694 64726167 		.ascii	"drag_dir\000"
+ 3136      5F646972 
+ 3136      00
+ 3137              	.LASF150:
+ 3138 069d 4C565F49 		.ascii	"LV_INDEV_TYPE_KEYPAD\000"
+ 3138      4E444556 
+ 3138      5F545950 
+ 3138      455F4B45 
+ 3138      59504144 
+ 3139              	.LASF121:
+ 3140 06b2 7379735F 		.ascii	"sys_layer\000"
+ 3140      6C617965 
+ 3140      7200
+ 3141              	.LASF55:
+ 3142 06bc 67726164 		.ascii	"grad_color\000"
+ 3142      5F636F6C 
+ 3142      6F7200
+ 3143              	.LASF160:
+ 3144 06c7 5F6C765F 		.ascii	"_lv_indev_drv_t\000"
+ 3144      696E6465 
+ 3144      765F6472 
+ 3144      765F7400 
+ 3145              	.LASF188:
+ 3146 06d7 72657365 		.ascii	"reset_query\000"
+ 3146      745F7175 
+ 3146      65727900 
+ 3147              	.LASF40:
+ 3148 06e3 73697A65 		.ascii	"sizetype\000"
+ 3148      74797065 
+ 3148      00
+ 3149              	.LASF32:
+ 3150 06ec 6C765F66 		.ascii	"lv_font_t\000"
+ 3150      6F6E745F 
+ 3150      7400
+ 3151              	.LASF62:
+ 3152 06f6 6C657474 		.ascii	"letter_space\000"
+ 3152      65725F73 
+ 3152      70616365 
+ 3152      00
+ 3153              	.LASF54:
+ 3154 0703 6D61696E 		.ascii	"main_color\000"
+ 3154      5F636F6C 
+ 3154      6F7200
+ 3155              	.LASF79:
+ 3156 070e 6C765F62 		.ascii	"lv_bidi_dir_t\000"
+ 3156      6964695F 
+ 3156      6469725F 
+ 3156      7400
+ 3157              	.LASF5:
+ 3158 071c 73686F72 		.ascii	"short int\000"
+ 3158      7420696E 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 65
+
+
+ 3158      7400
+ 3159              	.LASF128:
+ 3160 0726 636F6F72 		.ascii	"coords\000"
+ 3160      647300
+ 3161              	.LASF39:
+ 3162 072d 6C765F6F 		.ascii	"lv_opa_t\000"
+ 3162      70615F74 
+ 3162      00
+ 3163              	.LASF165:
+ 3164 0736 64726167 		.ascii	"drag_limit\000"
+ 3164      5F6C696D 
+ 3164      697400
+ 3165              	.LASF8:
+ 3166 0741 6C6F6E67 		.ascii	"long int\000"
+ 3166      20696E74 
+ 3166      00
+ 3167              	.LASF168:
+ 3168 074a 6C765F69 		.ascii	"lv_indev_drv_t\000"
+ 3168      6E646576 
+ 3168      5F647276 
+ 3168      5F7400
+ 3169              	.LASF149:
+ 3170 0759 4C565F49 		.ascii	"LV_INDEV_TYPE_POINTER\000"
+ 3170      4E444556 
+ 3170      5F545950 
+ 3170      455F504F 
+ 3170      494E5445 
+ 3171              	.LASF84:
+ 3172 076f 6C617374 		.ascii	"last_run\000"
+ 3172      5F72756E 
+ 3172      00
+ 3173              	.LASF33:
+ 3174 0778 626C7565 		.ascii	"blue\000"
+ 3174      00
+ 3175              	.LASF124:
+ 3176 077d 696E765F 		.ascii	"inv_p\000"
+ 3176      7000
+ 3177              	.LASF181:
+ 3178 0783 706F696E 		.ascii	"pointer\000"
+ 3178      74657200 
+ 3179              	.LASF196:
+ 3180 078b 62746E5F 		.ascii	"btn_points\000"
+ 3180      706F696E 
+ 3180      747300
+ 3181              	.LASF19:
+ 3182 0796 6C765F63 		.ascii	"lv_coord_t\000"
+ 3182      6F6F7264 
+ 3182      5F7400
+ 3183              	.LASF105:
+ 3184 07a1 686F725F 		.ascii	"hor_res\000"
+ 3184      72657300 
+ 3185              	.LASF51:
+ 3186 07a9 6C656674 		.ascii	"left\000"
+ 3186      00
+ 3187              	.LASF64:
+ 3188 07ae 696E7465 		.ascii	"intense\000"
+ 3188      6E736500 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 66
+
+
+ 3189              	.LASF1:
+ 3190 07b6 5F5F7569 		.ascii	"__uint8_t\000"
+ 3190      6E74385F 
+ 3190      7400
+ 3191              	.LASF109:
+ 3192 07c0 666C7573 		.ascii	"flush_cb\000"
+ 3192      685F6362 
+ 3192      00
+ 3193              	.LASF175:
+ 3194 07c9 6C617374 		.ascii	"last_obj\000"
+ 3194      5F6F626A 
+ 3194      00
+ 3195              	.LASF23:
+ 3196 07d2 626F785F 		.ascii	"box_h\000"
+ 3196      6800
+ 3197              	.LASF85:
+ 3198 07d8 7461736B 		.ascii	"task_cb\000"
+ 3198      5F636200 
+ 3199              	.LASF61:
+ 3200 07e0 666F6E74 		.ascii	"font\000"
+ 3200      00
+ 3201              	.LASF226:
+ 3202 07e5 5F6C765F 		.ascii	"_lv_indev_ll\000"
+ 3202      696E6465 
+ 3202      765F6C6C 
+ 3202      00
+ 3203              	.LASF193:
+ 3204 07f2 70726F63 		.ascii	"proc\000"
+ 3204      00
+ 3205              	.LASF22:
+ 3206 07f7 626F785F 		.ascii	"box_w\000"
+ 3206      7700
+ 3207              	.LASF80:
+ 3208 07fd 6C765F74 		.ascii	"lv_task_cb_t\000"
+ 3208      61736B5F 
+ 3208      63625F74 
+ 3208      00
+ 3209              	.LASF10:
+ 3210 080a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3210      20756E73 
+ 3210      69676E65 
+ 3210      6420696E 
+ 3210      7400
+ 3211              	.LASF214:
+ 3212 081c 6C765F69 		.ascii	"lv_indev_drv_update\000"
+ 3212      6E646576 
+ 3212      5F647276 
+ 3212      5F757064 
+ 3212      61746500 
+ 3213              	.LASF35:
+ 3214 0830 616C7068 		.ascii	"alpha\000"
+ 3214      6100
+ 3215              	.LASF30:
+ 3216 0836 62617365 		.ascii	"base_line\000"
+ 3216      5F6C696E 
+ 3216      6500
+ 3217              	.LASF162:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 67
+
+
+ 3218 0840 66656564 		.ascii	"feedback_cb\000"
+ 3218      6261636B 
+ 3218      5F636200 
+ 3219              	.LASF56:
+ 3220 084c 72616469 		.ascii	"radius\000"
+ 3220      757300
+ 3221              	.LASF145:
+ 3222 0853 6F70615F 		.ascii	"opa_scale\000"
+ 3222      7363616C 
+ 3222      6500
+ 3223              	.LASF68:
+ 3224 085d 626F6479 		.ascii	"body\000"
+ 3224      00
+ 3225              	.LASF202:
+ 3226 0862 6C765F73 		.ascii	"lv_signal_t\000"
+ 3226      69676E61 
+ 3226      6C5F7400 
+ 3227              	.LASF49:
+ 3228 086e 74797065 		.ascii	"type\000"
+ 3228      00
+ 3229              	.LASF217:
+ 3230 0873 6C765F69 		.ascii	"lv_indev_drv_register\000"
+ 3230      6E646576 
+ 3230      5F647276 
+ 3230      5F726567 
+ 3230      69737465 
+ 3231              	.LASF3:
+ 3232 0889 756E7369 		.ascii	"unsigned char\000"
+ 3232      676E6564 
+ 3232      20636861 
+ 3232      7200
+ 3233              	.LASF88:
+ 3234 0897 6F6E6365 		.ascii	"once\000"
+ 3234      00
+ 3235              	.LASF9:
+ 3236 089c 5F5F7569 		.ascii	"__uint32_t\000"
+ 3236      6E743332 
+ 3236      5F7400
+ 3237              	.LASF71:
+ 3238 08a7 6C696E65 		.ascii	"line\000"
+ 3238      00
+ 3239              	.LASF90:
+ 3240 08ac 4C565F54 		.ascii	"LV_TASK_PRIO_LOWEST\000"
+ 3240      41534B5F 
+ 3240      5052494F 
+ 3240      5F4C4F57 
+ 3240      45535400 
+ 3241              	.LASF28:
+ 3242 08c0 6765745F 		.ascii	"get_glyph_bitmap\000"
+ 3242      676C7970 
+ 3242      685F6269 
+ 3242      746D6170 
+ 3242      00
+ 3243              	.LASF77:
+ 3244 08d1 7461696C 		.ascii	"tail\000"
+ 3244      00
+ 3245              	.LASF127:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 68
+
+
+ 3246 08d6 6368696C 		.ascii	"child_ll\000"
+ 3246      645F6C6C 
+ 3246      00
+ 3247              	.LASF137:
+ 3248 08df 64726167 		.ascii	"drag_parent\000"
+ 3248      5F706172 
+ 3248      656E7400 
+ 3249              	.LASF158:
+ 3250 08eb 73746174 		.ascii	"state\000"
+ 3250      6500
+ 3251              	.LASF198:
+ 3252 08f1 6C765F64 		.ascii	"lv_design_mode_t\000"
+ 3252      65736967 
+ 3252      6E5F6D6F 
+ 3252      64655F74 
+ 3252      00
+ 3253              	.LASF122:
+ 3254 0902 696E765F 		.ascii	"inv_areas\000"
+ 3254      61726561 
+ 3254      7300
+ 3255              	.LASF129:
+ 3256 090c 6576656E 		.ascii	"event_cb\000"
+ 3256      745F6362 
+ 3256      00
+ 3257              	.LASF180:
+ 3258 0915 6C617374 		.ascii	"last_key\000"
+ 3258      5F6B6579 
+ 3258      00
+ 3259              	.LASF131:
+ 3260 091e 64657369 		.ascii	"design_cb\000"
+ 3260      676E5F63 
+ 3260      6200
+ 3261              	.LASF58:
+ 3262 0928 73686164 		.ascii	"shadow\000"
+ 3262      6F7700
+ 3263              	.LASF43:
+ 3264 092f 6C765F61 		.ascii	"lv_area_t\000"
+ 3264      7265615F 
+ 3264      7400
+ 3265              	.LASF2:
+ 3266 0939 7369676E 		.ascii	"signed char\000"
+ 3266      65642063 
+ 3266      68617200 
+ 3267              	.LASF83:
+ 3268 0945 70657269 		.ascii	"period\000"
+ 3268      6F6400
+ 3269              	.LASF138:
+ 3270 094c 68696464 		.ascii	"hidden\000"
+ 3270      656E00
+ 3271              	.LASF7:
+ 3272 0953 73686F72 		.ascii	"short unsigned int\000"
+ 3272      7420756E 
+ 3272      7369676E 
+ 3272      65642069 
+ 3272      6E7400
+ 3273              	.LASF92:
+ 3274 0966 4C565F54 		.ascii	"LV_TASK_PRIO_MID\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 69
+
+
+ 3274      41534B5F 
+ 3274      5052494F 
+ 3274      5F4D4944 
+ 3274      00
+ 3275              	.LASF211:
+ 3276 0977 6C765F72 		.ascii	"lv_reailgn_t\000"
+ 3276      6561696C 
+ 3276      676E5F74 
+ 3276      00
+ 3277              	.LASF143:
+ 3278 0984 72657365 		.ascii	"reserved\000"
+ 3278      72766564 
+ 3278      00
+ 3279              	.LASF155:
+ 3280 098d 706F696E 		.ascii	"point\000"
+ 3280      7400
+ 3281              	.LASF91:
+ 3282 0993 4C565F54 		.ascii	"LV_TASK_PRIO_LOW\000"
+ 3282      41534B5F 
+ 3282      5052494F 
+ 3282      5F4C4F57 
+ 3282      00
+ 3283              	.LASF167:
+ 3284 09a4 6C6F6E67 		.ascii	"long_press_rep_time\000"
+ 3284      5F707265 
+ 3284      73735F72 
+ 3284      65705F74 
+ 3284      696D6500 
+ 3285              	.LASF135:
+ 3286 09b8 64726167 		.ascii	"drag\000"
+ 3286      00
+ 3287              	.LASF130:
+ 3288 09bd 7369676E 		.ascii	"signal_cb\000"
+ 3288      616C5F63 
+ 3288      6200
+ 3289              	.LASF197:
+ 3290 09c7 6C765F69 		.ascii	"lv_indev_t\000"
+ 3290      6E646576 
+ 3290      5F7400
+ 3291              	.LASF222:
+ 3292 09d2 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3292      43313120 
+ 3292      352E342E 
+ 3292      31203230 
+ 3292      31363036 
+ 3293 0a05 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 3293      20726576 
+ 3293      6973696F 
+ 3293      6E203233 
+ 3293      37373135 
+ 3294 0a38 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 3294      70202D6D 
+ 3294      6670753D 
+ 3294      66707634 
+ 3294      2D73702D 
+ 3295 0a6b 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 3295      6F6E7320 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccm54XhS.s 			page 70
+
+
+ 3295      2D666661 
+ 3295      742D6C74 
+ 3295      6F2D6F62 
+ 3296              	.LASF44:
+ 3297 0a85 6C765F62 		.ascii	"lv_border_part_t\000"
+ 3297      6F726465 
+ 3297      725F7061 
+ 3297      72745F74 
+ 3297      00
+ 3298              	.LASF151:
+ 3299 0a96 4C565F49 		.ascii	"LV_INDEV_TYPE_BUTTON\000"
+ 3299      4E444556 
+ 3299      5F545950 
+ 3299      455F4255 
+ 3299      54544F4E 
+ 3300              	.LASF164:
+ 3301 0aab 72656164 		.ascii	"read_task\000"
+ 3301      5F746173 
+ 3301      6B00
+ 3302              	.LASF201:
+ 3303 0ab5 6C765F65 		.ascii	"lv_event_cb_t\000"
+ 3303      76656E74 
+ 3303      5F63625F 
+ 3303      7400
+ 3304              	.LASF21:
+ 3305 0ac3 6164765F 		.ascii	"adv_w\000"
+ 3305      7700
+ 3306              	.LASF112:
+ 3307 0ac9 6D6F6E69 		.ascii	"monitor_cb\000"
+ 3307      746F725F 
+ 3307      636200
+ 3308              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

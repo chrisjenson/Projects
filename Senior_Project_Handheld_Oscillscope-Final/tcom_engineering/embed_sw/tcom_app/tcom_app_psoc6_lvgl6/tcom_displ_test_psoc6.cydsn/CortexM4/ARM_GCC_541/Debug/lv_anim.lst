@@ -1,0 +1,4325 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_anim.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.bss
+  21              		.align	2
+  22              	last_task_run:
+  23 0000 00000000 		.space	4
+  24              	anim_list_changed:
+  25 0004 00       		.space	1
+  26              		.section	.text.lv_anim_core_init,"ax",%progbits
+  27              		.align	2
+  28              		.global	lv_anim_core_init
+  29              		.thumb
+  30              		.thumb_func
+  31              		.type	lv_anim_core_init, %function
+  32              	lv_anim_core_init:
+  33              	.LFB31:
+  34              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_anim.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @file anim.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "lv_anim.h"
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #if LV_USE_ANIMATION
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include <stddef.h>
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include <string.h>
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "../lv_core/lv_debug.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "../lv_hal/lv_hal_tick.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "lv_task.h"
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "lv_math.h"
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include "lv_gc.h"
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #if defined(LV_GC_INCLUDE)
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #include LV_GC_INCLUDE
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #endif /* LV_ENABLE_GC */
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 2
+
+
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /*********************
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *      DEFINES
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *********************/
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #define LV_ANIM_RESOLUTION 1024
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** #define LV_ANIM_RES_SHIFT 10
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *      TYPEDEFS
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *  STATIC PROTOTYPES
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static void anim_task(lv_task_t * param);
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static bool anim_ready_handler(lv_anim_t * a);
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *  STATIC VARIABLES
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static uint32_t last_task_run;
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static bool anim_list_changed;
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *      MACROS
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *   GLOBAL FUNCTIONS
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Init. the animation module
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** void lv_anim_core_init(void)
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+  35              		.loc 1 58 0
+  36              		.cfi_startproc
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 1, uses_anonymous_args = 0
+  39 0000 80B5     		push	{r7, lr}
+  40              		.cfi_def_cfa_offset 8
+  41              		.cfi_offset 7, -8
+  42              		.cfi_offset 14, -4
+  43 0002 00AF     		add	r7, sp, #0
+  44              		.cfi_def_cfa_register 7
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_ll_init(&LV_GC_ROOT(_lv_anim_ll), sizeof(lv_anim_t));
+  45              		.loc 1 59 0
+  46 0004 2421     		movs	r1, #36
+  47 0006 0848     		ldr	r0, .L2
+  48 0008 FFF7FEFF 		bl	lv_ll_init
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     last_task_run = lv_tick_get();
+  49              		.loc 1 60 0
+  50 000c FFF7FEFF 		bl	lv_tick_get
+  51 0010 0246     		mov	r2, r0
+  52 0012 064B     		ldr	r3, .L2+4
+  53 0014 1A60     		str	r2, [r3]
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_task_create(anim_task, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, NULL);
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 3
+
+
+  54              		.loc 1 61 0
+  55 0016 0023     		movs	r3, #0
+  56 0018 0322     		movs	r2, #3
+  57 001a 1E21     		movs	r1, #30
+  58 001c 0448     		ldr	r0, .L2+8
+  59 001e FFF7FEFF 		bl	lv_task_create
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+  60              		.loc 1 62 0
+  61 0022 00BF     		nop
+  62 0024 80BD     		pop	{r7, pc}
+  63              	.L3:
+  64 0026 00BF     		.align	2
+  65              	.L2:
+  66 0028 00000000 		.word	_lv_anim_ll
+  67 002c 00000000 		.word	last_task_run
+  68 0030 00000000 		.word	anim_task
+  69              		.cfi_endproc
+  70              	.LFE31:
+  71              		.size	lv_anim_core_init, .-lv_anim_core_init
+  72              		.section	.text.lv_anim_init,"ax",%progbits
+  73              		.align	2
+  74              		.global	lv_anim_init
+  75              		.thumb
+  76              		.thumb_func
+  77              		.type	lv_anim_init, %function
+  78              	lv_anim_init:
+  79              	.LFB32:
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Initialize an animation variable.
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * E.g.:
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * lv_anim_t a;
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * lv_anim_init(&a);
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * lv_anim_set_...(&a);
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * lv_anim_craete(&a);
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an `lv_anim_t` variable to initialize
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** void lv_anim_init(lv_anim_t * a)
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+  80              		.loc 1 74 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 8
+  83              		@ frame_needed = 1, uses_anonymous_args = 0
+  84 0000 80B5     		push	{r7, lr}
+  85              		.cfi_def_cfa_offset 8
+  86              		.cfi_offset 7, -8
+  87              		.cfi_offset 14, -4
+  88 0002 82B0     		sub	sp, sp, #8
+  89              		.cfi_def_cfa_offset 16
+  90 0004 00AF     		add	r7, sp, #0
+  91              		.cfi_def_cfa_register 7
+  92 0006 7860     		str	r0, [r7, #4]
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     memset(a, 0, sizeof(lv_anim_t));
+  93              		.loc 1 75 0
+  94 0008 2422     		movs	r2, #36
+  95 000a 0021     		movs	r1, #0
+  96 000c 7868     		ldr	r0, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 4
+
+
+  97 000e FFF7FEFF 		bl	memset
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a->time    = 500;
+  98              		.loc 1 76 0
+  99 0012 7B68     		ldr	r3, [r7, #4]
+ 100 0014 4FF4FA72 		mov	r2, #500
+ 101 0018 1A83     		strh	r2, [r3, #24]	@ movhi
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a->start   = 0;
+ 102              		.loc 1 77 0
+ 103 001a 7B68     		ldr	r3, [r7, #4]
+ 104 001c 0022     		movs	r2, #0
+ 105 001e 1A61     		str	r2, [r3, #16]
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a->end     = 100;
+ 106              		.loc 1 78 0
+ 107 0020 7B68     		ldr	r3, [r7, #4]
+ 108 0022 6422     		movs	r2, #100
+ 109 0024 5A61     		str	r2, [r3, #20]
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a->path_cb = lv_anim_path_linear;
+ 110              		.loc 1 79 0
+ 111 0026 7B68     		ldr	r3, [r7, #4]
+ 112 0028 024A     		ldr	r2, .L5
+ 113 002a 9A60     		str	r2, [r3, #8]
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 114              		.loc 1 80 0
+ 115 002c 00BF     		nop
+ 116 002e 0837     		adds	r7, r7, #8
+ 117              		.cfi_def_cfa_offset 8
+ 118 0030 BD46     		mov	sp, r7
+ 119              		.cfi_def_cfa_register 13
+ 120              		@ sp needed
+ 121 0032 80BD     		pop	{r7, pc}
+ 122              	.L6:
+ 123              		.align	2
+ 124              	.L5:
+ 125 0034 00000000 		.word	lv_anim_path_linear
+ 126              		.cfi_endproc
+ 127              	.LFE32:
+ 128              		.size	lv_anim_init, .-lv_anim_init
+ 129              		.section	.text.lv_anim_create,"ax",%progbits
+ 130              		.align	2
+ 131              		.global	lv_anim_create
+ 132              		.thumb
+ 133              		.thumb_func
+ 134              		.type	lv_anim_create, %function
+ 135              	lv_anim_create:
+ 136              	.LFB33:
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Create an animation
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a an initialized 'anim_t' variable. Not required after call.
+  84:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+  85:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** void lv_anim_create(lv_anim_t * a)
+  86:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 137              		.loc 1 86 0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 16
+ 140              		@ frame_needed = 1, uses_anonymous_args = 0
+ 141 0000 80B5     		push	{r7, lr}
+ 142              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 5
+
+
+ 143              		.cfi_offset 7, -8
+ 144              		.cfi_offset 14, -4
+ 145 0002 84B0     		sub	sp, sp, #16
+ 146              		.cfi_def_cfa_offset 24
+ 147 0004 00AF     		add	r7, sp, #0
+ 148              		.cfi_def_cfa_register 7
+ 149 0006 7860     		str	r0, [r7, #4]
+  87:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     LV_LOG_TRACE("animation create started")
+  88:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /* Do not let two animations for the  same 'var' with the same 'fp'*/
+  89:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->exec_cb != NULL) lv_anim_del(a->var, a->exec_cb); /*fp == NULL would delete all animation
+ 150              		.loc 1 89 0
+ 151 0008 7B68     		ldr	r3, [r7, #4]
+ 152 000a 5B68     		ldr	r3, [r3, #4]
+ 153 000c 002B     		cmp	r3, #0
+ 154 000e 07D0     		beq	.L8
+ 155              		.loc 1 89 0 is_stmt 0 discriminator 1
+ 156 0010 7B68     		ldr	r3, [r7, #4]
+ 157 0012 1A68     		ldr	r2, [r3]
+ 158 0014 7B68     		ldr	r3, [r7, #4]
+ 159 0016 5B68     		ldr	r3, [r3, #4]
+ 160 0018 1946     		mov	r1, r3
+ 161 001a 1046     		mov	r0, r2
+ 162 001c FFF7FEFF 		bl	lv_anim_del
+ 163              	.L8:
+  90:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  91:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Add the new animation to the animation linked list*/
+  92:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_anim_t * new_anim = lv_ll_ins_head(&LV_GC_ROOT(_lv_anim_ll));
+ 164              		.loc 1 92 0 is_stmt 1
+ 165 0020 1348     		ldr	r0, .L13
+ 166 0022 FFF7FEFF 		bl	lv_ll_ins_head
+ 167 0026 F860     		str	r0, [r7, #12]
+  93:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     LV_ASSERT_MEM(new_anim);
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(new_anim == NULL) return;
+ 168              		.loc 1 94 0
+ 169 0028 FB68     		ldr	r3, [r7, #12]
+ 170 002a 002B     		cmp	r3, #0
+ 171 002c 1CD0     		beq	.L12
+  95:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+  96:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Initialize the animation descriptor*/
+  97:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a->playback_now = 0;
+ 172              		.loc 1 97 0
+ 173 002e 7A68     		ldr	r2, [r7, #4]
+ 174 0030 92F82030 		ldrb	r3, [r2, #32]
+ 175 0034 6FF38203 		bfc	r3, #2, #1
+ 176 0038 82F82030 		strb	r3, [r2, #32]
+  98:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     memcpy(new_anim, a, sizeof(lv_anim_t));
+ 177              		.loc 1 98 0
+ 178 003c 2422     		movs	r2, #36
+ 179 003e 7968     		ldr	r1, [r7, #4]
+ 180 0040 F868     		ldr	r0, [r7, #12]
+ 181 0042 FFF7FEFF 		bl	memcpy
+  99:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 100:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Set the start value*/
+ 101:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(new_anim->exec_cb) new_anim->exec_cb(new_anim->var, new_anim->start);
+ 182              		.loc 1 101 0
+ 183 0046 FB68     		ldr	r3, [r7, #12]
+ 184 0048 5B68     		ldr	r3, [r3, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 6
+
+
+ 185 004a 002B     		cmp	r3, #0
+ 186 004c 08D0     		beq	.L11
+ 187              		.loc 1 101 0 is_stmt 0 discriminator 1
+ 188 004e FB68     		ldr	r3, [r7, #12]
+ 189 0050 5B68     		ldr	r3, [r3, #4]
+ 190 0052 FA68     		ldr	r2, [r7, #12]
+ 191 0054 1068     		ldr	r0, [r2]
+ 192 0056 FA68     		ldr	r2, [r7, #12]
+ 193 0058 1269     		ldr	r2, [r2, #16]
+ 194 005a 12B2     		sxth	r2, r2
+ 195 005c 1146     		mov	r1, r2
+ 196 005e 9847     		blx	r3
+ 197              	.L11:
+ 102:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 103:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /* Creating an animation changed the linked list.
+ 104:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****      * It's important if it happens in a ready callback. (see `anim_task`)*/
+ 105:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     anim_list_changed = true;
+ 198              		.loc 1 105 0 is_stmt 1
+ 199 0060 044B     		ldr	r3, .L13+4
+ 200 0062 0122     		movs	r2, #1
+ 201 0064 1A70     		strb	r2, [r3]
+ 202 0066 00E0     		b	.L7
+ 203              	.L12:
+  94:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 204              		.loc 1 94 0
+ 205 0068 00BF     		nop
+ 206              	.L7:
+ 106:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 107:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     LV_LOG_TRACE("animation created")
+ 108:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 207              		.loc 1 108 0
+ 208 006a 1037     		adds	r7, r7, #16
+ 209              		.cfi_def_cfa_offset 8
+ 210 006c BD46     		mov	sp, r7
+ 211              		.cfi_def_cfa_register 13
+ 212              		@ sp needed
+ 213 006e 80BD     		pop	{r7, pc}
+ 214              	.L14:
+ 215              		.align	2
+ 216              	.L13:
+ 217 0070 00000000 		.word	_lv_anim_ll
+ 218 0074 04000000 		.word	anim_list_changed
+ 219              		.cfi_endproc
+ 220              	.LFE33:
+ 221              		.size	lv_anim_create, .-lv_anim_create
+ 222              		.section	.text.lv_anim_del,"ax",%progbits
+ 223              		.align	2
+ 224              		.global	lv_anim_del
+ 225              		.thumb
+ 226              		.thumb_func
+ 227              		.type	lv_anim_del, %function
+ 228              	lv_anim_del:
+ 229              	.LFB34:
+ 109:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 110:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 111:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Delete an animation of a variable with a given animator function
+ 112:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param var pointer to variable
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 7
+
+
+ 113:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param exec_cb a function pointer which is animating 'var',
+ 114:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *           or NULL to delete all the animations of 'var'
+ 115:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return true: at least 1 animation is deleted, false: no animation is deleted
+ 116:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 117:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** bool lv_anim_del(void * var, lv_anim_exec_xcb_t exec_cb)
+ 118:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 230              		.loc 1 118 0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 24
+ 233              		@ frame_needed = 1, uses_anonymous_args = 0
+ 234 0000 80B5     		push	{r7, lr}
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 7, -8
+ 237              		.cfi_offset 14, -4
+ 238 0002 86B0     		sub	sp, sp, #24
+ 239              		.cfi_def_cfa_offset 32
+ 240 0004 00AF     		add	r7, sp, #0
+ 241              		.cfi_def_cfa_register 7
+ 242 0006 7860     		str	r0, [r7, #4]
+ 243 0008 3960     		str	r1, [r7]
+ 119:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_anim_t * a;
+ 120:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_anim_t * a_next;
+ 121:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     bool del = false;
+ 244              		.loc 1 121 0
+ 245 000a 0023     		movs	r3, #0
+ 246 000c FB74     		strb	r3, [r7, #19]
+ 122:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a        = lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 247              		.loc 1 122 0
+ 248 000e 1648     		ldr	r0, .L21
+ 249 0010 FFF7FEFF 		bl	lv_ll_get_head
+ 250 0014 7861     		str	r0, [r7, #20]
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     while(a != NULL) {
+ 251              		.loc 1 123 0
+ 252 0016 1FE0     		b	.L16
+ 253              	.L19:
+ 124:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ 125:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         a_next = lv_ll_get_next(&LV_GC_ROOT(_lv_anim_ll), a);
+ 254              		.loc 1 125 0
+ 255 0018 7969     		ldr	r1, [r7, #20]
+ 256 001a 1348     		ldr	r0, .L21
+ 257 001c FFF7FEFF 		bl	lv_ll_get_next
+ 258 0020 F860     		str	r0, [r7, #12]
+ 126:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 127:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         if(a->var == var && (a->exec_cb == exec_cb || exec_cb == NULL)) {
+ 259              		.loc 1 127 0
+ 260 0022 7B69     		ldr	r3, [r7, #20]
+ 261 0024 1A68     		ldr	r2, [r3]
+ 262 0026 7B68     		ldr	r3, [r7, #4]
+ 263 0028 9A42     		cmp	r2, r3
+ 264 002a 13D1     		bne	.L17
+ 265              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 266 002c 7B69     		ldr	r3, [r7, #20]
+ 267 002e 5A68     		ldr	r2, [r3, #4]
+ 268 0030 3B68     		ldr	r3, [r7]
+ 269 0032 9A42     		cmp	r2, r3
+ 270 0034 02D0     		beq	.L18
+ 271              		.loc 1 127 0 discriminator 2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 8
+
+
+ 272 0036 3B68     		ldr	r3, [r7]
+ 273 0038 002B     		cmp	r3, #0
+ 274 003a 0BD1     		bne	.L17
+ 275              	.L18:
+ 128:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             lv_ll_rem(&LV_GC_ROOT(_lv_anim_ll), a);
+ 276              		.loc 1 128 0 is_stmt 1
+ 277 003c 7969     		ldr	r1, [r7, #20]
+ 278 003e 0A48     		ldr	r0, .L21
+ 279 0040 FFF7FEFF 		bl	lv_ll_rem
+ 129:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             lv_mem_free(a);
+ 280              		.loc 1 129 0
+ 281 0044 7869     		ldr	r0, [r7, #20]
+ 282 0046 FFF7FEFF 		bl	lv_mem_free
+ 130:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             anim_list_changed = true; /*Read by `anim_task`. It need to know if a delete occurred i
+ 283              		.loc 1 130 0
+ 284 004a 084B     		ldr	r3, .L21+4
+ 285 004c 0122     		movs	r2, #1
+ 286 004e 1A70     		strb	r2, [r3]
+ 131:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                                          the linked list*/
+ 132:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             del = true;
+ 287              		.loc 1 132 0
+ 288 0050 0123     		movs	r3, #1
+ 289 0052 FB74     		strb	r3, [r7, #19]
+ 290              	.L17:
+ 133:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         }
+ 134:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 135:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         a = a_next;
+ 291              		.loc 1 135 0
+ 292 0054 FB68     		ldr	r3, [r7, #12]
+ 293 0056 7B61     		str	r3, [r7, #20]
+ 294              	.L16:
+ 123:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*'a' might be deleted, so get the next object while 'a' is valid*/
+ 295              		.loc 1 123 0
+ 296 0058 7B69     		ldr	r3, [r7, #20]
+ 297 005a 002B     		cmp	r3, #0
+ 298 005c DCD1     		bne	.L19
+ 136:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 137:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 138:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return del;
+ 299              		.loc 1 138 0
+ 300 005e FB7C     		ldrb	r3, [r7, #19]	@ zero_extendqisi2
+ 139:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 301              		.loc 1 139 0
+ 302 0060 1846     		mov	r0, r3
+ 303 0062 1837     		adds	r7, r7, #24
+ 304              		.cfi_def_cfa_offset 8
+ 305 0064 BD46     		mov	sp, r7
+ 306              		.cfi_def_cfa_register 13
+ 307              		@ sp needed
+ 308 0066 80BD     		pop	{r7, pc}
+ 309              	.L22:
+ 310              		.align	2
+ 311              	.L21:
+ 312 0068 00000000 		.word	_lv_anim_ll
+ 313 006c 04000000 		.word	anim_list_changed
+ 314              		.cfi_endproc
+ 315              	.LFE34:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 9
+
+
+ 316              		.size	lv_anim_del, .-lv_anim_del
+ 317              		.section	.text.lv_anim_count_running,"ax",%progbits
+ 318              		.align	2
+ 319              		.global	lv_anim_count_running
+ 320              		.thumb
+ 321              		.thumb_func
+ 322              		.type	lv_anim_count_running, %function
+ 323              	lv_anim_count_running:
+ 324              	.LFB35:
+ 140:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 141:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 142:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Get the number of currently running animations
+ 143:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the number of running animations
+ 144:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 145:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** uint16_t lv_anim_count_running(void)
+ 146:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 325              		.loc 1 146 0
+ 326              		.cfi_startproc
+ 327              		@ args = 0, pretend = 0, frame = 8
+ 328              		@ frame_needed = 1, uses_anonymous_args = 0
+ 329 0000 80B5     		push	{r7, lr}
+ 330              		.cfi_def_cfa_offset 8
+ 331              		.cfi_offset 7, -8
+ 332              		.cfi_offset 14, -4
+ 333 0002 82B0     		sub	sp, sp, #8
+ 334              		.cfi_def_cfa_offset 16
+ 335 0004 00AF     		add	r7, sp, #0
+ 336              		.cfi_def_cfa_register 7
+ 147:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint16_t cnt = 0;
+ 337              		.loc 1 147 0
+ 338 0006 0023     		movs	r3, #0
+ 339 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 148:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_anim_t * a;
+ 149:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     LV_LL_READ(LV_GC_ROOT(_lv_anim_ll), a) cnt++;
+ 340              		.loc 1 149 0
+ 341 000a 0B48     		ldr	r0, .L27
+ 342 000c FFF7FEFF 		bl	lv_ll_get_head
+ 343 0010 3860     		str	r0, [r7]
+ 344 0012 07E0     		b	.L24
+ 345              	.L25:
+ 346              		.loc 1 149 0 is_stmt 0 discriminator 3
+ 347 0014 FB88     		ldrh	r3, [r7, #6]
+ 348 0016 0133     		adds	r3, r3, #1
+ 349 0018 FB80     		strh	r3, [r7, #6]	@ movhi
+ 350 001a 3968     		ldr	r1, [r7]
+ 351 001c 0648     		ldr	r0, .L27
+ 352 001e FFF7FEFF 		bl	lv_ll_get_next
+ 353 0022 3860     		str	r0, [r7]
+ 354              	.L24:
+ 355              		.loc 1 149 0 discriminator 1
+ 356 0024 3B68     		ldr	r3, [r7]
+ 357 0026 002B     		cmp	r3, #0
+ 358 0028 F4D1     		bne	.L25
+ 150:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 151:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return cnt++;
+ 359              		.loc 1 151 0 is_stmt 1
+ 360 002a FB88     		ldrh	r3, [r7, #6]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 10
+
+
+ 361 002c 5A1C     		adds	r2, r3, #1
+ 362 002e FA80     		strh	r2, [r7, #6]	@ movhi
+ 152:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 363              		.loc 1 152 0
+ 364 0030 1846     		mov	r0, r3
+ 365 0032 0837     		adds	r7, r7, #8
+ 366              		.cfi_def_cfa_offset 8
+ 367 0034 BD46     		mov	sp, r7
+ 368              		.cfi_def_cfa_register 13
+ 369              		@ sp needed
+ 370 0036 80BD     		pop	{r7, pc}
+ 371              	.L28:
+ 372              		.align	2
+ 373              	.L27:
+ 374 0038 00000000 		.word	_lv_anim_ll
+ 375              		.cfi_endproc
+ 376              	.LFE35:
+ 377              		.size	lv_anim_count_running, .-lv_anim_count_running
+ 378              		.section	.text.lv_anim_speed_to_time,"ax",%progbits
+ 379              		.align	2
+ 380              		.global	lv_anim_speed_to_time
+ 381              		.thumb
+ 382              		.thumb_func
+ 383              		.type	lv_anim_speed_to_time, %function
+ 384              	lv_anim_speed_to_time:
+ 385              	.LFB36:
+ 153:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 154:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 155:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the time of an animation with a given speed and the start and end values
+ 156:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param speed speed of animation in unit/sec
+ 157:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param start start value of the animation
+ 158:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param end end value of the animation
+ 159:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the required time [ms] for the animation with the given parameters
+ 160:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 161:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** uint16_t lv_anim_speed_to_time(uint16_t speed, lv_anim_value_t start, lv_anim_value_t end)
+ 162:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 386              		.loc 1 162 0
+ 387              		.cfi_startproc
+ 388              		@ args = 0, pretend = 0, frame = 16
+ 389              		@ frame_needed = 1, uses_anonymous_args = 0
+ 390              		@ link register save eliminated.
+ 391 0000 80B4     		push	{r7}
+ 392              		.cfi_def_cfa_offset 4
+ 393              		.cfi_offset 7, -4
+ 394 0002 85B0     		sub	sp, sp, #20
+ 395              		.cfi_def_cfa_offset 24
+ 396 0004 00AF     		add	r7, sp, #0
+ 397              		.cfi_def_cfa_register 7
+ 398 0006 0346     		mov	r3, r0
+ 399 0008 FB80     		strh	r3, [r7, #6]	@ movhi
+ 400 000a 0B46     		mov	r3, r1	@ movhi
+ 401 000c BB80     		strh	r3, [r7, #4]	@ movhi
+ 402 000e 1346     		mov	r3, r2	@ movhi
+ 403 0010 7B80     		strh	r3, [r7, #2]	@ movhi
+ 163:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t d     = LV_MATH_ABS((int32_t)start - end);
+ 404              		.loc 1 163 0
+ 405 0012 B7F90420 		ldrsh	r2, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 11
+
+
+ 406 0016 B7F90230 		ldrsh	r3, [r7, #2]
+ 407 001a D31A     		subs	r3, r2, r3
+ 408 001c 002B     		cmp	r3, #0
+ 409 001e B8BF     		it	lt
+ 410 0020 5B42     		rsblt	r3, r3, #0
+ 411 0022 BB60     		str	r3, [r7, #8]
+ 164:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t time = (int32_t)((int32_t)(d * 1000) / speed);
+ 412              		.loc 1 164 0
+ 413 0024 BB68     		ldr	r3, [r7, #8]
+ 414 0026 4FF47A72 		mov	r2, #1000
+ 415 002a 02FB03F2 		mul	r2, r2, r3
+ 416 002e FB88     		ldrh	r3, [r7, #6]
+ 417 0030 92FBF3F3 		sdiv	r3, r2, r3
+ 418 0034 FB60     		str	r3, [r7, #12]
+ 165:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 166:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(time > UINT16_MAX) time = UINT16_MAX;
+ 419              		.loc 1 166 0
+ 420 0036 FB68     		ldr	r3, [r7, #12]
+ 421 0038 B3F5803F 		cmp	r3, #65536
+ 422 003c 02D3     		bcc	.L30
+ 423              		.loc 1 166 0 is_stmt 0 discriminator 1
+ 424 003e 4FF6FF73 		movw	r3, #65535
+ 425 0042 FB60     		str	r3, [r7, #12]
+ 426              	.L30:
+ 167:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 168:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(time == 0) {
+ 427              		.loc 1 168 0 is_stmt 1
+ 428 0044 FB68     		ldr	r3, [r7, #12]
+ 429 0046 002B     		cmp	r3, #0
+ 430 0048 02D1     		bne	.L31
+ 169:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         time++;
+ 431              		.loc 1 169 0
+ 432 004a FB68     		ldr	r3, [r7, #12]
+ 433 004c 0133     		adds	r3, r3, #1
+ 434 004e FB60     		str	r3, [r7, #12]
+ 435              	.L31:
+ 170:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 171:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 172:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return time;
+ 436              		.loc 1 172 0
+ 437 0050 FB68     		ldr	r3, [r7, #12]
+ 438 0052 9BB2     		uxth	r3, r3
+ 173:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 439              		.loc 1 173 0
+ 440 0054 1846     		mov	r0, r3
+ 441 0056 1437     		adds	r7, r7, #20
+ 442              		.cfi_def_cfa_offset 4
+ 443 0058 BD46     		mov	sp, r7
+ 444              		.cfi_def_cfa_register 13
+ 445              		@ sp needed
+ 446 005a 5DF8047B 		ldr	r7, [sp], #4
+ 447              		.cfi_restore 7
+ 448              		.cfi_def_cfa_offset 0
+ 449 005e 7047     		bx	lr
+ 450              		.cfi_endproc
+ 451              	.LFE36:
+ 452              		.size	lv_anim_speed_to_time, .-lv_anim_speed_to_time
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 12
+
+
+ 453              		.section	.text.lv_anim_path_linear,"ax",%progbits
+ 454              		.align	2
+ 455              		.global	lv_anim_path_linear
+ 456              		.thumb
+ 457              		.thumb_func
+ 458              		.type	lv_anim_path_linear, %function
+ 459              	lv_anim_path_linear:
+ 460              	.LFB37:
+ 174:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 175:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 176:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation applying linear characteristic
+ 177:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 178:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 179:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 180:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_linear(const lv_anim_t * a)
+ 181:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 461              		.loc 1 181 0
+ 462              		.cfi_startproc
+ 463              		@ args = 0, pretend = 0, frame = 16
+ 464              		@ frame_needed = 1, uses_anonymous_args = 0
+ 465              		@ link register save eliminated.
+ 466 0000 80B4     		push	{r7}
+ 467              		.cfi_def_cfa_offset 4
+ 468              		.cfi_offset 7, -4
+ 469 0002 85B0     		sub	sp, sp, #20
+ 470              		.cfi_def_cfa_offset 24
+ 471 0004 00AF     		add	r7, sp, #0
+ 472              		.cfi_def_cfa_register 7
+ 473 0006 7860     		str	r0, [r7, #4]
+ 182:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 183:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t step;
+ 184:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time) {
+ 474              		.loc 1 184 0
+ 475 0008 7B68     		ldr	r3, [r7, #4]
+ 476 000a 1B8B     		ldrh	r3, [r3, #24]
+ 477 000c 1A46     		mov	r2, r3
+ 478 000e 7B68     		ldr	r3, [r7, #4]
+ 479 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 480 0014 9A42     		cmp	r2, r3
+ 481 0016 03D1     		bne	.L34
+ 185:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         step = LV_ANIM_RESOLUTION; /*Use the last value if the time fully elapsed*/
+ 482              		.loc 1 185 0
+ 483 0018 4FF48063 		mov	r3, #1024
+ 484 001c FB60     		str	r3, [r7, #12]
+ 485 001e 08E0     		b	.L35
+ 486              	.L34:
+ 186:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     } else {
+ 187:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         step = ((int32_t)a->act_time * LV_ANIM_RESOLUTION) / a->time;
+ 487              		.loc 1 187 0
+ 488 0020 7B68     		ldr	r3, [r7, #4]
+ 489 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 490 0026 9B02     		lsls	r3, r3, #10
+ 491 0028 7A68     		ldr	r2, [r7, #4]
+ 492 002a 128B     		ldrh	r2, [r2, #24]
+ 493 002c 93FBF2F3 		sdiv	r3, r3, r2
+ 494 0030 FB60     		str	r3, [r7, #12]
+ 495              	.L35:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 13
+
+
+ 188:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 189:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 190:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /* Get the new value which will be proportional to `step`
+ 191:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****      * and the `start` and `end` values*/
+ 192:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 193:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * (a->end - a->start);
+ 496              		.loc 1 193 0
+ 497 0032 7B68     		ldr	r3, [r7, #4]
+ 498 0034 5A69     		ldr	r2, [r3, #20]
+ 499 0036 7B68     		ldr	r3, [r7, #4]
+ 500 0038 1B69     		ldr	r3, [r3, #16]
+ 501 003a D31A     		subs	r3, r2, r3
+ 502 003c FA68     		ldr	r2, [r7, #12]
+ 503 003e 02FB03F3 		mul	r3, r2, r3
+ 504 0042 BB60     		str	r3, [r7, #8]
+ 194:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> LV_ANIM_RES_SHIFT;
+ 505              		.loc 1 194 0
+ 506 0044 BB68     		ldr	r3, [r7, #8]
+ 507 0046 9B12     		asrs	r3, r3, #10
+ 508 0048 BB60     		str	r3, [r7, #8]
+ 195:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value += a->start;
+ 509              		.loc 1 195 0
+ 510 004a 7B68     		ldr	r3, [r7, #4]
+ 511 004c 1B69     		ldr	r3, [r3, #16]
+ 512 004e BA68     		ldr	r2, [r7, #8]
+ 513 0050 1344     		add	r3, r3, r2
+ 514 0052 BB60     		str	r3, [r7, #8]
+ 196:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 197:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 515              		.loc 1 197 0
+ 516 0054 BB68     		ldr	r3, [r7, #8]
+ 517 0056 1BB2     		sxth	r3, r3
+ 198:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 518              		.loc 1 198 0
+ 519 0058 1846     		mov	r0, r3
+ 520 005a 1437     		adds	r7, r7, #20
+ 521              		.cfi_def_cfa_offset 4
+ 522 005c BD46     		mov	sp, r7
+ 523              		.cfi_def_cfa_register 13
+ 524              		@ sp needed
+ 525 005e 5DF8047B 		ldr	r7, [sp], #4
+ 526              		.cfi_restore 7
+ 527              		.cfi_def_cfa_offset 0
+ 528 0062 7047     		bx	lr
+ 529              		.cfi_endproc
+ 530              	.LFE37:
+ 531              		.size	lv_anim_path_linear, .-lv_anim_path_linear
+ 532              		.section	.text.lv_anim_path_ease_in,"ax",%progbits
+ 533              		.align	2
+ 534              		.global	lv_anim_path_ease_in
+ 535              		.thumb
+ 536              		.thumb_func
+ 537              		.type	lv_anim_path_ease_in, %function
+ 538              	lv_anim_path_ease_in:
+ 539              	.LFB38:
+ 199:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 200:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 14
+
+
+ 201:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation slowing down the start phase
+ 202:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 203:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 204:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 205:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_ease_in(const lv_anim_t * a)
+ 206:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 540              		.loc 1 206 0
+ 541              		.cfi_startproc
+ 542              		@ args = 0, pretend = 0, frame = 24
+ 543              		@ frame_needed = 1, uses_anonymous_args = 0
+ 544 0000 80B5     		push	{r7, lr}
+ 545              		.cfi_def_cfa_offset 8
+ 546              		.cfi_offset 7, -8
+ 547              		.cfi_offset 14, -4
+ 548 0002 88B0     		sub	sp, sp, #32
+ 549              		.cfi_def_cfa_offset 40
+ 550 0004 02AF     		add	r7, sp, #8
+ 551              		.cfi_def_cfa 7, 32
+ 552 0006 7860     		str	r0, [r7, #4]
+ 207:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 208:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t t;
+ 209:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time)
+ 553              		.loc 1 209 0
+ 554 0008 7B68     		ldr	r3, [r7, #4]
+ 555 000a 1B8B     		ldrh	r3, [r3, #24]
+ 556 000c 1A46     		mov	r2, r3
+ 557 000e 7B68     		ldr	r3, [r7, #4]
+ 558 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 559 0014 9A42     		cmp	r2, r3
+ 560 0016 03D1     		bne	.L38
+ 210:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = 1024;
+ 561              		.loc 1 210 0
+ 562 0018 4FF48063 		mov	r3, #1024
+ 563 001c 7B61     		str	r3, [r7, #20]
+ 564 001e 08E0     		b	.L39
+ 565              	.L38:
+ 211:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 212:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
+ 566              		.loc 1 212 0
+ 567 0020 7B68     		ldr	r3, [r7, #4]
+ 568 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 569 0026 9B02     		lsls	r3, r3, #10
+ 570 0028 7A68     		ldr	r2, [r7, #4]
+ 571 002a 128B     		ldrh	r2, [r2, #24]
+ 572 002c B3FBF2F3 		udiv	r3, r3, r2
+ 573 0030 7B61     		str	r3, [r7, #20]
+ 574              	.L39:
+ 213:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 214:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1, 1, 1024);
+ 575              		.loc 1 214 0
+ 576 0032 4FF48063 		mov	r3, #1024
+ 577 0036 0093     		str	r3, [sp]
+ 578 0038 0123     		movs	r3, #1
+ 579 003a 0122     		movs	r2, #1
+ 580 003c 0021     		movs	r1, #0
+ 581 003e 7869     		ldr	r0, [r7, #20]
+ 582 0040 FFF7FEFF 		bl	lv_bezier3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 15
+
+
+ 583 0044 3861     		str	r0, [r7, #16]
+ 215:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 216:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 217:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * (a->end - a->start);
+ 584              		.loc 1 217 0
+ 585 0046 7B68     		ldr	r3, [r7, #4]
+ 586 0048 5A69     		ldr	r2, [r3, #20]
+ 587 004a 7B68     		ldr	r3, [r7, #4]
+ 588 004c 1B69     		ldr	r3, [r3, #16]
+ 589 004e D31A     		subs	r3, r2, r3
+ 590 0050 3A69     		ldr	r2, [r7, #16]
+ 591 0052 02FB03F3 		mul	r3, r2, r3
+ 592 0056 FB60     		str	r3, [r7, #12]
+ 218:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> 10;
+ 593              		.loc 1 218 0
+ 594 0058 FB68     		ldr	r3, [r7, #12]
+ 595 005a 9B12     		asrs	r3, r3, #10
+ 596 005c FB60     		str	r3, [r7, #12]
+ 219:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value += a->start;
+ 597              		.loc 1 219 0
+ 598 005e 7B68     		ldr	r3, [r7, #4]
+ 599 0060 1B69     		ldr	r3, [r3, #16]
+ 600 0062 FA68     		ldr	r2, [r7, #12]
+ 601 0064 1344     		add	r3, r3, r2
+ 602 0066 FB60     		str	r3, [r7, #12]
+ 220:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 221:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 603              		.loc 1 221 0
+ 604 0068 FB68     		ldr	r3, [r7, #12]
+ 605 006a 1BB2     		sxth	r3, r3
+ 222:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 606              		.loc 1 222 0
+ 607 006c 1846     		mov	r0, r3
+ 608 006e 1837     		adds	r7, r7, #24
+ 609              		.cfi_def_cfa_offset 8
+ 610 0070 BD46     		mov	sp, r7
+ 611              		.cfi_def_cfa_register 13
+ 612              		@ sp needed
+ 613 0072 80BD     		pop	{r7, pc}
+ 614              		.cfi_endproc
+ 615              	.LFE38:
+ 616              		.size	lv_anim_path_ease_in, .-lv_anim_path_ease_in
+ 617              		.section	.text.lv_anim_path_ease_out,"ax",%progbits
+ 618              		.align	2
+ 619              		.global	lv_anim_path_ease_out
+ 620              		.thumb
+ 621              		.thumb_func
+ 622              		.type	lv_anim_path_ease_out, %function
+ 623              	lv_anim_path_ease_out:
+ 624              	.LFB39:
+ 223:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 224:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 225:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation slowing down the end phase
+ 226:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 227:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 228:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 229:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_ease_out(const lv_anim_t * a)
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 16
+
+
+ 230:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 625              		.loc 1 230 0
+ 626              		.cfi_startproc
+ 627              		@ args = 0, pretend = 0, frame = 24
+ 628              		@ frame_needed = 1, uses_anonymous_args = 0
+ 629 0000 80B5     		push	{r7, lr}
+ 630              		.cfi_def_cfa_offset 8
+ 631              		.cfi_offset 7, -8
+ 632              		.cfi_offset 14, -4
+ 633 0002 88B0     		sub	sp, sp, #32
+ 634              		.cfi_def_cfa_offset 40
+ 635 0004 02AF     		add	r7, sp, #8
+ 636              		.cfi_def_cfa 7, 32
+ 637 0006 7860     		str	r0, [r7, #4]
+ 231:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 232:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 233:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t t;
+ 234:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time)
+ 638              		.loc 1 234 0
+ 639 0008 7B68     		ldr	r3, [r7, #4]
+ 640 000a 1B8B     		ldrh	r3, [r3, #24]
+ 641 000c 1A46     		mov	r2, r3
+ 642 000e 7B68     		ldr	r3, [r7, #4]
+ 643 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 644 0014 9A42     		cmp	r2, r3
+ 645 0016 03D1     		bne	.L42
+ 235:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = 1024;
+ 646              		.loc 1 235 0
+ 647 0018 4FF48063 		mov	r3, #1024
+ 648 001c 7B61     		str	r3, [r7, #20]
+ 649 001e 08E0     		b	.L43
+ 650              	.L42:
+ 236:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 237:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
+ 651              		.loc 1 237 0
+ 652 0020 7B68     		ldr	r3, [r7, #4]
+ 653 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 654 0026 9B02     		lsls	r3, r3, #10
+ 655 0028 7A68     		ldr	r2, [r7, #4]
+ 656 002a 128B     		ldrh	r2, [r2, #24]
+ 657 002c B3FBF2F3 		udiv	r3, r3, r2
+ 658 0030 7B61     		str	r3, [r7, #20]
+ 659              	.L43:
+ 238:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 239:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 1023, 1023, 1024);
+ 660              		.loc 1 239 0
+ 661 0032 4FF48063 		mov	r3, #1024
+ 662 0036 0093     		str	r3, [sp]
+ 663 0038 40F2FF33 		movw	r3, #1023
+ 664 003c 40F2FF32 		movw	r2, #1023
+ 665 0040 0021     		movs	r1, #0
+ 666 0042 7869     		ldr	r0, [r7, #20]
+ 667 0044 FFF7FEFF 		bl	lv_bezier3
+ 668 0048 3861     		str	r0, [r7, #16]
+ 240:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 241:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 242:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * (a->end - a->start);
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 17
+
+
+ 669              		.loc 1 242 0
+ 670 004a 7B68     		ldr	r3, [r7, #4]
+ 671 004c 5A69     		ldr	r2, [r3, #20]
+ 672 004e 7B68     		ldr	r3, [r7, #4]
+ 673 0050 1B69     		ldr	r3, [r3, #16]
+ 674 0052 D31A     		subs	r3, r2, r3
+ 675 0054 3A69     		ldr	r2, [r7, #16]
+ 676 0056 02FB03F3 		mul	r3, r2, r3
+ 677 005a FB60     		str	r3, [r7, #12]
+ 243:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> 10;
+ 678              		.loc 1 243 0
+ 679 005c FB68     		ldr	r3, [r7, #12]
+ 680 005e 9B12     		asrs	r3, r3, #10
+ 681 0060 FB60     		str	r3, [r7, #12]
+ 244:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value += a->start;
+ 682              		.loc 1 244 0
+ 683 0062 7B68     		ldr	r3, [r7, #4]
+ 684 0064 1B69     		ldr	r3, [r3, #16]
+ 685 0066 FA68     		ldr	r2, [r7, #12]
+ 686 0068 1344     		add	r3, r3, r2
+ 687 006a FB60     		str	r3, [r7, #12]
+ 245:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 246:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 688              		.loc 1 246 0
+ 689 006c FB68     		ldr	r3, [r7, #12]
+ 690 006e 1BB2     		sxth	r3, r3
+ 247:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 691              		.loc 1 247 0
+ 692 0070 1846     		mov	r0, r3
+ 693 0072 1837     		adds	r7, r7, #24
+ 694              		.cfi_def_cfa_offset 8
+ 695 0074 BD46     		mov	sp, r7
+ 696              		.cfi_def_cfa_register 13
+ 697              		@ sp needed
+ 698 0076 80BD     		pop	{r7, pc}
+ 699              		.cfi_endproc
+ 700              	.LFE39:
+ 701              		.size	lv_anim_path_ease_out, .-lv_anim_path_ease_out
+ 702              		.section	.text.lv_anim_path_ease_in_out,"ax",%progbits
+ 703              		.align	2
+ 704              		.global	lv_anim_path_ease_in_out
+ 705              		.thumb
+ 706              		.thumb_func
+ 707              		.type	lv_anim_path_ease_in_out, %function
+ 708              	lv_anim_path_ease_in_out:
+ 709              	.LFB40:
+ 248:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 249:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 250:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation applying an "S" characteristic (cosine)
+ 251:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 252:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 253:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 254:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_ease_in_out(const lv_anim_t * a)
+ 255:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 710              		.loc 1 255 0
+ 711              		.cfi_startproc
+ 712              		@ args = 0, pretend = 0, frame = 24
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 18
+
+
+ 713              		@ frame_needed = 1, uses_anonymous_args = 0
+ 714 0000 80B5     		push	{r7, lr}
+ 715              		.cfi_def_cfa_offset 8
+ 716              		.cfi_offset 7, -8
+ 717              		.cfi_offset 14, -4
+ 718 0002 88B0     		sub	sp, sp, #32
+ 719              		.cfi_def_cfa_offset 40
+ 720 0004 02AF     		add	r7, sp, #8
+ 721              		.cfi_def_cfa 7, 32
+ 722 0006 7860     		str	r0, [r7, #4]
+ 256:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 257:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 258:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t t;
+ 259:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time)
+ 723              		.loc 1 259 0
+ 724 0008 7B68     		ldr	r3, [r7, #4]
+ 725 000a 1B8B     		ldrh	r3, [r3, #24]
+ 726 000c 1A46     		mov	r2, r3
+ 727 000e 7B68     		ldr	r3, [r7, #4]
+ 728 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 729 0014 9A42     		cmp	r2, r3
+ 730 0016 03D1     		bne	.L46
+ 260:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = 1024;
+ 731              		.loc 1 260 0
+ 732 0018 4FF48063 		mov	r3, #1024
+ 733 001c 7B61     		str	r3, [r7, #20]
+ 734 001e 08E0     		b	.L47
+ 735              	.L46:
+ 261:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 262:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
+ 736              		.loc 1 262 0
+ 737 0020 7B68     		ldr	r3, [r7, #4]
+ 738 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 739 0026 9B02     		lsls	r3, r3, #10
+ 740 0028 7A68     		ldr	r2, [r7, #4]
+ 741 002a 128B     		ldrh	r2, [r2, #24]
+ 742 002c B3FBF2F3 		udiv	r3, r3, r2
+ 743 0030 7B61     		str	r3, [r7, #20]
+ 744              	.L47:
+ 263:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 264:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 100, 924, 1024);
+ 745              		.loc 1 264 0
+ 746 0032 4FF48063 		mov	r3, #1024
+ 747 0036 0093     		str	r3, [sp]
+ 748 0038 4FF46773 		mov	r3, #924
+ 749 003c 6422     		movs	r2, #100
+ 750 003e 0021     		movs	r1, #0
+ 751 0040 7869     		ldr	r0, [r7, #20]
+ 752 0042 FFF7FEFF 		bl	lv_bezier3
+ 753 0046 3861     		str	r0, [r7, #16]
+ 265:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 266:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 267:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * (a->end - a->start);
+ 754              		.loc 1 267 0
+ 755 0048 7B68     		ldr	r3, [r7, #4]
+ 756 004a 5A69     		ldr	r2, [r3, #20]
+ 757 004c 7B68     		ldr	r3, [r7, #4]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 19
+
+
+ 758 004e 1B69     		ldr	r3, [r3, #16]
+ 759 0050 D31A     		subs	r3, r2, r3
+ 760 0052 3A69     		ldr	r2, [r7, #16]
+ 761 0054 02FB03F3 		mul	r3, r2, r3
+ 762 0058 FB60     		str	r3, [r7, #12]
+ 268:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> 10;
+ 763              		.loc 1 268 0
+ 764 005a FB68     		ldr	r3, [r7, #12]
+ 765 005c 9B12     		asrs	r3, r3, #10
+ 766 005e FB60     		str	r3, [r7, #12]
+ 269:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value += a->start;
+ 767              		.loc 1 269 0
+ 768 0060 7B68     		ldr	r3, [r7, #4]
+ 769 0062 1B69     		ldr	r3, [r3, #16]
+ 770 0064 FA68     		ldr	r2, [r7, #12]
+ 771 0066 1344     		add	r3, r3, r2
+ 772 0068 FB60     		str	r3, [r7, #12]
+ 270:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 271:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 773              		.loc 1 271 0
+ 774 006a FB68     		ldr	r3, [r7, #12]
+ 775 006c 1BB2     		sxth	r3, r3
+ 272:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 776              		.loc 1 272 0
+ 777 006e 1846     		mov	r0, r3
+ 778 0070 1837     		adds	r7, r7, #24
+ 779              		.cfi_def_cfa_offset 8
+ 780 0072 BD46     		mov	sp, r7
+ 781              		.cfi_def_cfa_register 13
+ 782              		@ sp needed
+ 783 0074 80BD     		pop	{r7, pc}
+ 784              		.cfi_endproc
+ 785              	.LFE40:
+ 786              		.size	lv_anim_path_ease_in_out, .-lv_anim_path_ease_in_out
+ 787 0076 00BF     		.section	.text.lv_anim_path_overshoot,"ax",%progbits
+ 788              		.align	2
+ 789              		.global	lv_anim_path_overshoot
+ 790              		.thumb
+ 791              		.thumb_func
+ 792              		.type	lv_anim_path_overshoot, %function
+ 793              	lv_anim_path_overshoot:
+ 794              	.LFB41:
+ 273:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 274:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 275:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation with overshoot at the end
+ 276:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 277:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 278:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 279:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_overshoot(const lv_anim_t * a)
+ 280:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 795              		.loc 1 280 0
+ 796              		.cfi_startproc
+ 797              		@ args = 0, pretend = 0, frame = 24
+ 798              		@ frame_needed = 1, uses_anonymous_args = 0
+ 799 0000 80B5     		push	{r7, lr}
+ 800              		.cfi_def_cfa_offset 8
+ 801              		.cfi_offset 7, -8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 20
+
+
+ 802              		.cfi_offset 14, -4
+ 803 0002 88B0     		sub	sp, sp, #32
+ 804              		.cfi_def_cfa_offset 40
+ 805 0004 02AF     		add	r7, sp, #8
+ 806              		.cfi_def_cfa 7, 32
+ 807 0006 7860     		str	r0, [r7, #4]
+ 281:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 282:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 283:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t t;
+ 284:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time)
+ 808              		.loc 1 284 0
+ 809 0008 7B68     		ldr	r3, [r7, #4]
+ 810 000a 1B8B     		ldrh	r3, [r3, #24]
+ 811 000c 1A46     		mov	r2, r3
+ 812 000e 7B68     		ldr	r3, [r7, #4]
+ 813 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 814 0014 9A42     		cmp	r2, r3
+ 815 0016 03D1     		bne	.L50
+ 285:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = 1024;
+ 816              		.loc 1 285 0
+ 817 0018 4FF48063 		mov	r3, #1024
+ 818 001c 7B61     		str	r3, [r7, #20]
+ 819 001e 08E0     		b	.L51
+ 820              	.L50:
+ 286:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 287:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
+ 821              		.loc 1 287 0
+ 822 0020 7B68     		ldr	r3, [r7, #4]
+ 823 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 824 0026 9B02     		lsls	r3, r3, #10
+ 825 0028 7A68     		ldr	r2, [r7, #4]
+ 826 002a 128B     		ldrh	r2, [r2, #24]
+ 827 002c B3FBF2F3 		udiv	r3, r3, r2
+ 828 0030 7B61     		str	r3, [r7, #20]
+ 829              	.L51:
+ 288:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 289:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 0, 600, 1300, 1024);
+ 830              		.loc 1 289 0
+ 831 0032 4FF48063 		mov	r3, #1024
+ 832 0036 0093     		str	r3, [sp]
+ 833 0038 40F21453 		movw	r3, #1300
+ 834 003c 4FF41672 		mov	r2, #600
+ 835 0040 0021     		movs	r1, #0
+ 836 0042 7869     		ldr	r0, [r7, #20]
+ 837 0044 FFF7FEFF 		bl	lv_bezier3
+ 838 0048 3861     		str	r0, [r7, #16]
+ 290:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 291:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 292:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * (a->end - a->start);
+ 839              		.loc 1 292 0
+ 840 004a 7B68     		ldr	r3, [r7, #4]
+ 841 004c 5A69     		ldr	r2, [r3, #20]
+ 842 004e 7B68     		ldr	r3, [r7, #4]
+ 843 0050 1B69     		ldr	r3, [r3, #16]
+ 844 0052 D31A     		subs	r3, r2, r3
+ 845 0054 3A69     		ldr	r2, [r7, #16]
+ 846 0056 02FB03F3 		mul	r3, r2, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 21
+
+
+ 847 005a FB60     		str	r3, [r7, #12]
+ 293:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> 10;
+ 848              		.loc 1 293 0
+ 849 005c FB68     		ldr	r3, [r7, #12]
+ 850 005e 9B12     		asrs	r3, r3, #10
+ 851 0060 FB60     		str	r3, [r7, #12]
+ 294:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value += a->start;
+ 852              		.loc 1 294 0
+ 853 0062 7B68     		ldr	r3, [r7, #4]
+ 854 0064 1B69     		ldr	r3, [r3, #16]
+ 855 0066 FA68     		ldr	r2, [r7, #12]
+ 856 0068 1344     		add	r3, r3, r2
+ 857 006a FB60     		str	r3, [r7, #12]
+ 295:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 296:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 858              		.loc 1 296 0
+ 859 006c FB68     		ldr	r3, [r7, #12]
+ 860 006e 1BB2     		sxth	r3, r3
+ 297:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 861              		.loc 1 297 0
+ 862 0070 1846     		mov	r0, r3
+ 863 0072 1837     		adds	r7, r7, #24
+ 864              		.cfi_def_cfa_offset 8
+ 865 0074 BD46     		mov	sp, r7
+ 866              		.cfi_def_cfa_register 13
+ 867              		@ sp needed
+ 868 0076 80BD     		pop	{r7, pc}
+ 869              		.cfi_endproc
+ 870              	.LFE41:
+ 871              		.size	lv_anim_path_overshoot, .-lv_anim_path_overshoot
+ 872              		.section	.text.lv_anim_path_bounce,"ax",%progbits
+ 873              		.align	2
+ 874              		.global	lv_anim_path_bounce
+ 875              		.thumb
+ 876              		.thumb_func
+ 877              		.type	lv_anim_path_bounce, %function
+ 878              	lv_anim_path_bounce:
+ 879              	.LFB42:
+ 298:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 299:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 300:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation with 3 bounces
+ 301:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 302:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 303:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 304:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_bounce(const lv_anim_t * a)
+ 305:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 880              		.loc 1 305 0
+ 881              		.cfi_startproc
+ 882              		@ args = 0, pretend = 0, frame = 24
+ 883              		@ frame_needed = 1, uses_anonymous_args = 0
+ 884 0000 80B5     		push	{r7, lr}
+ 885              		.cfi_def_cfa_offset 8
+ 886              		.cfi_offset 7, -8
+ 887              		.cfi_offset 14, -4
+ 888 0002 88B0     		sub	sp, sp, #32
+ 889              		.cfi_def_cfa_offset 40
+ 890 0004 02AF     		add	r7, sp, #8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 22
+
+
+ 891              		.cfi_def_cfa 7, 32
+ 892 0006 7860     		str	r0, [r7, #4]
+ 306:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Calculate the current step*/
+ 307:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t t;
+ 308:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->time == a->act_time)
+ 893              		.loc 1 308 0
+ 894 0008 7B68     		ldr	r3, [r7, #4]
+ 895 000a 1B8B     		ldrh	r3, [r3, #24]
+ 896 000c 1A46     		mov	r2, r3
+ 897 000e 7B68     		ldr	r3, [r7, #4]
+ 898 0010 B3F91A30 		ldrsh	r3, [r3, #26]
+ 899 0014 9A42     		cmp	r2, r3
+ 900 0016 03D1     		bne	.L54
+ 309:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = 1024;
+ 901              		.loc 1 309 0
+ 902 0018 4FF48063 		mov	r3, #1024
+ 903 001c 7B61     		str	r3, [r7, #20]
+ 904 001e 08E0     		b	.L55
+ 905              	.L54:
+ 310:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 311:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (uint32_t)((uint32_t)a->act_time * 1024) / a->time;
+ 906              		.loc 1 311 0
+ 907 0020 7B68     		ldr	r3, [r7, #4]
+ 908 0022 B3F91A30 		ldrsh	r3, [r3, #26]
+ 909 0026 9B02     		lsls	r3, r3, #10
+ 910 0028 7A68     		ldr	r2, [r7, #4]
+ 911 002a 128B     		ldrh	r2, [r2, #24]
+ 912 002c B3FBF2F3 		udiv	r3, r3, r2
+ 913 0030 7B61     		str	r3, [r7, #20]
+ 914              	.L55:
+ 312:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 313:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t diff = (a->end - a->start);
+ 915              		.loc 1 313 0
+ 916 0032 7B68     		ldr	r3, [r7, #4]
+ 917 0034 5A69     		ldr	r2, [r3, #20]
+ 918 0036 7B68     		ldr	r3, [r7, #4]
+ 919 0038 1B69     		ldr	r3, [r3, #16]
+ 920 003a D31A     		subs	r3, r2, r3
+ 921 003c 3B61     		str	r3, [r7, #16]
+ 314:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 315:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*3 bounces has 5 parts: 3 down and 2 up. One part is t / 5 long*/
+ 316:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 317:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(t < 408) {
+ 922              		.loc 1 317 0
+ 923 003e 7B69     		ldr	r3, [r7, #20]
+ 924 0040 B3F5CC7F 		cmp	r3, #408
+ 925 0044 07D2     		bcs	.L56
+ 318:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Go down*/
+ 319:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t = (t * 2500) >> 10; /*[0..1024] range*/
+ 926              		.loc 1 319 0
+ 927 0046 7B69     		ldr	r3, [r7, #20]
+ 928 0048 40F6C412 		movw	r2, #2500
+ 929 004c 02FB03F3 		mul	r3, r2, r3
+ 930 0050 9B0A     		lsrs	r3, r3, #10
+ 931 0052 7B61     		str	r3, [r7, #20]
+ 932 0054 6EE0     		b	.L57
+ 933              	.L56:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 23
+
+
+ 320:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     } else if(t >= 408 && t < 614) {
+ 934              		.loc 1 320 0
+ 935 0056 7B69     		ldr	r3, [r7, #20]
+ 936 0058 B3F5CC7F 		cmp	r3, #408
+ 937 005c 19D3     		bcc	.L58
+ 938              		.loc 1 320 0 is_stmt 0 discriminator 1
+ 939 005e 7B69     		ldr	r3, [r7, #20]
+ 940 0060 40F26522 		movw	r2, #613
+ 941 0064 9342     		cmp	r3, r2
+ 942 0066 14D8     		bhi	.L58
+ 321:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*First bounce back*/
+ 322:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t -= 408;
+ 943              		.loc 1 322 0 is_stmt 1
+ 944 0068 7B69     		ldr	r3, [r7, #20]
+ 945 006a A3F5CC73 		sub	r3, r3, #408
+ 946 006e 7B61     		str	r3, [r7, #20]
+ 323:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 947              		.loc 1 323 0
+ 948 0070 7A69     		ldr	r2, [r7, #20]
+ 949 0072 1346     		mov	r3, r2
+ 950 0074 9B00     		lsls	r3, r3, #2
+ 951 0076 1344     		add	r3, r3, r2
+ 952 0078 7B61     		str	r3, [r7, #20]
+ 324:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = 1024 - t;
+ 953              		.loc 1 324 0
+ 954 007a 7B69     		ldr	r3, [r7, #20]
+ 955 007c C3F58063 		rsb	r3, r3, #1024
+ 956 0080 7B61     		str	r3, [r7, #20]
+ 325:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         diff = diff / 6;
+ 957              		.loc 1 325 0
+ 958 0082 3B69     		ldr	r3, [r7, #16]
+ 959 0084 3E4A     		ldr	r2, .L65
+ 960 0086 82FB0312 		smull	r1, r2, r2, r3
+ 961 008a DB17     		asrs	r3, r3, #31
+ 962 008c D31A     		subs	r3, r2, r3
+ 963 008e 3B61     		str	r3, [r7, #16]
+ 964 0090 50E0     		b	.L57
+ 965              	.L58:
+ 326:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     } else if(t >= 614 && t < 819) {
+ 966              		.loc 1 326 0
+ 967 0092 7B69     		ldr	r3, [r7, #20]
+ 968 0094 40F26522 		movw	r2, #613
+ 969 0098 9342     		cmp	r3, r2
+ 970 009a 15D9     		bls	.L59
+ 971              		.loc 1 326 0 is_stmt 0 discriminator 1
+ 972 009c 7B69     		ldr	r3, [r7, #20]
+ 973 009e 40F23232 		movw	r2, #818
+ 974 00a2 9342     		cmp	r3, r2
+ 975 00a4 10D8     		bhi	.L59
+ 327:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Fall back*/
+ 328:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t -= 614;
+ 976              		.loc 1 328 0 is_stmt 1
+ 977 00a6 7B69     		ldr	r3, [r7, #20]
+ 978 00a8 A3F26623 		subw	r3, r3, #614
+ 979 00ac 7B61     		str	r3, [r7, #20]
+ 329:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = t * 5; /*to [0..1024] range*/
+ 980              		.loc 1 329 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 24
+
+
+ 981 00ae 7A69     		ldr	r2, [r7, #20]
+ 982 00b0 1346     		mov	r3, r2
+ 983 00b2 9B00     		lsls	r3, r3, #2
+ 984 00b4 1344     		add	r3, r3, r2
+ 985 00b6 7B61     		str	r3, [r7, #20]
+ 330:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         diff = diff / 6;
+ 986              		.loc 1 330 0
+ 987 00b8 3B69     		ldr	r3, [r7, #16]
+ 988 00ba 314A     		ldr	r2, .L65
+ 989 00bc 82FB0312 		smull	r1, r2, r2, r3
+ 990 00c0 DB17     		asrs	r3, r3, #31
+ 991 00c2 D31A     		subs	r3, r2, r3
+ 992 00c4 3B61     		str	r3, [r7, #16]
+ 993 00c6 35E0     		b	.L57
+ 994              	.L59:
+ 331:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     } else if(t >= 819 && t < 921) {
+ 995              		.loc 1 331 0
+ 996 00c8 7B69     		ldr	r3, [r7, #20]
+ 997 00ca 40F23232 		movw	r2, #818
+ 998 00ce 9342     		cmp	r3, r2
+ 999 00d0 18D9     		bls	.L60
+ 1000              		.loc 1 331 0 is_stmt 0 discriminator 1
+ 1001 00d2 7B69     		ldr	r3, [r7, #20]
+ 1002 00d4 B3F5667F 		cmp	r3, #920
+ 1003 00d8 14D8     		bhi	.L60
+ 332:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Second bounce back*/
+ 333:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t -= 819;
+ 1004              		.loc 1 333 0 is_stmt 1
+ 1005 00da 7B69     		ldr	r3, [r7, #20]
+ 1006 00dc A3F23333 		subw	r3, r3, #819
+ 1007 00e0 7B61     		str	r3, [r7, #20]
+ 334:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1008              		.loc 1 334 0
+ 1009 00e2 7A69     		ldr	r2, [r7, #20]
+ 1010 00e4 1346     		mov	r3, r2
+ 1011 00e6 9B00     		lsls	r3, r3, #2
+ 1012 00e8 1344     		add	r3, r3, r2
+ 1013 00ea 5B00     		lsls	r3, r3, #1
+ 1014 00ec 7B61     		str	r3, [r7, #20]
+ 335:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = 1024 - t;
+ 1015              		.loc 1 335 0
+ 1016 00ee 7B69     		ldr	r3, [r7, #20]
+ 1017 00f0 C3F58063 		rsb	r3, r3, #1024
+ 1018 00f4 7B61     		str	r3, [r7, #20]
+ 336:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         diff = diff / 16;
+ 1019              		.loc 1 336 0
+ 1020 00f6 3B69     		ldr	r3, [r7, #16]
+ 1021 00f8 002B     		cmp	r3, #0
+ 1022 00fa 00DA     		bge	.L61
+ 1023 00fc 0F33     		adds	r3, r3, #15
+ 1024              	.L61:
+ 1025 00fe 1B11     		asrs	r3, r3, #4
+ 1026 0100 3B61     		str	r3, [r7, #16]
+ 1027 0102 17E0     		b	.L57
+ 1028              	.L60:
+ 337:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     } else if(t >= 921 && t <= 1024) {
+ 1029              		.loc 1 337 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 25
+
+
+ 1030 0104 7B69     		ldr	r3, [r7, #20]
+ 1031 0106 B3F5667F 		cmp	r3, #920
+ 1032 010a 13D9     		bls	.L57
+ 1033              		.loc 1 337 0 is_stmt 0 discriminator 1
+ 1034 010c 7B69     		ldr	r3, [r7, #20]
+ 1035 010e B3F5806F 		cmp	r3, #1024
+ 1036 0112 0FD8     		bhi	.L57
+ 338:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Fall back*/
+ 339:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t -= 921;
+ 1037              		.loc 1 339 0 is_stmt 1
+ 1038 0114 7B69     		ldr	r3, [r7, #20]
+ 1039 0116 A3F29933 		subw	r3, r3, #921
+ 1040 011a 7B61     		str	r3, [r7, #20]
+ 340:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         t    = t * 10; /*to [0..1024] range*/
+ 1041              		.loc 1 340 0
+ 1042 011c 7A69     		ldr	r2, [r7, #20]
+ 1043 011e 1346     		mov	r3, r2
+ 1044 0120 9B00     		lsls	r3, r3, #2
+ 1045 0122 1344     		add	r3, r3, r2
+ 1046 0124 5B00     		lsls	r3, r3, #1
+ 1047 0126 7B61     		str	r3, [r7, #20]
+ 341:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         diff = diff / 16;
+ 1048              		.loc 1 341 0
+ 1049 0128 3B69     		ldr	r3, [r7, #16]
+ 1050 012a 002B     		cmp	r3, #0
+ 1051 012c 00DA     		bge	.L62
+ 1052 012e 0F33     		adds	r3, r3, #15
+ 1053              	.L62:
+ 1054 0130 1B11     		asrs	r3, r3, #4
+ 1055 0132 3B61     		str	r3, [r7, #16]
+ 1056              	.L57:
+ 342:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 343:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 344:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(t > 1024) t = 1024;
+ 1057              		.loc 1 344 0
+ 1058 0134 7B69     		ldr	r3, [r7, #20]
+ 1059 0136 B3F5806F 		cmp	r3, #1024
+ 1060 013a 02D9     		bls	.L63
+ 1061              		.loc 1 344 0 is_stmt 0 discriminator 1
+ 1062 013c 4FF48063 		mov	r3, #1024
+ 1063 0140 7B61     		str	r3, [r7, #20]
+ 1064              	.L63:
+ 345:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 346:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t step = lv_bezier3(t, 1024, 1024, 800, 0);
+ 1065              		.loc 1 346 0 is_stmt 1
+ 1066 0142 0023     		movs	r3, #0
+ 1067 0144 0093     		str	r3, [sp]
+ 1068 0146 4FF44873 		mov	r3, #800
+ 1069 014a 4FF48062 		mov	r2, #1024
+ 1070 014e 4FF48061 		mov	r1, #1024
+ 1071 0152 7869     		ldr	r0, [r7, #20]
+ 1072 0154 FFF7FEFF 		bl	lv_bezier3
+ 1073 0158 F860     		str	r0, [r7, #12]
+ 347:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 348:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     int32_t new_value;
+ 349:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = (int32_t)step * diff;
+ 1074              		.loc 1 349 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 26
+
+
+ 1075 015a FB68     		ldr	r3, [r7, #12]
+ 1076 015c 3A69     		ldr	r2, [r7, #16]
+ 1077 015e 02FB03F3 		mul	r3, r2, r3
+ 1078 0162 BB60     		str	r3, [r7, #8]
+ 350:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = new_value >> 10;
+ 1079              		.loc 1 350 0
+ 1080 0164 BB68     		ldr	r3, [r7, #8]
+ 1081 0166 9B12     		asrs	r3, r3, #10
+ 1082 0168 BB60     		str	r3, [r7, #8]
+ 351:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     new_value = a->end - new_value;
+ 1083              		.loc 1 351 0
+ 1084 016a 7B68     		ldr	r3, [r7, #4]
+ 1085 016c 5A69     		ldr	r2, [r3, #20]
+ 1086 016e BB68     		ldr	r3, [r7, #8]
+ 1087 0170 D31A     		subs	r3, r2, r3
+ 1088 0172 BB60     		str	r3, [r7, #8]
+ 352:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 353:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return (lv_anim_value_t)new_value;
+ 1089              		.loc 1 353 0
+ 1090 0174 BB68     		ldr	r3, [r7, #8]
+ 1091 0176 1BB2     		sxth	r3, r3
+ 354:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 1092              		.loc 1 354 0
+ 1093 0178 1846     		mov	r0, r3
+ 1094 017a 1837     		adds	r7, r7, #24
+ 1095              		.cfi_def_cfa_offset 8
+ 1096 017c BD46     		mov	sp, r7
+ 1097              		.cfi_def_cfa_register 13
+ 1098              		@ sp needed
+ 1099 017e 80BD     		pop	{r7, pc}
+ 1100              	.L66:
+ 1101              		.align	2
+ 1102              	.L65:
+ 1103 0180 ABAAAA2A 		.word	715827883
+ 1104              		.cfi_endproc
+ 1105              	.LFE42:
+ 1106              		.size	lv_anim_path_bounce, .-lv_anim_path_bounce
+ 1107              		.section	.text.lv_anim_path_step,"ax",%progbits
+ 1108              		.align	2
+ 1109              		.global	lv_anim_path_step
+ 1110              		.thumb
+ 1111              		.thumb_func
+ 1112              		.type	lv_anim_path_step, %function
+ 1113              	lv_anim_path_step:
+ 1114              	.LFB43:
+ 355:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 356:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 357:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Calculate the current value of an animation applying step characteristic.
+ 358:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * (Set end value on the end of the animation)
+ 359:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation
+ 360:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return the current value to set
+ 361:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 362:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** lv_anim_value_t lv_anim_path_step(const lv_anim_t * a)
+ 363:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 1115              		.loc 1 363 0
+ 1116              		.cfi_startproc
+ 1117              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 27
+
+
+ 1118              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1119              		@ link register save eliminated.
+ 1120 0000 80B4     		push	{r7}
+ 1121              		.cfi_def_cfa_offset 4
+ 1122              		.cfi_offset 7, -4
+ 1123 0002 83B0     		sub	sp, sp, #12
+ 1124              		.cfi_def_cfa_offset 16
+ 1125 0004 00AF     		add	r7, sp, #0
+ 1126              		.cfi_def_cfa_register 7
+ 1127 0006 7860     		str	r0, [r7, #4]
+ 364:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if(a->act_time >= a->time)
+ 1128              		.loc 1 364 0
+ 1129 0008 7B68     		ldr	r3, [r7, #4]
+ 1130 000a B3F91A30 		ldrsh	r3, [r3, #26]
+ 1131 000e 1A46     		mov	r2, r3
+ 1132 0010 7B68     		ldr	r3, [r7, #4]
+ 1133 0012 1B8B     		ldrh	r3, [r3, #24]
+ 1134 0014 9A42     		cmp	r2, r3
+ 1135 0016 03DB     		blt	.L68
+ 365:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         return a->end;
+ 1136              		.loc 1 365 0
+ 1137 0018 7B68     		ldr	r3, [r7, #4]
+ 1138 001a 5B69     		ldr	r3, [r3, #20]
+ 1139 001c 1BB2     		sxth	r3, r3
+ 1140 001e 02E0     		b	.L69
+ 1141              	.L68:
+ 366:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else
+ 367:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         return a->start;
+ 1142              		.loc 1 367 0
+ 1143 0020 7B68     		ldr	r3, [r7, #4]
+ 1144 0022 1B69     		ldr	r3, [r3, #16]
+ 1145 0024 1BB2     		sxth	r3, r3
+ 1146              	.L69:
+ 368:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 1147              		.loc 1 368 0
+ 1148 0026 1846     		mov	r0, r3
+ 1149 0028 0C37     		adds	r7, r7, #12
+ 1150              		.cfi_def_cfa_offset 4
+ 1151 002a BD46     		mov	sp, r7
+ 1152              		.cfi_def_cfa_register 13
+ 1153              		@ sp needed
+ 1154 002c 5DF8047B 		ldr	r7, [sp], #4
+ 1155              		.cfi_restore 7
+ 1156              		.cfi_def_cfa_offset 0
+ 1157 0030 7047     		bx	lr
+ 1158              		.cfi_endproc
+ 1159              	.LFE43:
+ 1160              		.size	lv_anim_path_step, .-lv_anim_path_step
+ 1161 0032 00BF     		.section	.text.anim_task,"ax",%progbits
+ 1162              		.align	2
+ 1163              		.thumb
+ 1164              		.thumb_func
+ 1165              		.type	anim_task, %function
+ 1166              	anim_task:
+ 1167              	.LFB44:
+ 369:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 370:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**********************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 28
+
+
+ 371:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  *   STATIC FUNCTIONS
+ 372:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  **********************/
+ 373:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 374:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 375:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Periodically handle the animations.
+ 376:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param param unused
+ 377:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  */
+ 378:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static void anim_task(lv_task_t * param)
+ 379:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 1168              		.loc 1 379 0
+ 1169              		.cfi_startproc
+ 1170              		@ args = 0, pretend = 0, frame = 24
+ 1171              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1172 0000 80B5     		push	{r7, lr}
+ 1173              		.cfi_def_cfa_offset 8
+ 1174              		.cfi_offset 7, -8
+ 1175              		.cfi_offset 14, -4
+ 1176 0002 86B0     		sub	sp, sp, #24
+ 1177              		.cfi_def_cfa_offset 32
+ 1178 0004 00AF     		add	r7, sp, #0
+ 1179              		.cfi_def_cfa_register 7
+ 1180 0006 7860     		str	r0, [r7, #4]
+ 380:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     (void)param;
+ 381:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 382:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     lv_anim_t * a;
+ 383:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     LV_LL_READ(LV_GC_ROOT(_lv_anim_ll), a)
+ 1181              		.loc 1 383 0
+ 1182 0008 4248     		ldr	r0, .L79
+ 1183 000a FFF7FEFF 		bl	lv_ll_get_head
+ 1184 000e 7861     		str	r0, [r7, #20]
+ 1185 0010 0BE0     		b	.L71
+ 1186              	.L72:
+ 384:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     {
+ 385:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         a->has_run = 0;
+ 1187              		.loc 1 385 0 discriminator 3
+ 1188 0012 7A69     		ldr	r2, [r7, #20]
+ 1189 0014 92F82030 		ldrb	r3, [r2, #32]
+ 1190 0018 6FF3C303 		bfc	r3, #3, #1
+ 1191 001c 82F82030 		strb	r3, [r2, #32]
+ 383:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     {
+ 1192              		.loc 1 383 0 discriminator 3
+ 1193 0020 7969     		ldr	r1, [r7, #20]
+ 1194 0022 3C48     		ldr	r0, .L79
+ 1195 0024 FFF7FEFF 		bl	lv_ll_get_next
+ 1196 0028 7861     		str	r0, [r7, #20]
+ 1197              	.L71:
+ 383:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     {
+ 1198              		.loc 1 383 0 is_stmt 0 discriminator 1
+ 1199 002a 7B69     		ldr	r3, [r7, #20]
+ 1200 002c 002B     		cmp	r3, #0
+ 1201 002e F0D1     		bne	.L72
+ 386:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 387:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 388:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     uint32_t elaps = lv_tick_elaps(last_task_run);
+ 1202              		.loc 1 388 0 is_stmt 1
+ 1203 0030 394B     		ldr	r3, .L79+4
+ 1204 0032 1B68     		ldr	r3, [r3]
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 29
+
+
+ 1205 0034 1846     		mov	r0, r3
+ 1206 0036 FFF7FEFF 		bl	lv_tick_elaps
+ 1207 003a 3861     		str	r0, [r7, #16]
+ 389:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 390:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     a = lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 1208              		.loc 1 390 0
+ 1209 003c 3548     		ldr	r0, .L79
+ 1210 003e FFF7FEFF 		bl	lv_ll_get_head
+ 1211 0042 7861     		str	r0, [r7, #20]
+ 391:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 392:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     while(a != NULL) {
+ 1212              		.loc 1 392 0
+ 1213 0044 59E0     		b	.L73
+ 1214              	.L78:
+ 393:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 394:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****          * happened in `anim_ready_handler` which could make this linked list reading corrupt
+ 395:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****          * because the list is changed meanwhile
+ 396:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****          */
+ 397:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         anim_list_changed = false;
+ 1215              		.loc 1 397 0
+ 1216 0046 354B     		ldr	r3, .L79+8
+ 1217 0048 0022     		movs	r2, #0
+ 1218 004a 1A70     		strb	r2, [r3]
+ 398:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 399:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         if(!a->has_run) {
+ 1219              		.loc 1 399 0
+ 1220 004c 7B69     		ldr	r3, [r7, #20]
+ 1221 004e 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1222 0052 03F00803 		and	r3, r3, #8
+ 1223 0056 DBB2     		uxtb	r3, r3
+ 1224 0058 002B     		cmp	r3, #0
+ 1225 005a 40D1     		bne	.L74
+ 400:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a->has_run = 1; /*The list readying might be reseted so need to know which anim has run
+ 1226              		.loc 1 400 0
+ 1227 005c 7A69     		ldr	r2, [r7, #20]
+ 1228 005e 92F82030 		ldrb	r3, [r2, #32]
+ 1229 0062 43F00803 		orr	r3, r3, #8
+ 1230 0066 82F82030 		strb	r3, [r2, #32]
+ 401:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a->act_time += elaps;
+ 1231              		.loc 1 401 0
+ 1232 006a 7B69     		ldr	r3, [r7, #20]
+ 1233 006c B3F91A30 		ldrsh	r3, [r3, #26]
+ 1234 0070 9AB2     		uxth	r2, r3
+ 1235 0072 3B69     		ldr	r3, [r7, #16]
+ 1236 0074 9BB2     		uxth	r3, r3
+ 1237 0076 1344     		add	r3, r3, r2
+ 1238 0078 9BB2     		uxth	r3, r3
+ 1239 007a 1AB2     		sxth	r2, r3
+ 1240 007c 7B69     		ldr	r3, [r7, #20]
+ 1241 007e 5A83     		strh	r2, [r3, #26]	@ movhi
+ 402:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             if(a->act_time >= 0) {
+ 1242              		.loc 1 402 0
+ 1243 0080 7B69     		ldr	r3, [r7, #20]
+ 1244 0082 B3F91A30 		ldrsh	r3, [r3, #26]
+ 1245 0086 002B     		cmp	r3, #0
+ 1246 0088 29DB     		blt	.L74
+ 1247              	.LBB2:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 30
+
+
+ 403:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 if(a->act_time > a->time) a->act_time = a->time;
+ 1248              		.loc 1 403 0
+ 1249 008a 7B69     		ldr	r3, [r7, #20]
+ 1250 008c B3F91A30 		ldrsh	r3, [r3, #26]
+ 1251 0090 1A46     		mov	r2, r3
+ 1252 0092 7B69     		ldr	r3, [r7, #20]
+ 1253 0094 1B8B     		ldrh	r3, [r3, #24]
+ 1254 0096 9A42     		cmp	r2, r3
+ 1255 0098 04DD     		ble	.L75
+ 1256              		.loc 1 403 0 is_stmt 0 discriminator 1
+ 1257 009a 7B69     		ldr	r3, [r7, #20]
+ 1258 009c 1B8B     		ldrh	r3, [r3, #24]
+ 1259 009e 1AB2     		sxth	r2, r3
+ 1260 00a0 7B69     		ldr	r3, [r7, #20]
+ 1261 00a2 5A83     		strh	r2, [r3, #26]	@ movhi
+ 1262              	.L75:
+ 404:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 405:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 int32_t new_value;
+ 406:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 new_value = a->path_cb(a);
+ 1263              		.loc 1 406 0 is_stmt 1
+ 1264 00a4 7B69     		ldr	r3, [r7, #20]
+ 1265 00a6 9B68     		ldr	r3, [r3, #8]
+ 1266 00a8 7869     		ldr	r0, [r7, #20]
+ 1267 00aa 9847     		blx	r3
+ 1268 00ac 0346     		mov	r3, r0
+ 1269 00ae FB60     		str	r3, [r7, #12]
+ 407:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 408:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 /*Apply the calculated value*/
+ 409:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 if(a->exec_cb) a->exec_cb(a->var, new_value);
+ 1270              		.loc 1 409 0
+ 1271 00b0 7B69     		ldr	r3, [r7, #20]
+ 1272 00b2 5B68     		ldr	r3, [r3, #4]
+ 1273 00b4 002B     		cmp	r3, #0
+ 1274 00b6 07D0     		beq	.L76
+ 1275              		.loc 1 409 0 is_stmt 0 discriminator 1
+ 1276 00b8 7B69     		ldr	r3, [r7, #20]
+ 1277 00ba 5B68     		ldr	r3, [r3, #4]
+ 1278 00bc 7A69     		ldr	r2, [r7, #20]
+ 1279 00be 1268     		ldr	r2, [r2]
+ 1280 00c0 F968     		ldr	r1, [r7, #12]
+ 1281 00c2 09B2     		sxth	r1, r1
+ 1282 00c4 1046     		mov	r0, r2
+ 1283 00c6 9847     		blx	r3
+ 1284              	.L76:
+ 410:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 411:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 /*If the time is elapsed the animation is ready*/
+ 412:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 if(a->act_time >= a->time) {
+ 1285              		.loc 1 412 0 is_stmt 1
+ 1286 00c8 7B69     		ldr	r3, [r7, #20]
+ 1287 00ca B3F91A30 		ldrsh	r3, [r3, #26]
+ 1288 00ce 1A46     		mov	r2, r3
+ 1289 00d0 7B69     		ldr	r3, [r7, #20]
+ 1290 00d2 1B8B     		ldrh	r3, [r3, #24]
+ 1291 00d4 9A42     		cmp	r2, r3
+ 1292 00d6 02DB     		blt	.L74
+ 413:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                     anim_ready_handler(a);
+ 1293              		.loc 1 413 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 31
+
+
+ 1294 00d8 7869     		ldr	r0, [r7, #20]
+ 1295 00da FFF7FEFF 		bl	anim_ready_handler
+ 1296              	.L74:
+ 1297              	.LBE2:
+ 414:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****                 }
+ 415:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             }
+ 416:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         }
+ 417:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 418:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /* If the linked list changed due to anim. delete then it's not safe to continue
+ 419:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****          * the reading of the list from here -> start from the head*/
+ 420:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         if(anim_list_changed)
+ 1298              		.loc 1 420 0
+ 1299 00de 0F4B     		ldr	r3, .L79+8
+ 1300 00e0 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1301 00e2 002B     		cmp	r3, #0
+ 1302 00e4 04D0     		beq	.L77
+ 421:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a = lv_ll_get_head(&LV_GC_ROOT(_lv_anim_ll));
+ 1303              		.loc 1 421 0
+ 1304 00e6 0B48     		ldr	r0, .L79
+ 1305 00e8 FFF7FEFF 		bl	lv_ll_get_head
+ 1306 00ec 7861     		str	r0, [r7, #20]
+ 1307 00ee 04E0     		b	.L73
+ 1308              	.L77:
+ 422:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         else
+ 423:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a = lv_ll_get_next(&LV_GC_ROOT(_lv_anim_ll), a);
+ 1309              		.loc 1 423 0
+ 1310 00f0 7969     		ldr	r1, [r7, #20]
+ 1311 00f2 0848     		ldr	r0, .L79
+ 1312 00f4 FFF7FEFF 		bl	lv_ll_get_next
+ 1313 00f8 7861     		str	r0, [r7, #20]
+ 1314              	.L73:
+ 392:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*It can be set by `lv_anim_del()` typically in `end_cb`. If set then an animation delete
+ 1315              		.loc 1 392 0
+ 1316 00fa 7B69     		ldr	r3, [r7, #20]
+ 1317 00fc 002B     		cmp	r3, #0
+ 1318 00fe A2D1     		bne	.L78
+ 424:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 425:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 426:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     last_task_run = lv_tick_get();
+ 1319              		.loc 1 426 0
+ 1320 0100 FFF7FEFF 		bl	lv_tick_get
+ 1321 0104 0246     		mov	r2, r0
+ 1322 0106 044B     		ldr	r3, .L79+4
+ 1323 0108 1A60     		str	r2, [r3]
+ 427:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 1324              		.loc 1 427 0
+ 1325 010a 00BF     		nop
+ 1326 010c 1837     		adds	r7, r7, #24
+ 1327              		.cfi_def_cfa_offset 8
+ 1328 010e BD46     		mov	sp, r7
+ 1329              		.cfi_def_cfa_register 13
+ 1330              		@ sp needed
+ 1331 0110 80BD     		pop	{r7, pc}
+ 1332              	.L80:
+ 1333 0112 00BF     		.align	2
+ 1334              	.L79:
+ 1335 0114 00000000 		.word	_lv_anim_ll
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 32
+
+
+ 1336 0118 00000000 		.word	last_task_run
+ 1337 011c 04000000 		.word	anim_list_changed
+ 1338              		.cfi_endproc
+ 1339              	.LFE44:
+ 1340              		.size	anim_task, .-anim_task
+ 1341              		.section	.text.anim_ready_handler,"ax",%progbits
+ 1342              		.align	2
+ 1343              		.thumb
+ 1344              		.thumb_func
+ 1345              		.type	anim_ready_handler, %function
+ 1346              	anim_ready_handler:
+ 1347              	.LFB45:
+ 428:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 429:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** /**
+ 430:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * Called when an animation is ready to do the necessary thinks
+ 431:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * e.g. repeat, play back, delete etc.
+ 432:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @param a pointer to an animation descriptor
+ 433:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * @return true: animation delete occurred nnd the `LV_GC_ROOT(_lv_anim_ll)` has changed
+ 434:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****  * */
+ 435:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** static bool anim_ready_handler(lv_anim_t * a)
+ 436:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** {
+ 1348              		.loc 1 436 0
+ 1349              		.cfi_startproc
+ 1350              		@ args = 0, pretend = 0, frame = 48
+ 1351              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1352 0000 80B5     		push	{r7, lr}
+ 1353              		.cfi_def_cfa_offset 8
+ 1354              		.cfi_offset 7, -8
+ 1355              		.cfi_offset 14, -4
+ 1356 0002 8CB0     		sub	sp, sp, #48
+ 1357              		.cfi_def_cfa_offset 56
+ 1358 0004 00AF     		add	r7, sp, #0
+ 1359              		.cfi_def_cfa_register 7
+ 1360 0006 7860     		str	r0, [r7, #4]
+ 437:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 438:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*Delete the animation if
+ 439:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****      * - no repeat and no play back (simple one shot animation)
+ 440:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****      * - no repeat, play back is enabled and play back is ready */
+ 441:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     if((a->repeat == 0 && a->playback == 0) || (a->repeat == 0 && a->playback == 1 && a->playback_n
+ 1361              		.loc 1 441 0
+ 1362 0008 7B68     		ldr	r3, [r7, #4]
+ 1363 000a 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1364 000e 03F00203 		and	r3, r3, #2
+ 1365 0012 DBB2     		uxtb	r3, r3
+ 1366 0014 002B     		cmp	r3, #0
+ 1367 0016 07D1     		bne	.L82
+ 1368              		.loc 1 441 0 is_stmt 0 discriminator 1
+ 1369 0018 7B68     		ldr	r3, [r7, #4]
+ 1370 001a 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1371 001e 03F00103 		and	r3, r3, #1
+ 1372 0022 DBB2     		uxtb	r3, r3
+ 1373 0024 002B     		cmp	r3, #0
+ 1374 0026 17D0     		beq	.L83
+ 1375              	.L82:
+ 1376              		.loc 1 441 0 discriminator 3
+ 1377 0028 7B68     		ldr	r3, [r7, #4]
+ 1378 002a 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 33
+
+
+ 1379 002e 03F00203 		and	r3, r3, #2
+ 1380 0032 DBB2     		uxtb	r3, r3
+ 1381 0034 002B     		cmp	r3, #0
+ 1382 0036 29D1     		bne	.L84
+ 1383              		.loc 1 441 0 discriminator 4
+ 1384 0038 7B68     		ldr	r3, [r7, #4]
+ 1385 003a 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1386 003e 03F00103 		and	r3, r3, #1
+ 1387 0042 DBB2     		uxtb	r3, r3
+ 1388 0044 002B     		cmp	r3, #0
+ 1389 0046 21D0     		beq	.L84
+ 1390              		.loc 1 441 0 discriminator 5
+ 1391 0048 7B68     		ldr	r3, [r7, #4]
+ 1392 004a 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1393 004e 03F00403 		and	r3, r3, #4
+ 1394 0052 DBB2     		uxtb	r3, r3
+ 1395 0054 002B     		cmp	r3, #0
+ 1396 0056 19D0     		beq	.L84
+ 1397              	.L83:
+ 1398              	.LBB3:
+ 442:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 443:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Create copy from the animation and delete the animation from the list.
+ 444:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****          * This way the `ready_cb` will see the animations like it's animation is ready deleted*/
+ 445:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         lv_anim_t a_tmp;
+ 446:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         memcpy(&a_tmp, a, sizeof(lv_anim_t));
+ 1399              		.loc 1 446 0 is_stmt 1
+ 1400 0058 07F10803 		add	r3, r7, #8
+ 1401 005c 2422     		movs	r2, #36
+ 1402 005e 7968     		ldr	r1, [r7, #4]
+ 1403 0060 1846     		mov	r0, r3
+ 1404 0062 FFF7FEFF 		bl	memcpy
+ 447:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         lv_ll_rem(&LV_GC_ROOT(_lv_anim_ll), a);
+ 1405              		.loc 1 447 0
+ 1406 0066 7968     		ldr	r1, [r7, #4]
+ 1407 0068 2948     		ldr	r0, .L90
+ 1408 006a FFF7FEFF 		bl	lv_ll_rem
+ 448:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         lv_mem_free(a);
+ 1409              		.loc 1 448 0
+ 1410 006e 7868     		ldr	r0, [r7, #4]
+ 1411 0070 FFF7FEFF 		bl	lv_mem_free
+ 449:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         anim_list_changed = true;
+ 1412              		.loc 1 449 0
+ 1413 0074 274B     		ldr	r3, .L90+4
+ 1414 0076 0122     		movs	r2, #1
+ 1415 0078 1A70     		strb	r2, [r3]
+ 450:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 451:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /* Call the callback function at the end*/
+ 452:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         if(a_tmp.ready_cb != NULL) a_tmp.ready_cb(&a_tmp);
+ 1416              		.loc 1 452 0
+ 1417 007a 7B69     		ldr	r3, [r7, #20]
+ 1418 007c 002B     		cmp	r3, #0
+ 1419 007e 40D0     		beq	.L89
+ 1420              		.loc 1 452 0 is_stmt 0 discriminator 1
+ 1421 0080 7B69     		ldr	r3, [r7, #20]
+ 1422 0082 07F10802 		add	r2, r7, #8
+ 1423 0086 1046     		mov	r0, r2
+ 1424 0088 9847     		blx	r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 34
+
+
+ 1425              	.LBE3:
+ 441:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 1426              		.loc 1 441 0 is_stmt 1 discriminator 1
+ 1427 008a 3AE0     		b	.L89
+ 1428              	.L84:
+ 453:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 454:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     /*If the animation is not deleted then restart it*/
+ 455:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     else {
+ 456:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         a->act_time = -a->repeat_pause; /*Restart the animation*/
+ 1429              		.loc 1 456 0
+ 1430 008c 7B68     		ldr	r3, [r7, #4]
+ 1431 008e DB8B     		ldrh	r3, [r3, #30]
+ 1432 0090 5B42     		negs	r3, r3
+ 1433 0092 9BB2     		uxth	r3, r3
+ 1434 0094 1AB2     		sxth	r2, r3
+ 1435 0096 7B68     		ldr	r3, [r7, #4]
+ 1436 0098 5A83     		strh	r2, [r3, #26]	@ movhi
+ 457:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         /*Swap the start and end values in play back mode*/
+ 458:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         if(a->playback != 0) {
+ 1437              		.loc 1 458 0
+ 1438 009a 7B68     		ldr	r3, [r7, #4]
+ 1439 009c 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1440 00a0 03F00103 		and	r3, r3, #1
+ 1441 00a4 DBB2     		uxtb	r3, r3
+ 1442 00a6 002B     		cmp	r3, #0
+ 1443 00a8 2CD0     		beq	.L86
+ 1444              	.LBB4:
+ 459:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             /*If now turning back use the 'playback_pause*/
+ 460:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             if(a->playback_now == 0) a->act_time = -a->playback_pause;
+ 1445              		.loc 1 460 0
+ 1446 00aa 7B68     		ldr	r3, [r7, #4]
+ 1447 00ac 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1448 00b0 03F00403 		and	r3, r3, #4
+ 1449 00b4 DBB2     		uxtb	r3, r3
+ 1450 00b6 002B     		cmp	r3, #0
+ 1451 00b8 06D1     		bne	.L87
+ 1452              		.loc 1 460 0 is_stmt 0 discriminator 1
+ 1453 00ba 7B68     		ldr	r3, [r7, #4]
+ 1454 00bc 9B8B     		ldrh	r3, [r3, #28]
+ 1455 00be 5B42     		negs	r3, r3
+ 1456 00c0 9BB2     		uxth	r3, r3
+ 1457 00c2 1AB2     		sxth	r2, r3
+ 1458 00c4 7B68     		ldr	r3, [r7, #4]
+ 1459 00c6 5A83     		strh	r2, [r3, #26]	@ movhi
+ 1460              	.L87:
+ 461:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 462:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             /*Toggle the play back state*/
+ 463:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a->playback_now = a->playback_now == 0 ? 1 : 0;
+ 1461              		.loc 1 463 0 is_stmt 1
+ 1462 00c8 7B68     		ldr	r3, [r7, #4]
+ 1463 00ca 93F82030 		ldrb	r3, [r3, #32]	@ zero_extendqisi2
+ 1464 00ce 03F00403 		and	r3, r3, #4
+ 1465 00d2 DBB2     		uxtb	r3, r3
+ 1466 00d4 002B     		cmp	r3, #0
+ 1467 00d6 0CBF     		ite	eq
+ 1468 00d8 0123     		moveq	r3, #1
+ 1469 00da 0023     		movne	r3, #0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 35
+
+
+ 1470 00dc D9B2     		uxtb	r1, r3
+ 1471 00de 7A68     		ldr	r2, [r7, #4]
+ 1472 00e0 92F82030 		ldrb	r3, [r2, #32]
+ 1473 00e4 61F38203 		bfi	r3, r1, #2, #1
+ 1474 00e8 82F82030 		strb	r3, [r2, #32]
+ 464:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             /*Swap the start and end values*/
+ 465:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             int32_t tmp;
+ 466:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             tmp      = a->start;
+ 1475              		.loc 1 466 0
+ 1476 00ec 7B68     		ldr	r3, [r7, #4]
+ 1477 00ee 1B69     		ldr	r3, [r3, #16]
+ 1478 00f0 FB62     		str	r3, [r7, #44]
+ 467:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a->start = a->end;
+ 1479              		.loc 1 467 0
+ 1480 00f2 7B68     		ldr	r3, [r7, #4]
+ 1481 00f4 5A69     		ldr	r2, [r3, #20]
+ 1482 00f6 7B68     		ldr	r3, [r7, #4]
+ 1483 00f8 1A61     		str	r2, [r3, #16]
+ 468:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****             a->end   = tmp;
+ 1484              		.loc 1 468 0
+ 1485 00fa 7B68     		ldr	r3, [r7, #4]
+ 1486 00fc FA6A     		ldr	r2, [r7, #44]
+ 1487 00fe 5A61     		str	r2, [r3, #20]
+ 1488 0100 00E0     		b	.L86
+ 1489              	.L89:
+ 1490              	.LBE4:
+ 441:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 1491              		.loc 1 441 0
+ 1492 0102 00BF     		nop
+ 1493              	.L86:
+ 469:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****         }
+ 470:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     }
+ 471:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** 
+ 472:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c ****     return anim_list_changed;
+ 1494              		.loc 1 472 0
+ 1495 0104 034B     		ldr	r3, .L90+4
+ 1496 0106 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 473:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_anim.c **** }
+ 1497              		.loc 1 473 0
+ 1498 0108 1846     		mov	r0, r3
+ 1499 010a 3037     		adds	r7, r7, #48
+ 1500              		.cfi_def_cfa_offset 8
+ 1501 010c BD46     		mov	sp, r7
+ 1502              		.cfi_def_cfa_register 13
+ 1503              		@ sp needed
+ 1504 010e 80BD     		pop	{r7, pc}
+ 1505              	.L91:
+ 1506              		.align	2
+ 1507              	.L90:
+ 1508 0110 00000000 		.word	_lv_anim_ll
+ 1509 0114 04000000 		.word	anim_list_changed
+ 1510              		.cfi_endproc
+ 1511              	.LFE45:
+ 1512              		.size	anim_ready_handler, .-anim_ready_handler
+ 1513              		.text
+ 1514              	.Letext0:
+ 1515              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 36
+
+
+ 1516              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 1517              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 1518              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_anim.h"
+ 1519              		.file 6 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_core/../lv_misc/lv_ll.h"
+ 1520              		.file 7 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../lv_core/../lv_hal/../lv_misc/lv_t
+ 1521              		.file 8 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_gc.h"
+ 1522              		.section	.debug_info,"",%progbits
+ 1523              	.Ldebug_info0:
+ 1524 0000 A8070000 		.4byte	0x7a8
+ 1525 0004 0400     		.2byte	0x4
+ 1526 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1527 000a 04       		.byte	0x4
+ 1528 000b 01       		.uleb128 0x1
+ 1529 000c 23010000 		.4byte	.LASF86
+ 1530 0010 0C       		.byte	0xc
+ 1531 0011 BD030000 		.4byte	.LASF87
+ 1532 0015 74040000 		.4byte	.LASF88
+ 1533 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1534 001d 00000000 		.4byte	0
+ 1535 0021 00000000 		.4byte	.Ldebug_line0
+ 1536 0025 02       		.uleb128 0x2
+ 1537 0026 01       		.byte	0x1
+ 1538 0027 06       		.byte	0x6
+ 1539 0028 D5020000 		.4byte	.LASF0
+ 1540 002c 03       		.uleb128 0x3
+ 1541 002d 5A020000 		.4byte	.LASF2
+ 1542 0031 02       		.byte	0x2
+ 1543 0032 1D       		.byte	0x1d
+ 1544 0033 37000000 		.4byte	0x37
+ 1545 0037 02       		.uleb128 0x2
+ 1546 0038 01       		.byte	0x1
+ 1547 0039 08       		.byte	0x8
+ 1548 003a B4020000 		.4byte	.LASF1
+ 1549 003e 03       		.uleb128 0x3
+ 1550 003f 59050000 		.4byte	.LASF3
+ 1551 0043 02       		.byte	0x2
+ 1552 0044 29       		.byte	0x29
+ 1553 0045 49000000 		.4byte	0x49
+ 1554 0049 02       		.uleb128 0x2
+ 1555 004a 02       		.byte	0x2
+ 1556 004b 05       		.byte	0x5
+ 1557 004c 5D000000 		.4byte	.LASF4
+ 1558 0050 03       		.uleb128 0x3
+ 1559 0051 C8000000 		.4byte	.LASF5
+ 1560 0055 02       		.byte	0x2
+ 1561 0056 2B       		.byte	0x2b
+ 1562 0057 5B000000 		.4byte	0x5b
+ 1563 005b 02       		.uleb128 0x2
+ 1564 005c 02       		.byte	0x2
+ 1565 005d 07       		.byte	0x7
+ 1566 005e 84030000 		.4byte	.LASF6
+ 1567 0062 03       		.uleb128 0x3
+ 1568 0063 38050000 		.4byte	.LASF7
+ 1569 0067 02       		.byte	0x2
+ 1570 0068 3F       		.byte	0x3f
+ 1571 0069 6D000000 		.4byte	0x6d
+ 1572 006d 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 37
+
+
+ 1573 006e 04       		.byte	0x4
+ 1574 006f 05       		.byte	0x5
+ 1575 0070 40020000 		.4byte	.LASF8
+ 1576 0074 03       		.uleb128 0x3
+ 1577 0075 97000000 		.4byte	.LASF9
+ 1578 0079 02       		.byte	0x2
+ 1579 007a 41       		.byte	0x41
+ 1580 007b 7F000000 		.4byte	0x7f
+ 1581 007f 02       		.uleb128 0x2
+ 1582 0080 04       		.byte	0x4
+ 1583 0081 07       		.byte	0x7
+ 1584 0082 58040000 		.4byte	.LASF10
+ 1585 0086 02       		.uleb128 0x2
+ 1586 0087 08       		.byte	0x8
+ 1587 0088 05       		.byte	0x5
+ 1588 0089 19020000 		.4byte	.LASF11
+ 1589 008d 02       		.uleb128 0x2
+ 1590 008e 08       		.byte	0x8
+ 1591 008f 07       		.byte	0x7
+ 1592 0090 E9020000 		.4byte	.LASF12
+ 1593 0094 04       		.uleb128 0x4
+ 1594 0095 04       		.byte	0x4
+ 1595 0096 05       		.byte	0x5
+ 1596 0097 696E7400 		.ascii	"int\000"
+ 1597 009b 02       		.uleb128 0x2
+ 1598 009c 04       		.byte	0x4
+ 1599 009d 07       		.byte	0x7
+ 1600 009e 16030000 		.4byte	.LASF13
+ 1601 00a2 03       		.uleb128 0x3
+ 1602 00a3 D6010000 		.4byte	.LASF14
+ 1603 00a7 03       		.byte	0x3
+ 1604 00a8 18       		.byte	0x18
+ 1605 00a9 2C000000 		.4byte	0x2c
+ 1606 00ad 03       		.uleb128 0x3
+ 1607 00ae 24040000 		.4byte	.LASF15
+ 1608 00b2 03       		.byte	0x3
+ 1609 00b3 20       		.byte	0x20
+ 1610 00b4 3E000000 		.4byte	0x3e
+ 1611 00b8 03       		.uleb128 0x3
+ 1612 00b9 23030000 		.4byte	.LASF16
+ 1613 00bd 03       		.byte	0x3
+ 1614 00be 24       		.byte	0x24
+ 1615 00bf 50000000 		.4byte	0x50
+ 1616 00c3 03       		.uleb128 0x3
+ 1617 00c4 E1020000 		.4byte	.LASF17
+ 1618 00c8 03       		.byte	0x3
+ 1619 00c9 2C       		.byte	0x2c
+ 1620 00ca 62000000 		.4byte	0x62
+ 1621 00ce 03       		.uleb128 0x3
+ 1622 00cf 0D030000 		.4byte	.LASF18
+ 1623 00d3 03       		.byte	0x3
+ 1624 00d4 30       		.byte	0x30
+ 1625 00d5 74000000 		.4byte	0x74
+ 1626 00d9 03       		.uleb128 0x3
+ 1627 00da FD030000 		.4byte	.LASF19
+ 1628 00de 04       		.byte	0x4
+ 1629 00df 3C       		.byte	0x3c
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 38
+
+
+ 1630 00e0 AD000000 		.4byte	0xad
+ 1631 00e4 05       		.uleb128 0x5
+ 1632 00e5 04       		.byte	0x4
+ 1633 00e6 02       		.uleb128 0x2
+ 1634 00e7 08       		.byte	0x8
+ 1635 00e8 04       		.byte	0x4
+ 1636 00e9 91020000 		.4byte	.LASF20
+ 1637 00ed 02       		.uleb128 0x2
+ 1638 00ee 04       		.byte	0x4
+ 1639 00ef 07       		.byte	0x7
+ 1640 00f0 67000000 		.4byte	.LASF21
+ 1641 00f4 02       		.uleb128 0x2
+ 1642 00f5 01       		.byte	0x1
+ 1643 00f6 08       		.byte	0x8
+ 1644 00f7 A4030000 		.4byte	.LASF22
+ 1645 00fb 03       		.uleb128 0x3
+ 1646 00fc B8000000 		.4byte	.LASF23
+ 1647 0100 05       		.byte	0x5
+ 1648 0101 2B       		.byte	0x2b
+ 1649 0102 D9000000 		.4byte	0xd9
+ 1650 0106 03       		.uleb128 0x3
+ 1651 0107 F4010000 		.4byte	.LASF24
+ 1652 010b 05       		.byte	0x5
+ 1653 010c 37       		.byte	0x37
+ 1654 010d 11010000 		.4byte	0x111
+ 1655 0111 06       		.uleb128 0x6
+ 1656 0112 04       		.byte	0x4
+ 1657 0113 17010000 		.4byte	0x117
+ 1658 0117 07       		.uleb128 0x7
+ 1659 0118 27010000 		.4byte	0x127
+ 1660 011c 08       		.uleb128 0x8
+ 1661 011d E4000000 		.4byte	0xe4
+ 1662 0121 08       		.uleb128 0x8
+ 1663 0122 FB000000 		.4byte	0xfb
+ 1664 0126 00       		.byte	0
+ 1665 0127 06       		.uleb128 0x6
+ 1666 0128 04       		.byte	0x4
+ 1667 0129 2D010000 		.4byte	0x12d
+ 1668 012d 09       		.uleb128 0x9
+ 1669 012e 32040000 		.4byte	.LASF47
+ 1670 0132 24       		.byte	0x24
+ 1671 0133 05       		.byte	0x5
+ 1672 0134 44       		.byte	0x44
+ 1673 0135 EE010000 		.4byte	0x1ee
+ 1674 0139 0A       		.uleb128 0xa
+ 1675 013a 76617200 		.ascii	"var\000"
+ 1676 013e 05       		.byte	0x5
+ 1677 013f 46       		.byte	0x46
+ 1678 0140 E4000000 		.4byte	0xe4
+ 1679 0144 00       		.byte	0
+ 1680 0145 0B       		.uleb128 0xb
+ 1681 0146 8C050000 		.4byte	.LASF25
+ 1682 014a 05       		.byte	0x5
+ 1683 014b 47       		.byte	0x47
+ 1684 014c 06010000 		.4byte	0x106
+ 1685 0150 04       		.byte	0x4
+ 1686 0151 0B       		.uleb128 0xb
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 39
+
+
+ 1687 0152 2C030000 		.4byte	.LASF26
+ 1688 0156 05       		.byte	0x5
+ 1689 0157 48       		.byte	0x48
+ 1690 0158 EE010000 		.4byte	0x1ee
+ 1691 015c 08       		.byte	0x8
+ 1692 015d 0B       		.uleb128 0xb
+ 1693 015e 4F040000 		.4byte	.LASF27
+ 1694 0162 05       		.byte	0x5
+ 1695 0163 49       		.byte	0x49
+ 1696 0164 19020000 		.4byte	0x219
+ 1697 0168 0C       		.byte	0xc
+ 1698 0169 0B       		.uleb128 0xb
+ 1699 016a A2020000 		.4byte	.LASF28
+ 1700 016e 05       		.byte	0x5
+ 1701 016f 4A       		.byte	0x4a
+ 1702 0170 C3000000 		.4byte	0xc3
+ 1703 0174 10       		.byte	0x10
+ 1704 0175 0A       		.uleb128 0xa
+ 1705 0176 656E6400 		.ascii	"end\000"
+ 1706 017a 05       		.byte	0x5
+ 1707 017b 4B       		.byte	0x4b
+ 1708 017c C3000000 		.4byte	0xc3
+ 1709 0180 14       		.byte	0x14
+ 1710 0181 0B       		.uleb128 0xb
+ 1711 0182 59030000 		.4byte	.LASF29
+ 1712 0186 05       		.byte	0x5
+ 1713 0187 4C       		.byte	0x4c
+ 1714 0188 B8000000 		.4byte	0xb8
+ 1715 018c 18       		.byte	0x18
+ 1716 018d 0B       		.uleb128 0xb
+ 1717 018e F4030000 		.4byte	.LASF30
+ 1718 0192 05       		.byte	0x5
+ 1719 0193 4D       		.byte	0x4d
+ 1720 0194 AD000000 		.4byte	0xad
+ 1721 0198 1A       		.byte	0x1a
+ 1722 0199 0B       		.uleb128 0xb
+ 1723 019a A7050000 		.4byte	.LASF31
+ 1724 019e 05       		.byte	0x5
+ 1725 019f 4E       		.byte	0x4e
+ 1726 01a0 B8000000 		.4byte	0xb8
+ 1727 01a4 1C       		.byte	0x1c
+ 1728 01a5 0B       		.uleb128 0xb
+ 1729 01a6 81000000 		.4byte	.LASF32
+ 1730 01aa 05       		.byte	0x5
+ 1731 01ab 4F       		.byte	0x4f
+ 1732 01ac B8000000 		.4byte	0xb8
+ 1733 01b0 1E       		.byte	0x1e
+ 1734 01b1 0C       		.uleb128 0xc
+ 1735 01b2 20000000 		.4byte	.LASF33
+ 1736 01b6 05       		.byte	0x5
+ 1737 01b7 54       		.byte	0x54
+ 1738 01b8 A2000000 		.4byte	0xa2
+ 1739 01bc 01       		.byte	0x1
+ 1740 01bd 01       		.byte	0x1
+ 1741 01be 07       		.byte	0x7
+ 1742 01bf 20       		.byte	0x20
+ 1743 01c0 0C       		.uleb128 0xc
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 40
+
+
+ 1744 01c1 8A020000 		.4byte	.LASF34
+ 1745 01c5 05       		.byte	0x5
+ 1746 01c6 55       		.byte	0x55
+ 1747 01c7 A2000000 		.4byte	0xa2
+ 1748 01cb 01       		.byte	0x1
+ 1749 01cc 01       		.byte	0x1
+ 1750 01cd 06       		.byte	0x6
+ 1751 01ce 20       		.byte	0x20
+ 1752 01cf 0C       		.uleb128 0xc
+ 1753 01d0 97030000 		.4byte	.LASF35
+ 1754 01d4 05       		.byte	0x5
+ 1755 01d5 57       		.byte	0x57
+ 1756 01d6 A2000000 		.4byte	0xa2
+ 1757 01da 01       		.byte	0x1
+ 1758 01db 01       		.byte	0x1
+ 1759 01dc 05       		.byte	0x5
+ 1760 01dd 20       		.byte	0x20
+ 1761 01de 0C       		.uleb128 0xc
+ 1762 01df E5000000 		.4byte	.LASF36
+ 1763 01e3 05       		.byte	0x5
+ 1764 01e4 58       		.byte	0x58
+ 1765 01e5 CE000000 		.4byte	0xce
+ 1766 01e9 04       		.byte	0x4
+ 1767 01ea 01       		.byte	0x1
+ 1768 01eb 1C       		.byte	0x1c
+ 1769 01ec 20       		.byte	0x20
+ 1770 01ed 00       		.byte	0
+ 1771 01ee 03       		.uleb128 0x3
+ 1772 01ef ED000000 		.4byte	.LASF37
+ 1773 01f3 05       		.byte	0x5
+ 1774 01f4 3E       		.byte	0x3e
+ 1775 01f5 F9010000 		.4byte	0x1f9
+ 1776 01f9 06       		.uleb128 0x6
+ 1777 01fa 04       		.byte	0x4
+ 1778 01fb FF010000 		.4byte	0x1ff
+ 1779 01ff 0D       		.uleb128 0xd
+ 1780 0200 FB000000 		.4byte	0xfb
+ 1781 0204 0E020000 		.4byte	0x20e
+ 1782 0208 08       		.uleb128 0x8
+ 1783 0209 0E020000 		.4byte	0x20e
+ 1784 020d 00       		.byte	0
+ 1785 020e 06       		.uleb128 0x6
+ 1786 020f 04       		.byte	0x4
+ 1787 0210 14020000 		.4byte	0x214
+ 1788 0214 0E       		.uleb128 0xe
+ 1789 0215 2D010000 		.4byte	0x12d
+ 1790 0219 03       		.uleb128 0x3
+ 1791 021a 4A000000 		.4byte	.LASF38
+ 1792 021e 05       		.byte	0x5
+ 1793 021f 41       		.byte	0x41
+ 1794 0220 24020000 		.4byte	0x224
+ 1795 0224 06       		.uleb128 0x6
+ 1796 0225 04       		.byte	0x4
+ 1797 0226 2A020000 		.4byte	0x22a
+ 1798 022a 07       		.uleb128 0x7
+ 1799 022b 35020000 		.4byte	0x235
+ 1800 022f 08       		.uleb128 0x8
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 41
+
+
+ 1801 0230 27010000 		.4byte	0x127
+ 1802 0234 00       		.byte	0
+ 1803 0235 03       		.uleb128 0x3
+ 1804 0236 6A040000 		.4byte	.LASF39
+ 1805 023a 05       		.byte	0x5
+ 1806 023b 59       		.byte	0x59
+ 1807 023c 2D010000 		.4byte	0x12d
+ 1808 0240 02       		.uleb128 0x2
+ 1809 0241 01       		.byte	0x1
+ 1810 0242 02       		.byte	0x2
+ 1811 0243 2C040000 		.4byte	.LASF40
+ 1812 0247 03       		.uleb128 0x3
+ 1813 0248 00000000 		.4byte	.LASF41
+ 1814 024c 06       		.byte	0x6
+ 1815 024d 1E       		.byte	0x1e
+ 1816 024e A2000000 		.4byte	0xa2
+ 1817 0252 0F       		.uleb128 0xf
+ 1818 0253 0C       		.byte	0xc
+ 1819 0254 06       		.byte	0x6
+ 1820 0255 21       		.byte	0x21
+ 1821 0256 7F020000 		.4byte	0x27f
+ 1822 025a 0B       		.uleb128 0xb
+ 1823 025b CC050000 		.4byte	.LASF42
+ 1824 025f 06       		.byte	0x6
+ 1825 0260 23       		.byte	0x23
+ 1826 0261 CE000000 		.4byte	0xce
+ 1827 0265 00       		.byte	0
+ 1828 0266 0B       		.uleb128 0xb
+ 1829 0267 09010000 		.4byte	.LASF43
+ 1830 026b 06       		.byte	0x6
+ 1831 026c 24       		.byte	0x24
+ 1832 026d 7F020000 		.4byte	0x27f
+ 1833 0271 04       		.byte	0x4
+ 1834 0272 0B       		.uleb128 0xb
+ 1835 0273 9D020000 		.4byte	.LASF44
+ 1836 0277 06       		.byte	0x6
+ 1837 0278 25       		.byte	0x25
+ 1838 0279 7F020000 		.4byte	0x27f
+ 1839 027d 08       		.byte	0x8
+ 1840 027e 00       		.byte	0
+ 1841 027f 06       		.uleb128 0x6
+ 1842 0280 04       		.byte	0x4
+ 1843 0281 47020000 		.4byte	0x247
+ 1844 0285 03       		.uleb128 0x3
+ 1845 0286 38020000 		.4byte	.LASF45
+ 1846 028a 06       		.byte	0x6
+ 1847 028b 26       		.byte	0x26
+ 1848 028c 52020000 		.4byte	0x252
+ 1849 0290 03       		.uleb128 0x3
+ 1850 0291 6D050000 		.4byte	.LASF46
+ 1851 0295 07       		.byte	0x7
+ 1852 0296 2B       		.byte	0x2b
+ 1853 0297 9B020000 		.4byte	0x29b
+ 1854 029b 06       		.uleb128 0x6
+ 1855 029c 04       		.byte	0x4
+ 1856 029d A1020000 		.4byte	0x2a1
+ 1857 02a1 07       		.uleb128 0x7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 42
+
+
+ 1858 02a2 AC020000 		.4byte	0x2ac
+ 1859 02a6 08       		.uleb128 0x8
+ 1860 02a7 AC020000 		.4byte	0x2ac
+ 1861 02ab 00       		.byte	0
+ 1862 02ac 06       		.uleb128 0x6
+ 1863 02ad 04       		.byte	0x4
+ 1864 02ae B2020000 		.4byte	0x2b2
+ 1865 02b2 09       		.uleb128 0x9
+ 1866 02b3 0E020000 		.4byte	.LASF48
+ 1867 02b7 14       		.byte	0x14
+ 1868 02b8 07       		.byte	0x7
+ 1869 02b9 3E       		.byte	0x3e
+ 1870 02ba 0D030000 		.4byte	0x30d
+ 1871 02be 0B       		.uleb128 0xb
+ 1872 02bf 49020000 		.4byte	.LASF49
+ 1873 02c3 07       		.byte	0x7
+ 1874 02c4 40       		.byte	0x40
+ 1875 02c5 CE000000 		.4byte	0xce
+ 1876 02c9 00       		.byte	0
+ 1877 02ca 0B       		.uleb128 0xb
+ 1878 02cb 94050000 		.4byte	.LASF50
+ 1879 02cf 07       		.byte	0x7
+ 1880 02d0 41       		.byte	0x41
+ 1881 02d1 CE000000 		.4byte	0xce
+ 1882 02d5 04       		.byte	0x4
+ 1883 02d6 0B       		.uleb128 0xb
+ 1884 02d7 08040000 		.4byte	.LASF51
+ 1885 02db 07       		.byte	0x7
+ 1886 02dc 42       		.byte	0x42
+ 1887 02dd 90020000 		.4byte	0x290
+ 1888 02e1 08       		.byte	0x8
+ 1889 02e2 0B       		.uleb128 0xb
+ 1890 02e3 FF000000 		.4byte	.LASF52
+ 1891 02e7 07       		.byte	0x7
+ 1892 02e8 44       		.byte	0x44
+ 1893 02e9 E4000000 		.4byte	0xe4
+ 1894 02ed 0C       		.byte	0xc
+ 1895 02ee 0C       		.uleb128 0xc
+ 1896 02ef A2050000 		.4byte	.LASF53
+ 1897 02f3 07       		.byte	0x7
+ 1898 02f4 46       		.byte	0x46
+ 1899 02f5 A2000000 		.4byte	0xa2
+ 1900 02f9 01       		.byte	0x1
+ 1901 02fa 03       		.byte	0x3
+ 1902 02fb 05       		.byte	0x5
+ 1903 02fc 10       		.byte	0x10
+ 1904 02fd 0C       		.uleb128 0xc
+ 1905 02fe D0020000 		.4byte	.LASF54
+ 1906 0302 07       		.byte	0x7
+ 1907 0303 47       		.byte	0x47
+ 1908 0304 A2000000 		.4byte	0xa2
+ 1909 0308 01       		.byte	0x1
+ 1910 0309 01       		.byte	0x1
+ 1911 030a 04       		.byte	0x4
+ 1912 030b 10       		.byte	0x10
+ 1913 030c 00       		.byte	0
+ 1914 030d 10       		.uleb128 0x10
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 43
+
+
+ 1915 030e 01       		.byte	0x1
+ 1916 030f 37000000 		.4byte	0x37
+ 1917 0313 07       		.byte	0x7
+ 1918 0314 30       		.byte	0x30
+ 1919 0315 44030000 		.4byte	0x344
+ 1920 0319 11       		.uleb128 0x11
+ 1921 031a 27020000 		.4byte	.LASF55
+ 1922 031e 00       		.byte	0
+ 1923 031f 11       		.uleb128 0x11
+ 1924 0320 A9030000 		.4byte	.LASF56
+ 1925 0324 01       		.byte	0x1
+ 1926 0325 11       		.uleb128 0x11
+ 1927 0326 64020000 		.4byte	.LASF57
+ 1928 032a 02       		.byte	0x2
+ 1929 032b 11       		.uleb128 0x11
+ 1930 032c 70000000 		.4byte	.LASF58
+ 1931 0330 03       		.byte	0x3
+ 1932 0331 11       		.uleb128 0x11
+ 1933 0332 3D040000 		.4byte	.LASF59
+ 1934 0336 04       		.byte	0x4
+ 1935 0337 11       		.uleb128 0x11
+ 1936 0338 0E010000 		.4byte	.LASF60
+ 1937 033c 05       		.byte	0x5
+ 1938 033d 11       		.uleb128 0x11
+ 1939 033e D3000000 		.4byte	.LASF61
+ 1940 0342 06       		.byte	0x6
+ 1941 0343 00       		.byte	0
+ 1942 0344 03       		.uleb128 0x3
+ 1943 0345 29000000 		.4byte	.LASF62
+ 1944 0349 07       		.byte	0x7
+ 1945 034a 48       		.byte	0x48
+ 1946 034b B2020000 		.4byte	0x2b2
+ 1947 034f 06       		.uleb128 0x6
+ 1948 0350 04       		.byte	0x4
+ 1949 0351 44030000 		.4byte	0x344
+ 1950 0355 12       		.uleb128 0x12
+ 1951 0356 26050000 		.4byte	.LASF89
+ 1952 035a 01       		.byte	0x1
+ 1953 035b 39       		.byte	0x39
+ 1954 035c 00000000 		.4byte	.LFB31
+ 1955 0360 34000000 		.4byte	.LFE31-.LFB31
+ 1956 0364 01       		.uleb128 0x1
+ 1957 0365 9C       		.byte	0x9c
+ 1958 0366 13       		.uleb128 0x13
+ 1959 0367 00030000 		.4byte	.LASF63
+ 1960 036b 01       		.byte	0x1
+ 1961 036c 49       		.byte	0x49
+ 1962 036d 00000000 		.4byte	.LFB32
+ 1963 0371 38000000 		.4byte	.LFE32-.LFB32
+ 1964 0375 01       		.uleb128 0x1
+ 1965 0376 9C       		.byte	0x9c
+ 1966 0377 88030000 		.4byte	0x388
+ 1967 037b 14       		.uleb128 0x14
+ 1968 037c 6100     		.ascii	"a\000"
+ 1969 037e 01       		.byte	0x1
+ 1970 037f 49       		.byte	0x49
+ 1971 0380 88030000 		.4byte	0x388
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 44
+
+
+ 1972 0384 02       		.uleb128 0x2
+ 1973 0385 91       		.byte	0x91
+ 1974 0386 74       		.sleb128 -12
+ 1975 0387 00       		.byte	0
+ 1976 0388 06       		.uleb128 0x6
+ 1977 0389 04       		.byte	0x4
+ 1978 038a 35020000 		.4byte	0x235
+ 1979 038e 13       		.uleb128 0x13
+ 1980 038f 11050000 		.4byte	.LASF64
+ 1981 0393 01       		.byte	0x1
+ 1982 0394 55       		.byte	0x55
+ 1983 0395 00000000 		.4byte	.LFB33
+ 1984 0399 78000000 		.4byte	.LFE33-.LFB33
+ 1985 039d 01       		.uleb128 0x1
+ 1986 039e 9C       		.byte	0x9c
+ 1987 039f BE030000 		.4byte	0x3be
+ 1988 03a3 14       		.uleb128 0x14
+ 1989 03a4 6100     		.ascii	"a\000"
+ 1990 03a6 01       		.byte	0x1
+ 1991 03a7 55       		.byte	0x55
+ 1992 03a8 88030000 		.4byte	0x388
+ 1993 03ac 02       		.uleb128 0x2
+ 1994 03ad 91       		.byte	0x91
+ 1995 03ae 6C       		.sleb128 -20
+ 1996 03af 15       		.uleb128 0x15
+ 1997 03b0 8E000000 		.4byte	.LASF65
+ 1998 03b4 01       		.byte	0x1
+ 1999 03b5 5C       		.byte	0x5c
+ 2000 03b6 88030000 		.4byte	0x388
+ 2001 03ba 02       		.uleb128 0x2
+ 2002 03bb 91       		.byte	0x91
+ 2003 03bc 74       		.sleb128 -12
+ 2004 03bd 00       		.byte	0
+ 2005 03be 16       		.uleb128 0x16
+ 2006 03bf A8020000 		.4byte	.LASF67
+ 2007 03c3 01       		.byte	0x1
+ 2008 03c4 75       		.byte	0x75
+ 2009 03c5 40020000 		.4byte	0x240
+ 2010 03c9 00000000 		.4byte	.LFB34
+ 2011 03cd 70000000 		.4byte	.LFE34-.LFB34
+ 2012 03d1 01       		.uleb128 0x1
+ 2013 03d2 9C       		.byte	0x9c
+ 2014 03d3 1C040000 		.4byte	0x41c
+ 2015 03d7 14       		.uleb128 0x14
+ 2016 03d8 76617200 		.ascii	"var\000"
+ 2017 03dc 01       		.byte	0x1
+ 2018 03dd 75       		.byte	0x75
+ 2019 03de E4000000 		.4byte	0xe4
+ 2020 03e2 02       		.uleb128 0x2
+ 2021 03e3 91       		.byte	0x91
+ 2022 03e4 64       		.sleb128 -28
+ 2023 03e5 17       		.uleb128 0x17
+ 2024 03e6 8C050000 		.4byte	.LASF25
+ 2025 03ea 01       		.byte	0x1
+ 2026 03eb 75       		.byte	0x75
+ 2027 03ec 06010000 		.4byte	0x106
+ 2028 03f0 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 45
+
+
+ 2029 03f1 91       		.byte	0x91
+ 2030 03f2 60       		.sleb128 -32
+ 2031 03f3 18       		.uleb128 0x18
+ 2032 03f4 6100     		.ascii	"a\000"
+ 2033 03f6 01       		.byte	0x1
+ 2034 03f7 77       		.byte	0x77
+ 2035 03f8 88030000 		.4byte	0x388
+ 2036 03fc 02       		.uleb128 0x2
+ 2037 03fd 91       		.byte	0x91
+ 2038 03fe 74       		.sleb128 -12
+ 2039 03ff 15       		.uleb128 0x15
+ 2040 0400 07020000 		.4byte	.LASF66
+ 2041 0404 01       		.byte	0x1
+ 2042 0405 78       		.byte	0x78
+ 2043 0406 88030000 		.4byte	0x388
+ 2044 040a 02       		.uleb128 0x2
+ 2045 040b 91       		.byte	0x91
+ 2046 040c 6C       		.sleb128 -20
+ 2047 040d 18       		.uleb128 0x18
+ 2048 040e 64656C00 		.ascii	"del\000"
+ 2049 0412 01       		.byte	0x1
+ 2050 0413 79       		.byte	0x79
+ 2051 0414 40020000 		.4byte	0x240
+ 2052 0418 02       		.uleb128 0x2
+ 2053 0419 91       		.byte	0x91
+ 2054 041a 73       		.sleb128 -13
+ 2055 041b 00       		.byte	0
+ 2056 041c 16       		.uleb128 0x16
+ 2057 041d DE010000 		.4byte	.LASF68
+ 2058 0421 01       		.byte	0x1
+ 2059 0422 91       		.byte	0x91
+ 2060 0423 B8000000 		.4byte	0xb8
+ 2061 0427 00000000 		.4byte	.LFB35
+ 2062 042b 3C000000 		.4byte	.LFE35-.LFB35
+ 2063 042f 01       		.uleb128 0x1
+ 2064 0430 9C       		.byte	0x9c
+ 2065 0431 50040000 		.4byte	0x450
+ 2066 0435 18       		.uleb128 0x18
+ 2067 0436 636E7400 		.ascii	"cnt\000"
+ 2068 043a 01       		.byte	0x1
+ 2069 043b 93       		.byte	0x93
+ 2070 043c B8000000 		.4byte	0xb8
+ 2071 0440 02       		.uleb128 0x2
+ 2072 0441 91       		.byte	0x91
+ 2073 0442 76       		.sleb128 -10
+ 2074 0443 18       		.uleb128 0x18
+ 2075 0444 6100     		.ascii	"a\000"
+ 2076 0446 01       		.byte	0x1
+ 2077 0447 94       		.byte	0x94
+ 2078 0448 88030000 		.4byte	0x388
+ 2079 044c 02       		.uleb128 0x2
+ 2080 044d 91       		.byte	0x91
+ 2081 044e 70       		.sleb128 -16
+ 2082 044f 00       		.byte	0
+ 2083 0450 19       		.uleb128 0x19
+ 2084 0451 B6050000 		.4byte	.LASF69
+ 2085 0455 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 46
+
+
+ 2086 0456 A1       		.byte	0xa1
+ 2087 0457 B8000000 		.4byte	0xb8
+ 2088 045b 00000000 		.4byte	.LFB36
+ 2089 045f 60000000 		.4byte	.LFE36-.LFB36
+ 2090 0463 01       		.uleb128 0x1
+ 2091 0464 9C       		.byte	0x9c
+ 2092 0465 AE040000 		.4byte	0x4ae
+ 2093 0469 17       		.uleb128 0x17
+ 2094 046a 4D030000 		.4byte	.LASF70
+ 2095 046e 01       		.byte	0x1
+ 2096 046f A1       		.byte	0xa1
+ 2097 0470 B8000000 		.4byte	0xb8
+ 2098 0474 02       		.uleb128 0x2
+ 2099 0475 91       		.byte	0x91
+ 2100 0476 6E       		.sleb128 -18
+ 2101 0477 17       		.uleb128 0x17
+ 2102 0478 A2020000 		.4byte	.LASF28
+ 2103 047c 01       		.byte	0x1
+ 2104 047d A1       		.byte	0xa1
+ 2105 047e FB000000 		.4byte	0xfb
+ 2106 0482 02       		.uleb128 0x2
+ 2107 0483 91       		.byte	0x91
+ 2108 0484 6C       		.sleb128 -20
+ 2109 0485 14       		.uleb128 0x14
+ 2110 0486 656E6400 		.ascii	"end\000"
+ 2111 048a 01       		.byte	0x1
+ 2112 048b A1       		.byte	0xa1
+ 2113 048c FB000000 		.4byte	0xfb
+ 2114 0490 02       		.uleb128 0x2
+ 2115 0491 91       		.byte	0x91
+ 2116 0492 6A       		.sleb128 -22
+ 2117 0493 18       		.uleb128 0x18
+ 2118 0494 6400     		.ascii	"d\000"
+ 2119 0496 01       		.byte	0x1
+ 2120 0497 A3       		.byte	0xa3
+ 2121 0498 C3000000 		.4byte	0xc3
+ 2122 049c 02       		.uleb128 0x2
+ 2123 049d 91       		.byte	0x91
+ 2124 049e 70       		.sleb128 -16
+ 2125 049f 15       		.uleb128 0x15
+ 2126 04a0 59030000 		.4byte	.LASF29
+ 2127 04a4 01       		.byte	0x1
+ 2128 04a5 A4       		.byte	0xa4
+ 2129 04a6 CE000000 		.4byte	0xce
+ 2130 04aa 02       		.uleb128 0x2
+ 2131 04ab 91       		.byte	0x91
+ 2132 04ac 74       		.sleb128 -12
+ 2133 04ad 00       		.byte	0
+ 2134 04ae 19       		.uleb128 0x19
+ 2135 04af 10040000 		.4byte	.LASF71
+ 2136 04b3 01       		.byte	0x1
+ 2137 04b4 B4       		.byte	0xb4
+ 2138 04b5 FB000000 		.4byte	0xfb
+ 2139 04b9 00000000 		.4byte	.LFB37
+ 2140 04bd 64000000 		.4byte	.LFE37-.LFB37
+ 2141 04c1 01       		.uleb128 0x1
+ 2142 04c2 9C       		.byte	0x9c
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 47
+
+
+ 2143 04c3 F0040000 		.4byte	0x4f0
+ 2144 04c7 14       		.uleb128 0x14
+ 2145 04c8 6100     		.ascii	"a\000"
+ 2146 04ca 01       		.byte	0x1
+ 2147 04cb B4       		.byte	0xb4
+ 2148 04cc F0040000 		.4byte	0x4f0
+ 2149 04d0 02       		.uleb128 0x2
+ 2150 04d1 91       		.byte	0x91
+ 2151 04d2 6C       		.sleb128 -20
+ 2152 04d3 15       		.uleb128 0x15
+ 2153 04d4 9D050000 		.4byte	.LASF72
+ 2154 04d8 01       		.byte	0x1
+ 2155 04d9 B7       		.byte	0xb7
+ 2156 04da CE000000 		.4byte	0xce
+ 2157 04de 02       		.uleb128 0x2
+ 2158 04df 91       		.byte	0x91
+ 2159 04e0 74       		.sleb128 -12
+ 2160 04e1 15       		.uleb128 0x15
+ 2161 04e2 63050000 		.4byte	.LASF73
+ 2162 04e6 01       		.byte	0x1
+ 2163 04e7 C0       		.byte	0xc0
+ 2164 04e8 C3000000 		.4byte	0xc3
+ 2165 04ec 02       		.uleb128 0x2
+ 2166 04ed 91       		.byte	0x91
+ 2167 04ee 70       		.sleb128 -16
+ 2168 04ef 00       		.byte	0
+ 2169 04f0 06       		.uleb128 0x6
+ 2170 04f1 04       		.byte	0x4
+ 2171 04f2 F6040000 		.4byte	0x4f6
+ 2172 04f6 0E       		.uleb128 0xe
+ 2173 04f7 35020000 		.4byte	0x235
+ 2174 04fb 16       		.uleb128 0x16
+ 2175 04fc 75020000 		.4byte	.LASF74
+ 2176 0500 01       		.byte	0x1
+ 2177 0501 CD       		.byte	0xcd
+ 2178 0502 FB000000 		.4byte	0xfb
+ 2179 0506 00000000 		.4byte	.LFB38
+ 2180 050a 74000000 		.4byte	.LFE38-.LFB38
+ 2181 050e 01       		.uleb128 0x1
+ 2182 050f 9C       		.byte	0x9c
+ 2183 0510 49050000 		.4byte	0x549
+ 2184 0514 14       		.uleb128 0x14
+ 2185 0515 6100     		.ascii	"a\000"
+ 2186 0517 01       		.byte	0x1
+ 2187 0518 CD       		.byte	0xcd
+ 2188 0519 F0040000 		.4byte	0x4f0
+ 2189 051d 02       		.uleb128 0x2
+ 2190 051e 91       		.byte	0x91
+ 2191 051f 64       		.sleb128 -28
+ 2192 0520 18       		.uleb128 0x18
+ 2193 0521 7400     		.ascii	"t\000"
+ 2194 0523 01       		.byte	0x1
+ 2195 0524 D0       		.byte	0xd0
+ 2196 0525 CE000000 		.4byte	0xce
+ 2197 0529 02       		.uleb128 0x2
+ 2198 052a 91       		.byte	0x91
+ 2199 052b 74       		.sleb128 -12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 48
+
+
+ 2200 052c 15       		.uleb128 0x15
+ 2201 052d 9D050000 		.4byte	.LASF72
+ 2202 0531 01       		.byte	0x1
+ 2203 0532 D6       		.byte	0xd6
+ 2204 0533 C3000000 		.4byte	0xc3
+ 2205 0537 02       		.uleb128 0x2
+ 2206 0538 91       		.byte	0x91
+ 2207 0539 70       		.sleb128 -16
+ 2208 053a 15       		.uleb128 0x15
+ 2209 053b 63050000 		.4byte	.LASF73
+ 2210 053f 01       		.byte	0x1
+ 2211 0540 D8       		.byte	0xd8
+ 2212 0541 C3000000 		.4byte	0xc3
+ 2213 0545 02       		.uleb128 0x2
+ 2214 0546 91       		.byte	0x91
+ 2215 0547 6C       		.sleb128 -20
+ 2216 0548 00       		.byte	0
+ 2217 0549 16       		.uleb128 0x16
+ 2218 054a A2000000 		.4byte	.LASF75
+ 2219 054e 01       		.byte	0x1
+ 2220 054f E5       		.byte	0xe5
+ 2221 0550 FB000000 		.4byte	0xfb
+ 2222 0554 00000000 		.4byte	.LFB39
+ 2223 0558 78000000 		.4byte	.LFE39-.LFB39
+ 2224 055c 01       		.uleb128 0x1
+ 2225 055d 9C       		.byte	0x9c
+ 2226 055e 97050000 		.4byte	0x597
+ 2227 0562 14       		.uleb128 0x14
+ 2228 0563 6100     		.ascii	"a\000"
+ 2229 0565 01       		.byte	0x1
+ 2230 0566 E5       		.byte	0xe5
+ 2231 0567 F0040000 		.4byte	0x4f0
+ 2232 056b 02       		.uleb128 0x2
+ 2233 056c 91       		.byte	0x91
+ 2234 056d 64       		.sleb128 -28
+ 2235 056e 18       		.uleb128 0x18
+ 2236 056f 7400     		.ascii	"t\000"
+ 2237 0571 01       		.byte	0x1
+ 2238 0572 E9       		.byte	0xe9
+ 2239 0573 CE000000 		.4byte	0xce
+ 2240 0577 02       		.uleb128 0x2
+ 2241 0578 91       		.byte	0x91
+ 2242 0579 74       		.sleb128 -12
+ 2243 057a 15       		.uleb128 0x15
+ 2244 057b 9D050000 		.4byte	.LASF72
+ 2245 057f 01       		.byte	0x1
+ 2246 0580 EF       		.byte	0xef
+ 2247 0581 C3000000 		.4byte	0xc3
+ 2248 0585 02       		.uleb128 0x2
+ 2249 0586 91       		.byte	0x91
+ 2250 0587 70       		.sleb128 -16
+ 2251 0588 15       		.uleb128 0x15
+ 2252 0589 63050000 		.4byte	.LASF73
+ 2253 058d 01       		.byte	0x1
+ 2254 058e F1       		.byte	0xf1
+ 2255 058f C3000000 		.4byte	0xc3
+ 2256 0593 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 49
+
+
+ 2257 0594 91       		.byte	0x91
+ 2258 0595 6C       		.sleb128 -20
+ 2259 0596 00       		.byte	0
+ 2260 0597 16       		.uleb128 0x16
+ 2261 0598 34030000 		.4byte	.LASF76
+ 2262 059c 01       		.byte	0x1
+ 2263 059d FE       		.byte	0xfe
+ 2264 059e FB000000 		.4byte	0xfb
+ 2265 05a2 00000000 		.4byte	.LFB40
+ 2266 05a6 76000000 		.4byte	.LFE40-.LFB40
+ 2267 05aa 01       		.uleb128 0x1
+ 2268 05ab 9C       		.byte	0x9c
+ 2269 05ac E8050000 		.4byte	0x5e8
+ 2270 05b0 14       		.uleb128 0x14
+ 2271 05b1 6100     		.ascii	"a\000"
+ 2272 05b3 01       		.byte	0x1
+ 2273 05b4 FE       		.byte	0xfe
+ 2274 05b5 F0040000 		.4byte	0x4f0
+ 2275 05b9 02       		.uleb128 0x2
+ 2276 05ba 91       		.byte	0x91
+ 2277 05bb 64       		.sleb128 -28
+ 2278 05bc 1A       		.uleb128 0x1a
+ 2279 05bd 7400     		.ascii	"t\000"
+ 2280 05bf 01       		.byte	0x1
+ 2281 05c0 0201     		.2byte	0x102
+ 2282 05c2 CE000000 		.4byte	0xce
+ 2283 05c6 02       		.uleb128 0x2
+ 2284 05c7 91       		.byte	0x91
+ 2285 05c8 74       		.sleb128 -12
+ 2286 05c9 1B       		.uleb128 0x1b
+ 2287 05ca 9D050000 		.4byte	.LASF72
+ 2288 05ce 01       		.byte	0x1
+ 2289 05cf 0801     		.2byte	0x108
+ 2290 05d1 C3000000 		.4byte	0xc3
+ 2291 05d5 02       		.uleb128 0x2
+ 2292 05d6 91       		.byte	0x91
+ 2293 05d7 70       		.sleb128 -16
+ 2294 05d8 1B       		.uleb128 0x1b
+ 2295 05d9 63050000 		.4byte	.LASF73
+ 2296 05dd 01       		.byte	0x1
+ 2297 05de 0A01     		.2byte	0x10a
+ 2298 05e0 C3000000 		.4byte	0xc3
+ 2299 05e4 02       		.uleb128 0x2
+ 2300 05e5 91       		.byte	0x91
+ 2301 05e6 6C       		.sleb128 -20
+ 2302 05e7 00       		.byte	0
+ 2303 05e8 1C       		.uleb128 0x1c
+ 2304 05e9 42050000 		.4byte	.LASF77
+ 2305 05ed 01       		.byte	0x1
+ 2306 05ee 1701     		.2byte	0x117
+ 2307 05f0 FB000000 		.4byte	0xfb
+ 2308 05f4 00000000 		.4byte	.LFB41
+ 2309 05f8 78000000 		.4byte	.LFE41-.LFB41
+ 2310 05fc 01       		.uleb128 0x1
+ 2311 05fd 9C       		.byte	0x9c
+ 2312 05fe 3B060000 		.4byte	0x63b
+ 2313 0602 1D       		.uleb128 0x1d
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 50
+
+
+ 2314 0603 6100     		.ascii	"a\000"
+ 2315 0605 01       		.byte	0x1
+ 2316 0606 1701     		.2byte	0x117
+ 2317 0608 F0040000 		.4byte	0x4f0
+ 2318 060c 02       		.uleb128 0x2
+ 2319 060d 91       		.byte	0x91
+ 2320 060e 64       		.sleb128 -28
+ 2321 060f 1A       		.uleb128 0x1a
+ 2322 0610 7400     		.ascii	"t\000"
+ 2323 0612 01       		.byte	0x1
+ 2324 0613 1B01     		.2byte	0x11b
+ 2325 0615 CE000000 		.4byte	0xce
+ 2326 0619 02       		.uleb128 0x2
+ 2327 061a 91       		.byte	0x91
+ 2328 061b 74       		.sleb128 -12
+ 2329 061c 1B       		.uleb128 0x1b
+ 2330 061d 9D050000 		.4byte	.LASF72
+ 2331 0621 01       		.byte	0x1
+ 2332 0622 2101     		.2byte	0x121
+ 2333 0624 C3000000 		.4byte	0xc3
+ 2334 0628 02       		.uleb128 0x2
+ 2335 0629 91       		.byte	0x91
+ 2336 062a 70       		.sleb128 -16
+ 2337 062b 1B       		.uleb128 0x1b
+ 2338 062c 63050000 		.4byte	.LASF73
+ 2339 0630 01       		.byte	0x1
+ 2340 0631 2301     		.2byte	0x123
+ 2341 0633 C3000000 		.4byte	0xc3
+ 2342 0637 02       		.uleb128 0x2
+ 2343 0638 91       		.byte	0x91
+ 2344 0639 6C       		.sleb128 -20
+ 2345 063a 00       		.byte	0
+ 2346 063b 1C       		.uleb128 0x1c
+ 2347 063c 64030000 		.4byte	.LASF78
+ 2348 0640 01       		.byte	0x1
+ 2349 0641 3001     		.2byte	0x130
+ 2350 0643 FB000000 		.4byte	0xfb
+ 2351 0647 00000000 		.4byte	.LFB42
+ 2352 064b 84010000 		.4byte	.LFE42-.LFB42
+ 2353 064f 01       		.uleb128 0x1
+ 2354 0650 9C       		.byte	0x9c
+ 2355 0651 9D060000 		.4byte	0x69d
+ 2356 0655 1D       		.uleb128 0x1d
+ 2357 0656 6100     		.ascii	"a\000"
+ 2358 0658 01       		.byte	0x1
+ 2359 0659 3001     		.2byte	0x130
+ 2360 065b F0040000 		.4byte	0x4f0
+ 2361 065f 02       		.uleb128 0x2
+ 2362 0660 91       		.byte	0x91
+ 2363 0661 64       		.sleb128 -28
+ 2364 0662 1A       		.uleb128 0x1a
+ 2365 0663 7400     		.ascii	"t\000"
+ 2366 0665 01       		.byte	0x1
+ 2367 0666 3301     		.2byte	0x133
+ 2368 0668 CE000000 		.4byte	0xce
+ 2369 066c 02       		.uleb128 0x2
+ 2370 066d 91       		.byte	0x91
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 51
+
+
+ 2371 066e 74       		.sleb128 -12
+ 2372 066f 1B       		.uleb128 0x1b
+ 2373 0670 33000000 		.4byte	.LASF79
+ 2374 0674 01       		.byte	0x1
+ 2375 0675 3901     		.2byte	0x139
+ 2376 0677 C3000000 		.4byte	0xc3
+ 2377 067b 02       		.uleb128 0x2
+ 2378 067c 91       		.byte	0x91
+ 2379 067d 70       		.sleb128 -16
+ 2380 067e 1B       		.uleb128 0x1b
+ 2381 067f 9D050000 		.4byte	.LASF72
+ 2382 0683 01       		.byte	0x1
+ 2383 0684 5A01     		.2byte	0x15a
+ 2384 0686 C3000000 		.4byte	0xc3
+ 2385 068a 02       		.uleb128 0x2
+ 2386 068b 91       		.byte	0x91
+ 2387 068c 6C       		.sleb128 -20
+ 2388 068d 1B       		.uleb128 0x1b
+ 2389 068e 63050000 		.4byte	.LASF73
+ 2390 0692 01       		.byte	0x1
+ 2391 0693 5C01     		.2byte	0x15c
+ 2392 0695 C3000000 		.4byte	0xc3
+ 2393 0699 02       		.uleb128 0x2
+ 2394 069a 91       		.byte	0x91
+ 2395 069b 68       		.sleb128 -24
+ 2396 069c 00       		.byte	0
+ 2397 069d 1E       		.uleb128 0x1e
+ 2398 069e 7A050000 		.4byte	.LASF80
+ 2399 06a2 01       		.byte	0x1
+ 2400 06a3 6A01     		.2byte	0x16a
+ 2401 06a5 FB000000 		.4byte	0xfb
+ 2402 06a9 00000000 		.4byte	.LFB43
+ 2403 06ad 32000000 		.4byte	.LFE43-.LFB43
+ 2404 06b1 01       		.uleb128 0x1
+ 2405 06b2 9C       		.byte	0x9c
+ 2406 06b3 C5060000 		.4byte	0x6c5
+ 2407 06b7 1D       		.uleb128 0x1d
+ 2408 06b8 6100     		.ascii	"a\000"
+ 2409 06ba 01       		.byte	0x1
+ 2410 06bb 6A01     		.2byte	0x16a
+ 2411 06bd F0040000 		.4byte	0x4f0
+ 2412 06c1 02       		.uleb128 0x2
+ 2413 06c2 91       		.byte	0x91
+ 2414 06c3 74       		.sleb128 -12
+ 2415 06c4 00       		.byte	0
+ 2416 06c5 1F       		.uleb128 0x1f
+ 2417 06c6 50020000 		.4byte	.LASF90
+ 2418 06ca 01       		.byte	0x1
+ 2419 06cb 7A01     		.2byte	0x17a
+ 2420 06cd 00000000 		.4byte	.LFB44
+ 2421 06d1 20010000 		.4byte	.LFE44-.LFB44
+ 2422 06d5 01       		.uleb128 0x1
+ 2423 06d6 9C       		.byte	0x9c
+ 2424 06d7 20070000 		.4byte	0x720
+ 2425 06db 20       		.uleb128 0x20
+ 2426 06dc 5E030000 		.4byte	.LASF81
+ 2427 06e0 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 52
+
+
+ 2428 06e1 7A01     		.2byte	0x17a
+ 2429 06e3 4F030000 		.4byte	0x34f
+ 2430 06e7 02       		.uleb128 0x2
+ 2431 06e8 91       		.byte	0x91
+ 2432 06e9 64       		.sleb128 -28
+ 2433 06ea 1A       		.uleb128 0x1a
+ 2434 06eb 6100     		.ascii	"a\000"
+ 2435 06ed 01       		.byte	0x1
+ 2436 06ee 7E01     		.2byte	0x17e
+ 2437 06f0 88030000 		.4byte	0x388
+ 2438 06f4 02       		.uleb128 0x2
+ 2439 06f5 91       		.byte	0x91
+ 2440 06f6 74       		.sleb128 -12
+ 2441 06f7 1B       		.uleb128 0x1b
+ 2442 06f8 53030000 		.4byte	.LASF82
+ 2443 06fc 01       		.byte	0x1
+ 2444 06fd 8401     		.2byte	0x184
+ 2445 06ff CE000000 		.4byte	0xce
+ 2446 0703 02       		.uleb128 0x2
+ 2447 0704 91       		.byte	0x91
+ 2448 0705 70       		.sleb128 -16
+ 2449 0706 21       		.uleb128 0x21
+ 2450 0707 8A000000 		.4byte	.LBB2
+ 2451 070b 54000000 		.4byte	.LBE2-.LBB2
+ 2452 070f 1B       		.uleb128 0x1b
+ 2453 0710 63050000 		.4byte	.LASF73
+ 2454 0714 01       		.byte	0x1
+ 2455 0715 9501     		.2byte	0x195
+ 2456 0717 C3000000 		.4byte	0xc3
+ 2457 071b 02       		.uleb128 0x2
+ 2458 071c 91       		.byte	0x91
+ 2459 071d 6C       		.sleb128 -20
+ 2460 071e 00       		.byte	0
+ 2461 071f 00       		.byte	0
+ 2462 0720 22       		.uleb128 0x22
+ 2463 0721 0D000000 		.4byte	.LASF91
+ 2464 0725 01       		.byte	0x1
+ 2465 0726 B301     		.2byte	0x1b3
+ 2466 0728 40020000 		.4byte	0x240
+ 2467 072c 00000000 		.4byte	.LFB45
+ 2468 0730 18010000 		.4byte	.LFE45-.LFB45
+ 2469 0734 01       		.uleb128 0x1
+ 2470 0735 9C       		.byte	0x9c
+ 2471 0736 7E070000 		.4byte	0x77e
+ 2472 073a 1D       		.uleb128 0x1d
+ 2473 073b 6100     		.ascii	"a\000"
+ 2474 073d 01       		.byte	0x1
+ 2475 073e B301     		.2byte	0x1b3
+ 2476 0740 88030000 		.4byte	0x388
+ 2477 0744 02       		.uleb128 0x2
+ 2478 0745 91       		.byte	0x91
+ 2479 0746 4C       		.sleb128 -52
+ 2480 0747 23       		.uleb128 0x23
+ 2481 0748 58000000 		.4byte	.LBB3
+ 2482 074c 32000000 		.4byte	.LBE3-.LBB3
+ 2483 0750 64070000 		.4byte	0x764
+ 2484 0754 1B       		.uleb128 0x1b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 53
+
+
+ 2485 0755 20050000 		.4byte	.LASF83
+ 2486 0759 01       		.byte	0x1
+ 2487 075a BD01     		.2byte	0x1bd
+ 2488 075c 35020000 		.4byte	0x235
+ 2489 0760 02       		.uleb128 0x2
+ 2490 0761 91       		.byte	0x91
+ 2491 0762 50       		.sleb128 -48
+ 2492 0763 00       		.byte	0
+ 2493 0764 21       		.uleb128 0x21
+ 2494 0765 AA000000 		.4byte	.LBB4
+ 2495 0769 58000000 		.4byte	.LBE4-.LBB4
+ 2496 076d 1A       		.uleb128 0x1a
+ 2497 076e 746D7000 		.ascii	"tmp\000"
+ 2498 0772 01       		.byte	0x1
+ 2499 0773 D101     		.2byte	0x1d1
+ 2500 0775 C3000000 		.4byte	0xc3
+ 2501 0779 02       		.uleb128 0x2
+ 2502 077a 91       		.byte	0x91
+ 2503 077b 74       		.sleb128 -12
+ 2504 077c 00       		.byte	0
+ 2505 077d 00       		.byte	0
+ 2506 077e 15       		.uleb128 0x15
+ 2507 077f C2020000 		.4byte	.LASF84
+ 2508 0783 01       		.byte	0x1
+ 2509 0784 2B       		.byte	0x2b
+ 2510 0785 CE000000 		.4byte	0xce
+ 2511 0789 05       		.uleb128 0x5
+ 2512 078a 03       		.byte	0x3
+ 2513 078b 00000000 		.4byte	last_task_run
+ 2514 078f 15       		.uleb128 0x15
+ 2515 0790 38000000 		.4byte	.LASF85
+ 2516 0794 01       		.byte	0x1
+ 2517 0795 2C       		.byte	0x2c
+ 2518 0796 40020000 		.4byte	0x240
+ 2519 079a 05       		.uleb128 0x5
+ 2520 079b 03       		.byte	0x3
+ 2521 079c 04000000 		.4byte	anim_list_changed
+ 2522 07a0 24       		.uleb128 0x24
+ 2523 07a1 78030000 		.4byte	.LASF92
+ 2524 07a5 08       		.byte	0x8
+ 2525 07a6 38       		.byte	0x38
+ 2526 07a7 85020000 		.4byte	0x285
+ 2527 07ab 00       		.byte	0
+ 2528              		.section	.debug_abbrev,"",%progbits
+ 2529              	.Ldebug_abbrev0:
+ 2530 0000 01       		.uleb128 0x1
+ 2531 0001 11       		.uleb128 0x11
+ 2532 0002 01       		.byte	0x1
+ 2533 0003 25       		.uleb128 0x25
+ 2534 0004 0E       		.uleb128 0xe
+ 2535 0005 13       		.uleb128 0x13
+ 2536 0006 0B       		.uleb128 0xb
+ 2537 0007 03       		.uleb128 0x3
+ 2538 0008 0E       		.uleb128 0xe
+ 2539 0009 1B       		.uleb128 0x1b
+ 2540 000a 0E       		.uleb128 0xe
+ 2541 000b 55       		.uleb128 0x55
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 54
+
+
+ 2542 000c 17       		.uleb128 0x17
+ 2543 000d 11       		.uleb128 0x11
+ 2544 000e 01       		.uleb128 0x1
+ 2545 000f 10       		.uleb128 0x10
+ 2546 0010 17       		.uleb128 0x17
+ 2547 0011 00       		.byte	0
+ 2548 0012 00       		.byte	0
+ 2549 0013 02       		.uleb128 0x2
+ 2550 0014 24       		.uleb128 0x24
+ 2551 0015 00       		.byte	0
+ 2552 0016 0B       		.uleb128 0xb
+ 2553 0017 0B       		.uleb128 0xb
+ 2554 0018 3E       		.uleb128 0x3e
+ 2555 0019 0B       		.uleb128 0xb
+ 2556 001a 03       		.uleb128 0x3
+ 2557 001b 0E       		.uleb128 0xe
+ 2558 001c 00       		.byte	0
+ 2559 001d 00       		.byte	0
+ 2560 001e 03       		.uleb128 0x3
+ 2561 001f 16       		.uleb128 0x16
+ 2562 0020 00       		.byte	0
+ 2563 0021 03       		.uleb128 0x3
+ 2564 0022 0E       		.uleb128 0xe
+ 2565 0023 3A       		.uleb128 0x3a
+ 2566 0024 0B       		.uleb128 0xb
+ 2567 0025 3B       		.uleb128 0x3b
+ 2568 0026 0B       		.uleb128 0xb
+ 2569 0027 49       		.uleb128 0x49
+ 2570 0028 13       		.uleb128 0x13
+ 2571 0029 00       		.byte	0
+ 2572 002a 00       		.byte	0
+ 2573 002b 04       		.uleb128 0x4
+ 2574 002c 24       		.uleb128 0x24
+ 2575 002d 00       		.byte	0
+ 2576 002e 0B       		.uleb128 0xb
+ 2577 002f 0B       		.uleb128 0xb
+ 2578 0030 3E       		.uleb128 0x3e
+ 2579 0031 0B       		.uleb128 0xb
+ 2580 0032 03       		.uleb128 0x3
+ 2581 0033 08       		.uleb128 0x8
+ 2582 0034 00       		.byte	0
+ 2583 0035 00       		.byte	0
+ 2584 0036 05       		.uleb128 0x5
+ 2585 0037 0F       		.uleb128 0xf
+ 2586 0038 00       		.byte	0
+ 2587 0039 0B       		.uleb128 0xb
+ 2588 003a 0B       		.uleb128 0xb
+ 2589 003b 00       		.byte	0
+ 2590 003c 00       		.byte	0
+ 2591 003d 06       		.uleb128 0x6
+ 2592 003e 0F       		.uleb128 0xf
+ 2593 003f 00       		.byte	0
+ 2594 0040 0B       		.uleb128 0xb
+ 2595 0041 0B       		.uleb128 0xb
+ 2596 0042 49       		.uleb128 0x49
+ 2597 0043 13       		.uleb128 0x13
+ 2598 0044 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 55
+
+
+ 2599 0045 00       		.byte	0
+ 2600 0046 07       		.uleb128 0x7
+ 2601 0047 15       		.uleb128 0x15
+ 2602 0048 01       		.byte	0x1
+ 2603 0049 27       		.uleb128 0x27
+ 2604 004a 19       		.uleb128 0x19
+ 2605 004b 01       		.uleb128 0x1
+ 2606 004c 13       		.uleb128 0x13
+ 2607 004d 00       		.byte	0
+ 2608 004e 00       		.byte	0
+ 2609 004f 08       		.uleb128 0x8
+ 2610 0050 05       		.uleb128 0x5
+ 2611 0051 00       		.byte	0
+ 2612 0052 49       		.uleb128 0x49
+ 2613 0053 13       		.uleb128 0x13
+ 2614 0054 00       		.byte	0
+ 2615 0055 00       		.byte	0
+ 2616 0056 09       		.uleb128 0x9
+ 2617 0057 13       		.uleb128 0x13
+ 2618 0058 01       		.byte	0x1
+ 2619 0059 03       		.uleb128 0x3
+ 2620 005a 0E       		.uleb128 0xe
+ 2621 005b 0B       		.uleb128 0xb
+ 2622 005c 0B       		.uleb128 0xb
+ 2623 005d 3A       		.uleb128 0x3a
+ 2624 005e 0B       		.uleb128 0xb
+ 2625 005f 3B       		.uleb128 0x3b
+ 2626 0060 0B       		.uleb128 0xb
+ 2627 0061 01       		.uleb128 0x1
+ 2628 0062 13       		.uleb128 0x13
+ 2629 0063 00       		.byte	0
+ 2630 0064 00       		.byte	0
+ 2631 0065 0A       		.uleb128 0xa
+ 2632 0066 0D       		.uleb128 0xd
+ 2633 0067 00       		.byte	0
+ 2634 0068 03       		.uleb128 0x3
+ 2635 0069 08       		.uleb128 0x8
+ 2636 006a 3A       		.uleb128 0x3a
+ 2637 006b 0B       		.uleb128 0xb
+ 2638 006c 3B       		.uleb128 0x3b
+ 2639 006d 0B       		.uleb128 0xb
+ 2640 006e 49       		.uleb128 0x49
+ 2641 006f 13       		.uleb128 0x13
+ 2642 0070 38       		.uleb128 0x38
+ 2643 0071 0B       		.uleb128 0xb
+ 2644 0072 00       		.byte	0
+ 2645 0073 00       		.byte	0
+ 2646 0074 0B       		.uleb128 0xb
+ 2647 0075 0D       		.uleb128 0xd
+ 2648 0076 00       		.byte	0
+ 2649 0077 03       		.uleb128 0x3
+ 2650 0078 0E       		.uleb128 0xe
+ 2651 0079 3A       		.uleb128 0x3a
+ 2652 007a 0B       		.uleb128 0xb
+ 2653 007b 3B       		.uleb128 0x3b
+ 2654 007c 0B       		.uleb128 0xb
+ 2655 007d 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 56
+
+
+ 2656 007e 13       		.uleb128 0x13
+ 2657 007f 38       		.uleb128 0x38
+ 2658 0080 0B       		.uleb128 0xb
+ 2659 0081 00       		.byte	0
+ 2660 0082 00       		.byte	0
+ 2661 0083 0C       		.uleb128 0xc
+ 2662 0084 0D       		.uleb128 0xd
+ 2663 0085 00       		.byte	0
+ 2664 0086 03       		.uleb128 0x3
+ 2665 0087 0E       		.uleb128 0xe
+ 2666 0088 3A       		.uleb128 0x3a
+ 2667 0089 0B       		.uleb128 0xb
+ 2668 008a 3B       		.uleb128 0x3b
+ 2669 008b 0B       		.uleb128 0xb
+ 2670 008c 49       		.uleb128 0x49
+ 2671 008d 13       		.uleb128 0x13
+ 2672 008e 0B       		.uleb128 0xb
+ 2673 008f 0B       		.uleb128 0xb
+ 2674 0090 0D       		.uleb128 0xd
+ 2675 0091 0B       		.uleb128 0xb
+ 2676 0092 0C       		.uleb128 0xc
+ 2677 0093 0B       		.uleb128 0xb
+ 2678 0094 38       		.uleb128 0x38
+ 2679 0095 0B       		.uleb128 0xb
+ 2680 0096 00       		.byte	0
+ 2681 0097 00       		.byte	0
+ 2682 0098 0D       		.uleb128 0xd
+ 2683 0099 15       		.uleb128 0x15
+ 2684 009a 01       		.byte	0x1
+ 2685 009b 27       		.uleb128 0x27
+ 2686 009c 19       		.uleb128 0x19
+ 2687 009d 49       		.uleb128 0x49
+ 2688 009e 13       		.uleb128 0x13
+ 2689 009f 01       		.uleb128 0x1
+ 2690 00a0 13       		.uleb128 0x13
+ 2691 00a1 00       		.byte	0
+ 2692 00a2 00       		.byte	0
+ 2693 00a3 0E       		.uleb128 0xe
+ 2694 00a4 26       		.uleb128 0x26
+ 2695 00a5 00       		.byte	0
+ 2696 00a6 49       		.uleb128 0x49
+ 2697 00a7 13       		.uleb128 0x13
+ 2698 00a8 00       		.byte	0
+ 2699 00a9 00       		.byte	0
+ 2700 00aa 0F       		.uleb128 0xf
+ 2701 00ab 13       		.uleb128 0x13
+ 2702 00ac 01       		.byte	0x1
+ 2703 00ad 0B       		.uleb128 0xb
+ 2704 00ae 0B       		.uleb128 0xb
+ 2705 00af 3A       		.uleb128 0x3a
+ 2706 00b0 0B       		.uleb128 0xb
+ 2707 00b1 3B       		.uleb128 0x3b
+ 2708 00b2 0B       		.uleb128 0xb
+ 2709 00b3 01       		.uleb128 0x1
+ 2710 00b4 13       		.uleb128 0x13
+ 2711 00b5 00       		.byte	0
+ 2712 00b6 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 57
+
+
+ 2713 00b7 10       		.uleb128 0x10
+ 2714 00b8 04       		.uleb128 0x4
+ 2715 00b9 01       		.byte	0x1
+ 2716 00ba 0B       		.uleb128 0xb
+ 2717 00bb 0B       		.uleb128 0xb
+ 2718 00bc 49       		.uleb128 0x49
+ 2719 00bd 13       		.uleb128 0x13
+ 2720 00be 3A       		.uleb128 0x3a
+ 2721 00bf 0B       		.uleb128 0xb
+ 2722 00c0 3B       		.uleb128 0x3b
+ 2723 00c1 0B       		.uleb128 0xb
+ 2724 00c2 01       		.uleb128 0x1
+ 2725 00c3 13       		.uleb128 0x13
+ 2726 00c4 00       		.byte	0
+ 2727 00c5 00       		.byte	0
+ 2728 00c6 11       		.uleb128 0x11
+ 2729 00c7 28       		.uleb128 0x28
+ 2730 00c8 00       		.byte	0
+ 2731 00c9 03       		.uleb128 0x3
+ 2732 00ca 0E       		.uleb128 0xe
+ 2733 00cb 1C       		.uleb128 0x1c
+ 2734 00cc 0B       		.uleb128 0xb
+ 2735 00cd 00       		.byte	0
+ 2736 00ce 00       		.byte	0
+ 2737 00cf 12       		.uleb128 0x12
+ 2738 00d0 2E       		.uleb128 0x2e
+ 2739 00d1 00       		.byte	0
+ 2740 00d2 3F       		.uleb128 0x3f
+ 2741 00d3 19       		.uleb128 0x19
+ 2742 00d4 03       		.uleb128 0x3
+ 2743 00d5 0E       		.uleb128 0xe
+ 2744 00d6 3A       		.uleb128 0x3a
+ 2745 00d7 0B       		.uleb128 0xb
+ 2746 00d8 3B       		.uleb128 0x3b
+ 2747 00d9 0B       		.uleb128 0xb
+ 2748 00da 27       		.uleb128 0x27
+ 2749 00db 19       		.uleb128 0x19
+ 2750 00dc 11       		.uleb128 0x11
+ 2751 00dd 01       		.uleb128 0x1
+ 2752 00de 12       		.uleb128 0x12
+ 2753 00df 06       		.uleb128 0x6
+ 2754 00e0 40       		.uleb128 0x40
+ 2755 00e1 18       		.uleb128 0x18
+ 2756 00e2 9642     		.uleb128 0x2116
+ 2757 00e4 19       		.uleb128 0x19
+ 2758 00e5 00       		.byte	0
+ 2759 00e6 00       		.byte	0
+ 2760 00e7 13       		.uleb128 0x13
+ 2761 00e8 2E       		.uleb128 0x2e
+ 2762 00e9 01       		.byte	0x1
+ 2763 00ea 3F       		.uleb128 0x3f
+ 2764 00eb 19       		.uleb128 0x19
+ 2765 00ec 03       		.uleb128 0x3
+ 2766 00ed 0E       		.uleb128 0xe
+ 2767 00ee 3A       		.uleb128 0x3a
+ 2768 00ef 0B       		.uleb128 0xb
+ 2769 00f0 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 58
+
+
+ 2770 00f1 0B       		.uleb128 0xb
+ 2771 00f2 27       		.uleb128 0x27
+ 2772 00f3 19       		.uleb128 0x19
+ 2773 00f4 11       		.uleb128 0x11
+ 2774 00f5 01       		.uleb128 0x1
+ 2775 00f6 12       		.uleb128 0x12
+ 2776 00f7 06       		.uleb128 0x6
+ 2777 00f8 40       		.uleb128 0x40
+ 2778 00f9 18       		.uleb128 0x18
+ 2779 00fa 9642     		.uleb128 0x2116
+ 2780 00fc 19       		.uleb128 0x19
+ 2781 00fd 01       		.uleb128 0x1
+ 2782 00fe 13       		.uleb128 0x13
+ 2783 00ff 00       		.byte	0
+ 2784 0100 00       		.byte	0
+ 2785 0101 14       		.uleb128 0x14
+ 2786 0102 05       		.uleb128 0x5
+ 2787 0103 00       		.byte	0
+ 2788 0104 03       		.uleb128 0x3
+ 2789 0105 08       		.uleb128 0x8
+ 2790 0106 3A       		.uleb128 0x3a
+ 2791 0107 0B       		.uleb128 0xb
+ 2792 0108 3B       		.uleb128 0x3b
+ 2793 0109 0B       		.uleb128 0xb
+ 2794 010a 49       		.uleb128 0x49
+ 2795 010b 13       		.uleb128 0x13
+ 2796 010c 02       		.uleb128 0x2
+ 2797 010d 18       		.uleb128 0x18
+ 2798 010e 00       		.byte	0
+ 2799 010f 00       		.byte	0
+ 2800 0110 15       		.uleb128 0x15
+ 2801 0111 34       		.uleb128 0x34
+ 2802 0112 00       		.byte	0
+ 2803 0113 03       		.uleb128 0x3
+ 2804 0114 0E       		.uleb128 0xe
+ 2805 0115 3A       		.uleb128 0x3a
+ 2806 0116 0B       		.uleb128 0xb
+ 2807 0117 3B       		.uleb128 0x3b
+ 2808 0118 0B       		.uleb128 0xb
+ 2809 0119 49       		.uleb128 0x49
+ 2810 011a 13       		.uleb128 0x13
+ 2811 011b 02       		.uleb128 0x2
+ 2812 011c 18       		.uleb128 0x18
+ 2813 011d 00       		.byte	0
+ 2814 011e 00       		.byte	0
+ 2815 011f 16       		.uleb128 0x16
+ 2816 0120 2E       		.uleb128 0x2e
+ 2817 0121 01       		.byte	0x1
+ 2818 0122 3F       		.uleb128 0x3f
+ 2819 0123 19       		.uleb128 0x19
+ 2820 0124 03       		.uleb128 0x3
+ 2821 0125 0E       		.uleb128 0xe
+ 2822 0126 3A       		.uleb128 0x3a
+ 2823 0127 0B       		.uleb128 0xb
+ 2824 0128 3B       		.uleb128 0x3b
+ 2825 0129 0B       		.uleb128 0xb
+ 2826 012a 27       		.uleb128 0x27
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 59
+
+
+ 2827 012b 19       		.uleb128 0x19
+ 2828 012c 49       		.uleb128 0x49
+ 2829 012d 13       		.uleb128 0x13
+ 2830 012e 11       		.uleb128 0x11
+ 2831 012f 01       		.uleb128 0x1
+ 2832 0130 12       		.uleb128 0x12
+ 2833 0131 06       		.uleb128 0x6
+ 2834 0132 40       		.uleb128 0x40
+ 2835 0133 18       		.uleb128 0x18
+ 2836 0134 9642     		.uleb128 0x2116
+ 2837 0136 19       		.uleb128 0x19
+ 2838 0137 01       		.uleb128 0x1
+ 2839 0138 13       		.uleb128 0x13
+ 2840 0139 00       		.byte	0
+ 2841 013a 00       		.byte	0
+ 2842 013b 17       		.uleb128 0x17
+ 2843 013c 05       		.uleb128 0x5
+ 2844 013d 00       		.byte	0
+ 2845 013e 03       		.uleb128 0x3
+ 2846 013f 0E       		.uleb128 0xe
+ 2847 0140 3A       		.uleb128 0x3a
+ 2848 0141 0B       		.uleb128 0xb
+ 2849 0142 3B       		.uleb128 0x3b
+ 2850 0143 0B       		.uleb128 0xb
+ 2851 0144 49       		.uleb128 0x49
+ 2852 0145 13       		.uleb128 0x13
+ 2853 0146 02       		.uleb128 0x2
+ 2854 0147 18       		.uleb128 0x18
+ 2855 0148 00       		.byte	0
+ 2856 0149 00       		.byte	0
+ 2857 014a 18       		.uleb128 0x18
+ 2858 014b 34       		.uleb128 0x34
+ 2859 014c 00       		.byte	0
+ 2860 014d 03       		.uleb128 0x3
+ 2861 014e 08       		.uleb128 0x8
+ 2862 014f 3A       		.uleb128 0x3a
+ 2863 0150 0B       		.uleb128 0xb
+ 2864 0151 3B       		.uleb128 0x3b
+ 2865 0152 0B       		.uleb128 0xb
+ 2866 0153 49       		.uleb128 0x49
+ 2867 0154 13       		.uleb128 0x13
+ 2868 0155 02       		.uleb128 0x2
+ 2869 0156 18       		.uleb128 0x18
+ 2870 0157 00       		.byte	0
+ 2871 0158 00       		.byte	0
+ 2872 0159 19       		.uleb128 0x19
+ 2873 015a 2E       		.uleb128 0x2e
+ 2874 015b 01       		.byte	0x1
+ 2875 015c 3F       		.uleb128 0x3f
+ 2876 015d 19       		.uleb128 0x19
+ 2877 015e 03       		.uleb128 0x3
+ 2878 015f 0E       		.uleb128 0xe
+ 2879 0160 3A       		.uleb128 0x3a
+ 2880 0161 0B       		.uleb128 0xb
+ 2881 0162 3B       		.uleb128 0x3b
+ 2882 0163 0B       		.uleb128 0xb
+ 2883 0164 27       		.uleb128 0x27
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 60
+
+
+ 2884 0165 19       		.uleb128 0x19
+ 2885 0166 49       		.uleb128 0x49
+ 2886 0167 13       		.uleb128 0x13
+ 2887 0168 11       		.uleb128 0x11
+ 2888 0169 01       		.uleb128 0x1
+ 2889 016a 12       		.uleb128 0x12
+ 2890 016b 06       		.uleb128 0x6
+ 2891 016c 40       		.uleb128 0x40
+ 2892 016d 18       		.uleb128 0x18
+ 2893 016e 9742     		.uleb128 0x2117
+ 2894 0170 19       		.uleb128 0x19
+ 2895 0171 01       		.uleb128 0x1
+ 2896 0172 13       		.uleb128 0x13
+ 2897 0173 00       		.byte	0
+ 2898 0174 00       		.byte	0
+ 2899 0175 1A       		.uleb128 0x1a
+ 2900 0176 34       		.uleb128 0x34
+ 2901 0177 00       		.byte	0
+ 2902 0178 03       		.uleb128 0x3
+ 2903 0179 08       		.uleb128 0x8
+ 2904 017a 3A       		.uleb128 0x3a
+ 2905 017b 0B       		.uleb128 0xb
+ 2906 017c 3B       		.uleb128 0x3b
+ 2907 017d 05       		.uleb128 0x5
+ 2908 017e 49       		.uleb128 0x49
+ 2909 017f 13       		.uleb128 0x13
+ 2910 0180 02       		.uleb128 0x2
+ 2911 0181 18       		.uleb128 0x18
+ 2912 0182 00       		.byte	0
+ 2913 0183 00       		.byte	0
+ 2914 0184 1B       		.uleb128 0x1b
+ 2915 0185 34       		.uleb128 0x34
+ 2916 0186 00       		.byte	0
+ 2917 0187 03       		.uleb128 0x3
+ 2918 0188 0E       		.uleb128 0xe
+ 2919 0189 3A       		.uleb128 0x3a
+ 2920 018a 0B       		.uleb128 0xb
+ 2921 018b 3B       		.uleb128 0x3b
+ 2922 018c 05       		.uleb128 0x5
+ 2923 018d 49       		.uleb128 0x49
+ 2924 018e 13       		.uleb128 0x13
+ 2925 018f 02       		.uleb128 0x2
+ 2926 0190 18       		.uleb128 0x18
+ 2927 0191 00       		.byte	0
+ 2928 0192 00       		.byte	0
+ 2929 0193 1C       		.uleb128 0x1c
+ 2930 0194 2E       		.uleb128 0x2e
+ 2931 0195 01       		.byte	0x1
+ 2932 0196 3F       		.uleb128 0x3f
+ 2933 0197 19       		.uleb128 0x19
+ 2934 0198 03       		.uleb128 0x3
+ 2935 0199 0E       		.uleb128 0xe
+ 2936 019a 3A       		.uleb128 0x3a
+ 2937 019b 0B       		.uleb128 0xb
+ 2938 019c 3B       		.uleb128 0x3b
+ 2939 019d 05       		.uleb128 0x5
+ 2940 019e 27       		.uleb128 0x27
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 61
+
+
+ 2941 019f 19       		.uleb128 0x19
+ 2942 01a0 49       		.uleb128 0x49
+ 2943 01a1 13       		.uleb128 0x13
+ 2944 01a2 11       		.uleb128 0x11
+ 2945 01a3 01       		.uleb128 0x1
+ 2946 01a4 12       		.uleb128 0x12
+ 2947 01a5 06       		.uleb128 0x6
+ 2948 01a6 40       		.uleb128 0x40
+ 2949 01a7 18       		.uleb128 0x18
+ 2950 01a8 9642     		.uleb128 0x2116
+ 2951 01aa 19       		.uleb128 0x19
+ 2952 01ab 01       		.uleb128 0x1
+ 2953 01ac 13       		.uleb128 0x13
+ 2954 01ad 00       		.byte	0
+ 2955 01ae 00       		.byte	0
+ 2956 01af 1D       		.uleb128 0x1d
+ 2957 01b0 05       		.uleb128 0x5
+ 2958 01b1 00       		.byte	0
+ 2959 01b2 03       		.uleb128 0x3
+ 2960 01b3 08       		.uleb128 0x8
+ 2961 01b4 3A       		.uleb128 0x3a
+ 2962 01b5 0B       		.uleb128 0xb
+ 2963 01b6 3B       		.uleb128 0x3b
+ 2964 01b7 05       		.uleb128 0x5
+ 2965 01b8 49       		.uleb128 0x49
+ 2966 01b9 13       		.uleb128 0x13
+ 2967 01ba 02       		.uleb128 0x2
+ 2968 01bb 18       		.uleb128 0x18
+ 2969 01bc 00       		.byte	0
+ 2970 01bd 00       		.byte	0
+ 2971 01be 1E       		.uleb128 0x1e
+ 2972 01bf 2E       		.uleb128 0x2e
+ 2973 01c0 01       		.byte	0x1
+ 2974 01c1 3F       		.uleb128 0x3f
+ 2975 01c2 19       		.uleb128 0x19
+ 2976 01c3 03       		.uleb128 0x3
+ 2977 01c4 0E       		.uleb128 0xe
+ 2978 01c5 3A       		.uleb128 0x3a
+ 2979 01c6 0B       		.uleb128 0xb
+ 2980 01c7 3B       		.uleb128 0x3b
+ 2981 01c8 05       		.uleb128 0x5
+ 2982 01c9 27       		.uleb128 0x27
+ 2983 01ca 19       		.uleb128 0x19
+ 2984 01cb 49       		.uleb128 0x49
+ 2985 01cc 13       		.uleb128 0x13
+ 2986 01cd 11       		.uleb128 0x11
+ 2987 01ce 01       		.uleb128 0x1
+ 2988 01cf 12       		.uleb128 0x12
+ 2989 01d0 06       		.uleb128 0x6
+ 2990 01d1 40       		.uleb128 0x40
+ 2991 01d2 18       		.uleb128 0x18
+ 2992 01d3 9742     		.uleb128 0x2117
+ 2993 01d5 19       		.uleb128 0x19
+ 2994 01d6 01       		.uleb128 0x1
+ 2995 01d7 13       		.uleb128 0x13
+ 2996 01d8 00       		.byte	0
+ 2997 01d9 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 62
+
+
+ 2998 01da 1F       		.uleb128 0x1f
+ 2999 01db 2E       		.uleb128 0x2e
+ 3000 01dc 01       		.byte	0x1
+ 3001 01dd 03       		.uleb128 0x3
+ 3002 01de 0E       		.uleb128 0xe
+ 3003 01df 3A       		.uleb128 0x3a
+ 3004 01e0 0B       		.uleb128 0xb
+ 3005 01e1 3B       		.uleb128 0x3b
+ 3006 01e2 05       		.uleb128 0x5
+ 3007 01e3 27       		.uleb128 0x27
+ 3008 01e4 19       		.uleb128 0x19
+ 3009 01e5 11       		.uleb128 0x11
+ 3010 01e6 01       		.uleb128 0x1
+ 3011 01e7 12       		.uleb128 0x12
+ 3012 01e8 06       		.uleb128 0x6
+ 3013 01e9 40       		.uleb128 0x40
+ 3014 01ea 18       		.uleb128 0x18
+ 3015 01eb 9642     		.uleb128 0x2116
+ 3016 01ed 19       		.uleb128 0x19
+ 3017 01ee 01       		.uleb128 0x1
+ 3018 01ef 13       		.uleb128 0x13
+ 3019 01f0 00       		.byte	0
+ 3020 01f1 00       		.byte	0
+ 3021 01f2 20       		.uleb128 0x20
+ 3022 01f3 05       		.uleb128 0x5
+ 3023 01f4 00       		.byte	0
+ 3024 01f5 03       		.uleb128 0x3
+ 3025 01f6 0E       		.uleb128 0xe
+ 3026 01f7 3A       		.uleb128 0x3a
+ 3027 01f8 0B       		.uleb128 0xb
+ 3028 01f9 3B       		.uleb128 0x3b
+ 3029 01fa 05       		.uleb128 0x5
+ 3030 01fb 49       		.uleb128 0x49
+ 3031 01fc 13       		.uleb128 0x13
+ 3032 01fd 02       		.uleb128 0x2
+ 3033 01fe 18       		.uleb128 0x18
+ 3034 01ff 00       		.byte	0
+ 3035 0200 00       		.byte	0
+ 3036 0201 21       		.uleb128 0x21
+ 3037 0202 0B       		.uleb128 0xb
+ 3038 0203 01       		.byte	0x1
+ 3039 0204 11       		.uleb128 0x11
+ 3040 0205 01       		.uleb128 0x1
+ 3041 0206 12       		.uleb128 0x12
+ 3042 0207 06       		.uleb128 0x6
+ 3043 0208 00       		.byte	0
+ 3044 0209 00       		.byte	0
+ 3045 020a 22       		.uleb128 0x22
+ 3046 020b 2E       		.uleb128 0x2e
+ 3047 020c 01       		.byte	0x1
+ 3048 020d 03       		.uleb128 0x3
+ 3049 020e 0E       		.uleb128 0xe
+ 3050 020f 3A       		.uleb128 0x3a
+ 3051 0210 0B       		.uleb128 0xb
+ 3052 0211 3B       		.uleb128 0x3b
+ 3053 0212 05       		.uleb128 0x5
+ 3054 0213 27       		.uleb128 0x27
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 63
+
+
+ 3055 0214 19       		.uleb128 0x19
+ 3056 0215 49       		.uleb128 0x49
+ 3057 0216 13       		.uleb128 0x13
+ 3058 0217 11       		.uleb128 0x11
+ 3059 0218 01       		.uleb128 0x1
+ 3060 0219 12       		.uleb128 0x12
+ 3061 021a 06       		.uleb128 0x6
+ 3062 021b 40       		.uleb128 0x40
+ 3063 021c 18       		.uleb128 0x18
+ 3064 021d 9642     		.uleb128 0x2116
+ 3065 021f 19       		.uleb128 0x19
+ 3066 0220 01       		.uleb128 0x1
+ 3067 0221 13       		.uleb128 0x13
+ 3068 0222 00       		.byte	0
+ 3069 0223 00       		.byte	0
+ 3070 0224 23       		.uleb128 0x23
+ 3071 0225 0B       		.uleb128 0xb
+ 3072 0226 01       		.byte	0x1
+ 3073 0227 11       		.uleb128 0x11
+ 3074 0228 01       		.uleb128 0x1
+ 3075 0229 12       		.uleb128 0x12
+ 3076 022a 06       		.uleb128 0x6
+ 3077 022b 01       		.uleb128 0x1
+ 3078 022c 13       		.uleb128 0x13
+ 3079 022d 00       		.byte	0
+ 3080 022e 00       		.byte	0
+ 3081 022f 24       		.uleb128 0x24
+ 3082 0230 34       		.uleb128 0x34
+ 3083 0231 00       		.byte	0
+ 3084 0232 03       		.uleb128 0x3
+ 3085 0233 0E       		.uleb128 0xe
+ 3086 0234 3A       		.uleb128 0x3a
+ 3087 0235 0B       		.uleb128 0xb
+ 3088 0236 3B       		.uleb128 0x3b
+ 3089 0237 0B       		.uleb128 0xb
+ 3090 0238 49       		.uleb128 0x49
+ 3091 0239 13       		.uleb128 0x13
+ 3092 023a 3F       		.uleb128 0x3f
+ 3093 023b 19       		.uleb128 0x19
+ 3094 023c 3C       		.uleb128 0x3c
+ 3095 023d 19       		.uleb128 0x19
+ 3096 023e 00       		.byte	0
+ 3097 023f 00       		.byte	0
+ 3098 0240 00       		.byte	0
+ 3099              		.section	.debug_aranges,"",%progbits
+ 3100 0000 8C000000 		.4byte	0x8c
+ 3101 0004 0200     		.2byte	0x2
+ 3102 0006 00000000 		.4byte	.Ldebug_info0
+ 3103 000a 04       		.byte	0x4
+ 3104 000b 00       		.byte	0
+ 3105 000c 0000     		.2byte	0
+ 3106 000e 0000     		.2byte	0
+ 3107 0010 00000000 		.4byte	.LFB31
+ 3108 0014 34000000 		.4byte	.LFE31-.LFB31
+ 3109 0018 00000000 		.4byte	.LFB32
+ 3110 001c 38000000 		.4byte	.LFE32-.LFB32
+ 3111 0020 00000000 		.4byte	.LFB33
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 64
+
+
+ 3112 0024 78000000 		.4byte	.LFE33-.LFB33
+ 3113 0028 00000000 		.4byte	.LFB34
+ 3114 002c 70000000 		.4byte	.LFE34-.LFB34
+ 3115 0030 00000000 		.4byte	.LFB35
+ 3116 0034 3C000000 		.4byte	.LFE35-.LFB35
+ 3117 0038 00000000 		.4byte	.LFB36
+ 3118 003c 60000000 		.4byte	.LFE36-.LFB36
+ 3119 0040 00000000 		.4byte	.LFB37
+ 3120 0044 64000000 		.4byte	.LFE37-.LFB37
+ 3121 0048 00000000 		.4byte	.LFB38
+ 3122 004c 74000000 		.4byte	.LFE38-.LFB38
+ 3123 0050 00000000 		.4byte	.LFB39
+ 3124 0054 78000000 		.4byte	.LFE39-.LFB39
+ 3125 0058 00000000 		.4byte	.LFB40
+ 3126 005c 76000000 		.4byte	.LFE40-.LFB40
+ 3127 0060 00000000 		.4byte	.LFB41
+ 3128 0064 78000000 		.4byte	.LFE41-.LFB41
+ 3129 0068 00000000 		.4byte	.LFB42
+ 3130 006c 84010000 		.4byte	.LFE42-.LFB42
+ 3131 0070 00000000 		.4byte	.LFB43
+ 3132 0074 32000000 		.4byte	.LFE43-.LFB43
+ 3133 0078 00000000 		.4byte	.LFB44
+ 3134 007c 20010000 		.4byte	.LFE44-.LFB44
+ 3135 0080 00000000 		.4byte	.LFB45
+ 3136 0084 18010000 		.4byte	.LFE45-.LFB45
+ 3137 0088 00000000 		.4byte	0
+ 3138 008c 00000000 		.4byte	0
+ 3139              		.section	.debug_ranges,"",%progbits
+ 3140              	.Ldebug_ranges0:
+ 3141 0000 00000000 		.4byte	.LFB31
+ 3142 0004 34000000 		.4byte	.LFE31
+ 3143 0008 00000000 		.4byte	.LFB32
+ 3144 000c 38000000 		.4byte	.LFE32
+ 3145 0010 00000000 		.4byte	.LFB33
+ 3146 0014 78000000 		.4byte	.LFE33
+ 3147 0018 00000000 		.4byte	.LFB34
+ 3148 001c 70000000 		.4byte	.LFE34
+ 3149 0020 00000000 		.4byte	.LFB35
+ 3150 0024 3C000000 		.4byte	.LFE35
+ 3151 0028 00000000 		.4byte	.LFB36
+ 3152 002c 60000000 		.4byte	.LFE36
+ 3153 0030 00000000 		.4byte	.LFB37
+ 3154 0034 64000000 		.4byte	.LFE37
+ 3155 0038 00000000 		.4byte	.LFB38
+ 3156 003c 74000000 		.4byte	.LFE38
+ 3157 0040 00000000 		.4byte	.LFB39
+ 3158 0044 78000000 		.4byte	.LFE39
+ 3159 0048 00000000 		.4byte	.LFB40
+ 3160 004c 76000000 		.4byte	.LFE40
+ 3161 0050 00000000 		.4byte	.LFB41
+ 3162 0054 78000000 		.4byte	.LFE41
+ 3163 0058 00000000 		.4byte	.LFB42
+ 3164 005c 84010000 		.4byte	.LFE42
+ 3165 0060 00000000 		.4byte	.LFB43
+ 3166 0064 32000000 		.4byte	.LFE43
+ 3167 0068 00000000 		.4byte	.LFB44
+ 3168 006c 20010000 		.4byte	.LFE44
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 65
+
+
+ 3169 0070 00000000 		.4byte	.LFB45
+ 3170 0074 18010000 		.4byte	.LFE45
+ 3171 0078 00000000 		.4byte	0
+ 3172 007c 00000000 		.4byte	0
+ 3173              		.section	.debug_line,"",%progbits
+ 3174              	.Ldebug_line0:
+ 3175 0000 8D040000 		.section	.debug_str,"MS",%progbits,1
+ 3175      02004D02 
+ 3175      00000201 
+ 3175      FB0E0D00 
+ 3175      01010101 
+ 3176              	.LASF41:
+ 3177 0000 6C765F6C 		.ascii	"lv_ll_node_t\000"
+ 3177      6C5F6E6F 
+ 3177      64655F74 
+ 3177      00
+ 3178              	.LASF91:
+ 3179 000d 616E696D 		.ascii	"anim_ready_handler\000"
+ 3179      5F726561 
+ 3179      64795F68 
+ 3179      616E646C 
+ 3179      657200
+ 3180              	.LASF33:
+ 3181 0020 706C6179 		.ascii	"playback\000"
+ 3181      6261636B 
+ 3181      00
+ 3182              	.LASF62:
+ 3183 0029 6C765F74 		.ascii	"lv_task_t\000"
+ 3183      61736B5F 
+ 3183      7400
+ 3184              	.LASF79:
+ 3185 0033 64696666 		.ascii	"diff\000"
+ 3185      00
+ 3186              	.LASF85:
+ 3187 0038 616E696D 		.ascii	"anim_list_changed\000"
+ 3187      5F6C6973 
+ 3187      745F6368 
+ 3187      616E6765 
+ 3187      6400
+ 3188              	.LASF38:
+ 3189 004a 6C765F61 		.ascii	"lv_anim_ready_cb_t\000"
+ 3189      6E696D5F 
+ 3189      72656164 
+ 3189      795F6362 
+ 3189      5F7400
+ 3190              	.LASF4:
+ 3191 005d 73686F72 		.ascii	"short int\000"
+ 3191      7420696E 
+ 3191      7400
+ 3192              	.LASF21:
+ 3193 0067 73697A65 		.ascii	"sizetype\000"
+ 3193      74797065 
+ 3193      00
+ 3194              	.LASF58:
+ 3195 0070 4C565F54 		.ascii	"LV_TASK_PRIO_MID\000"
+ 3195      41534B5F 
+ 3195      5052494F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 66
+
+
+ 3195      5F4D4944 
+ 3195      00
+ 3196              	.LASF32:
+ 3197 0081 72657065 		.ascii	"repeat_pause\000"
+ 3197      61745F70 
+ 3197      61757365 
+ 3197      00
+ 3198              	.LASF65:
+ 3199 008e 6E65775F 		.ascii	"new_anim\000"
+ 3199      616E696D 
+ 3199      00
+ 3200              	.LASF9:
+ 3201 0097 5F5F7569 		.ascii	"__uint32_t\000"
+ 3201      6E743332 
+ 3201      5F7400
+ 3202              	.LASF75:
+ 3203 00a2 6C765F61 		.ascii	"lv_anim_path_ease_out\000"
+ 3203      6E696D5F 
+ 3203      70617468 
+ 3203      5F656173 
+ 3203      655F6F75 
+ 3204              	.LASF23:
+ 3205 00b8 6C765F61 		.ascii	"lv_anim_value_t\000"
+ 3205      6E696D5F 
+ 3205      76616C75 
+ 3205      655F7400 
+ 3206              	.LASF5:
+ 3207 00c8 5F5F7569 		.ascii	"__uint16_t\000"
+ 3207      6E743136 
+ 3207      5F7400
+ 3208              	.LASF61:
+ 3209 00d3 5F4C565F 		.ascii	"_LV_TASK_PRIO_NUM\000"
+ 3209      5441534B 
+ 3209      5F505249 
+ 3209      4F5F4E55 
+ 3209      4D00
+ 3210              	.LASF36:
+ 3211 00e5 6861735F 		.ascii	"has_run\000"
+ 3211      72756E00 
+ 3212              	.LASF37:
+ 3213 00ed 6C765F61 		.ascii	"lv_anim_path_cb_t\000"
+ 3213      6E696D5F 
+ 3213      70617468 
+ 3213      5F63625F 
+ 3213      7400
+ 3214              	.LASF52:
+ 3215 00ff 75736572 		.ascii	"user_data\000"
+ 3215      5F646174 
+ 3215      6100
+ 3216              	.LASF43:
+ 3217 0109 68656164 		.ascii	"head\000"
+ 3217      00
+ 3218              	.LASF60:
+ 3219 010e 4C565F54 		.ascii	"LV_TASK_PRIO_HIGHEST\000"
+ 3219      41534B5F 
+ 3219      5052494F 
+ 3219      5F484947 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 67
+
+
+ 3219      48455354 
+ 3220              	.LASF86:
+ 3221 0123 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3221      43313120 
+ 3221      352E342E 
+ 3221      31203230 
+ 3221      31363036 
+ 3222 0156 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 3222      20726576 
+ 3222      6973696F 
+ 3222      6E203233 
+ 3222      37373135 
+ 3223 0189 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 3223      70202D6D 
+ 3223      6670753D 
+ 3223      66707634 
+ 3223      2D73702D 
+ 3224 01bc 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 3224      6F6E7320 
+ 3224      2D666661 
+ 3224      742D6C74 
+ 3224      6F2D6F62 
+ 3225              	.LASF14:
+ 3226 01d6 75696E74 		.ascii	"uint8_t\000"
+ 3226      385F7400 
+ 3227              	.LASF68:
+ 3228 01de 6C765F61 		.ascii	"lv_anim_count_running\000"
+ 3228      6E696D5F 
+ 3228      636F756E 
+ 3228      745F7275 
+ 3228      6E6E696E 
+ 3229              	.LASF24:
+ 3230 01f4 6C765F61 		.ascii	"lv_anim_exec_xcb_t\000"
+ 3230      6E696D5F 
+ 3230      65786563 
+ 3230      5F786362 
+ 3230      5F7400
+ 3231              	.LASF66:
+ 3232 0207 615F6E65 		.ascii	"a_next\000"
+ 3232      787400
+ 3233              	.LASF48:
+ 3234 020e 5F6C765F 		.ascii	"_lv_task_t\000"
+ 3234      7461736B 
+ 3234      5F7400
+ 3235              	.LASF11:
+ 3236 0219 6C6F6E67 		.ascii	"long long int\000"
+ 3236      206C6F6E 
+ 3236      6720696E 
+ 3236      7400
+ 3237              	.LASF55:
+ 3238 0227 4C565F54 		.ascii	"LV_TASK_PRIO_OFF\000"
+ 3238      41534B5F 
+ 3238      5052494F 
+ 3238      5F4F4646 
+ 3238      00
+ 3239              	.LASF45:
+ 3240 0238 6C765F6C 		.ascii	"lv_ll_t\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 68
+
+
+ 3240      6C5F7400 
+ 3241              	.LASF8:
+ 3242 0240 6C6F6E67 		.ascii	"long int\000"
+ 3242      20696E74 
+ 3242      00
+ 3243              	.LASF49:
+ 3244 0249 70657269 		.ascii	"period\000"
+ 3244      6F6400
+ 3245              	.LASF90:
+ 3246 0250 616E696D 		.ascii	"anim_task\000"
+ 3246      5F746173 
+ 3246      6B00
+ 3247              	.LASF2:
+ 3248 025a 5F5F7569 		.ascii	"__uint8_t\000"
+ 3248      6E74385F 
+ 3248      7400
+ 3249              	.LASF57:
+ 3250 0264 4C565F54 		.ascii	"LV_TASK_PRIO_LOW\000"
+ 3250      41534B5F 
+ 3250      5052494F 
+ 3250      5F4C4F57 
+ 3250      00
+ 3251              	.LASF74:
+ 3252 0275 6C765F61 		.ascii	"lv_anim_path_ease_in\000"
+ 3252      6E696D5F 
+ 3252      70617468 
+ 3252      5F656173 
+ 3252      655F696E 
+ 3253              	.LASF34:
+ 3254 028a 72657065 		.ascii	"repeat\000"
+ 3254      617400
+ 3255              	.LASF20:
+ 3256 0291 6C6F6E67 		.ascii	"long double\000"
+ 3256      20646F75 
+ 3256      626C6500 
+ 3257              	.LASF44:
+ 3258 029d 7461696C 		.ascii	"tail\000"
+ 3258      00
+ 3259              	.LASF28:
+ 3260 02a2 73746172 		.ascii	"start\000"
+ 3260      7400
+ 3261              	.LASF67:
+ 3262 02a8 6C765F61 		.ascii	"lv_anim_del\000"
+ 3262      6E696D5F 
+ 3262      64656C00 
+ 3263              	.LASF1:
+ 3264 02b4 756E7369 		.ascii	"unsigned char\000"
+ 3264      676E6564 
+ 3264      20636861 
+ 3264      7200
+ 3265              	.LASF84:
+ 3266 02c2 6C617374 		.ascii	"last_task_run\000"
+ 3266      5F746173 
+ 3266      6B5F7275 
+ 3266      6E00
+ 3267              	.LASF54:
+ 3268 02d0 6F6E6365 		.ascii	"once\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 69
+
+
+ 3268      00
+ 3269              	.LASF0:
+ 3270 02d5 7369676E 		.ascii	"signed char\000"
+ 3270      65642063 
+ 3270      68617200 
+ 3271              	.LASF17:
+ 3272 02e1 696E7433 		.ascii	"int32_t\000"
+ 3272      325F7400 
+ 3273              	.LASF12:
+ 3274 02e9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3274      206C6F6E 
+ 3274      6720756E 
+ 3274      7369676E 
+ 3274      65642069 
+ 3275              	.LASF63:
+ 3276 0300 6C765F61 		.ascii	"lv_anim_init\000"
+ 3276      6E696D5F 
+ 3276      696E6974 
+ 3276      00
+ 3277              	.LASF18:
+ 3278 030d 75696E74 		.ascii	"uint32_t\000"
+ 3278      33325F74 
+ 3278      00
+ 3279              	.LASF13:
+ 3280 0316 756E7369 		.ascii	"unsigned int\000"
+ 3280      676E6564 
+ 3280      20696E74 
+ 3280      00
+ 3281              	.LASF16:
+ 3282 0323 75696E74 		.ascii	"uint16_t\000"
+ 3282      31365F74 
+ 3282      00
+ 3283              	.LASF26:
+ 3284 032c 70617468 		.ascii	"path_cb\000"
+ 3284      5F636200 
+ 3285              	.LASF76:
+ 3286 0334 6C765F61 		.ascii	"lv_anim_path_ease_in_out\000"
+ 3286      6E696D5F 
+ 3286      70617468 
+ 3286      5F656173 
+ 3286      655F696E 
+ 3287              	.LASF70:
+ 3288 034d 73706565 		.ascii	"speed\000"
+ 3288      6400
+ 3289              	.LASF82:
+ 3290 0353 656C6170 		.ascii	"elaps\000"
+ 3290      7300
+ 3291              	.LASF29:
+ 3292 0359 74696D65 		.ascii	"time\000"
+ 3292      00
+ 3293              	.LASF81:
+ 3294 035e 70617261 		.ascii	"param\000"
+ 3294      6D00
+ 3295              	.LASF78:
+ 3296 0364 6C765F61 		.ascii	"lv_anim_path_bounce\000"
+ 3296      6E696D5F 
+ 3296      70617468 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 70
+
+
+ 3296      5F626F75 
+ 3296      6E636500 
+ 3297              	.LASF92:
+ 3298 0378 5F6C765F 		.ascii	"_lv_anim_ll\000"
+ 3298      616E696D 
+ 3298      5F6C6C00 
+ 3299              	.LASF6:
+ 3300 0384 73686F72 		.ascii	"short unsigned int\000"
+ 3300      7420756E 
+ 3300      7369676E 
+ 3300      65642069 
+ 3300      6E7400
+ 3301              	.LASF35:
+ 3302 0397 706C6179 		.ascii	"playback_now\000"
+ 3302      6261636B 
+ 3302      5F6E6F77 
+ 3302      00
+ 3303              	.LASF22:
+ 3304 03a4 63686172 		.ascii	"char\000"
+ 3304      00
+ 3305              	.LASF56:
+ 3306 03a9 4C565F54 		.ascii	"LV_TASK_PRIO_LOWEST\000"
+ 3306      41534B5F 
+ 3306      5052494F 
+ 3306      5F4C4F57 
+ 3306      45535400 
+ 3307              	.LASF87:
+ 3308 03bd 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 3308      2E5C2E2E 
+ 3308      5C6C7667 
+ 3308      6C5C7665 
+ 3308      7273696F 
+ 3309 03e9 5C6C765F 		.ascii	"\\lv_anim.c\000"
+ 3309      616E696D 
+ 3309      2E6300
+ 3310              	.LASF30:
+ 3311 03f4 6163745F 		.ascii	"act_time\000"
+ 3311      74696D65 
+ 3311      00
+ 3312              	.LASF19:
+ 3313 03fd 6C765F63 		.ascii	"lv_coord_t\000"
+ 3313      6F6F7264 
+ 3313      5F7400
+ 3314              	.LASF51:
+ 3315 0408 7461736B 		.ascii	"task_cb\000"
+ 3315      5F636200 
+ 3316              	.LASF71:
+ 3317 0410 6C765F61 		.ascii	"lv_anim_path_linear\000"
+ 3317      6E696D5F 
+ 3317      70617468 
+ 3317      5F6C696E 
+ 3317      65617200 
+ 3318              	.LASF15:
+ 3319 0424 696E7431 		.ascii	"int16_t\000"
+ 3319      365F7400 
+ 3320              	.LASF40:
+ 3321 042c 5F426F6F 		.ascii	"_Bool\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 71
+
+
+ 3321      6C00
+ 3322              	.LASF47:
+ 3323 0432 5F6C765F 		.ascii	"_lv_anim_t\000"
+ 3323      616E696D 
+ 3323      5F7400
+ 3324              	.LASF59:
+ 3325 043d 4C565F54 		.ascii	"LV_TASK_PRIO_HIGH\000"
+ 3325      41534B5F 
+ 3325      5052494F 
+ 3325      5F484947 
+ 3325      4800
+ 3326              	.LASF27:
+ 3327 044f 72656164 		.ascii	"ready_cb\000"
+ 3327      795F6362 
+ 3327      00
+ 3328              	.LASF10:
+ 3329 0458 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3329      20756E73 
+ 3329      69676E65 
+ 3329      6420696E 
+ 3329      7400
+ 3330              	.LASF39:
+ 3331 046a 6C765F61 		.ascii	"lv_anim_t\000"
+ 3331      6E696D5F 
+ 3331      7400
+ 3332              	.LASF88:
+ 3333 0474 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 3333      73657273 
+ 3333      5C746D6A 
+ 3333      33325C44 
+ 3333      6F63756D 
+ 3334 04a1 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 3334      6C6C6F73 
+ 3334      636F7065 
+ 3334      5F53656E 
+ 3334      696F725F 
+ 3335 04d2 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 3335      5C74636F 
+ 3335      6D5F6170 
+ 3335      705C7463 
+ 3335      6F6D5F61 
+ 3336 0502 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 3336      736F6336 
+ 3336      2E637964 
+ 3336      736E00
+ 3337              	.LASF64:
+ 3338 0511 6C765F61 		.ascii	"lv_anim_create\000"
+ 3338      6E696D5F 
+ 3338      63726561 
+ 3338      746500
+ 3339              	.LASF83:
+ 3340 0520 615F746D 		.ascii	"a_tmp\000"
+ 3340      7000
+ 3341              	.LASF89:
+ 3342 0526 6C765F61 		.ascii	"lv_anim_core_init\000"
+ 3342      6E696D5F 
+ 3342      636F7265 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 72
+
+
+ 3342      5F696E69 
+ 3342      7400
+ 3343              	.LASF7:
+ 3344 0538 5F5F696E 		.ascii	"__int32_t\000"
+ 3344      7433325F 
+ 3344      7400
+ 3345              	.LASF77:
+ 3346 0542 6C765F61 		.ascii	"lv_anim_path_overshoot\000"
+ 3346      6E696D5F 
+ 3346      70617468 
+ 3346      5F6F7665 
+ 3346      7273686F 
+ 3347              	.LASF3:
+ 3348 0559 5F5F696E 		.ascii	"__int16_t\000"
+ 3348      7431365F 
+ 3348      7400
+ 3349              	.LASF73:
+ 3350 0563 6E65775F 		.ascii	"new_value\000"
+ 3350      76616C75 
+ 3350      6500
+ 3351              	.LASF46:
+ 3352 056d 6C765F74 		.ascii	"lv_task_cb_t\000"
+ 3352      61736B5F 
+ 3352      63625F74 
+ 3352      00
+ 3353              	.LASF80:
+ 3354 057a 6C765F61 		.ascii	"lv_anim_path_step\000"
+ 3354      6E696D5F 
+ 3354      70617468 
+ 3354      5F737465 
+ 3354      7000
+ 3355              	.LASF25:
+ 3356 058c 65786563 		.ascii	"exec_cb\000"
+ 3356      5F636200 
+ 3357              	.LASF50:
+ 3358 0594 6C617374 		.ascii	"last_run\000"
+ 3358      5F72756E 
+ 3358      00
+ 3359              	.LASF72:
+ 3360 059d 73746570 		.ascii	"step\000"
+ 3360      00
+ 3361              	.LASF53:
+ 3362 05a2 7072696F 		.ascii	"prio\000"
+ 3362      00
+ 3363              	.LASF31:
+ 3364 05a7 706C6179 		.ascii	"playback_pause\000"
+ 3364      6261636B 
+ 3364      5F706175 
+ 3364      736500
+ 3365              	.LASF69:
+ 3366 05b6 6C765F61 		.ascii	"lv_anim_speed_to_time\000"
+ 3366      6E696D5F 
+ 3366      73706565 
+ 3366      645F746F 
+ 3366      5F74696D 
+ 3367              	.LASF42:
+ 3368 05cc 6E5F7369 		.ascii	"n_size\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccIqOG38.s 			page 73
+
+
+ 3368      7A6500
+ 3369              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,73 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccoPjsOI.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_ufs.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              	.Letext0:
+  21              		.section	.debug_line,"",%progbits
+  22              	.Ldebug_line0:
+  23              		.section	.debug_str,"MS",%progbits,1
+  24              	.LASF0:
+  25 0000 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+  25      43313120 
+  25      352E342E 
+  25      31203230 
+  25      31363036 
+  26 0033 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+  26      20726576 
+  26      6973696F 
+  26      6E203233 
+  26      37373135 
+  27 0066 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+  27      70202D6D 
+  27      6670753D 
+  27      66707634 
+  27      2D73702D 
+  28 0099 65637469 		.ascii	"ections -ffat-lto-objects\000"
+  28      6F6E7320 
+  28      2D666661 
+  28      742D6C74 
+  28      6F2D6F62 
+  29              	.LASF1:
+  30 00b3 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+  30      73657273 
+  30      5C706561 
+  30      726C7374 
+  30      6C5C446F 
+  31 00e1 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+  31      6D5F656E 
+  31      67696E65 
+  31      6572696E 
+  31      675C656D 
+  32 0110 6F63365F 		.ascii	"oc6_fixed_io\\tcom_displ_test_psoc6.cydsn\000"
+  32      66697865 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\ccoPjsOI.s 			page 2
+
+
+  32      645F696F 
+  32      5C74636F 
+  32      6D5F6469 
+  33              	.LASF2:
+  34 0139 2E2E5C2E 		.ascii	"..\\..\\..\\display\\lvgl\\lv_misc\\lv_ufs.c\000"
+  34      2E5C2E2E 
+  34      5C646973 
+  34      706C6179 
+  34      5C6C7667 
+  35              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

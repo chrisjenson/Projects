@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="testbench_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="testbench" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="116376854040fs"></ZoomStartTime>
+      <ZoomEndTime time="116391281887fs"></ZoomEndTime>
+      <Cursor1Time time="115731136000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="85"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="104" />
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Testbench</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SCLK" type="logic">
+      <obj_property name="ElementShortName">SCLK</obj_property>
+      <obj_property name="ObjectShortName">SCLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SlaveSel" type="logic">
+      <obj_property name="ElementShortName">SlaveSel</obj_property>
+      <obj_property name="ObjectShortName">SlaveSel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/MISO" type="logic">
+      <obj_property name="ElementShortName">MISO</obj_property>
+      <obj_property name="ObjectShortName">MISO</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/MOSI" type="logic">
+      <obj_property name="ElementShortName">MOSI</obj_property>
+      <obj_property name="ObjectShortName">MOSI</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SPICounter" type="array">
+      <obj_property name="ElementShortName">SPICounter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">SPICounter[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SPICommandIndex" type="array">
+      <obj_property name="ElementShortName">SPICommandIndex[63:0]</obj_property>
+      <obj_property name="ObjectShortName">SPICommandIndex[63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SPICMD" type="array">
+      <obj_property name="ElementShortName">SPICMD[2:0]</obj_property>
+      <obj_property name="ObjectShortName">SPICMD[2:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SPIParams" type="array">
+      <obj_property name="ElementShortName">SPIParams[4:0]</obj_property>
+      <obj_property name="ObjectShortName">SPIParams[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SPIData" type="array">
+      <obj_property name="ElementShortName">SPIData[7:0]</obj_property>
+      <obj_property name="ObjectShortName">SPIData[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/RegReadArray" type="array">
+      <obj_property name="ElementShortName">RegReadArray[7:0]</obj_property>
+      <obj_property name="ObjectShortName">RegReadArray[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/RegReadData" type="array">
+      <obj_property name="ElementShortName">RegReadData[7:0]</obj_property>
+      <obj_property name="ObjectShortName">RegReadData[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/RAMReadTransfers" type="array">
+      <obj_property name="ElementShortName">RAMReadTransfers[63:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMReadTransfers[63:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/DataPoint" type="array">
+      <obj_property name="ElementShortName">DataPoint[7:0]</obj_property>
+      <obj_property name="ObjectShortName">DataPoint[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/CommandDonePulse" type="logic">
+      <obj_property name="ElementShortName">CommandDonePulse</obj_property>
+      <obj_property name="ObjectShortName">CommandDonePulse</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/RAMReadCounter" type="array">
+      <obj_property name="ElementShortName">RAMReadCounter[2:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMReadCounter[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/RAMReadsRemaining" type="array">
+      <obj_property name="ElementShortName">RAMReadsRemaining[63:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMReadsRemaining[63:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/SimDataHigh" type="logic">
+      <obj_property name="ElementShortName">SimDataHigh</obj_property>
+      <obj_property name="ObjectShortName">SimDataHigh</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider85">
+      <obj_property name="label">Top</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/DebugSCLK" type="logic">
+      <obj_property name="ElementShortName">DebugSCLK</obj_property>
+      <obj_property name="ObjectShortName">DebugSCLK</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/DebugMOSI" type="logic">
+      <obj_property name="ElementShortName">DebugMOSI</obj_property>
+      <obj_property name="ObjectShortName">DebugMOSI</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/MISO" type="logic">
+      <obj_property name="ElementShortName">MISO</obj_property>
+      <obj_property name="ObjectShortName">MISO</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/ADC_InData" type="array">
+      <obj_property name="ElementShortName">ADC_InData[9:0]</obj_property>
+      <obj_property name="ObjectShortName">ADC_InData[9:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider86">
+      <obj_property name="label">SPI</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/sck" type="logic">
+      <obj_property name="ElementShortName">sck</obj_property>
+      <obj_property name="ObjectShortName">sck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SlaveSel" type="logic">
+      <obj_property name="ElementShortName">SlaveSel</obj_property>
+      <obj_property name="ObjectShortName">SlaveSel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/MISO" type="logic">
+      <obj_property name="ElementShortName">MISO</obj_property>
+      <obj_property name="ObjectShortName">MISO</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/DebugMOSI" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">DebugMOSI</obj_property>
+      <obj_property name="ObjectShortName">DebugMOSI</obj_property>
+      <obj_property name="label">MOSI</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/Reg_RdEn" type="logic">
+      <obj_property name="ElementShortName">Reg_RdEn</obj_property>
+      <obj_property name="ObjectShortName">Reg_RdEn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/Reg_WrEn" type="logic">
+      <obj_property name="ElementShortName">Reg_WrEn</obj_property>
+      <obj_property name="ObjectShortName">Reg_WrEn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/Buffer_RdEn" type="logic">
+      <obj_property name="ElementShortName">Buffer_RdEn</obj_property>
+      <obj_property name="ObjectShortName">Buffer_RdEn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_Cmd" type="array">
+      <obj_property name="ElementShortName">SPI_Cmd[2:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_Cmd[2:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_Params" type="array">
+      <obj_property name="ElementShortName">SPI_Params[4:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_Params[4:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_Data" type="array">
+      <obj_property name="ElementShortName">SPI_Data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_Data[7:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/FIFO_OutData" type="array">
+      <obj_property name="ElementShortName">FIFO_OutData[15:0]</obj_property>
+      <obj_property name="ObjectShortName">FIFO_OutData[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_InInstructionSixteenCounter" type="array">
+      <obj_property name="ElementShortName">SPI_InInstructionSixteenCounter[3:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_InInstructionSixteenCounter[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_InBits" type="array">
+      <obj_property name="ElementShortName">SPI_InBits[15:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_InBits[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_OutEightCount" type="array">
+      <obj_property name="ElementShortName">SPI_OutEightCount[2:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_OutEightCount[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/SPI_OutSixteenCount" type="array">
+      <obj_property name="ElementShortName">SPI_OutSixteenCount[3:0]</obj_property>
+      <obj_property name="ObjectShortName">SPI_OutSixteenCount[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider362">
+      <obj_property name="label">Regs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_REGS/WrEn" type="logic">
+      <obj_property name="ElementShortName">WrEn</obj_property>
+      <obj_property name="ObjectShortName">WrEn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_REGS/registers" type="array">
+      <obj_property name="ElementShortName">registers[15:0][7:0]</obj_property>
+      <obj_property name="ObjectShortName">registers[15:0][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_REGS/onBit" type="logic">
+      <obj_property name="ElementShortName">onBit</obj_property>
+      <obj_property name="ObjectShortName">onBit</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider56">
+      <obj_property name="label">FIFO</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/FIFO_OutData" type="array">
+      <obj_property name="ElementShortName">FIFO_OutData[15:0]</obj_property>
+      <obj_property name="ObjectShortName">FIFO_OutData[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/FIFO_OutXFC" type="logic">
+      <obj_property name="ElementShortName">FIFO_OutXFC</obj_property>
+      <obj_property name="ObjectShortName">FIFO_OutXFC</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/FIFO_InXFC" type="logic">
+      <obj_property name="ElementShortName">FIFO_InXFC</obj_property>
+      <obj_property name="ObjectShortName">FIFO_InXFC</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/u_FIFO_RAM/dataBuffer" type="array">
+      <obj_property name="ElementShortName">dataBuffer[3:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">dataBuffer[3:0][15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/FIFO_InData" type="array">
+      <obj_property name="ElementShortName">FIFO_InData[15:0]</obj_property>
+      <obj_property name="ObjectShortName">FIFO_InData[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider55">
+      <obj_property name="label">RamRead</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_SPI/sck" type="logic">
+      <obj_property name="ElementShortName">sck</obj_property>
+      <obj_property name="ObjectShortName">sck</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/FIFO_OutRTS" type="logic">
+      <obj_property name="ElementShortName">FIFO_OutRTS</obj_property>
+      <obj_property name="ObjectShortName">FIFO_OutRTS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_Buffer_FIFO/FIFO_OutRTR" type="logic">
+      <obj_property name="ElementShortName">FIFO_OutRTR</obj_property>
+      <obj_property name="ObjectShortName">FIFO_OutRTR</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_blk_mem_gen_0/addrb" type="array">
+      <obj_property name="ElementShortName">addrb[17:0]</obj_property>
+      <obj_property name="ObjectShortName">addrb[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_blk_mem_gen_0/doutb" type="array">
+      <obj_property name="ElementShortName">doutb[15:0]</obj_property>
+      <obj_property name="ObjectShortName">doutb[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/RAMR_ReadAddr" type="array">
+      <obj_property name="ElementShortName">RAMR_ReadAddr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMR_ReadAddr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/RAMR_Quantity" type="array">
+      <obj_property name="ElementShortName">RAMR_Quantity[17:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMR_Quantity[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/SPI_ReadCommand" type="logic">
+      <obj_property name="ElementShortName">SPI_ReadCommand</obj_property>
+      <obj_property name="ObjectShortName">SPI_ReadCommand</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/SlaveSel" type="logic">
+      <obj_property name="ElementShortName">SlaveSel</obj_property>
+      <obj_property name="ObjectShortName">SlaveSel</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/reading" type="logic">
+      <obj_property name="ElementShortName">reading</obj_property>
+      <obj_property name="ObjectShortName">reading</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/readRemaining" type="array">
+      <obj_property name="ElementShortName">readRemaining[17:0]</obj_property>
+      <obj_property name="ObjectShortName">readRemaining[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/RAMReadDone" type="logic">
+      <obj_property name="ElementShortName">RAMReadDone</obj_property>
+      <obj_property name="ObjectShortName">RAMReadDone</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider53">
+      <obj_property name="label">RamWrite</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/ADC_SampleClock" type="logic">
+      <obj_property name="ElementShortName">ADC_SampleClock</obj_property>
+      <obj_property name="ObjectShortName">ADC_SampleClock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_blk_mem_gen_0/dina" type="array">
+      <obj_property name="ElementShortName">dina[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dina[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_blk_mem_gen_0/addra" type="array">
+      <obj_property name="ElementShortName">addra[17:0]</obj_property>
+      <obj_property name="ObjectShortName">addra[17:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_blk_mem_gen_0/wea" type="array">
+      <obj_property name="ElementShortName">wea[1:0]</obj_property>
+      <obj_property name="ObjectShortName">wea[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_WriteEngine/RAMW_WriteAddr" type="array">
+      <obj_property name="ElementShortName">RAMW_WriteAddr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMW_WriteAddr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_WriteEngine/RAMR_ReadAddr" type="array">
+      <obj_property name="ElementShortName">RAMR_ReadAddr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMR_ReadAddr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_ReadEngine/reading" type="logic">
+      <obj_property name="ElementShortName">reading</obj_property>
+      <obj_property name="ObjectShortName">reading</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_WriteEngine/TriggerWriteDone" type="logic">
+      <obj_property name="ElementShortName">TriggerWriteDone</obj_property>
+      <obj_property name="ObjectShortName">TriggerWriteDone</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_RAM_WriteEngine/TriggerStopAddr" type="array">
+      <obj_property name="ElementShortName">TriggerStopAddr[17:0]</obj_property>
+      <obj_property name="ObjectShortName">TriggerStopAddr[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider70">
+      <obj_property name="label">ADCInterface</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_ADCInterface/ADC_DataIn" type="array">
+      <obj_property name="ElementShortName">ADC_DataIn[9:0]</obj_property>
+      <obj_property name="ObjectShortName">ADC_DataIn[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_ADCInterface/ADC_SampleClock" type="logic">
+      <obj_property name="ElementShortName">ADC_SampleClock</obj_property>
+      <obj_property name="ObjectShortName">ADC_SampleClock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_ADCInterface/twoCounter" type="logic">
+      <obj_property name="ElementShortName">twoCounter</obj_property>
+      <obj_property name="ObjectShortName">twoCounter</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_ADCInterface/RAMW_Data" type="array">
+      <obj_property name="ElementShortName">RAMW_Data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">RAMW_Data[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider74">
+      <obj_property name="label">TimingGen</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TimingGen/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TimingGen/twoCounter" type="array">
+      <obj_property name="ElementShortName">twoCounter[6:0]</obj_property>
+      <obj_property name="ObjectShortName">twoCounter[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TimingGen/ADC_SampleClock" type="logic">
+      <obj_property name="ElementShortName">ADC_SampleClock</obj_property>
+      <obj_property name="ObjectShortName">ADC_SampleClock</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">TriggerLogic</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TriggerLogic/TriggerThreshold" type="array">
+      <obj_property name="ElementShortName">TriggerThreshold[7:0]</obj_property>
+      <obj_property name="ObjectShortName">TriggerThreshold[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TriggerLogic/TriggerType" type="array">
+      <obj_property name="ElementShortName">TriggerType[7:0]</obj_property>
+      <obj_property name="ObjectShortName">TriggerType[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TriggerLogic/ADC_InData" type="array">
+      <obj_property name="ElementShortName">ADC_InData[9:0]</obj_property>
+      <obj_property name="ObjectShortName">ADC_InData[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TriggerLogic/Triggered" type="logic">
+      <obj_property name="ElementShortName">Triggered</obj_property>
+      <obj_property name="ObjectShortName">Triggered</obj_property>
+   </wvobject>
+   <wvobject fp_name="/testbench/u_Top/u_TriggerLogic/TriggeredAddress" type="array">
+      <obj_property name="ElementShortName">TriggeredAddress[17:0]</obj_property>
+      <obj_property name="ObjectShortName">TriggeredAddress[17:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider78">
+      <obj_property name="label">Blank</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+</wave_config>

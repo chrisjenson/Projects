@@ -1,0 +1,735 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_draw.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.bss
+  21              		.align	2
+  22              	draw_buf_size:
+  23 0000 00000000 		.space	4
+  24              		.section	.text.lv_draw_get_buf,"ax",%progbits
+  25              		.align	2
+  26              		.global	lv_draw_get_buf
+  27              		.thumb
+  28              		.thumb_func
+  29              		.type	lv_draw_get_buf, %function
+  30              	lv_draw_get_buf:
+  31              	.LFB32:
+  32              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\lv_draw.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  * @file lv_draw.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  */
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /*********************
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *      INCLUDES
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *********************/
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include <stdio.h>
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include <stdbool.h>
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "lv_draw.h"
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_core/lv_debug.h"
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_misc/lv_math.h"
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_misc/lv_log.h"
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_misc/lv_math.h"
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_misc/lv_mem.h"
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include "../lv_misc/lv_gc.h"
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #if defined(LV_GC_INCLUDE)
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #include LV_GC_INCLUDE
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** #endif /* LV_ENABLE_GC */
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /*********************
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *      DEFINES
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 2
+
+
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *********************/
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**********************
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *      TYPEDEFS
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  **********************/
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**********************
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *  STATIC PROTOTYPES
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  **********************/
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**********************
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *  STATIC VARIABLES
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  **********************/
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** static uint32_t draw_buf_size = 0;
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**********************
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *      MACROS
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  **********************/
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**********************
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  *   GLOBAL FUNCTIONS
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  **********************/
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  * Give a buffer with the given to use during drawing.
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  * Be careful to not use the buffer while other processes are using it.
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  * @param size the required size
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  */
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** void * lv_draw_get_buf(uint32_t size)
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** {
+  33              		.loc 1 55 0
+  34              		.cfi_startproc
+  35              		@ args = 0, pretend = 0, frame = 8
+  36              		@ frame_needed = 1, uses_anonymous_args = 0
+  37 0000 80B5     		push	{r7, lr}
+  38              		.cfi_def_cfa_offset 8
+  39              		.cfi_offset 7, -8
+  40              		.cfi_offset 14, -4
+  41 0002 82B0     		sub	sp, sp, #8
+  42              		.cfi_def_cfa_offset 16
+  43 0004 00AF     		add	r7, sp, #0
+  44              		.cfi_def_cfa_register 7
+  45 0006 7860     		str	r0, [r7, #4]
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     if(size <= draw_buf_size) return LV_GC_ROOT(_lv_draw_buf);
+  46              		.loc 1 56 0
+  47 0008 134B     		ldr	r3, .L5
+  48 000a 1B68     		ldr	r3, [r3]
+  49 000c 7A68     		ldr	r2, [r7, #4]
+  50 000e 9A42     		cmp	r2, r3
+  51 0010 02D8     		bhi	.L2
+  52              		.loc 1 56 0 is_stmt 0 discriminator 1
+  53 0012 124B     		ldr	r3, .L5+4
+  54 0014 1B68     		ldr	r3, [r3]
+  55 0016 1AE0     		b	.L3
+  56              	.L2:
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     LV_LOG_TRACE("lv_draw_get_buf: allocate");
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 3
+
+
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     draw_buf_size = size;
+  57              		.loc 1 60 0 is_stmt 1
+  58 0018 0F4A     		ldr	r2, .L5
+  59 001a 7B68     		ldr	r3, [r7, #4]
+  60 001c 1360     		str	r3, [r2]
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     if(LV_GC_ROOT(_lv_draw_buf) == NULL) {
+  61              		.loc 1 62 0
+  62 001e 0F4B     		ldr	r3, .L5+4
+  63 0020 1B68     		ldr	r3, [r3]
+  64 0022 002B     		cmp	r3, #0
+  65 0024 08D1     		bne	.L4
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         LV_GC_ROOT(_lv_draw_buf) = lv_mem_alloc(size);
+  66              		.loc 1 63 0
+  67 0026 7868     		ldr	r0, [r7, #4]
+  68 0028 FFF7FEFF 		bl	lv_mem_alloc
+  69 002c 0246     		mov	r2, r0
+  70 002e 0B4B     		ldr	r3, .L5+4
+  71 0030 1A60     		str	r2, [r3]
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         LV_ASSERT_MEM(LV_GC_ROOT(_lv_draw_buf));
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         return LV_GC_ROOT(_lv_draw_buf);
+  72              		.loc 1 65 0
+  73 0032 0A4B     		ldr	r3, .L5+4
+  74 0034 1B68     		ldr	r3, [r3]
+  75 0036 0AE0     		b	.L3
+  76              	.L4:
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     }
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     LV_GC_ROOT(_lv_draw_buf) = lv_mem_realloc(LV_GC_ROOT(_lv_draw_buf), size);
+  77              		.loc 1 68 0
+  78 0038 084B     		ldr	r3, .L5+4
+  79 003a 1B68     		ldr	r3, [r3]
+  80 003c 7968     		ldr	r1, [r7, #4]
+  81 003e 1846     		mov	r0, r3
+  82 0040 FFF7FEFF 		bl	lv_mem_realloc
+  83 0044 0246     		mov	r2, r0
+  84 0046 054B     		ldr	r3, .L5+4
+  85 0048 1A60     		str	r2, [r3]
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     LV_ASSERT_MEM(LV_GC_ROOT(_lv_draw_buf));
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     return LV_GC_ROOT(_lv_draw_buf);
+  86              		.loc 1 70 0
+  87 004a 044B     		ldr	r3, .L5+4
+  88 004c 1B68     		ldr	r3, [r3]
+  89              	.L3:
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** }
+  90              		.loc 1 71 0
+  91 004e 1846     		mov	r0, r3
+  92 0050 0837     		adds	r7, r7, #8
+  93              		.cfi_def_cfa_offset 8
+  94 0052 BD46     		mov	sp, r7
+  95              		.cfi_def_cfa_register 13
+  96              		@ sp needed
+  97 0054 80BD     		pop	{r7, pc}
+  98              	.L6:
+  99 0056 00BF     		.align	2
+ 100              	.L5:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 4
+
+
+ 101 0058 00000000 		.word	draw_buf_size
+ 102 005c 00000000 		.word	_lv_draw_buf
+ 103              		.cfi_endproc
+ 104              	.LFE32:
+ 105              		.size	lv_draw_get_buf, .-lv_draw_get_buf
+ 106              		.section	.text.lv_draw_free_buf,"ax",%progbits
+ 107              		.align	2
+ 108              		.global	lv_draw_free_buf
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.type	lv_draw_free_buf, %function
+ 112              	lv_draw_free_buf:
+ 113              	.LFB33:
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** 
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** /**
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  * Free the draw buffer
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****  */
+  76:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** void lv_draw_free_buf(void)
+  77:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** {
+ 114              		.loc 1 77 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 1, uses_anonymous_args = 0
+ 118 0000 80B5     		push	{r7, lr}
+ 119              		.cfi_def_cfa_offset 8
+ 120              		.cfi_offset 7, -8
+ 121              		.cfi_offset 14, -4
+ 122 0002 00AF     		add	r7, sp, #0
+ 123              		.cfi_def_cfa_register 7
+  78:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     if(LV_GC_ROOT(_lv_draw_buf)) {
+ 124              		.loc 1 78 0
+ 125 0004 084B     		ldr	r3, .L10
+ 126 0006 1B68     		ldr	r3, [r3]
+ 127 0008 002B     		cmp	r3, #0
+ 128 000a 0AD0     		beq	.L9
+  79:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         lv_mem_free(LV_GC_ROOT(_lv_draw_buf));
+ 129              		.loc 1 79 0
+ 130 000c 064B     		ldr	r3, .L10
+ 131 000e 1B68     		ldr	r3, [r3]
+ 132 0010 1846     		mov	r0, r3
+ 133 0012 FFF7FEFF 		bl	lv_mem_free
+  80:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         LV_GC_ROOT(_lv_draw_buf) = NULL;
+ 134              		.loc 1 80 0
+ 135 0016 044B     		ldr	r3, .L10
+ 136 0018 0022     		movs	r2, #0
+ 137 001a 1A60     		str	r2, [r3]
+  81:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****         draw_buf_size = 0;
+ 138              		.loc 1 81 0
+ 139 001c 034B     		ldr	r3, .L10+4
+ 140 001e 0022     		movs	r2, #0
+ 141 0020 1A60     		str	r2, [r3]
+ 142              	.L9:
+  82:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c ****     }
+  83:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_draw/lv_draw.c **** }
+ 143              		.loc 1 83 0
+ 144 0022 00BF     		nop
+ 145 0024 80BD     		pop	{r7, pc}
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 5
+
+
+ 146              	.L11:
+ 147 0026 00BF     		.align	2
+ 148              	.L10:
+ 149 0028 00000000 		.word	_lv_draw_buf
+ 150 002c 00000000 		.word	draw_buf_size
+ 151              		.cfi_endproc
+ 152              	.LFE33:
+ 153              		.size	lv_draw_free_buf, .-lv_draw_free_buf
+ 154              		.text
+ 155              	.Letext0:
+ 156              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 157              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 158              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw\\../lv_misc/lv_gc.h"
+ 159              		.section	.debug_info,"",%progbits
+ 160              	.Ldebug_info0:
+ 161 0000 F1000000 		.4byte	0xf1
+ 162 0004 0400     		.2byte	0x4
+ 163 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 164 000a 04       		.byte	0x4
+ 165 000b 01       		.uleb128 0x1
+ 166 000c 02010000 		.4byte	.LASF15
+ 167 0010 0C       		.byte	0xc
+ 168 0011 95000000 		.4byte	.LASF16
+ 169 0015 BF010000 		.4byte	.LASF17
+ 170 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 171 001d 00000000 		.4byte	0
+ 172 0021 00000000 		.4byte	.Ldebug_line0
+ 173 0025 02       		.uleb128 0x2
+ 174 0026 01       		.byte	0x1
+ 175 0027 06       		.byte	0x6
+ 176 0028 E5000000 		.4byte	.LASF0
+ 177 002c 02       		.uleb128 0x2
+ 178 002d 01       		.byte	0x1
+ 179 002e 08       		.byte	0x8
+ 180 002f 70000000 		.4byte	.LASF1
+ 181 0033 02       		.uleb128 0x2
+ 182 0034 02       		.byte	0x2
+ 183 0035 05       		.byte	0x5
+ 184 0036 B5010000 		.4byte	.LASF2
+ 185 003a 02       		.uleb128 0x2
+ 186 003b 02       		.byte	0x2
+ 187 003c 07       		.byte	0x7
+ 188 003d D2000000 		.4byte	.LASF3
+ 189 0041 02       		.uleb128 0x2
+ 190 0042 04       		.byte	0x4
+ 191 0043 05       		.byte	0x5
+ 192 0044 8C000000 		.4byte	.LASF4
+ 193 0048 03       		.uleb128 0x3
+ 194 0049 1B000000 		.4byte	.LASF12
+ 195 004d 02       		.byte	0x2
+ 196 004e 41       		.byte	0x41
+ 197 004f 53000000 		.4byte	0x53
+ 198 0053 02       		.uleb128 0x2
+ 199 0054 04       		.byte	0x4
+ 200 0055 07       		.byte	0x7
+ 201 0056 26000000 		.4byte	.LASF5
+ 202 005a 02       		.uleb128 0x2
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 6
+
+
+ 203 005b 08       		.byte	0x8
+ 204 005c 05       		.byte	0x5
+ 205 005d 00000000 		.4byte	.LASF6
+ 206 0061 02       		.uleb128 0x2
+ 207 0062 08       		.byte	0x8
+ 208 0063 07       		.byte	0x7
+ 209 0064 49000000 		.4byte	.LASF7
+ 210 0068 04       		.uleb128 0x4
+ 211 0069 04       		.byte	0x4
+ 212 006a 05       		.byte	0x5
+ 213 006b 696E7400 		.ascii	"int\000"
+ 214 006f 02       		.uleb128 0x2
+ 215 0070 04       		.byte	0x4
+ 216 0071 07       		.byte	0x7
+ 217 0072 0E000000 		.4byte	.LASF8
+ 218 0076 02       		.uleb128 0x2
+ 219 0077 08       		.byte	0x8
+ 220 0078 04       		.byte	0x4
+ 221 0079 F6000000 		.4byte	.LASF9
+ 222 007d 05       		.uleb128 0x5
+ 223 007e 04       		.byte	0x4
+ 224 007f 02       		.uleb128 0x2
+ 225 0080 04       		.byte	0x4
+ 226 0081 07       		.byte	0x7
+ 227 0082 69020000 		.4byte	.LASF10
+ 228 0086 02       		.uleb128 0x2
+ 229 0087 01       		.byte	0x1
+ 230 0088 08       		.byte	0x8
+ 231 0089 7E000000 		.4byte	.LASF11
+ 232 008d 03       		.uleb128 0x3
+ 233 008e 83000000 		.4byte	.LASF13
+ 234 0092 03       		.byte	0x3
+ 235 0093 30       		.byte	0x30
+ 236 0094 48000000 		.4byte	0x48
+ 237 0098 02       		.uleb128 0x2
+ 238 0099 01       		.byte	0x1
+ 239 009a 02       		.byte	0x2
+ 240 009b CC000000 		.4byte	.LASF14
+ 241 009f 06       		.uleb128 0x6
+ 242 00a0 60000000 		.4byte	.LASF18
+ 243 00a4 01       		.byte	0x1
+ 244 00a5 36       		.byte	0x36
+ 245 00a6 7D000000 		.4byte	0x7d
+ 246 00aa 00000000 		.4byte	.LFB32
+ 247 00ae 60000000 		.4byte	.LFE32-.LFB32
+ 248 00b2 01       		.uleb128 0x1
+ 249 00b3 9C       		.byte	0x9c
+ 250 00b4 C7000000 		.4byte	0xc7
+ 251 00b8 07       		.uleb128 0x7
+ 252 00b9 F1000000 		.4byte	.LASF19
+ 253 00bd 01       		.byte	0x1
+ 254 00be 36       		.byte	0x36
+ 255 00bf 8D000000 		.4byte	0x8d
+ 256 00c3 02       		.uleb128 0x2
+ 257 00c4 91       		.byte	0x91
+ 258 00c5 74       		.sleb128 -12
+ 259 00c6 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 7
+
+
+ 260 00c7 08       		.uleb128 0x8
+ 261 00c8 38000000 		.4byte	.LASF20
+ 262 00cc 01       		.byte	0x1
+ 263 00cd 4C       		.byte	0x4c
+ 264 00ce 00000000 		.4byte	.LFB33
+ 265 00d2 30000000 		.4byte	.LFE33-.LFB33
+ 266 00d6 01       		.uleb128 0x1
+ 267 00d7 9C       		.byte	0x9c
+ 268 00d8 09       		.uleb128 0x9
+ 269 00d9 72020000 		.4byte	.LASF21
+ 270 00dd 01       		.byte	0x1
+ 271 00de 27       		.byte	0x27
+ 272 00df 8D000000 		.4byte	0x8d
+ 273 00e3 05       		.uleb128 0x5
+ 274 00e4 03       		.byte	0x3
+ 275 00e5 00000000 		.4byte	draw_buf_size
+ 276 00e9 0A       		.uleb128 0xa
+ 277 00ea 5C020000 		.4byte	.LASF22
+ 278 00ee 04       		.byte	0x4
+ 279 00ef 38       		.byte	0x38
+ 280 00f0 7D000000 		.4byte	0x7d
+ 281 00f4 00       		.byte	0
+ 282              		.section	.debug_abbrev,"",%progbits
+ 283              	.Ldebug_abbrev0:
+ 284 0000 01       		.uleb128 0x1
+ 285 0001 11       		.uleb128 0x11
+ 286 0002 01       		.byte	0x1
+ 287 0003 25       		.uleb128 0x25
+ 288 0004 0E       		.uleb128 0xe
+ 289 0005 13       		.uleb128 0x13
+ 290 0006 0B       		.uleb128 0xb
+ 291 0007 03       		.uleb128 0x3
+ 292 0008 0E       		.uleb128 0xe
+ 293 0009 1B       		.uleb128 0x1b
+ 294 000a 0E       		.uleb128 0xe
+ 295 000b 55       		.uleb128 0x55
+ 296 000c 17       		.uleb128 0x17
+ 297 000d 11       		.uleb128 0x11
+ 298 000e 01       		.uleb128 0x1
+ 299 000f 10       		.uleb128 0x10
+ 300 0010 17       		.uleb128 0x17
+ 301 0011 00       		.byte	0
+ 302 0012 00       		.byte	0
+ 303 0013 02       		.uleb128 0x2
+ 304 0014 24       		.uleb128 0x24
+ 305 0015 00       		.byte	0
+ 306 0016 0B       		.uleb128 0xb
+ 307 0017 0B       		.uleb128 0xb
+ 308 0018 3E       		.uleb128 0x3e
+ 309 0019 0B       		.uleb128 0xb
+ 310 001a 03       		.uleb128 0x3
+ 311 001b 0E       		.uleb128 0xe
+ 312 001c 00       		.byte	0
+ 313 001d 00       		.byte	0
+ 314 001e 03       		.uleb128 0x3
+ 315 001f 16       		.uleb128 0x16
+ 316 0020 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 8
+
+
+ 317 0021 03       		.uleb128 0x3
+ 318 0022 0E       		.uleb128 0xe
+ 319 0023 3A       		.uleb128 0x3a
+ 320 0024 0B       		.uleb128 0xb
+ 321 0025 3B       		.uleb128 0x3b
+ 322 0026 0B       		.uleb128 0xb
+ 323 0027 49       		.uleb128 0x49
+ 324 0028 13       		.uleb128 0x13
+ 325 0029 00       		.byte	0
+ 326 002a 00       		.byte	0
+ 327 002b 04       		.uleb128 0x4
+ 328 002c 24       		.uleb128 0x24
+ 329 002d 00       		.byte	0
+ 330 002e 0B       		.uleb128 0xb
+ 331 002f 0B       		.uleb128 0xb
+ 332 0030 3E       		.uleb128 0x3e
+ 333 0031 0B       		.uleb128 0xb
+ 334 0032 03       		.uleb128 0x3
+ 335 0033 08       		.uleb128 0x8
+ 336 0034 00       		.byte	0
+ 337 0035 00       		.byte	0
+ 338 0036 05       		.uleb128 0x5
+ 339 0037 0F       		.uleb128 0xf
+ 340 0038 00       		.byte	0
+ 341 0039 0B       		.uleb128 0xb
+ 342 003a 0B       		.uleb128 0xb
+ 343 003b 00       		.byte	0
+ 344 003c 00       		.byte	0
+ 345 003d 06       		.uleb128 0x6
+ 346 003e 2E       		.uleb128 0x2e
+ 347 003f 01       		.byte	0x1
+ 348 0040 3F       		.uleb128 0x3f
+ 349 0041 19       		.uleb128 0x19
+ 350 0042 03       		.uleb128 0x3
+ 351 0043 0E       		.uleb128 0xe
+ 352 0044 3A       		.uleb128 0x3a
+ 353 0045 0B       		.uleb128 0xb
+ 354 0046 3B       		.uleb128 0x3b
+ 355 0047 0B       		.uleb128 0xb
+ 356 0048 27       		.uleb128 0x27
+ 357 0049 19       		.uleb128 0x19
+ 358 004a 49       		.uleb128 0x49
+ 359 004b 13       		.uleb128 0x13
+ 360 004c 11       		.uleb128 0x11
+ 361 004d 01       		.uleb128 0x1
+ 362 004e 12       		.uleb128 0x12
+ 363 004f 06       		.uleb128 0x6
+ 364 0050 40       		.uleb128 0x40
+ 365 0051 18       		.uleb128 0x18
+ 366 0052 9642     		.uleb128 0x2116
+ 367 0054 19       		.uleb128 0x19
+ 368 0055 01       		.uleb128 0x1
+ 369 0056 13       		.uleb128 0x13
+ 370 0057 00       		.byte	0
+ 371 0058 00       		.byte	0
+ 372 0059 07       		.uleb128 0x7
+ 373 005a 05       		.uleb128 0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 9
+
+
+ 374 005b 00       		.byte	0
+ 375 005c 03       		.uleb128 0x3
+ 376 005d 0E       		.uleb128 0xe
+ 377 005e 3A       		.uleb128 0x3a
+ 378 005f 0B       		.uleb128 0xb
+ 379 0060 3B       		.uleb128 0x3b
+ 380 0061 0B       		.uleb128 0xb
+ 381 0062 49       		.uleb128 0x49
+ 382 0063 13       		.uleb128 0x13
+ 383 0064 02       		.uleb128 0x2
+ 384 0065 18       		.uleb128 0x18
+ 385 0066 00       		.byte	0
+ 386 0067 00       		.byte	0
+ 387 0068 08       		.uleb128 0x8
+ 388 0069 2E       		.uleb128 0x2e
+ 389 006a 00       		.byte	0
+ 390 006b 3F       		.uleb128 0x3f
+ 391 006c 19       		.uleb128 0x19
+ 392 006d 03       		.uleb128 0x3
+ 393 006e 0E       		.uleb128 0xe
+ 394 006f 3A       		.uleb128 0x3a
+ 395 0070 0B       		.uleb128 0xb
+ 396 0071 3B       		.uleb128 0x3b
+ 397 0072 0B       		.uleb128 0xb
+ 398 0073 27       		.uleb128 0x27
+ 399 0074 19       		.uleb128 0x19
+ 400 0075 11       		.uleb128 0x11
+ 401 0076 01       		.uleb128 0x1
+ 402 0077 12       		.uleb128 0x12
+ 403 0078 06       		.uleb128 0x6
+ 404 0079 40       		.uleb128 0x40
+ 405 007a 18       		.uleb128 0x18
+ 406 007b 9642     		.uleb128 0x2116
+ 407 007d 19       		.uleb128 0x19
+ 408 007e 00       		.byte	0
+ 409 007f 00       		.byte	0
+ 410 0080 09       		.uleb128 0x9
+ 411 0081 34       		.uleb128 0x34
+ 412 0082 00       		.byte	0
+ 413 0083 03       		.uleb128 0x3
+ 414 0084 0E       		.uleb128 0xe
+ 415 0085 3A       		.uleb128 0x3a
+ 416 0086 0B       		.uleb128 0xb
+ 417 0087 3B       		.uleb128 0x3b
+ 418 0088 0B       		.uleb128 0xb
+ 419 0089 49       		.uleb128 0x49
+ 420 008a 13       		.uleb128 0x13
+ 421 008b 02       		.uleb128 0x2
+ 422 008c 18       		.uleb128 0x18
+ 423 008d 00       		.byte	0
+ 424 008e 00       		.byte	0
+ 425 008f 0A       		.uleb128 0xa
+ 426 0090 34       		.uleb128 0x34
+ 427 0091 00       		.byte	0
+ 428 0092 03       		.uleb128 0x3
+ 429 0093 0E       		.uleb128 0xe
+ 430 0094 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 10
+
+
+ 431 0095 0B       		.uleb128 0xb
+ 432 0096 3B       		.uleb128 0x3b
+ 433 0097 0B       		.uleb128 0xb
+ 434 0098 49       		.uleb128 0x49
+ 435 0099 13       		.uleb128 0x13
+ 436 009a 3F       		.uleb128 0x3f
+ 437 009b 19       		.uleb128 0x19
+ 438 009c 3C       		.uleb128 0x3c
+ 439 009d 19       		.uleb128 0x19
+ 440 009e 00       		.byte	0
+ 441 009f 00       		.byte	0
+ 442 00a0 00       		.byte	0
+ 443              		.section	.debug_aranges,"",%progbits
+ 444 0000 24000000 		.4byte	0x24
+ 445 0004 0200     		.2byte	0x2
+ 446 0006 00000000 		.4byte	.Ldebug_info0
+ 447 000a 04       		.byte	0x4
+ 448 000b 00       		.byte	0
+ 449 000c 0000     		.2byte	0
+ 450 000e 0000     		.2byte	0
+ 451 0010 00000000 		.4byte	.LFB32
+ 452 0014 60000000 		.4byte	.LFE32-.LFB32
+ 453 0018 00000000 		.4byte	.LFB33
+ 454 001c 30000000 		.4byte	.LFE33-.LFB33
+ 455 0020 00000000 		.4byte	0
+ 456 0024 00000000 		.4byte	0
+ 457              		.section	.debug_ranges,"",%progbits
+ 458              	.Ldebug_ranges0:
+ 459 0000 00000000 		.4byte	.LFB32
+ 460 0004 60000000 		.4byte	.LFE32
+ 461 0008 00000000 		.4byte	.LFB33
+ 462 000c 30000000 		.4byte	.LFE33
+ 463 0010 00000000 		.4byte	0
+ 464 0014 00000000 		.4byte	0
+ 465              		.section	.debug_line,"",%progbits
+ 466              	.Ldebug_line0:
+ 467 0000 C6010000 		.section	.debug_str,"MS",%progbits,1
+ 467      02008D01 
+ 467      00000201 
+ 467      FB0E0D00 
+ 467      01010101 
+ 468              	.LASF6:
+ 469 0000 6C6F6E67 		.ascii	"long long int\000"
+ 469      206C6F6E 
+ 469      6720696E 
+ 469      7400
+ 470              	.LASF8:
+ 471 000e 756E7369 		.ascii	"unsigned int\000"
+ 471      676E6564 
+ 471      20696E74 
+ 471      00
+ 472              	.LASF12:
+ 473 001b 5F5F7569 		.ascii	"__uint32_t\000"
+ 473      6E743332 
+ 473      5F7400
+ 474              	.LASF5:
+ 475 0026 6C6F6E67 		.ascii	"long unsigned int\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 11
+
+
+ 475      20756E73 
+ 475      69676E65 
+ 475      6420696E 
+ 475      7400
+ 476              	.LASF20:
+ 477 0038 6C765F64 		.ascii	"lv_draw_free_buf\000"
+ 477      7261775F 
+ 477      66726565 
+ 477      5F627566 
+ 477      00
+ 478              	.LASF7:
+ 479 0049 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 479      206C6F6E 
+ 479      6720756E 
+ 479      7369676E 
+ 479      65642069 
+ 480              	.LASF18:
+ 481 0060 6C765F64 		.ascii	"lv_draw_get_buf\000"
+ 481      7261775F 
+ 481      6765745F 
+ 481      62756600 
+ 482              	.LASF1:
+ 483 0070 756E7369 		.ascii	"unsigned char\000"
+ 483      676E6564 
+ 483      20636861 
+ 483      7200
+ 484              	.LASF11:
+ 485 007e 63686172 		.ascii	"char\000"
+ 485      00
+ 486              	.LASF13:
+ 487 0083 75696E74 		.ascii	"uint32_t\000"
+ 487      33325F74 
+ 487      00
+ 488              	.LASF4:
+ 489 008c 6C6F6E67 		.ascii	"long int\000"
+ 489      20696E74 
+ 489      00
+ 490              	.LASF16:
+ 491 0095 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_draw"
+ 491      2E5C2E2E 
+ 491      5C6C7667 
+ 491      6C5C7665 
+ 491      7273696F 
+ 492 00c1 5C6C765F 		.ascii	"\\lv_draw.c\000"
+ 492      64726177 
+ 492      2E6300
+ 493              	.LASF14:
+ 494 00cc 5F426F6F 		.ascii	"_Bool\000"
+ 494      6C00
+ 495              	.LASF3:
+ 496 00d2 73686F72 		.ascii	"short unsigned int\000"
+ 496      7420756E 
+ 496      7369676E 
+ 496      65642069 
+ 496      6E7400
+ 497              	.LASF0:
+ 498 00e5 7369676E 		.ascii	"signed char\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 12
+
+
+ 498      65642063 
+ 498      68617200 
+ 499              	.LASF19:
+ 500 00f1 73697A65 		.ascii	"size\000"
+ 500      00
+ 501              	.LASF9:
+ 502 00f6 6C6F6E67 		.ascii	"long double\000"
+ 502      20646F75 
+ 502      626C6500 
+ 503              	.LASF15:
+ 504 0102 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 504      43313120 
+ 504      352E342E 
+ 504      31203230 
+ 504      31363036 
+ 505 0135 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 505      20726576 
+ 505      6973696F 
+ 505      6E203233 
+ 505      37373135 
+ 506 0168 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 506      70202D6D 
+ 506      6670753D 
+ 506      66707634 
+ 506      2D73702D 
+ 507 019b 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 507      6F6E7320 
+ 507      2D666661 
+ 507      742D6C74 
+ 507      6F2D6F62 
+ 508              	.LASF2:
+ 509 01b5 73686F72 		.ascii	"short int\000"
+ 509      7420696E 
+ 509      7400
+ 510              	.LASF17:
+ 511 01bf 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 511      73657273 
+ 511      5C746D6A 
+ 511      33325C44 
+ 511      6F63756D 
+ 512 01ec 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 512      6C6C6F73 
+ 512      636F7065 
+ 512      5F53656E 
+ 512      696F725F 
+ 513 021d 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 513      5C74636F 
+ 513      6D5F6170 
+ 513      705C7463 
+ 513      6F6D5F61 
+ 514 024d 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 514      736F6336 
+ 514      2E637964 
+ 514      736E00
+ 515              	.LASF22:
+ 516 025c 5F6C765F 		.ascii	"_lv_draw_buf\000"
+ 516      64726177 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccCFqdpQ.s 			page 13
+
+
+ 516      5F627566 
+ 516      00
+ 517              	.LASF10:
+ 518 0269 73697A65 		.ascii	"sizetype\000"
+ 518      74797065 
+ 518      00
+ 519              	.LASF21:
+ 520 0272 64726177 		.ascii	"draw_buf_size\000"
+ 520      5F627566 
+ 520      5F73697A 
+ 520      6500
+ 521              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

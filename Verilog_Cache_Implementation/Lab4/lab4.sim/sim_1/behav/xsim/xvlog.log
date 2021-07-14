@@ -1,0 +1,8 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/CELab2/Lab4/lab4.srcs/sources_1/new/Cache.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Cache
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/CELab2/Lab4/lab4.srcs/sources_1/new/CacheControl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module CacheControl
+INFO: [VRFC 10-2263] Analyzing Verilog file "D:/CELab2/Lab4/lab4.srcs/sources_1/new/Memory.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module Memory
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/CELab2/Lab4/lab4.srcs/sim_1/new/testbench.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module testbench

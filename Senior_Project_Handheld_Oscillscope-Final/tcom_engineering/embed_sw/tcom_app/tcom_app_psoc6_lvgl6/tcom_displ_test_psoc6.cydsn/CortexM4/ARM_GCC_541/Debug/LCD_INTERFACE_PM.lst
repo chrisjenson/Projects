@@ -1,0 +1,681 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"LCD_INTERFACE_PM.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.LCD_INTERFACE_SaveConfig,"ax",%progbits
+  21              		.align	2
+  22              		.global	LCD_INTERFACE_SaveConfig
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	LCD_INTERFACE_SaveConfig, %function
+  26              	LCD_INTERFACE_SaveConfig:
+  27              	.LFB132:
+  28              		.file 1 "Generated_Source\\PSoC6\\LCD_INTERFACE_PM.c"
+   1:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * File Name: LCD_INTERFACE_PM.c
+   3:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Version 1.80
+   4:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+   5:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Description:
+   6:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  This file contains the setup, control and status commands to support 
+   7:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  the component operations in Low-power mode.  
+   8:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+   9:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  10:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Copyright 2008-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  11:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  12:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  13:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * the software package with which this file was provided.
+  14:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  15:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  16:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** #include "LCD_INTERFACE.h" 
+  17:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  18:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  19:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  20:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_SaveConfig
+  21:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  22:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  23:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  24:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  All configuration registers are retention. Nothing to save here.
+  25:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  26:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  27:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_SaveConfig(void) 
+  28:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {   
+  29              		.loc 1 28 0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 2
+
+
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 00AF     		add	r7, sp, #0
+  38              		.cfi_def_cfa_register 7
+  29:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     
+  30:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+  39              		.loc 1 30 0
+  40 0004 00BF     		nop
+  41 0006 BD46     		mov	sp, r7
+  42              		.cfi_def_cfa_register 13
+  43              		@ sp needed
+  44 0008 5DF8047B 		ldr	r7, [sp], #4
+  45              		.cfi_restore 7
+  46              		.cfi_def_cfa_offset 0
+  47 000c 7047     		bx	lr
+  48              		.cfi_endproc
+  49              	.LFE132:
+  50              		.size	LCD_INTERFACE_SaveConfig, .-LCD_INTERFACE_SaveConfig
+  51 000e 00BF     		.section	.text.LCD_INTERFACE_RestoreConfig,"ax",%progbits
+  52              		.align	2
+  53              		.global	LCD_INTERFACE_RestoreConfig
+  54              		.thumb
+  55              		.thumb_func
+  56              		.type	LCD_INTERFACE_RestoreConfig, %function
+  57              	LCD_INTERFACE_RestoreConfig:
+  58              	.LFB133:
+  31:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  32:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  33:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  34:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_RestoreConfig
+  35:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  36:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  37:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  38:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  All configuration registers are retention. Nothing to restore here.
+  39:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  40:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  41:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_RestoreConfig(void) 
+  42:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {    
+  59              		.loc 1 42 0
+  60              		.cfi_startproc
+  61              		@ args = 0, pretend = 0, frame = 0
+  62              		@ frame_needed = 1, uses_anonymous_args = 0
+  63              		@ link register save eliminated.
+  64 0000 80B4     		push	{r7}
+  65              		.cfi_def_cfa_offset 4
+  66              		.cfi_offset 7, -4
+  67 0002 00AF     		add	r7, sp, #0
+  68              		.cfi_def_cfa_register 7
+  43:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     
+  44:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+  69              		.loc 1 44 0
+  70 0004 00BF     		nop
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 3
+
+
+  71 0006 BD46     		mov	sp, r7
+  72              		.cfi_def_cfa_register 13
+  73              		@ sp needed
+  74 0008 5DF8047B 		ldr	r7, [sp], #4
+  75              		.cfi_restore 7
+  76              		.cfi_def_cfa_offset 0
+  77 000c 7047     		bx	lr
+  78              		.cfi_endproc
+  79              	.LFE133:
+  80              		.size	LCD_INTERFACE_RestoreConfig, .-LCD_INTERFACE_RestoreConfig
+  81 000e 00BF     		.section	.text.LCD_INTERFACE_Sleep,"ax",%progbits
+  82              		.align	2
+  83              		.global	LCD_INTERFACE_Sleep
+  84              		.thumb
+  85              		.thumb_func
+  86              		.type	LCD_INTERFACE_Sleep, %function
+  87              	LCD_INTERFACE_Sleep:
+  88              	.LFB134:
+  45:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  46:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  47:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  48:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_Sleep
+  49:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  50:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  51:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  52:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  Disables block's operation and saves its configuration. Should be called 
+  53:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  prior to entering Sleep.
+  54:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  55:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  56:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_Sleep(void) 
+  57:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {
+  89              		.loc 1 57 0
+  90              		.cfi_startproc
+  91              		@ args = 0, pretend = 0, frame = 0
+  92              		@ frame_needed = 1, uses_anonymous_args = 0
+  93 0000 80B5     		push	{r7, lr}
+  94              		.cfi_def_cfa_offset 8
+  95              		.cfi_offset 7, -8
+  96              		.cfi_offset 14, -4
+  97 0002 00AF     		add	r7, sp, #0
+  98              		.cfi_def_cfa_register 7
+  58:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     LCD_INTERFACE_Stop();
+  99              		.loc 1 58 0
+ 100 0004 FFF7FEFF 		bl	LCD_INTERFACE_Stop
+  59:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+ 101              		.loc 1 59 0
+ 102 0008 00BF     		nop
+ 103 000a 80BD     		pop	{r7, pc}
+ 104              		.cfi_endproc
+ 105              	.LFE134:
+ 106              		.size	LCD_INTERFACE_Sleep, .-LCD_INTERFACE_Sleep
+ 107              		.section	.text.LCD_INTERFACE_Wakeup,"ax",%progbits
+ 108              		.align	2
+ 109              		.global	LCD_INTERFACE_Wakeup
+ 110              		.thumb
+ 111              		.thumb_func
+ 112              		.type	LCD_INTERFACE_Wakeup, %function
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 4
+
+
+ 113              	LCD_INTERFACE_Wakeup:
+ 114              	.LFB135:
+  60:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  61:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** 
+  62:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** /*******************************************************************************
+  63:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Function Name: LCD_INTERFACE_Wakeup
+  64:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** ********************************************************************************
+  65:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  66:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** * Summary:
+  67:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  Enables block's operation and restores its configuration. Should be called
+  68:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *  after awaking from Sleep.
+  69:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *
+  70:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** *******************************************************************************/
+  71:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** void LCD_INTERFACE_Wakeup(void) 
+  72:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** {
+ 115              		.loc 1 72 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 1, uses_anonymous_args = 0
+ 119 0000 80B5     		push	{r7, lr}
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 7, -8
+ 122              		.cfi_offset 14, -4
+ 123 0002 00AF     		add	r7, sp, #0
+ 124              		.cfi_def_cfa_register 7
+  73:Generated_Source\PSoC6/LCD_INTERFACE_PM.c ****     LCD_INTERFACE_Enable();
+ 125              		.loc 1 73 0
+ 126 0004 FFF7FEFF 		bl	LCD_INTERFACE_Enable
+  74:Generated_Source\PSoC6/LCD_INTERFACE_PM.c **** }
+ 127              		.loc 1 74 0
+ 128 0008 00BF     		nop
+ 129 000a 80BD     		pop	{r7, pc}
+ 130              		.cfi_endproc
+ 131              	.LFE135:
+ 132              		.size	LCD_INTERFACE_Wakeup, .-LCD_INTERFACE_Wakeup
+ 133              		.text
+ 134              	.Letext0:
+ 135              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 136              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 137              		.file 4 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 138              		.section	.debug_info,"",%progbits
+ 139              	.Ldebug_info0:
+ 140 0000 F6000000 		.4byte	0xf6
+ 141 0004 0400     		.2byte	0x4
+ 142 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 143 000a 04       		.byte	0x4
+ 144 000b 01       		.uleb128 0x1
+ 145 000c 22010000 		.4byte	.LASF20
+ 146 0010 0C       		.byte	0xc
+ 147 0011 C3000000 		.4byte	.LASF21
+ 148 0015 FC010000 		.4byte	.LASF22
+ 149 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 150 001d 00000000 		.4byte	0
+ 151 0021 00000000 		.4byte	.Ldebug_line0
+ 152 0025 02       		.uleb128 0x2
+ 153 0026 02       		.byte	0x2
+ 154 0027 05       		.byte	0x5
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 5
+
+
+ 155 0028 D5010000 		.4byte	.LASF0
+ 156 002c 02       		.uleb128 0x2
+ 157 002d 01       		.byte	0x1
+ 158 002e 06       		.byte	0x6
+ 159 002f 00010000 		.4byte	.LASF1
+ 160 0033 02       		.uleb128 0x2
+ 161 0034 01       		.byte	0x1
+ 162 0035 08       		.byte	0x8
+ 163 0036 93000000 		.4byte	.LASF2
+ 164 003a 02       		.uleb128 0x2
+ 165 003b 02       		.byte	0x2
+ 166 003c 07       		.byte	0x7
+ 167 003d ED000000 		.4byte	.LASF3
+ 168 0041 03       		.uleb128 0x3
+ 169 0042 0C010000 		.4byte	.LASF9
+ 170 0046 02       		.byte	0x2
+ 171 0047 3F       		.byte	0x3f
+ 172 0048 4C000000 		.4byte	0x4c
+ 173 004c 02       		.uleb128 0x2
+ 174 004d 04       		.byte	0x4
+ 175 004e 05       		.byte	0x5
+ 176 004f BA000000 		.4byte	.LASF4
+ 177 0053 02       		.uleb128 0x2
+ 178 0054 04       		.byte	0x4
+ 179 0055 07       		.byte	0x7
+ 180 0056 50000000 		.4byte	.LASF5
+ 181 005a 02       		.uleb128 0x2
+ 182 005b 08       		.byte	0x8
+ 183 005c 05       		.byte	0x5
+ 184 005d 00000000 		.4byte	.LASF6
+ 185 0061 02       		.uleb128 0x2
+ 186 0062 08       		.byte	0x8
+ 187 0063 07       		.byte	0x7
+ 188 0064 62000000 		.4byte	.LASF7
+ 189 0068 04       		.uleb128 0x4
+ 190 0069 04       		.byte	0x4
+ 191 006a 05       		.byte	0x5
+ 192 006b 696E7400 		.ascii	"int\000"
+ 193 006f 02       		.uleb128 0x2
+ 194 0070 04       		.byte	0x4
+ 195 0071 07       		.byte	0x7
+ 196 0072 0E000000 		.4byte	.LASF8
+ 197 0076 03       		.uleb128 0x3
+ 198 0077 F4010000 		.4byte	.LASF10
+ 199 007b 03       		.byte	0x3
+ 200 007c 2C       		.byte	0x2c
+ 201 007d 41000000 		.4byte	0x41
+ 202 0081 02       		.uleb128 0x2
+ 203 0082 04       		.byte	0x4
+ 204 0083 07       		.byte	0x7
+ 205 0084 99020000 		.4byte	.LASF11
+ 206 0088 02       		.uleb128 0x2
+ 207 0089 08       		.byte	0x8
+ 208 008a 04       		.byte	0x4
+ 209 008b 16010000 		.4byte	.LASF12
+ 210 008f 02       		.uleb128 0x2
+ 211 0090 01       		.byte	0x1
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 6
+
+
+ 212 0091 08       		.byte	0x8
+ 213 0092 A1000000 		.4byte	.LASF13
+ 214 0096 02       		.uleb128 0x2
+ 215 0097 04       		.byte	0x4
+ 216 0098 04       		.byte	0x4
+ 217 0099 8D000000 		.4byte	.LASF14
+ 218 009d 02       		.uleb128 0x2
+ 219 009e 08       		.byte	0x8
+ 220 009f 04       		.byte	0x4
+ 221 00a0 B3000000 		.4byte	.LASF15
+ 222 00a4 05       		.uleb128 0x5
+ 223 00a5 1B000000 		.4byte	.LASF16
+ 224 00a9 01       		.byte	0x1
+ 225 00aa 1B       		.byte	0x1b
+ 226 00ab 00000000 		.4byte	.LFB132
+ 227 00af 0E000000 		.4byte	.LFE132-.LFB132
+ 228 00b3 01       		.uleb128 0x1
+ 229 00b4 9C       		.byte	0x9c
+ 230 00b5 05       		.uleb128 0x5
+ 231 00b6 34000000 		.4byte	.LASF17
+ 232 00ba 01       		.byte	0x1
+ 233 00bb 29       		.byte	0x29
+ 234 00bc 00000000 		.4byte	.LFB133
+ 235 00c0 0E000000 		.4byte	.LFE133-.LFB133
+ 236 00c4 01       		.uleb128 0x1
+ 237 00c5 9C       		.byte	0x9c
+ 238 00c6 06       		.uleb128 0x6
+ 239 00c7 79000000 		.4byte	.LASF18
+ 240 00cb 01       		.byte	0x1
+ 241 00cc 38       		.byte	0x38
+ 242 00cd 00000000 		.4byte	.LFB134
+ 243 00d1 0C000000 		.4byte	.LFE134-.LFB134
+ 244 00d5 01       		.uleb128 0x1
+ 245 00d6 9C       		.byte	0x9c
+ 246 00d7 06       		.uleb128 0x6
+ 247 00d8 DF010000 		.4byte	.LASF19
+ 248 00dc 01       		.byte	0x1
+ 249 00dd 47       		.byte	0x47
+ 250 00de 00000000 		.4byte	.LFB135
+ 251 00e2 0C000000 		.4byte	.LFE135-.LFB135
+ 252 00e6 01       		.uleb128 0x1
+ 253 00e7 9C       		.byte	0x9c
+ 254 00e8 07       		.uleb128 0x7
+ 255 00e9 A6000000 		.4byte	.LASF23
+ 256 00ed 04       		.byte	0x4
+ 257 00ee F907     		.2byte	0x7f9
+ 258 00f0 F4000000 		.4byte	0xf4
+ 259 00f4 08       		.uleb128 0x8
+ 260 00f5 76000000 		.4byte	0x76
+ 261 00f9 00       		.byte	0
+ 262              		.section	.debug_abbrev,"",%progbits
+ 263              	.Ldebug_abbrev0:
+ 264 0000 01       		.uleb128 0x1
+ 265 0001 11       		.uleb128 0x11
+ 266 0002 01       		.byte	0x1
+ 267 0003 25       		.uleb128 0x25
+ 268 0004 0E       		.uleb128 0xe
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 7
+
+
+ 269 0005 13       		.uleb128 0x13
+ 270 0006 0B       		.uleb128 0xb
+ 271 0007 03       		.uleb128 0x3
+ 272 0008 0E       		.uleb128 0xe
+ 273 0009 1B       		.uleb128 0x1b
+ 274 000a 0E       		.uleb128 0xe
+ 275 000b 55       		.uleb128 0x55
+ 276 000c 17       		.uleb128 0x17
+ 277 000d 11       		.uleb128 0x11
+ 278 000e 01       		.uleb128 0x1
+ 279 000f 10       		.uleb128 0x10
+ 280 0010 17       		.uleb128 0x17
+ 281 0011 00       		.byte	0
+ 282 0012 00       		.byte	0
+ 283 0013 02       		.uleb128 0x2
+ 284 0014 24       		.uleb128 0x24
+ 285 0015 00       		.byte	0
+ 286 0016 0B       		.uleb128 0xb
+ 287 0017 0B       		.uleb128 0xb
+ 288 0018 3E       		.uleb128 0x3e
+ 289 0019 0B       		.uleb128 0xb
+ 290 001a 03       		.uleb128 0x3
+ 291 001b 0E       		.uleb128 0xe
+ 292 001c 00       		.byte	0
+ 293 001d 00       		.byte	0
+ 294 001e 03       		.uleb128 0x3
+ 295 001f 16       		.uleb128 0x16
+ 296 0020 00       		.byte	0
+ 297 0021 03       		.uleb128 0x3
+ 298 0022 0E       		.uleb128 0xe
+ 299 0023 3A       		.uleb128 0x3a
+ 300 0024 0B       		.uleb128 0xb
+ 301 0025 3B       		.uleb128 0x3b
+ 302 0026 0B       		.uleb128 0xb
+ 303 0027 49       		.uleb128 0x49
+ 304 0028 13       		.uleb128 0x13
+ 305 0029 00       		.byte	0
+ 306 002a 00       		.byte	0
+ 307 002b 04       		.uleb128 0x4
+ 308 002c 24       		.uleb128 0x24
+ 309 002d 00       		.byte	0
+ 310 002e 0B       		.uleb128 0xb
+ 311 002f 0B       		.uleb128 0xb
+ 312 0030 3E       		.uleb128 0x3e
+ 313 0031 0B       		.uleb128 0xb
+ 314 0032 03       		.uleb128 0x3
+ 315 0033 08       		.uleb128 0x8
+ 316 0034 00       		.byte	0
+ 317 0035 00       		.byte	0
+ 318 0036 05       		.uleb128 0x5
+ 319 0037 2E       		.uleb128 0x2e
+ 320 0038 00       		.byte	0
+ 321 0039 3F       		.uleb128 0x3f
+ 322 003a 19       		.uleb128 0x19
+ 323 003b 03       		.uleb128 0x3
+ 324 003c 0E       		.uleb128 0xe
+ 325 003d 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 8
+
+
+ 326 003e 0B       		.uleb128 0xb
+ 327 003f 3B       		.uleb128 0x3b
+ 328 0040 0B       		.uleb128 0xb
+ 329 0041 27       		.uleb128 0x27
+ 330 0042 19       		.uleb128 0x19
+ 331 0043 11       		.uleb128 0x11
+ 332 0044 01       		.uleb128 0x1
+ 333 0045 12       		.uleb128 0x12
+ 334 0046 06       		.uleb128 0x6
+ 335 0047 40       		.uleb128 0x40
+ 336 0048 18       		.uleb128 0x18
+ 337 0049 9742     		.uleb128 0x2117
+ 338 004b 19       		.uleb128 0x19
+ 339 004c 00       		.byte	0
+ 340 004d 00       		.byte	0
+ 341 004e 06       		.uleb128 0x6
+ 342 004f 2E       		.uleb128 0x2e
+ 343 0050 00       		.byte	0
+ 344 0051 3F       		.uleb128 0x3f
+ 345 0052 19       		.uleb128 0x19
+ 346 0053 03       		.uleb128 0x3
+ 347 0054 0E       		.uleb128 0xe
+ 348 0055 3A       		.uleb128 0x3a
+ 349 0056 0B       		.uleb128 0xb
+ 350 0057 3B       		.uleb128 0x3b
+ 351 0058 0B       		.uleb128 0xb
+ 352 0059 27       		.uleb128 0x27
+ 353 005a 19       		.uleb128 0x19
+ 354 005b 11       		.uleb128 0x11
+ 355 005c 01       		.uleb128 0x1
+ 356 005d 12       		.uleb128 0x12
+ 357 005e 06       		.uleb128 0x6
+ 358 005f 40       		.uleb128 0x40
+ 359 0060 18       		.uleb128 0x18
+ 360 0061 9642     		.uleb128 0x2116
+ 361 0063 19       		.uleb128 0x19
+ 362 0064 00       		.byte	0
+ 363 0065 00       		.byte	0
+ 364 0066 07       		.uleb128 0x7
+ 365 0067 34       		.uleb128 0x34
+ 366 0068 00       		.byte	0
+ 367 0069 03       		.uleb128 0x3
+ 368 006a 0E       		.uleb128 0xe
+ 369 006b 3A       		.uleb128 0x3a
+ 370 006c 0B       		.uleb128 0xb
+ 371 006d 3B       		.uleb128 0x3b
+ 372 006e 05       		.uleb128 0x5
+ 373 006f 49       		.uleb128 0x49
+ 374 0070 13       		.uleb128 0x13
+ 375 0071 3F       		.uleb128 0x3f
+ 376 0072 19       		.uleb128 0x19
+ 377 0073 3C       		.uleb128 0x3c
+ 378 0074 19       		.uleb128 0x19
+ 379 0075 00       		.byte	0
+ 380 0076 00       		.byte	0
+ 381 0077 08       		.uleb128 0x8
+ 382 0078 35       		.uleb128 0x35
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 9
+
+
+ 383 0079 00       		.byte	0
+ 384 007a 49       		.uleb128 0x49
+ 385 007b 13       		.uleb128 0x13
+ 386 007c 00       		.byte	0
+ 387 007d 00       		.byte	0
+ 388 007e 00       		.byte	0
+ 389              		.section	.debug_aranges,"",%progbits
+ 390 0000 34000000 		.4byte	0x34
+ 391 0004 0200     		.2byte	0x2
+ 392 0006 00000000 		.4byte	.Ldebug_info0
+ 393 000a 04       		.byte	0x4
+ 394 000b 00       		.byte	0
+ 395 000c 0000     		.2byte	0
+ 396 000e 0000     		.2byte	0
+ 397 0010 00000000 		.4byte	.LFB132
+ 398 0014 0E000000 		.4byte	.LFE132-.LFB132
+ 399 0018 00000000 		.4byte	.LFB133
+ 400 001c 0E000000 		.4byte	.LFE133-.LFB133
+ 401 0020 00000000 		.4byte	.LFB134
+ 402 0024 0C000000 		.4byte	.LFE134-.LFB134
+ 403 0028 00000000 		.4byte	.LFB135
+ 404 002c 0C000000 		.4byte	.LFE135-.LFB135
+ 405 0030 00000000 		.4byte	0
+ 406 0034 00000000 		.4byte	0
+ 407              		.section	.debug_ranges,"",%progbits
+ 408              	.Ldebug_ranges0:
+ 409 0000 00000000 		.4byte	.LFB132
+ 410 0004 0E000000 		.4byte	.LFE132
+ 411 0008 00000000 		.4byte	.LFB133
+ 412 000c 0E000000 		.4byte	.LFE133
+ 413 0010 00000000 		.4byte	.LFB134
+ 414 0014 0C000000 		.4byte	.LFE134
+ 415 0018 00000000 		.4byte	.LFB135
+ 416 001c 0C000000 		.4byte	.LFE135
+ 417 0020 00000000 		.4byte	0
+ 418 0024 00000000 		.4byte	0
+ 419              		.section	.debug_line,"",%progbits
+ 420              	.Ldebug_line0:
+ 421 0000 BD010000 		.section	.debug_str,"MS",%progbits,1
+ 421      02007401 
+ 421      00000201 
+ 421      FB0E0D00 
+ 421      01010101 
+ 422              	.LASF6:
+ 423 0000 6C6F6E67 		.ascii	"long long int\000"
+ 423      206C6F6E 
+ 423      6720696E 
+ 423      7400
+ 424              	.LASF8:
+ 425 000e 756E7369 		.ascii	"unsigned int\000"
+ 425      676E6564 
+ 425      20696E74 
+ 425      00
+ 426              	.LASF16:
+ 427 001b 4C43445F 		.ascii	"LCD_INTERFACE_SaveConfig\000"
+ 427      494E5445 
+ 427      52464143 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 10
+
+
+ 427      455F5361 
+ 427      7665436F 
+ 428              	.LASF17:
+ 429 0034 4C43445F 		.ascii	"LCD_INTERFACE_RestoreConfig\000"
+ 429      494E5445 
+ 429      52464143 
+ 429      455F5265 
+ 429      73746F72 
+ 430              	.LASF5:
+ 431 0050 6C6F6E67 		.ascii	"long unsigned int\000"
+ 431      20756E73 
+ 431      69676E65 
+ 431      6420696E 
+ 431      7400
+ 432              	.LASF7:
+ 433 0062 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 433      206C6F6E 
+ 433      6720756E 
+ 433      7369676E 
+ 433      65642069 
+ 434              	.LASF18:
+ 435 0079 4C43445F 		.ascii	"LCD_INTERFACE_Sleep\000"
+ 435      494E5445 
+ 435      52464143 
+ 435      455F536C 
+ 435      65657000 
+ 436              	.LASF14:
+ 437 008d 666C6F61 		.ascii	"float\000"
+ 437      7400
+ 438              	.LASF2:
+ 439 0093 756E7369 		.ascii	"unsigned char\000"
+ 439      676E6564 
+ 439      20636861 
+ 439      7200
+ 440              	.LASF13:
+ 441 00a1 63686172 		.ascii	"char\000"
+ 441      00
+ 442              	.LASF23:
+ 443 00a6 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 443      52784275 
+ 443      66666572 
+ 443      00
+ 444              	.LASF15:
+ 445 00b3 646F7562 		.ascii	"double\000"
+ 445      6C6500
+ 446              	.LASF4:
+ 447 00ba 6C6F6E67 		.ascii	"long int\000"
+ 447      20696E74 
+ 447      00
+ 448              	.LASF21:
+ 449 00c3 47656E65 		.ascii	"Generated_Source\\PSoC6\\LCD_INTERFACE_PM.c\000"
+ 449      72617465 
+ 449      645F536F 
+ 449      75726365 
+ 449      5C50536F 
+ 450              	.LASF3:
+ 451 00ed 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 11
+
+
+ 451      7420756E 
+ 451      7369676E 
+ 451      65642069 
+ 451      6E7400
+ 452              	.LASF1:
+ 453 0100 7369676E 		.ascii	"signed char\000"
+ 453      65642063 
+ 453      68617200 
+ 454              	.LASF9:
+ 455 010c 5F5F696E 		.ascii	"__int32_t\000"
+ 455      7433325F 
+ 455      7400
+ 456              	.LASF12:
+ 457 0116 6C6F6E67 		.ascii	"long double\000"
+ 457      20646F75 
+ 457      626C6500 
+ 458              	.LASF20:
+ 459 0122 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 459      43313120 
+ 459      352E342E 
+ 459      31203230 
+ 459      31363036 
+ 460 0155 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 460      20726576 
+ 460      6973696F 
+ 460      6E203233 
+ 460      37373135 
+ 461 0188 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 461      70202D6D 
+ 461      6670753D 
+ 461      66707634 
+ 461      2D73702D 
+ 462 01bb 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 462      6F6E7320 
+ 462      2D666661 
+ 462      742D6C74 
+ 462      6F2D6F62 
+ 463              	.LASF0:
+ 464 01d5 73686F72 		.ascii	"short int\000"
+ 464      7420696E 
+ 464      7400
+ 465              	.LASF19:
+ 466 01df 4C43445F 		.ascii	"LCD_INTERFACE_Wakeup\000"
+ 466      494E5445 
+ 466      52464143 
+ 466      455F5761 
+ 466      6B657570 
+ 467              	.LASF10:
+ 468 01f4 696E7433 		.ascii	"int32_t\000"
+ 468      325F7400 
+ 469              	.LASF22:
+ 470 01fc 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 470      73657273 
+ 470      5C746D6A 
+ 470      33325C44 
+ 470      6F63756D 
+ 471 0229 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccWKiy37.s 			page 12
+
+
+ 471      6C6C6F73 
+ 471      636F7065 
+ 471      5F53656E 
+ 471      696F725F 
+ 472 025a 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 472      5C74636F 
+ 472      6D5F6170 
+ 472      705C7463 
+ 472      6F6D5F61 
+ 473 028a 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ 473      736F6336 
+ 473      2E637964 
+ 473      736E00
+ 474              	.LASF11:
+ 475 0299 73697A65 		.ascii	"sizetype\000"
+ 475      74797065 
+ 475      00
+ 476              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

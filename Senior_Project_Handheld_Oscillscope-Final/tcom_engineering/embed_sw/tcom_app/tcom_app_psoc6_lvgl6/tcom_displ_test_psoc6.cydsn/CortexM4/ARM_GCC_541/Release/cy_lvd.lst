@@ -1,0 +1,3648 @@
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 2
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"cy_lvd.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.Cy_LVD_DeepSleepCallback,"ax",%progbits
+  21              		.align	2
+  22              		.global	Cy_LVD_DeepSleepCallback
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	Cy_LVD_DeepSleepCallback, %function
+  26              	Cy_LVD_DeepSleepCallback:
+  27              	.LFB178:
+  28              		.file 1 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\lvd\\cy_lvd.c"
+   1:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \file cy_lvd.c
+   3:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \version 1.10
+   4:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+   5:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * The source code file for the LVD driver.
+   6:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+   7:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** ********************************************************************************
+   8:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \copyright
+   9:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * Copyright 2017-2018, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *******************************************************************************/
+  14:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** 
+  15:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** #include "cy_lvd.h"
+  16:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** 
+  17:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** #ifdef __cplusplus
+  18:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** extern "C" {
+  19:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** #endif
+  20:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** 
+  21:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** 
+  22:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** /*******************************************************************************
+  23:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * Function Name: Cy_LVD_DeepSleepCallback
+  24:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** ****************************************************************************//**
+  25:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+  26:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * When this function is registered by \ref Cy_SysPm_RegisterCallback - it
+  27:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * automatically enables the LVD after wake up from Deep-Sleep mode.
+  28:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+  29:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \param callbackParams The pointer to the callback parameters structure, 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 2
+
+
+  30:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * see \ref cy_stc_syspm_callback_params_t.
+  31:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+  32:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \param mode
+  33:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * Callback mode, see \ref cy_en_syspm_callback_mode_t
+  34:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+  35:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** * \return the SysPm callback status \ref cy_en_syspm_status_t.
+  36:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *
+  37:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** *******************************************************************************/
+  38:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** cy_en_syspm_status_t Cy_LVD_DeepSleepCallback(cy_stc_syspm_callback_params_t * callbackParams, cy_e
+  39:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** {
+  29              		.loc 1 39 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34              	.LVL0:
+  40:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     cy_en_syspm_status_t ret = CY_SYSPM_SUCCESS;
+  41:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     
+  42:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     if (callbackParams != NULL)
+  35              		.loc 1 42 0
+  36 0000 48B1     		cbz	r0, .L2
+  43:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     {
+  44:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****         switch(mode)
+  37              		.loc 1 44 0
+  38 0002 0139     		subs	r1, r1, #1
+  39              	.LVL1:
+  40 0004 0729     		cmp	r1, #7
+  41 0006 0ED8     		bhi	.L3
+  42 0008 DFE801F0 		tbb	[pc, r1]
+  43              	.L4:
+  44 000c 04       		.byte	(.L7-.L4)/2
+  45 000d 04       		.byte	(.L7-.L4)/2
+  46 000e 0D       		.byte	(.L3-.L4)/2
+  47 000f 04       		.byte	(.L7-.L4)/2
+  48 0010 0D       		.byte	(.L3-.L4)/2
+  49 0011 0D       		.byte	(.L3-.L4)/2
+  50 0012 0D       		.byte	(.L3-.L4)/2
+  51 0013 06       		.byte	(.L5-.L4)/2
+  52              		.p2align 1
+  53              	.L7:
+  40:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     cy_en_syspm_status_t ret = CY_SYSPM_SUCCESS;
+  54              		.loc 1 40 0
+  55 0014 0020     		movs	r0, #0
+  56              	.LVL2:
+  57              	.L2:
+  45:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****         {
+  46:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             case CY_SYSPM_CHECK_READY:
+  47:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             case CY_SYSPM_CHECK_FAIL:
+  48:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             case CY_SYSPM_BEFORE_TRANSITION:
+  49:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 break;
+  50:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 
+  51:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             case CY_SYSPM_AFTER_TRANSITION:
+  52:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 Cy_LVD_Enable();
+  53:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 break;
+  54:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             
+  55:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****             default:
+  56:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 ret = CY_SYSPM_FAIL;
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 3
+
+
+  57:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 break;
+  58:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****         }
+  59:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     }
+  60:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     return (ret);
+  61:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c **** }
+  58              		.loc 1 61 0
+  59 0016 7047     		bx	lr
+  60              	.LVL3:
+  61              	.L5:
+  62              	.LBB4:
+  63              	.LBB5:
+  64              		.file 2 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\lvd\\cy_lvd.h"
+   1:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /***************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \file cy_lvd.h
+   3:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \version 1.10
+   4:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * 
+   5:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The header file of the LVD driver.
+   6:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+   7:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** ********************************************************************************
+   8:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \copyright
+   9:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Copyright 2017-2018, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *******************************************************************************/
+  14:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+  15:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /**
+  16:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \addtogroup group_lvd
+  17:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \{
+  18:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The LVD driver provides an API to manage the Low Voltage Detection block.
+  19:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  20:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The functions and other declarations used in this driver are in cy_lvd.h. 
+  21:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * You can include cy_pdl.h (ModusToolbox only) to get access to all functions 
+  22:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * and declarations in the PDL. 
+  23:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * 
+  24:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The LVD block provides a status of currently observed VDDD voltage 
+  25:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * and triggers an interrupt when the observed voltage crosses an adjusted
+  26:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * threshold.
+  27:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  28:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \section group_lvd_configuration_considerations Configuration Considerations
+  29:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * To set up an LVD, configure the voltage threshold by the 
+  30:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \ref Cy_LVD_SetThreshold function, ensure that the LVD block itself and LVD 
+  31:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * interrupt are disabled (by the \ref Cy_LVD_Disable and 
+  32:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \ref Cy_LVD_ClearInterruptMask functions correspondingly) before changing the
+  33:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * threshold to prevent propagating a false interrupt. 
+  34:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Then configure interrupts by the \ref Cy_LVD_SetInterruptConfig function, do
+  35:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * not forget to initialize an interrupt handler (the interrupt source number 
+  36:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * is srss_interrupt_IRQn).
+  37:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Then enable LVD by the \ref Cy_LVD_Enable function, then wait for at least 20us
+  38:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * to get the circuit stabilized and clear the possible false interrupts by the
+  39:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \ref Cy_LVD_ClearInterrupt, and finally the LVD interrupt can be enabled by
+  40:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * the \ref Cy_LVD_SetInterruptMask function.
+  41:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  42:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * For example:
+  43:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \snippet lvd_1_0_sut_00.cydsn/main_cm4.c Cy_LVD_Snippet
+  44:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  45:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Note that the LVD circuit is available only in Low Power and Ultra Low Power 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 4
+
+
+  46:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * modes. If an LVD is required in Deep Sleep mode, then the device
+  47:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * should be configured to periodically wake up from Deep Sleep using a
+  48:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Deep Sleep wakeup source. This makes sure a LVD check is performed during
+  49:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Low Power or Ultra Low Power modes.
+  50:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  51:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \section group_lvd_more_information More Information
+  52:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * See the LVD chapter of the device technical reference manual (TRM).
+  53:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  54:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \section group_lvd_MISRA MISRA-C Compliance
+  55:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The LVD driver has the following specific deviations:
+  56:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * <table class="doxtable">
+  57:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+  58:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <th>MISRA Rule</th>
+  59:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <th>Rule Class (Required/Advisory)</th>
+  60:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <th>Rule Description</th>
+  61:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <th>Description of Deviation(s)</th>
+  62:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+  63:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+  64:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>10.3</td>
+  65:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>R</td>
+  66:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>A composite expression of 'essentially unsigned' type (%1s) is being
+  67:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         cast to a different type category, '%2s'.</td>
+  68:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>The value got from the bitfield physically can't exceed the enumeration
+  69:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         that describes this bitfield. So the code is safety by design.</td>
+  70:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+  71:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+  72:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>16.7</td>
+  73:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>A</td>
+  74:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>The object addressed by the pointer parameter '%s' is not modified and
+  75:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         so the pointer could be of type 'pointer to const'.</td>
+  76:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>The pointer parameter is not used or modified, as there is no need 
+  77:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         to do any actions with it. However, such parameter is 
+  78:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         required to be presented in the function, because the 
+  79:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         \ref Cy_LVD_DeepSleepCallback is a callback 
+  80:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         of \ref cy_en_syspm_status_t type.
+  81:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         The SysPM driver callback function type requires implementing the 
+  82:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         function with the next parameters and return value: <br>
+  83:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         cy_en_syspm_status_t (*Cy_SysPmCallback) 
+  84:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         (cy_stc_syspm_callback_params_t *callbackParams);</td>
+  85:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+  86:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * </table>
+  87:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+  88:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \section group_lvd_changelog Changelog
+  89:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * <table class="doxtable">
+  90:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr><th>Version</th><th>Changes</th><th>Reason of Change</th></tr>
+  91:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+  92:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td rowspan="2">1.10</td>
+  93:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Flattened the organization of the driver source code into the single 
+  94:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         source directory and the single include directory.
+  95:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     </td>
+  96:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Driver library directory-structure simplification.</td>
+  97:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+  98:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+  99:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Added register access layer. Use register access macros instead
+ 100:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         of direct register access using dereferenced pointers.</td>
+ 101:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Makes register access device-independent, so that the PDL does 
+ 102:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *         not need to be recompiled for each supported part number.</td>
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 5
+
+
+ 103:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+ 104:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+ 105:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>1.0.1</td>
+ 106:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Added Low Power Callback section</td>
+ 107:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Documentation update and clarification</td>
+ 108:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+ 109:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   <tr>
+ 110:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>1.0</td>
+ 111:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td>Initial Version</td>
+ 112:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *     <td></td>
+ 113:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   </tr>
+ 114:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * </table>
+ 115:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+ 116:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \defgroup group_lvd_macros Macros
+ 117:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \defgroup group_lvd_functions Functions
+ 118:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   \{
+ 119:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *       \defgroup group_lvd_functions_syspm_callback  Low Power Callback
+ 120:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *   \}
+ 121:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \defgroup group_lvd_enums Enumerated Types
+ 122:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** */
+ 123:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 124:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 125:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #if !defined CY_LVD_H
+ 126:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_H
+ 127:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     
+ 128:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #include "cy_syspm.h"
+ 129:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #include "cy_device.h"
+ 130:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 131:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #ifdef __cplusplus
+ 132:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** extern "C" {
+ 133:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #endif
+ 134:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 135:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \addtogroup group_lvd_macros
+ 136:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \{
+ 137:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** */
+ 138:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 139:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** The driver major version */
+ 140:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_DRV_VERSION_MAJOR       1
+ 141:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 142:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** The driver minor version */
+ 143:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_DRV_VERSION_MINOR       10
+ 144:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 145:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** The LVD driver identifier */
+ 146:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_ID                      (CY_PDL_DRV_ID(0x39U))
+ 147:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 148:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** Interrupt mask for \ref Cy_LVD_GetInterruptStatus(),
+ 149:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                        \ref Cy_LVD_GetInterruptMask() and 
+ 150:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                        \ref Cy_LVD_GetInterruptStatusMasked() */
+ 151:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_INTR        (SRSS_SRSS_INTR_HVLVD1_Msk)
+ 152:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 153:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \} group_lvd_macros */
+ 154:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 155:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 156:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \addtogroup group_lvd_enums
+ 157:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \{
+ 158:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** */
+ 159:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 6
+
+
+ 160:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 161:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /**
+ 162:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  * LVD reference voltage select.
+ 163:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  */
+ 164:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** typedef enum
+ 165:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** {
+ 166:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_1_2_V    = 0x0U, /**<Select LVD reference voltage: 1.2V */
+ 167:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_1_4_V    = 0x1U, /**<Select LVD reference voltage: 1.4V */
+ 168:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_1_6_V    = 0x2U, /**<Select LVD reference voltage: 1.6V */
+ 169:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_1_8_V    = 0x3U, /**<Select LVD reference voltage: 1.8V */
+ 170:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_0_V    = 0x4U, /**<Select LVD reference voltage: 2.0V */
+ 171:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_1_V    = 0x5U, /**<Select LVD reference voltage: 2.1V */
+ 172:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_2_V    = 0x6U, /**<Select LVD reference voltage: 2.2V */
+ 173:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_3_V    = 0x7U, /**<Select LVD reference voltage: 2.3V */
+ 174:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_4_V    = 0x8U, /**<Select LVD reference voltage: 2.4V */
+ 175:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_5_V    = 0x9U, /**<Select LVD reference voltage: 2.5V */
+ 176:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_6_V    = 0xAU, /**<Select LVD reference voltage: 2.6V */
+ 177:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_7_V    = 0xBU, /**<Select LVD reference voltage: 2.7V */
+ 178:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_8_V    = 0xCU, /**<Select LVD reference voltage: 2.8V */
+ 179:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_2_9_V    = 0xDU, /**<Select LVD reference voltage: 2.9V */
+ 180:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_3_0_V    = 0xEU, /**<Select LVD reference voltage: 3.0V */
+ 181:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_THRESHOLD_3_1_V    = 0xFU  /**<Select LVD reference voltage: 3.1V */
+ 182:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** } cy_en_lvd_tripsel_t;
+ 183:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 184:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /**
+ 185:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  * LVD interrupt configuration select.
+ 186:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  */
+ 187:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** typedef enum
+ 188:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** {
+ 189:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_INTR_DISABLE    = 0x0U,  /**<Select LVD interrupt: disabled */
+ 190:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_INTR_RISING     = 0x1U,  /**<Select LVD interrupt: rising edge */
+ 191:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_INTR_FALLING    = 0x2U,  /**<Select LVD interrupt: falling edge */
+ 192:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_INTR_BOTH       = 0x3U,  /**<Select LVD interrupt: both edges */
+ 193:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** } cy_en_lvd_intr_config_t;
+ 194:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 195:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /**
+ 196:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  * LVD output status.
+ 197:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****  */
+ 198:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** typedef enum
+ 199:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** {
+ 200:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_STATUS_BELOW   = 0x0U,  /**<The voltage is below the threshold */
+ 201:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     CY_LVD_STATUS_ABOVE   = 0x1U,  /**<The voltage is above the threshold */
+ 202:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** } cy_en_lvd_status_t;
+ 203:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 204:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \} group_lvd_enums */
+ 205:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 206:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \cond internal */
+ 207:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /* Macros for conditions used by CY_ASSERT calls */
+ 208:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_CHECK_TRIPSEL(threshold)  (((threshold) == CY_LVD_THRESHOLD_1_2_V) || \
+ 209:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_1_4_V) || \
+ 210:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_1_6_V) || \
+ 211:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_1_8_V) || \
+ 212:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_0_V) || \
+ 213:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_1_V) || \
+ 214:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_2_V) || \
+ 215:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_3_V) || \
+ 216:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_4_V) || \
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 7
+
+
+ 217:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_5_V) || \
+ 218:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_6_V) || \
+ 219:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_7_V) || \
+ 220:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_8_V) || \
+ 221:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_2_9_V) || \
+ 222:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_3_0_V) || \
+ 223:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((threshold) == CY_LVD_THRESHOLD_3_1_V))
+ 224:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           
+ 225:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** #define CY_LVD_CHECK_INTR_CFG(intrCfg)   (((intrCfg) == CY_LVD_INTR_DISABLE) || \
+ 226:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((intrCfg) == CY_LVD_INTR_RISING) || \
+ 227:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((intrCfg) == CY_LVD_INTR_FALLING) || \
+ 228:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****                                           ((intrCfg) == CY_LVD_INTR_BOTH))
+ 229:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 230:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \endcond */
+ 231:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 232:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /**
+ 233:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \addtogroup group_lvd_functions
+ 234:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \{
+ 235:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** */
+ 236:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_Enable(void);
+ 237:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_Disable(void);
+ 238:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_SetThreshold(cy_en_lvd_tripsel_t threshold);
+ 239:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE cy_en_lvd_status_t Cy_LVD_GetStatus(void);
+ 240:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE uint32_t Cy_LVD_GetInterruptStatus(void);
+ 241:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_ClearInterrupt(void);
+ 242:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_SetInterrupt(void);
+ 243:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE uint32_t Cy_LVD_GetInterruptMask(void);
+ 244:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_SetInterruptMask(void);
+ 245:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_ClearInterruptMask(void);
+ 246:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE uint32_t Cy_LVD_GetInterruptStatusMasked(void);
+ 247:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_SetInterruptConfig(cy_en_lvd_intr_config_t lvdInterruptConfig);
+ 248:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \addtogroup group_lvd_functions_syspm_callback
+ 249:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * The driver supports SysPm callback for Deep Sleep transition.
+ 250:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * \{
+ 251:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** */
+ 252:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** cy_en_syspm_status_t Cy_LVD_DeepSleepCallback(cy_stc_syspm_callback_params_t * callbackParams, cy_e
+ 253:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /** \} */
+ 254:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** 
+ 255:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** /*******************************************************************************
+ 256:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** * Function Name: Cy_LVD_Enable
+ 257:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** ****************************************************************************//**
+ 258:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+ 259:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *  Enables the output of the LVD block when the VDDD voltage is   
+ 260:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *  at or below the threshold.
+ 261:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *  See the Configuration Considerations section for details.
+ 262:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *
+ 263:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** *******************************************************************************/
+ 264:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** __STATIC_INLINE void Cy_LVD_Enable(void)
+ 265:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h **** {
+ 266:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.h ****     SRSS_PWR_LVD_CTL |= SRSS_PWR_LVD_CTL_HVLVD1_EN_Msk;
+  65              		.loc 2 266 0
+  66 0018 044A     		ldr	r2, .L9
+  67 001a 9368     		ldr	r3, [r2, #8]
+  68 001c 43F08003 		orr	r3, r3, #128
+  69 0020 9360     		str	r3, [r2, #8]
+  70              	.LBE5:
+  71              	.LBE4:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 8
+
+
+  40:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****     
+  72              		.loc 1 40 0
+  73 0022 0020     		movs	r0, #0
+  74              	.LVL4:
+  75 0024 7047     		bx	lr
+  76              	.LVL5:
+  77              	.L3:
+  56:Generated_Source\PSoC6\pdl\drivers\peripheral\lvd/cy_lvd.c ****                 break;
+  78              		.loc 1 56 0
+  79 0026 0248     		ldr	r0, .L9+4
+  80              	.LVL6:
+  81 0028 7047     		bx	lr
+  82              	.L10:
+  83 002a 00BF     		.align	2
+  84              	.L9:
+  85 002c 00002640 		.word	1076232192
+  86 0030 FF004200 		.word	4325631
+  87              		.cfi_endproc
+  88              	.LFE178:
+  89              		.size	Cy_LVD_DeepSleepCallback, .-Cy_LVD_DeepSleepCallback
+  90              		.text
+  91              	.Letext0:
+  92              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  93              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  94              		.file 5 "Generated_Source\\PSoC6\\pdl\\devices/psoc6/include/ip/cyip_srss.h"
+  95              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/device/cy_device.h"
+  96              		.file 7 "Generated_Source\\PSoC6\\pdl\\devices/psoc6/include/psoc6_01_config.h"
+  97              		.file 8 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syspm/cy_syspm.h"
+  98              		.file 9 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+  99              		.section	.debug_info,"",%progbits
+ 100              	.Ldebug_info0:
+ 101 0000 410C0000 		.4byte	0xc41
+ 102 0004 0400     		.2byte	0x4
+ 103 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 104 000a 04       		.byte	0x4
+ 105 000b 01       		.uleb128 0x1
+ 106 000c 9A080000 		.4byte	.LASF211
+ 107 0010 0C       		.byte	0xc
+ 108 0011 1D060000 		.4byte	.LASF212
+ 109 0015 4A050000 		.4byte	.LASF213
+ 110 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 111 001d 00000000 		.4byte	0
+ 112 0021 00000000 		.4byte	.Ldebug_line0
+ 113 0025 02       		.uleb128 0x2
+ 114 0026 04       		.byte	0x4
+ 115 0027 05       		.byte	0x5
+ 116 0028 696E7400 		.ascii	"int\000"
+ 117 002c 03       		.uleb128 0x3
+ 118 002d 04       		.byte	0x4
+ 119 002e 07       		.byte	0x7
+ 120 002f 4E040000 		.4byte	.LASF0
+ 121 0033 03       		.uleb128 0x3
+ 122 0034 08       		.byte	0x8
+ 123 0035 05       		.byte	0x5
+ 124 0036 91010000 		.4byte	.LASF1
+ 125 003a 03       		.uleb128 0x3
+ 126 003b 08       		.byte	0x8
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 9
+
+
+ 127 003c 04       		.byte	0x4
+ 128 003d C70A0000 		.4byte	.LASF2
+ 129 0041 03       		.uleb128 0x3
+ 130 0042 01       		.byte	0x1
+ 131 0043 06       		.byte	0x6
+ 132 0044 9F010000 		.4byte	.LASF3
+ 133 0048 04       		.uleb128 0x4
+ 134 0049 BA000000 		.4byte	.LASF5
+ 135 004d 03       		.byte	0x3
+ 136 004e 1D       		.byte	0x1d
+ 137 004f 53000000 		.4byte	0x53
+ 138 0053 03       		.uleb128 0x3
+ 139 0054 01       		.byte	0x1
+ 140 0055 08       		.byte	0x8
+ 141 0056 5D090000 		.4byte	.LASF4
+ 142 005a 04       		.uleb128 0x4
+ 143 005b BB030000 		.4byte	.LASF6
+ 144 005f 03       		.byte	0x3
+ 145 0060 29       		.byte	0x29
+ 146 0061 65000000 		.4byte	0x65
+ 147 0065 03       		.uleb128 0x3
+ 148 0066 02       		.byte	0x2
+ 149 0067 05       		.byte	0x5
+ 150 0068 BF090000 		.4byte	.LASF7
+ 151 006c 04       		.uleb128 0x4
+ 152 006d 1D0B0000 		.4byte	.LASF8
+ 153 0071 03       		.byte	0x3
+ 154 0072 2B       		.byte	0x2b
+ 155 0073 77000000 		.4byte	0x77
+ 156 0077 03       		.uleb128 0x3
+ 157 0078 02       		.byte	0x2
+ 158 0079 07       		.byte	0x7
+ 159 007a 8B0B0000 		.4byte	.LASF9
+ 160 007e 04       		.uleb128 0x4
+ 161 007f 4F0B0000 		.4byte	.LASF10
+ 162 0083 03       		.byte	0x3
+ 163 0084 3F       		.byte	0x3f
+ 164 0085 89000000 		.4byte	0x89
+ 165 0089 03       		.uleb128 0x3
+ 166 008a 04       		.byte	0x4
+ 167 008b 05       		.byte	0x5
+ 168 008c D10B0000 		.4byte	.LASF11
+ 169 0090 04       		.uleb128 0x4
+ 170 0091 7D030000 		.4byte	.LASF12
+ 171 0095 03       		.byte	0x3
+ 172 0096 41       		.byte	0x41
+ 173 0097 9B000000 		.4byte	0x9b
+ 174 009b 03       		.uleb128 0x3
+ 175 009c 04       		.byte	0x4
+ 176 009d 07       		.byte	0x7
+ 177 009e B0040000 		.4byte	.LASF13
+ 178 00a2 03       		.uleb128 0x3
+ 179 00a3 08       		.byte	0x8
+ 180 00a4 07       		.byte	0x7
+ 181 00a5 0B010000 		.4byte	.LASF14
+ 182 00a9 04       		.uleb128 0x4
+ 183 00aa 720C0000 		.4byte	.LASF15
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 10
+
+
+ 184 00ae 04       		.byte	0x4
+ 185 00af 18       		.byte	0x18
+ 186 00b0 48000000 		.4byte	0x48
+ 187 00b4 04       		.uleb128 0x4
+ 188 00b5 89010000 		.4byte	.LASF16
+ 189 00b9 04       		.byte	0x4
+ 190 00ba 20       		.byte	0x20
+ 191 00bb 5A000000 		.4byte	0x5a
+ 192 00bf 04       		.uleb128 0x4
+ 193 00c0 E6050000 		.4byte	.LASF17
+ 194 00c4 04       		.byte	0x4
+ 195 00c5 24       		.byte	0x24
+ 196 00c6 6C000000 		.4byte	0x6c
+ 197 00ca 04       		.uleb128 0x4
+ 198 00cb F6060000 		.4byte	.LASF18
+ 199 00cf 04       		.byte	0x4
+ 200 00d0 2C       		.byte	0x2c
+ 201 00d1 7E000000 		.4byte	0x7e
+ 202 00d5 04       		.uleb128 0x4
+ 203 00d6 960A0000 		.4byte	.LASF19
+ 204 00da 04       		.byte	0x4
+ 205 00db 30       		.byte	0x30
+ 206 00dc 90000000 		.4byte	0x90
+ 207 00e0 05       		.uleb128 0x5
+ 208 00e1 D5000000 		.4byte	0xd5
+ 209 00e5 06       		.uleb128 0x6
+ 210 00e6 E0000000 		.4byte	0xe0
+ 211 00ea 03       		.uleb128 0x3
+ 212 00eb 04       		.byte	0x4
+ 213 00ec 07       		.byte	0x7
+ 214 00ed 5B040000 		.4byte	.LASF20
+ 215 00f1 07       		.uleb128 0x7
+ 216 00f2 E5000000 		.4byte	0xe5
+ 217 00f6 01010000 		.4byte	0x101
+ 218 00fa 08       		.uleb128 0x8
+ 219 00fb EA000000 		.4byte	0xea
+ 220 00ff 0F       		.byte	0xf
+ 221 0100 00       		.byte	0
+ 222 0101 07       		.uleb128 0x7
+ 223 0102 E0000000 		.4byte	0xe0
+ 224 0106 11010000 		.4byte	0x111
+ 225 010a 08       		.uleb128 0x8
+ 226 010b EA000000 		.4byte	0xea
+ 227 010f 0F       		.byte	0xf
+ 228 0110 00       		.byte	0
+ 229 0111 07       		.uleb128 0x7
+ 230 0112 E5000000 		.4byte	0xe5
+ 231 0116 21010000 		.4byte	0x121
+ 232 011a 08       		.uleb128 0x8
+ 233 011b EA000000 		.4byte	0xea
+ 234 011f 04       		.byte	0x4
+ 235 0120 00       		.byte	0
+ 236 0121 07       		.uleb128 0x7
+ 237 0122 E5000000 		.4byte	0xe5
+ 238 0126 31010000 		.4byte	0x131
+ 239 012a 08       		.uleb128 0x8
+ 240 012b EA000000 		.4byte	0xea
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 11
+
+
+ 241 012f 1A       		.byte	0x1a
+ 242 0130 00       		.byte	0
+ 243 0131 07       		.uleb128 0x7
+ 244 0132 E5000000 		.4byte	0xe5
+ 245 0136 41010000 		.4byte	0x141
+ 246 013a 08       		.uleb128 0x8
+ 247 013b EA000000 		.4byte	0xea
+ 248 013f 1C       		.byte	0x1c
+ 249 0140 00       		.byte	0
+ 250 0141 07       		.uleb128 0x7
+ 251 0142 E5000000 		.4byte	0xe5
+ 252 0146 51010000 		.4byte	0x151
+ 253 014a 08       		.uleb128 0x8
+ 254 014b EA000000 		.4byte	0xea
+ 255 014f 07       		.byte	0x7
+ 256 0150 00       		.byte	0
+ 257 0151 07       		.uleb128 0x7
+ 258 0152 E5000000 		.4byte	0xe5
+ 259 0156 61010000 		.4byte	0x161
+ 260 015a 08       		.uleb128 0x8
+ 261 015b EA000000 		.4byte	0xea
+ 262 015f 01       		.byte	0x1
+ 263 0160 00       		.byte	0
+ 264 0161 07       		.uleb128 0x7
+ 265 0162 E5000000 		.4byte	0xe5
+ 266 0166 71010000 		.4byte	0x171
+ 267 016a 08       		.uleb128 0x8
+ 268 016b EA000000 		.4byte	0xea
+ 269 016f 4F       		.byte	0x4f
+ 270 0170 00       		.byte	0
+ 271 0171 07       		.uleb128 0x7
+ 272 0172 E5000000 		.4byte	0xe5
+ 273 0176 81010000 		.4byte	0x181
+ 274 017a 08       		.uleb128 0x8
+ 275 017b EA000000 		.4byte	0xea
+ 276 017f 2F       		.byte	0x2f
+ 277 0180 00       		.byte	0
+ 278 0181 09       		.uleb128 0x9
+ 279 0182 40       		.byte	0x40
+ 280 0183 05       		.byte	0x5
+ 281 0184 22       		.byte	0x22
+ 282 0185 1A020000 		.4byte	0x21a
+ 283 0189 0A       		.uleb128 0xa
+ 284 018a 460B0000 		.4byte	.LASF21
+ 285 018e 05       		.byte	0x5
+ 286 018f 23       		.byte	0x23
+ 287 0190 E5000000 		.4byte	0xe5
+ 288 0194 00       		.byte	0
+ 289 0195 0A       		.uleb128 0xa
+ 290 0196 3D050000 		.4byte	.LASF22
+ 291 019a 05       		.byte	0x5
+ 292 019b 24       		.byte	0x24
+ 293 019c E0000000 		.4byte	0xe0
+ 294 01a0 04       		.byte	0x4
+ 295 01a1 0A       		.uleb128 0xa
+ 296 01a2 55010000 		.4byte	.LASF23
+ 297 01a6 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 12
+
+
+ 298 01a7 25       		.byte	0x25
+ 299 01a8 E0000000 		.4byte	0xe0
+ 300 01ac 08       		.byte	0x8
+ 301 01ad 0A       		.uleb128 0xa
+ 302 01ae 390A0000 		.4byte	.LASF24
+ 303 01b2 05       		.byte	0x5
+ 304 01b3 26       		.byte	0x26
+ 305 01b4 E0000000 		.4byte	0xe0
+ 306 01b8 0C       		.byte	0xc
+ 307 01b9 0A       		.uleb128 0xa
+ 308 01ba 360D0000 		.4byte	.LASF25
+ 309 01be 05       		.byte	0x5
+ 310 01bf 27       		.byte	0x27
+ 311 01c0 E0000000 		.4byte	0xe0
+ 312 01c4 10       		.byte	0x10
+ 313 01c5 0A       		.uleb128 0xa
+ 314 01c6 8E020000 		.4byte	.LASF26
+ 315 01ca 05       		.byte	0x5
+ 316 01cb 28       		.byte	0x28
+ 317 01cc E0000000 		.4byte	0xe0
+ 318 01d0 14       		.byte	0x14
+ 319 01d1 0A       		.uleb128 0xa
+ 320 01d2 E7000000 		.4byte	.LASF27
+ 321 01d6 05       		.byte	0x5
+ 322 01d7 29       		.byte	0x29
+ 323 01d8 E0000000 		.4byte	0xe0
+ 324 01dc 18       		.byte	0x18
+ 325 01dd 0A       		.uleb128 0xa
+ 326 01de 24080000 		.4byte	.LASF28
+ 327 01e2 05       		.byte	0x5
+ 328 01e3 2A       		.byte	0x2a
+ 329 01e4 E0000000 		.4byte	0xe0
+ 330 01e8 1C       		.byte	0x1c
+ 331 01e9 0A       		.uleb128 0xa
+ 332 01ea 6B090000 		.4byte	.LASF29
+ 333 01ee 05       		.byte	0x5
+ 334 01ef 2B       		.byte	0x2b
+ 335 01f0 E0000000 		.4byte	0xe0
+ 336 01f4 20       		.byte	0x20
+ 337 01f5 0A       		.uleb128 0xa
+ 338 01f6 64040000 		.4byte	.LASF30
+ 339 01fa 05       		.byte	0x5
+ 340 01fb 2C       		.byte	0x2c
+ 341 01fc E5000000 		.4byte	0xe5
+ 342 0200 24       		.byte	0x24
+ 343 0201 0A       		.uleb128 0xa
+ 344 0202 D5030000 		.4byte	.LASF31
+ 345 0206 05       		.byte	0x5
+ 346 0207 2D       		.byte	0x2d
+ 347 0208 E0000000 		.4byte	0xe0
+ 348 020c 28       		.byte	0x28
+ 349 020d 0A       		.uleb128 0xa
+ 350 020e 33080000 		.4byte	.LASF32
+ 351 0212 05       		.byte	0x5
+ 352 0213 2E       		.byte	0x2e
+ 353 0214 1F020000 		.4byte	0x21f
+ 354 0218 2C       		.byte	0x2c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 13
+
+
+ 355 0219 00       		.byte	0
+ 356 021a 05       		.uleb128 0x5
+ 357 021b 11010000 		.4byte	0x111
+ 358 021f 06       		.uleb128 0x6
+ 359 0220 1A020000 		.4byte	0x21a
+ 360 0224 04       		.uleb128 0x4
+ 361 0225 3E030000 		.4byte	.LASF33
+ 362 0229 05       		.byte	0x5
+ 363 022a 2F       		.byte	0x2f
+ 364 022b 81010000 		.4byte	0x181
+ 365 022f 0B       		.uleb128 0xb
+ 366 0230 30FF     		.2byte	0xff30
+ 367 0232 05       		.byte	0x5
+ 368 0233 34       		.byte	0x34
+ 369 0234 A3050000 		.4byte	0x5a3
+ 370 0238 0A       		.uleb128 0xa
+ 371 0239 EA020000 		.4byte	.LASF34
+ 372 023d 05       		.byte	0x5
+ 373 023e 35       		.byte	0x35
+ 374 023f E0000000 		.4byte	0xe0
+ 375 0243 00       		.byte	0
+ 376 0244 0A       		.uleb128 0xa
+ 377 0245 9F0A0000 		.4byte	.LASF35
+ 378 0249 05       		.byte	0x5
+ 379 024a 36       		.byte	0x36
+ 380 024b E0000000 		.4byte	0xe0
+ 381 024f 04       		.byte	0x4
+ 382 0250 0A       		.uleb128 0xa
+ 383 0251 C4000000 		.4byte	.LASF36
+ 384 0255 05       		.byte	0x5
+ 385 0256 37       		.byte	0x37
+ 386 0257 E0000000 		.4byte	0xe0
+ 387 025b 08       		.byte	0x8
+ 388 025c 0A       		.uleb128 0xa
+ 389 025d 460B0000 		.4byte	.LASF21
+ 390 0261 05       		.byte	0x5
+ 391 0262 38       		.byte	0x38
+ 392 0263 A8050000 		.4byte	0x5a8
+ 393 0267 0C       		.byte	0xc
+ 394 0268 0A       		.uleb128 0xa
+ 395 0269 E70B0000 		.4byte	.LASF37
+ 396 026d 05       		.byte	0x5
+ 397 026e 39       		.byte	0x39
+ 398 026f E0000000 		.4byte	0xe0
+ 399 0273 14       		.byte	0x14
+ 400 0274 0A       		.uleb128 0xa
+ 401 0275 24070000 		.4byte	.LASF38
+ 402 0279 05       		.byte	0x5
+ 403 027a 3A       		.byte	0x3a
+ 404 027b E0000000 		.4byte	0xe0
+ 405 027f 18       		.byte	0x18
+ 406 0280 0A       		.uleb128 0xa
+ 407 0281 D30A0000 		.4byte	.LASF39
+ 408 0285 05       		.byte	0x5
+ 409 0286 3B       		.byte	0x3b
+ 410 0287 E5000000 		.4byte	0xe5
+ 411 028b 1C       		.byte	0x1c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 14
+
+
+ 412 028c 0A       		.uleb128 0xa
+ 413 028d 33080000 		.4byte	.LASF32
+ 414 0291 05       		.byte	0x5
+ 415 0292 3C       		.byte	0x3c
+ 416 0293 C2050000 		.4byte	0x5c2
+ 417 0297 20       		.byte	0x20
+ 418 0298 0A       		.uleb128 0xa
+ 419 0299 67080000 		.4byte	.LASF40
+ 420 029d 05       		.byte	0x5
+ 421 029e 3D       		.byte	0x3d
+ 422 029f C7050000 		.4byte	0x5c7
+ 423 02a3 80       		.byte	0x80
+ 424 02a4 0A       		.uleb128 0xa
+ 425 02a5 450A0000 		.4byte	.LASF41
+ 426 02a9 05       		.byte	0x5
+ 427 02aa 3E       		.byte	0x3e
+ 428 02ab D1050000 		.4byte	0x5d1
+ 429 02af C0       		.byte	0xc0
+ 430 02b0 0C       		.uleb128 0xc
+ 431 02b1 7D060000 		.4byte	.LASF42
+ 432 02b5 05       		.byte	0x5
+ 433 02b6 3F       		.byte	0x3f
+ 434 02b7 E0000000 		.4byte	0xe0
+ 435 02bb 8001     		.2byte	0x180
+ 436 02bd 0C       		.uleb128 0xc
+ 437 02be 000A0000 		.4byte	.LASF43
+ 438 02c2 05       		.byte	0x5
+ 439 02c3 40       		.byte	0x40
+ 440 02c4 E0000000 		.4byte	0xe0
+ 441 02c8 8401     		.2byte	0x184
+ 442 02ca 0C       		.uleb128 0xc
+ 443 02cb 7A0C0000 		.4byte	.LASF44
+ 444 02cf 05       		.byte	0x5
+ 445 02d0 41       		.byte	0x41
+ 446 02d1 E0000000 		.4byte	0xe0
+ 447 02d5 8801     		.2byte	0x188
+ 448 02d7 0C       		.uleb128 0xc
+ 449 02d8 47080000 		.4byte	.LASF45
+ 450 02dc 05       		.byte	0x5
+ 451 02dd 42       		.byte	0x42
+ 452 02de DB050000 		.4byte	0x5db
+ 453 02e2 8C01     		.2byte	0x18c
+ 454 02e4 0C       		.uleb128 0xc
+ 455 02e5 2E0C0000 		.4byte	.LASF46
+ 456 02e9 05       		.byte	0x5
+ 457 02ea 43       		.byte	0x43
+ 458 02eb E0050000 		.4byte	0x5e0
+ 459 02ef 0002     		.2byte	0x200
+ 460 02f1 0C       		.uleb128 0xc
+ 461 02f2 B1060000 		.4byte	.LASF47
+ 462 02f6 05       		.byte	0x5
+ 463 02f7 44       		.byte	0x44
+ 464 02f8 F0050000 		.4byte	0x5f0
+ 465 02fc 0003     		.2byte	0x300
+ 466 02fe 0C       		.uleb128 0xc
+ 467 02ff 1C030000 		.4byte	.LASF48
+ 468 0303 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 15
+
+
+ 469 0304 45       		.byte	0x45
+ 470 0305 F5050000 		.4byte	0x5f5
+ 471 0309 4003     		.2byte	0x340
+ 472 030b 0C       		.uleb128 0xc
+ 473 030c 7B0B0000 		.4byte	.LASF49
+ 474 0310 05       		.byte	0x5
+ 475 0311 46       		.byte	0x46
+ 476 0312 FA050000 		.4byte	0x5fa
+ 477 0316 8003     		.2byte	0x380
+ 478 0318 0C       		.uleb128 0xc
+ 479 0319 E00C0000 		.4byte	.LASF50
+ 480 031d 05       		.byte	0x5
+ 481 031e 47       		.byte	0x47
+ 482 031f 04060000 		.4byte	0x604
+ 483 0323 C003     		.2byte	0x3c0
+ 484 0325 0C       		.uleb128 0xc
+ 485 0326 E1060000 		.4byte	.LASF51
+ 486 032a 05       		.byte	0x5
+ 487 032b 48       		.byte	0x48
+ 488 032c E0000000 		.4byte	0xe0
+ 489 0330 0005     		.2byte	0x500
+ 490 0332 0C       		.uleb128 0xc
+ 491 0333 080A0000 		.4byte	.LASF52
+ 492 0337 05       		.byte	0x5
+ 493 0338 49       		.byte	0x49
+ 494 0339 E0000000 		.4byte	0xe0
+ 495 033d 0405     		.2byte	0x504
+ 496 033f 0C       		.uleb128 0xc
+ 497 0340 5D080000 		.4byte	.LASF53
+ 498 0344 05       		.byte	0x5
+ 499 0345 4A       		.byte	0x4a
+ 500 0346 E5000000 		.4byte	0xe5
+ 501 034a 0805     		.2byte	0x508
+ 502 034c 0C       		.uleb128 0xc
+ 503 034d B30B0000 		.4byte	.LASF54
+ 504 0351 05       		.byte	0x5
+ 505 0352 4B       		.byte	0x4b
+ 506 0353 E0000000 		.4byte	0xe0
+ 507 0357 0C05     		.2byte	0x50c
+ 508 0359 0C       		.uleb128 0xc
+ 509 035a 6B0D0000 		.4byte	.LASF55
+ 510 035e 05       		.byte	0x5
+ 511 035f 4C       		.byte	0x4c
+ 512 0360 E0000000 		.4byte	0xe0
+ 513 0364 1005     		.2byte	0x510
+ 514 0366 0C       		.uleb128 0xc
+ 515 0367 8F090000 		.4byte	.LASF56
+ 516 036b 05       		.byte	0x5
+ 517 036c 4D       		.byte	0x4d
+ 518 036d E0000000 		.4byte	0xe0
+ 519 0371 1405     		.2byte	0x514
+ 520 0373 0C       		.uleb128 0xc
+ 521 0374 4F0A0000 		.4byte	.LASF57
+ 522 0378 05       		.byte	0x5
+ 523 0379 4E       		.byte	0x4e
+ 524 037a E0000000 		.4byte	0xe0
+ 525 037e 1805     		.2byte	0x518
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 16
+
+
+ 526 0380 0C       		.uleb128 0xc
+ 527 0381 010B0000 		.4byte	.LASF58
+ 528 0385 05       		.byte	0x5
+ 529 0386 4F       		.byte	0x4f
+ 530 0387 E0000000 		.4byte	0xe0
+ 531 038b 1C05     		.2byte	0x51c
+ 532 038d 0C       		.uleb128 0xc
+ 533 038e 99070000 		.4byte	.LASF59
+ 534 0392 05       		.byte	0x5
+ 535 0393 50       		.byte	0x50
+ 536 0394 E5000000 		.4byte	0xe5
+ 537 0398 2005     		.2byte	0x520
+ 538 039a 0C       		.uleb128 0xc
+ 539 039b 8C0A0000 		.4byte	.LASF60
+ 540 039f 05       		.byte	0x5
+ 541 03a0 51       		.byte	0x51
+ 542 03a1 0E060000 		.4byte	0x60e
+ 543 03a5 2405     		.2byte	0x524
+ 544 03a7 0C       		.uleb128 0xc
+ 545 03a8 0E0B0000 		.4byte	.LASF61
+ 546 03ac 05       		.byte	0x5
+ 547 03ad 52       		.byte	0x52
+ 548 03ae E0000000 		.4byte	0xe0
+ 549 03b2 2C05     		.2byte	0x52c
+ 550 03b4 0C       		.uleb128 0xc
+ 551 03b5 4A0C0000 		.4byte	.LASF62
+ 552 03b9 05       		.byte	0x5
+ 553 03ba 53       		.byte	0x53
+ 554 03bb E5000000 		.4byte	0xe5
+ 555 03bf 3005     		.2byte	0x530
+ 556 03c1 0C       		.uleb128 0xc
+ 557 03c2 74080000 		.4byte	.LASF63
+ 558 03c6 05       		.byte	0x5
+ 559 03c7 54       		.byte	0x54
+ 560 03c8 18060000 		.4byte	0x618
+ 561 03cc 3405     		.2byte	0x534
+ 562 03ce 0C       		.uleb128 0xc
+ 563 03cf C7010000 		.4byte	.LASF64
+ 564 03d3 05       		.byte	0x5
+ 565 03d4 55       		.byte	0x55
+ 566 03d5 E0000000 		.4byte	0xe0
+ 567 03d9 3C05     		.2byte	0x53c
+ 568 03db 0C       		.uleb128 0xc
+ 569 03dc 7E080000 		.4byte	.LASF65
+ 570 03e0 05       		.byte	0x5
+ 571 03e1 56       		.byte	0x56
+ 572 03e2 22060000 		.4byte	0x622
+ 573 03e6 4005     		.2byte	0x540
+ 574 03e8 0C       		.uleb128 0xc
+ 575 03e9 6D0A0000 		.4byte	.LASF66
+ 576 03ed 05       		.byte	0x5
+ 577 03ee 57       		.byte	0x57
+ 578 03ef E0000000 		.4byte	0xe0
+ 579 03f3 8005     		.2byte	0x580
+ 580 03f5 0C       		.uleb128 0xc
+ 581 03f6 C5030000 		.4byte	.LASF67
+ 582 03fa 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 17
+
+
+ 583 03fb 58       		.byte	0x58
+ 584 03fc E0000000 		.4byte	0xe0
+ 585 0400 8405     		.2byte	0x584
+ 586 0402 0C       		.uleb128 0xc
+ 587 0403 4D090000 		.4byte	.LASF68
+ 588 0407 05       		.byte	0x5
+ 589 0408 59       		.byte	0x59
+ 590 0409 E0000000 		.4byte	0xe0
+ 591 040d 8805     		.2byte	0x588
+ 592 040f 0C       		.uleb128 0xc
+ 593 0410 E0030000 		.4byte	.LASF69
+ 594 0414 05       		.byte	0x5
+ 595 0415 5A       		.byte	0x5a
+ 596 0416 E0000000 		.4byte	0xe0
+ 597 041a 8C05     		.2byte	0x58c
+ 598 041c 0C       		.uleb128 0xc
+ 599 041d C20B0000 		.4byte	.LASF70
+ 600 0421 05       		.byte	0x5
+ 601 0422 5B       		.byte	0x5b
+ 602 0423 E0000000 		.4byte	0xe0
+ 603 0427 9005     		.2byte	0x590
+ 604 0429 0C       		.uleb128 0xc
+ 605 042a 88080000 		.4byte	.LASF71
+ 606 042e 05       		.byte	0x5
+ 607 042f 5C       		.byte	0x5c
+ 608 0430 2C060000 		.4byte	0x62c
+ 609 0434 9405     		.2byte	0x594
+ 610 0436 0C       		.uleb128 0xc
+ 611 0437 F5040000 		.4byte	.LASF72
+ 612 043b 05       		.byte	0x5
+ 613 043c 5D       		.byte	0x5d
+ 614 043d 41060000 		.4byte	0x641
+ 615 0441 0006     		.2byte	0x600
+ 616 0443 0C       		.uleb128 0xc
+ 617 0444 41020000 		.4byte	.LASF73
+ 618 0448 05       		.byte	0x5
+ 619 0449 5E       		.byte	0x5e
+ 620 044a E5000000 		.4byte	0xe5
+ 621 044e 3C06     		.2byte	0x63c
+ 622 0450 0C       		.uleb128 0xc
+ 623 0451 3B0C0000 		.4byte	.LASF74
+ 624 0455 05       		.byte	0x5
+ 625 0456 5F       		.byte	0x5f
+ 626 0457 46060000 		.4byte	0x646
+ 627 045b 4006     		.2byte	0x640
+ 628 045d 0C       		.uleb128 0xc
+ 629 045e 4C020000 		.4byte	.LASF75
+ 630 0462 05       		.byte	0x5
+ 631 0463 60       		.byte	0x60
+ 632 0464 60060000 		.4byte	0x660
+ 633 0468 7C06     		.2byte	0x67c
+ 634 046a 0C       		.uleb128 0xc
+ 635 046b EC060000 		.4byte	.LASF76
+ 636 046f 05       		.byte	0x5
+ 637 0470 61       		.byte	0x61
+ 638 0471 E0000000 		.4byte	0xe0
+ 639 0475 0007     		.2byte	0x700
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 18
+
+
+ 640 0477 0C       		.uleb128 0xc
+ 641 0478 B9010000 		.4byte	.LASF77
+ 642 047c 05       		.byte	0x5
+ 643 047d 62       		.byte	0x62
+ 644 047e E0000000 		.4byte	0xe0
+ 645 0482 0407     		.2byte	0x704
+ 646 0484 0C       		.uleb128 0xc
+ 647 0485 2A0A0000 		.4byte	.LASF78
+ 648 0489 05       		.byte	0x5
+ 649 048a 63       		.byte	0x63
+ 650 048b E0000000 		.4byte	0xe0
+ 651 048f 0807     		.2byte	0x708
+ 652 0491 0C       		.uleb128 0xc
+ 653 0492 D7010000 		.4byte	.LASF79
+ 654 0496 05       		.byte	0x5
+ 655 0497 64       		.byte	0x64
+ 656 0498 E5000000 		.4byte	0xe5
+ 657 049c 0C07     		.2byte	0x70c
+ 658 049e 0C       		.uleb128 0xc
+ 659 049f AB010000 		.4byte	.LASF80
+ 660 04a3 05       		.byte	0x5
+ 661 04a4 65       		.byte	0x65
+ 662 04a5 E0000000 		.4byte	0xe0
+ 663 04a9 1007     		.2byte	0x710
+ 664 04ab 0C       		.uleb128 0xc
+ 665 04ac 57020000 		.4byte	.LASF81
+ 666 04b0 05       		.byte	0x5
+ 667 04b1 66       		.byte	0x66
+ 668 04b2 7A060000 		.4byte	0x67a
+ 669 04b6 1407     		.2byte	0x714
+ 670 04b8 0C       		.uleb128 0xc
+ 671 04b9 FE060000 		.4byte	.LASF82
+ 672 04bd 05       		.byte	0x5
+ 673 04be 67       		.byte	0x67
+ 674 04bf E0000000 		.4byte	0xe0
+ 675 04c3 0008     		.2byte	0x800
+ 676 04c5 0C       		.uleb128 0xc
+ 677 04c6 280B0000 		.4byte	.LASF83
+ 678 04ca 05       		.byte	0x5
+ 679 04cb 68       		.byte	0x68
+ 680 04cc E0000000 		.4byte	0xe0
+ 681 04d0 0408     		.2byte	0x804
+ 682 04d2 0C       		.uleb128 0xc
+ 683 04d3 62020000 		.4byte	.LASF84
+ 684 04d7 05       		.byte	0x5
+ 685 04d8 69       		.byte	0x69
+ 686 04d9 95060000 		.4byte	0x695
+ 687 04dd 0808     		.2byte	0x808
+ 688 04df 0C       		.uleb128 0xc
+ 689 04e0 C9090000 		.4byte	.LASF85
+ 690 04e4 05       		.byte	0x5
+ 691 04e5 6A       		.byte	0x6a
+ 692 04e6 E0000000 		.4byte	0xe0
+ 693 04ea 007F     		.2byte	0x7f00
+ 694 04ec 0C       		.uleb128 0xc
+ 695 04ed CC0C0000 		.4byte	.LASF86
+ 696 04f1 05       		.byte	0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 19
+
+
+ 697 04f2 6B       		.byte	0x6b
+ 698 04f3 E0000000 		.4byte	0xe0
+ 699 04f7 047F     		.2byte	0x7f04
+ 700 04f9 0C       		.uleb128 0xc
+ 701 04fa 13080000 		.4byte	.LASF87
+ 702 04fe 05       		.byte	0x5
+ 703 04ff 6C       		.byte	0x6c
+ 704 0500 E0000000 		.4byte	0xe0
+ 705 0504 087F     		.2byte	0x7f08
+ 706 0506 0C       		.uleb128 0xc
+ 707 0507 F0030000 		.4byte	.LASF88
+ 708 050b 05       		.byte	0x5
+ 709 050c 6D       		.byte	0x6d
+ 710 050d E0000000 		.4byte	0xe0
+ 711 0511 0C7F     		.2byte	0x7f0c
+ 712 0513 0C       		.uleb128 0xc
+ 713 0514 6D020000 		.4byte	.LASF89
+ 714 0518 05       		.byte	0x5
+ 715 0519 6E       		.byte	0x6e
+ 716 051a 9F060000 		.4byte	0x69f
+ 717 051e 107F     		.2byte	0x7f10
+ 718 0520 0C       		.uleb128 0xc
+ 719 0521 7A0D0000 		.4byte	.LASF90
+ 720 0525 05       		.byte	0x5
+ 721 0526 6F       		.byte	0x6f
+ 722 0527 E0000000 		.4byte	0xe0
+ 723 052b 307F     		.2byte	0x7f30
+ 724 052d 0C       		.uleb128 0xc
+ 725 052e 78020000 		.4byte	.LASF91
+ 726 0532 05       		.byte	0x5
+ 727 0533 70       		.byte	0x70
+ 728 0534 BA060000 		.4byte	0x6ba
+ 729 0538 347F     		.2byte	0x7f34
+ 730 053a 0C       		.uleb128 0xc
+ 731 053b AA0C0000 		.4byte	.LASF92
+ 732 053f 05       		.byte	0x5
+ 733 0540 71       		.byte	0x71
+ 734 0541 E0000000 		.4byte	0xe0
+ 735 0545 10FF     		.2byte	0xff10
+ 736 0547 0C       		.uleb128 0xc
+ 737 0548 83020000 		.4byte	.LASF93
+ 738 054c 05       		.byte	0x5
+ 739 054d 72       		.byte	0x72
+ 740 054e E5000000 		.4byte	0xe5
+ 741 0552 14FF     		.2byte	0xff14
+ 742 0554 0C       		.uleb128 0xc
+ 743 0555 990C0000 		.4byte	.LASF94
+ 744 0559 05       		.byte	0x5
+ 745 055a 73       		.byte	0x73
+ 746 055b E0000000 		.4byte	0xe0
+ 747 055f 18FF     		.2byte	0xff18
+ 748 0561 0C       		.uleb128 0xc
+ 749 0562 77070000 		.4byte	.LASF95
+ 750 0566 05       		.byte	0x5
+ 751 0567 74       		.byte	0x74
+ 752 0568 E0000000 		.4byte	0xe0
+ 753 056c 1CFF     		.2byte	0xff1c
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 20
+
+
+ 754 056e 0C       		.uleb128 0xc
+ 755 056f B4070000 		.4byte	.LASF96
+ 756 0573 05       		.byte	0x5
+ 757 0574 75       		.byte	0x75
+ 758 0575 E0000000 		.4byte	0xe0
+ 759 0579 20FF     		.2byte	0xff20
+ 760 057b 0C       		.uleb128 0xc
+ 761 057c EF050000 		.4byte	.LASF97
+ 762 0580 05       		.byte	0x5
+ 763 0581 76       		.byte	0x76
+ 764 0582 E0000000 		.4byte	0xe0
+ 765 0586 24FF     		.2byte	0xff24
+ 766 0588 0C       		.uleb128 0xc
+ 767 0589 DA090000 		.4byte	.LASF98
+ 768 058d 05       		.byte	0x5
+ 769 058e 77       		.byte	0x77
+ 770 058f E0000000 		.4byte	0xe0
+ 771 0593 28FF     		.2byte	0xff28
+ 772 0595 0C       		.uleb128 0xc
+ 773 0596 ED090000 		.4byte	.LASF99
+ 774 059a 05       		.byte	0x5
+ 775 059b 78       		.byte	0x78
+ 776 059c E0000000 		.4byte	0xe0
+ 777 05a0 2CFF     		.2byte	0xff2c
+ 778 05a2 00       		.byte	0
+ 779 05a3 05       		.uleb128 0x5
+ 780 05a4 51010000 		.4byte	0x151
+ 781 05a8 06       		.uleb128 0x6
+ 782 05a9 A3050000 		.4byte	0x5a3
+ 783 05ad 07       		.uleb128 0x7
+ 784 05ae E5000000 		.4byte	0xe5
+ 785 05b2 BD050000 		.4byte	0x5bd
+ 786 05b6 08       		.uleb128 0x8
+ 787 05b7 EA000000 		.4byte	0xea
+ 788 05bb 17       		.byte	0x17
+ 789 05bc 00       		.byte	0
+ 790 05bd 05       		.uleb128 0x5
+ 791 05be AD050000 		.4byte	0x5ad
+ 792 05c2 06       		.uleb128 0x6
+ 793 05c3 BD050000 		.4byte	0x5bd
+ 794 05c7 05       		.uleb128 0x5
+ 795 05c8 01010000 		.4byte	0x101
+ 796 05cc 05       		.uleb128 0x5
+ 797 05cd 71010000 		.4byte	0x171
+ 798 05d1 06       		.uleb128 0x6
+ 799 05d2 CC050000 		.4byte	0x5cc
+ 800 05d6 05       		.uleb128 0x5
+ 801 05d7 31010000 		.4byte	0x131
+ 802 05db 06       		.uleb128 0x6
+ 803 05dc D6050000 		.4byte	0x5d6
+ 804 05e0 07       		.uleb128 0x7
+ 805 05e1 24020000 		.4byte	0x224
+ 806 05e5 F0050000 		.4byte	0x5f0
+ 807 05e9 08       		.uleb128 0x8
+ 808 05ea EA000000 		.4byte	0xea
+ 809 05ee 03       		.byte	0x3
+ 810 05ef 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 21
+
+
+ 811 05f0 05       		.uleb128 0x5
+ 812 05f1 01010000 		.4byte	0x101
+ 813 05f5 05       		.uleb128 0x5
+ 814 05f6 01010000 		.4byte	0x101
+ 815 05fa 05       		.uleb128 0x5
+ 816 05fb 01010000 		.4byte	0x101
+ 817 05ff 05       		.uleb128 0x5
+ 818 0600 61010000 		.4byte	0x161
+ 819 0604 06       		.uleb128 0x6
+ 820 0605 FF050000 		.4byte	0x5ff
+ 821 0609 05       		.uleb128 0x5
+ 822 060a 51010000 		.4byte	0x151
+ 823 060e 06       		.uleb128 0x6
+ 824 060f 09060000 		.4byte	0x609
+ 825 0613 05       		.uleb128 0x5
+ 826 0614 51010000 		.4byte	0x151
+ 827 0618 06       		.uleb128 0x6
+ 828 0619 13060000 		.4byte	0x613
+ 829 061d 05       		.uleb128 0x5
+ 830 061e F1000000 		.4byte	0xf1
+ 831 0622 06       		.uleb128 0x6
+ 832 0623 1D060000 		.4byte	0x61d
+ 833 0627 05       		.uleb128 0x5
+ 834 0628 21010000 		.4byte	0x121
+ 835 062c 06       		.uleb128 0x6
+ 836 062d 27060000 		.4byte	0x627
+ 837 0631 07       		.uleb128 0x7
+ 838 0632 E0000000 		.4byte	0xe0
+ 839 0636 41060000 		.4byte	0x641
+ 840 063a 08       		.uleb128 0x8
+ 841 063b EA000000 		.4byte	0xea
+ 842 063f 0E       		.byte	0xe
+ 843 0640 00       		.byte	0
+ 844 0641 05       		.uleb128 0x5
+ 845 0642 31060000 		.4byte	0x631
+ 846 0646 05       		.uleb128 0x5
+ 847 0647 31060000 		.4byte	0x631
+ 848 064b 07       		.uleb128 0x7
+ 849 064c E5000000 		.4byte	0xe5
+ 850 0650 5B060000 		.4byte	0x65b
+ 851 0654 08       		.uleb128 0x8
+ 852 0655 EA000000 		.4byte	0xea
+ 853 0659 20       		.byte	0x20
+ 854 065a 00       		.byte	0
+ 855 065b 05       		.uleb128 0x5
+ 856 065c 4B060000 		.4byte	0x64b
+ 857 0660 06       		.uleb128 0x6
+ 858 0661 5B060000 		.4byte	0x65b
+ 859 0665 07       		.uleb128 0x7
+ 860 0666 E5000000 		.4byte	0xe5
+ 861 066a 75060000 		.4byte	0x675
+ 862 066e 08       		.uleb128 0x8
+ 863 066f EA000000 		.4byte	0xea
+ 864 0673 3A       		.byte	0x3a
+ 865 0674 00       		.byte	0
+ 866 0675 05       		.uleb128 0x5
+ 867 0676 65060000 		.4byte	0x665
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 22
+
+
+ 868 067a 06       		.uleb128 0x6
+ 869 067b 75060000 		.4byte	0x675
+ 870 067f 07       		.uleb128 0x7
+ 871 0680 E5000000 		.4byte	0xe5
+ 872 0684 90060000 		.4byte	0x690
+ 873 0688 0D       		.uleb128 0xd
+ 874 0689 EA000000 		.4byte	0xea
+ 875 068d BD1D     		.2byte	0x1dbd
+ 876 068f 00       		.byte	0
+ 877 0690 05       		.uleb128 0x5
+ 878 0691 7F060000 		.4byte	0x67f
+ 879 0695 06       		.uleb128 0x6
+ 880 0696 90060000 		.4byte	0x690
+ 881 069a 05       		.uleb128 0x5
+ 882 069b 41010000 		.4byte	0x141
+ 883 069f 06       		.uleb128 0x6
+ 884 06a0 9A060000 		.4byte	0x69a
+ 885 06a4 07       		.uleb128 0x7
+ 886 06a5 E5000000 		.4byte	0xe5
+ 887 06a9 B5060000 		.4byte	0x6b5
+ 888 06ad 0D       		.uleb128 0xd
+ 889 06ae EA000000 		.4byte	0xea
+ 890 06b2 F61F     		.2byte	0x1ff6
+ 891 06b4 00       		.byte	0
+ 892 06b5 05       		.uleb128 0x5
+ 893 06b6 A4060000 		.4byte	0x6a4
+ 894 06ba 06       		.uleb128 0x6
+ 895 06bb B5060000 		.4byte	0x6b5
+ 896 06bf 04       		.uleb128 0x4
+ 897 06c0 23000000 		.4byte	.LASF100
+ 898 06c4 05       		.byte	0x5
+ 899 06c5 79       		.byte	0x79
+ 900 06c6 2F020000 		.4byte	0x22f
+ 901 06ca 09       		.uleb128 0x9
+ 902 06cb B8       		.byte	0xb8
+ 903 06cc 06       		.byte	0x6
+ 904 06cd 34       		.byte	0x34
+ 905 06ce DB0A0000 		.4byte	0xadb
+ 906 06d2 0A       		.uleb128 0xa
+ 907 06d3 F2000000 		.4byte	.LASF101
+ 908 06d7 06       		.byte	0x6
+ 909 06d8 37       		.byte	0x37
+ 910 06d9 D5000000 		.4byte	0xd5
+ 911 06dd 00       		.byte	0
+ 912 06de 0A       		.uleb128 0xa
+ 913 06df A1000000 		.4byte	.LASF102
+ 914 06e3 06       		.byte	0x6
+ 915 06e4 38       		.byte	0x38
+ 916 06e5 D5000000 		.4byte	0xd5
+ 917 06e9 04       		.byte	0x4
+ 918 06ea 0A       		.uleb128 0xa
+ 919 06eb C5020000 		.4byte	.LASF103
+ 920 06ef 06       		.byte	0x6
+ 921 06f0 39       		.byte	0x39
+ 922 06f1 D5000000 		.4byte	0xd5
+ 923 06f5 08       		.byte	0x8
+ 924 06f6 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 23
+
+
+ 925 06f7 92080000 		.4byte	.LASF104
+ 926 06fb 06       		.byte	0x6
+ 927 06fc 3A       		.byte	0x3a
+ 928 06fd D5000000 		.4byte	0xd5
+ 929 0701 0C       		.byte	0xc
+ 930 0702 0A       		.uleb128 0xa
+ 931 0703 01020000 		.4byte	.LASF105
+ 932 0707 06       		.byte	0x6
+ 933 0708 3B       		.byte	0x3b
+ 934 0709 D5000000 		.4byte	0xd5
+ 935 070d 10       		.byte	0x10
+ 936 070e 0A       		.uleb128 0xa
+ 937 070f 98020000 		.4byte	.LASF106
+ 938 0713 06       		.byte	0x6
+ 939 0714 3C       		.byte	0x3c
+ 940 0715 D5000000 		.4byte	0xd5
+ 941 0719 14       		.byte	0x14
+ 942 071a 0A       		.uleb128 0xa
+ 943 071b EC040000 		.4byte	.LASF107
+ 944 071f 06       		.byte	0x6
+ 945 0720 3D       		.byte	0x3d
+ 946 0721 D5000000 		.4byte	0xd5
+ 947 0725 18       		.byte	0x18
+ 948 0726 0A       		.uleb128 0xa
+ 949 0727 98000000 		.4byte	.LASF108
+ 950 072b 06       		.byte	0x6
+ 951 072c 3E       		.byte	0x3e
+ 952 072d D5000000 		.4byte	0xd5
+ 953 0731 1C       		.byte	0x1c
+ 954 0732 0A       		.uleb128 0xa
+ 955 0733 2E0D0000 		.4byte	.LASF109
+ 956 0737 06       		.byte	0x6
+ 957 0738 3F       		.byte	0x3f
+ 958 0739 D5000000 		.4byte	0xd5
+ 959 073d 20       		.byte	0x20
+ 960 073e 0A       		.uleb128 0xa
+ 961 073f 9F090000 		.4byte	.LASF110
+ 962 0743 06       		.byte	0x6
+ 963 0744 40       		.byte	0x40
+ 964 0745 D5000000 		.4byte	0xd5
+ 965 0749 24       		.byte	0x24
+ 966 074a 0A       		.uleb128 0xa
+ 967 074b 9F060000 		.4byte	.LASF111
+ 968 074f 06       		.byte	0x6
+ 969 0750 43       		.byte	0x43
+ 970 0751 A9000000 		.4byte	0xa9
+ 971 0755 28       		.byte	0x28
+ 972 0756 0A       		.uleb128 0xa
+ 973 0757 7E000000 		.4byte	.LASF112
+ 974 075b 06       		.byte	0x6
+ 975 075c 44       		.byte	0x44
+ 976 075d A9000000 		.4byte	0xa9
+ 977 0761 29       		.byte	0x29
+ 978 0762 0A       		.uleb128 0xa
+ 979 0763 240D0000 		.4byte	.LASF113
+ 980 0767 06       		.byte	0x6
+ 981 0768 45       		.byte	0x45
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 24
+
+
+ 982 0769 A9000000 		.4byte	0xa9
+ 983 076d 2A       		.byte	0x2a
+ 984 076e 0A       		.uleb128 0xa
+ 985 076f A6070000 		.4byte	.LASF114
+ 986 0773 06       		.byte	0x6
+ 987 0774 46       		.byte	0x46
+ 988 0775 A9000000 		.4byte	0xa9
+ 989 0779 2B       		.byte	0x2b
+ 990 077a 0A       		.uleb128 0xa
+ 991 077b DA050000 		.4byte	.LASF115
+ 992 077f 06       		.byte	0x6
+ 993 0780 47       		.byte	0x47
+ 994 0781 A9000000 		.4byte	0xa9
+ 995 0785 2C       		.byte	0x2c
+ 996 0786 0A       		.uleb128 0xa
+ 997 0787 590B0000 		.4byte	.LASF116
+ 998 078b 06       		.byte	0x6
+ 999 078c 48       		.byte	0x48
+ 1000 078d A9000000 		.4byte	0xa9
+ 1001 0791 2D       		.byte	0x2d
+ 1002 0792 0A       		.uleb128 0xa
+ 1003 0793 0A020000 		.4byte	.LASF117
+ 1004 0797 06       		.byte	0x6
+ 1005 0798 49       		.byte	0x49
+ 1006 0799 A9000000 		.4byte	0xa9
+ 1007 079d 2E       		.byte	0x2e
+ 1008 079e 0A       		.uleb128 0xa
+ 1009 079f C0060000 		.4byte	.LASF118
+ 1010 07a3 06       		.byte	0x6
+ 1011 07a4 4A       		.byte	0x4a
+ 1012 07a5 A9000000 		.4byte	0xa9
+ 1013 07a9 2F       		.byte	0x2f
+ 1014 07aa 0A       		.uleb128 0xa
+ 1015 07ab E20A0000 		.4byte	.LASF119
+ 1016 07af 06       		.byte	0x6
+ 1017 07b0 4B       		.byte	0x4b
+ 1018 07b1 A9000000 		.4byte	0xa9
+ 1019 07b5 30       		.byte	0x30
+ 1020 07b6 0A       		.uleb128 0xa
+ 1021 07b7 C2040000 		.4byte	.LASF120
+ 1022 07bb 06       		.byte	0x6
+ 1023 07bc 4E       		.byte	0x4e
+ 1024 07bd A9000000 		.4byte	0xa9
+ 1025 07c1 31       		.byte	0x31
+ 1026 07c2 0A       		.uleb128 0xa
+ 1027 07c3 AC000000 		.4byte	.LASF121
+ 1028 07c7 06       		.byte	0x6
+ 1029 07c8 4F       		.byte	0x4f
+ 1030 07c9 A9000000 		.4byte	0xa9
+ 1031 07cd 32       		.byte	0x32
+ 1032 07ce 0A       		.uleb128 0xa
+ 1033 07cf 2B040000 		.4byte	.LASF122
+ 1034 07d3 06       		.byte	0x6
+ 1035 07d4 50       		.byte	0x50
+ 1036 07d5 A9000000 		.4byte	0xa9
+ 1037 07d9 33       		.byte	0x33
+ 1038 07da 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 25
+
+
+ 1039 07db 13070000 		.4byte	.LASF123
+ 1040 07df 06       		.byte	0x6
+ 1041 07e0 51       		.byte	0x51
+ 1042 07e1 A9000000 		.4byte	0xa9
+ 1043 07e5 34       		.byte	0x34
+ 1044 07e6 0A       		.uleb128 0xa
+ 1045 07e7 DA0B0000 		.4byte	.LASF124
+ 1046 07eb 06       		.byte	0x6
+ 1047 07ec 52       		.byte	0x52
+ 1048 07ed B4000000 		.4byte	0xb4
+ 1049 07f1 36       		.byte	0x36
+ 1050 07f2 0A       		.uleb128 0xa
+ 1051 07f3 DF020000 		.4byte	.LASF125
+ 1052 07f7 06       		.byte	0x6
+ 1053 07f8 53       		.byte	0x53
+ 1054 07f9 B4000000 		.4byte	0xb4
+ 1055 07fd 38       		.byte	0x38
+ 1056 07fe 0A       		.uleb128 0xa
+ 1057 07ff 660B0000 		.4byte	.LASF126
+ 1058 0803 06       		.byte	0x6
+ 1059 0804 54       		.byte	0x54
+ 1060 0805 B4000000 		.4byte	0xb4
+ 1061 0809 3A       		.byte	0x3a
+ 1062 080a 0A       		.uleb128 0xa
+ 1063 080b 000D0000 		.4byte	.LASF127
+ 1064 080f 06       		.byte	0x6
+ 1065 0810 55       		.byte	0x55
+ 1066 0811 A9000000 		.4byte	0xa9
+ 1067 0815 3C       		.byte	0x3c
+ 1068 0816 0A       		.uleb128 0xa
+ 1069 0817 11030000 		.4byte	.LASF128
+ 1070 081b 06       		.byte	0x6
+ 1071 081c 56       		.byte	0x56
+ 1072 081d A9000000 		.4byte	0xa9
+ 1073 0821 3D       		.byte	0x3d
+ 1074 0822 0A       		.uleb128 0xa
+ 1075 0823 5F0A0000 		.4byte	.LASF129
+ 1076 0827 06       		.byte	0x6
+ 1077 0828 57       		.byte	0x57
+ 1078 0829 A9000000 		.4byte	0xa9
+ 1079 082d 3E       		.byte	0x3e
+ 1080 082e 0A       		.uleb128 0xa
+ 1081 082f 8C000000 		.4byte	.LASF130
+ 1082 0833 06       		.byte	0x6
+ 1083 0834 58       		.byte	0x58
+ 1084 0835 A9000000 		.4byte	0xa9
+ 1085 0839 3F       		.byte	0x3f
+ 1086 083a 0A       		.uleb128 0xa
+ 1087 083b C5070000 		.4byte	.LASF131
+ 1088 083f 06       		.byte	0x6
+ 1089 0840 59       		.byte	0x59
+ 1090 0841 A9000000 		.4byte	0xa9
+ 1091 0845 40       		.byte	0x40
+ 1092 0846 0A       		.uleb128 0xa
+ 1093 0847 88030000 		.4byte	.LASF132
+ 1094 084b 06       		.byte	0x6
+ 1095 084c 5A       		.byte	0x5a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 26
+
+
+ 1096 084d A9000000 		.4byte	0xa9
+ 1097 0851 41       		.byte	0x41
+ 1098 0852 0A       		.uleb128 0xa
+ 1099 0853 11060000 		.4byte	.LASF133
+ 1100 0857 06       		.byte	0x6
+ 1101 0858 5B       		.byte	0x5b
+ 1102 0859 A9000000 		.4byte	0xa9
+ 1103 085d 42       		.byte	0x42
+ 1104 085e 0A       		.uleb128 0xa
+ 1105 085f 6C070000 		.4byte	.LASF134
+ 1106 0863 06       		.byte	0x6
+ 1107 0864 5C       		.byte	0x5c
+ 1108 0865 A9000000 		.4byte	0xa9
+ 1109 0869 43       		.byte	0x43
+ 1110 086a 0A       		.uleb128 0xa
+ 1111 086b CE020000 		.4byte	.LASF135
+ 1112 086f 06       		.byte	0x6
+ 1113 0870 5D       		.byte	0x5d
+ 1114 0871 A9000000 		.4byte	0xa9
+ 1115 0875 44       		.byte	0x44
+ 1116 0876 0A       		.uleb128 0xa
+ 1117 0877 00000000 		.4byte	.LASF136
+ 1118 087b 06       		.byte	0x6
+ 1119 087c 5E       		.byte	0x5e
+ 1120 087d D5000000 		.4byte	0xd5
+ 1121 0881 48       		.byte	0x48
+ 1122 0882 0A       		.uleb128 0xa
+ 1123 0883 A2020000 		.4byte	.LASF137
+ 1124 0887 06       		.byte	0x6
+ 1125 0888 5F       		.byte	0x5f
+ 1126 0889 D5000000 		.4byte	0xd5
+ 1127 088d 4C       		.byte	0x4c
+ 1128 088e 0A       		.uleb128 0xa
+ 1129 088f 930D0000 		.4byte	.LASF138
+ 1130 0893 06       		.byte	0x6
+ 1131 0894 60       		.byte	0x60
+ 1132 0895 A9000000 		.4byte	0xa9
+ 1133 0899 50       		.byte	0x50
+ 1134 089a 0A       		.uleb128 0xa
+ 1135 089b 63010000 		.4byte	.LASF139
+ 1136 089f 06       		.byte	0x6
+ 1137 08a0 61       		.byte	0x61
+ 1138 08a1 A9000000 		.4byte	0xa9
+ 1139 08a5 51       		.byte	0x51
+ 1140 08a6 0A       		.uleb128 0xa
+ 1141 08a7 590C0000 		.4byte	.LASF140
+ 1142 08ab 06       		.byte	0x6
+ 1143 08ac 62       		.byte	0x62
+ 1144 08ad A9000000 		.4byte	0xa9
+ 1145 08b1 52       		.byte	0x52
+ 1146 08b2 0A       		.uleb128 0xa
+ 1147 08b3 590D0000 		.4byte	.LASF141
+ 1148 08b7 06       		.byte	0x6
+ 1149 08b8 63       		.byte	0x63
+ 1150 08b9 A9000000 		.4byte	0xa9
+ 1151 08bd 53       		.byte	0x53
+ 1152 08be 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 27
+
+
+ 1153 08bf 7C0A0000 		.4byte	.LASF142
+ 1154 08c3 06       		.byte	0x6
+ 1155 08c4 64       		.byte	0x64
+ 1156 08c5 A9000000 		.4byte	0xa9
+ 1157 08c9 54       		.byte	0x54
+ 1158 08ca 0A       		.uleb128 0xa
+ 1159 08cb 75010000 		.4byte	.LASF143
+ 1160 08cf 06       		.byte	0x6
+ 1161 08d0 65       		.byte	0x65
+ 1162 08d1 A9000000 		.4byte	0xa9
+ 1163 08d5 55       		.byte	0x55
+ 1164 08d6 0A       		.uleb128 0xa
+ 1165 08d7 88040000 		.4byte	.LASF144
+ 1166 08db 06       		.byte	0x6
+ 1167 08dc 66       		.byte	0x66
+ 1168 08dd A9000000 		.4byte	0xa9
+ 1169 08e1 56       		.byte	0x56
+ 1170 08e2 0A       		.uleb128 0xa
+ 1171 08e3 04050000 		.4byte	.LASF145
+ 1172 08e7 06       		.byte	0x6
+ 1173 08e8 67       		.byte	0x67
+ 1174 08e9 A9000000 		.4byte	0xa9
+ 1175 08ed 57       		.byte	0x57
+ 1176 08ee 0A       		.uleb128 0xa
+ 1177 08ef 30000000 		.4byte	.LASF146
+ 1178 08f3 06       		.byte	0x6
+ 1179 08f4 68       		.byte	0x68
+ 1180 08f5 A9000000 		.4byte	0xa9
+ 1181 08f9 58       		.byte	0x58
+ 1182 08fa 0A       		.uleb128 0xa
+ 1183 08fb 7B090000 		.4byte	.LASF147
+ 1184 08ff 06       		.byte	0x6
+ 1185 0900 69       		.byte	0x69
+ 1186 0901 A9000000 		.4byte	0xa9
+ 1187 0905 59       		.byte	0x59
+ 1188 0906 0A       		.uleb128 0xa
+ 1189 0907 08070000 		.4byte	.LASF148
+ 1190 090b 06       		.byte	0x6
+ 1191 090c 6E       		.byte	0x6e
+ 1192 090d BF000000 		.4byte	0xbf
+ 1193 0911 5A       		.byte	0x5a
+ 1194 0912 0A       		.uleb128 0xa
+ 1195 0913 690C0000 		.4byte	.LASF149
+ 1196 0917 06       		.byte	0x6
+ 1197 0918 6F       		.byte	0x6f
+ 1198 0919 BF000000 		.4byte	0xbf
+ 1199 091d 5C       		.byte	0x5c
+ 1200 091e 0A       		.uleb128 0xa
+ 1201 091f FC000000 		.4byte	.LASF150
+ 1202 0923 06       		.byte	0x6
+ 1203 0924 70       		.byte	0x70
+ 1204 0925 A9000000 		.4byte	0xa9
+ 1205 0929 5E       		.byte	0x5e
+ 1206 092a 0A       		.uleb128 0xa
+ 1207 092b 67030000 		.4byte	.LASF151
+ 1208 092f 06       		.byte	0x6
+ 1209 0930 71       		.byte	0x71
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 28
+
+
+ 1210 0931 A9000000 		.4byte	0xa9
+ 1211 0935 5F       		.byte	0x5f
+ 1212 0936 0A       		.uleb128 0xa
+ 1213 0937 40070000 		.4byte	.LASF152
+ 1214 093b 06       		.byte	0x6
+ 1215 093c 72       		.byte	0x72
+ 1216 093d A9000000 		.4byte	0xa9
+ 1217 0941 60       		.byte	0x60
+ 1218 0942 0A       		.uleb128 0xa
+ 1219 0943 02080000 		.4byte	.LASF153
+ 1220 0947 06       		.byte	0x6
+ 1221 0948 73       		.byte	0x73
+ 1222 0949 D5000000 		.4byte	0xd5
+ 1223 094d 64       		.byte	0x64
+ 1224 094e 0A       		.uleb128 0xa
+ 1225 094f 22010000 		.4byte	.LASF154
+ 1226 0953 06       		.byte	0x6
+ 1227 0954 76       		.byte	0x76
+ 1228 0955 BF000000 		.4byte	0xbf
+ 1229 0959 68       		.byte	0x68
+ 1230 095a 0A       		.uleb128 0xa
+ 1231 095b 76040000 		.4byte	.LASF155
+ 1232 095f 06       		.byte	0x6
+ 1233 0960 77       		.byte	0x77
+ 1234 0961 BF000000 		.4byte	0xbf
+ 1235 0965 6A       		.byte	0x6a
+ 1236 0966 0A       		.uleb128 0xa
+ 1237 0967 20050000 		.4byte	.LASF156
+ 1238 096b 06       		.byte	0x6
+ 1239 096c 78       		.byte	0x78
+ 1240 096d BF000000 		.4byte	0xbf
+ 1241 0971 6C       		.byte	0x6c
+ 1242 0972 0A       		.uleb128 0xa
+ 1243 0973 CD050000 		.4byte	.LASF157
+ 1244 0977 06       		.byte	0x6
+ 1245 0978 79       		.byte	0x79
+ 1246 0979 BF000000 		.4byte	0xbf
+ 1247 097d 6E       		.byte	0x6e
+ 1248 097e 0A       		.uleb128 0xa
+ 1249 097f 160A0000 		.4byte	.LASF158
+ 1250 0983 06       		.byte	0x6
+ 1251 0984 7B       		.byte	0x7b
+ 1252 0985 A9000000 		.4byte	0xa9
+ 1253 0989 70       		.byte	0x70
+ 1254 098a 0A       		.uleb128 0xa
+ 1255 098b 9E0B0000 		.4byte	.LASF159
+ 1256 098f 06       		.byte	0x6
+ 1257 0990 7C       		.byte	0x7c
+ 1258 0991 A9000000 		.4byte	0xa9
+ 1259 0995 71       		.byte	0x71
+ 1260 0996 0A       		.uleb128 0xa
+ 1261 0997 430D0000 		.4byte	.LASF160
+ 1262 099b 06       		.byte	0x6
+ 1263 099c 7D       		.byte	0x7d
+ 1264 099d A9000000 		.4byte	0xa9
+ 1265 09a1 72       		.byte	0x72
+ 1266 09a2 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 29
+
+
+ 1267 09a3 2A020000 		.4byte	.LASF161
+ 1268 09a7 06       		.byte	0x6
+ 1269 09a8 7E       		.byte	0x7e
+ 1270 09a9 A9000000 		.4byte	0xa9
+ 1271 09ad 73       		.byte	0x73
+ 1272 09ae 0A       		.uleb128 0xa
+ 1273 09af 2C030000 		.4byte	.LASF162
+ 1274 09b3 06       		.byte	0x6
+ 1275 09b4 80       		.byte	0x80
+ 1276 09b5 BF000000 		.4byte	0xbf
+ 1277 09b9 74       		.byte	0x74
+ 1278 09ba 0A       		.uleb128 0xa
+ 1279 09bb 330B0000 		.4byte	.LASF163
+ 1280 09bf 06       		.byte	0x6
+ 1281 09c0 81       		.byte	0x81
+ 1282 09c1 BF000000 		.4byte	0xbf
+ 1283 09c5 76       		.byte	0x76
+ 1284 09c6 0A       		.uleb128 0xa
+ 1285 09c7 FC020000 		.4byte	.LASF164
+ 1286 09cb 06       		.byte	0x6
+ 1287 09cc 82       		.byte	0x82
+ 1288 09cd BF000000 		.4byte	0xbf
+ 1289 09d1 78       		.byte	0x78
+ 1290 09d2 0A       		.uleb128 0xa
+ 1291 09d3 AA090000 		.4byte	.LASF165
+ 1292 09d7 06       		.byte	0x6
+ 1293 09d8 83       		.byte	0x83
+ 1294 09d9 BF000000 		.4byte	0xbf
+ 1295 09dd 7A       		.byte	0x7a
+ 1296 09de 0A       		.uleb128 0xa
+ 1297 09df B0020000 		.4byte	.LASF166
+ 1298 09e3 06       		.byte	0x6
+ 1299 09e4 86       		.byte	0x86
+ 1300 09e5 A9000000 		.4byte	0xa9
+ 1301 09e9 7C       		.byte	0x7c
+ 1302 09ea 0A       		.uleb128 0xa
+ 1303 09eb 98030000 		.4byte	.LASF167
+ 1304 09ef 06       		.byte	0x6
+ 1305 09f0 87       		.byte	0x87
+ 1306 09f1 A9000000 		.4byte	0xa9
+ 1307 09f5 7D       		.byte	0x7d
+ 1308 09f6 0A       		.uleb128 0xa
+ 1309 09f7 44000000 		.4byte	.LASF168
+ 1310 09fb 06       		.byte	0x6
+ 1311 09fc 88       		.byte	0x88
+ 1312 09fd A9000000 		.4byte	0xa9
+ 1313 0a01 7E       		.byte	0x7e
+ 1314 0a02 0A       		.uleb128 0xa
+ 1315 0a03 53030000 		.4byte	.LASF169
+ 1316 0a07 06       		.byte	0x6
+ 1317 0a08 89       		.byte	0x89
+ 1318 0a09 A9000000 		.4byte	0xa9
+ 1319 0a0d 7F       		.byte	0x7f
+ 1320 0a0e 0A       		.uleb128 0xa
+ 1321 0a0f 17040000 		.4byte	.LASF170
+ 1322 0a13 06       		.byte	0x6
+ 1323 0a14 8A       		.byte	0x8a
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 30
+
+
+ 1324 0a15 A9000000 		.4byte	0xa9
+ 1325 0a19 80       		.byte	0x80
+ 1326 0a1a 0A       		.uleb128 0xa
+ 1327 0a1b F40B0000 		.4byte	.LASF171
+ 1328 0a1f 06       		.byte	0x6
+ 1329 0a20 8D       		.byte	0x8d
+ 1330 0a21 D5000000 		.4byte	0xd5
+ 1331 0a25 84       		.byte	0x84
+ 1332 0a26 0A       		.uleb128 0xa
+ 1333 0a27 D0000000 		.4byte	.LASF172
+ 1334 0a2b 06       		.byte	0x6
+ 1335 0a2c 8E       		.byte	0x8e
+ 1336 0a2d D5000000 		.4byte	0xd5
+ 1337 0a31 88       		.byte	0x88
+ 1338 0a32 0A       		.uleb128 0xa
+ 1339 0a33 840C0000 		.4byte	.LASF173
+ 1340 0a37 06       		.byte	0x6
+ 1341 0a38 8F       		.byte	0x8f
+ 1342 0a39 D5000000 		.4byte	0xd5
+ 1343 0a3d 8C       		.byte	0x8c
+ 1344 0a3e 0A       		.uleb128 0xa
+ 1345 0a3f CC060000 		.4byte	.LASF174
+ 1346 0a43 06       		.byte	0x6
+ 1347 0a44 90       		.byte	0x90
+ 1348 0a45 D5000000 		.4byte	0xd5
+ 1349 0a49 90       		.byte	0x90
+ 1350 0a4a 0A       		.uleb128 0xa
+ 1351 0a4b 02040000 		.4byte	.LASF175
+ 1352 0a4f 06       		.byte	0x6
+ 1353 0a50 91       		.byte	0x91
+ 1354 0a51 D5000000 		.4byte	0xd5
+ 1355 0a55 94       		.byte	0x94
+ 1356 0a56 0A       		.uleb128 0xa
+ 1357 0a57 67060000 		.4byte	.LASF176
+ 1358 0a5b 06       		.byte	0x6
+ 1359 0a5c 92       		.byte	0x92
+ 1360 0a5d D5000000 		.4byte	0xd5
+ 1361 0a61 98       		.byte	0x98
+ 1362 0a62 0A       		.uleb128 0xa
+ 1363 0a63 EA0C0000 		.4byte	.LASF177
+ 1364 0a67 06       		.byte	0x6
+ 1365 0a68 93       		.byte	0x93
+ 1366 0a69 D5000000 		.4byte	0xd5
+ 1367 0a6d 9C       		.byte	0x9c
+ 1368 0a6e 0A       		.uleb128 0xa
+ 1369 0a6f 32010000 		.4byte	.LASF178
+ 1370 0a73 06       		.byte	0x6
+ 1371 0a74 94       		.byte	0x94
+ 1372 0a75 D5000000 		.4byte	0xd5
+ 1373 0a79 A0       		.byte	0xa0
+ 1374 0a7a 0A       		.uleb128 0xa
+ 1375 0a7b 15020000 		.4byte	.LASF179
+ 1376 0a7f 06       		.byte	0x6
+ 1377 0a80 95       		.byte	0x95
+ 1378 0a81 BF000000 		.4byte	0xbf
+ 1379 0a85 A4       		.byte	0xa4
+ 1380 0a86 0A       		.uleb128 0xa
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 31
+
+
+ 1381 0a87 AD0A0000 		.4byte	.LASF180
+ 1382 0a8b 06       		.byte	0x6
+ 1383 0a8c 96       		.byte	0x96
+ 1384 0a8d BF000000 		.4byte	0xbf
+ 1385 0a91 A6       		.byte	0xa6
+ 1386 0a92 0A       		.uleb128 0xa
+ 1387 0a93 51080000 		.4byte	.LASF181
+ 1388 0a97 06       		.byte	0x6
+ 1389 0a98 97       		.byte	0x97
+ 1390 0a99 BF000000 		.4byte	0xbf
+ 1391 0a9d A8       		.byte	0xa8
+ 1392 0a9e 0A       		.uleb128 0xa
+ 1393 0a9f F30A0000 		.4byte	.LASF182
+ 1394 0aa3 06       		.byte	0x6
+ 1395 0aa4 98       		.byte	0x98
+ 1396 0aa5 BF000000 		.4byte	0xbf
+ 1397 0aa9 AA       		.byte	0xaa
+ 1398 0aaa 0A       		.uleb128 0xa
+ 1399 0aab 2F050000 		.4byte	.LASF183
+ 1400 0aaf 06       		.byte	0x6
+ 1401 0ab0 99       		.byte	0x99
+ 1402 0ab1 BF000000 		.4byte	0xbf
+ 1403 0ab5 AC       		.byte	0xac
+ 1404 0ab6 0A       		.uleb128 0xa
+ 1405 0ab7 32070000 		.4byte	.LASF184
+ 1406 0abb 06       		.byte	0x6
+ 1407 0abc 9A       		.byte	0x9a
+ 1408 0abd BF000000 		.4byte	0xbf
+ 1409 0ac1 AE       		.byte	0xae
+ 1410 0ac2 0A       		.uleb128 0xa
+ 1411 0ac3 D2070000 		.4byte	.LASF185
+ 1412 0ac7 06       		.byte	0x6
+ 1413 0ac8 9D       		.byte	0x9d
+ 1414 0ac9 BF000000 		.4byte	0xbf
+ 1415 0acd B0       		.byte	0xb0
+ 1416 0ace 0A       		.uleb128 0xa
+ 1417 0acf 57000000 		.4byte	.LASF186
+ 1418 0ad3 06       		.byte	0x6
+ 1419 0ad4 9E       		.byte	0x9e
+ 1420 0ad5 D5000000 		.4byte	0xd5
+ 1421 0ad9 B4       		.byte	0xb4
+ 1422 0ada 00       		.byte	0
+ 1423 0adb 04       		.uleb128 0x4
+ 1424 0adc 01060000 		.4byte	.LASF187
+ 1425 0ae0 06       		.byte	0x6
+ 1426 0ae1 9F       		.byte	0x9f
+ 1427 0ae2 CA060000 		.4byte	0x6ca
+ 1428 0ae6 0E       		.uleb128 0xe
+ 1429 0ae7 F2020000 		.4byte	.LASF188
+ 1430 0aeb 07       		.byte	0x7
+ 1431 0aec 2806     		.2byte	0x628
+ 1432 0aee BF060000 		.4byte	0x6bf
+ 1433 0af2 03       		.uleb128 0x3
+ 1434 0af3 01       		.byte	0x1
+ 1435 0af4 08       		.byte	0x8
+ 1436 0af5 C20A0000 		.4byte	.LASF189
+ 1437 0af9 03       		.uleb128 0x3
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 32
+
+
+ 1438 0afa 04       		.byte	0x4
+ 1439 0afb 04       		.byte	0x4
+ 1440 0afc FC070000 		.4byte	.LASF190
+ 1441 0b00 03       		.uleb128 0x3
+ 1442 0b01 08       		.byte	0x8
+ 1443 0b02 04       		.byte	0x4
+ 1444 0b03 8C0D0000 		.4byte	.LASF191
+ 1445 0b07 0F       		.uleb128 0xf
+ 1446 0b08 04       		.byte	0x4
+ 1447 0b09 2C000000 		.4byte	0x2c
+ 1448 0b0d 08       		.byte	0x8
+ 1449 0b0e 1405     		.2byte	0x514
+ 1450 0b10 480B0000 		.4byte	0xb48
+ 1451 0b14 10       		.uleb128 0x10
+ 1452 0b15 BB0C0000 		.4byte	.LASF192
+ 1453 0b19 00       		.byte	0
+ 1454 0b1a 11       		.uleb128 0x11
+ 1455 0b1b 6B000000 		.4byte	.LASF193
+ 1456 0b1f 01004200 		.4byte	0x420001
+ 1457 0b23 11       		.uleb128 0x11
+ 1458 0b24 12000000 		.4byte	.LASF194
+ 1459 0b28 02004200 		.4byte	0x420002
+ 1460 0b2c 11       		.uleb128 0x11
+ 1461 0b2d 37040000 		.4byte	.LASF195
+ 1462 0b31 03004200 		.4byte	0x420003
+ 1463 0b35 11       		.uleb128 0x11
+ 1464 0b36 A9030000 		.4byte	.LASF196
+ 1465 0b3a 04004200 		.4byte	0x420004
+ 1466 0b3e 11       		.uleb128 0x11
+ 1467 0b3f 0B0C0000 		.4byte	.LASF197
+ 1468 0b43 FF004200 		.4byte	0x4200ff
+ 1469 0b47 00       		.byte	0
+ 1470 0b48 0E       		.uleb128 0xe
+ 1471 0b49 0F0D0000 		.4byte	.LASF198
+ 1472 0b4d 08       		.byte	0x8
+ 1473 0b4e 1C05     		.2byte	0x51c
+ 1474 0b50 070B0000 		.4byte	0xb07
+ 1475 0b54 0F       		.uleb128 0xf
+ 1476 0b55 01       		.byte	0x1
+ 1477 0b56 53000000 		.4byte	0x53
+ 1478 0b5a 08       		.byte	0x8
+ 1479 0b5b BC05     		.2byte	0x5bc
+ 1480 0b5d 7A0B0000 		.4byte	0xb7a
+ 1481 0b61 10       		.uleb128 0x10
+ 1482 0b62 190C0000 		.4byte	.LASF199
+ 1483 0b66 01       		.byte	0x1
+ 1484 0b67 10       		.uleb128 0x10
+ 1485 0b68 9C040000 		.4byte	.LASF200
+ 1486 0b6c 02       		.byte	0x2
+ 1487 0b6d 10       		.uleb128 0x10
+ 1488 0b6e 51070000 		.4byte	.LASF201
+ 1489 0b72 04       		.byte	0x4
+ 1490 0b73 10       		.uleb128 0x10
+ 1491 0b74 85060000 		.4byte	.LASF202
+ 1492 0b78 08       		.byte	0x8
+ 1493 0b79 00       		.byte	0
+ 1494 0b7a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 33
+
+
+ 1495 0b7b E0070000 		.4byte	.LASF203
+ 1496 0b7f 08       		.byte	0x8
+ 1497 0b80 CB05     		.2byte	0x5cb
+ 1498 0b82 540B0000 		.4byte	0xb54
+ 1499 0b86 12       		.uleb128 0x12
+ 1500 0b87 08       		.byte	0x8
+ 1501 0b88 08       		.byte	0x8
+ 1502 0b89 E705     		.2byte	0x5e7
+ 1503 0b8b AA0B0000 		.4byte	0xbaa
+ 1504 0b8f 13       		.uleb128 0x13
+ 1505 0b90 AC060000 		.4byte	.LASF204
+ 1506 0b94 08       		.byte	0x8
+ 1507 0b95 E905     		.2byte	0x5e9
+ 1508 0b97 AA0B0000 		.4byte	0xbaa
+ 1509 0b9b 00       		.byte	0
+ 1510 0b9c 13       		.uleb128 0x13
+ 1511 0b9d 18050000 		.4byte	.LASF205
+ 1512 0ba1 08       		.byte	0x8
+ 1513 0ba2 EC05     		.2byte	0x5ec
+ 1514 0ba4 AA0B0000 		.4byte	0xbaa
+ 1515 0ba8 04       		.byte	0x4
+ 1516 0ba9 00       		.byte	0
+ 1517 0baa 14       		.uleb128 0x14
+ 1518 0bab 04       		.byte	0x4
+ 1519 0bac 0E       		.uleb128 0xe
+ 1520 0bad CD040000 		.4byte	.LASF206
+ 1521 0bb1 08       		.byte	0x8
+ 1522 0bb2 EF05     		.2byte	0x5ef
+ 1523 0bb4 860B0000 		.4byte	0xb86
+ 1524 0bb8 15       		.uleb128 0x15
+ 1525 0bb9 04       		.byte	0x4
+ 1526 0bba AC0B0000 		.4byte	0xbac
+ 1527 0bbe 16       		.uleb128 0x16
+ 1528 0bbf 8B070000 		.4byte	.LASF214
+ 1529 0bc3 02       		.byte	0x2
+ 1530 0bc4 0801     		.2byte	0x108
+ 1531 0bc6 03       		.byte	0x3
+ 1532 0bc7 17       		.uleb128 0x17
+ 1533 0bc8 E8010000 		.4byte	.LASF215
+ 1534 0bcc 01       		.byte	0x1
+ 1535 0bcd 26       		.byte	0x26
+ 1536 0bce 480B0000 		.4byte	0xb48
+ 1537 0bd2 00000000 		.4byte	.LFB178
+ 1538 0bd6 34000000 		.4byte	.LFE178-.LFB178
+ 1539 0bda 01       		.uleb128 0x1
+ 1540 0bdb 9C       		.byte	0x9c
+ 1541 0bdc 1D0C0000 		.4byte	0xc1d
+ 1542 0be0 18       		.uleb128 0x18
+ 1543 0be1 58060000 		.4byte	.LASF207
+ 1544 0be5 01       		.byte	0x1
+ 1545 0be6 26       		.byte	0x26
+ 1546 0be7 B80B0000 		.4byte	0xbb8
+ 1547 0beb 00000000 		.4byte	.LLST0
+ 1548 0bef 18       		.uleb128 0x18
+ 1549 0bf0 EE0A0000 		.4byte	.LASF208
+ 1550 0bf4 01       		.byte	0x1
+ 1551 0bf5 26       		.byte	0x26
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 34
+
+
+ 1552 0bf6 7A0B0000 		.4byte	0xb7a
+ 1553 0bfa 53000000 		.4byte	.LLST1
+ 1554 0bfe 19       		.uleb128 0x19
+ 1555 0bff 72657400 		.ascii	"ret\000"
+ 1556 0c03 01       		.byte	0x1
+ 1557 0c04 28       		.byte	0x28
+ 1558 0c05 480B0000 		.4byte	0xb48
+ 1559 0c09 74000000 		.4byte	.LLST2
+ 1560 0c0d 1A       		.uleb128 0x1a
+ 1561 0c0e BE0B0000 		.4byte	0xbbe
+ 1562 0c12 18000000 		.4byte	.LBB4
+ 1563 0c16 0A000000 		.4byte	.LBE4-.LBB4
+ 1564 0c1a 01       		.byte	0x1
+ 1565 0c1b 34       		.byte	0x34
+ 1566 0c1c 00       		.byte	0
+ 1567 0c1d 1B       		.uleb128 0x1b
+ 1568 0c1e 3D080000 		.4byte	.LASF209
+ 1569 0c22 06       		.byte	0x6
+ 1570 0c23 A7       		.byte	0xa7
+ 1571 0c24 280C0000 		.4byte	0xc28
+ 1572 0c28 15       		.uleb128 0x15
+ 1573 0c29 04       		.byte	0x4
+ 1574 0c2a 2E0C0000 		.4byte	0xc2e
+ 1575 0c2e 06       		.uleb128 0x6
+ 1576 0c2f DB0A0000 		.4byte	0xadb
+ 1577 0c33 1C       		.uleb128 0x1c
+ 1578 0c34 48010000 		.4byte	.LASF210
+ 1579 0c38 09       		.byte	0x9
+ 1580 0c39 F907     		.2byte	0x7f9
+ 1581 0c3b 3F0C0000 		.4byte	0xc3f
+ 1582 0c3f 05       		.uleb128 0x5
+ 1583 0c40 CA000000 		.4byte	0xca
+ 1584 0c44 00       		.byte	0
+ 1585              		.section	.debug_abbrev,"",%progbits
+ 1586              	.Ldebug_abbrev0:
+ 1587 0000 01       		.uleb128 0x1
+ 1588 0001 11       		.uleb128 0x11
+ 1589 0002 01       		.byte	0x1
+ 1590 0003 25       		.uleb128 0x25
+ 1591 0004 0E       		.uleb128 0xe
+ 1592 0005 13       		.uleb128 0x13
+ 1593 0006 0B       		.uleb128 0xb
+ 1594 0007 03       		.uleb128 0x3
+ 1595 0008 0E       		.uleb128 0xe
+ 1596 0009 1B       		.uleb128 0x1b
+ 1597 000a 0E       		.uleb128 0xe
+ 1598 000b 55       		.uleb128 0x55
+ 1599 000c 17       		.uleb128 0x17
+ 1600 000d 11       		.uleb128 0x11
+ 1601 000e 01       		.uleb128 0x1
+ 1602 000f 10       		.uleb128 0x10
+ 1603 0010 17       		.uleb128 0x17
+ 1604 0011 00       		.byte	0
+ 1605 0012 00       		.byte	0
+ 1606 0013 02       		.uleb128 0x2
+ 1607 0014 24       		.uleb128 0x24
+ 1608 0015 00       		.byte	0
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 35
+
+
+ 1609 0016 0B       		.uleb128 0xb
+ 1610 0017 0B       		.uleb128 0xb
+ 1611 0018 3E       		.uleb128 0x3e
+ 1612 0019 0B       		.uleb128 0xb
+ 1613 001a 03       		.uleb128 0x3
+ 1614 001b 08       		.uleb128 0x8
+ 1615 001c 00       		.byte	0
+ 1616 001d 00       		.byte	0
+ 1617 001e 03       		.uleb128 0x3
+ 1618 001f 24       		.uleb128 0x24
+ 1619 0020 00       		.byte	0
+ 1620 0021 0B       		.uleb128 0xb
+ 1621 0022 0B       		.uleb128 0xb
+ 1622 0023 3E       		.uleb128 0x3e
+ 1623 0024 0B       		.uleb128 0xb
+ 1624 0025 03       		.uleb128 0x3
+ 1625 0026 0E       		.uleb128 0xe
+ 1626 0027 00       		.byte	0
+ 1627 0028 00       		.byte	0
+ 1628 0029 04       		.uleb128 0x4
+ 1629 002a 16       		.uleb128 0x16
+ 1630 002b 00       		.byte	0
+ 1631 002c 03       		.uleb128 0x3
+ 1632 002d 0E       		.uleb128 0xe
+ 1633 002e 3A       		.uleb128 0x3a
+ 1634 002f 0B       		.uleb128 0xb
+ 1635 0030 3B       		.uleb128 0x3b
+ 1636 0031 0B       		.uleb128 0xb
+ 1637 0032 49       		.uleb128 0x49
+ 1638 0033 13       		.uleb128 0x13
+ 1639 0034 00       		.byte	0
+ 1640 0035 00       		.byte	0
+ 1641 0036 05       		.uleb128 0x5
+ 1642 0037 35       		.uleb128 0x35
+ 1643 0038 00       		.byte	0
+ 1644 0039 49       		.uleb128 0x49
+ 1645 003a 13       		.uleb128 0x13
+ 1646 003b 00       		.byte	0
+ 1647 003c 00       		.byte	0
+ 1648 003d 06       		.uleb128 0x6
+ 1649 003e 26       		.uleb128 0x26
+ 1650 003f 00       		.byte	0
+ 1651 0040 49       		.uleb128 0x49
+ 1652 0041 13       		.uleb128 0x13
+ 1653 0042 00       		.byte	0
+ 1654 0043 00       		.byte	0
+ 1655 0044 07       		.uleb128 0x7
+ 1656 0045 01       		.uleb128 0x1
+ 1657 0046 01       		.byte	0x1
+ 1658 0047 49       		.uleb128 0x49
+ 1659 0048 13       		.uleb128 0x13
+ 1660 0049 01       		.uleb128 0x1
+ 1661 004a 13       		.uleb128 0x13
+ 1662 004b 00       		.byte	0
+ 1663 004c 00       		.byte	0
+ 1664 004d 08       		.uleb128 0x8
+ 1665 004e 21       		.uleb128 0x21
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 36
+
+
+ 1666 004f 00       		.byte	0
+ 1667 0050 49       		.uleb128 0x49
+ 1668 0051 13       		.uleb128 0x13
+ 1669 0052 2F       		.uleb128 0x2f
+ 1670 0053 0B       		.uleb128 0xb
+ 1671 0054 00       		.byte	0
+ 1672 0055 00       		.byte	0
+ 1673 0056 09       		.uleb128 0x9
+ 1674 0057 13       		.uleb128 0x13
+ 1675 0058 01       		.byte	0x1
+ 1676 0059 0B       		.uleb128 0xb
+ 1677 005a 0B       		.uleb128 0xb
+ 1678 005b 3A       		.uleb128 0x3a
+ 1679 005c 0B       		.uleb128 0xb
+ 1680 005d 3B       		.uleb128 0x3b
+ 1681 005e 0B       		.uleb128 0xb
+ 1682 005f 01       		.uleb128 0x1
+ 1683 0060 13       		.uleb128 0x13
+ 1684 0061 00       		.byte	0
+ 1685 0062 00       		.byte	0
+ 1686 0063 0A       		.uleb128 0xa
+ 1687 0064 0D       		.uleb128 0xd
+ 1688 0065 00       		.byte	0
+ 1689 0066 03       		.uleb128 0x3
+ 1690 0067 0E       		.uleb128 0xe
+ 1691 0068 3A       		.uleb128 0x3a
+ 1692 0069 0B       		.uleb128 0xb
+ 1693 006a 3B       		.uleb128 0x3b
+ 1694 006b 0B       		.uleb128 0xb
+ 1695 006c 49       		.uleb128 0x49
+ 1696 006d 13       		.uleb128 0x13
+ 1697 006e 38       		.uleb128 0x38
+ 1698 006f 0B       		.uleb128 0xb
+ 1699 0070 00       		.byte	0
+ 1700 0071 00       		.byte	0
+ 1701 0072 0B       		.uleb128 0xb
+ 1702 0073 13       		.uleb128 0x13
+ 1703 0074 01       		.byte	0x1
+ 1704 0075 0B       		.uleb128 0xb
+ 1705 0076 05       		.uleb128 0x5
+ 1706 0077 3A       		.uleb128 0x3a
+ 1707 0078 0B       		.uleb128 0xb
+ 1708 0079 3B       		.uleb128 0x3b
+ 1709 007a 0B       		.uleb128 0xb
+ 1710 007b 01       		.uleb128 0x1
+ 1711 007c 13       		.uleb128 0x13
+ 1712 007d 00       		.byte	0
+ 1713 007e 00       		.byte	0
+ 1714 007f 0C       		.uleb128 0xc
+ 1715 0080 0D       		.uleb128 0xd
+ 1716 0081 00       		.byte	0
+ 1717 0082 03       		.uleb128 0x3
+ 1718 0083 0E       		.uleb128 0xe
+ 1719 0084 3A       		.uleb128 0x3a
+ 1720 0085 0B       		.uleb128 0xb
+ 1721 0086 3B       		.uleb128 0x3b
+ 1722 0087 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 37
+
+
+ 1723 0088 49       		.uleb128 0x49
+ 1724 0089 13       		.uleb128 0x13
+ 1725 008a 38       		.uleb128 0x38
+ 1726 008b 05       		.uleb128 0x5
+ 1727 008c 00       		.byte	0
+ 1728 008d 00       		.byte	0
+ 1729 008e 0D       		.uleb128 0xd
+ 1730 008f 21       		.uleb128 0x21
+ 1731 0090 00       		.byte	0
+ 1732 0091 49       		.uleb128 0x49
+ 1733 0092 13       		.uleb128 0x13
+ 1734 0093 2F       		.uleb128 0x2f
+ 1735 0094 05       		.uleb128 0x5
+ 1736 0095 00       		.byte	0
+ 1737 0096 00       		.byte	0
+ 1738 0097 0E       		.uleb128 0xe
+ 1739 0098 16       		.uleb128 0x16
+ 1740 0099 00       		.byte	0
+ 1741 009a 03       		.uleb128 0x3
+ 1742 009b 0E       		.uleb128 0xe
+ 1743 009c 3A       		.uleb128 0x3a
+ 1744 009d 0B       		.uleb128 0xb
+ 1745 009e 3B       		.uleb128 0x3b
+ 1746 009f 05       		.uleb128 0x5
+ 1747 00a0 49       		.uleb128 0x49
+ 1748 00a1 13       		.uleb128 0x13
+ 1749 00a2 00       		.byte	0
+ 1750 00a3 00       		.byte	0
+ 1751 00a4 0F       		.uleb128 0xf
+ 1752 00a5 04       		.uleb128 0x4
+ 1753 00a6 01       		.byte	0x1
+ 1754 00a7 0B       		.uleb128 0xb
+ 1755 00a8 0B       		.uleb128 0xb
+ 1756 00a9 49       		.uleb128 0x49
+ 1757 00aa 13       		.uleb128 0x13
+ 1758 00ab 3A       		.uleb128 0x3a
+ 1759 00ac 0B       		.uleb128 0xb
+ 1760 00ad 3B       		.uleb128 0x3b
+ 1761 00ae 05       		.uleb128 0x5
+ 1762 00af 01       		.uleb128 0x1
+ 1763 00b0 13       		.uleb128 0x13
+ 1764 00b1 00       		.byte	0
+ 1765 00b2 00       		.byte	0
+ 1766 00b3 10       		.uleb128 0x10
+ 1767 00b4 28       		.uleb128 0x28
+ 1768 00b5 00       		.byte	0
+ 1769 00b6 03       		.uleb128 0x3
+ 1770 00b7 0E       		.uleb128 0xe
+ 1771 00b8 1C       		.uleb128 0x1c
+ 1772 00b9 0B       		.uleb128 0xb
+ 1773 00ba 00       		.byte	0
+ 1774 00bb 00       		.byte	0
+ 1775 00bc 11       		.uleb128 0x11
+ 1776 00bd 28       		.uleb128 0x28
+ 1777 00be 00       		.byte	0
+ 1778 00bf 03       		.uleb128 0x3
+ 1779 00c0 0E       		.uleb128 0xe
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 38
+
+
+ 1780 00c1 1C       		.uleb128 0x1c
+ 1781 00c2 06       		.uleb128 0x6
+ 1782 00c3 00       		.byte	0
+ 1783 00c4 00       		.byte	0
+ 1784 00c5 12       		.uleb128 0x12
+ 1785 00c6 13       		.uleb128 0x13
+ 1786 00c7 01       		.byte	0x1
+ 1787 00c8 0B       		.uleb128 0xb
+ 1788 00c9 0B       		.uleb128 0xb
+ 1789 00ca 3A       		.uleb128 0x3a
+ 1790 00cb 0B       		.uleb128 0xb
+ 1791 00cc 3B       		.uleb128 0x3b
+ 1792 00cd 05       		.uleb128 0x5
+ 1793 00ce 01       		.uleb128 0x1
+ 1794 00cf 13       		.uleb128 0x13
+ 1795 00d0 00       		.byte	0
+ 1796 00d1 00       		.byte	0
+ 1797 00d2 13       		.uleb128 0x13
+ 1798 00d3 0D       		.uleb128 0xd
+ 1799 00d4 00       		.byte	0
+ 1800 00d5 03       		.uleb128 0x3
+ 1801 00d6 0E       		.uleb128 0xe
+ 1802 00d7 3A       		.uleb128 0x3a
+ 1803 00d8 0B       		.uleb128 0xb
+ 1804 00d9 3B       		.uleb128 0x3b
+ 1805 00da 05       		.uleb128 0x5
+ 1806 00db 49       		.uleb128 0x49
+ 1807 00dc 13       		.uleb128 0x13
+ 1808 00dd 38       		.uleb128 0x38
+ 1809 00de 0B       		.uleb128 0xb
+ 1810 00df 00       		.byte	0
+ 1811 00e0 00       		.byte	0
+ 1812 00e1 14       		.uleb128 0x14
+ 1813 00e2 0F       		.uleb128 0xf
+ 1814 00e3 00       		.byte	0
+ 1815 00e4 0B       		.uleb128 0xb
+ 1816 00e5 0B       		.uleb128 0xb
+ 1817 00e6 00       		.byte	0
+ 1818 00e7 00       		.byte	0
+ 1819 00e8 15       		.uleb128 0x15
+ 1820 00e9 0F       		.uleb128 0xf
+ 1821 00ea 00       		.byte	0
+ 1822 00eb 0B       		.uleb128 0xb
+ 1823 00ec 0B       		.uleb128 0xb
+ 1824 00ed 49       		.uleb128 0x49
+ 1825 00ee 13       		.uleb128 0x13
+ 1826 00ef 00       		.byte	0
+ 1827 00f0 00       		.byte	0
+ 1828 00f1 16       		.uleb128 0x16
+ 1829 00f2 2E       		.uleb128 0x2e
+ 1830 00f3 00       		.byte	0
+ 1831 00f4 03       		.uleb128 0x3
+ 1832 00f5 0E       		.uleb128 0xe
+ 1833 00f6 3A       		.uleb128 0x3a
+ 1834 00f7 0B       		.uleb128 0xb
+ 1835 00f8 3B       		.uleb128 0x3b
+ 1836 00f9 05       		.uleb128 0x5
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 39
+
+
+ 1837 00fa 27       		.uleb128 0x27
+ 1838 00fb 19       		.uleb128 0x19
+ 1839 00fc 20       		.uleb128 0x20
+ 1840 00fd 0B       		.uleb128 0xb
+ 1841 00fe 00       		.byte	0
+ 1842 00ff 00       		.byte	0
+ 1843 0100 17       		.uleb128 0x17
+ 1844 0101 2E       		.uleb128 0x2e
+ 1845 0102 01       		.byte	0x1
+ 1846 0103 3F       		.uleb128 0x3f
+ 1847 0104 19       		.uleb128 0x19
+ 1848 0105 03       		.uleb128 0x3
+ 1849 0106 0E       		.uleb128 0xe
+ 1850 0107 3A       		.uleb128 0x3a
+ 1851 0108 0B       		.uleb128 0xb
+ 1852 0109 3B       		.uleb128 0x3b
+ 1853 010a 0B       		.uleb128 0xb
+ 1854 010b 27       		.uleb128 0x27
+ 1855 010c 19       		.uleb128 0x19
+ 1856 010d 49       		.uleb128 0x49
+ 1857 010e 13       		.uleb128 0x13
+ 1858 010f 11       		.uleb128 0x11
+ 1859 0110 01       		.uleb128 0x1
+ 1860 0111 12       		.uleb128 0x12
+ 1861 0112 06       		.uleb128 0x6
+ 1862 0113 40       		.uleb128 0x40
+ 1863 0114 18       		.uleb128 0x18
+ 1864 0115 9742     		.uleb128 0x2117
+ 1865 0117 19       		.uleb128 0x19
+ 1866 0118 01       		.uleb128 0x1
+ 1867 0119 13       		.uleb128 0x13
+ 1868 011a 00       		.byte	0
+ 1869 011b 00       		.byte	0
+ 1870 011c 18       		.uleb128 0x18
+ 1871 011d 05       		.uleb128 0x5
+ 1872 011e 00       		.byte	0
+ 1873 011f 03       		.uleb128 0x3
+ 1874 0120 0E       		.uleb128 0xe
+ 1875 0121 3A       		.uleb128 0x3a
+ 1876 0122 0B       		.uleb128 0xb
+ 1877 0123 3B       		.uleb128 0x3b
+ 1878 0124 0B       		.uleb128 0xb
+ 1879 0125 49       		.uleb128 0x49
+ 1880 0126 13       		.uleb128 0x13
+ 1881 0127 02       		.uleb128 0x2
+ 1882 0128 17       		.uleb128 0x17
+ 1883 0129 00       		.byte	0
+ 1884 012a 00       		.byte	0
+ 1885 012b 19       		.uleb128 0x19
+ 1886 012c 34       		.uleb128 0x34
+ 1887 012d 00       		.byte	0
+ 1888 012e 03       		.uleb128 0x3
+ 1889 012f 08       		.uleb128 0x8
+ 1890 0130 3A       		.uleb128 0x3a
+ 1891 0131 0B       		.uleb128 0xb
+ 1892 0132 3B       		.uleb128 0x3b
+ 1893 0133 0B       		.uleb128 0xb
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 40
+
+
+ 1894 0134 49       		.uleb128 0x49
+ 1895 0135 13       		.uleb128 0x13
+ 1896 0136 02       		.uleb128 0x2
+ 1897 0137 17       		.uleb128 0x17
+ 1898 0138 00       		.byte	0
+ 1899 0139 00       		.byte	0
+ 1900 013a 1A       		.uleb128 0x1a
+ 1901 013b 1D       		.uleb128 0x1d
+ 1902 013c 00       		.byte	0
+ 1903 013d 31       		.uleb128 0x31
+ 1904 013e 13       		.uleb128 0x13
+ 1905 013f 11       		.uleb128 0x11
+ 1906 0140 01       		.uleb128 0x1
+ 1907 0141 12       		.uleb128 0x12
+ 1908 0142 06       		.uleb128 0x6
+ 1909 0143 58       		.uleb128 0x58
+ 1910 0144 0B       		.uleb128 0xb
+ 1911 0145 59       		.uleb128 0x59
+ 1912 0146 0B       		.uleb128 0xb
+ 1913 0147 00       		.byte	0
+ 1914 0148 00       		.byte	0
+ 1915 0149 1B       		.uleb128 0x1b
+ 1916 014a 34       		.uleb128 0x34
+ 1917 014b 00       		.byte	0
+ 1918 014c 03       		.uleb128 0x3
+ 1919 014d 0E       		.uleb128 0xe
+ 1920 014e 3A       		.uleb128 0x3a
+ 1921 014f 0B       		.uleb128 0xb
+ 1922 0150 3B       		.uleb128 0x3b
+ 1923 0151 0B       		.uleb128 0xb
+ 1924 0152 49       		.uleb128 0x49
+ 1925 0153 13       		.uleb128 0x13
+ 1926 0154 3F       		.uleb128 0x3f
+ 1927 0155 19       		.uleb128 0x19
+ 1928 0156 3C       		.uleb128 0x3c
+ 1929 0157 19       		.uleb128 0x19
+ 1930 0158 00       		.byte	0
+ 1931 0159 00       		.byte	0
+ 1932 015a 1C       		.uleb128 0x1c
+ 1933 015b 34       		.uleb128 0x34
+ 1934 015c 00       		.byte	0
+ 1935 015d 03       		.uleb128 0x3
+ 1936 015e 0E       		.uleb128 0xe
+ 1937 015f 3A       		.uleb128 0x3a
+ 1938 0160 0B       		.uleb128 0xb
+ 1939 0161 3B       		.uleb128 0x3b
+ 1940 0162 05       		.uleb128 0x5
+ 1941 0163 49       		.uleb128 0x49
+ 1942 0164 13       		.uleb128 0x13
+ 1943 0165 3F       		.uleb128 0x3f
+ 1944 0166 19       		.uleb128 0x19
+ 1945 0167 3C       		.uleb128 0x3c
+ 1946 0168 19       		.uleb128 0x19
+ 1947 0169 00       		.byte	0
+ 1948 016a 00       		.byte	0
+ 1949 016b 00       		.byte	0
+ 1950              		.section	.debug_loc,"",%progbits
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 41
+
+
+ 1951              	.Ldebug_loc0:
+ 1952              	.LLST0:
+ 1953 0000 00000000 		.4byte	.LVL0
+ 1954 0004 16000000 		.4byte	.LVL2
+ 1955 0008 0100     		.2byte	0x1
+ 1956 000a 50       		.byte	0x50
+ 1957 000b 16000000 		.4byte	.LVL2
+ 1958 000f 18000000 		.4byte	.LVL3
+ 1959 0013 0400     		.2byte	0x4
+ 1960 0015 F3       		.byte	0xf3
+ 1961 0016 01       		.uleb128 0x1
+ 1962 0017 50       		.byte	0x50
+ 1963 0018 9F       		.byte	0x9f
+ 1964 0019 18000000 		.4byte	.LVL3
+ 1965 001d 24000000 		.4byte	.LVL4
+ 1966 0021 0100     		.2byte	0x1
+ 1967 0023 50       		.byte	0x50
+ 1968 0024 24000000 		.4byte	.LVL4
+ 1969 0028 26000000 		.4byte	.LVL5
+ 1970 002c 0400     		.2byte	0x4
+ 1971 002e F3       		.byte	0xf3
+ 1972 002f 01       		.uleb128 0x1
+ 1973 0030 50       		.byte	0x50
+ 1974 0031 9F       		.byte	0x9f
+ 1975 0032 26000000 		.4byte	.LVL5
+ 1976 0036 28000000 		.4byte	.LVL6
+ 1977 003a 0100     		.2byte	0x1
+ 1978 003c 50       		.byte	0x50
+ 1979 003d 28000000 		.4byte	.LVL6
+ 1980 0041 34000000 		.4byte	.LFE178
+ 1981 0045 0400     		.2byte	0x4
+ 1982 0047 F3       		.byte	0xf3
+ 1983 0048 01       		.uleb128 0x1
+ 1984 0049 50       		.byte	0x50
+ 1985 004a 9F       		.byte	0x9f
+ 1986 004b 00000000 		.4byte	0
+ 1987 004f 00000000 		.4byte	0
+ 1988              	.LLST1:
+ 1989 0053 00000000 		.4byte	.LVL0
+ 1990 0057 04000000 		.4byte	.LVL1
+ 1991 005b 0100     		.2byte	0x1
+ 1992 005d 51       		.byte	0x51
+ 1993 005e 04000000 		.4byte	.LVL1
+ 1994 0062 34000000 		.4byte	.LFE178
+ 1995 0066 0400     		.2byte	0x4
+ 1996 0068 F3       		.byte	0xf3
+ 1997 0069 01       		.uleb128 0x1
+ 1998 006a 51       		.byte	0x51
+ 1999 006b 9F       		.byte	0x9f
+ 2000 006c 00000000 		.4byte	0
+ 2001 0070 00000000 		.4byte	0
+ 2002              	.LLST2:
+ 2003 0074 00000000 		.4byte	.LVL0
+ 2004 0078 16000000 		.4byte	.LVL2
+ 2005 007c 0200     		.2byte	0x2
+ 2006 007e 30       		.byte	0x30
+ 2007 007f 9F       		.byte	0x9f
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 42
+
+
+ 2008 0080 16000000 		.4byte	.LVL2
+ 2009 0084 18000000 		.4byte	.LVL3
+ 2010 0088 0100     		.2byte	0x1
+ 2011 008a 50       		.byte	0x50
+ 2012 008b 18000000 		.4byte	.LVL3
+ 2013 008f 34000000 		.4byte	.LFE178
+ 2014 0093 0200     		.2byte	0x2
+ 2015 0095 30       		.byte	0x30
+ 2016 0096 9F       		.byte	0x9f
+ 2017 0097 00000000 		.4byte	0
+ 2018 009b 00000000 		.4byte	0
+ 2019              		.section	.debug_aranges,"",%progbits
+ 2020 0000 1C000000 		.4byte	0x1c
+ 2021 0004 0200     		.2byte	0x2
+ 2022 0006 00000000 		.4byte	.Ldebug_info0
+ 2023 000a 04       		.byte	0x4
+ 2024 000b 00       		.byte	0
+ 2025 000c 0000     		.2byte	0
+ 2026 000e 0000     		.2byte	0
+ 2027 0010 00000000 		.4byte	.LFB178
+ 2028 0014 34000000 		.4byte	.LFE178-.LFB178
+ 2029 0018 00000000 		.4byte	0
+ 2030 001c 00000000 		.4byte	0
+ 2031              		.section	.debug_ranges,"",%progbits
+ 2032              	.Ldebug_ranges0:
+ 2033 0000 00000000 		.4byte	.LFB178
+ 2034 0004 34000000 		.4byte	.LFE178
+ 2035 0008 00000000 		.4byte	0
+ 2036 000c 00000000 		.4byte	0
+ 2037              		.section	.debug_line,"",%progbits
+ 2038              	.Ldebug_line0:
+ 2039 0000 CA020000 		.section	.debug_str,"MS",%progbits,1
+ 2039      0200A002 
+ 2039      00000201 
+ 2039      FB0E0D00 
+ 2039      01010101 
+ 2040              	.LASF136:
+ 2041 0000 70726F74 		.ascii	"protBusMasterMask\000"
+ 2041      4275734D 
+ 2041      61737465 
+ 2041      724D6173 
+ 2041      6B00
+ 2042              	.LASF194:
+ 2043 0012 43595F53 		.ascii	"CY_SYSPM_TIMEOUT\000"
+ 2043      5953504D 
+ 2043      5F54494D 
+ 2043      454F5554 
+ 2043      00
+ 2044              	.LASF100:
+ 2045 0023 53525353 		.ascii	"SRSS_V1_Type\000"
+ 2045      5F56315F 
+ 2045      54797065 
+ 2045      00
+ 2046              	.LASF146:
+ 2047 0030 666C6173 		.ascii	"flashCtlMainWs3Freq\000"
+ 2047      6843746C 
+ 2047      4D61696E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 43
+
+
+ 2047      57733346 
+ 2047      72657100 
+ 2048              	.LASF168:
+ 2049 0044 6770696F 		.ascii	"gpioPrtCfgInOffset\000"
+ 2049      50727443 
+ 2049      6667496E 
+ 2049      4F666673 
+ 2049      657400
+ 2050              	.LASF186:
+ 2051 0057 6970634C 		.ascii	"ipcLockStatusOffset\000"
+ 2051      6F636B53 
+ 2051      74617475 
+ 2051      734F6666 
+ 2051      73657400 
+ 2052              	.LASF193:
+ 2053 006b 43595F53 		.ascii	"CY_SYSPM_BAD_PARAM\000"
+ 2053      5953504D 
+ 2053      5F424144 
+ 2053      5F504152 
+ 2053      414D00
+ 2054              	.LASF112:
+ 2055 007e 63727970 		.ascii	"cryptoVersion\000"
+ 2055      746F5665 
+ 2055      7273696F 
+ 2055      6E00
+ 2056              	.LASF130:
+ 2057 008c 70657269 		.ascii	"periClockNr\000"
+ 2057      436C6F63 
+ 2057      6B4E7200 
+ 2058              	.LASF108:
+ 2059 0098 70617373 		.ascii	"passBase\000"
+ 2059      42617365 
+ 2059      00
+ 2060              	.LASF102:
+ 2061 00a1 666C6173 		.ascii	"flashcBase\000"
+ 2061      68634261 
+ 2061      736500
+ 2062              	.LASF121:
+ 2063 00ac 63707573 		.ascii	"cpussIpcIrqNr\000"
+ 2063      73497063 
+ 2063      4972714E 
+ 2063      7200
+ 2064              	.LASF5:
+ 2065 00ba 5F5F7569 		.ascii	"__uint8_t\000"
+ 2065      6E74385F 
+ 2065      7400
+ 2066              	.LASF36:
+ 2067 00c4 5057525F 		.ascii	"PWR_LVD_CTL\000"
+ 2067      4C56445F 
+ 2067      43544C00 
+ 2068              	.LASF172:
+ 2069 00d0 63707573 		.ascii	"cpussCm4ClockCtlOffset\000"
+ 2069      73436D34 
+ 2069      436C6F63 
+ 2069      6B43746C 
+ 2069      4F666673 
+ 2070              	.LASF27:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 44
+
+
+ 2071 00e7 4D435744 		.ascii	"MCWDT_INTR\000"
+ 2071      545F494E 
+ 2071      545200
+ 2072              	.LASF101:
+ 2073 00f2 63707573 		.ascii	"cpussBase\000"
+ 2073      73426173 
+ 2073      6500
+ 2074              	.LASF150:
+ 2075 00fc 64774368 		.ascii	"dwChCtlPrioPos\000"
+ 2075      43746C50 
+ 2075      72696F50 
+ 2075      6F7300
+ 2076              	.LASF14:
+ 2077 010b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2077      206C6F6E 
+ 2077      6720756E 
+ 2077      7369676E 
+ 2077      65642069 
+ 2078              	.LASF154:
+ 2079 0122 70657269 		.ascii	"periTrCmdOffset\000"
+ 2079      5472436D 
+ 2079      644F6666 
+ 2079      73657400 
+ 2080              	.LASF178:
+ 2081 0132 63707573 		.ascii	"cpussSysTickCtlOffset\000"
+ 2081      73537973 
+ 2081      5469636B 
+ 2081      43746C4F 
+ 2081      66667365 
+ 2082              	.LASF210:
+ 2083 0148 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2083      52784275 
+ 2083      66666572 
+ 2083      00
+ 2084              	.LASF23:
+ 2085 0155 4D435744 		.ascii	"MCWDT_CNTHIGH\000"
+ 2085      545F434E 
+ 2085      54484947 
+ 2085      4800
+ 2086              	.LASF139:
+ 2087 0163 666C6173 		.ascii	"flashPipeRequired\000"
+ 2087      68506970 
+ 2087      65526571 
+ 2087      75697265 
+ 2087      6400
+ 2088              	.LASF143:
+ 2089 0175 666C6173 		.ascii	"flashCtlMainWs0Freq\000"
+ 2089      6843746C 
+ 2089      4D61696E 
+ 2089      57733046 
+ 2089      72657100 
+ 2090              	.LASF16:
+ 2091 0189 696E7431 		.ascii	"int16_t\000"
+ 2091      365F7400 
+ 2092              	.LASF1:
+ 2093 0191 6C6F6E67 		.ascii	"long long int\000"
+ 2093      206C6F6E 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 45
+
+
+ 2093      6720696E 
+ 2093      7400
+ 2094              	.LASF3:
+ 2095 019f 7369676E 		.ascii	"signed char\000"
+ 2095      65642063 
+ 2095      68617200 
+ 2096              	.LASF80:
+ 2097 01ab 53525353 		.ascii	"SRSS_INTR_CFG\000"
+ 2097      5F494E54 
+ 2097      525F4346 
+ 2097      4700
+ 2098              	.LASF77:
+ 2099 01b9 53525353 		.ascii	"SRSS_INTR_SET\000"
+ 2099      5F494E54 
+ 2099      525F5345 
+ 2099      5400
+ 2100              	.LASF64:
+ 2101 01c7 434C4B5F 		.ascii	"CLK_PILO_CONFIG\000"
+ 2101      50494C4F 
+ 2101      5F434F4E 
+ 2101      46494700 
+ 2102              	.LASF79:
+ 2103 01d7 53525353 		.ascii	"SRSS_INTR_MASKED\000"
+ 2103      5F494E54 
+ 2103      525F4D41 
+ 2103      534B4544 
+ 2103      00
+ 2104              	.LASF215:
+ 2105 01e8 43795F4C 		.ascii	"Cy_LVD_DeepSleepCallback\000"
+ 2105      56445F44 
+ 2105      65657053 
+ 2105      6C656570 
+ 2105      43616C6C 
+ 2106              	.LASF105:
+ 2107 0201 70726F74 		.ascii	"protBase\000"
+ 2107      42617365 
+ 2107      00
+ 2108              	.LASF117:
+ 2109 020a 69706356 		.ascii	"ipcVersion\000"
+ 2109      65727369 
+ 2109      6F6E00
+ 2110              	.LASF179:
+ 2111 0215 63707573 		.ascii	"cpussCm0NmiCtlOffset\000"
+ 2111      73436D30 
+ 2111      4E6D6943 
+ 2111      746C4F66 
+ 2111      66736574 
+ 2112              	.LASF161:
+ 2113 022a 70657269 		.ascii	"periDivCmdPaTypeSelPos\000"
+ 2113      44697643 
+ 2113      6D645061 
+ 2113      54797065 
+ 2113      53656C50 
+ 2114              	.LASF73:
+ 2115 0241 52455345 		.ascii	"RESERVED10\000"
+ 2115      52564544 
+ 2115      313000
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 46
+
+
+ 2116              	.LASF75:
+ 2117 024c 52455345 		.ascii	"RESERVED11\000"
+ 2117      52564544 
+ 2117      313100
+ 2118              	.LASF81:
+ 2119 0257 52455345 		.ascii	"RESERVED12\000"
+ 2119      52564544 
+ 2119      313200
+ 2120              	.LASF84:
+ 2121 0262 52455345 		.ascii	"RESERVED13\000"
+ 2121      52564544 
+ 2121      313300
+ 2122              	.LASF89:
+ 2123 026d 52455345 		.ascii	"RESERVED14\000"
+ 2123      52564544 
+ 2123      313400
+ 2124              	.LASF91:
+ 2125 0278 52455345 		.ascii	"RESERVED15\000"
+ 2125      52564544 
+ 2125      313500
+ 2126              	.LASF93:
+ 2127 0283 52455345 		.ascii	"RESERVED16\000"
+ 2127      52564544 
+ 2127      313600
+ 2128              	.LASF26:
+ 2129 028e 4D435744 		.ascii	"MCWDT_CTL\000"
+ 2129      545F4354 
+ 2129      4C00
+ 2130              	.LASF106:
+ 2131 0298 6873696F 		.ascii	"hsiomBase\000"
+ 2131      6D426173 
+ 2131      6500
+ 2132              	.LASF137:
+ 2133 02a2 63727970 		.ascii	"cryptoMemSize\000"
+ 2133      746F4D65 
+ 2133      6D53697A 
+ 2133      6500
+ 2134              	.LASF166:
+ 2135 02b0 6770696F 		.ascii	"gpioPrtIntrCfgOffset\000"
+ 2135      50727449 
+ 2135      6E747243 
+ 2135      66674F66 
+ 2135      66736574 
+ 2136              	.LASF103:
+ 2137 02c5 70657269 		.ascii	"periBase\000"
+ 2137      42617365 
+ 2137      00
+ 2138              	.LASF135:
+ 2139 02ce 73797350 		.ascii	"sysPmSimoPresent\000"
+ 2139      6D53696D 
+ 2139      6F507265 
+ 2139      73656E74 
+ 2139      00
+ 2140              	.LASF125:
+ 2141 02df 63707573 		.ascii	"cpussFmIrq\000"
+ 2141      73466D49 
+ 2141      727100
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 47
+
+
+ 2142              	.LASF34:
+ 2143 02ea 5057525F 		.ascii	"PWR_CTL\000"
+ 2143      43544C00 
+ 2144              	.LASF188:
+ 2145 02f2 53525353 		.ascii	"SRSS_Type\000"
+ 2145      5F547970 
+ 2145      6500
+ 2146              	.LASF164:
+ 2147 02fc 70657269 		.ascii	"periDiv16_5CtlOffset\000"
+ 2147      44697631 
+ 2147      365F3543 
+ 2147      746C4F66 
+ 2147      66736574 
+ 2148              	.LASF128:
+ 2149 0311 73727373 		.ascii	"srssNumPll\000"
+ 2149      4E756D50 
+ 2149      6C6C00
+ 2150              	.LASF48:
+ 2151 031c 434C4B5F 		.ascii	"CLK_PATH_SELECT\000"
+ 2151      50415448 
+ 2151      5F53454C 
+ 2151      45435400 
+ 2152              	.LASF162:
+ 2153 032c 70657269 		.ascii	"periDiv8CtlOffset\000"
+ 2153      44697638 
+ 2153      43746C4F 
+ 2153      66667365 
+ 2153      7400
+ 2154              	.LASF33:
+ 2155 033e 4D435744 		.ascii	"MCWDT_STRUCT_V1_Type\000"
+ 2155      545F5354 
+ 2155      52554354 
+ 2155      5F56315F 
+ 2155      54797065 
+ 2156              	.LASF169:
+ 2157 0353 6770696F 		.ascii	"gpioPrtCfgOutOffset\000"
+ 2157      50727443 
+ 2157      66674F75 
+ 2157      744F6666 
+ 2157      73657400 
+ 2158              	.LASF151:
+ 2159 0367 64774368 		.ascii	"dwChCtlPreemptablePos\000"
+ 2159      43746C50 
+ 2159      7265656D 
+ 2159      70746162 
+ 2159      6C65506F 
+ 2160              	.LASF12:
+ 2161 037d 5F5F7569 		.ascii	"__uint32_t\000"
+ 2161      6E743332 
+ 2161      5F7400
+ 2162              	.LASF132:
+ 2163 0388 70617373 		.ascii	"passSarChannels\000"
+ 2163      53617243 
+ 2163      68616E6E 
+ 2163      656C7300 
+ 2164              	.LASF167:
+ 2165 0398 6770696F 		.ascii	"gpioPrtCfgOffset\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 48
+
+
+ 2165      50727443 
+ 2165      66674F66 
+ 2165      66736574 
+ 2165      00
+ 2166              	.LASF196:
+ 2167 03a9 43595F53 		.ascii	"CY_SYSPM_CANCELED\000"
+ 2167      5953504D 
+ 2167      5F43414E 
+ 2167      43454C45 
+ 2167      4400
+ 2168              	.LASF6:
+ 2169 03bb 5F5F696E 		.ascii	"__int16_t\000"
+ 2169      7431365F 
+ 2169      7400
+ 2170              	.LASF67:
+ 2171 03c5 434C4B5F 		.ascii	"CLK_FLL_CONFIG2\000"
+ 2171      464C4C5F 
+ 2171      434F4E46 
+ 2171      49473200 
+ 2172              	.LASF31:
+ 2173 03d5 4D435744 		.ascii	"MCWDT_LOCK\000"
+ 2173      545F4C4F 
+ 2173      434B00
+ 2174              	.LASF69:
+ 2175 03e0 434C4B5F 		.ascii	"CLK_FLL_CONFIG4\000"
+ 2175      464C4C5F 
+ 2175      434F4E46 
+ 2175      49473400 
+ 2176              	.LASF88:
+ 2177 03f0 434C4B5F 		.ascii	"CLK_TRIM_CCO_CTL2\000"
+ 2177      5452494D 
+ 2177      5F43434F 
+ 2177      5F43544C 
+ 2177      3200
+ 2178              	.LASF175:
+ 2179 0402 63707573 		.ascii	"cpussCm4PwrCtlOffset\000"
+ 2179      73436D34 
+ 2179      50777243 
+ 2179      746C4F66 
+ 2179      66736574 
+ 2180              	.LASF170:
+ 2181 0417 6770696F 		.ascii	"gpioPrtCfgSioOffset\000"
+ 2181      50727443 
+ 2181      66675369 
+ 2181      6F4F6666 
+ 2181      73657400 
+ 2182              	.LASF122:
+ 2183 042b 63707573 		.ascii	"cpussDwChNr\000"
+ 2183      73447743 
+ 2183      684E7200 
+ 2184              	.LASF195:
+ 2185 0437 43595F53 		.ascii	"CY_SYSPM_INVALID_STATE\000"
+ 2185      5953504D 
+ 2185      5F494E56 
+ 2185      414C4944 
+ 2185      5F535441 
+ 2186              	.LASF0:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 49
+
+
+ 2187 044e 756E7369 		.ascii	"unsigned int\000"
+ 2187      676E6564 
+ 2187      20696E74 
+ 2187      00
+ 2188              	.LASF20:
+ 2189 045b 73697A65 		.ascii	"sizetype\000"
+ 2189      74797065 
+ 2189      00
+ 2190              	.LASF30:
+ 2191 0464 4D435744 		.ascii	"MCWDT_INTR_MASKED\000"
+ 2191      545F494E 
+ 2191      54525F4D 
+ 2191      41534B45 
+ 2191      4400
+ 2192              	.LASF155:
+ 2193 0476 70657269 		.ascii	"periTrCmdGrSelMsk\000"
+ 2193      5472436D 
+ 2193      64477253 
+ 2193      656C4D73 
+ 2193      6B00
+ 2194              	.LASF144:
+ 2195 0488 666C6173 		.ascii	"flashCtlMainWs1Freq\000"
+ 2195      6843746C 
+ 2195      4D61696E 
+ 2195      57733146 
+ 2195      72657100 
+ 2196              	.LASF200:
+ 2197 049c 43595F53 		.ascii	"CY_SYSPM_CHECK_FAIL\000"
+ 2197      5953504D 
+ 2197      5F434845 
+ 2197      434B5F46 
+ 2197      41494C00 
+ 2198              	.LASF13:
+ 2199 04b0 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2199      20756E73 
+ 2199      69676E65 
+ 2199      6420696E 
+ 2199      7400
+ 2200              	.LASF120:
+ 2201 04c2 63707573 		.ascii	"cpussIpcNr\000"
+ 2201      73497063 
+ 2201      4E7200
+ 2202              	.LASF206:
+ 2203 04cd 63795F73 		.ascii	"cy_stc_syspm_callback_params_t\000"
+ 2203      74635F73 
+ 2203      7973706D 
+ 2203      5F63616C 
+ 2203      6C626163 
+ 2204              	.LASF107:
+ 2205 04ec 6770696F 		.ascii	"gpioBase\000"
+ 2205      42617365 
+ 2205      00
+ 2206              	.LASF72:
+ 2207 04f5 434C4B5F 		.ascii	"CLK_PLL_CONFIG\000"
+ 2207      504C4C5F 
+ 2207      434F4E46 
+ 2207      494700
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 50
+
+
+ 2208              	.LASF145:
+ 2209 0504 666C6173 		.ascii	"flashCtlMainWs2Freq\000"
+ 2209      6843746C 
+ 2209      4D61696E 
+ 2209      57733246 
+ 2209      72657100 
+ 2210              	.LASF205:
+ 2211 0518 636F6E74 		.ascii	"context\000"
+ 2211      65787400 
+ 2212              	.LASF156:
+ 2213 0520 70657269 		.ascii	"periTrGrOffset\000"
+ 2213      54724772 
+ 2213      4F666673 
+ 2213      657400
+ 2214              	.LASF183:
+ 2215 052f 63707573 		.ascii	"cpussRam1Ctl0\000"
+ 2215      7352616D 
+ 2215      3143746C 
+ 2215      3000
+ 2216              	.LASF22:
+ 2217 053d 4D435744 		.ascii	"MCWDT_CNTLOW\000"
+ 2217      545F434E 
+ 2217      544C4F57 
+ 2217      00
+ 2218              	.LASF213:
+ 2219 054a 433A5C55 		.ascii	"C:\\Users\\pearlstl\\Documents\\_Research\\projects"
+ 2219      73657273 
+ 2219      5C706561 
+ 2219      726C7374 
+ 2219      6C5C446F 
+ 2220 0578 5C74636F 		.ascii	"\\tcom_engineering\\embed_sw\\tcom_app\\tcom_app_ps"
+ 2220      6D5F656E 
+ 2220      67696E65 
+ 2220      6572696E 
+ 2220      675C656D 
+ 2221 05a7 6F63365F 		.ascii	"oc6_lvgl6\\tcom_displ_test_psoc6.cydsn\000"
+ 2221      6C76676C 
+ 2221      365C7463 
+ 2221      6F6D5F64 
+ 2221      6973706C 
+ 2222              	.LASF157:
+ 2223 05cd 70657269 		.ascii	"periTrGrSize\000"
+ 2223      54724772 
+ 2223      53697A65 
+ 2223      00
+ 2224              	.LASF115:
+ 2225 05da 6770696F 		.ascii	"gpioVersion\000"
+ 2225      56657273 
+ 2225      696F6E00 
+ 2226              	.LASF17:
+ 2227 05e6 75696E74 		.ascii	"uint16_t\000"
+ 2227      31365F74 
+ 2227      00
+ 2228              	.LASF97:
+ 2229 05ef 434C4B5F 		.ascii	"CLK_TRIM_PILO_CTL\000"
+ 2229      5452494D 
+ 2229      5F50494C 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 51
+
+
+ 2229      4F5F4354 
+ 2229      4C00
+ 2230              	.LASF187:
+ 2231 0601 63795F73 		.ascii	"cy_stc_device_t\000"
+ 2231      74635F64 
+ 2231      65766963 
+ 2231      655F7400 
+ 2232              	.LASF133:
+ 2233 0611 65704D6F 		.ascii	"epMonitorNr\000"
+ 2233      6E69746F 
+ 2233      724E7200 
+ 2234              	.LASF212:
+ 2235 061d 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
+ 2235      72617465 
+ 2235      645F536F 
+ 2235      75726365 
+ 2235      5C50536F 
+ 2236 064b 6C76645C 		.ascii	"lvd\\cy_lvd.c\000"
+ 2236      63795F6C 
+ 2236      76642E63 
+ 2236      00
+ 2237              	.LASF207:
+ 2238 0658 63616C6C 		.ascii	"callbackParams\000"
+ 2238      6261636B 
+ 2238      50617261 
+ 2238      6D7300
+ 2239              	.LASF176:
+ 2240 0667 63707573 		.ascii	"cpussTrimRamCtlOffset\000"
+ 2240      73547269 
+ 2240      6D52616D 
+ 2240      43746C4F 
+ 2240      66667365 
+ 2241              	.LASF42:
+ 2242 067d 5744545F 		.ascii	"WDT_CTL\000"
+ 2242      43544C00 
+ 2243              	.LASF202:
+ 2244 0685 43595F53 		.ascii	"CY_SYSPM_AFTER_TRANSITION\000"
+ 2244      5953504D 
+ 2244      5F414654 
+ 2244      45525F54 
+ 2244      52414E53 
+ 2245              	.LASF111:
+ 2246 069f 63707573 		.ascii	"cpussVersion\000"
+ 2246      73566572 
+ 2246      73696F6E 
+ 2246      00
+ 2247              	.LASF204:
+ 2248 06ac 62617365 		.ascii	"base\000"
+ 2248      00
+ 2249              	.LASF47:
+ 2250 06b1 434C4B5F 		.ascii	"CLK_DSI_SELECT\000"
+ 2250      4453495F 
+ 2250      53454C45 
+ 2250      435400
+ 2251              	.LASF118:
+ 2252 06c0 70657269 		.ascii	"periVersion\000"
+ 2252      56657273 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 52
+
+
+ 2252      696F6E00 
+ 2253              	.LASF174:
+ 2254 06cc 63707573 		.ascii	"cpussCm0StatusOffset\000"
+ 2254      73436D30 
+ 2254      53746174 
+ 2254      75734F66 
+ 2254      66736574 
+ 2255              	.LASF51:
+ 2256 06e1 434C4B5F 		.ascii	"CLK_SELECT\000"
+ 2256      53454C45 
+ 2256      435400
+ 2257              	.LASF76:
+ 2258 06ec 53525353 		.ascii	"SRSS_INTR\000"
+ 2258      5F494E54 
+ 2258      5200
+ 2259              	.LASF18:
+ 2260 06f6 696E7433 		.ascii	"int32_t\000"
+ 2260      325F7400 
+ 2261              	.LASF82:
+ 2262 06fe 5245535F 		.ascii	"RES_CAUSE\000"
+ 2262      43415553 
+ 2262      4500
+ 2263              	.LASF148:
+ 2264 0708 64774368 		.ascii	"dwChOffset\000"
+ 2264      4F666673 
+ 2264      657400
+ 2265              	.LASF123:
+ 2266 0713 63707573 		.ascii	"cpussFlashPaSize\000"
+ 2266      73466C61 
+ 2266      73685061 
+ 2266      53697A65 
+ 2266      00
+ 2267              	.LASF38:
+ 2268 0724 5057525F 		.ascii	"PWR_BUCK_CTL2\000"
+ 2268      4255434B 
+ 2268      5F43544C 
+ 2268      3200
+ 2269              	.LASF184:
+ 2270 0732 63707573 		.ascii	"cpussRam2Ctl0\000"
+ 2270      7352616D 
+ 2270      3243746C 
+ 2270      3000
+ 2271              	.LASF152:
+ 2272 0740 64775374 		.ascii	"dwStatusChIdxPos\000"
+ 2272      61747573 
+ 2272      43684964 
+ 2272      78506F73 
+ 2272      00
+ 2273              	.LASF201:
+ 2274 0751 43595F53 		.ascii	"CY_SYSPM_BEFORE_TRANSITION\000"
+ 2274      5953504D 
+ 2274      5F424546 
+ 2274      4F52455F 
+ 2274      5452414E 
+ 2275              	.LASF134:
+ 2276 076c 75646250 		.ascii	"udbPresent\000"
+ 2276      72657365 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 53
+
+
+ 2276      6E7400
+ 2277              	.LASF95:
+ 2278 0777 5057525F 		.ascii	"PWR_TRIM_PWRSYS_CTL\000"
+ 2278      5452494D 
+ 2278      5F505752 
+ 2278      5359535F 
+ 2278      43544C00 
+ 2279              	.LASF214:
+ 2280 078b 43795F4C 		.ascii	"Cy_LVD_Enable\000"
+ 2280      56445F45 
+ 2280      6E61626C 
+ 2280      6500
+ 2281              	.LASF59:
+ 2282 0799 434C4B5F 		.ascii	"CLK_CAL_CNT2\000"
+ 2282      43414C5F 
+ 2282      434E5432 
+ 2282      00
+ 2283              	.LASF114:
+ 2284 07a6 666C6173 		.ascii	"flashcVersion\000"
+ 2284      68635665 
+ 2284      7273696F 
+ 2284      6E00
+ 2285              	.LASF96:
+ 2286 07b4 434C4B5F 		.ascii	"CLK_TRIM_ECO_CTL\000"
+ 2286      5452494D 
+ 2286      5F45434F 
+ 2286      5F43544C 
+ 2286      00
+ 2287              	.LASF131:
+ 2288 07c5 736D6966 		.ascii	"smifDeviceNr\000"
+ 2288      44657669 
+ 2288      63654E72 
+ 2288      00
+ 2289              	.LASF185:
+ 2290 07d2 69706353 		.ascii	"ipcStructSize\000"
+ 2290      74727563 
+ 2290      7453697A 
+ 2290      6500
+ 2291              	.LASF203:
+ 2292 07e0 63795F65 		.ascii	"cy_en_syspm_callback_mode_t\000"
+ 2292      6E5F7379 
+ 2292      73706D5F 
+ 2292      63616C6C 
+ 2292      6261636B 
+ 2293              	.LASF190:
+ 2294 07fc 666C6F61 		.ascii	"float\000"
+ 2294      7400
+ 2295              	.LASF153:
+ 2296 0802 64775374 		.ascii	"dwStatusChIdxMsk\000"
+ 2296      61747573 
+ 2296      43684964 
+ 2296      784D736B 
+ 2296      00
+ 2297              	.LASF87:
+ 2298 0813 434C4B5F 		.ascii	"CLK_TRIM_CCO_CTL\000"
+ 2298      5452494D 
+ 2298      5F43434F 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 54
+
+
+ 2298      5F43544C 
+ 2298      00
+ 2299              	.LASF28:
+ 2300 0824 4D435744 		.ascii	"MCWDT_INTR_SET\000"
+ 2300      545F494E 
+ 2300      54525F53 
+ 2300      455400
+ 2301              	.LASF32:
+ 2302 0833 52455345 		.ascii	"RESERVED1\000"
+ 2302      52564544 
+ 2302      3100
+ 2303              	.LASF209:
+ 2304 083d 63795F64 		.ascii	"cy_device\000"
+ 2304      65766963 
+ 2304      6500
+ 2305              	.LASF45:
+ 2306 0847 52455345 		.ascii	"RESERVED3\000"
+ 2306      52564544 
+ 2306      3300
+ 2307              	.LASF181:
+ 2308 0851 63707573 		.ascii	"cpussRomCtl\000"
+ 2308      73526F6D 
+ 2308      43746C00 
+ 2309              	.LASF53:
+ 2310 085d 52455345 		.ascii	"RESERVED5\000"
+ 2310      52564544 
+ 2310      3500
+ 2311              	.LASF40:
+ 2312 0867 5057525F 		.ascii	"PWR_HIB_DATA\000"
+ 2312      4849425F 
+ 2312      44415441 
+ 2312      00
+ 2313              	.LASF63:
+ 2314 0874 52455345 		.ascii	"RESERVED7\000"
+ 2314      52564544 
+ 2314      3700
+ 2315              	.LASF65:
+ 2316 087e 52455345 		.ascii	"RESERVED8\000"
+ 2316      52564544 
+ 2316      3800
+ 2317              	.LASF71:
+ 2318 0888 52455345 		.ascii	"RESERVED9\000"
+ 2318      52564544 
+ 2318      3900
+ 2319              	.LASF104:
+ 2320 0892 75646242 		.ascii	"udbBase\000"
+ 2320      61736500 
+ 2321              	.LASF211:
+ 2322 089a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2322      43313120 
+ 2322      352E342E 
+ 2322      31203230 
+ 2322      31363036 
+ 2323 08cd 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2323      20726576 
+ 2323      6973696F 
+ 2323      6E203233 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 55
+
+
+ 2323      37373135 
+ 2324 0900 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O3 -ffunction-s"
+ 2324      70202D6D 
+ 2324      6670753D 
+ 2324      66707634 
+ 2324      2D73702D 
+ 2325 0933 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2325      6F6E7320 
+ 2325      2D666661 
+ 2325      742D6C74 
+ 2325      6F2D6F62 
+ 2326              	.LASF68:
+ 2327 094d 434C4B5F 		.ascii	"CLK_FLL_CONFIG3\000"
+ 2327      464C4C5F 
+ 2327      434F4E46 
+ 2327      49473300 
+ 2328              	.LASF4:
+ 2329 095d 756E7369 		.ascii	"unsigned char\000"
+ 2329      676E6564 
+ 2329      20636861 
+ 2329      7200
+ 2330              	.LASF29:
+ 2331 096b 4D435744 		.ascii	"MCWDT_INTR_MASK\000"
+ 2331      545F494E 
+ 2331      54525F4D 
+ 2331      41534B00 
+ 2332              	.LASF147:
+ 2333 097b 666C6173 		.ascii	"flashCtlMainWs4Freq\000"
+ 2333      6843746C 
+ 2333      4D61696E 
+ 2333      57733446 
+ 2333      72657100 
+ 2334              	.LASF56:
+ 2335 098f 434C4B5F 		.ascii	"CLK_OUTPUT_FAST\000"
+ 2335      4F555450 
+ 2335      55545F46 
+ 2335      41535400 
+ 2336              	.LASF110:
+ 2337 099f 63727970 		.ascii	"cryptoBase\000"
+ 2337      746F4261 
+ 2337      736500
+ 2338              	.LASF165:
+ 2339 09aa 70657269 		.ascii	"periDiv24_5CtlOffset\000"
+ 2339      44697632 
+ 2339      345F3543 
+ 2339      746C4F66 
+ 2339      66736574 
+ 2340              	.LASF7:
+ 2341 09bf 73686F72 		.ascii	"short int\000"
+ 2341      7420696E 
+ 2341      7400
+ 2342              	.LASF85:
+ 2343 09c9 5057525F 		.ascii	"PWR_TRIM_REF_CTL\000"
+ 2343      5452494D 
+ 2343      5F524546 
+ 2343      5F43544C 
+ 2343      00
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 56
+
+
+ 2344              	.LASF98:
+ 2345 09da 434C4B5F 		.ascii	"CLK_TRIM_PILO_CTL2\000"
+ 2345      5452494D 
+ 2345      5F50494C 
+ 2345      4F5F4354 
+ 2345      4C3200
+ 2346              	.LASF99:
+ 2347 09ed 434C4B5F 		.ascii	"CLK_TRIM_PILO_CTL3\000"
+ 2347      5452494D 
+ 2347      5F50494C 
+ 2347      4F5F4354 
+ 2347      4C3300
+ 2348              	.LASF43:
+ 2349 0a00 5744545F 		.ascii	"WDT_CNT\000"
+ 2349      434E5400 
+ 2350              	.LASF52:
+ 2351 0a08 434C4B5F 		.ascii	"CLK_TIMER_CTL\000"
+ 2351      54494D45 
+ 2351      525F4354 
+ 2351      4C00
+ 2352              	.LASF158:
+ 2353 0a16 70657269 		.ascii	"periDivCmdDivSelMsk\000"
+ 2353      44697643 
+ 2353      6D644469 
+ 2353      7653656C 
+ 2353      4D736B00 
+ 2354              	.LASF78:
+ 2355 0a2a 53525353 		.ascii	"SRSS_INTR_MASK\000"
+ 2355      5F494E54 
+ 2355      525F4D41 
+ 2355      534B00
+ 2356              	.LASF24:
+ 2357 0a39 4D435744 		.ascii	"MCWDT_MATCH\000"
+ 2357      545F4D41 
+ 2357      54434800 
+ 2358              	.LASF41:
+ 2359 0a45 52455345 		.ascii	"RESERVED2\000"
+ 2359      52564544 
+ 2359      3200
+ 2360              	.LASF57:
+ 2361 0a4f 434C4B5F 		.ascii	"CLK_OUTPUT_SLOW\000"
+ 2361      4F555450 
+ 2361      55545F53 
+ 2361      4C4F5700 
+ 2362              	.LASF129:
+ 2363 0a5f 73727373 		.ascii	"srssNumHfroot\000"
+ 2363      4E756D48 
+ 2363      66726F6F 
+ 2363      7400
+ 2364              	.LASF66:
+ 2365 0a6d 434C4B5F 		.ascii	"CLK_FLL_CONFIG\000"
+ 2365      464C4C5F 
+ 2365      434F4E46 
+ 2365      494700
+ 2366              	.LASF142:
+ 2367 0a7c 666C6173 		.ascii	"flashEraseDelay\000"
+ 2367      68457261 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 57
+
+
+ 2367      73654465 
+ 2367      6C617900 
+ 2368              	.LASF60:
+ 2369 0a8c 52455345 		.ascii	"RESERVED6\000"
+ 2369      52564544 
+ 2369      3600
+ 2370              	.LASF19:
+ 2371 0a96 75696E74 		.ascii	"uint32_t\000"
+ 2371      33325F74 
+ 2371      00
+ 2372              	.LASF35:
+ 2373 0a9f 5057525F 		.ascii	"PWR_HIBERNATE\000"
+ 2373      48494245 
+ 2373      524E4154 
+ 2373      4500
+ 2374              	.LASF180:
+ 2375 0aad 63707573 		.ascii	"cpussCm4NmiCtlOffset\000"
+ 2375      73436D34 
+ 2375      4E6D6943 
+ 2375      746C4F66 
+ 2375      66736574 
+ 2376              	.LASF189:
+ 2377 0ac2 63686172 		.ascii	"char\000"
+ 2377      00
+ 2378              	.LASF2:
+ 2379 0ac7 6C6F6E67 		.ascii	"long double\000"
+ 2379      20646F75 
+ 2379      626C6500 
+ 2380              	.LASF39:
+ 2381 0ad3 5057525F 		.ascii	"PWR_LVD_STATUS\000"
+ 2381      4C56445F 
+ 2381      53544154 
+ 2381      555300
+ 2382              	.LASF119:
+ 2383 0ae2 70726F74 		.ascii	"protVersion\000"
+ 2383      56657273 
+ 2383      696F6E00 
+ 2384              	.LASF208:
+ 2385 0aee 6D6F6465 		.ascii	"mode\000"
+ 2385      00
+ 2386              	.LASF182:
+ 2387 0af3 63707573 		.ascii	"cpussRam0Ctl0\000"
+ 2387      7352616D 
+ 2387      3043746C 
+ 2387      3000
+ 2388              	.LASF58:
+ 2389 0b01 434C4B5F 		.ascii	"CLK_CAL_CNT1\000"
+ 2389      43414C5F 
+ 2389      434E5431 
+ 2389      00
+ 2390              	.LASF61:
+ 2391 0b0e 434C4B5F 		.ascii	"CLK_ECO_CONFIG\000"
+ 2391      45434F5F 
+ 2391      434F4E46 
+ 2391      494700
+ 2392              	.LASF8:
+ 2393 0b1d 5F5F7569 		.ascii	"__uint16_t\000"
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 58
+
+
+ 2393      6E743136 
+ 2393      5F7400
+ 2394              	.LASF83:
+ 2395 0b28 5245535F 		.ascii	"RES_CAUSE2\000"
+ 2395      43415553 
+ 2395      453200
+ 2396              	.LASF163:
+ 2397 0b33 70657269 		.ascii	"periDiv16CtlOffset\000"
+ 2397      44697631 
+ 2397      3643746C 
+ 2397      4F666673 
+ 2397      657400
+ 2398              	.LASF21:
+ 2399 0b46 52455345 		.ascii	"RESERVED\000"
+ 2399      52564544 
+ 2399      00
+ 2400              	.LASF10:
+ 2401 0b4f 5F5F696E 		.ascii	"__int32_t\000"
+ 2401      7433325F 
+ 2401      7400
+ 2402              	.LASF116:
+ 2403 0b59 6873696F 		.ascii	"hsiomVersion\000"
+ 2403      6D566572 
+ 2403      73696F6E 
+ 2403      00
+ 2404              	.LASF126:
+ 2405 0b66 63707573 		.ascii	"cpussNotConnectedIrq\000"
+ 2405      734E6F74 
+ 2405      436F6E6E 
+ 2405      65637465 
+ 2405      64497271 
+ 2406              	.LASF49:
+ 2407 0b7b 434C4B5F 		.ascii	"CLK_ROOT_SELECT\000"
+ 2407      524F4F54 
+ 2407      5F53454C 
+ 2407      45435400 
+ 2408              	.LASF9:
+ 2409 0b8b 73686F72 		.ascii	"short unsigned int\000"
+ 2409      7420756E 
+ 2409      7369676E 
+ 2409      65642069 
+ 2409      6E7400
+ 2410              	.LASF159:
+ 2411 0b9e 70657269 		.ascii	"periDivCmdTypeSelPos\000"
+ 2411      44697643 
+ 2411      6D645479 
+ 2411      70655365 
+ 2411      6C506F73 
+ 2412              	.LASF54:
+ 2413 0bb3 434C4B5F 		.ascii	"CLK_ILO_CONFIG\000"
+ 2413      494C4F5F 
+ 2413      434F4E46 
+ 2413      494700
+ 2414              	.LASF70:
+ 2415 0bc2 434C4B5F 		.ascii	"CLK_FLL_STATUS\000"
+ 2415      464C4C5F 
+ 2415      53544154 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 59
+
+
+ 2415      555300
+ 2416              	.LASF11:
+ 2417 0bd1 6C6F6E67 		.ascii	"long int\000"
+ 2417      20696E74 
+ 2417      00
+ 2418              	.LASF124:
+ 2419 0bda 63707573 		.ascii	"cpussIpc0Irq\000"
+ 2419      73497063 
+ 2419      30497271 
+ 2419      00
+ 2420              	.LASF37:
+ 2421 0be7 5057525F 		.ascii	"PWR_BUCK_CTL\000"
+ 2421      4255434B 
+ 2421      5F43544C 
+ 2421      00
+ 2422              	.LASF171:
+ 2423 0bf4 63707573 		.ascii	"cpussCm0ClockCtlOffset\000"
+ 2423      73436D30 
+ 2423      436C6F63 
+ 2423      6B43746C 
+ 2423      4F666673 
+ 2424              	.LASF197:
+ 2425 0c0b 43595F53 		.ascii	"CY_SYSPM_FAIL\000"
+ 2425      5953504D 
+ 2425      5F464149 
+ 2425      4C00
+ 2426              	.LASF199:
+ 2427 0c19 43595F53 		.ascii	"CY_SYSPM_CHECK_READY\000"
+ 2427      5953504D 
+ 2427      5F434845 
+ 2427      434B5F52 
+ 2427      45414459 
+ 2428              	.LASF46:
+ 2429 0c2e 4D435744 		.ascii	"MCWDT_STRUCT\000"
+ 2429      545F5354 
+ 2429      52554354 
+ 2429      00
+ 2430              	.LASF74:
+ 2431 0c3b 434C4B5F 		.ascii	"CLK_PLL_STATUS\000"
+ 2431      504C4C5F 
+ 2431      53544154 
+ 2431      555300
+ 2432              	.LASF62:
+ 2433 0c4a 434C4B5F 		.ascii	"CLK_ECO_STATUS\000"
+ 2433      45434F5F 
+ 2433      53544154 
+ 2433      555300
+ 2434              	.LASF140:
+ 2435 0c59 666C6173 		.ascii	"flashWriteDelay\000"
+ 2435      68577269 
+ 2435      74654465 
+ 2435      6C617900 
+ 2436              	.LASF149:
+ 2437 0c69 64774368 		.ascii	"dwChSize\000"
+ 2437      53697A65 
+ 2437      00
+ 2438              	.LASF15:
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 60
+
+
+ 2439 0c72 75696E74 		.ascii	"uint8_t\000"
+ 2439      385F7400 
+ 2440              	.LASF44:
+ 2441 0c7a 5744545F 		.ascii	"WDT_MATCH\000"
+ 2441      4D415443 
+ 2441      4800
+ 2442              	.LASF173:
+ 2443 0c84 63707573 		.ascii	"cpussCm4StatusOffset\000"
+ 2443      73436D34 
+ 2443      53746174 
+ 2443      75734F66 
+ 2443      66736574 
+ 2444              	.LASF94:
+ 2445 0c99 434C4B5F 		.ascii	"CLK_TRIM_ILO_CTL\000"
+ 2445      5452494D 
+ 2445      5F494C4F 
+ 2445      5F43544C 
+ 2445      00
+ 2446              	.LASF92:
+ 2447 0caa 5057525F 		.ascii	"PWR_TRIM_LVD_CTL\000"
+ 2447      5452494D 
+ 2447      5F4C5644 
+ 2447      5F43544C 
+ 2447      00
+ 2448              	.LASF192:
+ 2449 0cbb 43595F53 		.ascii	"CY_SYSPM_SUCCESS\000"
+ 2449      5953504D 
+ 2449      5F535543 
+ 2449      43455353 
+ 2449      00
+ 2450              	.LASF86:
+ 2451 0ccc 5057525F 		.ascii	"PWR_TRIM_BODOVP_CTL\000"
+ 2451      5452494D 
+ 2451      5F424F44 
+ 2451      4F56505F 
+ 2451      43544C00 
+ 2452              	.LASF50:
+ 2453 0ce0 52455345 		.ascii	"RESERVED4\000"
+ 2453      52564544 
+ 2453      3400
+ 2454              	.LASF177:
+ 2455 0cea 63707573 		.ascii	"cpussTrimRomCtlOffset\000"
+ 2455      73547269 
+ 2455      6D526F6D 
+ 2455      43746C4F 
+ 2455      66667365 
+ 2456              	.LASF127:
+ 2457 0d00 73727373 		.ascii	"srssNumClkpath\000"
+ 2457      4E756D43 
+ 2457      6C6B7061 
+ 2457      746800
+ 2458              	.LASF198:
+ 2459 0d0f 63795F65 		.ascii	"cy_en_syspm_status_t\000"
+ 2459      6E5F7379 
+ 2459      73706D5F 
+ 2459      73746174 
+ 2459      75735F74 
+ARM GAS  C:\Users\pearlstl\AppData\Local\Temp\cclphwZy.s 			page 61
+
+
+ 2460              	.LASF113:
+ 2461 0d24 64775665 		.ascii	"dwVersion\000"
+ 2461      7273696F 
+ 2461      6E00
+ 2462              	.LASF109:
+ 2463 0d2e 69706342 		.ascii	"ipcBase\000"
+ 2463      61736500 
+ 2464              	.LASF25:
+ 2465 0d36 4D435744 		.ascii	"MCWDT_CONFIG\000"
+ 2465      545F434F 
+ 2465      4E464947 
+ 2465      00
+ 2466              	.LASF160:
+ 2467 0d43 70657269 		.ascii	"periDivCmdPaDivSelPos\000"
+ 2467      44697643 
+ 2467      6D645061 
+ 2467      44697653 
+ 2467      656C506F 
+ 2468              	.LASF141:
+ 2469 0d59 666C6173 		.ascii	"flashProgramDelay\000"
+ 2469      6850726F 
+ 2469      6772616D 
+ 2469      44656C61 
+ 2469      7900
+ 2470              	.LASF55:
+ 2471 0d6b 434C4B5F 		.ascii	"CLK_IMO_CONFIG\000"
+ 2471      494D4F5F 
+ 2471      434F4E46 
+ 2471      494700
+ 2472              	.LASF90:
+ 2473 0d7a 5057525F 		.ascii	"PWR_TRIM_WAKE_CTL\000"
+ 2473      5452494D 
+ 2473      5F57414B 
+ 2473      455F4354 
+ 2473      4C00
+ 2474              	.LASF191:
+ 2475 0d8c 646F7562 		.ascii	"double\000"
+ 2475      6C6500
+ 2476              	.LASF138:
+ 2477 0d93 666C6173 		.ascii	"flashRwwRequired\000"
+ 2477      68527777 
+ 2477      52657175 
+ 2477      69726564 
+ 2477      00
+ 2478              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

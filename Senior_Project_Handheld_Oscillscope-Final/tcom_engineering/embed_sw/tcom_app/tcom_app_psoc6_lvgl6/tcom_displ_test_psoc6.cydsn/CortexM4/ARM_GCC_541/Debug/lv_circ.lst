@@ -1,0 +1,916 @@
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"lv_circ.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.lv_circ_init,"ax",%progbits
+  21              		.align	2
+  22              		.global	lv_circ_init
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	lv_circ_init, %function
+  26              	lv_circ_init:
+  27              	.LFB3:
+  28              		.file 1 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_circ.c"
+   1:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+   2:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @file lv_circ.c
+   3:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Circle drawing algorithm (with Bresenham)
+   4:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Only a 1/8 circle is calculated. Use CIRC_OCT1_X, CIRC_OCT1_Y macros to get
+   5:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * the other octets.
+   6:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+   7:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+   8:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /*********************
+   9:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      INCLUDES
+  10:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *********************/
+  11:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** #include "lv_circ.h"
+  12:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  13:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /*********************
+  14:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      DEFINES
+  15:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *********************/
+  16:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  17:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  18:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      TYPEDEFS
+  19:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  20:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  21:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  22:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *  STATIC PROTOTYPES
+  23:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  24:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  25:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  26:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *  STATIC VARIABLES
+  27:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  28:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  29:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 2
+
+
+  30:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *      MACROS
+  31:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  32:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  33:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**********************
+  34:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  *   GLOBAL FUNCTIONS
+  35:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  **********************/
+  36:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  37:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  38:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Initialize the circle drawing
+  39:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c pointer to a point. The coordinates will be calculated here
+  40:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param tmp point to a variable. It will store temporary data
+  41:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param radius radius of the circle
+  42:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  43:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** void lv_circ_init(lv_point_t * c, lv_coord_t * tmp, lv_coord_t radius)
+  44:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+  29              		.loc 1 44 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 1, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  34 0000 80B4     		push	{r7}
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              		.cfi_def_cfa_offset 24
+  39 0004 00AF     		add	r7, sp, #0
+  40              		.cfi_def_cfa_register 7
+  41 0006 F860     		str	r0, [r7, #12]
+  42 0008 B960     		str	r1, [r7, #8]
+  43 000a 1346     		mov	r3, r2
+  44 000c FB80     		strh	r3, [r7, #6]	@ movhi
+  45:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->x = radius;
+  45              		.loc 1 45 0
+  46 000e FB68     		ldr	r3, [r7, #12]
+  47 0010 FA88     		ldrh	r2, [r7, #6]	@ movhi
+  48 0012 1A80     		strh	r2, [r3]	@ movhi
+  46:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->y = 0;
+  49              		.loc 1 46 0
+  50 0014 FB68     		ldr	r3, [r7, #12]
+  51 0016 0022     		movs	r2, #0
+  52 0018 5A80     		strh	r2, [r3, #2]	@ movhi
+  47:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     *tmp = 1 - radius;
+  53              		.loc 1 47 0
+  54 001a FB88     		ldrh	r3, [r7, #6]
+  55 001c C3F10103 		rsb	r3, r3, #1
+  56 0020 9BB2     		uxth	r3, r3
+  57 0022 1AB2     		sxth	r2, r3
+  58 0024 BB68     		ldr	r3, [r7, #8]
+  59 0026 1A80     		strh	r2, [r3]	@ movhi
+  48:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+  60              		.loc 1 48 0
+  61 0028 00BF     		nop
+  62 002a 1437     		adds	r7, r7, #20
+  63              		.cfi_def_cfa_offset 4
+  64 002c BD46     		mov	sp, r7
+  65              		.cfi_def_cfa_register 13
+  66              		@ sp needed
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 3
+
+
+  67 002e 5DF8047B 		ldr	r7, [sp], #4
+  68              		.cfi_restore 7
+  69              		.cfi_def_cfa_offset 0
+  70 0032 7047     		bx	lr
+  71              		.cfi_endproc
+  72              	.LFE3:
+  73              		.size	lv_circ_init, .-lv_circ_init
+  74              		.section	.text.lv_circ_cont,"ax",%progbits
+  75              		.align	2
+  76              		.global	lv_circ_cont
+  77              		.thumb
+  78              		.thumb_func
+  79              		.type	lv_circ_cont, %function
+  80              	lv_circ_cont:
+  81              	.LFB4:
+  49:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  50:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  51:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Test the circle drawing is ready or not
+  52:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c same as in circ_init
+  53:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @return true if the circle is not ready yet
+  54:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  55:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** bool lv_circ_cont(lv_point_t * c)
+  56:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+  82              		.loc 1 56 0
+  83              		.cfi_startproc
+  84              		@ args = 0, pretend = 0, frame = 8
+  85              		@ frame_needed = 1, uses_anonymous_args = 0
+  86              		@ link register save eliminated.
+  87 0000 80B4     		push	{r7}
+  88              		.cfi_def_cfa_offset 4
+  89              		.cfi_offset 7, -4
+  90 0002 83B0     		sub	sp, sp, #12
+  91              		.cfi_def_cfa_offset 16
+  92 0004 00AF     		add	r7, sp, #0
+  93              		.cfi_def_cfa_register 7
+  94 0006 7860     		str	r0, [r7, #4]
+  57:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     return c->y <= c->x ? true : false;
+  95              		.loc 1 57 0
+  96 0008 7B68     		ldr	r3, [r7, #4]
+  97 000a B3F90220 		ldrsh	r2, [r3, #2]
+  98 000e 7B68     		ldr	r3, [r7, #4]
+  99 0010 B3F90030 		ldrsh	r3, [r3]
+ 100 0014 9A42     		cmp	r2, r3
+ 101 0016 D4BF     		ite	le
+ 102 0018 0123     		movle	r3, #1
+ 103 001a 0023     		movgt	r3, #0
+ 104 001c DBB2     		uxtb	r3, r3
+  58:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+ 105              		.loc 1 58 0
+ 106 001e 1846     		mov	r0, r3
+ 107 0020 0C37     		adds	r7, r7, #12
+ 108              		.cfi_def_cfa_offset 4
+ 109 0022 BD46     		mov	sp, r7
+ 110              		.cfi_def_cfa_register 13
+ 111              		@ sp needed
+ 112 0024 5DF8047B 		ldr	r7, [sp], #4
+ 113              		.cfi_restore 7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 4
+
+
+ 114              		.cfi_def_cfa_offset 0
+ 115 0028 7047     		bx	lr
+ 116              		.cfi_endproc
+ 117              	.LFE4:
+ 118              		.size	lv_circ_cont, .-lv_circ_cont
+ 119 002a 00BF     		.section	.text.lv_circ_next,"ax",%progbits
+ 120              		.align	2
+ 121              		.global	lv_circ_next
+ 122              		.thumb
+ 123              		.thumb_func
+ 124              		.type	lv_circ_next, %function
+ 125              	lv_circ_next:
+ 126              	.LFB5:
+  59:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  60:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** /**
+  61:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * Get the next point from the circle
+  62:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param c same as in circ_init. The next point stored here.
+  63:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  * @param tmp same as in circ_init.
+  64:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****  */
+  65:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** void lv_circ_next(lv_point_t * c, lv_coord_t * tmp)
+  66:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** {
+ 127              		.loc 1 66 0
+ 128              		.cfi_startproc
+ 129              		@ args = 0, pretend = 0, frame = 8
+ 130              		@ frame_needed = 1, uses_anonymous_args = 0
+ 131              		@ link register save eliminated.
+ 132 0000 80B4     		push	{r7}
+ 133              		.cfi_def_cfa_offset 4
+ 134              		.cfi_offset 7, -4
+ 135 0002 83B0     		sub	sp, sp, #12
+ 136              		.cfi_def_cfa_offset 16
+ 137 0004 00AF     		add	r7, sp, #0
+ 138              		.cfi_def_cfa_register 7
+ 139 0006 7860     		str	r0, [r7, #4]
+ 140 0008 3960     		str	r1, [r7]
+  67:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     c->y++;
+ 141              		.loc 1 67 0
+ 142 000a 7B68     		ldr	r3, [r7, #4]
+ 143 000c B3F90230 		ldrsh	r3, [r3, #2]
+ 144 0010 9BB2     		uxth	r3, r3
+ 145 0012 0133     		adds	r3, r3, #1
+ 146 0014 9BB2     		uxth	r3, r3
+ 147 0016 1AB2     		sxth	r2, r3
+ 148 0018 7B68     		ldr	r3, [r7, #4]
+ 149 001a 5A80     		strh	r2, [r3, #2]	@ movhi
+  68:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** 
+  69:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     if(*tmp <= 0) {
+ 150              		.loc 1 69 0
+ 151 001c 3B68     		ldr	r3, [r7]
+ 152 001e B3F90030 		ldrsh	r3, [r3]
+ 153 0022 002B     		cmp	r3, #0
+ 154 0024 11DC     		bgt	.L5
+  70:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         (*tmp) += 2 * c->y + 1; /*Change in decision criterion for y -> y+1*/
+ 155              		.loc 1 70 0
+ 156 0026 3B68     		ldr	r3, [r7]
+ 157 0028 B3F90030 		ldrsh	r3, [r3]
+ 158 002c 9AB2     		uxth	r2, r3
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 5
+
+
+ 159 002e 7B68     		ldr	r3, [r7, #4]
+ 160 0030 B3F90230 		ldrsh	r3, [r3, #2]
+ 161 0034 9BB2     		uxth	r3, r3
+ 162 0036 5B00     		lsls	r3, r3, #1
+ 163 0038 9BB2     		uxth	r3, r3
+ 164 003a 1344     		add	r3, r3, r2
+ 165 003c 9BB2     		uxth	r3, r3
+ 166 003e 0133     		adds	r3, r3, #1
+ 167 0040 9BB2     		uxth	r3, r3
+ 168 0042 1AB2     		sxth	r2, r3
+ 169 0044 3B68     		ldr	r3, [r7]
+ 170 0046 1A80     		strh	r2, [r3]	@ movhi
+  71:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     } else {
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         c->x--;
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         (*tmp) += 2 * (c->y - c->x) + 1; /*Change for y -> y+1, x -> x-1*/
+  74:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     }
+  75:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c **** }
+ 171              		.loc 1 75 0
+ 172 0048 1EE0     		b	.L7
+ 173              	.L5:
+  72:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****         (*tmp) += 2 * (c->y - c->x) + 1; /*Change for y -> y+1, x -> x-1*/
+ 174              		.loc 1 72 0
+ 175 004a 7B68     		ldr	r3, [r7, #4]
+ 176 004c B3F90030 		ldrsh	r3, [r3]
+ 177 0050 9BB2     		uxth	r3, r3
+ 178 0052 013B     		subs	r3, r3, #1
+ 179 0054 9BB2     		uxth	r3, r3
+ 180 0056 1AB2     		sxth	r2, r3
+ 181 0058 7B68     		ldr	r3, [r7, #4]
+ 182 005a 1A80     		strh	r2, [r3]	@ movhi
+  73:..\..\..\lvgl\version_6.1.2\lvgl\src\lv_misc/lv_circ.c ****     }
+ 183              		.loc 1 73 0
+ 184 005c 3B68     		ldr	r3, [r7]
+ 185 005e B3F90030 		ldrsh	r3, [r3]
+ 186 0062 9AB2     		uxth	r2, r3
+ 187 0064 7B68     		ldr	r3, [r7, #4]
+ 188 0066 B3F90230 		ldrsh	r3, [r3, #2]
+ 189 006a 1946     		mov	r1, r3
+ 190 006c 7B68     		ldr	r3, [r7, #4]
+ 191 006e B3F90030 		ldrsh	r3, [r3]
+ 192 0072 CB1A     		subs	r3, r1, r3
+ 193 0074 9BB2     		uxth	r3, r3
+ 194 0076 5B00     		lsls	r3, r3, #1
+ 195 0078 9BB2     		uxth	r3, r3
+ 196 007a 1344     		add	r3, r3, r2
+ 197 007c 9BB2     		uxth	r3, r3
+ 198 007e 0133     		adds	r3, r3, #1
+ 199 0080 9BB2     		uxth	r3, r3
+ 200 0082 1AB2     		sxth	r2, r3
+ 201 0084 3B68     		ldr	r3, [r7]
+ 202 0086 1A80     		strh	r2, [r3]	@ movhi
+ 203              	.L7:
+ 204              		.loc 1 75 0
+ 205 0088 00BF     		nop
+ 206 008a 0C37     		adds	r7, r7, #12
+ 207              		.cfi_def_cfa_offset 4
+ 208 008c BD46     		mov	sp, r7
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 6
+
+
+ 209              		.cfi_def_cfa_register 13
+ 210              		@ sp needed
+ 211 008e 5DF8047B 		ldr	r7, [sp], #4
+ 212              		.cfi_restore 7
+ 213              		.cfi_def_cfa_offset 0
+ 214 0092 7047     		bx	lr
+ 215              		.cfi_endproc
+ 216              	.LFE5:
+ 217              		.size	lv_circ_next, .-lv_circ_next
+ 218              		.text
+ 219              	.Letext0:
+ 220              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 221              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.3\\psoc creator\\import\\gnu\\arm\\5.4.
+ 222              		.file 4 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\../../../lv_conf.h"
+ 223              		.file 5 "..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc\\lv_area.h"
+ 224              		.section	.debug_info,"",%progbits
+ 225              	.Ldebug_info0:
+ 226 0000 69010000 		.4byte	0x169
+ 227 0004 0400     		.2byte	0x4
+ 228 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 229 000a 04       		.byte	0x4
+ 230 000b 01       		.uleb128 0x1
+ 231 000c 11010000 		.4byte	.LASF18
+ 232 0010 0C       		.byte	0xc
+ 233 0011 B7000000 		.4byte	.LASF19
+ 234 0015 CE010000 		.4byte	.LASF20
+ 235 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 236 001d 00000000 		.4byte	0
+ 237 0021 00000000 		.4byte	.Ldebug_line0
+ 238 0025 02       		.uleb128 0x2
+ 239 0026 04       		.byte	0x4
+ 240 0027 05       		.byte	0x5
+ 241 0028 696E7400 		.ascii	"int\000"
+ 242 002c 03       		.uleb128 0x3
+ 243 002d 04       		.byte	0x4
+ 244 002e 07       		.byte	0x7
+ 245 002f 6B020000 		.4byte	.LASF0
+ 246 0033 03       		.uleb128 0x3
+ 247 0034 08       		.byte	0x8
+ 248 0035 05       		.byte	0x5
+ 249 0036 00000000 		.4byte	.LASF1
+ 250 003a 03       		.uleb128 0x3
+ 251 003b 08       		.byte	0x8
+ 252 003c 04       		.byte	0x4
+ 253 003d 05010000 		.4byte	.LASF2
+ 254 0041 03       		.uleb128 0x3
+ 255 0042 01       		.byte	0x1
+ 256 0043 06       		.byte	0x6
+ 257 0044 F9000000 		.4byte	.LASF3
+ 258 0048 03       		.uleb128 0x3
+ 259 0049 01       		.byte	0x1
+ 260 004a 08       		.byte	0x8
+ 261 004b 78000000 		.4byte	.LASF4
+ 262 004f 04       		.uleb128 0x4
+ 263 0050 21000000 		.4byte	.LASF12
+ 264 0054 02       		.byte	0x2
+ 265 0055 29       		.byte	0x29
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 7
+
+
+ 266 0056 5A000000 		.4byte	0x5a
+ 267 005a 03       		.uleb128 0x3
+ 268 005b 02       		.byte	0x2
+ 269 005c 05       		.byte	0x5
+ 270 005d C4010000 		.4byte	.LASF5
+ 271 0061 03       		.uleb128 0x3
+ 272 0062 02       		.byte	0x2
+ 273 0063 07       		.byte	0x7
+ 274 0064 0E000000 		.4byte	.LASF6
+ 275 0068 03       		.uleb128 0x3
+ 276 0069 04       		.byte	0x4
+ 277 006a 05       		.byte	0x5
+ 278 006b 8B000000 		.4byte	.LASF7
+ 279 006f 03       		.uleb128 0x3
+ 280 0070 04       		.byte	0x4
+ 281 0071 07       		.byte	0x7
+ 282 0072 9F000000 		.4byte	.LASF8
+ 283 0076 03       		.uleb128 0x3
+ 284 0077 08       		.byte	0x8
+ 285 0078 07       		.byte	0x7
+ 286 0079 54000000 		.4byte	.LASF9
+ 287 007d 03       		.uleb128 0x3
+ 288 007e 04       		.byte	0x4
+ 289 007f 07       		.byte	0x7
+ 290 0080 78020000 		.4byte	.LASF10
+ 291 0084 03       		.uleb128 0x3
+ 292 0085 01       		.byte	0x1
+ 293 0086 08       		.byte	0x8
+ 294 0087 86000000 		.4byte	.LASF11
+ 295 008b 04       		.uleb128 0x4
+ 296 008c 2B000000 		.4byte	.LASF13
+ 297 0090 03       		.byte	0x3
+ 298 0091 20       		.byte	0x20
+ 299 0092 4F000000 		.4byte	0x4f
+ 300 0096 04       		.uleb128 0x4
+ 301 0097 EE000000 		.4byte	.LASF14
+ 302 009b 04       		.byte	0x4
+ 303 009c 3C       		.byte	0x3c
+ 304 009d 8B000000 		.4byte	0x8b
+ 305 00a1 05       		.uleb128 0x5
+ 306 00a2 04       		.byte	0x4
+ 307 00a3 05       		.byte	0x5
+ 308 00a4 2A       		.byte	0x2a
+ 309 00a5 BE000000 		.4byte	0xbe
+ 310 00a9 06       		.uleb128 0x6
+ 311 00aa 7800     		.ascii	"x\000"
+ 312 00ac 05       		.byte	0x5
+ 313 00ad 2C       		.byte	0x2c
+ 314 00ae 96000000 		.4byte	0x96
+ 315 00b2 00       		.byte	0
+ 316 00b3 06       		.uleb128 0x6
+ 317 00b4 7900     		.ascii	"y\000"
+ 318 00b6 05       		.byte	0x5
+ 319 00b7 2D       		.byte	0x2d
+ 320 00b8 96000000 		.4byte	0x96
+ 321 00bc 02       		.byte	0x2
+ 322 00bd 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 8
+
+
+ 323 00be 04       		.uleb128 0x4
+ 324 00bf 94000000 		.4byte	.LASF15
+ 325 00c3 05       		.byte	0x5
+ 326 00c4 2E       		.byte	0x2e
+ 327 00c5 A1000000 		.4byte	0xa1
+ 328 00c9 07       		.uleb128 0x7
+ 329 00ca 6B000000 		.4byte	.LASF21
+ 330 00ce 01       		.byte	0x1
+ 331 00cf 2B       		.byte	0x2b
+ 332 00d0 00000000 		.4byte	.LFB3
+ 333 00d4 34000000 		.4byte	.LFE3-.LFB3
+ 334 00d8 01       		.uleb128 0x1
+ 335 00d9 9C       		.byte	0x9c
+ 336 00da 07010000 		.4byte	0x107
+ 337 00de 08       		.uleb128 0x8
+ 338 00df 6300     		.ascii	"c\000"
+ 339 00e1 01       		.byte	0x1
+ 340 00e2 2B       		.byte	0x2b
+ 341 00e3 07010000 		.4byte	0x107
+ 342 00e7 02       		.uleb128 0x2
+ 343 00e8 91       		.byte	0x91
+ 344 00e9 74       		.sleb128 -12
+ 345 00ea 08       		.uleb128 0x8
+ 346 00eb 746D7000 		.ascii	"tmp\000"
+ 347 00ef 01       		.byte	0x1
+ 348 00f0 2B       		.byte	0x2b
+ 349 00f1 0D010000 		.4byte	0x10d
+ 350 00f5 02       		.uleb128 0x2
+ 351 00f6 91       		.byte	0x91
+ 352 00f7 70       		.sleb128 -16
+ 353 00f8 09       		.uleb128 0x9
+ 354 00f9 33000000 		.4byte	.LASF16
+ 355 00fd 01       		.byte	0x1
+ 356 00fe 2B       		.byte	0x2b
+ 357 00ff 96000000 		.4byte	0x96
+ 358 0103 02       		.uleb128 0x2
+ 359 0104 91       		.byte	0x91
+ 360 0105 6E       		.sleb128 -18
+ 361 0106 00       		.byte	0
+ 362 0107 0A       		.uleb128 0xa
+ 363 0108 04       		.byte	0x4
+ 364 0109 BE000000 		.4byte	0xbe
+ 365 010d 0A       		.uleb128 0xa
+ 366 010e 04       		.byte	0x4
+ 367 010f 96000000 		.4byte	0x96
+ 368 0113 0B       		.uleb128 0xb
+ 369 0114 47000000 		.4byte	.LASF22
+ 370 0118 01       		.byte	0x1
+ 371 0119 37       		.byte	0x37
+ 372 011a 39010000 		.4byte	0x139
+ 373 011e 00000000 		.4byte	.LFB4
+ 374 0122 2A000000 		.4byte	.LFE4-.LFB4
+ 375 0126 01       		.uleb128 0x1
+ 376 0127 9C       		.byte	0x9c
+ 377 0128 39010000 		.4byte	0x139
+ 378 012c 08       		.uleb128 0x8
+ 379 012d 6300     		.ascii	"c\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 9
+
+
+ 380 012f 01       		.byte	0x1
+ 381 0130 37       		.byte	0x37
+ 382 0131 07010000 		.4byte	0x107
+ 383 0135 02       		.uleb128 0x2
+ 384 0136 91       		.byte	0x91
+ 385 0137 74       		.sleb128 -12
+ 386 0138 00       		.byte	0
+ 387 0139 03       		.uleb128 0x3
+ 388 013a 01       		.byte	0x1
+ 389 013b 02       		.byte	0x2
+ 390 013c B1000000 		.4byte	.LASF17
+ 391 0140 0C       		.uleb128 0xc
+ 392 0141 3A000000 		.4byte	.LASF23
+ 393 0145 01       		.byte	0x1
+ 394 0146 41       		.byte	0x41
+ 395 0147 00000000 		.4byte	.LFB5
+ 396 014b 94000000 		.4byte	.LFE5-.LFB5
+ 397 014f 01       		.uleb128 0x1
+ 398 0150 9C       		.byte	0x9c
+ 399 0151 08       		.uleb128 0x8
+ 400 0152 6300     		.ascii	"c\000"
+ 401 0154 01       		.byte	0x1
+ 402 0155 41       		.byte	0x41
+ 403 0156 07010000 		.4byte	0x107
+ 404 015a 02       		.uleb128 0x2
+ 405 015b 91       		.byte	0x91
+ 406 015c 74       		.sleb128 -12
+ 407 015d 08       		.uleb128 0x8
+ 408 015e 746D7000 		.ascii	"tmp\000"
+ 409 0162 01       		.byte	0x1
+ 410 0163 41       		.byte	0x41
+ 411 0164 0D010000 		.4byte	0x10d
+ 412 0168 02       		.uleb128 0x2
+ 413 0169 91       		.byte	0x91
+ 414 016a 70       		.sleb128 -16
+ 415 016b 00       		.byte	0
+ 416 016c 00       		.byte	0
+ 417              		.section	.debug_abbrev,"",%progbits
+ 418              	.Ldebug_abbrev0:
+ 419 0000 01       		.uleb128 0x1
+ 420 0001 11       		.uleb128 0x11
+ 421 0002 01       		.byte	0x1
+ 422 0003 25       		.uleb128 0x25
+ 423 0004 0E       		.uleb128 0xe
+ 424 0005 13       		.uleb128 0x13
+ 425 0006 0B       		.uleb128 0xb
+ 426 0007 03       		.uleb128 0x3
+ 427 0008 0E       		.uleb128 0xe
+ 428 0009 1B       		.uleb128 0x1b
+ 429 000a 0E       		.uleb128 0xe
+ 430 000b 55       		.uleb128 0x55
+ 431 000c 17       		.uleb128 0x17
+ 432 000d 11       		.uleb128 0x11
+ 433 000e 01       		.uleb128 0x1
+ 434 000f 10       		.uleb128 0x10
+ 435 0010 17       		.uleb128 0x17
+ 436 0011 00       		.byte	0
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 10
+
+
+ 437 0012 00       		.byte	0
+ 438 0013 02       		.uleb128 0x2
+ 439 0014 24       		.uleb128 0x24
+ 440 0015 00       		.byte	0
+ 441 0016 0B       		.uleb128 0xb
+ 442 0017 0B       		.uleb128 0xb
+ 443 0018 3E       		.uleb128 0x3e
+ 444 0019 0B       		.uleb128 0xb
+ 445 001a 03       		.uleb128 0x3
+ 446 001b 08       		.uleb128 0x8
+ 447 001c 00       		.byte	0
+ 448 001d 00       		.byte	0
+ 449 001e 03       		.uleb128 0x3
+ 450 001f 24       		.uleb128 0x24
+ 451 0020 00       		.byte	0
+ 452 0021 0B       		.uleb128 0xb
+ 453 0022 0B       		.uleb128 0xb
+ 454 0023 3E       		.uleb128 0x3e
+ 455 0024 0B       		.uleb128 0xb
+ 456 0025 03       		.uleb128 0x3
+ 457 0026 0E       		.uleb128 0xe
+ 458 0027 00       		.byte	0
+ 459 0028 00       		.byte	0
+ 460 0029 04       		.uleb128 0x4
+ 461 002a 16       		.uleb128 0x16
+ 462 002b 00       		.byte	0
+ 463 002c 03       		.uleb128 0x3
+ 464 002d 0E       		.uleb128 0xe
+ 465 002e 3A       		.uleb128 0x3a
+ 466 002f 0B       		.uleb128 0xb
+ 467 0030 3B       		.uleb128 0x3b
+ 468 0031 0B       		.uleb128 0xb
+ 469 0032 49       		.uleb128 0x49
+ 470 0033 13       		.uleb128 0x13
+ 471 0034 00       		.byte	0
+ 472 0035 00       		.byte	0
+ 473 0036 05       		.uleb128 0x5
+ 474 0037 13       		.uleb128 0x13
+ 475 0038 01       		.byte	0x1
+ 476 0039 0B       		.uleb128 0xb
+ 477 003a 0B       		.uleb128 0xb
+ 478 003b 3A       		.uleb128 0x3a
+ 479 003c 0B       		.uleb128 0xb
+ 480 003d 3B       		.uleb128 0x3b
+ 481 003e 0B       		.uleb128 0xb
+ 482 003f 01       		.uleb128 0x1
+ 483 0040 13       		.uleb128 0x13
+ 484 0041 00       		.byte	0
+ 485 0042 00       		.byte	0
+ 486 0043 06       		.uleb128 0x6
+ 487 0044 0D       		.uleb128 0xd
+ 488 0045 00       		.byte	0
+ 489 0046 03       		.uleb128 0x3
+ 490 0047 08       		.uleb128 0x8
+ 491 0048 3A       		.uleb128 0x3a
+ 492 0049 0B       		.uleb128 0xb
+ 493 004a 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 11
+
+
+ 494 004b 0B       		.uleb128 0xb
+ 495 004c 49       		.uleb128 0x49
+ 496 004d 13       		.uleb128 0x13
+ 497 004e 38       		.uleb128 0x38
+ 498 004f 0B       		.uleb128 0xb
+ 499 0050 00       		.byte	0
+ 500 0051 00       		.byte	0
+ 501 0052 07       		.uleb128 0x7
+ 502 0053 2E       		.uleb128 0x2e
+ 503 0054 01       		.byte	0x1
+ 504 0055 3F       		.uleb128 0x3f
+ 505 0056 19       		.uleb128 0x19
+ 506 0057 03       		.uleb128 0x3
+ 507 0058 0E       		.uleb128 0xe
+ 508 0059 3A       		.uleb128 0x3a
+ 509 005a 0B       		.uleb128 0xb
+ 510 005b 3B       		.uleb128 0x3b
+ 511 005c 0B       		.uleb128 0xb
+ 512 005d 27       		.uleb128 0x27
+ 513 005e 19       		.uleb128 0x19
+ 514 005f 11       		.uleb128 0x11
+ 515 0060 01       		.uleb128 0x1
+ 516 0061 12       		.uleb128 0x12
+ 517 0062 06       		.uleb128 0x6
+ 518 0063 40       		.uleb128 0x40
+ 519 0064 18       		.uleb128 0x18
+ 520 0065 9742     		.uleb128 0x2117
+ 521 0067 19       		.uleb128 0x19
+ 522 0068 01       		.uleb128 0x1
+ 523 0069 13       		.uleb128 0x13
+ 524 006a 00       		.byte	0
+ 525 006b 00       		.byte	0
+ 526 006c 08       		.uleb128 0x8
+ 527 006d 05       		.uleb128 0x5
+ 528 006e 00       		.byte	0
+ 529 006f 03       		.uleb128 0x3
+ 530 0070 08       		.uleb128 0x8
+ 531 0071 3A       		.uleb128 0x3a
+ 532 0072 0B       		.uleb128 0xb
+ 533 0073 3B       		.uleb128 0x3b
+ 534 0074 0B       		.uleb128 0xb
+ 535 0075 49       		.uleb128 0x49
+ 536 0076 13       		.uleb128 0x13
+ 537 0077 02       		.uleb128 0x2
+ 538 0078 18       		.uleb128 0x18
+ 539 0079 00       		.byte	0
+ 540 007a 00       		.byte	0
+ 541 007b 09       		.uleb128 0x9
+ 542 007c 05       		.uleb128 0x5
+ 543 007d 00       		.byte	0
+ 544 007e 03       		.uleb128 0x3
+ 545 007f 0E       		.uleb128 0xe
+ 546 0080 3A       		.uleb128 0x3a
+ 547 0081 0B       		.uleb128 0xb
+ 548 0082 3B       		.uleb128 0x3b
+ 549 0083 0B       		.uleb128 0xb
+ 550 0084 49       		.uleb128 0x49
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 12
+
+
+ 551 0085 13       		.uleb128 0x13
+ 552 0086 02       		.uleb128 0x2
+ 553 0087 18       		.uleb128 0x18
+ 554 0088 00       		.byte	0
+ 555 0089 00       		.byte	0
+ 556 008a 0A       		.uleb128 0xa
+ 557 008b 0F       		.uleb128 0xf
+ 558 008c 00       		.byte	0
+ 559 008d 0B       		.uleb128 0xb
+ 560 008e 0B       		.uleb128 0xb
+ 561 008f 49       		.uleb128 0x49
+ 562 0090 13       		.uleb128 0x13
+ 563 0091 00       		.byte	0
+ 564 0092 00       		.byte	0
+ 565 0093 0B       		.uleb128 0xb
+ 566 0094 2E       		.uleb128 0x2e
+ 567 0095 01       		.byte	0x1
+ 568 0096 3F       		.uleb128 0x3f
+ 569 0097 19       		.uleb128 0x19
+ 570 0098 03       		.uleb128 0x3
+ 571 0099 0E       		.uleb128 0xe
+ 572 009a 3A       		.uleb128 0x3a
+ 573 009b 0B       		.uleb128 0xb
+ 574 009c 3B       		.uleb128 0x3b
+ 575 009d 0B       		.uleb128 0xb
+ 576 009e 27       		.uleb128 0x27
+ 577 009f 19       		.uleb128 0x19
+ 578 00a0 49       		.uleb128 0x49
+ 579 00a1 13       		.uleb128 0x13
+ 580 00a2 11       		.uleb128 0x11
+ 581 00a3 01       		.uleb128 0x1
+ 582 00a4 12       		.uleb128 0x12
+ 583 00a5 06       		.uleb128 0x6
+ 584 00a6 40       		.uleb128 0x40
+ 585 00a7 18       		.uleb128 0x18
+ 586 00a8 9742     		.uleb128 0x2117
+ 587 00aa 19       		.uleb128 0x19
+ 588 00ab 01       		.uleb128 0x1
+ 589 00ac 13       		.uleb128 0x13
+ 590 00ad 00       		.byte	0
+ 591 00ae 00       		.byte	0
+ 592 00af 0C       		.uleb128 0xc
+ 593 00b0 2E       		.uleb128 0x2e
+ 594 00b1 01       		.byte	0x1
+ 595 00b2 3F       		.uleb128 0x3f
+ 596 00b3 19       		.uleb128 0x19
+ 597 00b4 03       		.uleb128 0x3
+ 598 00b5 0E       		.uleb128 0xe
+ 599 00b6 3A       		.uleb128 0x3a
+ 600 00b7 0B       		.uleb128 0xb
+ 601 00b8 3B       		.uleb128 0x3b
+ 602 00b9 0B       		.uleb128 0xb
+ 603 00ba 27       		.uleb128 0x27
+ 604 00bb 19       		.uleb128 0x19
+ 605 00bc 11       		.uleb128 0x11
+ 606 00bd 01       		.uleb128 0x1
+ 607 00be 12       		.uleb128 0x12
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 13
+
+
+ 608 00bf 06       		.uleb128 0x6
+ 609 00c0 40       		.uleb128 0x40
+ 610 00c1 18       		.uleb128 0x18
+ 611 00c2 9742     		.uleb128 0x2117
+ 612 00c4 19       		.uleb128 0x19
+ 613 00c5 00       		.byte	0
+ 614 00c6 00       		.byte	0
+ 615 00c7 00       		.byte	0
+ 616              		.section	.debug_aranges,"",%progbits
+ 617 0000 2C000000 		.4byte	0x2c
+ 618 0004 0200     		.2byte	0x2
+ 619 0006 00000000 		.4byte	.Ldebug_info0
+ 620 000a 04       		.byte	0x4
+ 621 000b 00       		.byte	0
+ 622 000c 0000     		.2byte	0
+ 623 000e 0000     		.2byte	0
+ 624 0010 00000000 		.4byte	.LFB3
+ 625 0014 34000000 		.4byte	.LFE3-.LFB3
+ 626 0018 00000000 		.4byte	.LFB4
+ 627 001c 2A000000 		.4byte	.LFE4-.LFB4
+ 628 0020 00000000 		.4byte	.LFB5
+ 629 0024 94000000 		.4byte	.LFE5-.LFB5
+ 630 0028 00000000 		.4byte	0
+ 631 002c 00000000 		.4byte	0
+ 632              		.section	.debug_ranges,"",%progbits
+ 633              	.Ldebug_ranges0:
+ 634 0000 00000000 		.4byte	.LFB3
+ 635 0004 34000000 		.4byte	.LFE3
+ 636 0008 00000000 		.4byte	.LFB4
+ 637 000c 2A000000 		.4byte	.LFE4
+ 638 0010 00000000 		.4byte	.LFB5
+ 639 0014 94000000 		.4byte	.LFE5
+ 640 0018 00000000 		.4byte	0
+ 641 001c 00000000 		.4byte	0
+ 642              		.section	.debug_line,"",%progbits
+ 643              	.Ldebug_line0:
+ 644 0000 DD010000 		.section	.debug_str,"MS",%progbits,1
+ 644      02009A01 
+ 644      00000201 
+ 644      FB0E0D00 
+ 644      01010101 
+ 645              	.LASF1:
+ 646 0000 6C6F6E67 		.ascii	"long long int\000"
+ 646      206C6F6E 
+ 646      6720696E 
+ 646      7400
+ 647              	.LASF6:
+ 648 000e 73686F72 		.ascii	"short unsigned int\000"
+ 648      7420756E 
+ 648      7369676E 
+ 648      65642069 
+ 648      6E7400
+ 649              	.LASF12:
+ 650 0021 5F5F696E 		.ascii	"__int16_t\000"
+ 650      7431365F 
+ 650      7400
+ 651              	.LASF13:
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 14
+
+
+ 652 002b 696E7431 		.ascii	"int16_t\000"
+ 652      365F7400 
+ 653              	.LASF16:
+ 654 0033 72616469 		.ascii	"radius\000"
+ 654      757300
+ 655              	.LASF23:
+ 656 003a 6C765F63 		.ascii	"lv_circ_next\000"
+ 656      6972635F 
+ 656      6E657874 
+ 656      00
+ 657              	.LASF22:
+ 658 0047 6C765F63 		.ascii	"lv_circ_cont\000"
+ 658      6972635F 
+ 658      636F6E74 
+ 658      00
+ 659              	.LASF9:
+ 660 0054 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 660      206C6F6E 
+ 660      6720756E 
+ 660      7369676E 
+ 660      65642069 
+ 661              	.LASF21:
+ 662 006b 6C765F63 		.ascii	"lv_circ_init\000"
+ 662      6972635F 
+ 662      696E6974 
+ 662      00
+ 663              	.LASF4:
+ 664 0078 756E7369 		.ascii	"unsigned char\000"
+ 664      676E6564 
+ 664      20636861 
+ 664      7200
+ 665              	.LASF11:
+ 666 0086 63686172 		.ascii	"char\000"
+ 666      00
+ 667              	.LASF7:
+ 668 008b 6C6F6E67 		.ascii	"long int\000"
+ 668      20696E74 
+ 668      00
+ 669              	.LASF15:
+ 670 0094 6C765F70 		.ascii	"lv_point_t\000"
+ 670      6F696E74 
+ 670      5F7400
+ 671              	.LASF8:
+ 672 009f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 672      20756E73 
+ 672      69676E65 
+ 672      6420696E 
+ 672      7400
+ 673              	.LASF17:
+ 674 00b1 5F426F6F 		.ascii	"_Bool\000"
+ 674      6C00
+ 675              	.LASF19:
+ 676 00b7 2E2E5C2E 		.ascii	"..\\..\\..\\lvgl\\version_6.1.2\\lvgl\\src\\lv_misc"
+ 676      2E5C2E2E 
+ 676      5C6C7667 
+ 676      6C5C7665 
+ 676      7273696F 
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 15
+
+
+ 677 00e3 5C6C765F 		.ascii	"\\lv_circ.c\000"
+ 677      63697263 
+ 677      2E6300
+ 678              	.LASF14:
+ 679 00ee 6C765F63 		.ascii	"lv_coord_t\000"
+ 679      6F6F7264 
+ 679      5F7400
+ 680              	.LASF3:
+ 681 00f9 7369676E 		.ascii	"signed char\000"
+ 681      65642063 
+ 681      68617200 
+ 682              	.LASF2:
+ 683 0105 6C6F6E67 		.ascii	"long double\000"
+ 683      20646F75 
+ 683      626C6500 
+ 684              	.LASF18:
+ 685 0111 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 685      43313120 
+ 685      352E342E 
+ 685      31203230 
+ 685      31363036 
+ 686 0144 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 686      20726576 
+ 686      6973696F 
+ 686      6E203233 
+ 686      37373135 
+ 687 0177 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -O0 -ffunction-s"
+ 687      70202D6D 
+ 687      6670753D 
+ 687      66707634 
+ 687      2D73702D 
+ 688 01aa 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 688      6F6E7320 
+ 688      2D666661 
+ 688      742D6C74 
+ 688      6F2D6F62 
+ 689              	.LASF5:
+ 690 01c4 73686F72 		.ascii	"short int\000"
+ 690      7420696E 
+ 690      7400
+ 691              	.LASF20:
+ 692 01ce 433A5C55 		.ascii	"C:\\Users\\tmj32\\Documents\\TCNJ\\Senior_Project\\"
+ 692      73657273 
+ 692      5C746D6A 
+ 692      33325C44 
+ 692      6F63756D 
+ 693 01fb 4F736369 		.ascii	"Oscilloscope_Senior_Project\\tcom_engineering\\embe"
+ 693      6C6C6F73 
+ 693      636F7065 
+ 693      5F53656E 
+ 693      696F725F 
+ 694 022c 645F7377 		.ascii	"d_sw\\tcom_app\\tcom_app_psoc6_lvgl6\\tcom_displ_te"
+ 694      5C74636F 
+ 694      6D5F6170 
+ 694      705C7463 
+ 694      6F6D5F61 
+ 695 025c 73745F70 		.ascii	"st_psoc6.cydsn\000"
+ARM GAS  C:\Users\tmj32\AppData\Local\Temp\ccjZRJ0y.s 			page 16
+
+
+ 695      736F6336 
+ 695      2E637964 
+ 695      736E00
+ 696              	.LASF0:
+ 697 026b 756E7369 		.ascii	"unsigned int\000"
+ 697      676E6564 
+ 697      20696E74 
+ 697      00
+ 698              	.LASF10:
+ 699 0278 73697A65 		.ascii	"sizetype\000"
+ 699      74797065 
+ 699      00
+ 700              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,7 @@
+E:\Applications\LittlevGL\tcom_engineering\embed_sw\tcom_app\tcom_app_psoc6\tcom_displ_test_psoc6.cydsn\tcom_displ_test_psoc6.cyprj|c3676289-1358-457e-a846-1d9023a76ceb
+E:\Applications\PSOC\PSoC Creator\4.3\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|5339d96f-fcff-4882-8e75-92e607d5c452
+C:\Users\chris\Documents\PSoC Creator\4.3\Downloads ( 4.3).cylib\Downloads ( 4.3).cyprj|b12d1109-85c2-46bd-91ff-4342b5c522fc
+C:\Users\chris\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|5e0b40fa-ec98-4cd0-954d-5aad292cb4c1
+E:\Applications\PSOC\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|b7b92279-f6c9-4b11-9829-0251c0c119aa
+E:\Applications\PSOC\PSoC Creator\4.3\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|30d6256d-9d24-4a50-8a42-21e9d311e5a6
+E:\Applications\PSOC\PSoC Creator\4.3\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|c1f412a5-0736-4688-ae18-651920a49be3
