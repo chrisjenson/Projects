@@ -1,6 +1,6 @@
 Pipelined ARM Processor written in Verilog. See WortsJensonCELab2Report.pdf  for more info
 
-ELC 463 Lab2
+ELC 463 Lab 2
 Completed 3/16/21
 Grade: 28/28
 
